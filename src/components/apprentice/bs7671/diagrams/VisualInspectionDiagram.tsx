@@ -164,7 +164,7 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
         code: "N/V",
         label: "Not Verified",
         description: "Unable to inspect - limitation",
-        color: "text-gray-400 bg-gray-500/20 border-gray-500/30"
+        color: "text-white bg-white/10 border-white/20"
       },
       {
         code: "LIM",

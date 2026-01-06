@@ -552,7 +552,7 @@ const InstrumentationModule6Section6 = () => {
                 ],
                 correctAnswer: 1,
                 explanation: "Professional calibration requires thorough preparation, systematic procedures, comprehensive documentation, historical trend monitoring, and continuous improvement of processes and methods."
-              }
+            }
             ]}
             title="Section 6 Knowledge Check"
           />

@@ -266,7 +266,7 @@ const HourlyRateCalculator = () => {
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 Hourly Rate Calculator
               </h1>
-              <p className="text-sm text-white/60">Calculate your optimal charge-out rate</p>
+              <p className="text-sm text-white">Calculate your optimal charge-out rate</p>
             </div>
           </div>
           <SmartBackButton />
@@ -369,7 +369,7 @@ const HourlyRateCalculator = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      "h-4 w-4 text-white/40 transition-transform duration-200",
+                      "h-4 w-4 text-white/80 transition-transform duration-200",
                       showAdvanced && "rotate-180"
                     )}
                   />
@@ -535,7 +535,7 @@ const HourlyRateCalculator = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      "h-4 w-4 text-white/40 transition-transform duration-200",
+                      "h-4 w-4 text-white/80 transition-transform duration-200",
                       showPremiums && "rotate-180"
                     )}
                   />
@@ -594,13 +594,13 @@ const HourlyRateCalculator = () => {
                 </button>
                 <button
                   onClick={saveScenario}
-                  className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 transition-colors touch-manipulation"
+                  className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/90 hover:bg-white/10 transition-colors touch-manipulation"
                 >
                   <Save className="h-5 w-5" />
                 </button>
                 <button
                   onClick={reset}
-                  className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 transition-colors touch-manipulation"
+                  className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/90 hover:bg-white/10 transition-colors touch-manipulation"
                 >
                   <RotateCcw className="h-5 w-5" />
                 </button>
@@ -614,7 +614,7 @@ const HourlyRateCalculator = () => {
               <>
                 <CalculatorResult category="business">
                   <div className="text-center pb-4 border-b border-white/10">
-                    <p className="text-sm text-white/60 mb-1">Recommended Hourly Rate (ex VAT)</p>
+                    <p className="text-sm text-white mb-1">Recommended Hourly Rate (ex VAT)</p>
                     <div
                       className="text-4xl font-bold bg-clip-text text-transparent"
                       style={{
@@ -624,7 +624,7 @@ const HourlyRateCalculator = () => {
                       £{roundedHourlyExVat.toFixed(2)}
                     </div>
                     {vatRegistered && (
-                      <p className="text-sm text-white/50 mt-2">
+                      <p className="text-sm text-white mt-2">
                         Inc VAT:{" "}
                         <span
                           className="font-semibold"
@@ -675,7 +675,7 @@ const HourlyRateCalculator = () => {
 
                   {/* Chart */}
                   <div className="pt-4 border-t border-white/10">
-                    <p className="text-xs text-white/50 mb-3">Cost vs Rate Breakdown</p>
+                    <p className="text-xs text-white mb-3">Cost vs Rate Breakdown</p>
                     <div className="h-40">
                       <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={chartData}>
@@ -696,25 +696,25 @@ const HourlyRateCalculator = () => {
                 {/* Premium Rates Results */}
                 <div className="grid grid-cols-3 gap-3">
                   <div className="p-3 rounded-xl border border-amber-400/20 bg-amber-400/5 text-center">
-                    <p className="text-xs text-white/50 mb-1">Call-out min</p>
+                    <p className="text-xs text-white mb-1">Call-out min</p>
                     <p className="text-lg font-bold text-amber-400">£{callOutFeeExVat.toFixed(0)}</p>
                     {vatRegistered && (
-                      <p className="text-xs text-white/40">inc VAT: £{callOutFeeIncVat?.toFixed(0)}</p>
+                      <p className="text-xs text-white">inc VAT: £{callOutFeeIncVat?.toFixed(0)}</p>
                     )}
-                    <p className="text-xs text-white/40">{callOutMinHours}h min</p>
+                    <p className="text-xs text-white">{callOutMinHours}h min</p>
                   </div>
                   <div className="p-3 rounded-xl border border-white/10 bg-white/5 text-center">
-                    <p className="text-xs text-white/50 mb-1">After-hours</p>
+                    <p className="text-xs text-white mb-1">After-hours</p>
                     <p className="text-lg font-bold text-blue-400">£{afterHoursHourlyExVat.toFixed(0)}/h</p>
                     {vatRegistered && (
-                      <p className="text-xs text-white/40">inc VAT: £{afterHoursHourlyIncVat?.toFixed(0)}</p>
+                      <p className="text-xs text-white">inc VAT: £{afterHoursHourlyIncVat?.toFixed(0)}</p>
                     )}
                   </div>
                   <div className="p-3 rounded-xl border border-white/10 bg-white/5 text-center">
-                    <p className="text-xs text-white/50 mb-1">Weekend</p>
+                    <p className="text-xs text-white mb-1">Weekend</p>
                     <p className="text-lg font-bold text-purple-400">£{weekendHourlyExVat.toFixed(0)}/h</p>
                     {vatRegistered && (
-                      <p className="text-xs text-white/40">inc VAT: £{weekendHourlyIncVat?.toFixed(0)}</p>
+                      <p className="text-xs text-white">inc VAT: £{weekendHourlyIncVat?.toFixed(0)}</p>
                     )}
                   </div>
                 </div>
@@ -751,7 +751,7 @@ const HourlyRateCalculator = () => {
               <div className="calculator-card text-center py-16">
                 <Clock className="h-16 w-16 text-blue-400/30 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-white mb-2">Ready to Calculate</h3>
-                <p className="text-white/50">Enter your details and click "Calculate"</p>
+                <p className="text-white">Enter your details and click "Calculate"</p>
               </div>
             )}
 
@@ -767,7 +767,7 @@ const HourlyRateCalculator = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      "h-4 w-4 text-white/40 transition-transform duration-200",
+                      "h-4 w-4 text-white/80 transition-transform duration-200",
                       showGuidance && "rotate-180"
                     )}
                   />
@@ -808,7 +808,7 @@ const HourlyRateCalculator = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      "h-4 w-4 text-white/40 transition-transform duration-200",
+                      "h-4 w-4 text-white/80 transition-transform duration-200",
                       showReference && "rotate-180"
                     )}
                   />

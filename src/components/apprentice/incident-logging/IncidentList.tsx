@@ -97,7 +97,7 @@ const IncidentList = ({ searchQuery, statusFilter, typeFilter, onEdit, onView }:
 
   const getStatusBadge = (status: string) => {
     const statusConfig = {
-      draft: { color: 'bg-gray-500/20 text-gray-400', label: 'Draft' },
+      draft: { color: 'bg-white/10 text-white', label: 'Draft' },
       submitted: { color: 'bg-blue-500/20 text-blue-400', label: 'Submitted' },
       under_review: { color: 'bg-yellow-500/20 text-yellow-400', label: 'Under Review' },
       investigating: { color: 'bg-orange-500/20 text-orange-400', label: 'Investigating' },
@@ -152,10 +152,10 @@ const IncidentList = ({ searchQuery, statusFilter, typeFilter, onEdit, onView }:
     return (
       <div className="space-y-4">
         {[1, 2, 3].map((i) => (
-          <Card key={i} className="border-elec-yellow/20 bg-elec-gray animate-pulse">
+          <Card key={i} className="border-elec-yellow/20 bg-white/5 animate-pulse">
             <CardContent className="p-6">
-              <div className="h-4 bg-elec-dark rounded w-3/4 mb-2"></div>
-              <div className="h-3 bg-elec-dark rounded w-1/2"></div>
+              <div className="h-4 bg-white/10 rounded w-3/4 mb-2"></div>
+              <div className="h-3 bg-white/10 rounded w-1/2"></div>
             </CardContent>
           </Card>
         ))}
@@ -165,10 +165,10 @@ const IncidentList = ({ searchQuery, statusFilter, typeFilter, onEdit, onView }:
 
   if (filteredIncidents.length === 0) {
     return (
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className="p-8 text-center">
-          <AlertTriangle className="h-12 w-12 mx-auto mb-4 text-muted-foreground opacity-50" />
-          <p className="text-muted-foreground">
+          <AlertTriangle className="h-12 w-12 mx-auto mb-4 text-white opacity-50" />
+          <p className="text-white">
             {incidents.length === 0 
               ? "No incidents reported yet. Click 'New Incident' to create your first report."
               : "No incidents match your current filters."
@@ -182,7 +182,7 @@ const IncidentList = ({ searchQuery, statusFilter, typeFilter, onEdit, onView }:
   return (
     <div className="space-y-4">
       {filteredIncidents.map((incident) => (
-        <Card key={incident.id} className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/90 transition-colors">
+        <Card key={incident.id} className="border-elec-yellow/20 bg-white/5 hover:bg-white/5 transition-colors">
           <CardHeader className="pb-3">
             <div className="flex items-start justify-between">
               <div className="space-y-2">
@@ -191,7 +191,7 @@ const IncidentList = ({ searchQuery, statusFilter, typeFilter, onEdit, onView }:
                   {getStatusBadge(incident.status)}
                   {getSeverityBadge(incident.severity)}
                 </div>
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                <div className="flex items-center gap-4 text-sm text-white">
                   <div className="flex items-center gap-1">
                     <Calendar className="h-4 w-4" />
                     {format(new Date(incident.date_occurred), 'MMM dd, yyyy HH:mm')}
@@ -225,12 +225,12 @@ const IncidentList = ({ searchQuery, statusFilter, typeFilter, onEdit, onView }:
           </CardHeader>
           
           <CardContent>
-            <p className="text-sm text-muted-foreground line-clamp-2">
+            <p className="text-sm text-white line-clamp-2">
               {incident.description}
             </p>
             
             <div className="flex items-center justify-between mt-3 pt-3 border-t border-elec-yellow/10">
-              <div className="text-xs text-muted-foreground">
+              <div className="text-xs text-white">
                 Created: {format(new Date(incident.created_at), 'MMM dd, yyyy')}
                 {incident.submitted_at && (
                   <span className="ml-2">

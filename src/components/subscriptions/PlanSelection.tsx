@@ -25,9 +25,9 @@ const PlanSelection = () => {
           <button
             onClick={() => setBilling("monthly")}
             className={cn(
-              "relative z-10 px-8 py-3 text-sm font-semibold rounded-full transition-all duration-300 min-w-[140px] min-h-[48px]",
+              "relative z-10 px-8 py-3 text-sm font-semibold rounded-full transition-all duration-300 min-w-[140px] min-h-[48px] touch-manipulation",
               "active:scale-[0.98]",
-              billing === "monthly" ? "text-elec-dark" : "text-muted-foreground hover:text-foreground"
+              billing === "monthly" ? "text-elec-dark" : "text-white/70 hover:text-foreground"
             )}
           >
             Monthly
@@ -37,9 +37,9 @@ const PlanSelection = () => {
           <button
             onClick={() => setBilling("yearly")}
             className={cn(
-              "relative z-10 px-8 py-3 text-sm font-semibold rounded-full transition-all duration-300 min-w-[140px] min-h-[48px]",
+              "relative z-10 px-8 py-3 text-sm font-semibold rounded-full transition-all duration-300 min-w-[140px] min-h-[48px] touch-manipulation",
               "active:scale-[0.98]",
-              billing === "yearly" ? "text-elec-dark" : "text-muted-foreground hover:text-foreground"
+              billing === "yearly" ? "text-elec-dark" : "text-white/70 hover:text-foreground"
             )}
           >
             Annual

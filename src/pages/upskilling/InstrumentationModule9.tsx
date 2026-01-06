@@ -13,7 +13,7 @@ const InstrumentationModule9 = () => {
       description: "Comprehensive 25-question examination covering all instrumentation modules with 70% pass rate required",
       icon: FileCheck,
       component: <InstrumentationMockExam />
-    }
+  }
   ];
 
   return (

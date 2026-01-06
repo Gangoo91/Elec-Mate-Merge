@@ -1,123 +1,132 @@
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { ProfileType } from './types';
 import { supabase } from '@/integrations/supabase/client';
 
-export function useSubscriptionStatus(profile: ProfileType | null) {
-  const [isTrialActive, setIsTrialActive] = useState(false);
-  const [trialEndsAt, setTrialEndsAt] = useState<Date | null>(null);
-  const [isSubscribed, setIsSubscribed] = useState(false);
-  const [subscriptionTier, setSubscriptionTier] = useState<string | null>(null);
-  const [isCheckingStatus, setIsCheckingStatus] = useState(false);
-  const [lastError, setLastError] = useState<string | null>(null);
-  const [lastCheckedAt, setLastCheckedAt] = useState<Date | null>(null);
+// Combined state to prevent multiple re-renders
+interface SubscriptionState {
+  isTrialActive: boolean;
+  trialEndsAt: Date | null;
+  isSubscribed: boolean;
+  subscriptionTier: string | null;
+  isCheckingStatus: boolean;
+  lastError: string | null;
+  lastCheckedAt: Date | null;
+}
 
-  // Handle profile updates - calculate trial status
+const initialState: SubscriptionState = {
+  isTrialActive: false,
+  trialEndsAt: null,
+  isSubscribed: false,
+  subscriptionTier: null,
+  isCheckingStatus: false,
+  lastError: null,
+  lastCheckedAt: null,
+};
+
+export function useSubscriptionStatus(profile: ProfileType | null) {
+  const [state, setState] = useState<SubscriptionState>(initialState);
+  const hasCheckedRef = useRef(false);
+  const profileIdRef = useRef<string | null>(null);
+
+  // Handle profile updates - calculate trial status from profile data
+  // This runs synchronously and doesn't cause loading states
   useEffect(() => {
     if (profile) {
-      // Check trial status
       const createdAt = new Date(profile.created_at || new Date());
       const trialEndDate = new Date(createdAt);
       trialEndDate.setDate(trialEndDate.getDate() + 7); // 7-day trial
-      
+
       const now = new Date();
       const isActive = now < trialEndDate;
       const isUserSubscribed = profile.subscribed || false;
-      
-      console.log('Profile subscription status:', {
-        profileId: profile.id,
-        createdAt,
-        trialEndDate,
-        isUserSubscribed,
-        subscriptionFromProfile: profile.subscribed
-      });
-      
-      // If the user is subscribed, ensure trial status is false
-      if (isUserSubscribed) {
-        setIsTrialActive(false);
-      } else {
-        setIsTrialActive(isActive && !isUserSubscribed);
-      }
-      
-      setTrialEndsAt(trialEndDate);
-      setIsSubscribed(isUserSubscribed);
+
+      // Single state update for profile data
+      setState(prev => ({
+        ...prev,
+        isTrialActive: isUserSubscribed ? false : (isActive && !isUserSubscribed),
+        trialEndsAt: trialEndDate,
+        isSubscribed: isUserSubscribed,
+        subscriptionTier: prev.subscriptionTier, // Keep existing tier until Stripe confirms
+      }));
     } else {
-      setIsTrialActive(false);
-      setTrialEndsAt(null);
-      setIsSubscribed(false);
-      
-      console.log('No profile available for subscription status check');
+      setState(prev => ({
+        ...prev,
+        isTrialActive: false,
+        trialEndsAt: null,
+        isSubscribed: false,
+        subscriptionTier: null,
+      }));
     }
   }, [profile]);
 
   // Function to check subscription status with Stripe
   const checkSubscriptionStatus = useCallback(async () => {
-    if (!profile) {
-      console.log('No profile available, skipping subscription check');
+    if (!profile) return;
+
+    // Prevent duplicate checks for same profile
+    if (hasCheckedRef.current && profileIdRef.current === profile.id) {
       return;
     }
-    
+
     try {
-      setIsCheckingStatus(true);
-      setLastError(null);
-      
-      console.log('Checking subscription status for user:', profile.id);
+      setState(prev => ({ ...prev, isCheckingStatus: true, lastError: null }));
+
       const { data, error } = await supabase.functions.invoke('check-subscription');
-      
+
       if (error) {
         console.error('Error checking subscription:', error);
-        setLastError(error.message);
-        // Don't update subscription status if there's an error
+        setState(prev => ({ ...prev, isCheckingStatus: false, lastError: error.message }));
         return;
-      } 
-      
-      if (data) {
-        console.log('Subscription check result:', data);
-        
-        // Always update state with the latest subscription data from Stripe
-        setIsSubscribed(data.subscribed);
-        setSubscriptionTier(data.subscription_tier);
-        
-        // If the user is subscribed according to Stripe, ensure trial is inactive
-        if (data.subscribed) {
-          setIsTrialActive(false);
-        }
-        
-        // Check if the subscription status differs from the profile
-        if (data.subscribed !== profile.subscribed) {
-          console.warn('Subscription status mismatch between Stripe and profile:', {
-            stripeSubscribed: data.subscribed,
-            profileSubscribed: profile.subscribed
-          });
-        }
       }
-      
-      setLastCheckedAt(new Date());
+
+      if (data) {
+        // Single batched state update with all Stripe data
+        setState(prev => ({
+          ...prev,
+          isSubscribed: data.subscribed,
+          subscriptionTier: data.subscription_tier,
+          isTrialActive: data.subscribed ? false : prev.isTrialActive,
+          lastCheckedAt: new Date(),
+          isCheckingStatus: false,
+          lastError: null,
+        }));
+
+        hasCheckedRef.current = true;
+        profileIdRef.current = profile.id;
+      } else {
+        setState(prev => ({ ...prev, isCheckingStatus: false }));
+      }
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       console.error('Error in checkSubscriptionStatus:', message);
-      setLastError(message);
-      // Don't update subscription status if there's an error
-    } finally {
-      setIsCheckingStatus(false);
+      setState(prev => ({ ...prev, isCheckingStatus: false, lastError: message }));
     }
   }, [profile]);
 
-  // Check subscription status immediately when profile changes
+  // Check subscription status once when profile becomes available
+  // Uses ref to prevent duplicate API calls
   useEffect(() => {
-    if (profile) {
+    if (profile && !hasCheckedRef.current) {
       checkSubscriptionStatus();
     }
   }, [profile, checkSubscriptionStatus]);
 
+  // Reset check flag when user changes
+  useEffect(() => {
+    if (profile?.id !== profileIdRef.current) {
+      hasCheckedRef.current = false;
+    }
+  }, [profile?.id]);
+
   return {
-    isTrialActive,
-    trialEndsAt,
-    isSubscribed,
-    subscriptionTier,
-    isCheckingStatus,
-    lastError,
-    lastCheckedAt,
+    isTrialActive: state.isTrialActive,
+    trialEndsAt: state.trialEndsAt,
+    isSubscribed: state.isSubscribed,
+    subscriptionTier: state.subscriptionTier,
+    isCheckingStatus: state.isCheckingStatus,
+    lastError: state.lastError,
+    lastCheckedAt: state.lastCheckedAt,
     checkSubscriptionStatus
   };
 }

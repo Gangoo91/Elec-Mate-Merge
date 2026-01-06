@@ -103,19 +103,19 @@ const MentalHealthSupport = () => {
             <AlertTriangle className="h-5 w-5" />
             Crisis Support - Get Help Now
           </CardTitle>
-          <p className="text-sm text-muted-foreground">If you're in crisis, reach out immediately</p>
+          <p className="text-sm text-white">If you're in crisis, reach out immediately</p>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {crisisResources.map((resource, index) => (
-              <div key={index} className="p-4 bg-elec-gray/50 rounded-lg border border-red-500/20">
+              <div key={index} className="p-4 bg-white/5 rounded-lg border border-red-500/20">
                 <h4 className="font-medium text-white mb-2">{resource.service}</h4>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <Phone className="h-4 w-4 text-red-400" />
                     <span className="text-lg font-bold text-red-400">{resource.contact}</span>
                   </div>
-                  <p className="text-sm text-muted-foreground">{resource.description}</p>
+                  <p className="text-sm text-white">{resource.description}</p>
                   <Badge className="bg-red-500/20 text-red-400 border-red-500/30 text-xs">
                     {resource.availability}
                   </Badge>
@@ -141,12 +141,12 @@ const MentalHealthSupport = () => {
         <CardContent>
           <div className="space-y-4">
             {apprenticeStressors.map((item, index) => (
-              <div key={index} className="p-4 bg-elec-gray/50 rounded-lg border border-orange-500/20">
+              <div key={index} className="p-4 bg-white/5 rounded-lg border border-orange-500/20">
                 <h4 className="font-medium text-white mb-3">{item.stressor}</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <h5 className="text-sm font-medium text-orange-400 mb-2">Common Symptoms:</h5>
-                    <ul className="space-y-1 text-xs text-muted-foreground">
+                    <ul className="space-y-1 text-xs text-white">
                       {item.symptoms.map((symptom, idx) => (
                         <li key={idx} className="flex items-start gap-2">
                           <span className="text-orange-400 mt-1">•</span>
@@ -157,7 +157,7 @@ const MentalHealthSupport = () => {
                   </div>
                   <div>
                     <h5 className="text-sm font-medium text-green-400 mb-2">Helpful Solutions:</h5>
-                    <ul className="space-y-1 text-xs text-muted-foreground">
+                    <ul className="space-y-1 text-xs text-white">
                       {item.solutions.map((solution, idx) => (
                         <li key={idx} className="flex items-start gap-2">
                           <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
@@ -183,11 +183,11 @@ const MentalHealthSupport = () => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {copingStrategies.map((strategy, index) => (
-              <div key={index} className="p-4 bg-elec-gray/50 rounded-lg border border-blue-500/20">
+              <div key={index} className="p-4 bg-white/5 rounded-lg border border-blue-500/20">
                 <h4 className="font-medium text-white mb-3">{strategy.strategy}</h4>
                 <ul className="space-y-2">
                   {strategy.techniques.map((technique, idx) => (
-                    <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                    <li key={idx} className="text-sm text-white flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                       {technique}
                     </li>
@@ -205,18 +205,18 @@ const MentalHealthSupport = () => {
             <AlertTriangle className="h-5 w-5" />
             Warning Signs to Watch For
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             If you notice these signs in yourself or others, it may be time to seek support
           </p>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {warningSignsData.map((category, index) => (
-              <div key={index} className="p-4 bg-elec-gray/50 rounded-lg border border-yellow-500/20">
+              <div key={index} className="p-4 bg-white/5 rounded-lg border border-yellow-500/20">
                 <h4 className="font-medium text-white mb-3">{category.category}</h4>
                 <ul className="space-y-2">
                   {category.signs.map((sign, idx) => (
-                    <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                    <li key={idx} className="text-sm text-white flex items-start gap-2">
                       <span className="text-yellow-400 mt-1">•</span>
                       {sign}
                     </li>
@@ -239,7 +239,7 @@ const MentalHealthSupport = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-3">
               <h4 className="font-medium text-white">ElecMate Mental Health Hub</h4>
-              <p className="text-sm text-muted-foreground mb-3">
+              <p className="text-sm text-white mb-3">
                 Access our comprehensive mental health resources designed specifically for electrical apprentices
               </p>
               <Link to="/apprentice/mental-health">
@@ -250,7 +250,7 @@ const MentalHealthSupport = () => {
             </div>
             <div className="space-y-3">
               <h4 className="font-medium text-white">Professional Support</h4>
-              <div className="space-y-2 text-sm text-muted-foreground">
+              <div className="space-y-2 text-sm text-white">
                 <p>• GP referral for counselling services</p>
                 <p>• Employee Assistance Programmes (EAP)</p>
                 <p>• ACAS helpline for workplace issues</p>

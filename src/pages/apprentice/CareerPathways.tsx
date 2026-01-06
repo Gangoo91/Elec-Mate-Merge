@@ -115,7 +115,7 @@ const CareerPathways = () => {
     <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-4 sm:mb-6 px-2">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 sm:mb-4">Electrical Career Progression Pathways</h1>
-        <p className="text-sm sm:text-base text-muted-foreground text-center max-w-2xl mb-3 sm:mb-4">
+        <p className="text-sm sm:text-base text-white/70 text-center max-w-2xl mb-3 sm:mb-4">
           Explore comprehensive career paths in the UK electrical industry, from apprentice to senior management roles. 
           Each pathway shows typical progression times, salary ranges, and requirements specific to UK electrical professionals.
         </p>
@@ -124,7 +124,7 @@ const CareerPathways = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {careerPaths.map((path, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-all duration-300">
+          <Card key={index} className="border-elec-yellow/20 bg-white/5 hover:border-elec-yellow/40 transition-all duration-300">
             <CardHeader>
               <div className="flex items-center gap-3 mb-2">
                 {path.icon}
@@ -140,14 +140,14 @@ const CareerPathways = () => {
                   </div>
                 </div>
               </div>
-              <p className="text-muted-foreground">{path.description}</p>
+              <p className="text-white/70">{path.description}</p>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
                 <h4 className="font-semibold text-white mb-2">Key Requirements:</h4>
                 <ul className="space-y-1">
                   {path.requirements.map((req, reqIndex) => (
-                    <li key={reqIndex} className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <li key={reqIndex} className="flex items-center gap-2 text-sm text-white/70">
                       <ArrowRight className="h-3 w-3 text-elec-yellow" />
                       {req}
                     </li>
@@ -158,7 +158,7 @@ const CareerPathways = () => {
                 <h4 className="font-semibold text-white mb-2">Career Opportunities:</h4>
                 <ul className="space-y-1">
                   {path.opportunities.map((opp, oppIndex) => (
-                    <li key={oppIndex} className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <li key={oppIndex} className="flex items-center gap-2 text-sm text-white/70">
                       <ArrowRight className="h-3 w-3 text-elec-yellow" />
                       {opp}
                     </li>
@@ -167,29 +167,29 @@ const CareerPathways = () => {
               </div>
               <div className="border-t border-elec-yellow/10 pt-3">
                 <h4 className="font-semibold text-white mb-1">Progression Route:</h4>
-                <p className="text-xs text-muted-foreground">{path.progression}</p>
+                <p className="text-xs text-white/70">{path.progression}</p>
               </div>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
+      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">UK Electrical Industry Registration Bodies</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground mb-4">
+          <p className="text-white/70 mb-4">
             To become an Approved Electrician in the UK, you'll need to register with one of these competent person schemes:
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {certificationBodies.map((body, index) => (
               <div key={index} className="border border-elec-yellow/20 rounded-lg p-3 sm:p-4">
                 <h4 className="font-semibold text-white mb-2">{body.name}</h4>
-                <p className="text-muted-foreground text-sm mb-3">{body.description}</p>
+                <p className="text-white/70 text-sm mb-3">{body.description}</p>
                 <ul className="space-y-1">
                   {body.benefits.map((benefit, benefitIndex) => (
-                    <li key={benefitIndex} className="text-xs text-muted-foreground flex items-start gap-2">
+                    <li key={benefitIndex} className="text-xs text-white/70 flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
                       {benefit}
                     </li>
@@ -201,7 +201,7 @@ const CareerPathways = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">Planning Your Electrical Career Journey</CardTitle>
         </CardHeader>
@@ -209,7 +209,7 @@ const CareerPathways = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 text-sm">
             <div>
               <h4 className="font-semibold text-white mb-3">Years 1-3: Foundation Building</h4>
-              <ul className="space-y-2 text-muted-foreground">
+              <ul className="space-y-2 text-white/70">
                 <li>• Complete Level 3 apprenticeship</li>
                 <li>• Pass AM2 practical assessment</li>
                 <li>• Gain 18th Edition certification</li>
@@ -219,7 +219,7 @@ const CareerPathways = () => {
             </div>
             <div>
               <h4 className="font-semibold text-white mb-3">Years 3-7: Specialisation</h4>
-              <ul className="space-y-2 text-muted-foreground">
+              <ul className="space-y-2 text-white/70">
                 <li>• Achieve Approved Electrician status</li>
                 <li>• Gain Inspection & Testing qualification</li>
                 <li>• Choose specialist area of focus</li>
@@ -229,7 +229,7 @@ const CareerPathways = () => {
             </div>
             <div>
               <h4 className="font-semibold text-white mb-3">Years 7+: Leadership & Growth</h4>
-              <ul className="space-y-2 text-muted-foreground">
+              <ul className="space-y-2 text-white/70">
                 <li>• Move into management roles</li>
                 <li>• Develop business and leadership skills</li>
                 <li>• Consider higher education options</li>
@@ -240,7 +240,7 @@ const CareerPathways = () => {
           </div>
           <div className="mt-6 p-4 bg-elec-yellow/10 rounded-lg">
             <h4 className="font-semibold text-elec-yellow mb-2">Remember:</h4>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-white/70 text-sm">
               Career progression isn't always linear. Many successful electrical professionals combine multiple paths, 
               such as running a contracting business whilst also teaching part-time, or specialising in renewable energy 
               whilst maintaining general electrical skills. The key is continuous learning and adapting to industry changes.

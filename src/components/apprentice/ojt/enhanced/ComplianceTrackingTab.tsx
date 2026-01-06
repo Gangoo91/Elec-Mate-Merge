@@ -133,7 +133,7 @@ const ComplianceTrackingTab = () => {
       case "attention-needed":
         return <AlertTriangle className="h-4 w-4 text-orange-500" />;
       default:
-        return <FileText className="h-4 w-4 text-muted-foreground" />;
+        return <FileText className="h-4 w-4 text-white" />;
     }
   };
 
@@ -157,11 +157,11 @@ const ComplianceTrackingTab = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Compliance Score</CardTitle>
-            <Shield className="h-4 w-4 text-muted-foreground" />
+            <Shield className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-green-500">92%</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white">
               Overall compliance
             </p>
           </CardContent>
@@ -170,11 +170,11 @@ const ComplianceTrackingTab = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">OJT Progress</CardTitle>
-            <Clock className="h-4 w-4 text-muted-foreground" />
+            <Clock className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-blue-500">22.3%</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white">
               Above 20% requirement
             </p>
           </CardContent>
@@ -183,11 +183,11 @@ const ComplianceTrackingTab = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">EPA Readiness</CardTitle>
-            <Award className="h-4 w-4 text-muted-foreground" />
+            <Award className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-orange-500">73%</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white">
               Gateway preparation
             </p>
           </CardContent>
@@ -196,11 +196,11 @@ const ComplianceTrackingTab = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Next Review</CardTitle>
-            <Calendar className="h-4 w-4 text-muted-foreground" />
+            <Calendar className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-purple-500">14d</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white">
               Days remaining
             </p>
           </CardContent>
@@ -239,7 +239,7 @@ const ComplianceTrackingTab = () => {
                           value={(item.hoursCompleted / item.hoursRequired) * 100} 
                           className="h-2" 
                         />
-                        <div className="flex justify-between text-xs text-muted-foreground">
+                        <div className="flex justify-between text-xs text-white">
                           <span>{item.hoursCompleted}h completed</span>
                           <span>{item.hoursRequired}h required</span>
                         </div>
@@ -247,7 +247,7 @@ const ComplianceTrackingTab = () => {
                     )}
                     
                     <div className="flex justify-between text-xs">
-                      <span className="text-muted-foreground">Deadline: {item.deadline}</span>
+                      <span className="text-white">Deadline: {item.deadline}</span>
                       <span className="italic text-purple-500">AI: {item.aiStatus}</span>
                     </div>
                   </div>
@@ -269,10 +269,10 @@ const ComplianceTrackingTab = () => {
               {documents.map((doc, index) => (
                 <div key={index} className="flex items-center justify-between border rounded-lg p-3">
                   <div className="flex items-center gap-3">
-                    <FileText className="h-4 w-4 text-muted-foreground" />
+                    <FileText className="h-4 w-4 text-white" />
                     <div>
                       <p className="font-medium text-sm">{doc.name}</p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs text-white">
                         {doc.type} • Updated: {doc.lastUpdated}
                       </p>
                     </div>
@@ -303,13 +303,13 @@ const ComplianceTrackingTab = () => {
               <div key={index} className="flex items-center justify-between border-l-2 border-blue-500 pl-4 py-2">
                 <div>
                   <p className="font-medium text-sm">{entry.action}</p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-white">
                     {entry.date} • {entry.assessor}
                   </p>
                 </div>
                 <div className="text-right">
                   <Badge variant="outline">{entry.type}</Badge>
-                  <p className="text-xs text-muted-foreground mt-1">{entry.outcome}</p>
+                  <p className="text-xs text-white mt-1">{entry.outcome}</p>
                 </div>
               </div>
             ))}
@@ -340,7 +340,7 @@ const ComplianceTrackingTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Your intelligent compliance system continuously monitors all apprenticeship requirements, 
             tracks deadlines, validates evidence, and maintains detailed audit trails. Stay confident 
             knowing you're always meeting standards and ready for assessments.

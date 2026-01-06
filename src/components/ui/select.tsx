@@ -17,14 +17,30 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      "flex h-12 md:h-10 w-full items-center justify-between text-left rounded-lg border border-border px-3 py-2 text-sm ring-offset-background text-foreground placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-elec-yellow focus:ring-offset-0 disabled:cursor-not-allowed disabled:bg-background disabled:text-neutral-400 disabled:opacity-100 transition-colors touch-manipulation",
+      // Base layout - match Input sizing
+      "flex w-full h-12 md:h-11 items-center justify-between",
+      "px-4 py-3 md:px-3 md:py-2",
+      "text-base md:text-sm text-foreground text-left",
+      // Background & border - match Input
+      "bg-input border border-border/50 rounded-lg",
+      // Placeholder
+      "placeholder:text-muted-foreground/50",
+      // Focus states - elec-yellow glow like Input
+      "focus:outline-none focus:border-elec-yellow focus:ring-0",
+      "focus:shadow-[0_0_0_3px_hsl(var(--elec-yellow)/0.15)]",
+      // Transitions
+      "transition-all duration-200 ease-out",
+      // Disabled
+      "disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground disabled:opacity-70",
+      // Touch
+      "touch-manipulation",
       className
     )}
     {...props}
   >
     <span className="block truncate text-left flex-1">{children}</span>
     <SelectPrimitive.Icon asChild>
-      <ChevronDown className="h-4 w-4 opacity-50 flex-shrink-0 ml-2" />
+      <ChevronDown className="h-4 w-4 text-muted-foreground flex-shrink-0 ml-2 transition-transform duration-200" />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ))
@@ -73,7 +89,18 @@ const SelectContent = React.forwardRef<
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
-        "relative z-[9999] max-h-[min(24rem,calc(100vh-8rem))] min-w-[8rem] overflow-hidden rounded-md border border-border bg-background text-foreground shadow-xl data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+        // Base
+        "relative z-[9999] min-w-[8rem] overflow-hidden",
+        "rounded-lg border border-border/50 bg-card text-foreground",
+        "shadow-xl shadow-black/20",
+        // Max height
+        "max-h-[min(24rem,calc(100vh-8rem))]",
+        // Animations
+        "data-[state=open]:animate-in data-[state=closed]:animate-out",
+        "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+        "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
+        "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2",
+        "data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
         position === "popper" &&
           "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
         className
@@ -86,7 +113,9 @@ const SelectContent = React.forwardRef<
       <SelectScrollUpButton />
       <SelectPrimitive.Viewport
         className={cn(
-          "p-1 pr-2 overflow-y-scroll max-h-[min(22rem,calc(100vh-10rem))] touch-manipulation dropdown-scrollbar",
+          "p-1.5 overflow-y-auto max-h-[min(22rem,calc(100vh-10rem))]",
+          "touch-manipulation overscroll-contain",
+          "-webkit-overflow-scrolling-touch",
           position === "popper" &&
             "w-full min-w-[var(--radix-select-trigger-width)]"
         )}
@@ -118,14 +147,28 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex w-full cursor-pointer select-none items-center rounded-sm py-2.5 pl-8 pr-2 text-sm md:py-2 md:text-sm outline-none hover:bg-muted hover:text-foreground focus:bg-muted focus:text-foreground active:bg-neutral-600 data-[state=checked]:bg-card data-[disabled]:pointer-events-none data-[disabled]:opacity-50 touch-manipulation min-h-[44px] md:min-h-[36px] transition-all duration-150",
+      // Base
+      "relative flex w-full cursor-pointer select-none items-center",
+      "rounded-md py-3 pl-9 pr-3 md:py-2.5 md:pl-8 md:pr-2",
+      "text-base md:text-sm outline-none",
+      // Touch targets
+      "min-h-[48px] md:min-h-[40px]",
+      // Hover/Focus states
+      "hover:bg-elec-yellow/10 focus:bg-elec-yellow/10",
+      "active:bg-elec-yellow/20",
+      // Selected state
+      "data-[state=checked]:bg-elec-yellow/15 data-[state=checked]:text-elec-yellow",
+      // Disabled
+      "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      // Touch & transitions
+      "touch-manipulation transition-colors duration-150",
       className
     )}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span className="absolute left-2.5 md:left-2 flex h-4 w-4 items-center justify-center">
       <SelectPrimitive.ItemIndicator>
-        <Check className="h-4 w-4" />
+        <Check className="h-4 w-4 text-elec-yellow" />
       </SelectPrimitive.ItemIndicator>
     </span>
 

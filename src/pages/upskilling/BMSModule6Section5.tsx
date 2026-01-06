@@ -22,12 +22,12 @@ const BMSModule6Section5 = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-white">
+    <div className="min-h-screen bg-[#1a1a1a] text-white">
       <div className="px-8 pt-8 pb-12">
         <Link to="../bms-module-6">
           <Button
             variant="ghost"
-            className="text-white hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+            className="text-white hover:bg-transparent hover:text-elec-yellow transition-all duration-200 mb-8 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 6
@@ -37,7 +37,7 @@ const BMSModule6Section5 = () => {
         <div className="space-y-6">
           <div>
             <div className="flex items-center gap-4 mb-4">
-              <Shield className="h-8 w-8 text-yellow-400" />
+              <Shield className="h-8 w-8 text-elec-yellow" />
               <div>
                 <h1 className="text-4xl font-bold text-white">
                   Integration with Fire Panels and Emergency Shutdowns
@@ -48,7 +48,7 @@ const BMSModule6Section5 = () => {
               </div>
             </div>
             <div className="flex gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">
+              <Badge variant="secondary" className="bg-elec-yellow text-black">
                 Module 6
               </Badge>
               <Badge variant="outline" className="border-gray-600 text-white">
@@ -58,10 +58,10 @@ const BMSModule6Section5 = () => {
           </div>
 
           {/* Introduction */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <BookOpen className="h-6 w-6 text-yellow-400" />
+                <BookOpen className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-white text-xl">Introduction</CardTitle>
               </div>
             </CardHeader>
@@ -76,10 +76,10 @@ const BMSModule6Section5 = () => {
           </Card>
 
           {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <Target className="h-6 w-6 text-yellow-400" />
+                <Target className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-white text-xl">Learning Outcomes</CardTitle>
               </div>
             </CardHeader>
@@ -107,10 +107,10 @@ const BMSModule6Section5 = () => {
           </Card>
 
           {/* Why Integration Matters */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <Shield className="h-6 w-6 text-yellow-400" />
+                <Shield className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-white text-xl">Why Integration Matters</CardTitle>
               </div>
             </CardHeader>
@@ -118,31 +118,31 @@ const BMSModule6Section5 = () => {
               <p>Fire panels are designed for life safety, but they need the BMS to act on their signals:</p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                <div className="p-4 bg-card rounded-lg border border-gray-600">
+                <div className="p-4 bg-transparent rounded-lg border border-gray-600">
                   <div className="flex items-center gap-3 mb-2">
-                    <Activity className="h-5 w-5 text-yellow-400" />
-                    <h4 className="font-semibold text-yellow-400">Ventilation Control</h4>
+                    <Activity className="h-5 w-5 text-elec-yellow" />
+                    <h4 className="font-semibold text-elec-yellow">Ventilation Control</h4>
                   </div>
                   <p className="text-sm">Air Handling Units (AHUs) and fans must shut down to prevent smoke spread through the building's ventilation system.</p>
                 </div>
-                <div className="p-4 bg-card rounded-lg border border-gray-600">
+                <div className="p-4 bg-transparent rounded-lg border border-gray-600">
                   <div className="flex items-center gap-3 mb-2">
-                    <Bell className="h-5 w-5 text-yellow-400" />
-                    <h4 className="font-semibold text-yellow-400">Smoke Control</h4>
+                    <Bell className="h-5 w-5 text-elec-yellow" />
+                    <h4 className="font-semibold text-elec-yellow">Smoke Control</h4>
                   </div>
                   <p className="text-sm">Smoke extract fans and dampers must activate to clear escape routes and maintain safe egress paths.</p>
                 </div>
-                <div className="p-4 bg-card rounded-lg border border-gray-600">
+                <div className="p-4 bg-transparent rounded-lg border border-gray-600">
                   <div className="flex items-center gap-3 mb-2">
-                    <Users className="h-5 w-5 text-yellow-400" />
-                    <h4 className="font-semibold text-yellow-400">Access Control</h4>
+                    <Users className="h-5 w-5 text-elec-yellow" />
+                    <h4 className="font-semibold text-elec-yellow">Access Control</h4>
                   </div>
                   <p className="text-sm">Fire alarm signals unlock all exit doors and turnstiles to enable rapid evacuation without access cards.</p>
                 </div>
-                <div className="p-4 bg-card rounded-lg border border-gray-600">
+                <div className="p-4 bg-transparent rounded-lg border border-gray-600">
                   <div className="flex items-center gap-3 mb-2">
-                    <Settings className="h-5 w-5 text-yellow-400" />
-                    <h4 className="font-semibold text-yellow-400">Plant Shutdown</h4>
+                    <Settings className="h-5 w-5 text-elec-yellow" />
+                    <h4 className="font-semibold text-elec-yellow">Plant Shutdown</h4>
                   </div>
                   <p className="text-sm">Boilers, chillers, and gas supplies may be isolated to reduce fire hazards and prevent fuel sources.</p>
                 </div>
@@ -151,21 +151,21 @@ const BMSModule6Section5 = () => {
               <div className="mt-6 p-4 bg-blue-900/20 border border-blue-600 rounded-lg">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Eye className="h-5 w-5 text-yellow-400" />
-                    <span className="font-semibold text-yellow-400">Inline Check 1</span>
+                    <Eye className="h-5 w-5 text-elec-yellow" />
+                    <span className="font-semibold text-elec-yellow">Inline Check 1</span>
                   </div>
                   <Button
                     onClick={() => setInlineCheck1(!inlineCheck1)}
                     size="sm"
                     variant="outline"
-                    className="border-blue-600 text-yellow-400 hover:bg-yellow-400 hover:text-white"
+                    className="border-blue-600 text-elec-yellow hover:bg-elec-yellow hover:text-white"
                   >
                     {inlineCheck1 ? 'Hide' : 'Show'} Answer
                   </Button>
                 </div>
                 <p className="text-white mt-2">👉 Why must AHUs and fans be shut down during a fire alarm event?</p>
                 {inlineCheck1 && (
-                  <div className="mt-3 p-3 bg-blue-800/30 rounded border border-yellow-400">
+                  <div className="mt-3 p-3 bg-blue-800/30 rounded border border-elec-yellow">
                     <p className="text-blue-200 text-sm">
                       <strong>Answer:</strong> AHUs and fans must be shut down to prevent the ventilation system from circulating smoke throughout the building, which could make evacuation routes impassable and spread fire/smoke to unaffected areas.
                     </p>
@@ -176,10 +176,10 @@ const BMSModule6Section5 = () => {
           </Card>
 
           {/* Fire-BMS Interface Types */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <Zap className="h-6 w-6 text-yellow-400" />
+                <Zap className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-white text-xl">Typical Fire-BMS Interfaces</CardTitle>
               </div>
             </CardHeader>
@@ -187,41 +187,41 @@ const BMSModule6Section5 = () => {
               <p>Understanding the different types of connections between fire panels and BMS:</p>
               
               <div className="space-y-4">
-                <div className="border border-gray-600 rounded-lg p-4 bg-card">
+                <div className="border border-gray-600 rounded-lg p-4 bg-transparent">
                   <div className="flex items-start gap-3">
-                    <Database className="h-5 w-5 text-yellow-400 mt-1 flex-shrink-0" />
+                    <Database className="h-5 w-5 text-elec-yellow mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-semibold text-yellow-400 mb-2">Digital Inputs</h4>
+                      <h4 className="font-semibold text-elec-yellow mb-2">Digital Inputs</h4>
                       <p>Fire panel provides a contact signal to BMS (alarm activated). These are typically volt-free contacts that close or open on alarm activation.</p>
                     </div>
                   </div>
                 </div>
                 
-                <div className="border border-gray-600 rounded-lg p-4 bg-card">
+                <div className="border border-gray-600 rounded-lg p-4 bg-transparent">
                   <div className="flex items-start gap-3">
-                    <Settings className="h-5 w-5 text-yellow-400 mt-1 flex-shrink-0" />
+                    <Settings className="h-5 w-5 text-elec-yellow mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-semibold text-yellow-400 mb-2">Relays/Interlocks</h4>
+                      <h4 className="font-semibold text-elec-yellow mb-2">Relays/Interlocks</h4>
                       <p>BMS relays cut power to AHUs, dampers, or plant equipment. These must be rated for the loads they control and fire-rated where required.</p>
                     </div>
                   </div>
                 </div>
                 
-                <div className="border border-gray-600 rounded-lg p-4 bg-card">
+                <div className="border border-gray-600 rounded-lg p-4 bg-transparent">
                   <div className="flex items-start gap-3">
-                    <Smartphone className="h-5 w-5 text-yellow-400 mt-1 flex-shrink-0" />
+                    <Smartphone className="h-5 w-5 text-elec-yellow mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-semibold text-yellow-400 mb-2">Override Logic</h4>
+                      <h4 className="font-semibold text-elec-yellow mb-2">Override Logic</h4>
                       <p>BMS software forces emergency mode, ignoring normal schedules or setpoints. This ensures safety takes priority over comfort or efficiency.</p>
                     </div>
                   </div>
                 </div>
                 
-                <div className="border border-gray-600 rounded-lg p-4 bg-card">
+                <div className="border border-gray-600 rounded-lg p-4 bg-transparent">
                   <div className="flex items-start gap-3">
-                    <Activity className="h-5 w-5 text-yellow-400 mt-1 flex-shrink-0" />
+                    <Activity className="h-5 w-5 text-elec-yellow mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-semibold text-yellow-400 mb-2">Feedback to Fire Panel</h4>
+                      <h4 className="font-semibold text-elec-yellow mb-2">Feedback to Fire Panel</h4>
                       <p>BMS may report back status (e.g., fan stopped, damper open) to confirm actions have been completed successfully.</p>
                     </div>
                   </div>
@@ -231,21 +231,21 @@ const BMSModule6Section5 = () => {
               <div className="mt-6 p-4 bg-blue-900/20 border border-blue-600 rounded-lg">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Eye className="h-5 w-5 text-yellow-400" />
-                    <span className="font-semibold text-yellow-400">Inline Check 2</span>
+                    <Eye className="h-5 w-5 text-elec-yellow" />
+                    <span className="font-semibold text-elec-yellow">Inline Check 2</span>
                   </div>
                   <Button
                     onClick={() => setInlineCheck2(!inlineCheck2)}
                     size="sm"
                     variant="outline"
-                    className="border-blue-600 text-yellow-400 hover:bg-yellow-400 hover:text-white"
+                    className="border-blue-600 text-elec-yellow hover:bg-elec-yellow hover:text-white"
                   >
                     {inlineCheck2 ? 'Hide' : 'Show'} Answer
                   </Button>
                 </div>
                 <p className="text-white mt-2">👉 What type of signal is typically used by a fire panel to trigger BMS responses?</p>
                 {inlineCheck2 && (
-                  <div className="mt-3 p-3 bg-blue-800/30 rounded border border-yellow-400">
+                  <div className="mt-3 p-3 bg-blue-800/30 rounded border border-elec-yellow">
                     <p className="text-blue-200 text-sm">
                       <strong>Answer:</strong> Digital contact signals (dry contacts) are typically used. These are simple volt-free contacts that open or close to indicate alarm activation, providing a reliable and fail-safe interface.
                     </p>
@@ -256,10 +256,10 @@ const BMSModule6Section5 = () => {
           </Card>
 
           {/* Emergency Shutdowns Beyond Fire */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <AlertTriangle className="h-6 w-6 text-yellow-400" />
+                <AlertTriangle className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-white text-xl">Emergency Shutdowns Beyond Fire</CardTitle>
               </div>
             </CardHeader>
@@ -285,8 +285,8 @@ const BMSModule6Section5 = () => {
                 
                 <div className="p-4 bg-yellow-900/20 border border-yellow-600 rounded-lg">
                   <div className="flex items-center gap-3 mb-2">
-                    <Settings className="h-5 w-5 text-yellow-400" />
-                    <h4 className="font-semibold text-yellow-400">Critical Plant Safety</h4>
+                    <Settings className="h-5 w-5 text-elec-yellow" />
+                    <h4 className="font-semibold text-elec-yellow">Critical Plant Safety</h4>
                   </div>
                   <p>High pressure/temperature trips isolate boilers, chillers, or pumps. These protect equipment and prevent catastrophic failures that could endanger occupants.</p>
                 </div>
@@ -307,21 +307,21 @@ const BMSModule6Section5 = () => {
               <div className="mt-6 p-4 bg-blue-900/20 border border-blue-600 rounded-lg">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Eye className="h-5 w-5 text-yellow-400" />
-                    <span className="font-semibold text-yellow-400">Inline Check 3</span>
+                    <Eye className="h-5 w-5 text-elec-yellow" />
+                    <span className="font-semibold text-elec-yellow">Inline Check 3</span>
                   </div>
                   <Button
                     onClick={() => setInlineCheck3(!inlineCheck3)}
                     size="sm"
                     variant="outline"
-                    className="border-blue-600 text-yellow-400 hover:bg-yellow-400 hover:text-white"
+                    className="border-blue-600 text-elec-yellow hover:bg-elec-yellow hover:text-white"
                   >
                     {inlineCheck3 ? 'Hide' : 'Show'} Answer
                   </Button>
                 </div>
                 <p className="text-white mt-2">👉 Give one example of a non-fire event that would require a BMS emergency shutdown.</p>
                 {inlineCheck3 && (
-                  <div className="mt-3 p-3 bg-blue-800/30 rounded border border-yellow-400">
+                  <div className="mt-3 p-3 bg-blue-800/30 rounded border border-elec-yellow">
                     <p className="text-blue-200 text-sm">
                       <strong>Answer:</strong> Gas leak detection would require immediate BMS shutdown of boilers, gas supply valves, and ignition sources to prevent explosion risk. Other examples include electrical faults, high pressure trips, or major water leaks.
                     </p>
@@ -332,21 +332,21 @@ const BMSModule6Section5 = () => {
           </Card>
 
           {/* Practical Guidance */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <Wrench className="h-6 w-6 text-yellow-400" />
+                <Wrench className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-white text-xl">Practical Installation Guidance</CardTitle>
               </div>
             </CardHeader>
             <CardContent className="text-white space-y-6">
               <div>
-                <h3 className="text-lg font-semibold mb-4 text-yellow-400 flex items-center gap-2">
+                <h3 className="text-lg font-semibold mb-4 text-elec-yellow flex items-center gap-2">
                   <Settings className="h-5 w-5" />
                   Installing Fire-BMS Interlocks
                 </h3>
                 <div className="space-y-4">
-                  <div className="border border-gray-600 rounded-lg p-4 bg-card">
+                  <div className="border border-gray-600 rounded-lg p-4 bg-transparent">
                     <div className="flex items-start gap-3">
                       <Shield className="h-5 w-5 text-green-400 mt-1 flex-shrink-0" />
                       <div>
@@ -356,17 +356,17 @@ const BMSModule6Section5 = () => {
                     </div>
                   </div>
                   
-                  <div className="border border-gray-600 rounded-lg p-4 bg-card">
+                  <div className="border border-gray-600 rounded-lg p-4 bg-transparent">
                     <div className="flex items-start gap-3">
-                      <Database className="h-5 w-5 text-yellow-400 mt-1 flex-shrink-0" />
+                      <Database className="h-5 w-5 text-elec-yellow mt-1 flex-shrink-0" />
                       <div>
-                        <h4 className="font-semibold text-yellow-400 mb-1">Segregate Cabling</h4>
+                        <h4 className="font-semibold text-elec-yellow mb-1">Segregate Cabling</h4>
                         <p>Run fire alarm wiring separately from standard BMS cabling. Use fire-rated cables in dedicated conduits or cable trays to maintain integrity during emergencies.</p>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="border border-gray-600 rounded-lg p-4 bg-card">
+                  <div className="border border-gray-600 rounded-lg p-4 bg-transparent">
                     <div className="flex items-start gap-3">
                       <CheckCircle className="h-5 w-5 text-purple-400 mt-1 flex-shrink-0" />
                       <div>
@@ -376,17 +376,17 @@ const BMSModule6Section5 = () => {
                     </div>
                   </div>
                   
-                  <div className="border border-gray-600 rounded-lg p-4 bg-card">
+                  <div className="border border-gray-600 rounded-lg p-4 bg-transparent">
                     <div className="flex items-start gap-3">
-                      <Info className="h-5 w-5 text-yellow-400 mt-1 flex-shrink-0" />
+                      <Info className="h-5 w-5 text-elec-yellow mt-1 flex-shrink-0" />
                       <div>
-                        <h4 className="font-semibold text-yellow-400 mb-1">Clear Labelling</h4>
+                        <h4 className="font-semibold text-elec-yellow mb-1">Clear Labelling</h4>
                         <p>Identify fire-related cabling and relays distinctly from standard controls. Use red labels or cable markers stating "FIRE SYSTEM - DO NOT DISCONNECT".</p>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="border border-gray-600 rounded-lg p-4 bg-card">
+                  <div className="border border-gray-600 rounded-lg p-4 bg-transparent">
                     <div className="flex items-start gap-3">
                       <BookOpen className="h-5 w-5 text-orange-400 mt-1 flex-shrink-0" />
                       <div>
@@ -399,12 +399,12 @@ const BMSModule6Section5 = () => {
               </div>
               
               <div>
-                <h3 className="text-lg font-semibold mb-4 text-yellow-400 flex items-center gap-2">
+                <h3 className="text-lg font-semibold mb-4 text-elec-yellow flex items-center gap-2">
                   <CheckSquare className="h-5 w-5" />
                   Commissioning Emergency Shutdowns
                 </h3>
                 <div className="space-y-4">
-                  <div className="border border-gray-600 rounded-lg p-4 bg-card">
+                  <div className="border border-gray-600 rounded-lg p-4 bg-transparent">
                     <div className="flex items-start gap-3">
                       <Play className="h-5 w-5 text-green-400 mt-1 flex-shrink-0" />
                       <div>
@@ -414,17 +414,17 @@ const BMSModule6Section5 = () => {
                     </div>
                   </div>
                   
-                  <div className="border border-gray-600 rounded-lg p-4 bg-card">
+                  <div className="border border-gray-600 rounded-lg p-4 bg-transparent">
                     <div className="flex items-start gap-3">
-                      <Activity className="h-5 w-5 text-yellow-400 mt-1 flex-shrink-0" />
+                      <Activity className="h-5 w-5 text-elec-yellow mt-1 flex-shrink-0" />
                       <div>
-                        <h4 className="font-semibold text-yellow-400 mb-1">Verify BMS Response</h4>
+                        <h4 className="font-semibold text-elec-yellow mb-1">Verify BMS Response</h4>
                         <p>Confirm AHUs shut down, dampers open/close correctly, doors release, and plant isolates as designed. Use BMS graphics to monitor responses in real-time.</p>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="border border-gray-600 rounded-lg p-4 bg-card">
+                  <div className="border border-gray-600 rounded-lg p-4 bg-transparent">
                     <div className="flex items-start gap-3">
                       <Database className="h-5 w-5 text-purple-400 mt-1 flex-shrink-0" />
                       <div>
@@ -434,7 +434,7 @@ const BMSModule6Section5 = () => {
                     </div>
                   </div>
                   
-                  <div className="border border-gray-600 rounded-lg p-4 bg-card">
+                  <div className="border border-gray-600 rounded-lg p-4 bg-transparent">
                     <div className="flex items-start gap-3">
                       <Users className="h-5 w-5 text-red-400 mt-1 flex-shrink-0" />
                       <div>
@@ -492,10 +492,10 @@ const BMSModule6Section5 = () => {
           </Card>
 
           {/* FAQ Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <HelpCircle className="h-6 w-6 text-yellow-400" />
+                <HelpCircle className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-white text-xl">Frequently Asked Questions</CardTitle>
               </div>
             </CardHeader>
@@ -530,7 +530,7 @@ const BMSModule6Section5 = () => {
                   <div key={index} className="border border-gray-600 rounded-lg">
                     <button
                       onClick={() => toggleFaq(index)}
-                      className="w-full p-4 text-left flex items-center justify-between hover:bg-card transition-colors"
+                      className="w-full p-4 text-left flex items-center justify-between hover:bg-transparent transition-colors"
                     >
                       <span className="font-medium text-white">{faq.question}</span>
                       <span className={`transform transition-transform ${faqOpen.includes(index) ? 'rotate-180' : ''}`}>
@@ -591,10 +591,10 @@ const BMSModule6Section5 = () => {
           </Card>
 
           {/* Extended Content */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <Shield className="h-6 w-6 text-yellow-400" />
+                <Shield className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-white text-xl">UK Regulatory Standards & Technical Requirements</CardTitle>
               </div>
             </CardHeader>
@@ -620,10 +620,10 @@ const BMSModule6Section5 = () => {
           </Card>
 
           {/* Real-World Learning */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <Lightbulb className="h-6 w-6 text-yellow-400" />
+                <Lightbulb className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-white text-xl">Real-World Applications & Learning Scenarios</CardTitle>
               </div>
             </CardHeader>
@@ -649,10 +649,10 @@ const BMSModule6Section5 = () => {
           </Card>
 
           {/* Quiz Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <CheckSquare className="h-6 w-6 text-yellow-400" />
+                <CheckSquare className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-white text-xl">Knowledge Check Quiz</CardTitle>
               </div>
               <p className="text-white mt-2">Test your understanding of fire panel integration and emergency shutdown systems. You need to score 70% or higher to pass.</p>
@@ -667,13 +667,13 @@ const BMSModule6Section5 = () => {
 
           <div className="flex justify-between">
             <Link to="../bms-module-6-section-4">
-              <Button variant="outline" className="border-gray-600 text-white hover:bg-card">
+              <Button variant="outline" className="border-gray-600 text-white hover:bg-transparent">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Previous Section
               </Button>
             </Link>
             <Link to="../bms-module-6-section-6">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
+              <Button className="bg-elec-yellow text-black hover:bg-yellow-600">
                 Next Section
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>

@@ -13,13 +13,13 @@ const Subsection8_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           <Shield className="h-6 w-6 text-elec-yellow" />
           Electrical Installation Standards and Compliance
         </h2>
-        <p className="text-muted-foreground">
+        <p className="text-white">
           Understanding the key standards and compliance requirements for electrical installations in the UK.
         </p>
       </div>
 
       {/* Section 1: BS 7671 Requirements */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className="pt-6">
           <h3 className="text-xl font-semibold mb-4">BS 7671: Requirements for Electrical Installations</h3>
           <div className="space-y-4">
@@ -29,7 +29,7 @@ const Subsection8_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               are essential knowledge for all electrical professionals.
             </p>
             
-            <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-md p-4">
+            <div className="bg-white/10 border border-elec-yellow/30 rounded-md p-4">
               <h4 className="text-lg font-medium text-elec-yellow mb-2">Key Areas Covered by BS 7671:</h4>
               <ul className="list-disc pl-5 space-y-1">
                 <li>Protection against electric shock</li>
@@ -50,7 +50,7 @@ const Subsection8_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       </Card>
 
       {/* Section 2: Building Regulations */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className="pt-6">
           <h3 className="text-xl font-semibold mb-4">Building Regulations and Part P</h3>
           <div className="space-y-4">
@@ -59,7 +59,7 @@ const Subsection8_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               safety in dwellings. It places legal requirements on those carrying out electrical installation work.
             </p>
             
-            <div className="bg-elec-dark/50 border border-blue-400/30 rounded-md p-4">
+            <div className="bg-white/10 border border-blue-400/30 rounded-md p-4">
               <h4 className="text-lg font-medium text-blue-400 mb-2">Requirements under Part P:</h4>
               <ul className="list-disc pl-5 space-y-1">
                 <li>All work must be designed and installed to protect people from fire and electric shocks</li>
@@ -81,7 +81,7 @@ const Subsection8_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       </Card>
 
       {/* Section 3: Certification and Documentation */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className="pt-6">
           <h3 className="text-xl font-semibold mb-4">Essential Certification and Documentation</h3>
           <div className="space-y-4">
@@ -91,7 +91,7 @@ const Subsection8_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-md p-4 space-y-2">
+              <div className="bg-white/10 border border-elec-yellow/30 rounded-md p-4 space-y-2">
                 <div className="flex items-center gap-2">
                   <FileText className="h-5 w-5 text-elec-yellow" />
                   <h4 className="font-medium">Electrical Installation Certificate (EIC)</h4>
@@ -102,7 +102,7 @@ const Subsection8_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </p>
               </div>
               
-              <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-md p-4 space-y-2">
+              <div className="bg-white/10 border border-elec-yellow/30 rounded-md p-4 space-y-2">
                 <div className="flex items-center gap-2">
                   <FileText className="h-5 w-5 text-elec-yellow" />
                   <h4 className="font-medium">Minor Electrical Installation Works Certificate</h4>
@@ -113,7 +113,7 @@ const Subsection8_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </p>
               </div>
               
-              <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-md p-4 space-y-2">
+              <div className="bg-white/10 border border-elec-yellow/30 rounded-md p-4 space-y-2">
                 <div className="flex items-center gap-2">
                   <FileText className="h-5 w-5 text-elec-yellow" />
                   <h4 className="font-medium">Electrical Installation Condition Report</h4>
@@ -124,7 +124,7 @@ const Subsection8_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </p>
               </div>
               
-              <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-md p-4 space-y-2">
+              <div className="bg-white/10 border border-elec-yellow/30 rounded-md p-4 space-y-2">
                 <div className="flex items-center gap-2">
                   <FileText className="h-5 w-5 text-elec-yellow" />
                   <h4 className="font-medium">Schedule of Test Results</h4>

@@ -14,7 +14,7 @@ const OffJobTrainingGuide = () => {
       </div>
 
       {/* Introduction Section */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <BookOpen className="h-5 w-5 text-elec-yellow" />
@@ -26,7 +26,7 @@ const OffJobTrainingGuide = () => {
             Off-the-job training is a fundamental requirement for all apprenticeships in the UK. It represents learning that takes place 
             away from your normal work duties but within your paid working hours, accounting for at least 20% of your total working time.
           </p>
-          <div className="bg-elec-dark p-4 rounded-lg border border-elec-yellow/10">
+          <div className="bg-white/5 border border-white/10 p-4 rounded-lg border border-elec-yellow/10">
             <h3 className="text-elec-yellow font-semibold mb-2">Key Requirements</h3>
             <ul className="space-y-2 text-sm">
               <li className="flex items-center gap-2">
@@ -63,7 +63,7 @@ const OffJobTrainingGuide = () => {
 
         <TabsContent value="what-counts" className="mt-6">
           <div className="grid gap-6 md:grid-cols-2">
-            <Card className="border-elec-yellow/20 bg-elec-gray">
+            <Card className="border-elec-yellow/20 bg-white/5">
               <CardHeader>
                 <CardTitle className="text-lg text-green-400">Activities That Count</CardTitle>
               </CardHeader>
@@ -73,49 +73,49 @@ const OffJobTrainingGuide = () => {
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <span className="font-medium">Theory lessons and lectures</span>
-                      <p className="text-muted-foreground">Classroom-based learning covering electrical theory, regulations, and principles</p>
+                      <p className="text-white/70">Classroom-based learning covering electrical theory, regulations, and principles</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <span className="font-medium">Practical workshops</span>
-                      <p className="text-muted-foreground">Hands-on training in controlled environments away from live projects</p>
+                      <p className="text-white/70">Hands-on training in controlled environments away from live projects</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <span className="font-medium">Shadowing and mentoring</span>
-                      <p className="text-muted-foreground">Structured observation and guidance from experienced professionals</p>
+                      <p className="text-white/70">Structured observation and guidance from experienced professionals</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <span className="font-medium">Online learning modules</span>
-                      <p className="text-muted-foreground">Digital courses, webinars, and educational resources</p>
+                      <p className="text-white/70">Digital courses, webinars, and educational resources</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <span className="font-medium">Industry visits</span>
-                      <p className="text-muted-foreground">Educational trips to suppliers, manufacturers, or exemplar installations</p>
+                      <p className="text-white/70">Educational trips to suppliers, manufacturers, or exemplar installations</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <span className="font-medium">Research and assignments</span>
-                      <p className="text-muted-foreground">Independent study projects and coursework</p>
+                      <p className="text-white/70">Independent study projects and coursework</p>
                     </div>
                   </li>
                 </ul>
               </CardContent>
             </Card>
 
-            <Card className="border-red-500/20 bg-elec-gray">
+            <Card className="border-red-500/20 bg-white/5">
               <CardHeader>
                 <CardTitle className="text-lg text-red-400">What Doesn't Count</CardTitle>
               </CardHeader>
@@ -125,35 +125,35 @@ const OffJobTrainingGuide = () => {
                     <AlertCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <span className="font-medium">Regular work duties</span>
-                      <p className="text-muted-foreground">Normal installation, maintenance, or repair work</p>
+                      <p className="text-white/70">Normal installation, maintenance, or repair work</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-2">
                     <AlertCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <span className="font-medium">Tea breaks and lunch</span>
-                      <p className="text-muted-foreground">General break times don't constitute learning</p>
+                      <p className="text-white/70">General break times don't constitute learning</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-2">
                     <AlertCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <span className="font-medium">Travel time</span>
-                      <p className="text-muted-foreground">Journey time between sites (unless structured learning occurs)</p>
+                      <p className="text-white/70">Journey time between sites (unless structured learning occurs)</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-2">
                     <AlertCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <span className="font-medium">Unpaid study time</span>
-                      <p className="text-muted-foreground">Learning outside of contracted working hours</p>
+                      <p className="text-white/70">Learning outside of contracted working hours</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-2">
                     <AlertCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <span className="font-medium">Induction periods</span>
-                      <p className="text-muted-foreground">General workplace orientation and safety briefings</p>
+                      <p className="text-white/70">General workplace orientation and safety briefings</p>
                     </div>
                   </li>
                 </ul>
@@ -164,7 +164,7 @@ const OffJobTrainingGuide = () => {
 
         <TabsContent value="evidence" className="mt-6">
           <div className="space-y-6">
-            <Card className="border-elec-yellow/20 bg-elec-gray">
+            <Card className="border-elec-yellow/20 bg-white/5">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <FileText className="h-5 w-5 text-elec-yellow" />
@@ -178,7 +178,7 @@ const OffJobTrainingGuide = () => {
                 </p>
                 
                 <div className="grid gap-4 md:grid-cols-2">
-                  <div className="bg-elec-dark p-4 rounded-lg">
+                  <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <h3 className="text-elec-yellow font-semibold mb-3">Essential Documentation</h3>
                     <ul className="space-y-2 text-sm">
                       <li>• Training logs with dates, times, and duration</li>
@@ -190,7 +190,7 @@ const OffJobTrainingGuide = () => {
                     </ul>
                   </div>
                   
-                  <div className="bg-elec-dark p-4 rounded-lg">
+                  <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <h3 className="text-elec-yellow font-semibold mb-3">Quality Standards</h3>
                     <ul className="space-y-2 text-sm">
                       <li>• Clear, legible, and professionally presented</li>
@@ -223,7 +223,7 @@ const OffJobTrainingGuide = () => {
 
         <TabsContent value="planning" className="mt-6">
           <div className="space-y-6">
-            <Card className="border-elec-yellow/20 bg-elec-gray">
+            <Card className="border-elec-yellow/20 bg-white/5">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Target className="h-5 w-5 text-elec-yellow" />
@@ -235,23 +235,23 @@ const OffJobTrainingGuide = () => {
                   <div>
                     <h3 className="text-elec-yellow font-semibold mb-3">Annual Planning Approach</h3>
                     <div className="space-y-3 text-sm">
-                      <div className="bg-elec-dark p-3 rounded">
+                      <div className="bg-white/5 border border-white/10 p-3 rounded">
                         <span className="font-medium text-blue-400">Year 1: Foundation Building</span>
-                        <p className="text-muted-foreground mt-1">
+                        <p className="text-white/70 mt-1">
                           Focus on electrical fundamentals, safety regulations, and basic practical skills. 
                           Expect 60-80% theory-based learning.
                         </p>
                       </div>
-                      <div className="bg-elec-dark p-3 rounded">
+                      <div className="bg-white/5 border border-white/10 p-3 rounded">
                         <span className="font-medium text-green-400">Year 2-3: Skill Development</span>
-                        <p className="text-muted-foreground mt-1">
+                        <p className="text-white/70 mt-1">
                           Balance theory with practical application. Specialisation areas and advanced techniques. 
                           50-70% practical focus.
                         </p>
                       </div>
-                      <div className="bg-elec-dark p-3 rounded">
+                      <div className="bg-white/5 border border-white/10 p-3 rounded">
                         <span className="font-medium text-orange-400">Year 4: Mastery & Assessment</span>
-                        <p className="text-muted-foreground mt-1">
+                        <p className="text-white/70 mt-1">
                           Portfolio completion, EPA preparation, and advanced troubleshooting. 
                           Assessment-focused learning.
                         </p>
@@ -261,7 +261,7 @@ const OffJobTrainingGuide = () => {
 
                   <div>
                     <h3 className="text-elec-yellow font-semibold mb-3">Monthly Time Allocation</h3>
-                    <div className="bg-elec-dark p-4 rounded-lg space-y-3">
+                    <div className="bg-white/5 border border-white/10 p-4 rounded-lg space-y-3">
                       <div className="flex justify-between items-center">
                         <span className="text-sm">College/Training Centre</span>
                         <span className="text-elec-yellow font-medium">40-60%</span>
@@ -296,29 +296,29 @@ const OffJobTrainingGuide = () => {
         <TabsContent value="delivery" className="mt-6">
           <div className="space-y-6">
             <div className="grid gap-6 md:grid-cols-2">
-              <Card className="border-elec-yellow/20 bg-elec-gray">
+              <Card className="border-elec-yellow/20 bg-white/5">
                 <CardHeader>
                   <CardTitle className="text-lg">Traditional Delivery Methods</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-3">
-                    <div className="bg-elec-dark p-3 rounded">
+                    <div className="bg-white/5 border border-white/10 p-3 rounded">
                       <h4 className="font-semibold text-blue-400 mb-1">College Block Release</h4>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-white/70">
                         Full-time attendance at college for concentrated periods (typically 1-2 weeks). 
                         Intensive learning with dedicated facilities and expert instructors.
                       </p>
                     </div>
-                    <div className="bg-elec-dark p-3 rounded">
+                    <div className="bg-white/5 border border-white/10 p-3 rounded">
                       <h4 className="font-semibold text-green-400 mb-1">Day Release</h4>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-white/70">
                         Regular weekly attendance (usually one day per week). Consistent progress 
                         with immediate workplace application opportunities.
                       </p>
                     </div>
-                    <div className="bg-elec-dark p-3 rounded">
+                    <div className="bg-white/5 border border-white/10 p-3 rounded">
                       <h4 className="font-semibold text-orange-400 mb-1">Evening Classes</h4>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-white/70">
                         After-hours study sessions. Flexible for employers but must be within 
                         contracted working hours to count as off-the-job training.
                       </p>
@@ -327,29 +327,29 @@ const OffJobTrainingGuide = () => {
                 </CardContent>
               </Card>
 
-              <Card className="border-elec-yellow/20 bg-elec-gray">
+              <Card className="border-elec-yellow/20 bg-white/5">
                 <CardHeader>
                   <CardTitle className="text-lg">Modern Delivery Approaches</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-3">
-                    <div className="bg-elec-dark p-3 rounded">
+                    <div className="bg-white/5 border border-white/10 p-3 rounded">
                       <h4 className="font-semibold text-purple-400 mb-1">Blended Learning</h4>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-white/70">
                         Combination of face-to-face and digital learning. Interactive online modules 
                         complemented by practical workshops and assessments.
                       </p>
                     </div>
-                    <div className="bg-elec-dark p-3 rounded">
+                    <div className="bg-white/5 border border-white/10 p-3 rounded">
                       <h4 className="font-semibold text-cyan-400 mb-1">Virtual Reality Training</h4>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-white/70">
                         Immersive simulation environments for hazardous scenario training. 
                         Safe practice of high-risk procedures and fault-finding techniques.
                       </p>
                     </div>
-                    <div className="bg-elec-dark p-3 rounded">
+                    <div className="bg-white/5 border border-white/10 p-3 rounded">
                       <h4 className="font-semibold text-pink-400 mb-1">Mobile Learning</h4>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-white/70">
                         Smartphone and tablet-based learning platforms. Micro-learning modules 
                         for flexible study during commute or breaks.
                       </p>
@@ -359,7 +359,7 @@ const OffJobTrainingGuide = () => {
               </Card>
             </div>
 
-            <Card className="border-elec-yellow/20 bg-elec-gray">
+            <Card className="border-elec-yellow/20 bg-white/5">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Users className="h-5 w-5 text-elec-yellow" />
@@ -368,7 +368,7 @@ const OffJobTrainingGuide = () => {
               </CardHeader>
               <CardContent>
                 <div className="grid gap-4 md:grid-cols-3">
-                  <div className="bg-elec-dark p-4 rounded-lg">
+                  <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <h3 className="text-elec-yellow font-semibold mb-2">Quality Indicators</h3>
                     <ul className="space-y-1 text-sm">
                       <li>• Ofsted rating (Good or Outstanding)</li>
@@ -379,7 +379,7 @@ const OffJobTrainingGuide = () => {
                     </ul>
                   </div>
                   
-                  <div className="bg-elec-dark p-4 rounded-lg">
+                  <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <h3 className="text-elec-yellow font-semibold mb-2">Practical Considerations</h3>
                     <ul className="space-y-1 text-sm">
                       <li>• Geographic accessibility</li>
@@ -390,7 +390,7 @@ const OffJobTrainingGuide = () => {
                     </ul>
                   </div>
                   
-                  <div className="bg-elec-dark p-4 rounded-lg">
+                  <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <h3 className="text-elec-yellow font-semibold mb-2">Cost Factors</h3>
                     <ul className="space-y-1 text-sm">
                       <li>• Government funding eligibility</li>
@@ -408,7 +408,7 @@ const OffJobTrainingGuide = () => {
 
         <TabsContent value="rights" className="mt-6">
           <div className="space-y-6">
-            <Card className="border-elec-yellow/20 bg-elec-gray">
+            <Card className="border-elec-yellow/20 bg-white/5">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Shield className="h-5 w-5 text-elec-yellow" />
@@ -424,28 +424,28 @@ const OffJobTrainingGuide = () => {
                         <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                         <div>
                           <span className="font-medium">Guaranteed training time</span>
-                          <p className="text-muted-foreground">Minimum 20% of working hours for off-the-job training</p>
+                          <p className="text-white/70">Minimum 20% of working hours for off-the-job training</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-2">
                         <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                         <div>
                           <span className="font-medium">Paid learning time</span>
-                          <p className="text-muted-foreground">Training must occur during contracted, paid hours</p>
+                          <p className="text-white/70">Training must occur during contracted, paid hours</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-2">
                         <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                         <div>
                           <span className="font-medium">Quality training provision</span>
-                          <p className="text-muted-foreground">Access to qualified instructors and appropriate resources</p>
+                          <p className="text-white/70">Access to qualified instructors and appropriate resources</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-2">
                         <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                         <div>
                           <span className="font-medium">Progress monitoring</span>
-                          <p className="text-muted-foreground">Regular reviews and feedback on your development</p>
+                          <p className="text-white/70">Regular reviews and feedback on your development</p>
                         </div>
                       </div>
                     </div>
@@ -458,28 +458,28 @@ const OffJobTrainingGuide = () => {
                         <Target className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
                         <div>
                           <span className="font-medium">Release time provision</span>
-                          <p className="text-muted-foreground">Must allow and schedule appropriate training time</p>
+                          <p className="text-white/70">Must allow and schedule appropriate training time</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-2">
                         <Target className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
                         <div>
                           <span className="font-medium">Financial investment</span>
-                          <p className="text-muted-foreground">Cover training costs and maintain wages during learning</p>
+                          <p className="text-white/70">Cover training costs and maintain wages during learning</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-2">
                         <Target className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
                         <div>
                           <span className="font-medium">Workplace support</span>
-                          <p className="text-muted-foreground">Provide mentoring and practical application opportunities</p>
+                          <p className="text-white/70">Provide mentoring and practical application opportunities</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-2">
                         <Target className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
                         <div>
                           <span className="font-medium">Progress facilitation</span>
-                          <p className="text-muted-foreground">Support portfolio development and assessment preparation</p>
+                          <p className="text-white/70">Support portfolio development and assessment preparation</p>
                         </div>
                       </div>
                     </div>
@@ -494,7 +494,7 @@ const OffJobTrainingGuide = () => {
                   <div className="grid gap-3 md:grid-cols-2 text-sm">
                     <div>
                       <span className="font-medium text-yellow-400">Step 1: Document the Issues</span>
-                      <ul className="mt-1 space-y-1 text-muted-foreground">
+                      <ul className="mt-1 space-y-1 text-white/70">
                         <li>• Keep records of missed training time</li>
                         <li>• Note specific incidents and dates</li>
                         <li>• Gather evidence of impact on progress</li>
@@ -502,7 +502,7 @@ const OffJobTrainingGuide = () => {
                     </div>
                     <div>
                       <span className="font-medium text-yellow-400">Step 2: Seek Support</span>
-                      <ul className="mt-1 space-y-1 text-muted-foreground">
+                      <ul className="mt-1 space-y-1 text-white/70">
                         <li>• Contact your training provider first</li>
                         <li>• Speak with your apprenticeship assessor</li>
                         <li>• Consider mediation services</li>
@@ -517,7 +517,7 @@ const OffJobTrainingGuide = () => {
 
         <TabsContent value="assessment" className="mt-6">
           <div className="space-y-6">
-            <Card className="border-elec-yellow/20 bg-elec-gray">
+            <Card className="border-elec-yellow/20 bg-white/5">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <CheckCircle className="h-5 w-5 text-elec-yellow" />
@@ -538,23 +538,23 @@ const OffJobTrainingGuide = () => {
                   <div>
                     <h3 className="text-elec-yellow font-semibold mb-3">Knowledge Component Alignment</h3>
                     <div className="space-y-3 text-sm">
-                      <div className="bg-elec-dark p-3 rounded">
+                      <div className="bg-white/5 border border-white/10 p-3 rounded">
                         <span className="font-medium text-green-400">Electrical Science & Theory</span>
-                        <p className="text-muted-foreground mt-1">
+                        <p className="text-white/70 mt-1">
                           Classroom theory, online modules, and practical demonstrations that build 
                           fundamental understanding tested in knowledge assessments.
                         </p>
                       </div>
-                      <div className="bg-elec-dark p-3 rounded">
+                      <div className="bg-white/5 border border-white/10 p-3 rounded">
                         <span className="font-medium text-blue-400">Regulations & Standards</span>
-                        <p className="text-muted-foreground mt-1">
+                        <p className="text-white/70 mt-1">
                           Structured study of BS 7671, building regulations, and safety standards 
                           through guided reading and interpretation exercises.
                         </p>
                       </div>
-                      <div className="bg-elec-dark p-3 rounded">
+                      <div className="bg-white/5 border border-white/10 p-3 rounded">
                         <span className="font-medium text-purple-400">Design & Planning</span>
-                        <p className="text-muted-foreground mt-1">
+                        <p className="text-white/70 mt-1">
                           Project-based learning covering circuit design, load calculations, 
                           and installation planning methodologies.
                         </p>
@@ -565,23 +565,23 @@ const OffJobTrainingGuide = () => {
                   <div>
                     <h3 className="text-elec-yellow font-semibold mb-3">Skills Development Focus</h3>
                     <div className="space-y-3 text-sm">
-                      <div className="bg-elec-dark p-3 rounded">
+                      <div className="bg-white/5 border border-white/10 p-3 rounded">
                         <span className="font-medium text-orange-400">Practical Competencies</span>
-                        <p className="text-muted-foreground mt-1">
+                        <p className="text-white/70 mt-1">
                           Workshop-based skill development that directly maps to practical 
                           assessment criteria and workplace observations.
                         </p>
                       </div>
-                      <div className="bg-elec-dark p-3 rounded">
+                      <div className="bg-white/5 border border-white/10 p-3 rounded">
                         <span className="font-medium text-cyan-400">Testing & Inspection</span>
-                        <p className="text-muted-foreground mt-1">
+                        <p className="text-white/70 mt-1">
                           Hands-on training with test equipment, measurement techniques, 
                           and certification procedures required for professional practice.
                         </p>
                       </div>
-                      <div className="bg-elec-dark p-3 rounded">
+                      <div className="bg-white/5 border border-white/10 p-3 rounded">
                         <span className="font-medium text-pink-400">Problem Solving</span>
-                        <p className="text-muted-foreground mt-1">
+                        <p className="text-white/70 mt-1">
                           Scenario-based learning that develops diagnostic skills and 
                           systematic fault-finding approaches tested in EPA activities.
                         </p>
@@ -590,26 +590,26 @@ const OffJobTrainingGuide = () => {
                   </div>
                 </div>
 
-                <div className="bg-elec-dark p-4 rounded-lg">
+                <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <h3 className="text-elec-yellow font-semibold mb-3">Portfolio Integration Strategy</h3>
                   <div className="grid gap-4 md:grid-cols-3 text-sm">
                     <div>
                       <span className="font-medium text-yellow-400">Continuous Documentation</span>
-                      <p className="text-muted-foreground mt-1">
+                      <p className="text-white/70 mt-1">
                         Record learning outcomes from each training session with reflection 
                         on application to apprenticeship standards.
                       </p>
                     </div>
                     <div>
                       <span className="font-medium text-yellow-400">Evidence Mapping</span>
-                      <p className="text-muted-foreground mt-1">
+                      <p className="text-white/70 mt-1">
                         Cross-reference training activities to specific EPA criteria 
                         and portfolio requirements for comprehensive coverage.
                       </p>
                     </div>
                     <div>
                       <span className="font-medium text-yellow-400">Progress Monitoring</span>
-                      <p className="text-muted-foreground mt-1">
+                      <p className="text-white/70 mt-1">
                         Regular review sessions to identify gaps and plan additional 
                         training to ensure EPA readiness.
                       </p>

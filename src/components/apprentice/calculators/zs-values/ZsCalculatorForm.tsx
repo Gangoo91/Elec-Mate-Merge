@@ -63,7 +63,7 @@ const ZsCalculatorForm = ({
         <MobileSelectTrigger label="Protection Device Type">
           <MobileSelectValue placeholder="Select device type" />
         </MobileSelectTrigger>
-        <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+        <MobileSelectContent className="bg-white/10 border-elec-yellow/20">
           <MobileSelectItem value="mcb">MCB (Miniature Circuit Breaker)</MobileSelectItem>
           <MobileSelectItem value="rcbo">RCBO (RCD + MCB)</MobileSelectItem>
           <MobileSelectItem value="fuse">Fuse</MobileSelectItem>
@@ -77,7 +77,7 @@ const ZsCalculatorForm = ({
           <MobileSelectTrigger label="Disconnection Time">
             <MobileSelectValue placeholder="Select disconnection time" />
           </MobileSelectTrigger>
-          <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+          <MobileSelectContent className="bg-white/10 border-elec-yellow/20">
             {Object.entries(disconnectionTimes).map(([key, label]) => (
               <MobileSelectItem key={key} value={key}>{label}</MobileSelectItem>
             ))}
@@ -91,7 +91,7 @@ const ZsCalculatorForm = ({
             <MobileSelectTrigger label="MCB Curve Type (BS EN 60898)">
               <MobileSelectValue placeholder="Select curve type" />
             </MobileSelectTrigger>
-            <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+            <MobileSelectContent className="bg-white/10 border-elec-yellow/20">
               {Object.entries(curveTypes).map(([key, label]) => (
                 <MobileSelectItem key={key} value={key}>{label}</MobileSelectItem>
               ))}
@@ -102,7 +102,7 @@ const ZsCalculatorForm = ({
             <MobileSelectTrigger label="MCB Rating (A)">
               <MobileSelectValue placeholder="Select MCB rating" />
             </MobileSelectTrigger>
-            <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+            <MobileSelectContent className="bg-white/10 border-elec-yellow/20">
               {mcbRatings.map((rating) => (
                 <MobileSelectItem key={rating} value={rating.toString()}>{rating}A</MobileSelectItem>
               ))}
@@ -117,7 +117,7 @@ const ZsCalculatorForm = ({
             <MobileSelectTrigger label="RCBO Curve Type (BS EN 61009-1)">
               <MobileSelectValue placeholder="Select curve type" />
             </MobileSelectTrigger>
-            <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+            <MobileSelectContent className="bg-white/10 border-elec-yellow/20">
               {Object.entries(curveTypes).map(([key, label]) => (
                 <MobileSelectItem key={key} value={key}>{label}</MobileSelectItem>
               ))}
@@ -128,7 +128,7 @@ const ZsCalculatorForm = ({
             <MobileSelectTrigger label="RCBO Rating (A)">
               <MobileSelectValue placeholder="Select RCBO rating" />
             </MobileSelectTrigger>
-            <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+            <MobileSelectContent className="bg-white/10 border-elec-yellow/20">
               {mcbRatings.map((rating) => (
                 <MobileSelectItem key={rating} value={rating.toString()}>{rating}A</MobileSelectItem>
               ))}
@@ -146,7 +146,7 @@ const ZsCalculatorForm = ({
             <MobileSelectTrigger label="Fuse Type">
               <MobileSelectValue placeholder="Select fuse type" />
             </MobileSelectTrigger>
-            <MobileSelectContent className="bg-elec-dark border-elec-yellow/20 max-h-48">
+            <MobileSelectContent className="bg-white/10 border-elec-yellow/20 max-h-48">
               {Object.entries(fuseTypes).map(([key, label]) => (
                 <MobileSelectItem key={key} value={key}>{label}</MobileSelectItem>
               ))}
@@ -158,7 +158,7 @@ const ZsCalculatorForm = ({
               <MobileSelectTrigger label="Fuse Rating (A)">
                 <MobileSelectValue placeholder="Select fuse rating" />
               </MobileSelectTrigger>
-              <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+              <MobileSelectContent className="bg-white/10 border-elec-yellow/20">
                 {fuseRatings[fuseType as keyof typeof fuseRatings]?.map((rating) => (
                   <MobileSelectItem key={rating} value={rating.toString()}>
                     {rating}A
@@ -175,7 +175,7 @@ const ZsCalculatorForm = ({
           <MobileSelectTrigger label="RCD Rated Residual Current (mA)">
             <MobileSelectValue placeholder="Select RCD rating" />
           </MobileSelectTrigger>
-          <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+          <MobileSelectContent className="bg-white/10 border-elec-yellow/20">
             {rcdRatings.map((rating) => (
               <MobileSelectItem key={rating} value={rating.toString()}>{rating}mA</MobileSelectItem>
             ))}

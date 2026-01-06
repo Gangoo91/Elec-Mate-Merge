@@ -134,7 +134,7 @@ const InteractiveStressAssessment = () => {
             <h4 className="font-semibold text-foreground">Personalised Recommendations:</h4>
             <ul className="space-y-2">
               {getRecommendations().map((rec, index) => (
-                <li key={index} className="flex items-start gap-2 text-sm text-muted-foreground">
+                <li key={index} className="flex items-start gap-2 text-sm text-white/80">
                   <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                   {rec}
                 </li>
@@ -163,7 +163,7 @@ const InteractiveStressAssessment = () => {
         <CardTitle className="text-elec-yellow">Quick Stress Assessment</CardTitle>
         <div className="space-y-2">
           <Progress value={((currentQuestion + 1) / questions.length) * 100} className="h-2" />
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white/80">
             Question {currentQuestion + 1} of {questions.length}
           </p>
         </div>

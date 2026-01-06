@@ -15,13 +15,13 @@ import { SmartHomeModule5Section6Quiz } from '@/components/upskilling/smart-home
 
 const SmartHomeModule5Section6 = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
         <Link to="../smart-home-module-5">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 5
@@ -30,7 +30,7 @@ const SmartHomeModule5Section6 = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <Shield className="h-8 w-8 text-yellow-400" />
+            <Shield className="h-8 w-8 text-elec-yellow" />
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
               Network Security and User Privacy
             </h1>
@@ -65,7 +65,7 @@ const SmartHomeModule5Section6 = () => {
             <Link to="../smart-home-module-5-section-5">
               <Button 
                 variant="outline" 
-                className="bg-transparent border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black transition-all duration-200"
+                className="bg-transparent border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black transition-all duration-200"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Previous: Lighting and Emergency Scenes
@@ -74,7 +74,7 @@ const SmartHomeModule5Section6 = () => {
             
             <Link to="../smart-home-course">
               <Button 
-                className="bg-yellow-400 text-black hover:bg-yellow-400 transition-all duration-200"
+                className="bg-elec-yellow text-black hover:bg-elec-yellow transition-all duration-200"
               >
                 Complete Module
                 <ArrowRight className="ml-2 h-4 w-4" />

@@ -318,7 +318,7 @@ export function OffGridSystemCalculator() {
                   <Settings className="h-4 w-4 text-purple-400" />
                   <span className="text-sm sm:text-base font-medium text-purple-300">Cost Breakdown</span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showCost && "rotate-180")} />
+                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showCost && "rotate-180")} />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0">
                 <div className="space-y-2 text-sm">
@@ -344,7 +344,7 @@ export function OffGridSystemCalculator() {
                   <Info className="h-4 w-4 text-blue-400" />
                   <span className="text-sm sm:text-base font-medium text-blue-300">Installation Guidance</span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showGuidance && "rotate-180")} />
+                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showGuidance && "rotate-180")} />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0 space-y-2">
                 <p className="text-sm text-blue-200/80">Planning permission generally not needed for roof-mounted panels</p>
@@ -362,7 +362,7 @@ export function OffGridSystemCalculator() {
                   <BookOpen className="h-4 w-4 text-amber-400" />
                   <span className="text-sm sm:text-base font-medium text-amber-300">Standards & Regulations</span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showRegs && "rotate-180")} />
+                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showRegs && "rotate-180")} />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0">
                 <div className="space-y-2 text-sm text-amber-200/80">

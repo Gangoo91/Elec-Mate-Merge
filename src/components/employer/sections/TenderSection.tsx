@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FileSearch, Send, Clock, Trophy, Plus, Eye, Download, Brain, Sparkles, Trash2 } from "lucide-react";
+import { FileSearch, Send, Clock, Trophy, Plus, Eye, Download, Brain, Sparkles, Trash2, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { StatusBadge } from "@/components/employer/StatusBadge";
 import { SectionHeader } from "@/components/employer/SectionHeader";
 import { CreateTenderDialog } from "@/components/employer/dialogs/CreateTenderDialog";
+import { QuickStats, QuickStat } from "@/components/employer/QuickStats";
 import {
   useTenders,
   useAllTenderEstimates,
@@ -179,53 +180,42 @@ export function TenderSection() {
       />
 
       {/* Stats */}
-      <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4 md:mx-0 md:px-0">
-        <Card className="bg-elec-yellow/10 border-elec-yellow/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <FileSearch className="h-4 w-4 text-elec-yellow" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{stats.open}</p>
-              <p className="text-xs text-muted-foreground">Open</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-warning/10 border-warning/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <Send className="h-4 w-4 text-warning" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{stats.submitted}</p>
-              <p className="text-xs text-muted-foreground">Submitted</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-success/10 border-success/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <Trophy className="h-4 w-4 text-success" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{stats.won}</p>
-              <p className="text-xs text-muted-foreground">Won</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-success/10 border-success/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <div>
-              <p className="text-lg font-bold text-success">£{(stats.wonValue / 1000).toFixed(0)}k</p>
-              <p className="text-xs text-muted-foreground">Won Value</p>
-            </div>
-          </CardContent>
-        </Card>
-        {stats.winRate > 0 && (
-          <Card className="bg-info/10 border-info/20 shrink-0">
-            <CardContent className="p-3 flex items-center gap-2">
-              <div>
-                <p className="text-lg font-bold text-info">{stats.winRate.toFixed(0)}%</p>
-                <p className="text-xs text-muted-foreground">Win Rate</p>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-      </div>
+      <QuickStats
+        stats={[
+          {
+            icon: FileSearch,
+            value: stats.open,
+            label: "Open",
+            color: "yellow",
+            pulse: stats.open > 0,
+          },
+          {
+            icon: Send,
+            value: stats.submitted,
+            label: "Submitted",
+            color: "orange",
+          },
+          {
+            icon: Trophy,
+            value: stats.won,
+            label: "Won",
+            color: "green",
+          },
+          {
+            icon: Trophy,
+            value: `£${(stats.wonValue / 1000).toFixed(0)}k`,
+            label: "Won Value",
+            color: "green",
+          },
+          ...(stats.winRate > 0 ? [{
+            icon: TrendingUp,
+            value: stats.winRate.toFixed(0),
+            label: "Win Rate",
+            color: "blue" as const,
+            suffix: "%",
+          }] : []),
+        ]}
+      />
 
       {/* AI Estimates Section */}
       {aiEstimates.length > 0 && (

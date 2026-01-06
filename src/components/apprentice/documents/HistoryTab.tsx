@@ -69,7 +69,7 @@ const HistoryTab = () => {
       case 'EICR': return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
       case 'MEIWC': return 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20';
       case 'Schedule': return 'bg-purple-500/10 text-purple-400 border-purple-500/20';
-      case 'Template': return 'bg-gray-500/10 text-gray-400 border-gray-500/20';
+      case 'Template': return 'bg-white/5 text-white border-white/10';
       default: return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
     }
   };
@@ -93,31 +93,31 @@ const HistoryTab = () => {
         <Card className="border-blue-500/30 bg-blue-500/10">
           <CardContent className="p-4 text-center">
             <div className="text-2xl font-bold text-blue-400">{stats.totalDownloads}</div>
-            <div className="text-sm text-muted-foreground">Total Downloads</div>
+            <div className="text-sm text-white">Total Downloads</div>
           </CardContent>
         </Card>
         <Card className="border-green-500/30 bg-green-500/10">
           <CardContent className="p-4 text-center">
             <div className="text-2xl font-bold text-green-400">{stats.thisWeek}</div>
-            <div className="text-sm text-muted-foreground">This Week</div>
+            <div className="text-sm text-white">This Week</div>
           </CardContent>
         </Card>
         <Card className="border-yellow-500/30 bg-yellow-500/10">
           <CardContent className="p-4 text-center">
             <div className="text-2xl font-bold text-yellow-400">{stats.certificates}</div>
-            <div className="text-sm text-muted-foreground">Certificates</div>
+            <div className="text-sm text-white">Certificates</div>
           </CardContent>
         </Card>
         <Card className="border-purple-500/30 bg-purple-500/10">
           <CardContent className="p-4 text-center">
             <div className="text-2xl font-bold text-purple-400">{stats.schedules}</div>
-            <div className="text-sm text-muted-foreground">Schedules</div>
+            <div className="text-sm text-white">Schedules</div>
           </CardContent>
         </Card>
       </div>
 
       {/* Recent Activity */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
             <Clock className="h-5 w-5" />
@@ -138,7 +138,7 @@ const HistoryTab = () => {
                       </Badge>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-muted-foreground">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white">
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
                           <Calendar className="h-3 w-3" />
@@ -182,7 +182,7 @@ const HistoryTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <h4 className="font-semibold mb-3 text-amber-300">Retention Policy</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
+              <ul className="space-y-2 text-sm text-white">
                 <li>• Download history kept for 2 years</li>
                 <li>• Certificates accessible for re-download</li>
                 <li>• Templates always available</li>
@@ -191,7 +191,7 @@ const HistoryTab = () => {
             </div>
             <div>
               <h4 className="font-semibold mb-3 text-amber-300">Best Practices</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
+              <ul className="space-y-2 text-sm text-white">
                 <li>• Keep local copies of important certificates</li>
                 <li>• Use cloud storage for backup</li>
                 <li>• Name files consistently for easy searching</li>

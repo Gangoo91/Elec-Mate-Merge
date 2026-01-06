@@ -67,8 +67,7 @@ const InstrumentationModule2Section4 = () => {
       ],
       correct: 1,
       explanation: "Non-contact sensors are chosen to avoid contamination (especially in food/medical applications), eliminate mechanical wear, and prevent interference with the measured object or process."
-    }
-  ];
+  }  ];
 
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">

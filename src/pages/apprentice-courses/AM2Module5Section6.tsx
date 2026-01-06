@@ -96,11 +96,11 @@ const AM2Module5Section6 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-2 sm:p-0 text-sm sm:text-base" asChild>
+          <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
               <span className="hidden xs:inline">Back to Module 5</span>
@@ -118,41 +118,41 @@ const AM2Module5Section6 = () => {
             <FileText className="w-4 h-4" />
             Quick Reference Sheet
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4 sm:mb-6 leading-tight">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6 leading-tight">
             AM2 Fault Diagnosis & Rectification
           </h1>
-          <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg text-white max-w-3xl mx-auto leading-relaxed">
             Essential reference guide for AM2 fault-finding procedures. Keep this handy during your preparation and assessment.
           </p>
         </div>
 
         {/* Quick Access Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-          <Card className="bg-card border-elec-yellow/30 hover:border-elec-yellow/30 transition-colors">
+          <Card className="bg-transparent border-elec-yellow/30 hover:border-elec-yellow/30 transition-colors">
             <CardContent className="p-4 text-center">
               <Search className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
               <h3 className="font-semibold text-sm">8 Common Faults</h3>
-              <p className="text-xs text-muted-foreground mt-1">Complete reference table</p>
+              <p className="text-xs text-white mt-1">Complete reference table</p>
             </CardContent>
           </Card>
-          <Card className="bg-card border-elec-yellow/30 hover:border-elec-yellow/30 transition-colors">
+          <Card className="bg-transparent border-elec-yellow/30 hover:border-elec-yellow/30 transition-colors">
             <CardContent className="p-4 text-center">
               <Target className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
               <h3 className="font-semibold text-sm">Golden Rules</h3>
-              <p className="text-xs text-muted-foreground mt-1">Never lose marks again</p>
+              <p className="text-xs text-white mt-1">Never lose marks again</p>
             </CardContent>
           </Card>
-          <Card className="bg-card border-elec-yellow/30 hover:border-elec-yellow/30 transition-colors">
+          <Card className="bg-transparent border-elec-yellow/30 hover:border-elec-yellow/30 transition-colors">
             <CardContent className="p-4 text-center">
               <Zap className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
               <h3 className="font-semibold text-sm">Quick Testing</h3>
-              <p className="text-xs text-muted-foreground mt-1">Right test for each fault</p>
+              <p className="text-xs text-white mt-1">Right test for each fault</p>
             </CardContent>
           </Card>
         </div>
 
         {/* Fault Types Table */}
-        <Card className="bg-card border-elec-yellow/30">
+        <Card className="bg-transparent border-elec-yellow/30">
           <div className="p-4 sm:p-6">
             <h2 className="text-xl sm:text-2xl font-bold text-elec-yellow mb-6 flex items-center gap-2">
               <Wrench className="w-6 h-6" />
@@ -174,15 +174,15 @@ const AM2Module5Section6 = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                       <div>
                         <h4 className="font-semibold text-sm mb-1">Typical Symptom</h4>
-                        <p className="text-xs text-muted-foreground">{fault.symptom}</p>
+                        <p className="text-xs text-white">{fault.symptom}</p>
                       </div>
                       <div>
                         <h4 className="font-semibold text-sm mb-1">Rectification</h4>
-                        <p className="text-xs text-muted-foreground">{fault.rectification}</p>
+                        <p className="text-xs text-white">{fault.rectification}</p>
                       </div>
                       <div>
                         <h4 className="font-semibold text-sm mb-1">Re-Test Required</h4>
-                        <p className="text-xs text-muted-foreground font-medium">{fault.reTest}</p>
+                        <p className="text-xs text-white font-medium">{fault.reTest}</p>
                       </div>
                     </div>
                   </CardContent>
@@ -206,7 +206,7 @@ const AM2Module5Section6 = () => {
                   <div className="w-6 h-6 bg-elec-yellow/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                     <span className="text-xs font-bold text-elec-yellow">{index + 1}</span>
                   </div>
-                  <p className="text-xs sm:text-sm text-foreground leading-relaxed">{rule}</p>
+                  <p className="text-xs sm:text-sm text-white leading-relaxed">{rule}</p>
                 </div>
               ))}
             </div>
@@ -214,7 +214,7 @@ const AM2Module5Section6 = () => {
         </Card>
 
         {/* Common Test Equipment */}
-        <Card className="bg-card border-elec-yellow/30">
+        <Card className="bg-transparent border-elec-yellow/30">
           <div className="p-4 sm:p-6">
             <h2 className="text-xl sm:text-2xl font-bold text-elec-yellow mb-6 flex items-center gap-2">
               <Settings className="w-6 h-6" />
@@ -222,28 +222,28 @@ const AM2Module5Section6 = () => {
             </h2>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="p-3 border border-border/20 rounded-lg bg-background/50">
+              <div className="p-3 border border-white/10 rounded-lg bg-[#1a1a1a]/50">
                 <h4 className="font-semibold text-sm mb-2">Continuity Tester</h4>
-                <p className="text-xs text-muted-foreground">200mA test current for conductor continuity</p>
+                <p className="text-xs text-white">200mA test current for conductor continuity</p>
               </div>
-              <div className="p-3 border border-border/20 rounded-lg bg-background/50">
+              <div className="p-3 border border-white/10 rounded-lg bg-[#1a1a1a]/50">
                 <h4 className="font-semibold text-sm mb-2">Insulation Tester</h4>
-                <p className="text-xs text-muted-foreground">500V DC for IR between conductors</p>
+                <p className="text-xs text-white">500V DC for IR between conductors</p>
               </div>
-              <div className="p-3 border border-border/20 rounded-lg bg-background/50">
+              <div className="p-3 border border-white/10 rounded-lg bg-[#1a1a1a]/50">
                 <h4 className="font-semibold text-sm mb-2">Loop Tester</h4>
-                <p className="text-xs text-muted-foreground">Zs measurements for earth faults</p>
+                <p className="text-xs text-white">Zs measurements for earth faults</p>
               </div>
-              <div className="p-3 border border-border/20 rounded-lg bg-background/50">
+              <div className="p-3 border border-white/10 rounded-lg bg-[#1a1a1a]/50">
                 <h4 className="font-semibold text-sm mb-2">RCD Tester</h4>
-                <p className="text-xs text-muted-foreground">Verify RCD operation after earth faults</p>
+                <p className="text-xs text-white">Verify RCD operation after earth faults</p>
               </div>
             </div>
           </div>
         </Card>
 
         {/* Time Management Tips */}
-        <Card className="bg-card border-elec-yellow/30">
+        <Card className="bg-transparent border-elec-yellow/30">
           <div className="p-4 sm:p-6">
             <h2 className="text-xl sm:text-2xl font-bold text-elec-yellow mb-6 flex items-center gap-2">
               <Clock className="w-6 h-6" />
@@ -253,7 +253,7 @@ const AM2Module5Section6 = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-3">
                 <h4 className="font-semibold text-sm">Typical Time Allocation:</h4>
-                <ul className="text-xs text-muted-foreground space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• Initial circuit inspection: 5-10 minutes</li>
                   <li>• Fault diagnosis per circuit: 15-20 minutes</li>
                   <li>• Rectification: 10-15 minutes</li>
@@ -262,7 +262,7 @@ const AM2Module5Section6 = () => {
               </div>
               <div className="space-y-3">
                 <h4 className="font-semibold text-sm">Pro Tips:</h4>
-                <ul className="text-xs text-muted-foreground space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• Start with obvious visual checks</li>
                   <li>• Use logical sequence: dead tests first</li>
                   <li>• Document as you work, not at the end</li>
@@ -272,7 +272,7 @@ const AM2Module5Section6 = () => {
             </div>
           </div>
         </Card>
-        <Card className="bg-card border-elec-yellow/30">
+        <Card className="bg-transparent border-elec-yellow/30">
           <div className="p-4 sm:p-6">
             <h2 className="text-xl sm:text-2xl font-bold text-elec-yellow mb-6 flex items-center gap-2">
               <Zap className="w-6 h-6" />
@@ -281,12 +281,12 @@ const AM2Module5Section6 = () => {
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {quickTestingGuide.map((item, index) => (
-                <div key={index} className="p-4 border border-border/20 rounded-lg bg-background/50">
+                <div key={index} className="p-4 border border-white/10 rounded-lg bg-[#1a1a1a]/50">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                     <h4 className="font-semibold text-sm">{item.fault}</h4>
                   </div>
-                  <p className="text-xs text-muted-foreground">→ {item.test}</p>
+                  <p className="text-xs text-white">→ {item.test}</p>
                 </div>
               ))}
             </div>
@@ -325,7 +325,7 @@ const AM2Module5Section6 = () => {
         </Card>
 
         {/* Success Formula */}
-        <Card className="bg-card border-elec-yellow/30">
+        <Card className="bg-transparent border-elec-yellow/30">
           <div className="p-4 sm:p-6">
             <h2 className="text-xl sm:text-2xl font-bold text-elec-yellow mb-6 flex items-center gap-2">
               <CheckCircle className="w-6 h-6" />
@@ -333,32 +333,32 @@ const AM2Module5Section6 = () => {
             </h2>
             
             <div className="bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/30 rounded-lg p-4 sm:p-6">
-              <p className="text-center text-base sm:text-lg font-bold text-foreground mb-6">
+              <p className="text-center text-base sm:text-lg font-bold text-white mb-6">
                 If apprentices memorise this sheet, they'll walk into fault-finding with a clear plan:
               </p>
               
               {/* Mobile-First Vertical Layout */}
               <div className="flex flex-col items-center space-y-3 sm:space-y-4">
                 <div className="w-full max-w-xs sm:max-w-sm bg-elec-yellow/20 border border-elec-yellow/30 px-4 py-3 rounded-xl text-center">
-                  <span className="font-semibold text-foreground text-sm sm:text-base">1. Diagnose</span>
+                  <span className="font-semibold text-white text-sm sm:text-base">1. Diagnose</span>
                 </div>
                 
                 <div className="text-elec-yellow font-bold text-xl">↓</div>
                 
                 <div className="w-full max-w-xs sm:max-w-sm bg-elec-yellow/20 border border-elec-yellow/30 px-4 py-3 rounded-xl text-center">
-                  <span className="font-semibold text-foreground text-sm sm:text-base">2. State Rectification</span>
+                  <span className="font-semibold text-white text-sm sm:text-base">2. State Rectification</span>
                 </div>
                 
                 <div className="text-elec-yellow font-bold text-xl">↓</div>
                 
                 <div className="w-full max-w-xs sm:max-w-sm bg-elec-yellow/20 border border-elec-yellow/30 px-4 py-3 rounded-xl text-center">
-                  <span className="font-semibold text-foreground text-sm sm:text-base">3. State Re-Test</span>
+                  <span className="font-semibold text-white text-sm sm:text-base">3. State Re-Test</span>
                 </div>
                 
                 <div className="text-elec-yellow font-bold text-xl">↓</div>
                 
                 <div className="w-full max-w-xs sm:max-w-sm bg-elec-yellow/20 border border-elec-yellow/30 px-4 py-3 rounded-xl text-center">
-                  <span className="font-semibold text-foreground text-sm sm:text-base">4. Done ✓</span>
+                  <span className="font-semibold text-white text-sm sm:text-base">4. Done ✓</span>
                 </div>
               </div>
             </div>
@@ -366,9 +366,9 @@ const AM2Module5Section6 = () => {
         </Card>
 
         {/* Bottom Navigation */}
-        <div className="mt-12 pt-8 border-t border-border/20 space-y-4">
+        <div className="mt-12 pt-8 border-t border-white/10 space-y-4">
           {/* Previous Section */}
-          <Button variant="outline" className="w-full h-auto p-4 bg-background border-border text-white hover:bg-background/80" asChild>
+          <Button variant="outline" className="w-full h-auto p-4 bg-[#1a1a1a] border-border text-white hover:bg-[#1a1a1a]/80" asChild>
             <Link to="../section5">
               <div className="flex items-center justify-center gap-3">
                 <ArrowLeft className="w-5 h-5" />

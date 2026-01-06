@@ -428,20 +428,14 @@ export default function Module2Section3_4() {
         </div>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-white/10">
-          <Button variant="outline" asChild>
-            <Link to=".." className="flex items-center gap-2">
-              <ArrowLeft className="w-4 h-4" />
-              Previous: Parallel Circuits
-            </Link>
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5" asChild>
+            <Link to="../3-3"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
           </Button>
-          <Button asChild>
-            <Link to=".." className="flex items-center gap-2">
-              Next: Power in Circuits
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a]" asChild>
+            <Link to="../3-5">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
           </Button>
-        </div>
+        </nav>
       </main>
     </div>
   );

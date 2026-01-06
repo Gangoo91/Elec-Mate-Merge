@@ -19,7 +19,7 @@ const CareerPageHeader = ({ activeSection, onBackToSections }: CareerPageHeaderP
           <GraduationCap className="h-7 w-7 sm:h-8 sm:w-8 text-elec-yellow" />
           Career Progression
         </h1>
-        <p className="text-sm sm:text-base text-muted-foreground">
+        <p className="text-sm sm:text-base text-white">
           Resources and guidance for advancing your electrical career
         </p>
       </div>

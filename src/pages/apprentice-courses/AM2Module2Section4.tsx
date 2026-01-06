@@ -199,18 +199,18 @@ const AM2Module2Section4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
+      <div className="border-b border-white/10 bg-card/50">
         <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16 py-4">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-0 self-start" asChild>
+            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98] self-start" asChild>
               <Link to="..">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Module 2
               </Link>
             </Button>
-            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+            <div className="flex items-center gap-4 text-sm text-white">
               <div className="flex items-center gap-1">
                 <Clock className="w-4 h-4" />
                 <span>20 min read</span>
@@ -232,10 +232,10 @@ const AM2Module2Section4 = () => {
             <FileText className="w-4 h-4" />
             Module 2 – Section 4
           </div>
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4 md:mb-6">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 md:mb-6">
             Completing Paperwork Under Pressure
           </h1>
-          <p className="text-sm md:text-base text-muted-foreground mb-6 md:mb-8 leading-relaxed">
+          <p className="text-sm md:text-base text-white mb-6 md:mb-8 leading-relaxed">
             Accurate completion of certificates, test sheets, and RAMS forms within AM2 time limits - critical skills for passing AM2 and real-world electrical work.
           </p>
         </div>
@@ -263,16 +263,16 @@ const AM2Module2Section4 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckSquare className="w-5 h-5" />
               Learning Outcomes
             </h2>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm text-white mb-4">
               By the end of this section, you should be able to:
             </p>
-            <ul className="space-y-2 text-xs sm:text-sm text-foreground">
+            <ul className="space-y-2 text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Accurately complete electrical installation certificates (EICs), test result sheets, and other documents
@@ -298,19 +298,19 @@ const AM2Module2Section4 = () => {
         </Card>
 
         {/* Types of Paperwork */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               1. Types of Paperwork in AM2
             </h2>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div>
                 <h3 className="font-semibold text-base mb-2 flex items-center gap-2">
                   <PenTool className="w-4 h-4 text-elec-yellow" />
                   Risk Assessments and Method Statements (RAMS)
                 </h3>
                 <p className="mb-2">Pre-work planning documentation showing hazard identification and safe working procedures.</p>
-                <p className="text-muted-foreground">Must be task-specific and realistic for the actual work being undertaken.</p>
+                <p className="text-white">Must be task-specific and realistic for the actual work being undertaken.</p>
               </div>
               <div>
                 <h3 className="font-semibold text-base mb-2 flex items-center gap-2">
@@ -318,7 +318,7 @@ const AM2Module2Section4 = () => {
                   Inspection & Testing Sheets
                 </h3>
                 <p className="mb-2">Records of visual inspection and electrical testing results.</p>
-                <p className="text-muted-foreground">Must contain actual measured values, not theoretical or 'book' answers.</p>
+                <p className="text-white">Must contain actual measured values, not theoretical or 'book' answers.</p>
               </div>
               <div>
                 <h3 className="font-semibold text-base mb-2 flex items-center gap-2">
@@ -326,7 +326,7 @@ const AM2Module2Section4 = () => {
                   Electrical Installation Certificate (EIC)
                 </h3>
                 <p className="mb-2">Formal certification that installation complies with BS 7671.</p>
-                <p className="text-muted-foreground">Legal document requiring complete and accurate information in all sections.</p>
+                <p className="text-white">Legal document requiring complete and accurate information in all sections.</p>
               </div>
               <div>
                 <h3 className="font-semibold text-base mb-2 flex items-center gap-2">
@@ -334,7 +334,7 @@ const AM2Module2Section4 = () => {
                   Schedule of Test Results
                 </h3>
                 <p className="mb-2">Detailed test measurements for each circuit.</p>
-                <p className="text-muted-foreground">Values must be consistent with actual installation and realistic for the circuit types.</p>
+                <p className="text-white">Values must be consistent with actual installation and realistic for the circuit types.</p>
               </div>
             </div>
             <InlineCheck {...quickCheckQuestions[0]} />
@@ -342,7 +342,7 @@ const AM2Module2Section4 = () => {
         </Card>
 
         {/* NET Testing Procedures */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <TestTube className="w-5 h-5" />
@@ -352,37 +352,37 @@ const AM2Module2Section4 = () => {
               <div>
                 <h3 className="font-semibold mb-3 text-elec-yellow">Initial Verification Tests (EIC)</h3>
                 <div className="space-y-3">
-                  <div className="p-3 bg-background/50 rounded-lg">
+                  <div className="p-3 bg-[#1a1a1a]/50 rounded-lg">
                     <h4 className="font-medium text-sm mb-1">1. Continuity of Protective Conductors</h4>
-                    <p className="text-xs text-muted-foreground mb-2">Test all CPC connections including main and supplementary bonding</p>
-                    <ul className="text-xs text-muted-foreground space-y-1">
+                    <p className="text-xs text-white mb-2">Test all CPC connections including main and supplementary bonding</p>
+                    <ul className="text-xs text-white space-y-1">
                       <li>• Record actual measured resistance values</li>
                       <li>• Check R1+R2 values for each circuit</li>
                       <li>• Document bonding conductor continuity</li>
                     </ul>
                   </div>
-                  <div className="p-3 bg-background/50 rounded-lg">
+                  <div className="p-3 bg-[#1a1a1a]/50 rounded-lg">
                     <h4 className="font-medium text-sm mb-1">2. Continuity of Ring Final Circuits</h4>
-                    <p className="text-xs text-muted-foreground mb-2">End-to-end and cross-connection tests for socket circuits</p>
-                    <ul className="text-xs text-muted-foreground space-y-1">
+                    <p className="text-xs text-white mb-2">End-to-end and cross-connection tests for socket circuits</p>
+                    <ul className="text-xs text-white space-y-1">
                       <li>• Record live-neutral, live-earth, neutral-earth values</li>
                       <li>• Calculate and verify (R1+R2)/4 values</li>
                       <li>• Document any interconnections found</li>
                     </ul>
                   </div>
-                  <div className="p-3 bg-background/50 rounded-lg">
+                  <div className="p-3 bg-[#1a1a1a]/50 rounded-lg">
                     <h4 className="font-medium text-sm mb-1">3. Insulation Resistance</h4>
-                    <p className="text-xs text-muted-foreground mb-2">Minimum 1MΩ at 500V DC between live conductors and earth</p>
-                    <ul className="text-xs text-muted-foreground space-y-1">
+                    <p className="text-xs text-white mb-2">Minimum 1MΩ at 500V DC between live conductors and earth</p>
+                    <ul className="text-xs text-white space-y-1">
                       <li>• Test between live and neutral conductors</li>
                       <li>• Test between live conductors and earth</li>
                       <li>• Record values in MΩ, never as &gt;999MΩ</li>
                     </ul>
                   </div>
-                  <div className="p-3 bg-background/50 rounded-lg">
+                  <div className="p-3 bg-[#1a1a1a]/50 rounded-lg">
                     <h4 className="font-medium text-sm mb-1">4. Polarity Testing</h4>
-                    <p className="text-xs text-muted-foreground mb-2">Verify correct connections at switches, sockets and accessories</p>
-                    <ul className="text-xs text-muted-foreground space-y-1">
+                    <p className="text-xs text-white mb-2">Verify correct connections at switches, sockets and accessories</p>
+                    <ul className="text-xs text-white space-y-1">
                       <li>• Check switch line connections</li>
                       <li>• Verify socket outlet polarity</li>
                       <li>• Confirm protective device arrangements</li>
@@ -393,37 +393,37 @@ const AM2Module2Section4 = () => {
               <div>
                 <h3 className="font-semibold mb-3 text-elec-yellow">Live Testing & Documentation</h3>
                 <div className="space-y-3">
-                  <div className="p-3 bg-background/50 rounded-lg">
+                  <div className="p-3 bg-[#1a1a1a]/50 rounded-lg">
                     <h4 className="font-medium text-sm mb-1">5. Earth Fault Loop Impedance (Zs)</h4>
-                    <p className="text-xs text-muted-foreground mb-2">Verify disconnection times meet BS 7671 requirements</p>
-                    <ul className="text-xs text-muted-foreground space-y-1">
+                    <p className="text-xs text-white mb-2">Verify disconnection times meet BS 7671 requirements</p>
+                    <ul className="text-xs text-white space-y-1">
                       <li>• Measure actual Zs at each outlet</li>
                       <li>• Compare with maximum permitted values</li>
                       <li>• Never record 0.00Ω - always shows measurable value</li>
                     </ul>
                   </div>
-                  <div className="p-3 bg-background/50 rounded-lg">
+                  <div className="p-3 bg-[#1a1a1a]/50 rounded-lg">
                     <h4 className="font-medium text-sm mb-1">6. RCD Operation Testing</h4>
-                    <p className="text-xs text-muted-foreground mb-2">Test trip times at x1, x5 rated current and ramp testing</p>
-                    <ul className="text-xs text-muted-foreground space-y-1">
+                    <p className="text-xs text-white mb-2">Test trip times at x1, x5 rated current and ramp testing</p>
+                    <ul className="text-xs text-white space-y-1">
                       <li>• Record trip times at 1× and 5× IΔn</li>
                       <li>• Document ramp test results</li>
                       <li>• Test mechanical operation button</li>
                     </ul>
                   </div>
-                  <div className="p-3 bg-background/50 rounded-lg">
+                  <div className="p-3 bg-[#1a1a1a]/50 rounded-lg">
                     <h4 className="font-medium text-sm mb-1">7. Voltage and Phase Sequence</h4>
-                    <p className="text-xs text-muted-foreground mb-2">Supply voltage verification and three-phase rotation</p>
-                    <ul className="text-xs text-muted-foreground space-y-1">
+                    <p className="text-xs text-white mb-2">Supply voltage verification and three-phase rotation</p>
+                    <ul className="text-xs text-white space-y-1">
                       <li>• Record actual supply voltages</li>
                       <li>• Verify phase rotation for 3-phase supplies</li>
                       <li>• Check voltage balance between phases</li>
                     </ul>
                   </div>
-                  <div className="p-3 bg-background/50 rounded-lg">
+                  <div className="p-3 bg-[#1a1a1a]/50 rounded-lg">
                     <h4 className="font-medium text-sm mb-1">8. Functional Testing</h4>
-                    <p className="text-xs text-muted-foreground mb-2">Operation of switches, isolators and control devices</p>
-                    <ul className="text-xs text-muted-foreground space-y-1">
+                    <p className="text-xs text-white mb-2">Operation of switches, isolators and control devices</p>
+                    <ul className="text-xs text-white space-y-1">
                       <li>• Test all switching and control functions</li>
                       <li>• Verify emergency stop operations</li>
                       <li>• Document any operational limitations</li>
@@ -436,7 +436,7 @@ const AM2Module2Section4 = () => {
         </Card>
 
         {/* Complete Documentation Package */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Clipboard className="w-5 h-5" />
@@ -535,7 +535,7 @@ const AM2Module2Section4 = () => {
         </Card>
 
         {/* Legal Framework */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Scale className="w-5 h-5" />
@@ -544,7 +544,7 @@ const AM2Module2Section4 = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <h3 className="font-semibold mb-3">Building Regulations Part P</h3>
-                <p className="text-sm text-muted-foreground mb-3">
+                <p className="text-sm text-white mb-3">
                   Mandatory for notifiable electrical work in dwellings and certain other premises.
                 </p>
                 <ul className="space-y-2 text-sm">
@@ -568,7 +568,7 @@ const AM2Module2Section4 = () => {
               </div>
               <div>
                 <h3 className="font-semibold mb-3">BS 7671:2018+A2:2022 Requirements</h3>
-                <p className="text-sm text-muted-foreground mb-3">
+                <p className="text-sm text-white mb-3">
                   IET Wiring Regulations compliance verification and documentation standards.
                 </p>
                 <ul className="space-y-2 text-sm">
@@ -591,9 +591,9 @@ const AM2Module2Section4 = () => {
                 </ul>
               </div>
             </div>
-            <div className="mt-6 p-4 bg-background/50 rounded-lg">
+            <div className="mt-6 p-4 bg-[#1a1a1a]/50 rounded-lg">
               <h3 className="font-semibold mb-2 text-elec-yellow">NET Testing Standards & AM2 Requirements</h3>
-              <p className="text-sm text-muted-foreground mb-3">
+              <p className="text-sm text-white mb-3">
                 National Electrical Testing requirements ensure competency in documentation and testing procedures.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -631,7 +631,7 @@ const AM2Module2Section4 = () => {
         </Card>
 
         {/* Pre-Paperwork Checklist */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               Pre-Paperwork Checklist
@@ -639,7 +639,7 @@ const AM2Module2Section4 = () => {
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div>
                 <h3 className="font-semibold text-base mb-3">Before You Start</h3>
-                <ul className="space-y-2 text-xs sm:text-sm text-foreground">
+                <ul className="space-y-2 text-xs sm:text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Check all paperwork is provided and complete
@@ -664,7 +664,7 @@ const AM2Module2Section4 = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-base mb-3">Time Management Strategy</h3>
-                <ul className="space-y-2 text-xs sm:text-sm text-foreground">
+                <ul className="space-y-2 text-xs sm:text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Allocate specific time for documentation
@@ -692,12 +692,12 @@ const AM2Module2Section4 = () => {
         </Card>
 
         {/* Common Paperwork Mistakes */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               2. Common Paperwork Mistakes (NET Guidance)
             </h2>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <h3 className="font-semibold text-base mb-3 text-elec-yellow">Critical Errors to Avoid</h3>
@@ -756,13 +756,13 @@ const AM2Module2Section4 = () => {
         </Card>
 
         {/* Time Pressure in AM2 */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Timer className="w-5 h-5" />
               3. Time Pressure in AM2
             </h2>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="grid md:grid-cols-3 gap-6">
                 <div className="bg-muted/20 p-4 rounded-lg">
                   <h3 className="font-semibold text-base mb-2">Assessment Structure</h3>
@@ -799,7 +799,7 @@ const AM2Module2Section4 = () => {
             <div className="space-y-6">
               <div>
                 <h3 className="font-semibold text-base mb-3">Pre-Assessment Preparation</h3>
-                <ul className="space-y-2 text-xs sm:text-sm text-foreground">
+                <ul className="space-y-2 text-xs sm:text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Practice certificates beforehand — fill in blank EICs and test sheets until it's second nature
@@ -816,7 +816,7 @@ const AM2Module2Section4 = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-base mb-3">During Assessment</h3>
-                <ul className="space-y-2 text-xs sm:text-sm text-foreground">
+                <ul className="space-y-2 text-xs sm:text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Record results as you go — don't wait until the end of the section
@@ -837,7 +837,7 @@ const AM2Module2Section4 = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-base mb-3">Quality Control</h3>
-                <ul className="space-y-2 text-xs sm:text-sm text-foreground">
+                <ul className="space-y-2 text-xs sm:text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Cross-check measurements against installation reality
@@ -858,7 +858,7 @@ const AM2Module2Section4 = () => {
         </Card>
 
         {/* Real-world Examples */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               Real-world Examples
@@ -913,47 +913,47 @@ const AM2Module2Section4 = () => {
             <div className="space-y-4">
               <Card className="bg-gradient-to-r from-elec-yellow/5 to-background border-elec-yellow/30">
                 <div className="p-4">
-                  <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                  <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
                     <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                     Q1: Can I use pencil in AM2 paperwork?
                   </h3>
-                  <p className="text-sm text-muted-foreground">A: No — all paperwork must be completed in pen for legal certification requirements.</p>
+                  <p className="text-sm text-white">A: No — all paperwork must be completed in pen for legal certification requirements.</p>
                 </div>
               </Card>
               <Card className="bg-gradient-to-r from-elec-yellow/5 to-background border-elec-yellow/30">
                 <div className="p-4">
-                  <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                  <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
                     <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                     Q2: Will assessors allow small mistakes?
                   </h3>
-                  <p className="text-sm text-muted-foreground">A: Minor slips may not fail you, but repeated or major omissions will. Quality and accuracy are assessed holistically.</p>
+                  <p className="text-sm text-white">A: Minor slips may not fail you, but repeated or major omissions will. Quality and accuracy are assessed holistically.</p>
                 </div>
               </Card>
               <Card className="bg-gradient-to-r from-elec-yellow/5 to-background border-elec-yellow/30">
                 <div className="p-4">
-                  <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                  <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
                     <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                     Q3: Do I need to write explanations for test results?
                   </h3>
-                  <p className="text-sm text-muted-foreground">A: No, just accurate measured values in the correct boxes. Over-explanation can waste valuable time.</p>
+                  <p className="text-sm text-white">A: No, just accurate measured values in the correct boxes. Over-explanation can waste valuable time.</p>
                 </div>
               </Card>
               <Card className="bg-gradient-to-r from-elec-yellow/5 to-background border-elec-yellow/30">
                 <div className="p-4">
-                  <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                  <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
                     <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                     Q4: What happens if I don't complete the paperwork in time?
                   </h3>
-                  <p className="text-sm text-muted-foreground">A: Marks are lost proportionally. Incomplete documentation may tip you below the pass threshold despite good practical work.</p>
+                  <p className="text-sm text-white">A: Marks are lost proportionally. Incomplete documentation may tip you below the pass threshold despite good practical work.</p>
                 </div>
               </Card>
               <Card className="bg-gradient-to-r from-elec-yellow/5 to-background border-elec-yellow/30">
                 <div className="p-4">
-                  <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                  <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
                     <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                     Q5: Can I bring pre-filled paperwork?
                   </h3>
-                  <p className="text-sm text-muted-foreground">A: No — all paperwork must be completed during the assessment to demonstrate competency under exam conditions.</p>
+                  <p className="text-sm text-white">A: No — all paperwork must be completed during the assessment to demonstrate competency under exam conditions.</p>
                 </div>
               </Card>
             </div>
@@ -966,7 +966,7 @@ const AM2Module2Section4 = () => {
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               Summary
             </h2>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <p className="text-base font-medium">
                 Paperwork is as important as the practical work. You must:
               </p>
@@ -998,12 +998,12 @@ const AM2Module2Section4 = () => {
         </Card>
 
         {/* Quiz Section */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               Knowledge Check: 10-Question Quiz
             </h2>
-            <p className="text-sm text-muted-foreground mb-6">
+            <p className="text-sm text-white mb-6">
               Test your understanding of AM2 paperwork requirements and best practices.
             </p>
             <Quiz questions={quizQuestions} />
@@ -1014,7 +1014,7 @@ const AM2Module2Section4 = () => {
         <div className="flex flex-col sm:flex-row gap-3 justify-between">
           <Link 
             to="../section3"
-            className="flex items-center gap-2 px-4 py-3 bg-card border border-elec-yellow/30 text-foreground rounded-lg hover:border-elec-yellow/50 transition-colors text-sm font-medium w-full sm:w-auto justify-center sm:justify-start"
+            className="flex items-center gap-2 px-4 py-3 border border-elec-yellow/30 text-white rounded-lg hover:border-elec-yellow/50 transition-colors text-sm font-medium w-full sm:w-auto justify-center sm:justify-start"
           >
             <ArrowLeft className="h-4 w-4" />
             Previous: Section 3

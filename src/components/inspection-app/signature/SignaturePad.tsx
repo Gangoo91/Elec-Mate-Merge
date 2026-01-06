@@ -194,7 +194,7 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(({
   return (
     <Card className="p-2 sm:p-3 space-y-2 sm:space-y-3">
       <div className="w-full max-w-sm mx-auto">
-        <div className="border-2 border-dashed border-gray-300 rounded-lg" style={{ width: '100%', maxWidth: width || 320, height: height || 160 }}>
+        <div className="border-2 border-dashed border-white/30 rounded-lg" style={{ width: '100%', maxWidth: width || 320, height: height || 160 }}>
           <canvas
             ref={canvasRef}
             width={width}

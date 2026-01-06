@@ -1,105 +1,140 @@
-import { useEffect, useMemo, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import BackButton from "@/components/common/BackButton";
-import { useToast } from "@/hooks/use-toast";
-import { BarChart3, Info, RefreshCw, Save } from "lucide-react";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
+import { useMemo, useState } from "react";
 import { Helmet } from "react-helmet";
-import WhyThisMatters from "@/components/common/WhyThisMatters";
+import {
+  BarChart3,
+  PoundSterling,
+  Clock,
+  TrendingUp,
+  Calculator,
+  RotateCcw,
+  Save,
+  ChevronDown,
+  BookOpen,
+  Info,
+  CheckCircle,
+  AlertCircle,
+} from "lucide-react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { cn } from "@/lib/utils";
+import { useToast } from "@/hooks/use-toast";
+import {
+  CalculatorCard,
+  CalculatorInput,
+  CalculatorSelect,
+  CalculatorResult,
+  ResultValue,
+  ResultsGrid,
+  CALCULATOR_CONFIG,
+} from "@/components/calculators/shared";
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ReferenceLine } from "recharts";
 
 interface ROIInputs {
-  equipmentCost: number;
-  installationCost: number;
-  maintenancePerYear: number;
-  lifespanYears: number;
-  residualValue: number;
-  annualSavings: number; // extra revenue or cost reduction
-  utilisationRate: number; // % multiplier applied to savings
-  discountRate: number; // % for NPV
-}
-
-interface ROIResults {
-  capex: number;
-  annualNetBenefit: number;
-  simplePaybackYears: number | null;
-  npv: number;
-  npvLow: number; // sensitivity -5%
-  npvHigh: number; // sensitivity +5%
-  roiPercent: number;
-  irrPercent: number | null;
-  cashflowSeries: { year: number; cumulative: number }[];
+  equipmentCost: string;
+  installationCost: string;
+  maintenancePerYear: string;
+  lifespanYears: string;
+  residualValue: string;
+  annualSavings: string;
+  utilisationRate: string;
+  discountRate: string;
 }
 
 const STORAGE_KEY = "equipment_roi_scenarios";
 
 const EquipmentROICalculator = () => {
+  const config = CALCULATOR_CONFIG["business"];
   const { toast } = useToast();
+
   const [calculated, setCalculated] = useState(false);
+  const [showChart, setShowChart] = useState(false);
+  const [showReference, setShowReference] = useState(false);
+
   const [inputs, setInputs] = useState<ROIInputs>({
-    equipmentCost: 7500,
-    installationCost: 800,
-    maintenancePerYear: 200,
-    lifespanYears: 5,
-    residualValue: 500,
-    annualSavings: 3000,
-    utilisationRate: 85,
-    discountRate: 5,
+    equipmentCost: "7500",
+    installationCost: "800",
+    maintenancePerYear: "200",
+    lifespanYears: "5",
+    residualValue: "500",
+    annualSavings: "3000",
+    utilisationRate: "85",
+    discountRate: "5",
   });
 
-  const update = (key: keyof ROIInputs, val: number) => {
+  const update = (key: keyof ROIInputs, val: string) => {
     setCalculated(false);
-    setInputs((p) => ({ ...p, [key]: isFinite(val) ? val : 0 }));
+    setInputs((p) => ({ ...p, [key]: val }));
   };
 
-  const discountOptions = [3, 5, 7, 10].map((v) => ({ value: String(v), label: `${v}%` }));
+  const discountOptions = [
+    { value: "3", label: "3% - Low risk" },
+    { value: "5", label: "5% - Standard" },
+    { value: "7", label: "7% - Moderate" },
+    { value: "10", label: "10% - High risk" },
+  ];
 
-  const results: ROIResults = useMemo(() => {
-    const capex = inputs.equipmentCost + inputs.installationCost;
-    const annualNetBenefit = (inputs.annualSavings * (inputs.utilisationRate / 100)) - inputs.maintenancePerYear;
+  const lifespanOptions = [
+    { value: "3", label: "3 years" },
+    { value: "5", label: "5 years" },
+    { value: "7", label: "7 years" },
+    { value: "10", label: "10 years" },
+  ];
 
-    // cumulative cashflow for simple payback and chart (no discount in simple payback)
+  const equipmentCostNum = parseFloat(inputs.equipmentCost) || 0;
+  const installationCostNum = parseFloat(inputs.installationCost) || 0;
+  const maintenancePerYearNum = parseFloat(inputs.maintenancePerYear) || 0;
+  const lifespanYearsNum = parseFloat(inputs.lifespanYears) || 5;
+  const residualValueNum = parseFloat(inputs.residualValue) || 0;
+  const annualSavingsNum = parseFloat(inputs.annualSavings) || 0;
+  const utilisationRateNum = parseFloat(inputs.utilisationRate) || 100;
+  const discountRateNum = parseFloat(inputs.discountRate) || 5;
+
+  const results = useMemo(() => {
+    const capex = equipmentCostNum + installationCostNum;
+    const annualNetBenefit = (annualSavingsNum * (utilisationRateNum / 100)) - maintenancePerYearNum;
+
+    // Cumulative cashflow
     let cumulative = -capex;
     const series: { year: number; cumulative: number }[] = [{ year: 0, cumulative }];
     let payback: number | null = null;
-    for (let y = 1; y <= inputs.lifespanYears; y++) {
+    for (let y = 1; y <= lifespanYearsNum; y++) {
       cumulative += annualNetBenefit;
       series.push({ year: y, cumulative });
       if (payback === null && cumulative >= 0) payback = y;
     }
 
     // NPV
-    const r = inputs.discountRate / 100;
+    const r = discountRateNum / 100;
     let npv = -capex;
-    for (let y = 1; y <= inputs.lifespanYears; y++) {
+    for (let y = 1; y <= lifespanYearsNum; y++) {
       npv += annualNetBenefit / Math.pow(1 + r, y);
     }
-    npv += inputs.residualValue / Math.pow(1 + r, inputs.lifespanYears);
+    npv += residualValueNum / Math.pow(1 + r, lifespanYearsNum);
 
     const rLow = Math.max(r - 0.05, 0.001);
     const rHigh = r + 0.05;
     const calcNPV = (rate: number) => {
       let val = -capex;
-      for (let y = 1; y <= inputs.lifespanYears; y++) val += annualNetBenefit / Math.pow(1 + rate, y);
-      val += inputs.residualValue / Math.pow(1 + rate, inputs.lifespanYears);
+      for (let y = 1; y <= lifespanYearsNum; y++) val += annualNetBenefit / Math.pow(1 + rate, y);
+      val += residualValueNum / Math.pow(1 + rate, lifespanYearsNum);
       return val;
     };
 
     const npvLow = calcNPV(rLow);
     const npvHigh = calcNPV(rHigh);
 
-    // ROI over life (simple total return vs cost)
-    const totalReturn = annualNetBenefit * inputs.lifespanYears + inputs.residualValue;
+    // ROI
+    const totalReturn = annualNetBenefit * lifespanYearsNum + residualValueNum;
     const roiPercent = capex > 0 ? ((totalReturn - capex) / capex) * 100 : 0;
 
-    // IRR (bisection)
-    const cashflows: number[] = [-capex, ...Array.from({ length: inputs.lifespanYears }, () => annualNetBenefit)];
-    cashflows[cashflows.length - 1] += inputs.residualValue;
+    // IRR
+    const cashflows: number[] = [-capex, ...Array.from({ length: lifespanYearsNum }, () => annualNetBenefit)];
+    cashflows[cashflows.length - 1] += residualValueNum;
     const irr = (() => {
-      let low = -0.9, high = 1.0; // -90% to 100%
+      let low = -0.9, high = 1.0;
       const npvAt = (rate: number) => cashflows.reduce((acc, cf, i) => acc + cf / Math.pow(1 + rate, i), 0);
       let mid = 0;
       for (let i = 0; i < 60; i++) {
@@ -123,7 +158,7 @@ const EquipmentROICalculator = () => {
       irrPercent: irr,
       cashflowSeries: series,
     };
-  }, [inputs]);
+  }, [equipmentCostNum, installationCostNum, maintenancePerYearNum, lifespanYearsNum, residualValueNum, annualSavingsNum, utilisationRateNum, discountRateNum]);
 
   const calculateROI = () => {
     setCalculated(true);
@@ -148,167 +183,436 @@ const EquipmentROICalculator = () => {
 
   const reset = () => {
     setInputs({
-      equipmentCost: 0,
-      installationCost: 0,
-      maintenancePerYear: 0,
-      lifespanYears: 5,
-      residualValue: 0,
-      annualSavings: 0,
-      utilisationRate: 100,
-      discountRate: 5,
+      equipmentCost: "7500",
+      installationCost: "800",
+      maintenancePerYear: "200",
+      lifespanYears: "5",
+      residualValue: "500",
+      annualSavings: "3000",
+      utilisationRate: "85",
+      discountRate: "5",
     });
     setCalculated(false);
   };
 
-  useEffect(() => {
-    // ensure dropdowns are above other content on mobile
-    // (addresses transparency/z-index issue from context)
-    document.documentElement.style.setProperty("--dropdown-z", "9999");
-  }, []);
-
   const currency = (n: number) => `£${(n || 0).toFixed(2)}`;
+  const isValid = equipmentCostNum > 0;
+
+  const getROIStatus = () => {
+    if (results.npv >= 0 && results.roiPercent > 20)
+      return { color: "text-green-400", label: "Good Investment", bg: "bg-green-500/10 border-green-500/30" };
+    if (results.npv >= 0)
+      return { color: "text-amber-400", label: "Marginal Investment", bg: "bg-amber-500/10 border-amber-500/30" };
+    return { color: "text-red-400", label: "Poor Investment", bg: "bg-red-500/10 border-red-500/30" };
+  };
+
+  const roiStatus = getROIStatus();
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl">
+    <div className="space-y-4">
       <Helmet>
         <title>Equipment ROI Calculator UK | Electrician Tools</title>
-        <meta name="description" content="Analyse ROI, NPV, IRR and payback for equipment purchases. UK electrician-focused, mobile friendly." />
+        <meta
+          name="description"
+          content="Analyse ROI, NPV, IRR and payback for equipment purchases. UK electrician-focused, mobile friendly."
+        />
         <link rel="canonical" href="/electrician/business-development/tools/equipment-roi" />
       </Helmet>
 
-      <div className="flex flex-col items-center justify-center mb-8">
-        <h1 className="text-3xl font-bold tracking-tight mb-4 flex items-center gap-3">
-          <BarChart3 className="h-8 w-8 text-elec-yellow" />
-          Equipment ROI Calculator
-        </h1>
-        <p className="text-muted-foreground text-center max-w-2xl mb-6">
-          Analyse the return on investment for new equipment purchases.
-        </p>
-        <BackButton customUrl="/electrician/business-development/tools" label="Back to Calculators" />
-      </div>
+      <CalculatorCard
+        category="business"
+        title="Equipment ROI Calculator"
+        description="Analyse return on investment for equipment purchases"
+        badge="Investment"
+      >
+        {/* Investment Costs Section */}
+        <div className="flex items-center gap-2 mb-3">
+          <PoundSterling className="h-4 w-4 text-blue-400" />
+          <span className="text-sm font-medium text-white/80">Investment Costs</span>
+        </div>
 
-      <WhyThisMatters
-        points={[
-          "Checks if a purchase pays back and improves cash flow before you commit.",
-          "NPV/IRR quantify value vs risk and utilisation for smarter capex decisions.",
-          "Supports justification to lenders/partners with clear evidence."
-        ]}
-      />
+        <div className="grid grid-cols-2 gap-3">
+          <CalculatorInput
+            label="Equipment Cost"
+            unit="£"
+            type="text"
+            inputMode="decimal"
+            value={inputs.equipmentCost}
+            onChange={(val) => update("equipmentCost", val)}
+            placeholder="e.g., 7500"
+            hint="Purchase price"
+          />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card className="border-elec-yellow/20 bg-elec-card">
-          <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
-              <BarChart3 className="h-5 w-5 text-elec-yellow" />
-              ROI Inputs
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid sm:grid-cols-2 gap-4">
-              <MobileInput label="Equipment Cost" value={String(inputs.equipmentCost)} type="number" onChange={(e) => update("equipmentCost", parseFloat((e.target as HTMLInputElement).value || "0"))} unit="£" />
-              <MobileInput label="Installation Cost" value={String(inputs.installationCost)} type="number" onChange={(e) => update("installationCost", parseFloat((e.target as HTMLInputElement).value || "0"))} unit="£" />
-              <MobileInput label="Maintenance per Year" value={String(inputs.maintenancePerYear)} type="number" onChange={(e) => update("maintenancePerYear", parseFloat((e.target as HTMLInputElement).value || "0"))} unit="£" />
-              <MobileInput label="Lifespan" value={String(inputs.lifespanYears)} type="number" onChange={(e) => update("lifespanYears", parseFloat((e.target as HTMLInputElement).value || "0"))} unit="years" />
-              <MobileInput label="Residual Value (end)" value={String(inputs.residualValue)} type="number" onChange={(e) => update("residualValue", parseFloat((e.target as HTMLInputElement).value || "0"))} unit="£" />
-              <MobileInput label="Annual Savings/Revenue" value={String(inputs.annualSavings)} type="number" onChange={(e) => update("annualSavings", parseFloat((e.target as HTMLInputElement).value || "0"))} unit="£" />
-              <MobileInput label="Utilisation" value={String(inputs.utilisationRate)} type="number" onChange={(e) => update("utilisationRate", parseFloat((e.target as HTMLInputElement).value || "0"))} unit="%" />
-              <div className="relative z-[var(--dropdown-z,50)]">
-                <MobileSelectWrapper
-                  label="Discount Rate"
-                  placeholder="Select rate"
-                  value={String(inputs.discountRate)}
-                  onValueChange={(val) => update("discountRate", parseFloat(val))}
-                  options={discountOptions}
-                  hint="Used for NPV calculation"
-                />
-              </div>
-            </div>
+          <CalculatorInput
+            label="Installation Cost"
+            unit="£"
+            type="text"
+            inputMode="decimal"
+            value={inputs.installationCost}
+            onChange={(val) => update("installationCost", val)}
+            placeholder="e.g., 800"
+            hint="Setup & commissioning"
+          />
 
-            <div className="flex flex-wrap gap-3 pt-2">
-              <Button onClick={calculateROI} className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                Calculate ROI
-              </Button>
-              <Button variant="secondary" onClick={saveScenario} className="gap-2">
-                <Save className="h-4 w-4" /> Save Scenario
-              </Button>
-              <Button variant="outline" onClick={reset} className="gap-2">
-                <RefreshCw className="h-4 w-4" /> Reset
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+          <CalculatorInput
+            label="Maintenance/Year"
+            unit="£"
+            type="text"
+            inputMode="decimal"
+            value={inputs.maintenancePerYear}
+            onChange={(val) => update("maintenancePerYear", val)}
+            placeholder="e.g., 200"
+            hint="Annual running cost"
+          />
 
-        <Card className="border-elec-yellow/20 bg-elec-card">
-          <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
-              <BarChart3 className="h-5 w-5 text-elec-yellow" />
-              ROI Analysis
-              {calculated && <Badge variant="success" className="ml-auto">Calculated</Badge>}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {!calculated ? (
-              <div className="text-elec-light text-sm flex items-start gap-2">
-                <Info className="h-4 w-4 mt-0.5 text-elec-yellow" />
-                Enter inputs then press Calculate to see your NPV, payback and ROI. All values are estimates.
-              </div>
-            ) : (
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                  <div className="bg-elec-dark/50 rounded-lg p-3">
-                    <div className="text-elec-light text-xs">CapEx</div>
-                    <div className="text-white text-lg font-semibold">{currency(results.capex)}</div>
-                  </div>
-                  <div className="bg-elec-dark/50 rounded-lg p-3">
-                    <div className="text-elec-light text-xs">Annual Net Benefit</div>
-                    <div className="text-white text-lg font-semibold">{currency(results.annualNetBenefit)}</div>
-                  </div>
-                  <div className="bg-elec-dark/50 rounded-lg p-3">
-                    <div className="text-elec-light text-xs">Simple Payback</div>
-                    <div className="text-white text-lg font-semibold">{results.simplePaybackYears ?? "—"} years</div>
-                  </div>
-                  <div className="bg-elec-dark/50 rounded-lg p-3">
-                    <div className="text-elec-light text-xs">NPV @ {inputs.discountRate}%</div>
-                    <div className={`text-lg font-semibold ${results.npv >= 0 ? "text-elec-yellow" : "text-red-300"}`}>{currency(results.npv)}</div>
-                  </div>
-                  <div className="bg-elec-dark/50 rounded-lg p-3">
-                    <div className="text-elec-light text-xs">ROI (life)</div>
-                    <div className={`text-lg font-semibold ${results.roiPercent >= 0 ? "text-elec-yellow" : "text-red-300"}`}>{results.roiPercent.toFixed(1)}%</div>
-                  </div>
-                  <div className="bg-elec-dark/50 rounded-lg p-3">
-                    <div className="text-elec-light text-xs">IRR</div>
-                    <div className="text-white text-lg font-semibold">{results.irrPercent !== null ? `${results.irrPercent.toFixed(1)}%` : "—"}</div>
-                  </div>
-                </div>
+          <CalculatorInput
+            label="Residual Value"
+            unit="£"
+            type="text"
+            inputMode="decimal"
+            value={inputs.residualValue}
+            onChange={(val) => update("residualValue", val)}
+            placeholder="e.g., 500"
+            hint="Value at end of life"
+          />
+        </div>
 
-                <div className="bg-elec-dark/50 rounded-lg p-4">
-                  <h4 className="text-white font-medium mb-2">Cumulative Cash Flow</h4>
-                  <div className="h-56">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={results.cashflowSeries}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                        <XAxis dataKey="year" stroke="rgba(255,255,255,0.6)" />
-                        <YAxis stroke="rgba(255,255,255,0.6)" tickFormatter={(v) => `£${v}`} />
-                        <Tooltip formatter={(v: any) => currency(v as number)} labelFormatter={(l) => `Year ${l}`} contentStyle={{ background: "#0b0f15", border: "1px solid rgba(255,255,255,0.1)" }} />
-                        <Line type="monotone" dataKey="cumulative" stroke="#F7D154" strokeWidth={2} dot={false} />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </div>
-                </div>
+        {/* Revenue Section */}
+        <div className="flex items-center gap-2 mb-3 mt-6 pt-4 border-t border-white/10">
+          <TrendingUp className="h-4 w-4 text-green-400" />
+          <span className="text-sm font-medium text-white/80">Revenue & Savings</span>
+        </div>
 
-                <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
-                  <div className="flex items-start gap-2">
-                    <Info className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
-                    <p className="text-blue-200/80 text-xs">
-                      NPV sensitivity: {currency(results.npvLow)} at lower rate, {currency(results.npvHigh)} at higher rate. Always verify assumptions for BS 7671 compliant installation planning and HMRC capital allowances.
-                    </p>
-                  </div>
-                </div>
-              </div>
+        <div className="grid grid-cols-2 gap-3">
+          <CalculatorInput
+            label="Annual Savings"
+            unit="£"
+            type="text"
+            inputMode="decimal"
+            value={inputs.annualSavings}
+            onChange={(val) => update("annualSavings", val)}
+            placeholder="e.g., 3000"
+            hint="Revenue or cost savings"
+          />
+
+          <CalculatorInput
+            label="Utilisation"
+            unit="%"
+            type="text"
+            inputMode="decimal"
+            value={inputs.utilisationRate}
+            onChange={(val) => update("utilisationRate", val)}
+            placeholder="e.g., 85"
+            hint="Usage rate"
+          />
+        </div>
+
+        {/* Financial Settings Section */}
+        <div className="flex items-center gap-2 mb-3 mt-6 pt-4 border-t border-white/10">
+          <Clock className="h-4 w-4 text-blue-400" />
+          <span className="text-sm font-medium text-white/80">Financial Settings</span>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3">
+          <CalculatorSelect
+            label="Equipment Lifespan"
+            value={inputs.lifespanYears}
+            onChange={(val) => update("lifespanYears", val)}
+            options={lifespanOptions}
+          />
+
+          <CalculatorSelect
+            label="Discount Rate"
+            value={inputs.discountRate}
+            onChange={(val) => update("discountRate", val)}
+            options={discountOptions}
+            hint="For NPV calculation"
+          />
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex gap-2 pt-4">
+          <button
+            onClick={calculateROI}
+            disabled={!isValid}
+            className={cn(
+              "flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation",
+              isValid ? "text-black" : "bg-white/10 text-white/30 cursor-not-allowed"
             )}
-          </CardContent>
-        </Card>
-      </div>
+            style={
+              isValid
+                ? {
+                    background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                  }
+                : undefined
+            }
+          >
+            <Calculator className="h-5 w-5" />
+            Calculate ROI
+          </button>
+          <button
+            onClick={saveScenario}
+            disabled={!calculated}
+            className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/90 hover:bg-white/10 transition-colors touch-manipulation disabled:opacity-50"
+          >
+            <Save className="h-5 w-5" />
+          </button>
+          <button
+            onClick={reset}
+            className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/90 hover:bg-white/10 transition-colors touch-manipulation"
+          >
+            <RotateCcw className="h-5 w-5" />
+          </button>
+        </div>
+      </CalculatorCard>
+
+      {/* Results Section */}
+      {calculated && isValid && (
+        <div className="space-y-4 animate-fade-in">
+          {/* Investment Status */}
+          <div className={cn("flex items-center gap-2 p-3 rounded-xl border", roiStatus.bg)}>
+            {results.npv >= 0 ? (
+              <CheckCircle className={cn("h-5 w-5", roiStatus.color)} />
+            ) : (
+              <AlertCircle className={cn("h-5 w-5", roiStatus.color)} />
+            )}
+            <span className={cn("font-medium text-sm", roiStatus.color)}>
+              {roiStatus.label} - {results.roiPercent.toFixed(1)}% ROI over {lifespanYearsNum} years
+            </span>
+          </div>
+
+          {/* Key Metrics */}
+          <div className="grid grid-cols-2 gap-4">
+            <CalculatorResult category="business">
+              <div className="text-center">
+                <p className="text-sm text-white mb-1">NPV @ {discountRateNum}%</p>
+                <div
+                  className={cn(
+                    "text-3xl font-bold",
+                    results.npv >= 0 ? "" : "text-red-400"
+                  )}
+                  style={
+                    results.npv >= 0
+                      ? {
+                          backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                          WebkitBackgroundClip: "text",
+                          WebkitTextFillColor: "transparent",
+                          backgroundClip: "text",
+                        }
+                      : undefined
+                  }
+                >
+                  {currency(results.npv)}
+                </div>
+                <p className="text-xs text-white mt-1">Net Present Value</p>
+              </div>
+            </CalculatorResult>
+
+            <CalculatorResult category="business">
+              <div className="text-center">
+                <p className="text-sm text-white mb-1">Payback Period</p>
+                <div
+                  className="text-3xl font-bold"
+                  style={{
+                    backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
+                  {results.simplePaybackYears ?? "—"} yrs
+                </div>
+                <p className="text-xs text-white mt-1">Simple payback</p>
+              </div>
+            </CalculatorResult>
+          </div>
+
+          {/* Detailed Results */}
+          <CalculatorResult category="business">
+            <ResultsGrid columns={3}>
+              <ResultValue
+                label="Total CapEx"
+                value={currency(results.capex)}
+                category="business"
+                size="sm"
+              />
+              <ResultValue
+                label="Annual Net Benefit"
+                value={currency(results.annualNetBenefit)}
+                category="business"
+                size="sm"
+              />
+              <ResultValue
+                label="IRR"
+                value={results.irrPercent !== null ? `${results.irrPercent.toFixed(1)}%` : "—"}
+                category="business"
+                size="sm"
+              />
+              <ResultValue
+                label="ROI (Lifetime)"
+                value={`${results.roiPercent.toFixed(1)}%`}
+                category="business"
+                size="sm"
+              />
+              <ResultValue
+                label="NPV Low"
+                value={currency(results.npvLow)}
+                category="business"
+                size="sm"
+              />
+              <ResultValue
+                label="NPV High"
+                value={currency(results.npvHigh)}
+                category="business"
+                size="sm"
+              />
+            </ResultsGrid>
+          </CalculatorResult>
+
+          {/* Cash Flow Chart */}
+          <Collapsible open={showChart} onOpenChange={setShowChart}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: "#60a5fa15" }}>
+              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                <div className="flex items-center gap-3">
+                  <BarChart3 className="h-4 w-4 text-blue-400" />
+                  <span className="text-sm sm:text-base font-medium text-blue-300">
+                    Cumulative Cash Flow Chart
+                  </span>
+                </div>
+                <ChevronDown
+                  className={cn(
+                    "h-4 w-4 text-white/80 transition-transform duration-200",
+                    showChart && "rotate-180"
+                  )}
+                />
+              </CollapsibleTrigger>
+
+              <CollapsibleContent className="p-4 pt-0">
+                <div className="h-56">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={results.cashflowSeries}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                      <XAxis
+                        dataKey="year"
+                        stroke="rgba(255,255,255,0.6)"
+                        fontSize={10}
+                        tickFormatter={(v) => `Y${v}`}
+                      />
+                      <YAxis
+                        stroke="rgba(255,255,255,0.6)"
+                        tickFormatter={(v) => `£${v / 1000}k`}
+                        fontSize={10}
+                      />
+                      <ReferenceLine y={0} stroke="rgba(255,255,255,0.3)" strokeDasharray="3 3" />
+                      <Tooltip
+                        formatter={(v: number) => [currency(v), "Cumulative"]}
+                        labelFormatter={(l) => `Year ${l}`}
+                        contentStyle={{
+                          background: "#1a1f2e",
+                          border: "1px solid rgba(96, 165, 250, 0.3)",
+                          borderRadius: "8px",
+                          color: "white",
+                        }}
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="cumulative"
+                        stroke="#60a5fa"
+                        strokeWidth={2}
+                        dot={{ fill: "#60a5fa", strokeWidth: 0, r: 3 }}
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+                <p className="text-xs text-white mt-3 text-center">
+                  Break-even occurs when the line crosses zero
+                </p>
+              </CollapsibleContent>
+            </div>
+          </Collapsible>
+
+          {/* NPV Sensitivity Note */}
+          <div className="p-4 rounded-xl border border-blue-500/30 bg-blue-500/10">
+            <div className="flex items-start gap-2">
+              <Info className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
+              <p className="text-sm text-blue-200/80">
+                <strong className="text-blue-300">NPV Sensitivity:</strong> At ±5% discount rate variation,
+                NPV ranges from {currency(results.npvLow)} to {currency(results.npvHigh)}.
+                Always verify assumptions for BS 7671 compliant installation and HMRC capital allowances.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Prompt to Calculate */}
+      {!calculated && (
+        <div className="p-6 rounded-xl border border-white/10 bg-white/5 text-center">
+          <Info className="h-10 w-10 text-blue-400 mx-auto mb-3 opacity-50" />
+          <h3 className="text-white text-lg font-semibold mb-2">Ready to Analyse</h3>
+          <p className="text-white text-sm">
+            Enter your equipment costs and expected savings above, then click "Calculate ROI" to see
+            NPV, IRR, payback period and more.
+          </p>
+        </div>
+      )}
+
+      {/* Quick Reference */}
+      <Collapsible open={showReference} onOpenChange={setShowReference}>
+        <div className="calculator-card overflow-hidden" style={{ borderColor: "#fbbf2415" }}>
+          <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+            <div className="flex items-center gap-3">
+              <BookOpen className="h-4 w-4 text-amber-400" />
+              <span className="text-sm sm:text-base font-medium text-amber-300">
+                Investment Analysis Reference
+              </span>
+            </div>
+            <ChevronDown
+              className={cn(
+                "h-4 w-4 text-white/80 transition-transform duration-200",
+                showReference && "rotate-180"
+              )}
+            />
+          </CollapsibleTrigger>
+
+          <CollapsibleContent className="p-4 pt-0">
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              <div className="space-y-1">
+                <p className="text-amber-300 font-medium">NPV (Net Present Value)</p>
+                <p className="text-amber-200/70">{">"} £0 = worthwhile</p>
+                <p className="text-amber-200/70">Accounts for time value</p>
+                <p className="text-amber-200/70">Higher = better return</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-amber-300 font-medium">IRR (Internal Rate of Return)</p>
+                <p className="text-amber-200/70">{">"} discount rate = good</p>
+                <p className="text-amber-200/70">Compare to bank rates</p>
+                <p className="text-amber-200/70">15-25% typical target</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-amber-300 font-medium">Payback Period</p>
+                <p className="text-amber-200/70">{"<"} 3 years = excellent</p>
+                <p className="text-amber-200/70">3-5 years = acceptable</p>
+                <p className="text-amber-200/70">{">"} 5 years = risky</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-amber-300 font-medium">Discount Rates</p>
+                <p className="text-amber-200/70">3-5% low risk</p>
+                <p className="text-amber-200/70">7-10% moderate risk</p>
+                <p className="text-amber-200/70">10%+ high risk</p>
+              </div>
+            </div>
+
+            <div className="mt-4 pt-3 border-t border-amber-500/20">
+              <p className="text-xs text-amber-200/60">
+                <Info className="h-3 w-3 inline mr-1" />
+                Capital equipment purchases may qualify for Annual Investment Allowance (AIA) or
+                Full Expensing for tax relief. Consult an accountant for specific advice on your situation.
+              </p>
+            </div>
+          </CollapsibleContent>
+        </div>
+      </Collapsible>
     </div>
   );
 };

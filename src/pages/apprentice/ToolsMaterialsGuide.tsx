@@ -101,8 +101,8 @@ const ToolsMaterialsGuide = () => {
             Tools & Materials Guide
           </h1>
         </div>
-        <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-3xl mx-auto mb-4 sm:mb-6 px-2">
-          Essential tools, equipment and materials for professional electrical installations. 
+        <p className="text-sm sm:text-base md:text-lg text-white/70 max-w-3xl mx-auto mb-4 sm:mb-6 px-2">
+          Essential tools, equipment and materials for professional electrical installations.
           Complete guide to building your electrical toolkit for UK installations.
         </p>
         <SmartBackButton />
@@ -110,7 +110,7 @@ const ToolsMaterialsGuide = () => {
 
       {/* Essential Tools Overview */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-        <Card className="border-elec-yellow/30 bg-elec-gray">
+        <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
           <CardHeader>
             <div className="flex items-center gap-2">
               <Settings className="h-6 w-6 text-elec-yellow" />
@@ -120,7 +120,7 @@ const ToolsMaterialsGuide = () => {
           <CardContent className="p-4">
             <ul className="space-y-2">
               {essentialTools.map((tool, index) => (
-                <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                <li key={index} className="text-sm text-white/70 flex items-start gap-2">
                   <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
                   {tool}
                 </li>
@@ -129,7 +129,7 @@ const ToolsMaterialsGuide = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/30 bg-elec-gray">
+        <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
           <CardHeader>
             <div className="flex items-center gap-2">
               <Cable className="h-6 w-6 text-elec-yellow" />
@@ -139,7 +139,7 @@ const ToolsMaterialsGuide = () => {
           <CardContent className="p-4">
             <ul className="space-y-2">
               {consumables.map((item, index) => (
-                <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                <li key={index} className="text-sm text-white/70 flex items-start gap-2">
                   <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
                   {item}
                 </li>
@@ -148,7 +148,7 @@ const ToolsMaterialsGuide = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/30 bg-elec-gray">
+        <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
           <CardHeader>
             <div className="flex items-center gap-2">
               <Shield className="h-6 w-6 text-elec-yellow" />
@@ -158,7 +158,7 @@ const ToolsMaterialsGuide = () => {
           <CardContent className="p-4">
             <ul className="space-y-2">
               {safetyEquipment.map((item, index) => (
-                <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                <li key={index} className="text-sm text-white/70 flex items-start gap-2">
                   <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
                   {item}
                 </li>
@@ -169,18 +169,18 @@ const ToolsMaterialsGuide = () => {
       </div>
 
       {/* Testing Equipment Detail */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Zap className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Testing Equipment</CardTitle>
           </div>
-          <p className="text-muted-foreground">Essential testing tools for electrical installation work</p>
+          <p className="text-white/70">Essential testing tools for electrical installation work</p>
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="space-y-6">
             {testingEquipment.map((equipment, index) => (
-              <div key={index} className="bg-elec-dark/40 p-5 rounded-lg border border-elec-yellow/20">
+              <div key={index} className="bg-white/5 border border-white/10 p-5 rounded-lg">
                 <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
@@ -189,21 +189,21 @@ const ToolsMaterialsGuide = () => {
                         {equipment.cost}
                       </Badge>
                     </div>
-                    <p className="text-sm text-muted-foreground mb-3">{equipment.purpose}</p>
+                    <p className="text-sm text-white/70 mb-3">{equipment.purpose}</p>
                     <div className="mb-3">
                       <h5 className="text-sm font-medium text-elec-yellow mb-2">Key Features:</h5>
                       <div className="grid grid-cols-2 gap-1">
                         {equipment.features.map((feature, featureIndex) => (
                           <div key={featureIndex} className="flex items-center gap-1">
                             <CheckCircle className="h-3 w-3 text-green-400" />
-                            <span className="text-xs text-muted-foreground">{feature}</span>
+                            <span className="text-xs text-white/70">{feature}</span>
                           </div>
                         ))}
                       </div>
                     </div>
                     <div>
                       <h5 className="text-sm font-medium text-elec-yellow mb-1">Recommended Brands:</h5>
-                      <p className="text-xs text-muted-foreground">{equipment.brands.join(', ')}</p>
+                      <p className="text-xs text-white/70">{equipment.brands.join(', ')}</p>
                     </div>
                   </div>
                 </div>
@@ -214,18 +214,18 @@ const ToolsMaterialsGuide = () => {
       </Card>
 
       {/* Hand Tools */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Wrench className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Hand Tools</CardTitle>
           </div>
-          <p className="text-muted-foreground">Essential hand tools for electrical installation work</p>
+          <p className="text-white/70">Essential hand tools for electrical installation work</p>
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {handTools.map((category, index) => (
-              <div key={index} className="bg-elec-dark/40 p-4 rounded-lg">
+              <div key={index} className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h4 className="font-medium text-white mb-4">{category.category}</h4>
                 <div className="space-y-3">
                   {category.tools.map((tool, toolIndex) => (
@@ -234,7 +234,7 @@ const ToolsMaterialsGuide = () => {
                         <h5 className="text-sm font-medium text-elec-yellow">{tool.name}</h5>
                         <span className="text-xs text-green-300">{tool.cost}</span>
                       </div>
-                      <p className="text-xs text-muted-foreground">{tool.purpose}</p>
+                      <p className="text-xs text-white/70">{tool.purpose}</p>
                     </div>
                   ))}
                 </div>
@@ -245,29 +245,29 @@ const ToolsMaterialsGuide = () => {
       </Card>
 
       {/* Budget Planning */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <BadgePoundSterling className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Tool Budget Planning</CardTitle>
           </div>
-          <p className="text-muted-foreground">Strategic approach to building your electrical toolkit</p>
+          <p className="text-white/70">Strategic approach to building your electrical toolkit</p>
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-elec-dark/40 p-5 rounded-lg">
+            <div className="bg-white/5 border border-white/10 p-5 rounded-lg">
               <h4 className="font-medium text-white mb-3">Apprentice Year 1</h4>
               <div className="space-y-2 mb-4">
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Budget:</span>
+                  <span className="text-white/70">Budget:</span>
                   <span className="text-green-300">£200-400</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Focus:</span>
+                  <span className="text-white/70">Focus:</span>
                   <span className="text-elec-yellow">Basic tools & PPE</span>
                 </div>
               </div>
-              <ul className="space-y-1 text-xs text-muted-foreground">
+              <ul className="space-y-1 text-xs text-white/70">
                 <li>• Basic hand tools</li>
                 <li>• Safety equipment</li>
                 <li>• Simple multimeter</li>
@@ -275,19 +275,19 @@ const ToolsMaterialsGuide = () => {
               </ul>
             </div>
 
-            <div className="bg-elec-dark/40 p-5 rounded-lg">
+            <div className="bg-white/5 border border-white/10 p-5 rounded-lg">
               <h4 className="font-medium text-white mb-3">Apprentice Year 2</h4>
               <div className="space-y-2 mb-4">
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Budget:</span>
+                  <span className="text-white/70">Budget:</span>
                   <span className="text-green-300">£400-800</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Focus:</span>
+                  <span className="text-white/70">Focus:</span>
                   <span className="text-elec-yellow">Testing equipment</span>
                 </div>
               </div>
-              <ul className="space-y-1 text-xs text-muted-foreground">
+              <ul className="space-y-1 text-xs text-white/70">
                 <li>• Multifunction tester</li>
                 <li>• Advanced hand tools</li>
                 <li>• Power tools</li>
@@ -295,19 +295,19 @@ const ToolsMaterialsGuide = () => {
               </ul>
             </div>
 
-            <div className="bg-elec-dark/40 p-5 rounded-lg">
+            <div className="bg-white/5 border border-white/10 p-5 rounded-lg">
               <h4 className="font-medium text-white mb-3">Qualified Electrician</h4>
               <div className="space-y-2 mb-4">
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Budget:</span>
+                  <span className="text-white/70">Budget:</span>
                   <span className="text-green-300">£300-600</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Focus:</span>
+                  <span className="text-white/70">Focus:</span>
                   <span className="text-elec-yellow">Specialization</span>
                 </div>
               </div>
-              <ul className="space-y-1 text-xs text-muted-foreground">
+              <ul className="space-y-1 text-xs text-white/70">
                 <li>• Specialist tools</li>
                 <li>• Additional test gear</li>
                 <li>• Professional storage</li>
@@ -328,16 +328,16 @@ const ToolsMaterialsGuide = () => {
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="space-y-3">
-            <p className="text-sm text-muted-foreground">
-              <strong className="text-orange-300">VDE Tools Required:</strong> All screwdrivers and hand tools used near 
+            <p className="text-sm text-white/70">
+              <strong className="text-orange-300">VDE Tools Required:</strong> All screwdrivers and hand tools used near
               live parts must be individually tested to 10,000V and marked with VDE approval.
             </p>
-            <p className="text-sm text-muted-foreground">
-              <strong className="text-orange-300">GS38 Compliance:</strong> Voltage testers must comply with GS38 
+            <p className="text-sm text-white/70">
+              <strong className="text-orange-300">GS38 Compliance:</strong> Voltage testers must comply with GS38
               Health and Safety guidance including fused test leads and proving units.
             </p>
-            <p className="text-sm text-muted-foreground">
-              <strong className="text-orange-300">Regular Calibration:</strong> Test equipment must be calibrated 
+            <p className="text-sm text-white/70">
+              <strong className="text-orange-300">Regular Calibration:</strong> Test equipment must be calibrated
               annually to maintain accuracy and ensure reliable results.
             </p>
           </div>

@@ -37,7 +37,7 @@ const BalanceChecklist = ({ initialChecklist }: BalanceChecklistProps) => {
     <div>
       <div className="flex items-center justify-between mb-3">
         <h3 className="text-lg font-medium">Balance Checklist</h3>
-        <span className="text-sm text-muted-foreground">
+        <span className="text-sm text-white/80">
           {completedItems} of {totalItems} complete
         </span>
       </div>
@@ -52,7 +52,7 @@ const BalanceChecklist = ({ initialChecklist }: BalanceChecklistProps) => {
               />
               <div className="grid gap-1.5 leading-none">
                 <Label htmlFor="item1">Establish a consistent work routine</Label>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/80">
                   Create a predictable schedule for workdays and client visits
                 </p>
               </div>
@@ -66,7 +66,7 @@ const BalanceChecklist = ({ initialChecklist }: BalanceChecklistProps) => {
               />
               <div className="grid gap-1.5 leading-none">
                 <Label htmlFor="item2">Schedule dedicated admin time</Label>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/80">
                   Block out specific hours for quoting, invoicing and paperwork
                 </p>
               </div>
@@ -80,7 +80,7 @@ const BalanceChecklist = ({ initialChecklist }: BalanceChecklistProps) => {
               />
               <div className="grid gap-1.5 leading-none">
                 <Label htmlFor="item3">Plan leisure activities</Label>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/80">
                   Make time for hobbies, exercise, and social connections
                 </p>
               </div>
@@ -94,7 +94,7 @@ const BalanceChecklist = ({ initialChecklist }: BalanceChecklistProps) => {
               />
               <div className="grid gap-1.5 leading-none">
                 <Label htmlFor="item4">Set device boundaries</Label>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/80">
                   Limit client calls and work messages during personal time
                 </p>
               </div>
@@ -108,7 +108,7 @@ const BalanceChecklist = ({ initialChecklist }: BalanceChecklistProps) => {
               />
               <div className="grid gap-1.5 leading-none">
                 <Label htmlFor="item5">Prioritise sufficient rest</Label>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/80">
                   Aim for 7-9 hours of quality sleep each night to recover from physical work
                 </p>
               </div>

@@ -38,7 +38,7 @@ export const EmptyState = ({
           {title}
         </h3>
         
-        <p className="text-base md:text-sm text-gray-400 max-w-md mb-6">
+        <p className="text-base md:text-sm text-white/70 max-w-md mb-6">
           {description}
         </p>
         

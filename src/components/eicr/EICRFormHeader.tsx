@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, FileText, Save, Plus } from 'lucide-react';
-import SaveStatusIndicator from '../SaveStatusIndicator';
+import { ArrowLeft, Save, Plus, Zap } from 'lucide-react';
 import { SyncStatusIndicator } from '@/components/ui/sync-status-indicator';
 import { SyncStatus } from '@/hooks/useCloudSync';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { ProgressSteps, Step } from '@/components/ui/ProgressSteps';
 
 interface EICRFormHeaderProps {
   onBack: () => void;
@@ -19,111 +19,142 @@ interface EICRFormHeaderProps {
   lastSyncTime?: number;
   isOnline?: boolean;
   isAuthenticated?: boolean;
+  currentTab?: number;
+  completedSections?: Set<number>;
+  onOpenBoardScan?: () => void; // Keep prop for compatibility but don't render button
 }
+
+const EICR_STEPS: Step[] = [
+  { id: 'details', label: 'Details' },
+  { id: 'inspection', label: 'Inspection' },
+  { id: 'testing', label: 'Testing' },
+  { id: 'declaration', label: 'Declaration' },
+];
 
 const EICRFormHeader: React.FC<EICRFormHeaderProps> = ({
   onBack,
   currentReportId,
-  hasUnsavedChanges,
   isSaving,
-  lastSaveTime,
   onStartNew,
   onManualSave,
-  formData,
   syncStatus = 'synced',
   lastSyncTime,
   isOnline = true,
   isAuthenticated = false,
+  currentTab = 0,
+  completedSections = new Set(),
 }) => {
   const isMobile = useIsMobile();
 
   if (isMobile) {
     return (
-      <div className="flex items-center gap-3 mb-6">
-        <Button variant="ghost" onClick={onBack} className="p-2 flex-shrink-0 hover:bg-accent/10 transition-colours duration-200">
-          <ArrowLeft className="h-4 w-4" />
-        </Button>
-        <div className="flex-1 min-w-0">
-          <h1 className="text-base font-bold tracking-tight flex items-center gap-2 flex-wrap">
-            <div className="p-1.5 rounded-lg bg-gradient-to-br from-yellow-400 to-yellow-500 shadow-sm">
-              <FileText className="h-4 w-4 text-black flex-shrink-0" />
-            </div>
-            <span className="bg-gradient-to-r from-yellow-600 to-yellow-500 bg-clip-text text-transparent">EICR Report</span>
-          </h1>
-          {currentReportId && (
-            <div className="text-xs text-muted-foreground">
-              <span className="truncate">ID: {currentReportId}</span>
-            </div>
-          )}
+      <div className="space-y-3">
+        {/* Compact header row */}
+        <div className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            onClick={onBack}
+            size="icon"
+            className="h-9 w-9 shrink-0 -ml-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+          </Button>
+
+          <div className="flex-1 min-w-0 flex items-center gap-2">
+            <Zap className="h-4 w-4 text-elec-yellow shrink-0" />
+            <span className="font-semibold truncate">EICR</span>
+          </div>
+
+          <SyncStatusIndicator
+            status={syncStatus}
+            lastSyncTime={lastSyncTime}
+            isOnline={isOnline}
+            isAuthenticated={isAuthenticated}
+            className="shrink-0"
+          />
+
+          <Button
+            onClick={onManualSave}
+            disabled={isSaving || syncStatus === 'syncing'}
+            variant="ghost"
+            size="icon"
+            className="h-9 w-9 shrink-0 -mr-2"
+          >
+            <Save className="h-4 w-4" />
+          </Button>
         </div>
-        <Button 
-          onClick={onStartNew} 
-          variant="outline" 
-          size="sm" 
-          className="h-11 w-11 p-2 flex-shrink-0 border-border hover:bg-accent/10 hover:border-border transition-all duration-200 touch-manipulation"
-          aria-label="Start New Report"
-          title="Start New"
-        >
-          <Plus className="h-4 w-4" />
-        </Button>
-        <Button 
-          onClick={onManualSave} 
-          disabled={isSaving || syncStatus === 'syncing'} 
-          variant="outline" 
-          size="sm" 
-          className="h-11 w-11 p-2 flex-shrink-0 border-border hover:bg-accent/10 hover:border-border transition-all duration-200 touch-manipulation"
-          aria-label="Save Now"
-          title="Save Now"
-        >
-          <Save className="h-4 w-4" />
-        </Button>
+
+        {/* Progress indicator */}
+        <ProgressSteps
+          steps={EICR_STEPS}
+          currentStep={currentTab}
+          completedSteps={completedSections}
+          compact
+        />
       </div>
     );
   }
 
+  // Desktop layout
   return (
-    <div className="flex items-center gap-4 mb-6">
-      <Button variant="ghost" onClick={onBack} className="p-2 hover:bg-accent/10 transition-colours duration-200">
-        <ArrowLeft className="h-4 w-4" />
-      </Button>
-      <div className="flex-1">
-        <h1 className="text-lg lg:text-xl font-bold tracking-tight flex items-center gap-3 flex-wrap">
-          <div className="p-2 rounded-lg bg-gradient-to-br from-yellow-400 to-yellow-500 shadow-sm">
-            <FileText className="h-5 w-5 text-black" />
-          </div>
-          <span className="bg-gradient-to-r from-yellow-600 to-yellow-500 bg-clip-text text-transparent">
-            EICR - Electrical Installation Condition Report
-          </span>
-        </h1>
-        <p className="text-sm text-muted-foreground flex items-center gap-2 mt-1">
-          <span className="font-medium">BS7671 Periodic Inspection & Testing Certificate</span>
+    <div className="space-y-3">
+      {/* Header row */}
+      <div className="flex items-center gap-3">
+        <Button
+          variant="ghost"
+          onClick={onBack}
+          size="sm"
+          className="gap-1.5 -ml-2"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back
+        </Button>
+
+        <div className="flex items-center gap-2 flex-1">
+          <Zap className="h-5 w-5 text-elec-yellow" />
+          <h1 className="text-lg font-semibold">EICR - Condition Report</h1>
           {currentReportId && (
-            <>
-              <span className="text-yellow-500">•</span>
-              <span className="font-mono text-xs bg-muted/50 px-2 py-0.5 rounded border border-border">
-                Report ID: {currentReportId}
-              </span>
-            </>
+            <span className="text-xs text-muted-foreground font-mono bg-muted/50 px-2 py-0.5 rounded">
+              {currentReportId}
+            </span>
           )}
-        </p>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <SyncStatusIndicator
+            status={syncStatus}
+            lastSyncTime={lastSyncTime}
+            isOnline={isOnline}
+            isAuthenticated={isAuthenticated}
+          />
+          <Button
+            onClick={onStartNew}
+            variant="outline"
+            size="sm"
+            className="border-border/50"
+          >
+            <Plus className="h-4 w-4 mr-1.5" />
+            New
+          </Button>
+          <Button
+            onClick={onManualSave}
+            disabled={isSaving || syncStatus === 'syncing'}
+            variant="outline"
+            size="sm"
+            className="border-border/50"
+          >
+            <Save className="h-4 w-4 mr-1.5" />
+            Save
+          </Button>
+        </div>
       </div>
-      <div className="flex gap-2 items-center">
-        <SyncStatusIndicator 
-          status={syncStatus}
-          lastSyncTime={lastSyncTime}
-          isOnline={isOnline}
-          isAuthenticated={isAuthenticated}
-          className="mr-2"
-        />
-        <Button onClick={onStartNew} variant="outline" size="sm" className="border-border hover:bg-accent/10 hover:border-border font-medium transition-all duration-200">
-          <Plus className="h-4 w-4 mr-2" />
-          Start New
-        </Button>
-        <Button onClick={onManualSave} disabled={isSaving || syncStatus === 'syncing'} variant="outline" size="sm" className="elec-gradient-bg hover:shadow-lg text-black font-semibold transition-all duration-200 hover:scale-[1.02]">
-          <Save className="h-4 w-4 mr-2" />
-          Save Now
-        </Button>
-      </div>
+
+      {/* Progress steps */}
+      <ProgressSteps
+        steps={EICR_STEPS}
+        currentStep={currentTab}
+        completedSteps={completedSections}
+      />
     </div>
   );
 };

@@ -382,7 +382,7 @@ const InstrumentationModule8Section1 = () => {
                 ],
                 correctAnswer: 1,
                 explanation: "Logging findings prevents repeating tests, builds organizational knowledge, enables pattern recognition, and supports thorough root cause analysis for better long-term solutions."
-              }
+            }
             ]}
             title="Section 1 Knowledge Check"
           />

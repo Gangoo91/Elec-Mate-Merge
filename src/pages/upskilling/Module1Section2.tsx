@@ -8,13 +8,13 @@ import InspectionTestingQuiz from '@/components/upskilling/InspectionTestingQuiz
 
 const Module1Section2 = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="../module-1">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 1
@@ -23,7 +23,7 @@ const Module1Section2 = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3 mb-2">
-            <Badge variant="secondary" className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold">
+            <Badge variant="secondary" className="bg-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/50 font-semibold">
               Module 1 - Section 2
             </Badge>
           </div>
@@ -41,10 +41,10 @@ const Module1Section2 = () => {
         <div className="space-y-4 sm:space-y-6">
           
           {/* Quick Intro */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Scale className="h-5 w-5 text-yellow-400" />
+                <Scale className="h-5 w-5 text-elec-yellow" />
                 Quick Introduction
               </CardTitle>
             </CardHeader>
@@ -59,7 +59,7 @@ const Module1Section2 = () => {
           </Card>
 
           {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white">Learning Outcomes</CardTitle>
             </CardHeader>
@@ -67,23 +67,23 @@ const Module1Section2 = () => {
               <p className="mb-4">By the end of this section, you will:</p>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span>Understand the key legislation governing electrical safety in the UK</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span>Know the requirements of Building Regulations Part P</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span>Identify the role of BS 7671 in electrical installations</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span>Recognise legal duties and responsibilities for electrical safety</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span>Apply regulatory requirements in practical situations</span>
                 </li>
               </ul>
@@ -91,10 +91,10 @@ const Module1Section2 = () => {
           </Card>
 
           {/* Main Content */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <FileText className="h-5 w-5 text-yellow-400" />
+                <FileText className="h-5 w-5 text-elec-yellow" />
                 Primary Legislation
               </CardTitle>
             </CardHeader>
@@ -104,12 +104,12 @@ const Module1Section2 = () => {
                 <h3 className="text-xl font-semibold text-white mb-3">Electricity at Work Regulations 1989</h3>
                 
                 <div className="space-y-4">
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-yellow-400 mb-2">Overview</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="font-semibold text-elec-yellow mb-2">Overview</h4>
                     <p className="text-sm text-white mb-3">
                       The Electricity at Work Regulations 1989 (EAWR) are the primary legislation governing electrical safety in the workplace. They place absolute duties on employers and employees to ensure electrical safety.
                     </p>
-                    <h5 className="font-semibold text-yellow-400 mb-2">Key Requirements:</h5>
+                    <h5 className="font-semibold text-elec-yellow mb-2">Key Requirements:</h5>
                     <ul className="text-sm text-white space-y-1 ml-4">
                       <li>• Electrical systems must be constructed to prevent danger (Regulation 4)</li>
                       <li>• Systems must be maintained to prevent danger (Regulation 4)</li>
@@ -119,8 +119,8 @@ const Module1Section2 = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-yellow-400 mb-2">Regulation 4 - Systems, Work Activities and Protective Equipment</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="font-semibold text-elec-yellow mb-2">Regulation 4 - Systems, Work Activities and Protective Equipment</h4>
                     <p className="text-sm text-white mb-2">
                       This is the cornerstone regulation that requires:
                     </p>
@@ -131,8 +131,8 @@ const Module1Section2 = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-yellow-400 mb-2">Regulation 16 - Persons to be Competent</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="font-semibold text-elec-yellow mb-2">Regulation 16 - Persons to be Competent</h4>
                     <p className="text-sm text-white mb-2">
                       No person shall be engaged in work which requires technical knowledge or experience unless they:
                     </p>
@@ -148,8 +148,8 @@ const Module1Section2 = () => {
               <div>
                 <h3 className="text-xl font-semibold text-white mb-3">Health and Safety at Work Act 1974</h3>
                 
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="font-semibold text-yellow-400 mb-2">Framework Legislation</h4>
+                <div className="bg-transparent/80 p-4 rounded-lg">
+                  <h4 className="font-semibold text-elec-yellow mb-2">Framework Legislation</h4>
                   <p className="text-sm text-white mb-2">
                     Provides the overarching framework for workplace safety. Key sections include:
                   </p>
@@ -165,17 +165,17 @@ const Module1Section2 = () => {
           </Card>
 
           {/* Building Regulations */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Gavel className="h-5 w-5 text-yellow-400" />
+                <Gavel className="h-5 w-5 text-elec-yellow" />
                 Building Regulations Part P
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-6">
               
-              <div className="bg-card/80 p-4 rounded-lg">
-                <h4 className="font-semibold text-yellow-400 mb-2">Electrical Safety in Dwellings</h4>
+              <div className="bg-transparent/80 p-4 rounded-lg">
+                <h4 className="font-semibold text-elec-yellow mb-2">Electrical Safety in Dwellings</h4>
                 <p className="text-sm text-white mb-2">
                   Part P covers electrical safety in dwellings, requiring that electrical installations are:
                 </p>
@@ -187,8 +187,8 @@ const Module1Section2 = () => {
                 </ul>
               </div>
 
-              <div className="bg-card/80 p-4 rounded-lg">
-                <h4 className="font-semibold text-yellow-400 mb-2">Notifiable Work</h4>
+              <div className="bg-transparent/80 p-4 rounded-lg">
+                <h4 className="font-semibold text-elec-yellow mb-2">Notifiable Work</h4>
                 <p className="text-sm text-white mb-2">
                   Certain electrical work must be notified to Building Control:
                 </p>
@@ -200,8 +200,8 @@ const Module1Section2 = () => {
                 </ul>
               </div>
 
-              <div className="bg-card/80 p-4 rounded-lg">
-                <h4 className="font-semibold text-yellow-400 mb-2">Competent Person Schemes</h4>
+              <div className="bg-transparent/80 p-4 rounded-lg">
+                <h4 className="font-semibold text-elec-yellow mb-2">Competent Person Schemes</h4>
                 <p className="text-sm text-white mb-2">
                   Registered electricians can self-certify work through approved schemes:
                 </p>
@@ -217,22 +217,22 @@ const Module1Section2 = () => {
           </Card>
 
           {/* Standards and Codes */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <BookOpen className="h-5 w-5 text-yellow-400" />
+                <BookOpen className="h-5 w-5 text-elec-yellow" />
                 Standards and Codes of Practice
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-6">
               
-              <div className="bg-card/80 p-4 rounded-lg">
-                <h4 className="font-semibold text-yellow-400 mb-2">BS 7671 (IET Wiring Regulations)</h4>
+              <div className="bg-transparent/80 p-4 rounded-lg">
+                <h4 className="font-semibold text-elec-yellow mb-2">BS 7671 (IET Wiring Regulations)</h4>
                 <p className="text-sm text-white mb-3">
                   The national standard for electrical installations in the UK. Current edition is the 18th Edition (2018) with Amendment 2 (2022).
                 </p>
                 
-                <h5 className="font-semibold text-yellow-400 mb-2">Structure of BS 7671:</h5>
+                <h5 className="font-semibold text-elec-yellow mb-2">Structure of BS 7671:</h5>
                 <ul className="text-sm text-white space-y-1 ml-4">
                   <li>• Part 1: Scope, object and fundamental principles</li>
                   <li>• Part 2: Definitions</li>
@@ -248,8 +248,8 @@ const Module1Section2 = () => {
                 </p>
               </div>
 
-              <div className="bg-card/80 p-4 rounded-lg">
-                <h4 className="font-semibold text-yellow-400 mb-2">Supporting Standards</h4>
+              <div className="bg-transparent/80 p-4 rounded-lg">
+                <h4 className="font-semibold text-elec-yellow mb-2">Supporting Standards</h4>
                 <div className="space-y-3">
                   <div>
                     <h5 className="font-semibold text-white text-sm">BS 7909: Code of Practice for Temporary Electrical Systems</h5>
@@ -269,18 +269,18 @@ const Module1Section2 = () => {
           </Card>
 
           {/* Duties and Responsibilities */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Users className="h-5 w-5 text-yellow-400" />
+                <Users className="h-5 w-5 text-elec-yellow" />
                 Legal Duties and Responsibilities
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-6">
               
               <div className="space-y-4">
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="font-semibold text-yellow-400 mb-2">Employers' Duties</h4>
+                <div className="bg-transparent/80 p-4 rounded-lg">
+                  <h4 className="font-semibold text-elec-yellow mb-2">Employers' Duties</h4>
                   <ul className="text-sm text-white space-y-1 ml-4">
                     <li>• Ensure electrical systems are safe and properly maintained</li>
                     <li>• Provide adequate training and supervision</li>
@@ -291,8 +291,8 @@ const Module1Section2 = () => {
                   </ul>
                 </div>
 
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="font-semibold text-yellow-400 mb-2">Employees' Duties</h4>
+                <div className="bg-transparent/80 p-4 rounded-lg">
+                  <h4 className="font-semibold text-elec-yellow mb-2">Employees' Duties</h4>
                   <ul className="text-sm text-white space-y-1 ml-4">
                     <li>• Take reasonable care for their own safety</li>
                     <li>• Take reasonable care for the safety of others</li>
@@ -303,8 +303,8 @@ const Module1Section2 = () => {
                   </ul>
                 </div>
 
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="font-semibold text-yellow-400 mb-2">Competent Persons</h4>
+                <div className="bg-transparent/80 p-4 rounded-lg">
+                  <h4 className="font-semibold text-elec-yellow mb-2">Competent Persons</h4>
                   <p className="text-sm text-white mb-2">
                     Competency is determined by a combination of:
                   </p>
@@ -374,14 +374,14 @@ const Module1Section2 = () => {
           <Card className="bg-blue-900/20 border-blue-800/30">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Shield className="h-5 w-5 text-yellow-400" />
+                <Shield className="h-5 w-5 text-elec-yellow" />
                 Practical Application
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
               
               <div className="bg-blue-900/30 p-4 rounded-lg">
-                <h4 className="font-semibold text-yellow-400 mb-2">Documentation Requirements</h4>
+                <h4 className="font-semibold text-elec-yellow mb-2">Documentation Requirements</h4>
                  <p className="text-sm text-white mb-2">
                   Legal compliance requires proper documentation:
                 </p>
@@ -396,7 +396,7 @@ const Module1Section2 = () => {
               </div>
 
               <div className="bg-blue-900/30 p-4 rounded-lg">
-                <h4 className="font-semibold text-yellow-400 mb-2">Insurance Implications</h4>
+                <h4 className="font-semibold text-elec-yellow mb-2">Insurance Implications</h4>
                  <p className="text-sm text-white mb-2">
                   Non-compliance can affect insurance coverage:
                 </p>
@@ -492,38 +492,38 @@ const Module1Section2 = () => {
           </Card>
 
           {/* Key Takeaways */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white">Key Takeaways</CardTitle>
             </CardHeader>
             <CardContent className="text-white">
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span><strong>Legal Requirement:</strong> Electrical inspection and testing is mandated by law, not optional</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span><strong>Multiple Frameworks:</strong> Various regulations and standards work together to ensure electrical safety</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span><strong>Shared Responsibility:</strong> All duty holders have legal obligations for electrical safety</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span><strong>Competency Matters:</strong> Only competent persons should carry out electrical work</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span><strong>Immediate Action:</strong> Dangerous conditions must be addressed immediately</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span><strong>Documentation:</strong> Proper certification and records are essential for legal compliance</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span><strong>Consequences:</strong> Non-compliance can result in serious legal and financial penalties</span>
                 </li>
               </ul>
@@ -531,20 +531,20 @@ const Module1Section2 = () => {
           </Card>
 
           {/* Quick Knowledge Checks */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-6 w-6 text-yellow-400" />
+                <CheckCircle className="h-6 w-6 text-elec-yellow" />
                 Quick Knowledge Checks
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-yellow-400/10 p-4 rounded-lg">
+                <div className="bg-elec-yellow/10 p-4 rounded-lg">
                   <h4 className="text-white font-semibold mb-2">Check 1: EAWR 1989</h4>
                   <p className="text-sm">Which regulation in EAWR 1989 requires electrical systems to be maintained to prevent danger?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">Regulation 4 - Systems, work activities and protective equipment</p>
                   </details>
                 </div>
@@ -552,7 +552,7 @@ const Module1Section2 = () => {
                   <h4 className="text-white font-semibold mb-2">Check 2: Building Regulations</h4>
                   <p className="text-sm">What does Building Regulations Part P specifically cover?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">Electrical safety in dwellings (residential buildings)</p>
                   </details>
                 </div>
@@ -560,7 +560,7 @@ const Module1Section2 = () => {
                   <h4 className="text-white font-semibold mb-2">Check 3: Competent Person Schemes</h4>
                   <p className="text-sm">Name three approved Competent Person Schemes for electrical work.</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">NICEIC, NAPIT, Stroma Certification (also BSI, Benchmark Certification)</p>
                   </details>
                 </div>
@@ -568,7 +568,7 @@ const Module1Section2 = () => {
                   <h4 className="text-white font-semibold mb-2">Check 4: Legal Status of BS 7671</h4>
                   <p className="text-sm">Is BS 7671 legally binding in the UK?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">No, but compliance demonstrates due diligence and is recognised by courts as good practice</p>
                   </details>
                 </div>
@@ -577,10 +577,10 @@ const Module1Section2 = () => {
           </Card>
 
           {/* Frequently Asked Questions */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-6 w-6 text-yellow-400" />
+                <AlertTriangle className="h-6 w-6 text-elec-yellow" />
                 Frequently Asked Questions
               </CardTitle>
             </CardHeader>
@@ -615,10 +615,10 @@ const Module1Section2 = () => {
           </Card>
 
           {/* Quiz Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Lightbulb className="h-6 w-6 text-yellow-400" />
+                <Lightbulb className="h-6 w-6 text-elec-yellow" />
                 Test Your Knowledge - Comprehensive Quiz
               </CardTitle>
             </CardHeader>

@@ -29,7 +29,7 @@ const RcdPageHeader = () => {
           </div>
           <h1 className="text-4xl font-bold text-foreground">RCD Requirements Guide</h1>
         </div>
-        <p className="text-xl text-gray-300 max-w-4xl mx-auto">
+        <p className="text-xl text-white/80 max-w-4xl mx-auto">
           Comprehensive guide to RCD protection requirements, testing procedures, and installation guidelines 
           for compliance with BS7671 regulations.
         </p>

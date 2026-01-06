@@ -66,8 +66,8 @@ const enhancedCircuitTypes = [
     category: 'Low Current',
     options: [
       { type: 'Fire Alarm', icon: Flame, label: 'Fire Alarm', color: 'bg-red-100 hover:bg-red-200 text-red-800', suggestions: { liveSize: '1.5mm', cpcSize: '1.5mm', protectiveDeviceRating: '6', referenceMethod: 'A' } },
-      { type: 'Security System', icon: Building2, label: 'Security', color: 'bg-gray-100 hover:bg-gray-200 text-gray-800', suggestions: { liveSize: '1.5mm', cpcSize: '1.5mm', protectiveDeviceRating: '6', referenceMethod: 'A' } },
-      { type: 'Door Entry', icon: Home, label: 'Door Entry', color: 'bg-gray-100 hover:bg-gray-200 text-gray-800', suggestions: { liveSize: '1.5mm', cpcSize: '1.5mm', protectiveDeviceRating: '6', referenceMethod: 'A' } },
+      { type: 'Security System', icon: Building2, label: 'Security', color: 'bg-white/5 hover:bg-white/10 text-white/90', suggestions: { liveSize: '1.5mm', cpcSize: '1.5mm', protectiveDeviceRating: '6', referenceMethod: 'A' } },
+      { type: 'Door Entry', icon: Home, label: 'Door Entry', color: 'bg-white/5 hover:bg-white/10 text-white/90', suggestions: { liveSize: '1.5mm', cpcSize: '1.5mm', protectiveDeviceRating: '6', referenceMethod: 'A' } },
       { type: 'TV/Data', icon: Tv, label: 'TV/Data', color: 'bg-indigo-100 hover:bg-indigo-200 text-indigo-800', suggestions: { liveSize: '1.5mm', cpcSize: '1.5mm', protectiveDeviceRating: '6', referenceMethod: 'A' } }
     ]
   }
@@ -125,12 +125,12 @@ const CircuitAutoFillButton: React.FC<CircuitAutoFillButtonProps> = ({ result, o
 
   return (
     <>
-      <div className="flex flex-col gap-3 p-3 bg-gray-50 rounded border-t">
-        <span className="text-xs font-medium text-gray-700 mb-1">Quick Fill Circuit Types:</span>
+      <div className="flex flex-col gap-3 p-3 bg-white/5 rounded border-t">
+        <span className="text-xs font-medium text-white/80 mb-1">Quick Fill Circuit Types:</span>
         
         {enhancedCircuitTypes.map((category) => (
           <div key={category.category} className="space-y-2">
-            <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">
+            <span className="text-xs font-medium text-white/70 uppercase tracking-wide">
               {category.category}
             </span>
             <div className="flex flex-wrap gap-1">
@@ -151,7 +151,7 @@ const CircuitAutoFillButton: React.FC<CircuitAutoFillButtonProps> = ({ result, o
           </div>
         ))}
         
-        <div className="text-xs text-gray-500 mt-2 p-2 bg-blue-50 rounded border-l-2 border-blue-200">
+        <div className="text-xs text-white/60 mt-2 p-2 bg-blue-50 rounded border-l-2 border-blue-200">
           💡 <strong>Auto-Reg Checker:</strong> Configurations are automatically checked against BS 7671 regulations. 
           Any issues will be highlighted for your review.
         </div>

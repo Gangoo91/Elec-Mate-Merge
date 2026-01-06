@@ -95,13 +95,13 @@ const RcdRequirementsTab = () => {
         {/* Search */}
         <div className="max-w-md">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/70" />
             <Input
               type="text"
               placeholder="Search locations or regulations..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-muted border-border text-foreground placeholder-gray-400"
+              className="pl-10 bg-muted border-border text-foreground placeholder-white/70"
             />
           </div>
         </div>
@@ -114,7 +114,7 @@ const RcdRequirementsTab = () => {
               className={`bg-muted border-2 ${
                 req.category === 'mandatory' 
                   ? 'border-green-500/30 bg-green-500/5' 
-                  : 'border-gray-500/30 bg-gray-500/5'
+                  : 'border-white/20 bg-white/5'
               }`}
             >
               <CardHeader className="pb-3">
@@ -123,14 +123,14 @@ const RcdRequirementsTab = () => {
                   {req.category === 'mandatory' ? (
                     <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0" />
                   ) : (
-                    <AlertTriangle className="h-5 w-5 text-gray-400 flex-shrink-0" />
+                    <AlertTriangle className="h-5 w-5 text-white/70 flex-shrink-0" />
                   )}
                 </div>
                 <Badge 
                   className={
                     req.category === 'mandatory'
                       ? 'bg-green-500 text-foreground w-fit'
-                      : 'bg-gray-500 text-foreground w-fit'
+                      : 'bg-white/20 text-foreground w-fit'
                   }
                 >
                   {req.requirement}
@@ -138,19 +138,19 @@ const RcdRequirementsTab = () => {
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-400">Regulation:</span>
+                  <span className="text-sm text-white/70">Regulation:</span>
                   <span className="text-elec-yellow font-semibold">{req.regulation}</span>
                 </div>
                 
                 {req.rating !== 'N/A' && (
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-400">Rating:</span>
+                    <span className="text-sm text-white/70">Rating:</span>
                     <span className="text-green-400 font-semibold">{req.rating}</span>
                   </div>
                 )}
                 
                 <div className="pt-2 border-t border-border">
-                  <p className="text-sm text-gray-300">{req.reasoning}</p>
+                  <p className="text-sm text-white/80">{req.reasoning}</p>
                 </div>
               </CardContent>
             </Card>

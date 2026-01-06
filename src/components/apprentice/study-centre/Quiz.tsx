@@ -91,7 +91,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
             {percentage}%
           </div>
           <div>
-            <p className="text-lg text-gray-300 mb-2">
+            <p className="text-lg text-white/80 mb-2">
               You scored {score} out of {questions.length} questions correctly
             </p>
             <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${
@@ -132,7 +132,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
           <Target className="h-5 w-5" />
           {title}
         </CardTitle>
-        <div className="flex items-center justify-between text-sm text-gray-400">
+        <div className="flex items-center justify-between text-sm text-white">
           <span>Question {currentQuestion + 1} of {questions.length}</span>
           <div className="flex gap-1 items-center">
             {questions.map((_, index) => (
@@ -143,7 +143,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
                     ? 'bg-green-400' 
                     : index === currentQuestion 
                     ? 'bg-elec-yellow' 
-                    : 'bg-gray-600'
+                    : 'bg-white/15'
                 }`}
               />
             ))}
@@ -170,7 +170,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
                       : 'bg-elec-yellow/20 border-elec-yellow/50 text-elec-yellow'
                     : showResult && index === currentQ.correctAnswer
                     ? 'bg-green-500/20 border-green-400/50 text-green-300'
-                    : 'bg-elec-gray/30 border-elec-gray hover:border-elec-yellow/30 text-gray-300 hover:text-white'
+                    : 'bg-white/5 border-white/10 hover:border-elec-yellow/30 text-white/80 hover:text-white'
                 }`}
               >
                 <div className="flex items-center gap-3">
@@ -183,10 +183,10 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
                         : 'border-elec-yellow bg-elec-yellow'
                       : showResult && index === currentQ.correctAnswer
                       ? 'border-green-400 bg-green-400'
-                      : 'border-gray-400 bg-transparent'
+                      : 'border-white/60 bg-transparent'
                    }`}>
                     {selectedAnswers[currentQuestion] === index && !showResult && (
-                      <div className="w-3 h-3 rounded-full bg-elec-dark"></div>
+                      <div className="w-3 h-3 rounded-full bg-white/10"></div>
                     )}
                     {showResult && (
                       <>

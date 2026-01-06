@@ -81,8 +81,8 @@ const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
   return (
     <>
       <Card className={entry.isAutomatic || entry.notes?.includes("verified") || entry.notes?.includes("activity verification") 
-        ? "bg-elec-gray/50 overflow-hidden border-elec-yellow/20"
-        : "bg-elec-gray/50 overflow-hidden"}>
+        ? "bg-white/5 overflow-hidden border-elec-yellow/20"
+        : "bg-white/5 overflow-hidden"}>
         <CardContent className="p-4">
           <div className="flex justify-between items-start">
             <div className="flex-1">
@@ -91,14 +91,14 @@ const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
                 <Badge className={badgeType.color}>{badgeType.label}</Badge>
               </div>
               
-              <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{entry.notes}</p>
+              <p className="text-sm text-white mt-1 line-clamp-2">{entry.notes}</p>
             </div>
             
             <div className="text-right">
               <div className="text-lg font-semibold">
                 {hours > 0 ? `${hours}h ` : ""}{minutes}m
               </div>
-              <div className="text-xs text-muted-foreground">{formatDate(entry.date)}</div>
+              <div className="text-xs text-white">{formatDate(entry.date)}</div>
             </div>
           </div>
           
@@ -134,7 +134,7 @@ const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
               size="sm"
               variant="outline"
               onClick={() => setShowPortfolioDialog(true)}
-              className="gap-1 text-muted-foreground hover:text-foreground"
+              className="gap-1 text-white hover:text-foreground"
             >
               <Plus className="h-3 w-3" />
               Custom

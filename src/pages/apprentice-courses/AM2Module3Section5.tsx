@@ -132,18 +132,18 @@ const AM2Module3Section5 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
+      <div className="border-b border-white/10 bg-card/50">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+            <Button variant="ghost" className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
               <Link to="..">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Module 3
               </Link>
             </Button>
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+            <Button variant="ghost" className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
               <Link to="../section6">
                 Section 6
                 <ArrowRight className="w-4 h-4 ml-2" />
@@ -161,10 +161,10 @@ const AM2Module3Section5 = () => {
             <Ruler className="w-4 h-4" />
             Module 3 – Section 5
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-6">
             Accuracy, Neatness, and Compliance with BS 7671
           </h1>
-          <p className="text-base text-muted-foreground mb-8 leading-relaxed">
+          <p className="text-base text-white mb-8 leading-relaxed">
             Professional workmanship standards, accuracy requirements and NET compliance for AM2 assessment success - master the critical details that determine pass or fail.
           </p>
         </div>
@@ -190,16 +190,16 @@ const AM2Module3Section5 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm text-white mb-4">
               By the end of this section, you should be able to:
             </p>
-            <ul className="space-y-2 text-xs sm:text-sm text-foreground">
+            <ul className="space-y-2 text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Define "workmanlike standard" under BS 7671 and apply it consistently
@@ -229,7 +229,7 @@ const AM2Module3Section5 = () => {
         </Card>
 
         {/* Accuracy to Specification */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Target className="w-5 h-5" />
@@ -237,9 +237,9 @@ const AM2Module3Section5 = () => {
             </h2>
             
             <div className="space-y-4">
-              <div className="border border-border/20 rounded-lg p-4">
+              <div className="border border-white/10 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Critical Measurement Requirements</h4>
-                <ul className="space-y-2 text-sm text-muted-foreground">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">•</span>
                     <div>
@@ -294,7 +294,7 @@ const AM2Module3Section5 = () => {
         />
 
         {/* Neatness and Workmanship */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Wrench className="w-5 h-5" />
@@ -302,12 +302,12 @@ const AM2Module3Section5 = () => {
             </h2>
             
             <div className="space-y-4">
-              <div className="border border-border/20 rounded-lg p-4">
+              <div className="border border-white/10 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Component-Specific Standards</h4>
                 <div className="space-y-3">
                   <div className="bg-muted/50 rounded p-3">
-                    <h5 className="font-medium text-foreground mb-2">Trunking Installation</h5>
-                    <ul className="space-y-1 text-sm text-muted-foreground">
+                    <h5 className="font-medium text-white mb-2">Trunking Installation</h5>
+                    <ul className="space-y-1 text-sm text-white">
                       <li>• Lids flush and properly seated</li>
                       <li>• Screws aligned in consistent pattern</li>
                       <li>• Runs level and straight throughout</li>
@@ -317,8 +317,8 @@ const AM2Module3Section5 = () => {
                   </div>
                   
                   <div className="bg-muted/50 rounded p-3">
-                    <h5 className="font-medium text-foreground mb-2">Conduit Systems</h5>
-                    <ul className="space-y-1 text-sm text-muted-foreground">
+                    <h5 className="font-medium text-white mb-2">Conduit Systems</h5>
+                    <ul className="space-y-1 text-sm text-white">
                       <li>• Smooth bends with no kinks or distortion</li>
                       <li>• Saddles evenly spaced and aligned</li>
                       <li>• Proper coupling techniques at joints</li>
@@ -328,8 +328,8 @@ const AM2Module3Section5 = () => {
                   </div>
                   
                   <div className="bg-muted/50 rounded p-3">
-                    <h5 className="font-medium text-foreground mb-2">Cable Installation</h5>
-                    <ul className="space-y-1 text-sm text-muted-foreground">
+                    <h5 className="font-medium text-white mb-2">Cable Installation</h5>
+                    <ul className="space-y-1 text-sm text-white">
                       <li>• Straight runs with no unnecessary twists</li>
                       <li>• Minimal crossover of circuits</li>
                       <li>• Proper support spacing maintained</li>
@@ -340,9 +340,9 @@ const AM2Module3Section5 = () => {
                 </div>
               </div>
 
-              <div className="border border-border/20 rounded-lg p-4">
+              <div className="border border-white/10 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Termination Excellence</h4>
-                <ul className="space-y-2 text-sm text-muted-foreground">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex gap-2">
                     <span className="font-medium text-green-400 min-w-[20px]">•</span>
                     <div>
@@ -374,7 +374,7 @@ const AM2Module3Section5 = () => {
         </Card>
 
         {/* BS 7671 Compliance */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Settings className="w-5 h-5" />
@@ -382,9 +382,9 @@ const AM2Module3Section5 = () => {
             </h2>
             
             <div className="space-y-4">
-              <div className="border border-border/20 rounded-lg p-4">
+              <div className="border border-white/10 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Key Regulatory Requirements</h4>
-                <ul className="space-y-2 text-sm text-muted-foreground">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[60px]">134.1.1</span>
                     <div>
@@ -423,9 +423,9 @@ const AM2Module3Section5 = () => {
                 </ul>
               </div>
 
-              <div className="bg-card border border-elec-yellow/20 rounded-lg p-4">
+              <div className="bg-transparent border border-elec-yellow/20 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Compliance Verification Checklist</h4>
-                <ul className="space-y-1 text-sm text-muted-foreground">
+                <ul className="space-y-1 text-sm text-white">
                   <li>• <strong>Review specification against BS 7671</strong> - Ensure no conflicts</li>
                   <li>• <strong>Check protection coordination</strong> - MCB/RCD ratings appropriate</li>
                   <li>• <strong>Verify identification requirements</strong> - All conductors properly marked</li>
@@ -446,7 +446,7 @@ const AM2Module3Section5 = () => {
         />
 
         {/* Assessor Perspective */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Square className="w-5 h-5" />
@@ -454,14 +454,14 @@ const AM2Module3Section5 = () => {
             </h2>
             
             <div className="space-y-4">
-              <div className="border border-border/20 rounded-lg p-4">
+              <div className="border border-white/10 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">First Impression Assessment</h4>
                 <div className="bg-muted/50 rounded p-3 mb-3">
-                  <p className="text-sm text-muted-foreground italic">
+                  <p className="text-sm text-white italic">
                     "Does this installation look like a real electrician did it, or like rushed training-bay work?"
                   </p>
                 </div>
-                <ul className="space-y-2 text-sm text-muted-foreground">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex gap-2">
                     <span className="font-medium text-green-400 min-w-[20px]">•</span>
                     <div>
@@ -489,12 +489,12 @@ const AM2Module3Section5 = () => {
                 </ul>
               </div>
 
-              <div className="border border-border/20 rounded-lg p-4">
+              <div className="border border-white/10 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Detailed Inspection Points</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <h5 className="font-medium text-foreground mb-2">Containment Systems</h5>
-                    <ul className="space-y-1 text-xs text-muted-foreground">
+                    <h5 className="font-medium text-white mb-2">Containment Systems</h5>
+                    <ul className="space-y-1 text-xs text-white">
                       <li>• Trunking runs straight and level</li>
                       <li>• No gaps in lids or joints</li>
                       <li>• Screws aligned consistently</li>
@@ -503,8 +503,8 @@ const AM2Module3Section5 = () => {
                     </ul>
                   </div>
                   <div>
-                    <h5 className="font-medium text-foreground mb-2">Accessories</h5>
-                    <ul className="space-y-1 text-xs text-muted-foreground">
+                    <h5 className="font-medium text-white mb-2">Accessories</h5>
+                    <ul className="space-y-1 text-xs text-white">
                       <li>• Perfectly aligned and level</li>
                       <li>• No visible gaps around edges</li>
                       <li>• Flush mounting to surface</li>
@@ -513,8 +513,8 @@ const AM2Module3Section5 = () => {
                     </ul>
                   </div>
                   <div>
-                    <h5 className="font-medium text-foreground mb-2">Terminations</h5>
-                    <ul className="space-y-1 text-xs text-muted-foreground">
+                    <h5 className="font-medium text-white mb-2">Terminations</h5>
+                    <ul className="space-y-1 text-xs text-white">
                       <li>• Zero exposed copper visible</li>
                       <li>• Proper conductor identification</li>
                       <li>• Conductors cut to exact length</li>
@@ -523,8 +523,8 @@ const AM2Module3Section5 = () => {
                     </ul>
                   </div>
                   <div>
-                    <h5 className="font-medium text-foreground mb-2">Distribution Board</h5>
-                    <ul className="space-y-1 text-xs text-muted-foreground">
+                    <h5 className="font-medium text-white mb-2">Distribution Board</h5>
+                    <ul className="space-y-1 text-xs text-white">
                       <li>• Cables dressed systematically</li>
                       <li>• Clear, permanent labelling</li>
                       <li>• No cable crossings/tangles</li>
@@ -539,7 +539,7 @@ const AM2Module3Section5 = () => {
         </Card>
 
         {/* Common Candidate Mistakes */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" />
@@ -547,9 +547,9 @@ const AM2Module3Section5 = () => {
             </h2>
             
             <div className="space-y-4">
-              <div className="border border-border/20 rounded-lg p-4">
+              <div className="border border-white/10 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Top Workmanship Failures</h4>
-                <ol className="space-y-2 text-sm text-muted-foreground">
+                <ol className="space-y-2 text-sm text-white">
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[30px]">1.</span>
                     <div>
@@ -617,7 +617,7 @@ const AM2Module3Section5 = () => {
         />
 
         {/* Practical Guidance */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Target className="w-5 h-5" />
@@ -625,9 +625,9 @@ const AM2Module3Section5 = () => {
             </h2>
             
             <div className="space-y-4">
-              <div className="border border-border/20 rounded-lg p-4">
+              <div className="border border-white/10 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Step-by-Step Excellence Process</h4>
-                <ol className="space-y-2 text-sm text-muted-foreground">
+                <ol className="space-y-2 text-sm text-white">
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
                     <div>
@@ -689,7 +689,7 @@ const AM2Module3Section5 = () => {
         </Card>
 
         {/* Summary and Key Takeaways */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
@@ -697,12 +697,12 @@ const AM2Module3Section5 = () => {
             </h2>
             
             <div className="space-y-4">
-              <div className="bg-card border border-elec-yellow/20 rounded-lg p-4">
+              <div className="bg-transparent border border-elec-yellow/20 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Golden Rule for AM2 Success</h4>
-                <p className="text-sm text-muted-foreground italic mb-3">
+                <p className="text-sm text-white italic mb-3">
                   "If your installation wouldn't pass a customer handover or NICEIC inspection, it won't pass AM2."
                 </p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white">
                   This single principle encompasses all workmanship standards. Every decision should pass this test.
                 </p>
               </div>
@@ -733,13 +733,13 @@ const AM2Module3Section5 = () => {
         </Card>
 
         {/* Knowledge Check Quiz */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               Knowledge Check - Workmanship Standards
             </h2>
-            <p className="text-sm text-muted-foreground mb-6">
+            <p className="text-sm text-white mb-6">
               Test your understanding of accuracy, neatness and BS 7671 compliance requirements. This quiz covers key assessment criteria and common failure points.
             </p>
             
@@ -751,7 +751,7 @@ const AM2Module3Section5 = () => {
         </Card>
 
         {/* Navigation */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-border/20">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-white/10">
           <Button variant="outline" className="w-full sm:w-auto" asChild>
             <Link to="../section4" className="flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" />
@@ -760,7 +760,7 @@ const AM2Module3Section5 = () => {
             </Link>
           </Button>
           
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2 text-sm text-white">
             <span className="hidden sm:inline">Section 5 of 6</span>
             <div className="flex gap-1">
               <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>

@@ -273,7 +273,7 @@ const TestingEquipmentSafety = ({ onBack }: TestingEquipmentSafetyProps) => {
                       {inspectionChecks.length}/{preUseInspection.length}
                     </span>
                   </div>
-                  <div className="mt-2 bg-gray-600 rounded-full h-2">
+                  <div className="mt-2 bg-white/15 rounded-full h-2">
                     <div 
                       className="bg-green-500 h-2 rounded-full transition-all duration-300"
                       style={{

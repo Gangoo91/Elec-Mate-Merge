@@ -29,7 +29,7 @@ const InsulationTestProcedureCard = () => {
             Insulation Resistance Test Procedure
           </CardTitle>
         </div>
-        <CardDescription className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+        <CardDescription className="text-xs sm:text-sm text-white/80 leading-relaxed">
           Step-by-step procedure for testing insulation resistance in accordance with BS 7671 Regulation 612.3
         </CardDescription>
       </CardHeader>
@@ -48,7 +48,7 @@ const InsulationTestProcedureCard = () => {
                   <Icon className={`h-4 w-4 sm:h-5 sm:w-5 ${step.color} mt-1 shrink-0`} />
                   <div className="flex-1 min-w-0">
                     <h5 className="font-semibold text-foreground text-sm sm:text-base mb-1">{step.title}</h5>
-                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{step.description}</p>
+                    <p className="text-xs sm:text-sm text-white/80 leading-relaxed">{step.description}</p>
                   </div>
                 </div>
               </div>
@@ -66,7 +66,7 @@ const InsulationTestProcedureCard = () => {
                   <Badge className="bg-indigo-500/20 text-indigo-400 border-indigo-400/20 text-xs shrink-0">{option.voltage}</Badge>
                   <div className="flex-1 min-w-0 space-y-1">
                     <p className="text-xs sm:text-sm font-medium text-foreground">Circuits: {option.circuits}</p>
-                    <p className="text-xs text-muted-foreground">{option.examples}</p>
+                    <p className="text-xs text-white/80">{option.examples}</p>
                   </div>
                 </div>
               </div>
@@ -84,18 +84,18 @@ const InsulationTestProcedureCard = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm">
             <div className="space-y-1">
               <p className="font-medium text-foreground">Minimum Values</p>
-              <p className="text-muted-foreground leading-relaxed">• New: 1.0MΩ minimum</p>
-              <p className="text-muted-foreground leading-relaxed">• Existing: 0.5MΩ acceptable</p>
+              <p className="text-white/80 leading-relaxed">• New: 1.0MΩ minimum</p>
+              <p className="text-white/80 leading-relaxed">• Existing: 0.5MΩ acceptable</p>
             </div>
             <div className="space-y-1">
               <p className="font-medium text-foreground">Environmental</p>
-              <p className="text-muted-foreground leading-relaxed">• Temperature correction</p>
-              <p className="text-muted-foreground leading-relaxed">• Moisture affects readings</p>
+              <p className="text-white/80 leading-relaxed">• Temperature correction</p>
+              <p className="text-white/80 leading-relaxed">• Moisture affects readings</p>
             </div>
             <div className="space-y-1">
               <p className="font-medium text-foreground">Equipment</p>
-              <p className="text-muted-foreground leading-relaxed">• Calibrated IR tester</p>
-              <p className="text-muted-foreground leading-relaxed">• Suitable test voltage</p>
+              <p className="text-white/80 leading-relaxed">• Calibrated IR tester</p>
+              <p className="text-white/80 leading-relaxed">• Suitable test voltage</p>
             </div>
           </div>
         </div>

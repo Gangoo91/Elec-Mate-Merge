@@ -14,7 +14,7 @@ const LegalRequirements = () => {
           distribution boards.
         </p>
         
-        <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-lg p-4">
+        <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-4">
           <h4 className="font-semibold text-elec-yellow mb-3">Key Regulations for Electrical Work</h4>
           <ul className="list-disc pl-5 space-y-2 text-elec-light/80">
             <li>

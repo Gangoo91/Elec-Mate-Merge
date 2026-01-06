@@ -1,8 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Store, MapPin, CreditCard, Truck, Phone, Globe } from "lucide-react";
+import { Store, MapPin, CreditCard, Truck, Phone, Globe, Info, AlertTriangle, CheckCircle, Percent } from "lucide-react";
 import BudgetPlanningCalculator from "@/components/apprentice/tools-guide/BudgetPlanningCalculator";
 
 const SuppliersAndCostsTab = () => {
@@ -159,57 +158,68 @@ const SuppliersAndCostsTab = () => {
   ];
 
   return (
-    <div className="space-y-6">
-      <Alert className="border-blue-500/50 bg-blue-500/10">
-        <Store className="h-4 w-4 text-blue-400" />
-        <AlertDescription className="text-blue-200">
-          Smart supplier selection and budgeting can save you hundreds of pounds on your professional toolkit while ensuring you get quality tools.
-        </AlertDescription>
-      </Alert>
+    <div className="space-y-6 animate-fade-in">
+      {/* Hero Alert */}
+      <div className="p-4 rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/30">
+        <div className="flex items-start gap-3">
+          <div className="p-2 rounded-lg bg-blue-500/20">
+            <Info className="h-5 w-5 text-blue-400" />
+          </div>
+          <div>
+            <p className="font-medium text-blue-400 mb-1">Smart Purchasing Guide</p>
+            <p className="text-sm text-white/70">
+              Smart supplier selection and budgeting can save you hundreds of pounds on your professional toolkit while ensuring you get quality tools.
+            </p>
+          </div>
+        </div>
+      </div>
 
       {/* UK Suppliers Overview */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <MapPin className="h-5 w-5" />
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+              <MapPin className="h-5 w-5 text-elec-yellow" />
+            </div>
             Major UK Tool Suppliers
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white/60">
             Key suppliers for electrical tools and equipment across the UK
           </p>
         </CardHeader>
-        <CardContent>
+        <CardContent className="relative">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {ukSuppliers.map((supplier, index) => (
-              <div key={index} className="border border-elec-yellow/30 rounded-lg p-4 space-y-3">
+              <div key={index} className="p-4 rounded-xl bg-white/10 border border-white/10 hover:border-elec-yellow/30 transition-all space-y-3">
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 className="font-medium text-white">{supplier.name}</h3>
-                    <p className="text-sm text-muted-foreground">{supplier.speciality}</p>
+                    <h3 className="font-semibold text-white">{supplier.name}</h3>
+                    <p className="text-sm text-white/60">{supplier.speciality}</p>
                   </div>
-                  <Badge variant="outline" className="border-elec-yellow/40 text-elec-yellow">
+                  <Badge variant="outline" className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow">
                     {supplier.type}
                   </Badge>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   <div>
-                    <span className="text-muted-foreground">Locations:</span>
-                    <p className="text-white">{supplier.locations}</p>
+                    <span className="text-white/80">Locations:</span>
+                    <p className="text-white/80">{supplier.locations}</p>
                   </div>
                   <div>
-                    <span className="text-muted-foreground">Best For:</span>
-                    <p className="text-white">{supplier.bestFor}</p>
+                    <span className="text-white/80">Best For:</span>
+                    <p className="text-white/80">{supplier.bestFor}</p>
                   </div>
                 </div>
 
-                <div className="bg-green-500/10 rounded p-2">
-                  <span className="text-xs font-medium text-green-300">Apprentice Support:</span>
-                  <p className="text-xs text-green-200">{supplier.apprenticeSupport}</p>
+                <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
+                  <span className="text-xs font-medium text-green-400">Apprentice Support:</span>
+                  <p className="text-xs text-white/70 mt-1">{supplier.apprenticeSupport}</p>
                 </div>
 
-                <div className="flex items-center gap-2 text-xs text-blue-300">
-                  <Globe className="h-3 w-3" />
+                <div className="flex items-center gap-2 text-xs text-blue-400">
+                  <Globe className="h-3.5 w-3.5" />
                   {supplier.website}
                 </div>
               </div>
@@ -222,39 +232,51 @@ const SuppliersAndCostsTab = () => {
       <BudgetPlanningCalculator />
 
       {/* Budgeting Strategies */}
-      <Card className="border-green-500/20 bg-green-500/10">
-        <CardHeader>
-          <CardTitle className="text-green-300 flex items-center gap-2">
-            <CreditCard className="h-5 w-5" />
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-green-500/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30">
+              <CreditCard className="h-5 w-5 text-green-400" />
+            </div>
             Budgeting Strategies for Apprentices
           </CardTitle>
+          <p className="text-sm text-white/60">
+            Smart approaches to building your professional toolkit
+          </p>
         </CardHeader>
-        <CardContent>
+        <CardContent className="relative">
           <div className="space-y-4">
             {budgetingStrategies.map((strategy, index) => (
-              <div key={index} className="border border-green-500/30 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-medium text-green-200">{strategy.strategy}</h3>
-                  <Badge variant="outline" className="border-green-500/40 text-green-400">
-                    {strategy.monthlyBudget}
+              <div key={index} className="p-5 rounded-xl bg-green-500/5 border border-green-500/20 hover:border-green-500/40 transition-all">
+                <div className="flex items-center justify-between flex-wrap gap-2 mb-3">
+                  <h3 className="font-semibold text-white">{strategy.strategy}</h3>
+                  <Badge variant="outline" className="bg-green-500/10 border-green-500/30 text-green-400">
+                    {strategy.monthlyBudget}/month
                   </Badge>
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">{strategy.description}</p>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <div>
-                    <h4 className="text-sm font-medium text-green-300 mb-1">Benefits:</h4>
-                    <ul className="text-xs text-muted-foreground space-y-0.5">
+                <p className="text-sm text-white/60 mb-4">{strategy.description}</p>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="p-3 rounded-lg bg-white/10 border border-white/10">
+                    <h4 className="text-sm font-medium text-green-400 mb-2">Benefits:</h4>
+                    <ul className="text-sm text-white/60 space-y-1.5">
                       {strategy.benefits.map((benefit, idx) => (
-                        <li key={idx}>• {benefit}</li>
+                        <li key={idx} className="flex items-start gap-2">
+                          <CheckCircle className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
+                          {benefit}
+                        </li>
                       ))}
                     </ul>
                   </div>
-                  <div>
-                    <h4 className="text-sm font-medium text-green-300 mb-1">Timeline:</h4>
-                    <ul className="text-xs text-muted-foreground space-y-0.5">
+                  <div className="p-3 rounded-lg bg-white/10 border border-white/10">
+                    <h4 className="text-sm font-medium text-green-400 mb-2">Timeline:</h4>
+                    <ul className="text-sm text-white/60 space-y-1.5">
                       {strategy.timeline.map((phase, idx) => (
-                        <li key={idx}>• {phase}</li>
+                        <li key={idx} className="flex items-start gap-2">
+                          <div className="w-2 h-2 bg-green-400 rounded-full mt-1.5 flex-shrink-0" />
+                          {phase}
+                        </li>
                       ))}
                     </ul>
                   </div>
@@ -266,27 +288,36 @@ const SuppliersAndCostsTab = () => {
       </Card>
 
       {/* Money-Saving Tips */}
-      <Card className="border-orange-500/20 bg-orange-500/10">
-        <CardHeader>
-          <CardTitle className="text-orange-300 flex items-center gap-2">
-            <Truck className="h-5 w-5" />
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-orange-500/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-orange-500/20 to-orange-500/5 border border-orange-500/30">
+              <Percent className="h-5 w-5 text-orange-400" />
+            </div>
             Money-Saving Tips for Tool Purchases
           </CardTitle>
+          <p className="text-sm text-white/60">
+            Smart strategies to get the best value for your money
+          </p>
         </CardHeader>
-        <CardContent>
+        <CardContent className="relative">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {savingTips.map((tip, index) => (
-              <div key={index} className="border border-orange-500/30 rounded-lg p-3">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-medium text-orange-200 text-sm">{tip.tip}</h3>
-                  <Badge variant="outline" className="border-orange-500/40 text-orange-400 text-xs">
-                    {tip.savings}
+              <div key={index} className="p-4 rounded-xl bg-orange-500/5 border border-orange-500/20 hover:border-orange-500/40 transition-all">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-semibold text-white text-sm">{tip.tip}</h3>
+                  <Badge variant="outline" className="bg-orange-500/10 border-orange-500/30 text-orange-400 text-xs">
+                    Save {tip.savings}
                   </Badge>
                 </div>
-                <p className="text-xs text-muted-foreground mb-2">{tip.description}</p>
-                <ul className="text-xs text-muted-foreground space-y-0.5">
+                <p className="text-sm text-white/60 mb-3">{tip.description}</p>
+                <ul className="text-sm text-white/60 space-y-1.5">
                   {tip.details.map((detail, idx) => (
-                    <li key={idx}>• {detail}</li>
+                    <li key={idx} className="flex items-start gap-2">
+                      <div className="w-2 h-2 bg-orange-400 rounded-full mt-1.5 flex-shrink-0" />
+                      {detail}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -296,56 +327,65 @@ const SuppliersAndCostsTab = () => {
       </Card>
 
       {/* Financing Options */}
-      <Card className="border-purple-500/20 bg-purple-500/10">
-        <CardHeader>
-          <CardTitle className="text-purple-300 flex items-center gap-2">
-            <Phone className="h-5 w-5" />
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-purple-500/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/30">
+              <Phone className="h-5 w-5 text-purple-400" />
+            </div>
             Financing Options for Larger Purchases
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white/60">
             Responsible financing options for expensive test equipment
           </p>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
+        <CardContent className="relative">
+          <div className="space-y-4">
             {financingOptions.map((option, index) => (
-              <div key={index} className="border border-purple-500/30 rounded-lg p-3">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-medium text-purple-200">{option.option}</h3>
-                  <Badge variant="outline" className="border-purple-500/40 text-purple-400">
+              <div key={index} className="p-4 rounded-xl bg-purple-500/5 border border-purple-500/20 hover:border-purple-500/40 transition-all">
+                <div className="flex items-center justify-between flex-wrap gap-2 mb-3">
+                  <h3 className="font-semibold text-white">{option.option}</h3>
+                  <Badge variant="outline" className="bg-purple-500/10 border-purple-500/30 text-purple-400">
                     {option.rate}
                   </Badge>
                 </div>
-                
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs mb-2">
-                  <div>
-                    <span className="text-muted-foreground">Amount:</span>
-                    <p className="text-white">{option.amount}</p>
+
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm mb-4">
+                  <div className="p-2 rounded-lg bg-white/10">
+                    <span className="text-white/80 text-xs">Amount:</span>
+                    <p className="text-white font-medium">{option.amount}</p>
                   </div>
-                  <div>
-                    <span className="text-muted-foreground">Term:</span>
-                    <p className="text-white">{option.term}</p>
+                  <div className="p-2 rounded-lg bg-white/10">
+                    <span className="text-white/80 text-xs">Term:</span>
+                    <p className="text-white font-medium">{option.term}</p>
                   </div>
-                  <div className="col-span-2">
-                    <span className="text-muted-foreground">Eligibility:</span>
-                    <p className="text-white">{option.eligibility}</p>
+                  <div className="col-span-2 p-2 rounded-lg bg-white/10">
+                    <span className="text-white/80 text-xs">Eligibility:</span>
+                    <p className="text-white/80 text-sm">{option.eligibility}</p>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                  <div>
-                    <span className="text-xs font-medium text-green-300">Pros:</span>
-                    <ul className="text-xs text-muted-foreground">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
+                    <span className="text-sm font-medium text-green-400">Pros:</span>
+                    <ul className="text-sm text-white/60 mt-2 space-y-1">
                       {option.pros.map((pro, idx) => (
-                        <li key={idx}>• {pro}</li>
+                        <li key={idx} className="flex items-start gap-2">
+                          <CheckCircle className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
+                          {pro}
+                        </li>
                       ))}
                     </ul>
                   </div>
-                  <div>
-                    <span className="text-xs font-medium text-red-300">Cons:</span>
-                    <ul className="text-xs text-muted-foreground">
+                  <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20">
+                    <span className="text-sm font-medium text-red-400">Cons:</span>
+                    <ul className="text-sm text-white/60 mt-2 space-y-1">
                       {option.cons.map((con, idx) => (
-                        <li key={idx}>• {con}</li>
+                        <li key={idx} className="flex items-start gap-2">
+                          <AlertTriangle className="h-3.5 w-3.5 text-red-400 mt-0.5 flex-shrink-0" />
+                          {con}
+                        </li>
                       ))}
                     </ul>
                   </div>
@@ -356,11 +396,20 @@ const SuppliersAndCostsTab = () => {
         </CardContent>
       </Card>
 
-      <Alert className="border-red-500/50 bg-red-500/10">
-        <AlertDescription className="text-red-200">
-          <strong>Financial Warning:</strong> Only borrow what you can afford to repay. Tool purchases are an investment, but debt can impact your financial future. Consider starting with essential items and upgrading gradually.
-        </AlertDescription>
-      </Alert>
+      {/* Financial Warning Alert */}
+      <div className="p-4 rounded-xl bg-gradient-to-br from-red-500/10 to-red-500/5 border border-red-500/30">
+        <div className="flex items-start gap-3">
+          <div className="p-2 rounded-lg bg-red-500/20">
+            <AlertTriangle className="h-5 w-5 text-red-400" />
+          </div>
+          <div>
+            <p className="font-medium text-red-400 mb-1">Financial Warning</p>
+            <p className="text-sm text-white/70">
+              Only borrow what you can afford to repay. Tool purchases are an investment, but debt can impact your financial future. Consider starting with essential items and upgrading gradually.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

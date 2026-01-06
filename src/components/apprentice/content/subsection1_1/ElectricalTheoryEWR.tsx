@@ -16,7 +16,7 @@ const ElectricalTheoryEWR = ({ subsectionId, isCompleted, markAsComplete }: Subs
     <div className="space-y-8">
       <h1 className="text-2xl font-bold text-elec-yellow">Electricity at Work Regulations 1989</h1>
       
-      <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-lg p-6 mb-6">
+      <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-6 mb-6">
         <h2 className="text-xl font-semibold text-elec-yellow mb-4 flex items-center">
           <Shield className="mr-3 h-6 w-6 text-elec-yellow" />
           Introduction to the EWR 1989
@@ -34,7 +34,7 @@ const ElectricalTheoryEWR = ({ subsectionId, isCompleted, markAsComplete }: Subs
         </p>
       </div>
       
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow flex items-center">
             <FileText className="mr-3 h-6 w-6" />
@@ -43,7 +43,7 @@ const ElectricalTheoryEWR = ({ subsectionId, isCompleted, markAsComplete }: Subs
           <CardDescription>Essential regulations for electrical installation work</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Regulation 4: Systems, Work Activities and Protective Equipment</h3>
             <p className="mb-3">
               This fundamental regulation requires that:
@@ -57,7 +57,7 @@ const ElectricalTheoryEWR = ({ subsectionId, isCompleted, markAsComplete }: Subs
             </ul>
           </div>
 
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Regulation 12: Means for Cutting Off the Supply and for Isolation</h3>
             <p className="mb-3">
               This regulation requires that:
@@ -70,7 +70,7 @@ const ElectricalTheoryEWR = ({ subsectionId, isCompleted, markAsComplete }: Subs
             </ul>
           </div>
 
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Regulation 14: Work on or Near Live Conductors</h3>
             <p className="mb-3">
               This critical regulation states that no person shall work on or near any live conductor unless:
@@ -96,7 +96,7 @@ const ElectricalTheoryEWR = ({ subsectionId, isCompleted, markAsComplete }: Subs
         </CardContent>
       </Card>
       
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow flex items-center">
             <HardHat className="mr-3 h-6 w-6" />
@@ -112,7 +112,7 @@ const ElectricalTheoryEWR = ({ subsectionId, isCompleted, markAsComplete }: Subs
             the nature of the work."
           </p>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mb-4">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mb-4">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Elements of Electrical Competence:</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -154,7 +154,7 @@ const ElectricalTheoryEWR = ({ subsectionId, isCompleted, markAsComplete }: Subs
             </div>
           </div>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Practical Implications for Electricians:</h3>
             <p className="mb-3">
               For electricians and those working in the electrical industry, this regulation has several important practical implications:
@@ -170,7 +170,7 @@ const ElectricalTheoryEWR = ({ subsectionId, isCompleted, markAsComplete }: Subs
         </CardContent>
       </Card>
       
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow flex items-center">
             <Zap className="mr-3 h-6 w-6" />
@@ -184,7 +184,7 @@ const ElectricalTheoryEWR = ({ subsectionId, isCompleted, markAsComplete }: Subs
             is disconnected and secured against inadvertent reconnection before work begins.
           </p>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">The Safe Isolation Procedure:</h3>
             <ol className="list-decimal pl-5 space-y-3">
               <li>
@@ -232,7 +232,7 @@ const ElectricalTheoryEWR = ({ subsectionId, isCompleted, markAsComplete }: Subs
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow flex items-center">
             <Scale className="mr-3 h-6 w-6" />
@@ -246,7 +246,7 @@ const ElectricalTheoryEWR = ({ subsectionId, isCompleted, markAsComplete }: Subs
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+            <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
               <h3 className="text-lg font-semibold text-elec-yellow mb-2">Enforcement Methods</h3>
               <ul className="list-disc pl-5 space-y-2">
                 <li><span className="font-semibold">Improvement Notice:</span> Requiring remedial action within a specified time</li>
@@ -256,7 +256,7 @@ const ElectricalTheoryEWR = ({ subsectionId, isCompleted, markAsComplete }: Subs
               </ul>
             </div>
             
-            <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+            <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
               <h3 className="text-lg font-semibold text-elec-yellow mb-2">Potential Penalties</h3>
               <ul className="list-disc pl-5 space-y-2">
                 <li><span className="font-semibold">Magistrates' Court:</span> Fines up to £20,000 per offence</li>
@@ -290,7 +290,7 @@ const ElectricalTheoryEWR = ({ subsectionId, isCompleted, markAsComplete }: Subs
         </CardContent>
       </Card>
       
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow flex items-center">
             <Info className="mr-3 h-6 w-6" />
@@ -304,7 +304,7 @@ const ElectricalTheoryEWR = ({ subsectionId, isCompleted, markAsComplete }: Subs
             frequently tested in assessments:
           </p>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Common Examination Topics:</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
@@ -345,7 +345,7 @@ const ElectricalTheoryEWR = ({ subsectionId, isCompleted, markAsComplete }: Subs
             </div>
           </div>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mt-4">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mt-4">
             <h3 className="text-lg font-semibold text-elec-yellow mb-3">Sample Assessment Questions:</h3>
             <div className="space-y-4">
               <div>
@@ -372,7 +372,7 @@ const ElectricalTheoryEWR = ({ subsectionId, isCompleted, markAsComplete }: Subs
         </CardContent>
       </Card>
       
-      <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-lg p-6">
+      <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-6">
         <h2 className="text-xl font-semibold text-elec-yellow mb-4 flex items-center">
           <CheckCircle2 className="mr-3 h-6 w-6 text-elec-yellow" />
           Key Points Summary

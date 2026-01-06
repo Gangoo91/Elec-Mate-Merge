@@ -106,15 +106,15 @@ const AddGoalDialog = ({ open, onOpenChange, onAddGoal }: AddGoalDialogProps) =>
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md max-h-[95vh] overflow-y-auto bg-elec-gray border-elec-gray/40">
-        <DialogHeader className="pb-4 bg-elec-gray">
+      <DialogContent className="max-w-md max-h-[95vh] overflow-y-auto bg-white/5 border-elec-gray/40">
+        <DialogHeader className="pb-4 bg-white/5">
           <DialogTitle className="text-elec-light text-xl font-semibold flex items-center gap-2">
             <Target className="h-5 w-5 text-elec-yellow" />
             Add New Goal
           </DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-6 bg-elec-gray">
+        <form onSubmit={handleSubmit} className="space-y-6 bg-white/5">
           {/* Category Selection - First for smart suggestions */}
           <MobileSelect value={category} onValueChange={setCategory}>
             <MobileSelectTrigger label="Goal Category">
@@ -347,7 +347,7 @@ const AddGoalDialog = ({ open, onOpenChange, onAddGoal }: AddGoalDialogProps) =>
             <button 
               type="button" 
               onClick={() => onOpenChange(false)}
-              className="w-full text-elec-light/70 hover:text-elec-light hover:bg-elec-gray/20 font-medium py-3 rounded-xl transition-all duration-200"
+              className="w-full text-elec-light/70 hover:text-elec-light hover:bg-white/5 font-medium py-3 rounded-xl transition-all duration-200"
             >
               Cancel
             </button>

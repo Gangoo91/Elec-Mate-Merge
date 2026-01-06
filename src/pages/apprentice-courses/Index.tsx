@@ -21,7 +21,6 @@ const courses = [
     description: "Advanced electrical installation techniques",
     icon: CheckCircle,
     href: "level3",
-    comingSoon: true,
   },
   {
     title: "MOET",

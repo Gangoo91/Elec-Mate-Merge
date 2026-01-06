@@ -27,7 +27,7 @@ const InspectionOutcomeSelect = ({ itemId, currentOutcome, onOutcomeChange }: In
       case 'C3': return <AlertTriangle className="h-4 w-4 text-yellow-500" />;
       case 'limitation': return <Info className="h-4 w-4 text-purple-500" />;
       case 'not-verified': return <FileText className="h-4 w-4 text-blue-500" />;
-      default: return <div className="h-4 w-4 bg-gray-300 rounded-full" />;
+      default: return <div className="h-4 w-4 bg-white/10 rounded-full" />;
     }
   };
 

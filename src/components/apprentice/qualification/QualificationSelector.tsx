@@ -48,7 +48,7 @@ const QualificationSelector = () => {
 
   if (userSelection) {
     return (
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Award className="h-5 w-5" />
@@ -66,7 +66,7 @@ const QualificationSelector = () => {
                   {userSelection.progress_percentage}% Complete
                 </Badge>
                 <h3 className="font-semibold">{userSelection.qualification?.title}</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white">
                   {userSelection.qualification?.awarding_body} • {userSelection.qualification?.level}
                 </p>
               </div>
@@ -75,7 +75,7 @@ const QualificationSelector = () => {
               </Badge>
             </div>
             {userSelection.target_completion_date && (
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2 text-sm text-white">
                 <CalendarDays className="h-4 w-4" />
                 Target completion: {new Date(userSelection.target_completion_date).toLocaleDateString()}
               </div>
@@ -87,7 +87,7 @@ const QualificationSelector = () => {
   }
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border-elec-yellow/20 bg-white/5">
       <CardHeader>
         <CardTitle>Select Your Qualification</CardTitle>
         <CardDescription>
@@ -109,7 +109,7 @@ const QualificationSelector = () => {
                   {qualifications.map((qualification) => (
                     <Card
                       key={qualification.id}
-                      className={`cursor-pointer transition-all hover:shadow-md border-elec-yellow/20 bg-elec-dark ${
+                      className={`cursor-pointer transition-all hover:shadow-md border-elec-yellow/20 bg-white/10 ${
                         selectedQualification?.id === qualification.id ? 'ring-2 ring-elec-yellow' : ''
                       }`}
                       onClick={() => handleSelectQualification(qualification)}
@@ -123,10 +123,10 @@ const QualificationSelector = () => {
                            <h3 className="font-semibold text-lg leading-tight text-center">{qualification.title}</h3>
                          </div>
                          <div className="space-y-2 text-center">
-                           <p className="text-sm text-muted-foreground">
+                           <p className="text-sm text-white">
                              {qualification.description}
                            </p>
-                           <p className="text-xs text-muted-foreground">
+                           <p className="text-xs text-white">
                              Code: {qualification.code}
                            </p>
                          </div>

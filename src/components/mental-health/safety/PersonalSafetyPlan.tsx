@@ -211,7 +211,7 @@ const PersonalSafetyPlan = () => {
             <Icon className={`h-7 w-7 ${colors.text}`} />
           </div>
           <h2 className="text-xl font-bold text-foreground">{section.title}</h2>
-          <p className="text-sm text-muted-foreground mt-1">{section.description}</p>
+          <p className="text-sm text-white/80 mt-1">{section.description}</p>
         </div>
 
         {/* Items List */}
@@ -231,7 +231,7 @@ const PersonalSafetyPlan = () => {
                       <div>
                         <div className="font-medium text-foreground">{contact.name}</div>
                         {contact.role && (
-                          <div className="text-xs text-muted-foreground">{contact.role}</div>
+                          <div className="text-xs text-white/80">{contact.role}</div>
                         )}
                         {contact.phone && (
                           <a
@@ -298,8 +298,8 @@ const PersonalSafetyPlan = () => {
             {(items as any[]).length === 0 && !isEditing && (
               <Card className="border-white/10 bg-white/5">
                 <CardContent className="text-center py-8">
-                  <Users className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground mb-3">No contacts added yet</p>
+                  <Users className="h-8 w-8 text-white/80 mx-auto mb-2" />
+                  <p className="text-sm text-white/80 mb-3">No contacts added yet</p>
                   <Button size="sm" onClick={() => setIsEditing(true)}>
                     <Plus className="h-4 w-4 mr-1" />
                     Add Contact
@@ -357,8 +357,8 @@ const PersonalSafetyPlan = () => {
             {(items as string[]).length === 0 && !isEditing && (
               <Card className="border-white/10 bg-white/5">
                 <CardContent className="text-center py-8">
-                  <Icon className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground mb-3">No items added yet</p>
+                  <Icon className="h-8 w-8 text-white/80 mx-auto mb-2" />
+                  <p className="text-sm text-white/80 mb-3">No items added yet</p>
                   <Button size="sm" onClick={() => setIsEditing(true)}>
                     <Plus className="h-4 w-4 mr-1" />
                     Add Item
@@ -392,7 +392,7 @@ const PersonalSafetyPlan = () => {
           <Shield className="h-6 w-6 text-red-400" />
         </div>
         <h2 className="text-xl font-bold text-foreground mb-1">Personal Safety Plan</h2>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-white/80">
           Your personal guide for difficult moments
         </p>
       </div>
@@ -405,7 +405,7 @@ const PersonalSafetyPlan = () => {
             Synced to cloud
           </span>
         ) : (
-          <span className="flex items-center gap-1 text-muted-foreground">
+          <span className="flex items-center gap-1 text-white/80">
             <CloudOff className="h-3 w-3" />
             Local only - sign in to sync
           </span>
@@ -416,7 +416,7 @@ const PersonalSafetyPlan = () => {
       <Card className="border-white/10 bg-white/5">
         <CardContent className="p-3">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-muted-foreground">Plan Completion</span>
+            <span className="text-sm text-white/80">Plan Completion</span>
             <span className="text-sm font-medium text-foreground">{getCompletionCount()}/7 sections</span>
           </div>
           <div className="h-2 bg-white/10 rounded-full overflow-hidden">
@@ -435,7 +435,7 @@ const PersonalSafetyPlan = () => {
             <Phone className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
             <div>
               <p className="text-sm text-foreground font-medium">In an emergency, call 999</p>
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-xs text-white/80 mt-1">
                 This plan is a support tool, not a replacement for professional help.
                 If you're in immediate danger, please call emergency services.
               </p>
@@ -470,13 +470,13 @@ const PersonalSafetyPlan = () => {
                         <CheckCircle className="h-4 w-4 text-green-400" />
                       )}
                     </div>
-                    <p className="text-xs text-muted-foreground line-clamp-1">
+                    <p className="text-xs text-white/80 line-clamp-1">
                       {itemCount > 0
                         ? `${itemCount} item${itemCount !== 1 ? "s" : ""} added`
                         : "Tap to add"}
                     </p>
                   </div>
-                  <ChevronLeft className="h-5 w-5 text-muted-foreground rotate-180" />
+                  <ChevronLeft className="h-5 w-5 text-white/80 rotate-180" />
                 </div>
               </CardContent>
             </Card>

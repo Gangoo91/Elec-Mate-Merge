@@ -106,7 +106,7 @@ const InteractiveToolsTab = () => {
           <Zap className="h-6 w-6 text-yellow-400" />
         </div>
         <h2 className="text-xl font-bold text-foreground mb-1">Interactive Tools</h2>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-white/80">
           Track, manage, and improve your wellbeing
         </p>
       </div>
@@ -118,13 +118,13 @@ const InteractiveToolsTab = () => {
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
                 <div className="text-2xl font-bold text-foreground">{moodHistory.length}</div>
-                <div className="text-xs text-muted-foreground">Days Tracked</div>
+                <div className="text-xs text-white/80">Days Tracked</div>
               </div>
               <div>
                 <div className="text-2xl font-bold text-foreground">
                   {(moodHistory.reduce((sum, e) => sum + e.mood, 0) / moodHistory.length).toFixed(1)}
                 </div>
-                <div className="text-xs text-muted-foreground">Avg Mood</div>
+                <div className="text-xs text-white/80">Avg Mood</div>
               </div>
               <div>
                 <div className="flex items-center justify-center">
@@ -136,7 +136,7 @@ const InteractiveToolsTab = () => {
                     <Sparkles className="h-5 w-5 text-amber-400" />
                   )}
                 </div>
-                <div className="text-xs text-muted-foreground">
+                <div className="text-xs text-white/80">
                   {hasMoodToday ? "Today" : "Log today"}
                 </div>
               </div>
@@ -171,13 +171,13 @@ const InteractiveToolsTab = () => {
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-muted-foreground">{section.description}</p>
+                    <p className="text-xs text-white/80">{section.description}</p>
                   </div>
                 </div>
                 {isExpanded ? (
-                  <ChevronUp className="h-5 w-5 text-muted-foreground" />
+                  <ChevronUp className="h-5 w-5 text-white/80" />
                 ) : (
-                  <ChevronDown className="h-5 w-5 text-muted-foreground" />
+                  <ChevronDown className="h-5 w-5 text-white/80" />
                 )}
               </button>
 
@@ -200,7 +200,7 @@ const InteractiveToolsTab = () => {
             </div>
             <div>
               <h4 className="font-medium text-purple-400 text-sm mb-1">Pro Tip</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white/80">
                 Tracking your mood daily helps identify patterns. Even on tough days,
                 a quick check-in takes less than 30 seconds and provides valuable insights over time.
               </p>

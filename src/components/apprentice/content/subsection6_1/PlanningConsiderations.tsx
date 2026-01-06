@@ -19,10 +19,10 @@ const PlanningConsiderations = () => {
         This involves careful consideration of the work environment, resources needed, and potential hazards.
       </p>
       
-      <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg overflow-hidden">
+      <div className="bg-white/10 border border-elec-yellow/20 rounded-lg overflow-hidden">
         <div className="bg-gradient-to-r from-elec-yellow/10 to-transparent p-4 border-b border-elec-yellow/20">
           <h4 className="font-semibold text-lg text-elec-yellow">Comprehensive Work Planning</h4>
-          <p className="text-sm mt-1 text-gray-300">Essential elements for safe and effective electrical work</p>
+          <p className="text-sm mt-1 text-white/80">Essential elements for safe and effective electrical work</p>
         </div>
         
         <div className="p-6">
@@ -213,7 +213,7 @@ const PlanningConsiderations = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <h6 className="text-sm font-medium text-gray-300 mb-2">Before Starting</h6>
+                <h6 className="text-sm font-medium text-white/80 mb-2">Before Starting</h6>
                 <ul className="space-y-2">
                   <li className="flex items-center gap-2 text-sm">
                     <div className="h-5 w-5 border border-elec-yellow/30 rounded flex-shrink-0"></div>
@@ -235,7 +235,7 @@ const PlanningConsiderations = () => {
               </div>
               
               <div>
-                <h6 className="text-sm font-medium text-gray-300 mb-2">During Work</h6>
+                <h6 className="text-sm font-medium text-white/80 mb-2">During Work</h6>
                 <ul className="space-y-2">
                   <li className="flex items-center gap-2 text-sm">
                     <div className="h-5 w-5 border border-elec-yellow/30 rounded flex-shrink-0"></div>
@@ -257,7 +257,7 @@ const PlanningConsiderations = () => {
               </div>
               
               <div>
-                <h6 className="text-sm font-medium text-gray-300 mb-2">Completion</h6>
+                <h6 className="text-sm font-medium text-white/80 mb-2">Completion</h6>
                 <ul className="space-y-2">
                   <li className="flex items-center gap-2 text-sm">
                     <div className="h-5 w-5 border border-elec-yellow/30 rounded flex-shrink-0"></div>

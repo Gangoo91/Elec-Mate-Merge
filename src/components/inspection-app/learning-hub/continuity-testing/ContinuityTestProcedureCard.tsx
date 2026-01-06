@@ -30,7 +30,7 @@ const ContinuityTestProcedureCard = () => {
             Continuity Test Procedure Overview
           </CardTitle>
         </div>
-        <CardDescription className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+        <CardDescription className="text-xs sm:text-sm text-white/80 leading-relaxed">
           Step-by-step procedures for testing protective conductor continuity in accordance with BS 7671
         </CardDescription>
       </CardHeader>
@@ -54,7 +54,7 @@ const ContinuityTestProcedureCard = () => {
                     <Icon className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400 mt-0.5 shrink-0" />
                     <div className="flex-1 min-w-0">
                       <h5 className="font-medium text-foreground text-xs sm:text-sm mb-0.5">{step.title}</h5>
-                      <p className="text-xs text-muted-foreground leading-relaxed">{step.description}</p>
+                      <p className="text-xs text-white/80 leading-relaxed">{step.description}</p>
                     </div>
                   </div>
                 </div>
@@ -81,7 +81,7 @@ const ContinuityTestProcedureCard = () => {
                     <Icon className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400 mt-0.5 shrink-0" />
                     <div className="flex-1 min-w-0">
                       <h5 className="font-medium text-foreground text-xs sm:text-sm mb-0.5">{step.title}</h5>
-                      <p className="text-xs text-muted-foreground leading-relaxed">{step.description}</p>
+                      <p className="text-xs text-white/80 leading-relaxed">{step.description}</p>
                     </div>
                   </div>
                 </div>
@@ -96,18 +96,18 @@ const ContinuityTestProcedureCard = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm">
             <div className="space-y-1">
               <p className="font-medium text-foreground">Test Current</p>
-              <p className="text-muted-foreground leading-relaxed">• Minimum 200mA DC</p>
-              <p className="text-muted-foreground leading-relaxed">• Higher for bonding</p>
+              <p className="text-white/80 leading-relaxed">• Minimum 200mA DC</p>
+              <p className="text-white/80 leading-relaxed">• Higher for bonding</p>
             </div>
             <div className="space-y-1">
               <p className="font-medium text-foreground">Instrument</p>
-              <p className="text-muted-foreground leading-relaxed">• Low resistance ohmmeter</p>
-              <p className="text-muted-foreground leading-relaxed">• 0.01Ω resolution min</p>
+              <p className="text-white/80 leading-relaxed">• Low resistance ohmmeter</p>
+              <p className="text-white/80 leading-relaxed">• 0.01Ω resolution min</p>
             </div>
             <div className="space-y-1">
               <p className="font-medium text-foreground">Test Leads</p>
-              <p className="text-muted-foreground leading-relaxed">• Robust construction</p>
-              <p className="text-muted-foreground leading-relaxed">• Known resistance</p>
+              <p className="text-white/80 leading-relaxed">• Robust construction</p>
+              <p className="text-white/80 leading-relaxed">• Known resistance</p>
             </div>
           </div>
         </div>

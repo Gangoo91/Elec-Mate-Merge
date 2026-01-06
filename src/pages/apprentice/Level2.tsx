@@ -23,7 +23,7 @@ const Level2 = () => {
             <h3 className="text-sm sm:text-base lg:text-lg font-bold text-foreground leading-tight group-hover:text-primary transition-colors duration-300">
               Health and safety in electrical installation
             </h3>
-            <p className="text-muted-foreground text-[10px] sm:text-xs leading-relaxed">
+            <p className="text-white/70 text-[10px] sm:text-xs leading-relaxed">
               Core safety principles and practices for electrical work
             </p>
           </CardContent>
@@ -39,7 +39,7 @@ const Level2 = () => {
             <h3 className="text-sm sm:text-base lg:text-lg font-bold text-foreground leading-tight group-hover:text-primary transition-colors duration-300">
               Electrical science and principles
             </h3>
-            <p className="text-muted-foreground text-[10px] sm:text-xs leading-relaxed">
+            <p className="text-white/70 text-[10px] sm:text-xs leading-relaxed">
               Fundamental electrical theory and concepts
             </p>
           </CardContent>
@@ -55,7 +55,7 @@ const Level2 = () => {
             <h3 className="text-sm sm:text-base lg:text-lg font-bold text-foreground leading-tight group-hover:text-primary transition-colors duration-300">
               Installation practices and theory
             </h3>
-            <p className="text-muted-foreground text-[10px] sm:text-xs leading-relaxed">
+            <p className="text-white/70 text-[10px] sm:text-xs leading-relaxed">
               Practical installation techniques and methods
             </p>
           </CardContent>
@@ -71,7 +71,7 @@ const Level2 = () => {
             <h3 className="text-sm sm:text-base lg:text-lg font-bold text-foreground leading-tight group-hover:text-primary transition-colors duration-300">
               Wiring systems and enclosures
             </h3>
-            <p className="text-muted-foreground text-[10px] sm:text-xs leading-relaxed">
+            <p className="text-white/70 text-[10px] sm:text-xs leading-relaxed">
               Understanding different wiring systems and applications
             </p>
           </CardContent>
@@ -87,7 +87,7 @@ const Level2 = () => {
             <h3 className="text-sm sm:text-base lg:text-lg font-bold text-foreground leading-tight group-hover:text-primary transition-colors duration-300">
               Communicating with others
             </h3>
-            <p className="text-muted-foreground text-[10px] sm:text-xs leading-relaxed">
+            <p className="text-white/70 text-[10px] sm:text-xs leading-relaxed">
               Professional communication in the building services industry
             </p>
           </CardContent>

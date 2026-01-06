@@ -7,13 +7,13 @@ import Module3Section2Quiz from '@/components/upskilling/Module3Section2Quiz';
 
 const Module3Section2 = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
         <Link to="../module-3">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 3
@@ -22,8 +22,8 @@ const Module3Section2 = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3 mb-2">
-            <AlertTriangle className="h-8 w-8 text-yellow-400" />
-            <Badge variant="secondary" className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold">
+            <AlertTriangle className="h-8 w-8 text-elec-yellow" />
+            <Badge variant="secondary" className="bg-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/50 font-semibold">
               Section 2
             </Badge>
           </div>
@@ -41,10 +41,10 @@ const Module3Section2 = () => {
         <div className="space-y-4 sm:space-y-6">
           
           {/* Introduction */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <BookOpen className="h-5 w-5 text-yellow-400" />
+                <BookOpen className="h-5 w-5 text-elec-yellow" />
                 Introduction to Common Defects
               </CardTitle>
             </CardHeader>
@@ -59,8 +59,8 @@ const Module3Section2 = () => {
                 levels of risk, from immediate dangers requiring urgent action to minor issues that can be 
                 scheduled for future attention.
               </p>
-              <div className="bg-card/80 p-4 rounded-lg">
-                <p className="text-sm font-medium text-yellow-400 mb-2">Professional Insight:</p>
+              <div className="bg-transparent/80 p-4 rounded-lg">
+                <p className="text-sm font-medium text-elec-yellow mb-2">Professional Insight:</p>
                 <p className="text-sm">
                   Experienced inspectors develop pattern recognition for common defects, but systematic 
                   checklists ensure nothing is missed even in familiar installations.
@@ -70,38 +70,38 @@ const Module3Section2 = () => {
           </Card>
 
           {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Target className="h-5 w-5 text-yellow-400" />
+                <Target className="h-5 w-5 text-elec-yellow" />
                 Learning Outcomes
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-3">
-              <p className="text-sm font-medium text-yellow-400">By the end of this section, you'll be able to:</p>
+              <p className="text-sm font-medium text-elec-yellow">By the end of this section, you'll be able to:</p>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Identify and classify common electrical defects according to safety risk levels</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Recognise signs of deterioration, damage, and non-compliant installations</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Apply systematic visual inspection techniques for different installation areas</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Distinguish between immediate dangers and improvement recommendations</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Document defects appropriately with correct classification codes</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Understand the implications of different defect types for installation safety</span>
                 </li>
               </ul>
@@ -109,10 +109,10 @@ const Module3Section2 = () => {
           </Card>
 
           {/* Defect Classification System */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <BookOpen className="h-5 w-5 text-yellow-400" />
+                <BookOpen className="h-5 w-5 text-elec-yellow" />
                 Defect Classification System
               </CardTitle>
             </CardHeader>
@@ -152,7 +152,7 @@ const Module3Section2 = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-yellow-900/20 border border-yellow-600/30 p-4 rounded-lg">
+                  <div className="bg-yellow-900/20 border border-elec-yellow/30 p-4 rounded-lg">
                     <h4 className="text-yellow-300 font-medium mb-2">C3 - Improvement Recommended</h4>
                     <p className="text-sm mb-2">
                       Improvement would enhance electrical safety but not immediately dangerous.
@@ -183,10 +183,10 @@ const Module3Section2 = () => {
           </Card>
 
           {/* Common Defects by Installation Area */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-yellow-400" />
+                <AlertTriangle className="h-5 w-5 text-elec-yellow" />
                 Common Defects by Installation Area
               </CardTitle>
             </CardHeader>
@@ -196,8 +196,8 @@ const Module3Section2 = () => {
                 <div>
                   <h3 className="text-xl font-semibold text-white mb-4">Consumer Units and Distribution Boards</h3>
                   <div className="space-y-4">
-                    <div className="bg-card/80 p-4 rounded-lg">
-                      <h4 className="text-yellow-400 font-medium mb-2">High Priority Defects (C1/C2)</h4>
+                    <div className="bg-transparent/80 p-4 rounded-lg">
+                      <h4 className="text-elec-yellow font-medium mb-2">High Priority Defects (C1/C2)</h4>
                       <ul className="space-y-1 text-sm">
                         <li>• Missing or damaged enclosure covers exposing live parts</li>
                         <li>• Incorrect or missing RCDs for required circuits</li>
@@ -209,8 +209,8 @@ const Module3Section2 = () => {
                       </ul>
                     </div>
 
-                    <div className="bg-card/80 p-4 rounded-lg">
-                      <h4 className="text-yellow-400 font-medium mb-2">Improvement Areas (C3)</h4>
+                    <div className="bg-transparent/80 p-4 rounded-lg">
+                      <h4 className="text-elec-yellow font-medium mb-2">Improvement Areas (C3)</h4>
                       <ul className="space-y-1 text-sm">
                         <li>• Missing or inadequate circuit labelling</li>
                         <li>• Absence of electrical installation certificate</li>
@@ -225,8 +225,8 @@ const Module3Section2 = () => {
                 <div>
                   <h3 className="text-xl font-semibold text-white mb-4">Wiring Systems and Cable Installation</h3>
                   <div className="space-y-4">
-                    <div className="bg-card/80 p-4 rounded-lg">
-                      <h4 className="text-yellow-400 font-medium mb-2">Critical Safety Issues</h4>
+                    <div className="bg-transparent/80 p-4 rounded-lg">
+                      <h4 className="text-elec-yellow font-medium mb-2">Critical Safety Issues</h4>
                       <ul className="space-y-1 text-sm">
                         <li>• Damaged cable insulation exposing conductors</li>
                         <li>• Cables installed in inappropriate environments (wet/hot locations)</li>
@@ -238,8 +238,8 @@ const Module3Section2 = () => {
                       </ul>
                     </div>
 
-                    <div className="bg-card/80 p-4 rounded-lg">
-                      <h4 className="text-yellow-400 font-medium mb-2">Common Installation Problems</h4>
+                    <div className="bg-transparent/80 p-4 rounded-lg">
+                      <h4 className="text-elec-yellow font-medium mb-2">Common Installation Problems</h4>
                       <ul className="space-y-1 text-sm">
                         <li>• Excessive cable support spacing</li>
                         <li>• Poor cable routing creating trip hazards</li>
@@ -254,8 +254,8 @@ const Module3Section2 = () => {
                 <div>
                   <h3 className="text-xl font-semibold text-white mb-4">Accessories and Equipment</h3>
                   <div className="space-y-4">
-                    <div className="bg-card/80 p-4 rounded-lg">
-                      <h4 className="text-yellow-400 font-medium mb-2">Socket Outlets and Switches</h4>
+                    <div className="bg-transparent/80 p-4 rounded-lg">
+                      <h4 className="text-elec-yellow font-medium mb-2">Socket Outlets and Switches</h4>
                       <ul className="space-y-1 text-sm">
                         <li>• Damaged or cracked faceplates exposing internal parts</li>
                         <li>• Loose mounting allowing movement when operated</li>
@@ -266,8 +266,8 @@ const Module3Section2 = () => {
                       </ul>
                     </div>
 
-                    <div className="bg-card/80 p-4 rounded-lg">
-                      <h4 className="text-yellow-400 font-medium mb-2">Lighting and Fixed Equipment</h4>
+                    <div className="bg-transparent/80 p-4 rounded-lg">
+                      <h4 className="text-elec-yellow font-medium mb-2">Lighting and Fixed Equipment</h4>
                       <ul className="space-y-1 text-sm">
                         <li>• Inadequate support for heavy luminaires</li>
                         <li>• Missing or damaged protective covers on fluorescent fittings</li>
@@ -283,8 +283,8 @@ const Module3Section2 = () => {
                 <div>
                   <h3 className="text-xl font-semibold text-white mb-4">Earthing and Bonding</h3>
                   <div className="space-y-4">
-                    <div className="bg-card/80 p-4 rounded-lg">
-                      <h4 className="text-yellow-400 font-medium mb-2">Critical Earthing Defects</h4>
+                    <div className="bg-transparent/80 p-4 rounded-lg">
+                      <h4 className="text-elec-yellow font-medium mb-2">Critical Earthing Defects</h4>
                       <ul className="space-y-1 text-sm">
                         <li>• Disconnected or corroded earth electrode connections</li>
                         <li>• Missing main protective bonding to gas and water services</li>
@@ -295,8 +295,8 @@ const Module3Section2 = () => {
                       </ul>
                     </div>
 
-                    <div className="bg-card/80 p-4 rounded-lg">
-                      <h4 className="text-yellow-400 font-medium mb-2">Bonding Issues</h4>
+                    <div className="bg-transparent/80 p-4 rounded-lg">
+                      <h4 className="text-elec-yellow font-medium mb-2">Bonding Issues</h4>
                       <ul className="space-y-1 text-sm">
                         <li>• Bonding conductors incorrectly sized for the application</li>
                         <li>• Connections to painted or non-conductive surfaces</li>
@@ -312,17 +312,17 @@ const Module3Section2 = () => {
           </Card>
 
           {/* Practical Learning Exercises */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Settings className="h-5 w-5 text-yellow-400" />
+                <Settings className="h-5 w-5 text-elec-yellow" />
                 Practical Learning Exercises
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
               <div className="space-y-6">
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-medium mb-3">Exercise 1: Defect Classification Practice</h4>
+                <div className="bg-transparent/80 p-4 rounded-lg">
+                  <h4 className="text-elec-yellow font-medium mb-3">Exercise 1: Defect Classification Practice</h4>
                   <p className="text-sm mb-3">
                     Practice classifying various electrical defects using standardised codes (C1, C2, C3, FI) 
                     with photographic examples and case studies.
@@ -338,8 +338,8 @@ const Module3Section2 = () => {
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-medium mb-3">Exercise 2: Consumer Unit Detailed Inspection</h4>
+                <div className="bg-transparent/80 p-4 rounded-lg">
+                  <h4 className="text-elec-yellow font-medium mb-3">Exercise 2: Consumer Unit Detailed Inspection</h4>
                   <p className="text-sm mb-3">
                     Conduct comprehensive visual examination of different consumer unit types, 
                     identifying compliance issues and safety defects systematically.
@@ -355,8 +355,8 @@ const Module3Section2 = () => {
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-medium mb-3">Exercise 3: Cable Installation Assessment</h4>
+                <div className="bg-transparent/80 p-4 rounded-lg">
+                  <h4 className="text-elec-yellow font-medium mb-3">Exercise 3: Cable Installation Assessment</h4>
                   <p className="text-sm mb-3">
                     Evaluate cable installation methods across different environments, 
                     identifying support, protection, and routing defects.
@@ -372,8 +372,8 @@ const Module3Section2 = () => {
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-medium mb-3">Exercise 4: Special Location Inspection</h4>
+                <div className="bg-transparent/80 p-4 rounded-lg">
+                  <h4 className="text-elec-yellow font-medium mb-3">Exercise 4: Special Location Inspection</h4>
                   <p className="text-sm mb-3">
                     Practice inspecting bathrooms, kitchens, and other special locations, 
                     focusing on zone requirements and additional protective measures.
@@ -393,16 +393,16 @@ const Module3Section2 = () => {
           </Card>
 
           {/* FAQ Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Eye className="h-5 w-5 text-yellow-400" />
+                <Eye className="h-5 w-5 text-elec-yellow" />
                 Frequently Asked Questions
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
               <div className="space-y-6">
-                <div className="border-l-4 border-yellow-400 pl-4">
+                <div className="border-l-4 border-elec-yellow pl-4">
                   <h4 className="text-white font-medium mb-2">Q: How do I decide between C1 and C2 classification for a defect?</h4>
                   <p className="text-sm text-white">
                     A: C1 means immediate danger exists (someone could be injured right now). C2 means danger could 
@@ -410,7 +410,7 @@ const Module3Section2 = () => {
                   </p>
                 </div>
 
-                <div className="border-l-4 border-yellow-400 pl-4">
+                <div className="border-l-4 border-elec-yellow pl-4">
                   <h4 className="text-white font-medium mb-2">Q: Should I take photographs of every defect I find?</h4>
                   <p className="text-sm text-white">
                     A: Photograph significant defects, especially C1 and C2 issues, complex problems, or anything 
@@ -418,7 +418,7 @@ const Module3Section2 = () => {
                   </p>
                 </div>
 
-                <div className="border-l-4 border-yellow-400 pl-4">
+                <div className="border-l-4 border-elec-yellow pl-4">
                   <h4 className="text-white font-medium mb-2">Q: What if I find defects that don't fit the standard classifications?</h4>
                   <p className="text-sm text-white">
                     A: Use the closest appropriate classification and provide detailed descriptions. Document unusual 
@@ -426,7 +426,7 @@ const Module3Section2 = () => {
                   </p>
                 </div>
 
-                <div className="border-l-4 border-yellow-400 pl-4">
+                <div className="border-l-4 border-elec-yellow pl-4">
                   <h4 className="text-white font-medium mb-2">Q: How detailed should defect descriptions be?</h4>
                   <p className="text-sm text-white">
                     A: Provide enough detail that another competent person could locate and understand the defect. 
@@ -434,7 +434,7 @@ const Module3Section2 = () => {
                   </p>
                 </div>
 
-                <div className="border-l-4 border-yellow-400 pl-4">
+                <div className="border-l-4 border-elec-yellow pl-4">
                   <h4 className="text-white font-medium mb-2">Q: Can I classify minor labelling issues as acceptable?</h4>
                   <p className="text-sm text-white">
                     A: Poor labelling is typically C3 (improvement recommended) as it affects maintenance and emergency 
@@ -442,7 +442,7 @@ const Module3Section2 = () => {
                   </p>
                 </div>
 
-                <div className="border-l-4 border-yellow-400 pl-4">
+                <div className="border-l-4 border-elec-yellow pl-4">
                   <h4 className="text-white font-medium mb-2">Q: What should I do if the client disputes my defect classifications?</h4>
                   <p className="text-sm text-white">
                     A: Explain your reasoning clearly, reference relevant standards, and provide supporting evidence. 
@@ -450,7 +450,7 @@ const Module3Section2 = () => {
                   </p>
                 </div>
 
-                <div className="border-l-4 border-yellow-400 pl-4">
+                <div className="border-l-4 border-elec-yellow pl-4">
                   <h4 className="text-white font-medium mb-2">Q: How do I handle defects in inaccessible areas?</h4>
                   <p className="text-sm text-white">
                     A: Use FI (Further Investigation) classification for suspected defects in inaccessible areas. 
@@ -462,16 +462,16 @@ const Module3Section2 = () => {
           </Card>
 
           {/* Real-World Scenario */}
-          <Card className="bg-card border-l-4 border-l-yellow-400">
+          <Card className="bg-transparent border-l-4 border-l-elec-yellow">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Brain className="h-5 w-5 text-yellow-400" />
+                <Brain className="h-5 w-5 text-elec-yellow" />
                 Real-World Scenario
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
-              <div className="bg-card p-4 rounded-md">
-                <h4 className="text-yellow-400 font-medium mb-2">Scenario:</h4>
+              <div className="bg-transparent p-4 rounded-md">
+                <h4 className="text-elec-yellow font-medium mb-2">Scenario:</h4>
                 <p className="text-sm">
                   During inspection of a rental property, you discover the bathroom has socket outlets within 
                   3 metres of the bath, no RCD protection on bathroom circuits, missing supplementary bonding 
@@ -479,7 +479,7 @@ const Module3Section2 = () => {
                   evidence of water damage and some circuits have no labelling.
                 </p>
               </div>
-              <div className="bg-card p-4 rounded-md">
+              <div className="bg-transparent p-4 rounded-md">
                 <h4 className="text-green-400 font-medium mb-2">Professional Response:</h4>
                 <ol className="space-y-2 text-sm">
                   <li>1. <strong>C1:</strong> Socket outlets in bathroom zones - immediate danger, must be made safe</li>
@@ -496,37 +496,37 @@ const Module3Section2 = () => {
           </Card>
 
           {/* Summary */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-yellow-400" />
+                <CheckCircle2 className="h-5 w-5 text-elec-yellow" />
                 Key Summary Points
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-3">
               <ul className="space-y-3 text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Defect classification guides appropriate response times and remedial actions</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>C1 defects require immediate action to prevent injury or death</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Systematic inspection by area ensures comprehensive defect identification</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Consumer units and earthing systems are common sources of serious defects</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Special locations require additional attention due to enhanced risks</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Professional documentation protects both inspector and client interests</span>
                 </li>
               </ul>
@@ -534,10 +534,10 @@ const Module3Section2 = () => {
           </Card>
 
           {/* Interactive Quiz */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-yellow-400" />
+                <CheckCircle2 className="h-5 w-5 text-elec-yellow" />
                 Test Your Knowledge
               </CardTitle>
             </CardHeader>

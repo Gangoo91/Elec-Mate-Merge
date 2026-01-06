@@ -68,7 +68,7 @@ const SubsectionPage = () => {
 
   return (
     <div className="flex flex-col flex-1">
-      <div className="px-4 py-3 md:py-4 bg-elec-dark/80 border-b border-elec-yellow/30 shadow-md">
+      <div className="px-4 py-3 md:py-4 bg-white/10 border-b border-elec-yellow/30 shadow-md">
         <h1 className="text-lg md:text-xl font-semibold text-elec-yellow">
           {displaySectionTitle && `${displaySectionTitle}: `}
           {displaySubsectionTitle || "Learning Content"}

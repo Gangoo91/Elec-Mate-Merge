@@ -16,6 +16,9 @@ interface DraggableVoiceAssistantProps {
 
 const SETTINGS_KEY = 'elevenlabs_agent_id';
 
+// Default agent ID - works out of the box
+const DEFAULT_EMPLOYER_AGENT_ID = 'agent_7301kdxbnshce7vv8mtah970y3g1';
+
 type ConnectionStep = 'idle' | 'mic' | 'token' | 'connecting' | 'connected' | 'error';
 
 const SECTION_DISPLAY_NAMES: Record<string, string> = {
@@ -87,10 +90,16 @@ const ROTATING_TIPS = [
   "What jobs are overdue?",
 ];
 
-// Dock zone at bottom center
+// Dock zone at bottom center - larger for easier targeting
 const DOCK_ZONE = {
-  height: 80,
-  width: 120,
+  height: 100,
+  width: 160,
+};
+
+// Dismiss zone at bottom left (X to close) - larger for easier targeting
+const DISMISS_ZONE = {
+  height: 100,
+  width: 100,
 };
 
 export const DraggableVoiceAssistant: React.FC<DraggableVoiceAssistantProps> = ({
@@ -106,6 +115,10 @@ export const DraggableVoiceAssistant: React.FC<DraggableVoiceAssistantProps> = (
   const [connectionError, setConnectionError] = useState<string>('');
   const [isMinimised, setIsMinimised] = useState(true);
   const [isDocked, setIsDocked] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(() => {
+    // Check sessionStorage for dismiss state (resets on page refresh)
+    return sessionStorage.getItem('voice-assistant-dismissed') === 'true';
+  });
   const [transcript, setTranscript] = useState('');
   const [lastAgentMessage, setLastAgentMessage] = useState('');
   const [agentId, setAgentId] = useState<string>('');
@@ -117,6 +130,7 @@ export const DraggableVoiceAssistant: React.FC<DraggableVoiceAssistantProps> = (
   // Drag state
   const [isDragging, setIsDragging] = useState(false);
   const [isInDockZone, setIsInDockZone] = useState(false);
+  const [isInDismissZone, setIsInDismissZone] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [startPos, setStartPos] = useState({ x: 0, y: 0 });
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
@@ -150,14 +164,17 @@ export const DraggableVoiceAssistant: React.FC<DraggableVoiceAssistantProps> = (
     localStorage.setItem('voice-assistant-docked', isDocked.toString());
   }, [position, isDocked]);
 
-  // Load agent ID
+  // Load agent ID (falls back to default)
   useEffect(() => {
     const loadAgentId = async () => {
       try {
         const value = await getSetting(SETTINGS_KEY);
-        if (value) setAgentId(value);
+        // Use saved value or fall back to default
+        setAgentId(value || DEFAULT_EMPLOYER_AGENT_ID);
       } catch (error) {
         console.error('Failed to load agent ID:', error);
+        // Still use default on error
+        setAgentId(DEFAULT_EMPLOYER_AGENT_ID);
       } finally {
         setIsLoadingSettings(false);
       }
@@ -685,18 +702,26 @@ export const DraggableVoiceAssistant: React.FC<DraggableVoiceAssistantProps> = (
     const newX = clientX - dragOffset.x;
     const newY = clientY - dragOffset.y;
 
-    // Check if in dock zone (bottom center of screen)
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
+
+    // Check if in dock zone (bottom center of screen)
     const dockLeft = (screenWidth - DOCK_ZONE.width) / 2;
     const dockRight = dockLeft + DOCK_ZONE.width;
     const dockTop = screenHeight - DOCK_ZONE.height;
+
+    // Check if in dismiss zone (bottom left of screen)
+    const dismissRight = DISMISS_ZONE.width;
+    const dismissTop = screenHeight - DISMISS_ZONE.height;
 
     const centerX = newX + 28; // Half of button width
     const centerY = newY + 28;
 
     const inDock = centerX >= dockLeft && centerX <= dockRight && centerY >= dockTop;
-    setIsInDockZone(inDock);
+    const inDismiss = centerX <= dismissRight && centerY >= dismissTop;
+
+    setIsInDockZone(inDock && !inDismiss);
+    setIsInDismissZone(inDismiss);
 
     // Constrain to screen
     const maxX = screenWidth - 56;
@@ -713,11 +738,20 @@ export const DraggableVoiceAssistant: React.FC<DraggableVoiceAssistantProps> = (
 
     setIsDragging(false);
 
-    if (isInDockZone) {
+    if (isInDismissZone) {
+      // Dismiss the voice assistant
+      setIsDismissed(true);
+      sessionStorage.setItem('voice-assistant-dismissed', 'true');
+      setIsInDismissZone(false);
+      toast({
+        title: 'Voice Assistant Hidden',
+        description: 'Tap the mic icon in the header or refresh page to show again',
+      });
+    } else if (isInDockZone) {
       setIsDocked(true);
       setIsInDockZone(false);
     }
-  }, [isDragging, isInDockZone]);
+  }, [isDragging, isInDockZone, isInDismissZone, toast]);
 
   // Mouse events
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
@@ -857,35 +891,37 @@ export const DraggableVoiceAssistant: React.FC<DraggableVoiceAssistantProps> = (
 
   if (isLoadingSettings) return null;
 
-  // No agent ID configured
-  if (!agentId) {
-    return (
-      <div className="fixed bottom-20 right-4 z-50 md:bottom-6">
-        <Button
-          onClick={() => onNavigate?.('settings')}
-          size="lg"
-          className="h-14 w-14 rounded-full shadow-lg bg-muted hover:bg-muted/80"
-        >
-          <AlertCircle className="h-6 w-6 text-muted-foreground" />
-        </Button>
-      </div>
-    );
-  }
+  // Voice assistant dismissed for this session
+  if (isDismissed) return null;
 
   // Docked state - show minimal indicator at bottom
   if (isDocked) {
     return (
       <>
-        {/* Dock zone indicator when dragging */}
+        {/* Drop zone indicators when dragging */}
         {isDragging && (
-          <div className={cn(
-            "fixed bottom-0 left-1/2 -translate-x-1/2 w-[120px] h-[80px] rounded-t-2xl border-2 border-dashed transition-all duration-200 flex items-center justify-center z-40",
-            isInDockZone
-              ? "border-elec-yellow bg-elec-yellow/20"
-              : "border-muted-foreground/30 bg-muted/20"
-          )}>
-            <Minimize2 className={cn("h-6 w-6", isInDockZone ? "text-elec-yellow" : "text-muted-foreground/50")} />
-          </div>
+          <>
+            {/* Dismiss zone - bottom left (X to close) */}
+            <div className={cn(
+              "fixed bottom-0 left-0 w-[80px] h-[80px] rounded-tr-2xl border-2 border-dashed transition-all duration-200 flex flex-col items-center justify-center gap-1 z-40",
+              isInDismissZone
+                ? "border-red-500 bg-red-500/20 scale-110"
+                : "border-muted-foreground/30 bg-muted/20"
+            )}>
+              <X className={cn("h-6 w-6", isInDismissZone ? "text-red-500" : "text-muted-foreground/50")} />
+              <span className={cn("text-[10px] font-medium", isInDismissZone ? "text-red-500" : "text-muted-foreground/50")}>Hide</span>
+            </div>
+            {/* Dock zone - bottom center */}
+            <div className={cn(
+              "fixed bottom-0 left-1/2 -translate-x-1/2 w-[120px] h-[80px] rounded-t-2xl border-2 border-dashed transition-all duration-200 flex flex-col items-center justify-center gap-1 z-40",
+              isInDockZone
+                ? "border-elec-yellow bg-elec-yellow/20 scale-110"
+                : "border-muted-foreground/30 bg-muted/20"
+            )}>
+              <Minimize2 className={cn("h-6 w-6", isInDockZone ? "text-elec-yellow" : "text-muted-foreground/50")} />
+              <span className={cn("text-[10px] font-medium", isInDockZone ? "text-elec-yellow" : "text-muted-foreground/50")}>Dock</span>
+            </div>
+          </>
         )}
 
         {/* Docked mini button */}
@@ -938,32 +974,64 @@ export const DraggableVoiceAssistant: React.FC<DraggableVoiceAssistantProps> = (
 
   return (
     <>
-      {/* Dock zone indicator when dragging */}
+      {/* Drop zone indicators when dragging */}
       {isDragging && (
-        <div className={cn(
-          "fixed bottom-0 left-1/2 -translate-x-1/2 w-[120px] h-[80px] rounded-t-2xl border-2 border-dashed transition-all duration-200 flex items-center justify-center z-40",
-          isInDockZone
-            ? "border-elec-yellow bg-elec-yellow/20"
-            : "border-muted-foreground/30 bg-muted/20"
-        )}>
-          <Minimize2 className={cn("h-6 w-6", isInDockZone ? "text-elec-yellow" : "text-muted-foreground/50")} />
-        </div>
+        <>
+          {/* Dismiss zone - bottom left (X to close) */}
+          <div className={cn(
+            "fixed bottom-0 left-0 w-[80px] h-[80px] rounded-tr-2xl border-2 border-dashed transition-all duration-200 flex flex-col items-center justify-center gap-1 z-40",
+            isInDismissZone
+              ? "border-red-500 bg-red-500/20 scale-110"
+              : "border-muted-foreground/30 bg-muted/20"
+          )}>
+            <X className={cn("h-6 w-6", isInDismissZone ? "text-red-500" : "text-muted-foreground/50")} />
+            <span className={cn("text-[10px] font-medium", isInDismissZone ? "text-red-500" : "text-muted-foreground/50")}>Hide</span>
+          </div>
+          {/* Dock zone - bottom center */}
+          <div className={cn(
+            "fixed bottom-0 left-1/2 -translate-x-1/2 w-[120px] h-[80px] rounded-t-2xl border-2 border-dashed transition-all duration-200 flex flex-col items-center justify-center gap-1 z-40",
+            isInDockZone
+              ? "border-elec-yellow bg-elec-yellow/20 scale-110"
+              : "border-muted-foreground/30 bg-muted/20"
+          )}>
+            <Minimize2 className={cn("h-6 w-6", isInDockZone ? "text-elec-yellow" : "text-muted-foreground/50")} />
+            <span className={cn("text-[10px] font-medium", isInDockZone ? "text-elec-yellow" : "text-muted-foreground/50")}>Dock</span>
+          </div>
+        </>
       )}
 
       <div className="z-50" style={fabStyle}>
-        {/* Expanded Panel */}
+        {/* Expanded Panel - Glassmorphism Design */}
         {!isMinimised && (
-          <div className="absolute bottom-16 right-0 w-80 max-w-[calc(100vw-32px)] rounded-2xl bg-card border border-border shadow-2xl overflow-hidden animate-in slide-in-from-bottom-4">
+          <div className="absolute bottom-16 right-0 w-80 max-w-[calc(100vw-32px)] rounded-2xl overflow-hidden animate-in slide-in-from-bottom-4 shadow-2xl">
+            {/* Glassmorphism background */}
+            <div className="absolute inset-0 bg-gradient-to-b from-elec-gray/95 via-background/95 to-background/98 backdrop-blur-xl" />
+            <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/5 via-transparent to-green-500/5" />
+            <div className="relative border border-white/10 rounded-2xl overflow-hidden">
+
             {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 bg-primary/10 border-b border-border">
-              <div className="flex items-center gap-2">
+            <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-elec-yellow/10 via-transparent to-green-500/10 border-b border-white/10">
+              <div className="flex items-center gap-3">
                 <div className={cn(
-                  "h-2 w-2 rounded-full",
-                  isConnected ? "bg-green-500 animate-pulse" : "bg-muted-foreground"
-                )} />
-                <span className="text-sm font-medium">ELEC-MATE Voice</span>
+                  "relative flex items-center justify-center",
+                  isConnected && "animate-pulse"
+                )}>
+                  <div className={cn(
+                    "h-3 w-3 rounded-full",
+                    isConnected ? "bg-green-500 shadow-lg shadow-green-500/50" : "bg-muted-foreground"
+                  )} />
+                  {isConnected && (
+                    <div className="absolute inset-0 h-3 w-3 rounded-full bg-green-500 animate-ping opacity-50" />
+                  )}
+                </div>
+                <div>
+                  <span className="text-sm font-semibold text-foreground">ELEC-MATE Voice</span>
+                  <p className="text-[10px] text-muted-foreground">
+                    {isConnected ? 'Connected' : 'Ready to connect'}
+                  </p>
+                </div>
               </div>
-              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setIsMinimised(true)}>
+              <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-white/10" onClick={() => setIsMinimised(true)}>
                 <X className="h-4 w-4" />
               </Button>
             </div>
@@ -1006,45 +1074,65 @@ export const DraggableVoiceAssistant: React.FC<DraggableVoiceAssistantProps> = (
 
               {isConnected && (
                 <>
-                  {/* Speaking/Listening indicator */}
-                  <div className="flex items-center justify-center gap-2 py-2">
+                  {/* Speaking/Listening indicator - Enhanced visual */}
+                  <div className="flex flex-col items-center justify-center py-3">
+                    {/* Animated orb */}
                     <div className={cn(
-                      "flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium",
+                      "relative w-16 h-16 rounded-full flex items-center justify-center mb-3",
                       conversation.isSpeaking
-                        ? "bg-primary/10 text-primary"
-                        : "bg-green-500/10 text-green-600"
+                        ? "bg-gradient-to-br from-elec-yellow/20 to-amber-500/10"
+                        : "bg-gradient-to-br from-green-500/20 to-emerald-500/10"
                     )}>
-                      {conversation.isSpeaking ? (
-                        <>
-                          <Volume2 className="h-3 w-3 animate-pulse" />
-                          Speaking...
-                        </>
-                      ) : (
-                        <>
-                          <Mic className="h-3 w-3" />
-                          Listening...
-                        </>
-                      )}
+                      {/* Pulsing ring */}
+                      <div className={cn(
+                        "absolute inset-0 rounded-full animate-ping opacity-30",
+                        conversation.isSpeaking ? "bg-elec-yellow/20" : "bg-green-500/20"
+                      )} style={{ animationDuration: '1.5s' }} />
+
+                      {/* Center icon */}
+                      <div className={cn(
+                        "relative z-10 p-3 rounded-full",
+                        conversation.isSpeaking
+                          ? "bg-gradient-to-br from-elec-yellow to-amber-500 shadow-lg shadow-elec-yellow/30"
+                          : "bg-gradient-to-br from-green-500 to-emerald-500 shadow-lg shadow-green-500/30"
+                      )}>
+                        {conversation.isSpeaking ? (
+                          <Volume2 className="h-5 w-5 text-elec-dark animate-pulse" />
+                        ) : (
+                          <Mic className="h-5 w-5 text-white" />
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Status badge */}
+                    <div className={cn(
+                      "px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase",
+                      conversation.isSpeaking
+                        ? "bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30"
+                        : "bg-green-500/20 text-green-400 border border-green-500/30"
+                    )}>
+                      {conversation.isSpeaking ? 'Speaking' : 'Listening'}
                     </div>
                   </div>
 
                   {/* Rotating tip */}
                   {!conversation.isSpeaking && !transcript && (
-                    <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground py-1">
-                      <Lightbulb className="h-3 w-3 text-amber-500" />
-                      <span>Try: "{ROTATING_TIPS[currentTipIndex]}"</span>
+                    <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground py-1 px-3">
+                      <Lightbulb className="h-3.5 w-3.5 text-amber-400 flex-shrink-0" />
+                      <span className="truncate">Try: "{ROTATING_TIPS[currentTipIndex]}"</span>
                     </div>
                   )}
 
+                  {/* Transcript bubbles */}
                   {transcript && (
-                    <div className="text-sm bg-muted/50 rounded-lg p-2">
-                      <span className="text-xs text-muted-foreground block mb-1">You said:</span>
+                    <div className="text-sm bg-white/5 border border-white/10 rounded-xl p-3">
+                      <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide block mb-1">You said</span>
                       <p className="text-foreground">{transcript}</p>
                     </div>
                   )}
                   {lastAgentMessage && (
-                    <div className="text-sm bg-primary/5 rounded-lg p-2">
-                      <span className="text-xs text-primary block mb-1">ELEC-MATE:</span>
+                    <div className="text-sm bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/20 rounded-xl p-3">
+                      <span className="text-[10px] font-medium text-elec-yellow uppercase tracking-wide block mb-1">ELEC-MATE</span>
                       <p className="text-foreground">{lastAgentMessage}</p>
                     </div>
                   )}
@@ -1127,44 +1215,47 @@ export const DraggableVoiceAssistant: React.FC<DraggableVoiceAssistantProps> = (
               )}
 
               {!isConnected && !isConnecting && connectionStep !== 'error' && (
-                <div className="flex flex-col items-center justify-center py-6 gap-2">
-                  <Mic className="h-8 w-8 text-muted-foreground" />
+                <div className="flex flex-col items-center justify-center py-8 gap-3">
+                  <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+                    <Mic className="h-7 w-7 text-muted-foreground" />
+                  </div>
                   <p className="text-sm text-muted-foreground text-center">
-                    Tap Start to begin
+                    Tap <span className="font-medium text-foreground">Start</span> to begin
                   </p>
                 </div>
               )}
             </div>
 
-            {/* Actions */}
-            <div className="flex items-center justify-center gap-3 px-4 py-3 border-t border-border bg-muted/30">
+            {/* Actions - Enhanced footer */}
+            <div className="flex items-center justify-center gap-3 px-4 py-3 border-t border-white/10 bg-black/20">
               {isConnected ? (
                 <Button
                   onClick={stopConversation}
                   variant="destructive"
                   size="sm"
-                  className="gap-2"
+                  className="gap-2 px-6 shadow-lg shadow-red-500/20"
                 >
                   <PhoneOff className="h-4 w-4" />
-                  End
+                  End Call
                 </Button>
               ) : (
                 <Button
                   onClick={startConversation}
                   disabled={isConnecting}
                   size="sm"
-                  className="gap-2"
+                  className="gap-2 px-6 bg-gradient-to-r from-elec-yellow to-amber-500 text-elec-dark hover:from-elec-yellow/90 hover:to-amber-500/90 shadow-lg shadow-elec-yellow/20"
                 >
                   <Mic className="h-4 w-4" />
                   Start
                 </Button>
               )}
             </div>
+            </div>
           </div>
         )}
 
-        {/* Draggable FAB */}
-        <Button
+        {/* Draggable FAB - Enhanced Design */}
+        <button
           ref={fabRef}
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
@@ -1184,31 +1275,47 @@ export const DraggableVoiceAssistant: React.FC<DraggableVoiceAssistantProps> = (
               }
             }
           }}
-          size="lg"
           className={cn(
-            "h-14 w-14 rounded-full shadow-lg transition-all select-none",
+            "relative h-14 w-14 rounded-full transition-all duration-300 select-none",
+            "flex items-center justify-center",
+            "shadow-xl",
             isConnected
-              ? "bg-green-600 hover:bg-green-700"
-              : "bg-primary hover:bg-primary/90",
-            conversation.isSpeaking && "ring-4 ring-primary/30",
+              ? "bg-gradient-to-br from-green-500 to-emerald-600 shadow-green-500/30"
+              : "bg-gradient-to-br from-elec-yellow to-amber-500 shadow-elec-yellow/30",
+            conversation.isSpeaking && "ring-4 ring-elec-yellow/40 ring-offset-2 ring-offset-background",
             isDragging && "cursor-grabbing scale-110 opacity-90",
-            !isDragging && "cursor-grab"
+            !isDragging && "cursor-grab hover:scale-105 active:scale-95"
           )}
         >
+          {/* Glow effect */}
+          <div className={cn(
+            "absolute inset-0 rounded-full blur-md -z-10 opacity-50",
+            isConnected ? "bg-green-500" : "bg-elec-yellow"
+          )} />
+
+          {/* Icon */}
           {isDragging ? (
-            <GripVertical className="h-6 w-6" />
+            <GripVertical className="h-6 w-6 text-elec-dark" />
           ) : isConnecting ? (
-            <Loader2 className="h-6 w-6 animate-spin" />
+            <Loader2 className="h-6 w-6 animate-spin text-elec-dark" />
           ) : isConnected ? (
             conversation.isSpeaking ? (
-              <Volume2 className="h-6 w-6 animate-pulse" />
+              <Volume2 className="h-6 w-6 animate-pulse text-white" />
             ) : (
-              <Mic className="h-6 w-6" />
+              <Mic className="h-6 w-6 text-white" />
             )
           ) : (
-            <Mic className="h-6 w-6" />
+            <Mic className="h-6 w-6 text-elec-dark" />
           )}
-        </Button>
+
+          {/* Connection indicator dot */}
+          {isConnected && !isDragging && (
+            <div className="absolute -top-0.5 -right-0.5 h-3 w-3">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75 animate-ping" />
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-green-400 border-2 border-background" />
+            </div>
+          )}
+        </button>
       </div>
     </>
   );

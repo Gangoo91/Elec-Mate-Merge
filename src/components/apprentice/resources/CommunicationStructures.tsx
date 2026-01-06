@@ -27,7 +27,7 @@ const CommunicationStructures = () => {
         
         {/* Content sections */}
         <div className="space-y-6">
-          <section className="bg-elec-dark p-6 rounded-lg border border-elec-yellow/20">
+          <section className="bg-white/10 p-6 rounded-lg border border-elec-yellow/20">
             <h2 className="text-xl font-semibold text-elec-yellow mb-4">Reporting Hierarchies</h2>
             <p className="mb-4">Clear reporting hierarchies establish who to contact in different safety scenarios:</p>
             <ul className="list-disc pl-6 space-y-2 text-elec-light/90">
@@ -38,7 +38,7 @@ const CommunicationStructures = () => {
             </ul>
           </section>
           
-          <section className="bg-elec-dark p-6 rounded-lg border border-elec-yellow/20">
+          <section className="bg-white/10 p-6 rounded-lg border border-elec-yellow/20">
             <h2 className="text-xl font-semibold text-elec-yellow mb-4">Formal Communication Procedures</h2>
             <p className="mb-4">Standardized procedures ensure consistent and effective information flow:</p>
             <ul className="list-disc pl-6 space-y-2 text-elec-light/90">
@@ -49,7 +49,7 @@ const CommunicationStructures = () => {
             </ul>
           </section>
           
-          <section className="bg-elec-dark p-6 rounded-lg border border-elec-yellow/20">
+          <section className="bg-white/10 p-6 rounded-lg border border-elec-yellow/20">
             <h2 className="text-xl font-semibold text-elec-yellow mb-4">Clear Lines of Authority</h2>
             <p className="mb-4">Understanding who has authority in safety matters prevents confusion:</p>
             <ul className="list-disc pl-6 space-y-2 text-elec-light/90">
@@ -60,16 +60,16 @@ const CommunicationStructures = () => {
             </ul>
           </section>
           
-          <section className="bg-elec-dark p-6 rounded-lg border border-elec-yellow/20">
+          <section className="bg-white/10 p-6 rounded-lg border border-elec-yellow/20">
             <h2 className="text-xl font-semibold text-elec-yellow mb-4">Communication Flow Charts</h2>
             <p className="mb-4">Visual representations help clarify who to contact in different situations:</p>
-            <div className="bg-elec-dark/50 p-4 rounded border border-elec-yellow/10 text-center">
+            <div className="bg-white/5 p-4 rounded border border-elec-yellow/10 text-center">
               <p className="text-elec-light/70 italic">Flow chart visualization would be displayed here</p>
             </div>
             <p className="mt-4">Flow charts should be posted in visible locations and included in safety manuals for quick reference.</p>
           </section>
           
-          <section className="bg-elec-dark p-6 rounded-lg border border-elec-yellow/20">
+          <section className="bg-white/10 p-6 rounded-lg border border-elec-yellow/20">
             <h2 className="text-xl font-semibold text-elec-yellow mb-4">Best Practices</h2>
             <ul className="list-disc pl-6 space-y-2 text-elec-light/90">
               <li>Review communication structures regularly to ensure effectiveness</li>
@@ -82,22 +82,22 @@ const CommunicationStructures = () => {
         </div>
         
         {/* Resources */}
-        <div className="bg-elec-dark/70 p-6 rounded-lg border border-elec-yellow/20 mt-8">
+        <div className="bg-white/[0.07] p-6 rounded-lg border border-elec-yellow/20 mt-8">
           <h2 className="text-xl font-semibold text-elec-yellow mb-4">Additional Resources</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="flex items-center gap-3 p-3 bg-elec-dark/30 rounded-md">
+            <div className="flex items-center gap-3 p-3 bg-white/[0.03] rounded-md">
               <FileText className="text-elec-yellow h-5 w-5" />
               <span>HSE Communication Guidelines</span>
             </div>
-            <div className="flex items-center gap-3 p-3 bg-elec-dark/30 rounded-md">
+            <div className="flex items-center gap-3 p-3 bg-white/[0.03] rounded-md">
               <FileText className="text-elec-yellow h-5 w-5" />
               <span>Sample Communication Structure Templates</span>
             </div>
-            <div className="flex items-center gap-3 p-3 bg-elec-dark/30 rounded-md">
+            <div className="flex items-center gap-3 p-3 bg-white/[0.03] rounded-md">
               <FileText className="text-elec-yellow h-5 w-5" />
               <span>Electrical Industry Safety Communication Standards</span>
             </div>
-            <div className="flex items-center gap-3 p-3 bg-elec-dark/30 rounded-md">
+            <div className="flex items-center gap-3 p-3 bg-white/[0.03] rounded-md">
               <FileText className="text-elec-yellow h-5 w-5" />
               <span>Communication Effectiveness Assessment Tools</span>
             </div>

@@ -166,41 +166,41 @@ const AM2Module8 = () => {
   // Before exam starts
   if (!examStarted) {
     return (
-      <div className="min-h-screen bg-background p-2 sm:p-4">
+      <div className="min-h-screen bg-[#1a1a1a] p-2 sm:p-4">
         <div>
-          <Card className="border-elec-yellow/30 bg-card">
+          <Card className="border-elec-yellow/30 ">
             <CardHeader className="text-center pb-3 sm:pb-4 px-3 sm:px-6">
               <div className="mx-auto mb-3 sm:mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-elec-yellow/10">
                 <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
               </div>
-              <CardTitle className="text-lg sm:text-xl md:text-2xl text-foreground mb-1">AM2 Mock Examination</CardTitle>
+              <CardTitle className="text-lg sm:text-xl md:text-2xl text-white mb-1">AM2 Mock Examination</CardTitle>
               <h2 className="text-xs sm:text-sm md:text-lg text-elec-yellow">Comprehensive AM2 Assessment Practice</h2>
             </CardHeader>
             
             <CardContent className="space-y-4 sm:space-y-6 px-3 sm:px-6">
-              <div className="bg-background p-3 sm:p-4 rounded-lg sm:rounded-xl border border-muted/40">
+              <div className="bg-[#1a1a1a] p-3 sm:p-4 rounded-lg sm:rounded-xl border border-muted/40">
                 <div className="flex items-center gap-2 mb-3 sm:mb-3">
                   <div className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-md sm:rounded-lg bg-elec-yellow/20">
                     <CheckCircle className="h-3 w-3 sm:h-3 sm:w-3 text-elec-yellow" />
                   </div>
-                  <h3 className="font-semibold text-foreground text-sm sm:text-base">Instructions</h3>
+                  <h3 className="font-semibold text-white text-sm sm:text-base">Instructions</h3>
                 </div>
                 <div className="grid gap-2 sm:gap-2">
                   <div className="flex items-start gap-2">
                     <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                    <p className="text-sm sm:text-sm text-muted-foreground leading-relaxed">40 questions randomly selected from 500+ question bank</p>
+                    <p className="text-sm sm:text-sm text-white leading-relaxed">40 questions randomly selected from 500+ question bank</p>
                   </div>
                   <div className="flex items-start gap-2">
                     <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                    <p className="text-sm sm:text-sm text-muted-foreground leading-relaxed">60 minutes time limit</p>
+                    <p className="text-sm sm:text-sm text-white leading-relaxed">60 minutes time limit</p>
                   </div>
                   <div className="flex items-start gap-2">
                     <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                    <p className="text-sm sm:text-sm text-muted-foreground leading-relaxed">Pass mark: 60% (24/40 questions)</p>
+                    <p className="text-sm sm:text-sm text-white leading-relaxed">Pass mark: 60% (24/40 questions)</p>
                   </div>
                   <div className="flex items-start gap-2">
                     <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                    <p className="text-sm sm:text-sm text-muted-foreground leading-relaxed">Covers all AM2 assessment areas</p>
+                    <p className="text-sm sm:text-sm text-white leading-relaxed">Covers all AM2 assessment areas</p>
                   </div>
                 </div>
               </div>
@@ -226,9 +226,9 @@ const AM2Module8 = () => {
   // Results screen
   if (showResults && !showReview) {
     return (
-      <div className="min-h-screen bg-background p-2 sm:p-4">
+      <div className="min-h-screen bg-[#1a1a1a] p-2 sm:p-4">
         <div>
-          <Card className="border-elec-yellow/30 bg-card">
+          <Card className="border-elec-yellow/30 ">
             <CardHeader className="text-center pb-4 px-4 sm:px-6">
               <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-lg font-semibold mb-4 ${
                 passed ? 'bg-elec-yellow/20 text-elec-yellow' : 'bg-red-500/20 text-elec-yellow'
@@ -236,30 +236,30 @@ const AM2Module8 = () => {
                 {passed ? <CheckCircle className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
                 {passed ? 'PASSED' : 'FAILED'}
               </div>
-              <CardTitle className="text-xl sm:text-2xl text-foreground mb-2">Exam Complete</CardTitle>
-              <p className="text-lg text-muted-foreground">
+              <CardTitle className="text-xl sm:text-2xl text-white mb-2">Exam Complete</CardTitle>
+              <p className="text-lg text-white">
                 You scored {score} out of {examQuestions.length} ({percentage}%)
               </p>
             </CardHeader>
             
             <CardContent className="px-4 sm:px-6">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-                <Card className="bg-card border-green-500/20">
+                <Card className="bg-transparent border-green-500/20">
                   <CardContent className="p-4 text-center">
                     <div className="text-2xl font-bold text-green-500">{stats.correct}</div>
-                    <div className="text-sm text-muted-foreground">Correct</div>
+                    <div className="text-sm text-white">Correct</div>
                   </CardContent>
                 </Card>
-                <Card className="bg-card border-red-500/20">
+                <Card className="bg-transparent border-red-500/20">
                   <CardContent className="p-4 text-center">
                     <div className="text-2xl font-bold text-elec-yellow">{stats.incorrect}</div>
-                    <div className="text-sm text-muted-foreground">Incorrect</div>
+                    <div className="text-sm text-white">Incorrect</div>
                   </CardContent>
                 </Card>
-                <Card className="bg-card border-muted/20">
+                <Card className="bg-transparent border-muted/20">
                   <CardContent className="p-4 text-center">
-                    <div className="text-2xl font-bold text-muted-foreground">{stats.unanswered}</div>
-                    <div className="text-sm text-muted-foreground">Unanswered</div>
+                    <div className="text-2xl font-bold text-white">{stats.unanswered}</div>
+                    <div className="text-sm text-white">Unanswered</div>
                   </CardContent>
                 </Card>
               </div>
@@ -269,7 +269,7 @@ const AM2Module8 = () => {
                   onClick={() => setShowReview(true)}
                   variant="outline"
                   size="lg"
-                  className="border-elec-yellow/40 hover:bg-elec-yellow/10 text-foreground"
+                  className="border-elec-yellow/40 hover:bg-elec-yellow/10 text-white"
                 >
                   <FileText className="w-4 h-4 mr-2" />
                   Review Answers
@@ -286,7 +286,7 @@ const AM2Module8 = () => {
                   onClick={() => navigate("am2")}
                   variant="outline"
                   size="lg"
-                  className="border-border/40 hover:bg-card/10 text-foreground"
+                  className="border-border/40 hover:bg-card/10 text-white"
                 >
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back to Course
@@ -304,20 +304,20 @@ const AM2Module8 = () => {
     const filteredQuestions = getFilteredQuestions();
     
     return (
-      <div className="min-h-screen bg-background p-2 sm:p-4">
+      <div className="min-h-screen bg-[#1a1a1a] p-2 sm:p-4">
         <div className="max-w-6xl mx-auto">
           {/* Review Header */}
           <div className="mb-4">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h1 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground">Review Answers</h1>
-                <p className="text-sm text-muted-foreground">Score: {percentage}% ({score}/{examQuestions.length})</p>
+                <h1 className="text-lg sm:text-lg sm:text-xl font-semibold text-white">Review Answers</h1>
+                <p className="text-sm text-white">Score: {percentage}% ({score}/{examQuestions.length})</p>
               </div>
               <Button
                 onClick={() => setShowReview(false)}
                 variant="ghost"
                 size="sm"
-                className="text-muted-foreground hover:text-elec-yellow"
+                className="text-white hover:text-elec-yellow"
               >
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back to Results
@@ -327,58 +327,58 @@ const AM2Module8 = () => {
             {/* Summary Stats - Clickable Filters */}
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-4 mb-4">
               <Card 
-                className={`bg-card border-elec-yellow/30 cursor-pointer hover:bg-elec-yellow/5 transition-colors ${
+                className={`bg-transparent border-elec-yellow/30 cursor-pointer hover:bg-elec-yellow/5 transition-colors ${
                   reviewFilter === "all" ? "ring-2 ring-elec-yellow/50" : ""
                 }`}
                 onClick={() => setReviewFilter(reviewFilter === "all" ? "all" : "all")}
               >
                 <CardContent className="p-3 text-center">
                   <div className="text-lg font-bold text-elec-yellow">{examQuestions.length}</div>
-                  <div className="text-xs text-muted-foreground">All</div>
+                  <div className="text-xs text-white">All</div>
                 </CardContent>
               </Card>
               <Card 
-                className={`bg-card border-green-500/20 cursor-pointer hover:bg-card transition-colors ${
+                className={`bg-transparent border-green-500/20 cursor-pointer hover:bg-transparent transition-colors ${
                   reviewFilter === "correct" ? "ring-2 ring-green-500/50" : ""
                 }`}
                 onClick={() => setReviewFilter(reviewFilter === "correct" ? "all" : "correct")}
               >
                 <CardContent className="p-3 text-center">
                   <div className="text-lg font-bold text-green-500">{stats.correct}</div>
-                  <div className="text-xs text-muted-foreground">Correct</div>
+                  <div className="text-xs text-white">Correct</div>
                 </CardContent>
               </Card>
               <Card 
-                className={`bg-card border-red-500/20 cursor-pointer hover:bg-card transition-colors ${
+                className={`bg-transparent border-red-500/20 cursor-pointer hover:bg-transparent transition-colors ${
                   reviewFilter === "incorrect" ? "ring-2 ring-red-500/50" : ""
                 }`}
                 onClick={() => setReviewFilter(reviewFilter === "incorrect" ? "all" : "incorrect")}
               >
                 <CardContent className="p-3 text-center">
                   <div className="text-lg font-bold text-elec-yellow">{stats.incorrect}</div>
-                  <div className="text-xs text-muted-foreground">Incorrect</div>
+                  <div className="text-xs text-white">Incorrect</div>
                 </CardContent>
               </Card>
               <Card 
-                className={`bg-card border-muted/20 cursor-pointer hover:bg-muted/10 transition-colors ${
+                className={`bg-transparent border-muted/20 cursor-pointer hover:bg-muted/10 transition-colors ${
                   reviewFilter === "unanswered" ? "ring-2 ring-muted/50" : ""
                 }`}
                 onClick={() => setReviewFilter(reviewFilter === "unanswered" ? "all" : "unanswered")}
               >
                 <CardContent className="p-3 text-center">
-                  <div className="text-lg font-bold text-muted-foreground">{stats.unanswered}</div>
-                  <div className="text-xs text-muted-foreground">Unanswered</div>
+                  <div className="text-lg font-bold text-white">{stats.unanswered}</div>
+                  <div className="text-xs text-white">Unanswered</div>
                 </CardContent>
               </Card>
               <Card 
-                className={`bg-card border-elec-yellow/30 cursor-pointer hover:bg-elec-yellow/5 transition-colors ${
+                className={`bg-transparent border-elec-yellow/30 cursor-pointer hover:bg-elec-yellow/5 transition-colors ${
                   reviewFilter === "flagged" ? "ring-2 ring-elec-yellow/50" : ""
                 }`}
                 onClick={() => setReviewFilter(reviewFilter === "flagged" ? "all" : "flagged")}
               >
                 <CardContent className="p-3 text-center">
                   <div className="text-lg font-bold text-elec-yellow">{stats.flagged}</div>
-                  <div className="text-xs text-muted-foreground">Flagged</div>
+                  <div className="text-xs text-white">Flagged</div>
                 </CardContent>
               </Card>
             </div>
@@ -393,10 +393,10 @@ const AM2Module8 = () => {
               const isFlagged = flaggedQuestions.has(index);
               
               return (
-                <Card key={index} className="bg-card border-elec-yellow/30">
+                <Card key={index} className="bg-transparent border-elec-yellow/30">
                   <CardHeader className="pb-3">
                     <div className="flex items-center justify-between">
-                      <CardTitle className="text-base text-foreground">
+                      <CardTitle className="text-base text-white">
                         Question {index + 1}
                       </CardTitle>
                       <div className="flex items-center gap-2">
@@ -413,7 +413,7 @@ const AM2Module8 = () => {
                               ? "bg-green-500/20 text-green-500 border-green-500/40" 
                               : status === "incorrect"
                               ? "bg-red-500/20 text-elec-yellow border-red-500/40"
-                              : "bg-muted/20 text-muted-foreground border-muted/40"
+                              : "bg-muted/20 text-white border-muted/40"
                           }
                         >
                           {status === "correct" ? "Correct" : status === "incorrect" ? "Incorrect" : "Unanswered"}
@@ -434,9 +434,9 @@ const AM2Module8 = () => {
                             key={optionIndex}
                             className={`p-3 rounded-lg border-2 text-sm ${
                               isCorrectAnswer
-                                ? "border-green-500 bg-card text-green-500"
+                                ? "border-green-500 text-green-500"
                                 : isUserAnswer && !isCorrectAnswer
-                                ? "border-red-500 bg-card text-elec-yellow"
+                                ? "border-red-500 text-elec-yellow"
                                 : "border-muted/40 bg-muted/5"
                             }`}
                           >
@@ -466,14 +466,14 @@ const AM2Module8 = () => {
                     </div>
                     
                     {question.explanation && (
-                      <div className="mt-4 p-3 bg-card rounded-lg border border-elec-yellow/30">
+                      <div className="mt-4 p-3 rounded-lg border border-elec-yellow/30">
                         <div className="flex items-start gap-2">
                           <div className="flex h-5 w-5 items-center justify-center rounded-md bg-elec-yellow/20 flex-shrink-0 mt-0.5">
                             <CheckCircle className="h-3 w-3 text-elec-yellow" />
                           </div>
                           <div>
-                            <h4 className="text-sm font-semibold text-foreground mb-1">Explanation</h4>
-                            <p className="text-sm text-muted-foreground leading-relaxed">{question.explanation}</p>
+                            <h4 className="text-sm font-semibold text-white mb-1">Explanation</h4>
+                            <p className="text-sm text-white leading-relaxed">{question.explanation}</p>
                           </div>
                         </div>
                       </div>
@@ -502,17 +502,17 @@ const AM2Module8 = () => {
   };
   
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="sticky top-0 z-10 backdrop-blur-sm bg-background/80 border-b border-elec-yellow/30 p-4">
+      <div className="sticky top-0 z-50 backdrop-blur-sm bg-[#1a1a1a]/80 border-b border-elec-yellow/30 p-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div>
-            <Link to=".." className="text-muted-foreground hover:text-elec-yellow">
+            <Link to=".." className="text-white hover:text-elec-yellow">
               <ArrowLeft className="h-5 w-5" />
             </Link>
           </div>
           <div className="text-center">
-            <div className="text-sm text-muted-foreground">AM2 Mock Examination</div>
+            <div className="text-sm text-white">AM2 Mock Examination</div>
             <div className="font-mono text-lg font-bold text-elec-yellow">
               {formatTime(timeRemaining)}
             </div>
@@ -544,19 +544,19 @@ const AM2Module8 = () => {
             <div className="p-6">
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-semibold text-foreground">
+                  <h2 className="text-lg font-semibold text-white">
                     Question {currentQuestion + 1} of {examQuestions.length}
                   </h2>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={toggleFlag}
-                    className={flaggedQuestions.has(currentQuestion) ? "text-elec-yellow" : "text-muted-foreground"}
+                    className={flaggedQuestions.has(currentQuestion) ? "text-elec-yellow" : "text-white"}
                   >
                     <Flag className="w-4 h-4" />
                   </Button>
                 </div>
-                <p className="text-foreground leading-relaxed">
+                <p className="text-white leading-relaxed">
                   {examQuestions[currentQuestion].question}
                 </p>
               </div>
@@ -568,8 +568,8 @@ const AM2Module8 = () => {
                     onClick={() => handleAnswerSelect(index)}
                     className={`w-full p-4 text-left rounded-lg border transition-colors ${
                       selectedAnswers[currentQuestion] === index
-                        ? 'bg-elec-yellow/20 border-elec-yellow text-foreground'
-                        : 'bg-card border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10 hover:border-elec-yellow/40'
+                        ? 'bg-elec-yellow/20 border-elec-yellow text-white'
+                        : 'bg-transparent border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:border-elec-yellow/40'
                     }`}
                   >
                     <div className="flex items-center gap-3">
@@ -591,14 +591,14 @@ const AM2Module8 = () => {
         <div className="max-w-7xl mx-auto p-4">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             {/* Question Panel */}
-            <Card className="lg:col-span-3 bg-card border border-elec-yellow/30">
+            <Card className="lg:col-span-3 border border-elec-yellow/30">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                    <h2 className="text-lg font-semibold text-foreground">
+                    <h2 className="text-lg font-semibold text-white">
                       Question {currentQuestion + 1} of {examQuestions.length}
                     </h2>
-                    <div className="text-sm text-muted-foreground mt-1">
+                    <div className="text-sm text-white mt-1">
                       AM2 Assessment • Electrical Installation • BS7671
                     </div>
                   </div>
@@ -609,7 +609,7 @@ const AM2Module8 = () => {
                     className={`border-elec-yellow/30 ${
                       flaggedQuestions.has(currentQuestion) 
                         ? 'bg-elec-yellow/20 text-elec-yellow' 
-                        : 'text-foreground hover:bg-elec-yellow/10'
+                        : 'text-white hover:bg-elec-yellow/10'
                     }`}
                   >
                     <Flag className="h-4 w-4 mr-2" />
@@ -618,7 +618,7 @@ const AM2Module8 = () => {
                 </div>
 
                 <div className="mb-8">
-                  <p className="text-foreground text-lg leading-relaxed mb-6">
+                  <p className="text-white text-lg leading-relaxed mb-6">
                     {examQuestions[currentQuestion]?.question}
                   </p>
                   
@@ -629,8 +629,8 @@ const AM2Module8 = () => {
                         onClick={() => handleAnswerSelect(index)}
                         className={`w-full p-4 text-left rounded-lg border transition-colors ${
                           selectedAnswers[currentQuestion] === index
-                            ? 'bg-elec-yellow/20 border-elec-yellow text-foreground'
-                            : 'bg-background/30 border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10 hover:border-elec-yellow/40'
+                            ? 'bg-elec-yellow/20 border-elec-yellow text-white'
+                            : 'bg-[#1a1a1a]/30 border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:border-elec-yellow/40'
                         }`}
                       >
                         <div className="flex items-center gap-3">
@@ -650,7 +650,7 @@ const AM2Module8 = () => {
                     onClick={handlePrevious}
                     disabled={currentQuestion === 0}
                     variant="outline"
-                    className="border-elec-yellow/30 text-foreground hover:bg-elec-yellow/10 disabled:opacity-50"
+                    className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 disabled:opacity-50"
                   >
                     <ArrowLeft className="h-4 w-4 mr-2" />
                     Previous
@@ -683,7 +683,7 @@ const AM2Module8 = () => {
             </Card>
 
             {/* Enhanced Sidebar */}
-            <Card className="bg-card border border-elec-yellow/30 shadow-lg">
+            <Card className="bg-transparent border border-elec-yellow/30 shadow-lg">
               <CardContent className="p-4">
                 <div className="space-y-6">
                   {/* Enhanced Timer */}
@@ -691,12 +691,12 @@ const AM2Module8 = () => {
                     <div className="bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/10 p-4 rounded-xl border border-elec-yellow/30">
                       <div className="flex items-center justify-center gap-2 mb-2">
                         <Clock className="h-5 w-5 text-elec-yellow" />
-                        <span className="text-sm font-medium text-foreground">Time Remaining</span>
+                        <span className="text-sm font-medium text-white">Time Remaining</span>
                       </div>
                       <div className="font-mono text-2xl font-bold text-elec-yellow">
                         {formatTime(timeRemaining)}
                       </div>
-                      <div className="text-xs text-muted-foreground mt-1">
+                      <div className="text-xs text-white mt-1">
                         {timeRemaining < 300 ? 'Final 5 minutes!' : 'Stay focused'}
                       </div>
                     </div>
@@ -704,13 +704,13 @@ const AM2Module8 = () => {
 
                   {/* Enhanced Progress */}
                   <div>
-                    <div className="bg-background/50 p-4 rounded-lg border border-elec-yellow/30">
+                    <div className="bg-[#1a1a1a]/50 p-4 rounded-lg border border-elec-yellow/30">
                       <div className="flex justify-between items-center mb-3">
-                        <span className="text-sm font-medium text-foreground">Progress</span>
+                        <span className="text-sm font-medium text-white">Progress</span>
                         <span className="text-lg font-bold text-elec-yellow">{answeredCount}/{examQuestions.length}</span>
                       </div>
                       <Progress value={progressPercentage} className="h-3 mb-3" />
-                      <div className="text-xs text-center text-muted-foreground">
+                      <div className="text-xs text-center text-white">
                         {Math.round(progressPercentage)}% Complete
                       </div>
                     </div>
@@ -718,13 +718,13 @@ const AM2Module8 = () => {
 
                   {/* Enhanced Stats */}
                   <div className="space-y-3">
-                    <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                    <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
                       <Target className="h-4 w-4 text-elec-yellow" />
                       Statistics
                     </h3>
                     
                     <div className="grid grid-cols-1 gap-2">
-                      <div className="flex items-center justify-between p-3 bg-card rounded-lg border border-green-500/20">
+                      <div className="flex items-center justify-between p-3 rounded-lg border border-green-500/20">
                         <div className="flex items-center gap-2">
                           <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                           <span className="text-sm text-green-400">Answered</span>
@@ -732,7 +732,7 @@ const AM2Module8 = () => {
                         <span className="font-bold text-green-400">{answeredCount}</span>
                       </div>
                       
-                      <div className="flex items-center justify-between p-3 bg-card rounded-lg border border-red-500/20">
+                      <div className="flex items-center justify-between p-3 rounded-lg border border-red-500/20">
                         <div className="flex items-center gap-2">
                           <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                           <span className="text-sm text-elec-yellow">Remaining</span>
@@ -740,7 +740,7 @@ const AM2Module8 = () => {
                         <span className="font-bold text-elec-yellow">{examQuestions.length - answeredCount}</span>
                       </div>
                       
-                      <div className="flex items-center justify-between p-3 bg-card rounded-lg border border-elec-yellow/20">
+                      <div className="flex items-center justify-between p-3 rounded-lg border border-elec-yellow/20">
                         <div className="flex items-center gap-2">
                           <Flag className="w-3 h-3 text-elec-yellow" />
                           <span className="text-sm text-elec-yellow">Flagged</span>
@@ -752,7 +752,7 @@ const AM2Module8 = () => {
 
                   {/* Enhanced Question Grid */}
                   <div>
-                    <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                    <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
                       <BookOpen className="h-4 w-4 text-elec-yellow" />
                       Questions
                     </h3>
@@ -772,7 +772,7 @@ const AM2Module8 = () => {
                                 ? 'bg-elec-yellow text-black border-elec-yellow shadow-lg scale-110' 
                                 : isAnswered 
                                   ? 'bg-green-500/30 text-green-400 border-green-500/50 hover:bg-green-500/40' 
-                                  : 'bg-background/30 text-muted-foreground border-elec-yellow/30 hover:bg-elec-yellow/20 hover:border-elec-yellow/40'
+                                  : 'bg-[#1a1a1a]/30 text-white border-elec-yellow/30 hover:bg-elec-yellow/20 hover:border-elec-yellow/40'
                               }
                             `}
                           >
@@ -795,13 +795,13 @@ const AM2Module8 = () => {
                       disabled={flaggedQuestions.size === 0}
                       variant="outline"
                       size="sm"
-                      className="w-full text-xs border-border/30 text-elec-yellow hover:bg-card disabled:opacity-50"
+                      className="w-full text-xs border-border/30 text-elec-yellow hover:bg-transparent disabled:opacity-50"
                     >
                       <Flag className="h-3 w-3 mr-2" />
                       Next Flagged ({flaggedQuestions.size})
                     </Button>
                     
-                    <div className="text-xs text-center text-muted-foreground pt-2 border-t border-elec-yellow/30">
+                    <div className="text-xs text-center text-white pt-2 border-t border-elec-yellow/30">
                       <div>Exam: AM2</div>
                       <div>Electrical Assessment</div>
                     </div>

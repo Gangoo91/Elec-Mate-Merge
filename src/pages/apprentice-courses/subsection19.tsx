@@ -716,7 +716,7 @@ const Section5_2 = () => {
                       </ul>
                       <div className="mt-3 p-2 bg-elec-yellow bg-elec-yellow rounded text-sm">
                         <strong className="text-white">Result:</strong> 
-                        <span className="text-emerald-50"> Zero incidents. Project completed safely and on time.</span>
+                        <span className="text-white"> Zero incidents. Project completed safely and on time.</span>
                       </div>
                     </div>
                   </div>

@@ -1,472 +1,407 @@
-import { ArrowLeft, Globe, AlertTriangle, CheckCircle, Wifi } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Link } from 'react-router-dom';
-import { Quiz } from '@/components/upskilling/Quiz';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
+import useSEO from "@/hooks/useSEO";
+
+const quickCheckQuestions = [
+  {
+    id: "datacabling-m5s5-check1",
+    question: "What is the maximum supported frequency for Category 8 cabling?",
+    options: ["500 MHz", "1000 MHz", "1600 MHz", "2000 MHz"],
+    correctIndex: 3,
+    explanation: "Category 8 supports frequencies up to 2000 MHz (2 GHz), enabling 25GBASE-T and 40GBASE-T applications over distances up to 30 metres."
+  },
+  {
+    id: "datacabling-m5s5-check2",
+    question: "What is the maximum channel length for Category 8 installations?",
+    options: ["30 metres", "50 metres", "90 metres", "100 metres"],
+    correctIndex: 0,
+    explanation: "Category 8 has a maximum channel length of 30 metres (24m permanent link + 6m patch cords) to maintain signal integrity at 2000 MHz frequencies."
+  },
+  {
+    id: "datacabling-m5s5-check3",
+    question: "Which connector type does Category 8.1 use for backward compatibility?",
+    options: ["GG45", "TERA", "Standard RJ45 (8P8C)", "ARJ45"],
+    correctIndex: 2,
+    explanation: "Category 8.1 uses standard RJ45 (8P8C) connectors for backward compatibility with existing systems. Category 8.2 uses different connector types like GG45 or TERA."
+  }
+];
+
+const faqs = [
+  {
+    question: "When should I use Category 8 instead of fibre optic?",
+    answer: "Cat 8 is cost-effective for short data centre connections (under 30m) where 25G/40G speeds are needed. It uses existing copper infrastructure skills and RJ45 connectors. For longer distances or higher speeds, fibre remains the better choice."
+  },
+  {
+    question: "Can I use Cat 8 for general office cabling?",
+    answer: "Not recommended. Cat 8's 30m distance limit makes it unsuitable for typical office horizontal cabling (up to 90m). Use Cat 6A for office environments where 10Gbps capability is sufficient for foreseeable applications."
+  },
+  {
+    question: "How do I future-proof without over-investing?",
+    answer: "Install Cat 6A for horizontal cabling (supports 10G at 100m, adequate for most applications). Reserve Cat 8 for data centre ToR connections. Plan pathways and spaces for future upgrades rather than over-specifying cable."
+  },
+  {
+    question: "What bandwidth growth should I plan for?",
+    answer: "Historical data shows approximately 25-30% annual bandwidth growth. Plan for 10x current requirements over 10 years. Cat 6A provides good headroom for most applications through 2035."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+  question: "A new data centre is being designed with servers in racks requiring 25Gbps connections to top-of-rack switches. Switch to spine connections will be 100Gbps. What cabling strategy is most appropriate?",
+  options: [
+    "Cat 6A throughout the data centre",
+    "Cat 8 for server to ToR, fibre for spine connections",
+    "Fibre optic for all connections",
+    "Cat 5e to minimize costs"
+  ],
+  correctAnswer: 1,
+  explanation: "Cat 8 is ideal for server-to-switch connections within the 30m limit and provides 25G/40G capability cost-effectively. Fibre is necessary for spine connections requiring 100G speeds and longer distances between racks."
+  }
+];
 
 const DataCablingModule5Section5 = () => {
-  const quizQuestions = [
-    {
-      id: 1,
-      question: "What is the maximum supported frequency range for Category 8 cabling systems?",
-      options: [
-        "500 MHz",
-        "1000 MHz",
-        "1600 MHz",
-        "2000 MHz"
-      ],
-      correctAnswer: 3,
-      explanation: "Category 8 cabling systems support frequencies up to 2000 MHz (2 GHz), enabling 25GBASE-T and 40GBASE-T applications over shorter distances."
-    },
-    {
-      id: 2,
-      question: "What is the maximum channel length for Category 8 installations?",
-      options: [
-        "30 metres",
-        "50 metres", 
-        "90 metres",
-        "100 metres"
-      ],
-      correctAnswer: 0,
-      explanation: "Category 8 has a maximum channel length of 30 metres (24m permanent link + 6m patch cords) to support high-speed applications while maintaining signal integrity."
-    },
-    {
-      id: 3,
-      question: "Which connector type is mandatory for Category 8.1 applications?",
-      options: [
-        "RJ45 (8P8C)",
-        "GG45",
-        "TERA",
-        "ARJ45"
-      ],
-      correctAnswer: 0,
-      explanation: "Category 8.1 uses standard RJ45 (8P8C) connectors for backward compatibility with existing systems, while Cat 8.2 uses different connector types like GG45 or TERA."
-    },
-    {
-      id: 4,
-      question: "What is the primary application for Category 8 cabling in data centres?",
-      options: [
-        "Desktop computer connections",
-        "Server-to-switch and switch-to-switch connections",
-        "Wireless access point connections",
-        "Building backbone cabling"
-      ],
-      correctAnswer: 1,
-      explanation: "Category 8 is primarily designed for short-distance, high-speed data centre applications, particularly server-to-switch and switch-to-switch connections requiring 25G or 40G speeds."
-    },
-    {
-      id: 5,
-      question: "What is the key electromagnetic compatibility requirement for Category 8 installations?",
-      options: [
-        "Unshielded cable is preferred",
-        "Shielded cable with proper grounding",
-        "Special fire-rated jackets only",
-        "Increased bend radius requirements"
-      ],
-      correctAnswer: 1,
-      explanation: "Category 8 requires shielded cable (S/FTP) with proper grounding to handle the high frequencies up to 2 GHz and prevent electromagnetic interference in dense data centre environments."
-    }
-  ];
+  useSEO({
+    title: "Future-Proofing Network Infrastructure | Data Cabling Module 5.5",
+    description: "Emerging technologies, Category 8 systems, and strategic planning for next-generation network requirements."
+  });
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="px-4 sm:px-6 lg:px-8 pt-8 pb-12 max-w-6xl mx-auto">
-        <Link to="../data-cabling-module-5">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
           <Button
             variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 5
-          </Button>
-        </Link>
-        
-        <div className="space-y-8">
-          <div className="text-center">
-            <Badge variant="secondary" className="bg-yellow-400 text-black mb-4">
-              Module 5 • Section 5
-            </Badge>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
-              Future-Proofing Network Infrastructure
-            </h1>
-            <p className="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto">
-              Emerging technologies, Category 8 systems, and strategic planning for next-generation network requirements
-            </p>
-          </div>
-
-          <Alert className="border-yellow-400/30 bg-yellow-400/10">
-            <Globe className="h-4 w-4 text-yellow-400" />
-            <AlertDescription className="text-foreground">
-              <strong className="text-yellow-400">Future-Ready:</strong> Network infrastructure investments must consider emerging technologies and bandwidth requirements to maintain relevance over 15-20 year lifecycles.
-            </AlertDescription>
-          </Alert>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-yellow-400 flex items-center">
-                <Wifi className="mr-2 h-5 w-5" />
-                Category 8 Technology and Applications
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold text-white mb-3">Next-Generation Copper Technology</h3>
-                <p className="text-gray-300 leading-relaxed mb-4">
-                  Category 8 represents the latest evolution in copper cabling technology, designed specifically for short-distance, 
-                  high-speed data centre applications requiring 25 Gbps and 40 Gbps transmission rates. While not suitable for general 
-                  office installations due to distance limitations, Cat 8 fills a crucial niche in data centre server connectivity.
-                </p>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="bg-card p-4 rounded-lg">
-                    <h4 className="font-medium text-yellow-400 mb-3">Category 8.1 Specifications and Use Cases</h4>
-                    <ul className="text-sm text-gray-300 space-y-2">
-                      <li><strong>Frequency Range:</strong> Up to 2000 MHz (2 GHz) - 4x higher than Cat 6A</li>
-                      <li><strong>Channel Length:</strong> Maximum 30 metres (vs 100m for other categories)</li>
-                      <li><strong>Permanent Link:</strong> Maximum 24 metres (shorter for better performance)</li>
-                      <li><strong>Patch Cords:</strong> Maximum 6 metres total (3m each end recommended)</li>
-                      <li><strong>Connector:</strong> Standard RJ45 (8P8C) - existing tooling works</li>
-                      <li><strong>Backward Compatibility:</strong> Works with Cat 6A infrastructure and equipment</li>
-                      <li><strong>Cost Factor:</strong> 3-5x more expensive than Cat 6A but cheaper than fibre + transceivers</li>
-                    </ul>
-                  </div>
-                  <div className="bg-card p-4 rounded-lg">
-                    <h4 className="font-medium text-yellow-400 mb-3">Category 8.2 Specifications and Applications</h4>
-                    <ul className="text-sm text-gray-300 space-y-2">
-                      <li><strong>Frequency Range:</strong> Up to 2000 MHz (2 GHz) - same as 8.1</li>
-                      <li><strong>Channel Length:</strong> Maximum 30 metres (optimised for data centres)</li>
-                      <li><strong>Connectors:</strong> GG45, TERA, or ARJ45 (non-RJ45 options)</li>
-                      <li><strong>Applications:</strong> Specialised data centre use, future-proofing</li>
-                      <li><strong>Compatibility:</strong> Limited backward compatibility with existing systems</li>
-                      <li><strong>Performance:</strong> Enhanced alien crosstalk rejection in dense bundles</li>
-                      <li><strong>Market Reality:</strong> Limited adoption due to connector incompatibility</li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="bg-purple-900/20 p-4 rounded-lg border border-purple-800/30 mt-4">
-                  <h4 className="font-medium text-purple-400 mb-2">🏢 Where Cat 8 Makes Sense</h4>
-                  <div className="grid md:grid-cols-3 gap-4 text-sm">
-                    <div>
-                      <p className="text-white font-medium mb-1">Data Centre Top-of-Rack</p>
-                      <ul className="text-purple-300 space-y-1">
-                        <li>• Server to switch connections</li>
-                        <li>• Storage area network links</li>
-                        <li>• High-frequency trading systems</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="text-white font-medium mb-1">Equipment Rooms</p>
-                      <ul className="text-purple-300 space-y-1">
-                        <li>• Switch-to-switch interconnects</li>
-                        <li>• Core network equipment links</li>
-                        <li>• High-performance computing clusters</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="text-white font-medium mb-1">Specialised Applications</p>
-                      <ul className="text-purple-300 space-y-1">
-                        <li>• Broadcast video production</li>
-                        <li>• Medical imaging systems</li>
-                        <li>• Industrial automation control</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-yellow-400">High-Speed Ethernet Applications and Performance</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold text-white mb-3">25GBASE-T and 40GBASE-T Implementation</h3>
-                <p className="text-gray-300 leading-relaxed mb-4">
-                  Category 8 enables 25 Gigabit and 40 Gigabit Ethernet over copper, providing cost-effective alternatives 
-                  to fibre optic solutions for short-distance data centre interconnections.
-                </p>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b border-gray-600">
-                        <th className="text-left p-3 text-yellow-400">Ethernet Standard</th>
-                        <th className="text-left p-3 text-yellow-400">Speed</th>
-                        <th className="text-left p-3 text-yellow-400">Cable Type</th>
-                        <th className="text-left p-3 text-yellow-400">Max Distance</th>
-                        <th className="text-left p-3 text-yellow-400">Power Consumption</th>
-                      </tr>
-                    </thead>
-                    <tbody className="text-gray-300">
-                      <tr className="border-b border-gray-700">
-                        <td className="p-3">10GBASE-T</td>
-                        <td className="p-3">10 Gbps</td>
-                        <td className="p-3">Cat 6A</td>
-                        <td className="p-3">100 metres</td>
-                        <td className="p-3">4-8W per port</td>
-                      </tr>
-                      <tr className="border-b border-gray-700">
-                        <td className="p-3">25GBASE-T</td>
-                        <td className="p-3">25 Gbps</td>
-                        <td className="p-3">Cat 8</td>
-                        <td className="p-3">30 metres</td>
-                        <td className="p-3">8-12W per port</td>
-                      </tr>
-                      <tr className="border-b border-gray-700">
-                        <td className="p-3">40GBASE-T</td>
-                        <td className="p-3">40 Gbps</td>
-                        <td className="p-3">Cat 8</td>
-                        <td className="p-3">30 metres</td>
-                        <td className="p-3">12-16W per port</td>
-                      </tr>
-                      <tr className="border-b border-gray-700">
-                        <td className="p-3">100GBASE-T</td>
-                        <td className="p-3">100 Gbps</td>
-                        <td className="p-3">Future Cat 8+</td>
-                        <td className="p-3">15 metres (projected)</td>
-                        <td className="p-3">20-25W per port</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div className="bg-card p-4 rounded-lg">
-                <h4 className="font-medium text-yellow-400 mb-3">Data Centre Architecture and Deployment Strategies</h4>
-                <div className="grid md:grid-cols-3 gap-4 text-sm">
-                  <div>
-                    <p className="text-white font-medium mb-2">Top-of-Rack (ToR) Design</p>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• Cat 8 for server-to-switch connections</li>
-                      <li>• Fibre for switch-to-spine uplinks</li>
-                      <li>• Reduced latency and power consumption</li>
-                      <li>• Simplified cable management</li>
-                      <li>• Cost-effective for 25G applications</li>
-                      <li>• Easy maintenance and upgrades</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white font-medium mb-2">End-of-Row (EoR) Design</p>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• Longer cable runs within 30m limit</li>
-                      <li>• Centralised switching architecture</li>
-                      <li>• Higher density switch ports</li>
-                      <li>• Cat 8 for high-speed interconnects</li>
-                      <li>• Potential for future 40G upgrades</li>
-                      <li>• Structured cabling approach</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white font-medium mb-2">Hybrid Architectures</p>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• Cat 8 for critical high-speed links</li>
-                      <li>• Cat 6A for general purpose connections</li>
-                      <li>• Fibre for long-distance backbone</li>
-                      <li>• Flexible migration strategies</li>
-                      <li>• Cost-optimised implementations</li>
-                      <li>• Performance where needed approach</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-yellow-400">Emerging Technologies and Market Trends</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold text-white mb-3">Next-Generation Network Requirements</h3>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="bg-card p-4 rounded-lg">
-                    <h4 className="font-medium text-yellow-400 mb-3">Artificial Intelligence and Machine Learning Infrastructure</h4>
-                    <ul className="text-sm text-gray-300 space-y-2">
-                      <li><strong>GPU Clusters:</strong> High-bandwidth interconnect requirements (25-100Gbps per connection)</li>
-                      <li><strong>Data Processing:</strong> Low-latency, high-speed connections for real-time analytics</li>
-                      <li><strong>Model Training:</strong> Sustained high throughput demands between compute nodes</li>
-                      <li><strong>Real-time Inference:</strong> Minimal latency requirements (&lt;1ms) for live applications</li>
-                      <li><strong>Storage Access:</strong> High-speed data retrieval needs for large datasets</li>
-                      <li><strong>Distributed Computing:</strong> Inter-node communication in compute clusters</li>
-                      <li><strong>Network Impact:</strong> Traditional 1Gbps networks become bottlenecks</li>
-                    </ul>
-                  </div>
-                  <div className="bg-card p-4 rounded-lg">
-                    <h4 className="font-medium text-yellow-400 mb-3">Internet of Things (IoT) and Smart Building Integration</h4>
-                    <ul className="text-sm text-gray-300 space-y-2">
-                      <li><strong>Massive Connectivity:</strong> Thousands of devices per switch port (time-division access)</li>
-                      <li><strong>Edge Computing:</strong> Local processing requirements reduce cloud dependence</li>
-                      <li><strong>Sensor Networks:</strong> Low-power device support with centralised management</li>
-                      <li><strong>Real-time Analytics:</strong> Immediate data processing for automated responses</li>
-                      <li><strong>Security Integration:</strong> Network-level device protection and access control</li>
-                      <li><strong>Bandwidth Aggregation:</strong> Collective traffic management from many small devices</li>
-                      <li><strong>Infrastructure Challenge:</strong> Balancing individual device needs with network capacity</li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="bg-green-900/20 p-4 rounded-lg border border-green-800/30 mt-4">
-                  <h4 className="font-medium text-green-400 mb-3">📊 Bandwidth Growth Reality Check</h4>
-                  <div className="grid md:grid-cols-3 gap-4 text-sm">
-                    <div>
-                      <p className="text-white font-medium mb-2">Historical Growth (2010-2020)</p>
-                      <ul className="text-green-300 space-y-1">
-                        <li>• 2010: 100Mbps typical desktop</li>
-                        <li>• 2015: 1Gbps becoming standard</li>
-                        <li>• 2020: 1Gbps universal, 10Gbps emerging</li>
-                        <li>• Average annual growth: ~26%</li>
-                        <li>• Driving factors: Video, cloud, remote work</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="text-white font-medium mb-2">Current Trends (2020-2025)</p>
-                      <ul className="text-green-300 space-y-1">
-                        <li>• Multi-gigabit to desktop emerging</li>
-                        <li>• 10Gbps for power users/servers</li>
-                        <li>• 25Gbps in data centres</li>
-                        <li>• Wi-Fi 6/6E increasing wireless demands</li>
-                        <li>• 4K/8K video, VR/AR applications</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="text-white font-medium mb-2">Future Projections (2025-2030)</p>
-                      <ul className="text-green-300 space-y-1">
-                        <li>• 2.5/5Gbps standard desktop</li>
-                        <li>• 10Gbps common for workstations</li>
-                        <li>• 25/40Gbps in server environments</li>
-                        <li>• 100Gbps for backbone connections</li>
-                        <li>• Metaverse, holographic applications</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-card p-4 rounded-lg">
-                <h4 className="font-medium text-yellow-400 mb-3">Cloud and Virtualisation Evolution</h4>
-                <div className="grid md:grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <p className="text-white font-medium mb-2">Hyperconverged Infrastructure</p>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• Software-defined networking requirements</li>
-                      <li>• Storage traffic convergence on Ethernet</li>
-                      <li>• Virtual machine mobility support</li>
-                      <li>• Container orchestration networking</li>
-                      <li>• Microservices communication patterns</li>
-                      <li>• Multi-tenant network isolation</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white font-medium mb-2">5G and Edge Computing</p>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• Ultra-low latency requirements (1ms)</li>
-                      <li>• Massive MIMO antenna system support</li>
-                      <li>• Network slicing implementation</li>
-                      <li>• Edge data centre interconnection</li>
-                      <li>• Fronthaul and backhaul convergence</li>
-                      <li>• Mission-critical application support</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-yellow-400">Strategic Infrastructure Planning and Investment</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold text-white mb-3">Long-term Technology Roadmap Planning</h3>
-                <div className="grid md:grid-cols-3 gap-4">
-                  <div className="bg-card p-4 rounded-lg">
-                    <h4 className="font-medium text-yellow-400 mb-2">Short-term (1-3 years)</h4>
-                    <ul className="text-sm text-gray-300 space-y-1">
-                      <li>• Cat 6A deployments for 10G readiness</li>
-                      <li>• PoE+ infrastructure for device support</li>
-                      <li>• Wi-Fi 6 access point upgrades</li>
-                      <li>• Basic IoT device integration</li>
-                      <li>• Security system modernisation</li>
-                      <li>• Building automation expansion</li>
-                    </ul>
-                  </div>
-                  <div className="bg-card p-4 rounded-lg">
-                    <h4 className="font-medium text-yellow-400 mb-2">Medium-term (3-7 years)</h4>
-                    <ul className="text-sm text-gray-300 space-y-1">
-                      <li>• Selective Cat 8 implementations</li>
-                      <li>• 25G switch infrastructure</li>
-                      <li>• Advanced PoE (60-90W) systems</li>
-                      <li>• Edge computing deployment</li>
-                      <li>• 5G small cell integration</li>
-                      <li>• AI/ML infrastructure support</li>
-                    </ul>
-                  </div>
-                  <div className="bg-card p-4 rounded-lg">
-                    <h4 className="font-medium text-yellow-400 mb-2">Long-term (7-15 years)</h4>
-                    <ul className="text-sm text-gray-300 space-y-1">
-                      <li>• 40G copper where applicable</li>
-                      <li>• Converged fibre/copper architectures</li>
-                      <li>• Autonomous building systems</li>
-                      <li>• Massive IoT deployments</li>
-                      <li>• Quantum networking preparation</li>
-                      <li>• Sustainable technology integration</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-card p-4 rounded-lg">
-                <h4 className="font-medium text-yellow-400 mb-3">Cost-Benefit Analysis and ROI Considerations</h4>
-                <div className="grid md:grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <p className="text-white font-medium mb-2">Investment Strategies</p>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• <strong>Pathway Planning:</strong> Install Cat 6A now, upgrade to Cat 8 later</li>
-                      <li>• <strong>Zone-based Approach:</strong> Cat 8 in data centres, Cat 6A elsewhere</li>
-                      <li>• <strong>Application-driven:</strong> Match cable category to specific needs</li>
-                      <li>• <strong>Future-ready Infrastructure:</strong> Over-specify for unknown requirements</li>
-                      <li>• <strong>Hybrid Solutions:</strong> Mix copper and fibre strategically</li>
-                      <li>• <strong>Modular Deployment:</strong> Expandable architecture design</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white font-medium mb-2">Risk Mitigation</p>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• <strong>Technology Obsolescence:</strong> Plan for 15-20 year lifecycles</li>
-                      <li>• <strong>Bandwidth Growth:</strong> Account for 50% annual growth</li>
-                      <li>• <strong>Application Changes:</strong> Flexible infrastructure design</li>
-                      <li>• <strong>Standard Evolution:</strong> Monitor emerging standards</li>
-                      <li>• <strong>Vendor Independence:</strong> Open standard compliance</li>
-                      <li>• <strong>Retrofit Costs:</strong> Consider replacement complexity</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Quiz 
-            questions={quizQuestions} 
-            title="Future-Proofing Infrastructure Knowledge Check"
-            description="Test your understanding of Category 8 technology, emerging trends, and strategic infrastructure planning"
-          />
-
-          <div className="flex justify-between">
-            <Link to="../data-cabling-module-5-section-4">
-              <Button variant="outline" className="border-gray-600">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
             <Link to="../data-cabling-module-5">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
-                Module Overview
-                <CheckCircle className="ml-2 h-4 w-4" />
-              </Button>
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 5
             </Link>
-          </div>
+          </Button>
         </div>
       </div>
+
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Page Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 5.5</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Future-Proofing Network Infrastructure
+          </h1>
+          <p className="text-white/80">
+            Category 8 and strategic planning for next-generation requirements
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Cat 8:</strong> 2000MHz, 25/40Gbps, 30m max</li>
+              <li><strong>Use case:</strong> Data centre ToR connections</li>
+              <li><strong>Planning:</strong> Cat 6A for offices, Cat 8 for DC</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Cat 8 = short runs, shielded, data centres</li>
+              <li><strong>Use:</strong> Zone-based planning for cost efficiency</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Understand Category 8 specifications",
+              "Apply Cat 8 in appropriate scenarios",
+              "Plan for bandwidth growth trends",
+              "Design hybrid copper/fibre systems",
+              "Balance cost with future requirements",
+              "Implement zone-based cabling strategies"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Category 8 Technology
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Category 8 represents the latest evolution in copper cabling, designed specifically
+              for short-distance, high-speed data centre applications.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Category 8.1 Specifications</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Frequency:</strong> Up to 2000 MHz (2 GHz)</li>
+                  <li><strong>Channel length:</strong> 30m maximum</li>
+                  <li><strong>Permanent link:</strong> 24m maximum</li>
+                  <li><strong>Connector:</strong> Standard RJ45 (8P8C)</li>
+                  <li><strong>Shielding:</strong> S/FTP required</li>
+                  <li><strong>Applications:</strong> 25GBASE-T, 40GBASE-T</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Category 8.2 Specifications</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Frequency:</strong> Up to 2000 MHz</li>
+                  <li><strong>Channel length:</strong> 30m maximum</li>
+                  <li><strong>Connectors:</strong> GG45, TERA, or ARJ45</li>
+                  <li><strong>Compatibility:</strong> Limited backward compatibility</li>
+                  <li><strong>Performance:</strong> Enhanced alien crosstalk</li>
+                  <li><strong>Adoption:</strong> Limited market uptake</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">Cat 6A</p>
+                <p className="text-white/90 text-xs">500MHz, 100m</p>
+              </div>
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">Cat 8.1</p>
+                <p className="text-white/90 text-xs">2000MHz, 30m</p>
+              </div>
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">Cat 8.2</p>
+                <p className="text-white/90 text-xs">2000MHz, 30m</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Data Centre Applications
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Category 8 fills a specific niche in data centre connectivity where high speeds
+              are needed over short distances without the complexity of fibre optics.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">High-Speed Ethernet Standards:</p>
+              <div className="grid sm:grid-cols-2 gap-4 mt-3">
+                <div className="p-3 rounded bg-white/5">
+                  <p className="text-sm font-medium text-white mb-2">25GBASE-T</p>
+                  <ul className="text-xs text-white/90 space-y-1">
+                    <li>25 Gbps speed</li>
+                    <li>Cat 8 cable required</li>
+                    <li>30m max distance</li>
+                    <li>8-12W per port</li>
+                  </ul>
+                </div>
+                <div className="p-3 rounded bg-white/5">
+                  <p className="text-sm font-medium text-white mb-2">40GBASE-T</p>
+                  <ul className="text-xs text-white/90 space-y-1">
+                    <li>40 Gbps speed</li>
+                    <li>Cat 8 cable required</li>
+                    <li>30m max distance</li>
+                    <li>12-16W per port</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Where Cat 8 makes sense:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Top-of-Rack (ToR):</strong> Server to switch connections</li>
+                <li><strong>Storage networks:</strong> High-bandwidth SAN connections</li>
+                <li><strong>Switch interconnects:</strong> Within equipment rooms</li>
+                <li><strong>HPC clusters:</strong> High-performance computing</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 3 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Strategic Infrastructure Planning
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Effective future-proofing balances current requirements with anticipated growth,
+              avoiding both under-specification and unnecessary over-investment.
+            </p>
+
+            <div className="grid sm:grid-cols-3 gap-4 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Short-term (1-3 years)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Cat 6A for new installations</li>
+                  <li>10G infrastructure readiness</li>
+                  <li>Wi-Fi 6 AP support</li>
+                  <li>Advanced PoE planning</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Medium-term (3-7 years)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Cat 8 in data centres</li>
+                  <li>25G server connections</li>
+                  <li>Edge computing support</li>
+                  <li>High-density PoE++</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Long-term (7-15 years)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>40G+ copper where applicable</li>
+                  <li>Hybrid copper/fibre</li>
+                  <li>IoT infrastructure</li>
+                  <li>Pathway/space flexibility</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Zone-based approach:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Office areas:</strong> Cat 6A (10G ready, 100m reach)</li>
+                <li><strong>Equipment rooms:</strong> Cat 8 for high-speed interconnects</li>
+                <li><strong>Backbone:</strong> Fibre optic for long distances</li>
+                <li><strong>Wireless:</strong> Cat 6A with PoE+ minimum</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Investment Strategies</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Install Cat 6A for general purpose - it covers most needs for 10+ years</li>
+                <li>Reserve Cat 8 for data centre ToR connections under 30m</li>
+                <li>Use fibre for backbone and inter-building connections</li>
+                <li>Over-spec pathways and spaces rather than cable category</li>
+                <li>Plan for 10x bandwidth growth over installation lifetime</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Cat 8 everywhere:</strong> — Wasted cost for office cabling</li>
+                <li><strong>Distance miscalculation:</strong> — Cat 8 won't reach 100m</li>
+                <li><strong>Ignoring trends:</strong> — Under-spec leads to premature replacement</li>
+                <li><strong>Pathway neglect:</strong> — Cables can be upgraded, pathways cannot</li>
+                <li><strong>No documentation:</strong> — Future upgrades need accurate records</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quick Reference */}
+        <div className="mt-6 p-5 rounded-lg bg-transparent">
+          <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+            <div>
+              <p className="font-medium text-white mb-1">Category Comparison</p>
+              <ul className="space-y-0.5">
+                <li>Cat 6A: 500MHz, 100m, 10G</li>
+                <li>Cat 8: 2000MHz, 30m, 25/40G</li>
+                <li>Fibre: Unlimited, km range</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-medium text-white mb-1">Zone Planning</p>
+              <ul className="space-y-0.5">
+                <li>Office: Cat 6A</li>
+                <li>Data Centre: Cat 8</li>
+                <li>Backbone: Fibre</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Quiz Section */}
+        <section className="mb-10 mt-12">
+          <SingleQuestionQuiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../data-cabling-module-5-section-4">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../data-cabling-module-6">
+              Next Module
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

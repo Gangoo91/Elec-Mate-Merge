@@ -566,7 +566,7 @@ const IndustrialOverviewCards = () => {
       {/* Quick Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {overviewStats.map((stat, index) => (
-          <Card key={index} className="border-elec-yellow/30 bg-elec-gray">
+          <Card key={index} className="border-elec-yellow/30 bg-white/5">
             <CardContent className="p-4">
               <div className="flex items-center gap-2 mb-2">
                 <stat.icon className="h-4 w-4 text-elec-yellow" />
@@ -579,7 +579,7 @@ const IndustrialOverviewCards = () => {
       </div>
 
       {/* What is Industrial Electrical Work? */}
-      <Card className="border-blue-500/30 bg-elec-gray">
+      <Card className="border-blue-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Factory className="h-6 w-6 text-blue-400" />
@@ -634,7 +634,7 @@ const IndustrialOverviewCards = () => {
       </Card>
 
       {/* Career Paths */}
-      <Card className="border-emerald-500/30 bg-elec-gray">
+      <Card className="border-emerald-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <GraduationCap className="h-6 w-6 text-emerald-400" />
@@ -676,7 +676,7 @@ const IndustrialOverviewCards = () => {
       </Card>
 
       {/* Manufacturing Facilities */}
-      <Card className="border-violet-500/30 bg-elec-gray">
+      <Card className="border-violet-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Cog className="h-6 w-6 text-violet-400" />
@@ -834,7 +834,7 @@ const IndustrialOverviewCards = () => {
       </Card>
 
       {/* Warehousing & Distribution */}
-      <Card className="border-cyan-500/30 bg-elec-gray">
+      <Card className="border-cyan-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Warehouse className="h-6 w-6 text-cyan-400" />
@@ -1068,7 +1068,7 @@ const IndustrialOverviewCards = () => {
       </Card>
 
       {/* Heavy Industry */}
-      <Card className="border-orange-500/30 bg-elec-gray">
+      <Card className="border-orange-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Zap className="h-6 w-6 text-orange-400" />
@@ -1333,7 +1333,7 @@ const IndustrialOverviewCards = () => {
       </Card>
 
       {/* Process Industries */}
-      <Card className="border-teal-500/30 bg-elec-gray">
+      <Card className="border-teal-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <FlaskConical className="h-6 w-6 text-teal-400" />
@@ -1524,7 +1524,7 @@ const IndustrialOverviewCards = () => {
       </Card>
 
       {/* Project Types Guide */}
-      <Card className="border-blue-500/30 bg-elec-gray">
+      <Card className="border-blue-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Factory className="h-6 w-6 text-blue-400" />
@@ -1558,7 +1558,7 @@ const IndustrialOverviewCards = () => {
       </Card>
 
       {/* Safety Requirements */}
-      <Card className="border-red-500/30 bg-elec-gray">
+      <Card className="border-red-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <HardHat className="h-6 w-6 text-red-400" />
@@ -1589,7 +1589,7 @@ const IndustrialOverviewCards = () => {
       </Card>
 
       {/* Hazard Assessment */}
-      <Card className="border-orange-500/30 bg-elec-gray">
+      <Card className="border-orange-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <AlertTriangle className="h-6 w-6 text-orange-400" />
@@ -1619,7 +1619,7 @@ const IndustrialOverviewCards = () => {
       </Card>
 
       {/* Pre-Project Checklist */}
-      <Card className="border-green-500/30 bg-elec-gray">
+      <Card className="border-green-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <CheckCircle className="h-6 w-6 text-green-400" />

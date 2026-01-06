@@ -384,7 +384,7 @@ const EnergyCostCalculator = () => {
         </div>
 
         {appliances.length === 0 ? (
-          <div className="text-center py-8 text-white/50">
+          <div className="text-center py-8 text-white/80">
             <Clock className="h-10 w-10 mx-auto mb-3 opacity-50" />
             <p className="text-sm">Add appliances to calculate costs</p>
           </div>
@@ -417,7 +417,7 @@ const EnergyCostCalculator = () => {
                 {/* Power, Standby, Quantity */}
                 <div className="grid grid-cols-3 gap-2">
                   <div>
-                    <label className="text-xs text-white/50 mb-1 block">Power</label>
+                    <label className="text-xs text-white/80 mb-1 block">Power</label>
                     <div className="flex items-center">
                       <input
                         type="text"
@@ -431,11 +431,11 @@ const EnergyCostCalculator = () => {
                         className="w-full h-9 px-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-400/50"
                         placeholder="0"
                       />
-                      <span className="text-xs text-white/50 ml-1">W</span>
+                      <span className="text-xs text-white/80 ml-1">W</span>
                     </div>
                   </div>
                   <div>
-                    <label className="text-xs text-white/50 mb-1 block">Standby</label>
+                    <label className="text-xs text-white/80 mb-1 block">Standby</label>
                     <div className="flex items-center">
                       <input
                         type="text"
@@ -449,11 +449,11 @@ const EnergyCostCalculator = () => {
                         className="w-full h-9 px-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-400/50"
                         placeholder="0"
                       />
-                      <span className="text-xs text-white/50 ml-1">W</span>
+                      <span className="text-xs text-white/80 ml-1">W</span>
                     </div>
                   </div>
                   <div>
-                    <label className="text-xs text-white/50 mb-1 block">Qty</label>
+                    <label className="text-xs text-white/80 mb-1 block">Qty</label>
                     <input
                       type="text"
                       inputMode="numeric"
@@ -502,7 +502,7 @@ const EnergyCostCalculator = () => {
                 {/* Usage Input */}
                 {appliance.usageMode === "hoursPerDay" ? (
                   <div>
-                    <label className="text-xs text-white/50 mb-1 block">
+                    <label className="text-xs text-white/80 mb-1 block">
                       Hours per day
                     </label>
                     <div className="flex items-center">
@@ -518,13 +518,13 @@ const EnergyCostCalculator = () => {
                         className="w-full h-9 px-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-400/50"
                         placeholder="e.g., 4"
                       />
-                      <span className="text-xs text-white/50 ml-2">hrs</span>
+                      <span className="text-xs text-white/80 ml-2">hrs</span>
                     </div>
                   </div>
                 ) : (
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <label className="text-xs text-white/50 mb-1 block">
+                      <label className="text-xs text-white/80 mb-1 block">
                         Cycle duration
                       </label>
                       <div className="flex items-center">
@@ -540,11 +540,11 @@ const EnergyCostCalculator = () => {
                           className="w-full h-9 px-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-400/50"
                           placeholder="1.5"
                         />
-                        <span className="text-xs text-white/50 ml-1">hrs</span>
+                        <span className="text-xs text-white/80 ml-1">hrs</span>
                       </div>
                     </div>
                     <div>
-                      <label className="text-xs text-white/50 mb-1 block">
+                      <label className="text-xs text-white/80 mb-1 block">
                         Cycles/week
                       </label>
                       <input
@@ -767,27 +767,27 @@ const EnergyCostCalculator = () => {
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div className="p-3 rounded-lg bg-white/5">
-                <p className="text-xs text-white/50">Daily</p>
+                <p className="text-xs text-white/80">Daily</p>
                 <p className="text-lg font-semibold text-white">
-                  {result.dailyKWh.toFixed(2)} <span className="text-sm text-white/50">kWh</span>
+                  {result.dailyKWh.toFixed(2)} <span className="text-sm text-white/80">kWh</span>
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-white/5">
-                <p className="text-xs text-white/50">Weekly</p>
+                <p className="text-xs text-white/80">Weekly</p>
                 <p className="text-lg font-semibold text-white">
-                  {result.weeklyKWh.toFixed(1)} <span className="text-sm text-white/50">kWh</span>
+                  {result.weeklyKWh.toFixed(1)} <span className="text-sm text-white/80">kWh</span>
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-white/5">
-                <p className="text-xs text-white/50">Monthly</p>
+                <p className="text-xs text-white/80">Monthly</p>
                 <p className="text-lg font-semibold text-white">
-                  {result.monthlyKWh.toFixed(0)} <span className="text-sm text-white/50">kWh</span>
+                  {result.monthlyKWh.toFixed(0)} <span className="text-sm text-white/80">kWh</span>
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-white/5">
-                <p className="text-xs text-white/50">Yearly</p>
+                <p className="text-xs text-white/80">Yearly</p>
                 <p className="text-lg font-semibold text-white">
-                  {result.yearlyKWh.toFixed(0)} <span className="text-sm text-white/50">kWh</span>
+                  {result.yearlyKWh.toFixed(0)} <span className="text-sm text-white/80">kWh</span>
                 </p>
               </div>
             </div>
@@ -842,16 +842,16 @@ const EnergyCostCalculator = () => {
                   >
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-white truncate">{item.name}</p>
-                      <p className="text-xs text-white/50">
+                      <p className="text-xs text-white/80">
                         {item.dailyKWh.toFixed(2)} kWh/day
                       </p>
                     </div>
                     <div className="text-right ml-3">
                       <p className="text-sm font-semibold text-amber-400">
                         {formatCurrency(item.monthlyCost)}
-                        <span className="text-xs text-white/50">/mo</span>
+                        <span className="text-xs text-white/80">/mo</span>
                       </p>
-                      <p className="text-xs text-white/50">{item.shareOfTotal.toFixed(1)}%</p>
+                      <p className="text-xs text-white/80">{item.shareOfTotal.toFixed(1)}%</p>
                     </div>
                   </div>
                 ))}
@@ -874,7 +874,7 @@ const EnergyCostCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/40 transition-transform duration-200",
+                    "h-4 w-4 text-white/70 transition-transform duration-200",
                     showGuidance && "rotate-180"
                   )}
                 />
@@ -920,7 +920,7 @@ const EnergyCostCalculator = () => {
             </div>
             <ChevronDown
               className={cn(
-                "h-4 w-4 text-white/40 transition-transform duration-200",
+                "h-4 w-4 text-white/70 transition-transform duration-200",
                 showReference && "rotate-180"
               )}
             />

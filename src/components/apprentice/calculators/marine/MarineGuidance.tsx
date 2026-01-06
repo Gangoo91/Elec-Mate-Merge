@@ -42,7 +42,7 @@ const MarineGuidance = ({ results, inputs }: MarineGuidanceProps) => {
             <AlertTriangle className="h-6 w-6 text-red-500 flex-shrink-0 mt-1" />
             <div>
               <h3 className="font-semibold text-red-400 mb-2">Professional Marine Electrical Installation Required</h3>
-              <p className="text-sm text-muted-foreground mb-3">
+              <p className="text-sm text-white mb-3">
                 Marine electrical systems must be installed and certified by qualified marine electricians. This calculator provides 
                 design guidance only and does not replace professional installation, inspection, and certification requirements.
               </p>
@@ -63,7 +63,7 @@ const MarineGuidance = ({ results, inputs }: MarineGuidanceProps) => {
       </Card>
 
       {/* System Status Overview */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <CheckCircle className="h-5 w-5 text-elec-yellow" />
@@ -100,7 +100,7 @@ const MarineGuidance = ({ results, inputs }: MarineGuidanceProps) => {
       </Card>
 
       {/* Load Analysis & Management */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Zap className="h-5 w-5 text-elec-yellow" />
@@ -173,7 +173,7 @@ const MarineGuidance = ({ results, inputs }: MarineGuidanceProps) => {
       </Card>
 
       {/* Battery System Guidance */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Battery className="h-5 w-5 text-elec-yellow" />
@@ -290,7 +290,7 @@ const MarineGuidance = ({ results, inputs }: MarineGuidanceProps) => {
       </Card>
 
       {/* Charging System Analysis */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Zap className="h-5 w-5 text-elec-yellow" />
@@ -349,7 +349,7 @@ const MarineGuidance = ({ results, inputs }: MarineGuidanceProps) => {
       </Card>
 
       {/* Marine Safety & Regulations */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Shield className="h-5 w-5 text-elec-yellow" />
@@ -419,7 +419,7 @@ const MarineGuidance = ({ results, inputs }: MarineGuidanceProps) => {
       </Card>
 
       {/* Installation Best Practices */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Wrench className="h-5 w-5 text-elec-yellow" />

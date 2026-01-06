@@ -89,7 +89,7 @@ export const SmartTabs = ({
           <MobileTabsTrigger 
             key={tab.value} 
             value={tab.value} 
-            className={`flex items-center gap-2 data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-gray-300 hover:text-foreground transition-colors ${
+            className={`flex items-center gap-2 data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/80 hover:text-foreground transition-colors ${
               isMobile ? 'text-xs min-w-[80px]' : ''
             }`}
           >

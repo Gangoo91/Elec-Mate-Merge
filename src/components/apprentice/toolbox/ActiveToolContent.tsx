@@ -24,7 +24,7 @@ const ActiveToolContent = ({ activeTool, onClose }: ActiveToolContentProps) => {
         return (
           <div className="p-6 text-center">
             <h2 className="text-xl font-semibold mb-4">Tool Content</h2>
-            <p className="text-muted-foreground">
+            <p className="text-white">
               Content for {activeTool} is being developed and will be available soon.
             </p>
           </div>

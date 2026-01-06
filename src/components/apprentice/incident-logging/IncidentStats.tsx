@@ -119,10 +119,10 @@ const IncidentStats = () => {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {[1, 2, 3, 4].map(i => (
-          <Card key={i} className="border-elec-yellow/20 bg-elec-gray animate-pulse">
+          <Card key={i} className="border-elec-yellow/20 bg-white/5 animate-pulse">
             <CardContent className="p-6">
-              <div className="h-4 bg-elec-dark rounded w-3/4 mb-2"></div>
-              <div className="h-8 bg-elec-dark rounded w-1/2"></div>
+              <div className="h-4 bg-white/10 rounded w-3/4 mb-2"></div>
+              <div className="h-8 bg-white/10 rounded w-1/2"></div>
             </CardContent>
           </Card>
         ))}
@@ -155,28 +155,28 @@ const IncidentStats = () => {
     <div className="space-y-6">
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardContent className="p-6">
             <div className="flex items-center gap-3">
               <div className="p-3 rounded-lg bg-elec-yellow/20">
                 <AlertTriangle className="h-6 w-6 text-elec-yellow" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Total Incidents</p>
+                <p className="text-sm text-white">Total Incidents</p>
                 <p className="text-2xl font-bold text-elec-yellow">{stats.total}</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardContent className="p-6">
             <div className="flex items-center gap-3">
               <div className="p-3 rounded-lg bg-green-500/20">
                 <TrendingUp className="h-6 w-6 text-green-400" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Resolved</p>
+                <p className="text-sm text-white">Resolved</p>
                 <p className="text-2xl font-bold text-green-400">
                   {stats.byStatus.find(s => s.name === 'Resolved')?.value || 0}
                 </p>
@@ -185,14 +185,14 @@ const IncidentStats = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardContent className="p-6">
             <div className="flex items-center gap-3">
               <div className="p-3 rounded-lg bg-orange-500/20">
                 <Activity className="h-6 w-6 text-orange-400" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">In Progress</p>
+                <p className="text-sm text-white">In Progress</p>
                 <p className="text-2xl font-bold text-orange-400">
                   {stats.byStatus.filter(s => 
                     ['Under Review', 'Investigating'].includes(s.name)
@@ -203,14 +203,14 @@ const IncidentStats = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardContent className="p-6">
             <div className="flex items-center gap-3">
               <div className="p-3 rounded-lg bg-red-500/20">
                 <Calendar className="h-6 w-6 text-red-400" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">This Month</p>
+                <p className="text-sm text-white">This Month</p>
                 <p className="text-2xl font-bold text-red-400">
                   {stats.byMonth.length > 0 ? stats.byMonth[stats.byMonth.length - 1]?.incidents || 0 : 0}
                 </p>
@@ -223,7 +223,7 @@ const IncidentStats = () => {
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Incidents by Type */}
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardHeader>
             <CardTitle>Incidents by Type</CardTitle>
           </CardHeader>
@@ -249,7 +249,7 @@ const IncidentStats = () => {
                 </PieChart>
               </ResponsiveContainer>
             ) : (
-              <div className="h-300 flex items-center justify-center text-muted-foreground">
+              <div className="h-300 flex items-center justify-center text-white">
                 No data available
               </div>
             )}
@@ -257,7 +257,7 @@ const IncidentStats = () => {
         </Card>
 
         {/* Incidents by Severity */}
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardHeader>
             <CardTitle>Incidents by Severity</CardTitle>
           </CardHeader>
@@ -279,7 +279,7 @@ const IncidentStats = () => {
                 </BarChart>
               </ResponsiveContainer>
             ) : (
-              <div className="h-300 flex items-center justify-center text-muted-foreground">
+              <div className="h-300 flex items-center justify-center text-white">
                 No data available
               </div>
             )}
@@ -287,7 +287,7 @@ const IncidentStats = () => {
         </Card>
 
         {/* Incidents by Status */}
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardHeader>
             <CardTitle>Incidents by Status</CardTitle>
           </CardHeader>
@@ -313,7 +313,7 @@ const IncidentStats = () => {
                 </PieChart>
               </ResponsiveContainer>
             ) : (
-              <div className="h-300 flex items-center justify-center text-muted-foreground">
+              <div className="h-300 flex items-center justify-center text-white">
                 No data available
               </div>
             )}
@@ -321,7 +321,7 @@ const IncidentStats = () => {
         </Card>
 
         {/* Monthly Trend */}
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardHeader>
             <CardTitle>Monthly Trend</CardTitle>
           </CardHeader>
@@ -343,7 +343,7 @@ const IncidentStats = () => {
                 </LineChart>
               </ResponsiveContainer>
             ) : (
-              <div className="h-300 flex items-center justify-center text-muted-foreground">
+              <div className="h-300 flex items-center justify-center text-white">
                 No data available
               </div>
             )}

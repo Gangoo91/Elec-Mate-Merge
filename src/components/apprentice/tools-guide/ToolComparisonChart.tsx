@@ -26,7 +26,7 @@ const ToolComparisonChart = ({ title, tools, category }: ToolComparisonChartProp
     return Array.from({ length: 5 }, (_, i) => (
       <Star 
         key={i} 
-        className={`h-3 w-3 ${i < rating ? 'text-yellow-400 fill-current' : 'text-gray-500'}`} 
+        className={`h-3 w-3 ${i < rating ? 'text-yellow-400 fill-current' : 'text-white'}`} 
       />
     ));
   };
@@ -39,13 +39,13 @@ const ToolComparisonChart = ({ title, tools, category }: ToolComparisonChartProp
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border-elec-yellow/20 bg-white/5">
       <CardHeader>
         <div className="flex items-center gap-2">
           <Award className="h-5 w-5 text-elec-yellow" />
           <CardTitle className="text-elec-yellow">{title}</CardTitle>
         </div>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-white">
           Professional comparison of top {category} tools for UK electricians
         </p>
       </CardHeader>
@@ -59,7 +59,7 @@ const ToolComparisonChart = ({ title, tools, category }: ToolComparisonChartProp
                 <div className="flex items-start justify-between">
                   <div>
                     <h4 className="font-medium text-white">{tool.brand}</h4>
-                    <p className="text-sm text-muted-foreground">{tool.model}</p>
+                    <p className="text-sm text-white">{tool.model}</p>
                   </div>
                   {badge && (
                     <Badge className={badge.color} variant="outline">
@@ -70,26 +70,26 @@ const ToolComparisonChart = ({ title, tools, category }: ToolComparisonChartProp
 
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Price:</span>
+                    <span className="text-sm text-white">Price:</span>
                     <span className="text-elec-yellow font-medium">{tool.price}</span>
                   </div>
                   
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Rating:</span>
+                    <span className="text-sm text-white">Rating:</span>
                     <div className="flex items-center gap-1">
                       {getRatingStars(tool.rating)}
                     </div>
                   </div>
                   
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Warranty:</span>
+                    <span className="text-sm text-white">Warranty:</span>
                     <span className="text-white">{tool.warranty}</span>
                   </div>
                 </div>
 
                 <div>
                   <h5 className="text-sm font-medium text-white mb-1">Key Features:</h5>
-                  <ul className="text-xs text-muted-foreground space-y-0.5">
+                  <ul className="text-xs text-white space-y-0.5">
                     {tool.features.slice(0, 3).map((feature, idx) => (
                       <li key={idx}>• {feature}</li>
                     ))}

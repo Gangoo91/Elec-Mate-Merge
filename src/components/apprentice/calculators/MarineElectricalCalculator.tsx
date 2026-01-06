@@ -171,7 +171,7 @@ const MarineElectricalCalculator = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Anchor className="h-5 w-5 text-elec-yellow" />
@@ -193,7 +193,7 @@ const MarineElectricalCalculator = () => {
                   onClick={() => applyPreset(preset)}
                 >
                   <h4 className="font-medium text-sm text-elec-yellow">{preset.name}</h4>
-                  <p className="text-xs text-muted-foreground mt-1">{preset.description}</p>
+                  <p className="text-xs text-white mt-1">{preset.description}</p>
                 </Card>
               ))}
             </div>
@@ -497,7 +497,7 @@ const MarineElectricalCalculator = () => {
       {results && (
         <div className="space-y-6">
           {/* Main Results in elec-gray background */}
-          <Card className="bg-elec-gray border-elec-yellow/20">
+          <Card className="bg-white/5 border-elec-yellow/20">
             <CardHeader>
               <CardTitle className="text-elec-yellow">Marine System Analysis</CardTitle>
             </CardHeader>

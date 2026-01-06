@@ -337,11 +337,11 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                   <ChevronDown className="h-5 w-5 shrink-0 transition-transform group-data-[state=open]:rotate-180" />
                 </div>
                 
-                <div className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm text-muted-foreground">
+                <div className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm text-white/80">
                   <Clock className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span>{step.estimatedTime}</span>
                 </div>
-                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mt-2">
+                <p className="text-xs sm:text-sm text-white/80 leading-relaxed mt-2">
                   {step.description}
                 </p>
               </CardHeader>
@@ -355,7 +355,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                   <ul className="space-y-2 text-xs sm:text-sm">
                     {step.keyPoints.map((point, index) => (
                       <li key={index} className="flex items-start gap-2 sm:gap-3 leading-relaxed">
-                        <span className="text-muted-foreground shrink-0">•</span>
+                        <span className="text-white/80 shrink-0">•</span>
                         <span className="flex-1">{point}</span>
                       </li>
                     ))}
@@ -735,11 +735,11 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                     <ChevronDown className="h-5 w-5 shrink-0 transition-transform group-data-[state=open]:rotate-180" />
                   </div>
                   
-                  <div className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm text-muted-foreground">
+                  <div className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm text-white/80">
                     <Clock className="h-3 w-3 sm:h-4 sm:w-4" />
                     <span>{topic.estimatedTime}</span>
                   </div>
-                  <p className="text-left text-sm text-muted-foreground">
+                  <p className="text-left text-sm text-white/80">
                     {topic.description}
                   </p>
                 </CardHeader>
@@ -753,7 +753,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                     <ul className="space-y-2 text-xs sm:text-sm">
                       {topic.keyPoints.map((point, index) => (
                         <li key={index} className="flex items-start gap-2 sm:gap-3 leading-relaxed">
-                          <span className="text-muted-foreground shrink-0">•</span>
+                          <span className="text-white/80 shrink-0">•</span>
                           <span className="flex-1">{point}</span>
                         </li>
                       ))}
@@ -1379,7 +1379,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
         high: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
         medium: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30'
       };
-      return colors[severity as keyof typeof colors] || 'bg-muted/20 text-muted-foreground border-muted/30';
+      return colors[severity as keyof typeof colors] || 'bg-muted/20 text-white/80 border-muted/30';
     };
 
     return (
@@ -1403,7 +1403,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                     </div>
                     <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
                   </div>
-                  <p className="text-left text-sm text-muted-foreground">
+                  <p className="text-left text-sm text-white/80">
                     {scenario.description}
                   </p>
                 </CardHeader>
@@ -1429,7 +1429,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                         
                         {/* Test measurement section */}
                         <div className="bg-background/50 rounded-lg p-3 border">
-                          <h5 className="font-medium text-xs text-muted-foreground mb-2 uppercase tracking-wide">
+                          <h5 className="font-medium text-xs text-white/80 mb-2 uppercase tracking-wide">
                             Test Measurement
                           </h5>
                           <p className="text-sm font-mono text-foreground">
@@ -1442,7 +1442,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                           <h5 className="font-medium text-xs text-yellow-400 mb-2 uppercase tracking-wide">
                             Technical Interpretation
                           </h5>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-sm text-white/80">
                             {diagnostic.interpretation}
                           </p>
                         </div>
@@ -1456,7 +1456,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                             {diagnostic.possibleCauses.map((cause, causeIndex) => (
                               <div key={causeIndex} className="flex items-start gap-2 text-sm">
                                 <span className="text-orange-400 mt-1">•</span>
-                                <span className="text-muted-foreground">{cause}</span>
+                                <span className="text-white/80">{cause}</span>
                               </div>
                             ))}
                           </div>
@@ -1473,7 +1473,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                                 <Badge variant="outline" className="text-xs min-w-[28px] h-6 flex items-center justify-center bg-blue-500/10 border-blue-500/30 text-blue-400">
                                   {stepIndex + 1}
                                 </Badge>
-                                <span className="text-sm text-muted-foreground flex-1">{step}</span>
+                                <span className="text-sm text-white/80 flex-1">{step}</span>
                               </div>
                             ))}
                           </div>
@@ -1488,7 +1488,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                             {diagnostic.rectificationMethods.map((method, methodIndex) => (
                               <div key={methodIndex} className="flex items-start gap-3">
                                 <CheckCircle2 className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                                <span className="text-sm text-muted-foreground flex-1">{method}</span>
+                                <span className="text-sm text-white/80 flex-1">{method}</span>
                               </div>
                             ))}
                           </div>
@@ -1944,7 +1944,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                     </div>
                     <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
                   </div>
-                  <p className="text-left text-sm text-muted-foreground">
+                  <p className="text-left text-sm text-white/80">
                     {category.description}
                   </p>
                 </CardHeader>
@@ -1967,20 +1967,20 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                         <div className="space-y-3">
                           <div>
                             <h5 className="font-medium text-sm text-orange-400 mb-1">Symptoms Reported</h5>
-                            <p className="text-sm text-muted-foreground">{example.symptoms}</p>
+                            <p className="text-sm text-white/80">{example.symptoms}</p>
                           </div>
                           <div>
                             <h5 className="font-medium text-sm text-blue-400 mb-1">Diagnosis Method</h5>
-                            <p className="text-sm text-muted-foreground">{example.diagnosis}</p>
+                            <p className="text-sm text-white/80">{example.diagnosis}</p>
                           </div>
                           <div>
                             <h5 className="font-medium text-sm text-green-400 mb-1">Solution Applied</h5>
-                            <p className="text-sm text-muted-foreground">{example.solution}</p>
+                            <p className="text-sm text-white/80">{example.solution}</p>
                           </div>
                           {example.rectification && (
                             <div>
                               <h5 className="font-medium text-sm text-emerald-400 mb-1">Rectification Steps</h5>
-                              <p className="text-sm text-muted-foreground whitespace-pre-line">{example.rectification}</p>
+                              <p className="text-sm text-white/80 whitespace-pre-line">{example.rectification}</p>
                             </div>
                           )}
                         </div>
@@ -1988,11 +1988,11 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                         <div className="space-y-3">
                           <div>
                             <h5 className="font-medium text-sm text-purple-400 mb-1">Location</h5>
-                            <p className="text-sm text-muted-foreground">{example.location}</p>
+                            <p className="text-sm text-white/80">{example.location}</p>
                           </div>
                           <div>
                             <h5 className="font-medium text-sm text-cyan-400 mb-1">Prevention Strategy</h5>
-                            <p className="text-sm text-muted-foreground">{example.prevention}</p>
+                            <p className="text-sm text-white/80">{example.prevention}</p>
                           </div>
                         </div>
                       </div>
@@ -2202,7 +2202,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                       <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
                     </div>
                   </div>
-                  <p className="text-left text-sm text-muted-foreground">
+                  <p className="text-left text-sm text-white/80">
                     {category.description}
                   </p>
                 </CardHeader>
@@ -2246,7 +2246,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                     <ul className="space-y-1 text-sm">
                       {category.commonSymptoms.map((symptom, symptomIndex) => (
                         <li key={symptomIndex} className="flex items-start gap-2">
-                          <span className="text-muted-foreground">•</span>
+                          <span className="text-white/80">•</span>
                           <span>{symptom}</span>
                         </li>
                       ))}

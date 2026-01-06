@@ -32,7 +32,7 @@ const TestingChecklistPanel = ({
             {completion}% Complete
           </Badge>
         </CardTitle>
-        <CardDescription className="text-gray-400">
+        <CardDescription className="text-white/70">
           Follow these best practices throughout your testing sequence
         </CardDescription>
       </CardHeader>
@@ -48,7 +48,7 @@ const TestingChecklistPanel = ({
               />
               <label
                 htmlFor={`checklist-${index}`}
-                className={`text-sm leading-relaxed ${checkedItems[item] ? 'text-green-400' : 'text-gray-300'} cursor-pointer`}
+                className={`text-sm leading-relaxed ${checkedItems[item] ? 'text-green-400' : 'text-white/80'} cursor-pointer`}
               >
                 {item}
               </label>

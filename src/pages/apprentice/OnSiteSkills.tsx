@@ -12,41 +12,41 @@ const OnSiteSkills = () => {
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-        <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 shadow-lg shadow-black/20">
+        <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-yellow/10 to-elec-yellow/5 hover:from-elec-yellow/15 hover:to-elec-yellow/10 transition-all duration-300 shadow-lg shadow-black/20">
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <Clock className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">How to log off-the-job learning properly</h2>
-            <p className="text-center text-muted-foreground">
+            <p className="text-center text-white/70">
               Best practices for tracking and documenting your off-the-job learning hours
             </p>
           </CardContent>
         </Card>
         
-        <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 shadow-lg shadow-black/20">
+        <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-yellow/10 to-elec-yellow/5 hover:from-elec-yellow/15 hover:to-elec-yellow/10 transition-all duration-300 shadow-lg shadow-black/20">
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <Camera className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">Evidence gathering tips</h2>
-            <p className="text-center text-muted-foreground">
+            <p className="text-center text-white/70">
               Photos, logs, witness statements and other portfolio evidence techniques
             </p>
           </CardContent>
         </Card>
         
-        <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 shadow-lg shadow-black/20">
+        <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-yellow/10 to-elec-yellow/5 hover:from-elec-yellow/15 hover:to-elec-yellow/10 transition-all duration-300 shadow-lg shadow-black/20">
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <FileText className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">Common mistakes in portfolios</h2>
-            <p className="text-center text-muted-foreground">
+            <p className="text-center text-white/70">
               How to avoid typical portfolio errors and ensure assessment success
             </p>
           </CardContent>
         </Card>
         
-        <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 shadow-lg shadow-black/20">
+        <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-yellow/10 to-elec-yellow/5 hover:from-elec-yellow/15 hover:to-elec-yellow/10 transition-all duration-300 shadow-lg shadow-black/20">
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <Briefcase className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">Soft skills development</h2>
-            <p className="text-center text-muted-foreground">
+            <p className="text-center text-white/70">
               Client communication, timekeeping, and workplace professionalism
             </p>
           </CardContent>

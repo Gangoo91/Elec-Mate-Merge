@@ -71,26 +71,29 @@ const ProfessionalLanguageBuilder = ({ onBack }: ProfessionalLanguageBuilderProp
   };
 
   return (
-    <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <BookOpen className="h-5 w-5" />
+    <div className="space-y-6 animate-fade-in">
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-purple-500/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/30">
+              <BookOpen className="h-5 w-5 text-purple-400" />
+            </div>
             Professional Language Builder
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <p className="text-white">
+        <CardContent className="space-y-5 relative">
+          <p className="text-white/70">
             Practice converting informal language into professional workplace communication.
           </p>
 
           <div className="space-y-3">
-            <Label htmlFor="category" className="text-elec-yellow">Category</Label>
-            <select 
+            <Label htmlFor="category" className="text-purple-400 font-medium">Category</Label>
+            <select
               id="category"
-              value={category} 
+              value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full p-2 rounded bg-elec-dark border border-elec-yellow/30 text-white"
+              className="w-full p-3 rounded-xl bg-white/10 border border-purple-500/30 text-white focus:border-purple-500/50 focus:outline-none transition-colors"
             >
               {Object.entries(phraseCategories).map(([key, label]) => (
                 <option key={key} value={key}>{label}</option>
@@ -99,51 +102,64 @@ const ProfessionalLanguageBuilder = ({ onBack }: ProfessionalLanguageBuilderProp
           </div>
 
           <div className="space-y-3">
-            <Label htmlFor="phrase-input" className="text-elec-yellow">Enter an informal phrase:</Label>
+            <Label htmlFor="phrase-input" className="text-purple-400 font-medium">Enter an informal phrase:</Label>
             <Input
               id="phrase-input"
               value={currentPhrase}
               onChange={(e) => handlePhraseInput(e.target.value)}
               placeholder="Type how you might naturally say something..."
-              className="bg-elec-dark border-elec-yellow/30 text-white"
+              className="h-12 bg-white/10 border-purple-500/30 text-white focus:border-purple-500/50 rounded-xl"
             />
           </div>
 
           {suggestion && (
-            <Card className="border-green-500/30 bg-green-500/10">
-              <CardHeader>
-                <CardTitle className="text-green-300 text-sm flex items-center gap-2">
-                  <Lightbulb className="h-4 w-4" />
-                  Professional Alternative
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-green-200">{suggestion}</p>
-              </CardContent>
-            </Card>
+            <div className="p-5 rounded-xl bg-green-500/10 border border-green-500/30 animate-fade-in">
+              <div className="flex items-start gap-3">
+                <div className="p-2 rounded-lg bg-green-500/20">
+                  <Lightbulb className="h-4 w-4 text-green-400" />
+                </div>
+                <div>
+                  <h4 className="text-green-400 font-semibold mb-2">Professional Alternative</h4>
+                  <p className="text-white/80">{suggestion}</p>
+                </div>
+              </div>
+            </div>
           )}
 
-          <div className="flex gap-2 pt-4">
-            <Button onClick={getRandomExample} variant="outline">
+          <div className="flex flex-wrap gap-2 pt-2">
+            <Button
+              onClick={getRandomExample}
+              variant="outline"
+              className="h-11 border-purple-500/30 hover:border-purple-500/50 hover:bg-purple-500/10 text-purple-400 touch-manipulation active:scale-95 transition-all"
+            >
               Get Example
             </Button>
-            <Button variant="outline" onClick={onBack}>
+            <Button
+              variant="outline"
+              onClick={onBack}
+              className="h-11 border-white/20 hover:border-purple-500/50 hover:bg-purple-500/10 touch-manipulation active:scale-95 transition-all"
+            >
               Back to Tools
             </Button>
           </div>
 
-          <Card className="border-blue-500/30 bg-blue-500/10">
-            <CardContent className="pt-4">
-              <h4 className="text-blue-300 font-medium mb-2">Tips for Professional Communication:</h4>
-              <ul className="text-blue-200 text-sm space-y-1">
-                <li>• Use "please" and "thank you" regularly</li>
-                <li>• Avoid slang and casual expressions</li>
-                <li>• Be specific rather than vague</li>
-                <li>• Frame problems with solutions</li>
-                <li>• Show respect for others' expertise</li>
-              </ul>
-            </CardContent>
-          </Card>
+          <div className="p-5 rounded-xl bg-blue-500/10 border border-blue-500/20">
+            <h4 className="text-blue-400 font-semibold mb-3">Tips for Professional Communication:</h4>
+            <ul className="space-y-2">
+              {[
+                "Use \"please\" and \"thank you\" regularly",
+                "Avoid slang and casual expressions",
+                "Be specific rather than vague",
+                "Frame problems with solutions",
+                "Show respect for others' expertise"
+              ].map((tip, index) => (
+                <li key={index} className="flex items-start gap-2 text-sm text-white/70">
+                  <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-1.5 flex-shrink-0" />
+                  {tip}
+                </li>
+              ))}
+            </ul>
+          </div>
         </CardContent>
       </Card>
     </div>

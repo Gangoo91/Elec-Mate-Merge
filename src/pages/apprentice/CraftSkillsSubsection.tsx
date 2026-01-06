@@ -70,7 +70,7 @@ const CraftSkillsSubsection = () => {
         <SmartBackButton />
       </div>
       
-      <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-6">
+      <div className="bg-white/5 border border-elec-yellow/20 rounded-lg p-6">
         <div className="flex flex-col mb-8">
           <div className="flex items-center gap-3 mb-1">
             <span className="text-elec-yellow text-xl font-bold">{subsectionData.id}</span>
@@ -87,11 +87,11 @@ const CraftSkillsSubsection = () => {
             <p className="mb-4">{typeof subsectionData.content === 'string' ? subsectionData.content : 'Content placeholder for this subsection.'}</p>
             
             {/* Image or illustration placeholder */}
-            <div className="my-6 bg-elec-dark/50 rounded-lg p-4 flex flex-col items-center text-center">
-              <div className="w-full h-64 bg-elec-dark rounded-lg mb-4 flex items-center justify-center border border-elec-yellow/20">
+            <div className="my-6 bg-white/5 rounded-lg p-4 flex flex-col items-center text-center">
+              <div className="w-full h-64 bg-white/5 rounded-lg mb-4 flex items-center justify-center border border-elec-yellow/20">
                 <p className="text-elec-yellow/70">Practical demonstration image for {subsectionData.title}</p>
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white/70">
                 Visual reference for the techniques described in this section
               </p>
             </div>

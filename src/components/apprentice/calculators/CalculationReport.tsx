@@ -49,7 +49,7 @@ const CalculationReport: React.FC<CalculationReportProps> = ({
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border-elec-yellow/20 bg-white/5">
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-sm">
           <FileText className="h-4 w-4" />
@@ -58,7 +58,7 @@ const CalculationReport: React.FC<CalculationReportProps> = ({
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          <div className="text-xs text-muted-foreground">
+          <div className="text-xs text-white">
             Generate a professional calculation report for documentation and compliance purposes.
           </div>
           
@@ -71,9 +71,9 @@ const CalculationReport: React.FC<CalculationReportProps> = ({
             Download Report
           </Button>
           
-          <div className="bg-elec-dark/50 rounded p-3 text-xs">
+          <div className="bg-white/10 rounded p-3 text-xs">
             <div className="font-medium text-elec-yellow mb-2">Report includes:</div>
-            <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+            <ul className="list-disc list-inside space-y-1 text-white">
               <li>All input parameters and calculated results</li>
               <li>Standards compliance verification</li>
               <li>Safety warnings and recommendations</li>

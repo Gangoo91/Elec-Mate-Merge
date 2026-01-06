@@ -588,7 +588,7 @@ const SpecialLocationsGuide = () => {
   return (
     <div className="space-y-6">
       {/* Introduction */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <MapPin className="h-6 w-6 text-elec-yellow" />
@@ -604,24 +604,24 @@ const SpecialLocationsGuide = () => {
             </AlertDescription>
           </Alert>
 
-          <div className="bg-elec-dark/40 p-4 rounded-lg border border-elec-yellow/20">
+          <div className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
             <h4 className="font-medium text-white mb-3">Why Special Locations Require Additional Requirements</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
               <div className="flex items-start gap-2">
                 <Droplets className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-300">Increased risk of electric shock (wet locations, pools)</span>
+                <span className="text-white/80">Increased risk of electric shock (wet locations, pools)</span>
               </div>
               <div className="flex items-start gap-2">
                 <Flame className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-300">High temperature environments (saunas, hot rooms)</span>
+                <span className="text-white/80">High temperature environments (saunas, hot rooms)</span>
               </div>
               <div className="flex items-start gap-2">
                 <Users className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-300">Vulnerable persons (medical, agricultural)</span>
+                <span className="text-white/80">Vulnerable persons (medical, agricultural)</span>
               </div>
               <div className="flex items-start gap-2">
                 <HardHat className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-300">Temporary installations (construction, exhibitions)</span>
+                <span className="text-white/80">Temporary installations (construction, exhibitions)</span>
               </div>
             </div>
           </div>
@@ -629,7 +629,7 @@ const SpecialLocationsGuide = () => {
       </Card>
 
       {/* Section 701 - Bathrooms (Quick Reference with Link) */}
-      <Card className={`${getColorClasses(bathroomQuickRef.color).border} bg-elec-gray`}>
+      <Card className={`${getColorClasses(bathroomQuickRef.color).border} bg-white/5`}>
         {renderSectionHeader(bathroomQuickRef.section, bathroomQuickRef.title, bathroomQuickRef.color, bathroomQuickRef.icon, bathroomQuickRef.description)}
         <CardContent className="space-y-4">
           <div className={`${getColorClasses(bathroomQuickRef.color).bg} p-4 rounded-lg border ${getColorClasses(bathroomQuickRef.color).border}`}>
@@ -648,9 +648,9 @@ const SpecialLocationsGuide = () => {
                   {bathroomQuickRef.zones.map((zone, idx) => (
                     <tr key={idx} className="border-b border-cyan-500/20">
                       <td className="py-2 text-white font-medium">{zone.zone}</td>
-                      <td className="py-2 text-gray-300">{zone.description}</td>
+                      <td className="py-2 text-white/80">{zone.description}</td>
                       <td className="py-2 text-cyan-300">{zone.ipRating}</td>
-                      <td className="py-2 text-gray-300">{zone.voltage}</td>
+                      <td className="py-2 text-white/80">{zone.voltage}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -672,7 +672,7 @@ const SpecialLocationsGuide = () => {
       </Card>
 
       {/* Section 702 - Swimming Pools (Quick Reference with Link) */}
-      <Card className={`${getColorClasses(swimmingPoolsRef.color).border} bg-elec-gray`}>
+      <Card className={`${getColorClasses(swimmingPoolsRef.color).border} bg-white/5`}>
         {renderSectionHeader(swimmingPoolsRef.section, swimmingPoolsRef.title, swimmingPoolsRef.color, swimmingPoolsRef.icon, swimmingPoolsRef.description)}
         <CardContent className="space-y-4">
           <div className={`${getColorClasses(swimmingPoolsRef.color).bg} p-4 rounded-lg border ${getColorClasses(swimmingPoolsRef.color).border}`}>
@@ -691,9 +691,9 @@ const SpecialLocationsGuide = () => {
                   {swimmingPoolsRef.zones.map((zone, idx) => (
                     <tr key={idx} className="border-b border-blue-500/20">
                       <td className="py-2 text-white font-medium">{zone.zone}</td>
-                      <td className="py-2 text-gray-300">{zone.description}</td>
+                      <td className="py-2 text-white/80">{zone.description}</td>
                       <td className="py-2 text-blue-300">{zone.ipRating}</td>
-                      <td className="py-2 text-gray-300">{zone.voltage}</td>
+                      <td className="py-2 text-white/80">{zone.voltage}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -705,7 +705,7 @@ const SpecialLocationsGuide = () => {
             {swimmingPoolsRef.keyRequirements.map((req, idx) => (
               <div key={idx} className="flex items-start gap-2 text-sm">
                 <CheckCircle className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-300">{req}</span>
+                <span className="text-white/80">{req}</span>
               </div>
             ))}
           </div>
@@ -713,7 +713,7 @@ const SpecialLocationsGuide = () => {
       </Card>
 
       {/* Section 703 - Saunas (Full Detail) */}
-      <Card className={`${getColorClasses(saunasData.color).border} bg-elec-gray`}>
+      <Card className={`${getColorClasses(saunasData.color).border} bg-white/5`}>
         {renderSectionHeader(saunasData.section, saunasData.title, saunasData.color, saunasData.icon, saunasData.description)}
         <CardContent className="space-y-4">
           <div className={`${getColorClasses(saunasData.color).bg} p-4 rounded-lg border ${getColorClasses(saunasData.color).border}`}>
@@ -726,8 +726,8 @@ const SpecialLocationsGuide = () => {
                     <Badge variant="outline" className="border-orange-400 text-orange-300 text-xs">{zone.temperature}</Badge>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-                    <div><span className="text-gray-400">Cables:</span> <span className="text-gray-300">{zone.cables}</span></div>
-                    <div><span className="text-gray-400">Equipment:</span> <span className="text-gray-300">{zone.equipment}</span></div>
+                    <div><span className="text-white">Cables:</span> <span className="text-white/80">{zone.cables}</span></div>
+                    <div><span className="text-white">Equipment:</span> <span className="text-white/80">{zone.equipment}</span></div>
                   </div>
                 </div>
               ))}
@@ -750,7 +750,7 @@ const SpecialLocationsGuide = () => {
                     <tr key={idx} className="border-b border-orange-500/20">
                       <td className="py-2 text-white">{cable.type}</td>
                       <td className="py-2 text-orange-300">{cable.maxTemp}</td>
-                      <td className="py-2 text-gray-300">{cable.suitability}</td>
+                      <td className="py-2 text-white/80">{cable.suitability}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -768,7 +768,7 @@ const SpecialLocationsGuide = () => {
       </Card>
 
       {/* Section 704 - Construction Sites (Full Detail) */}
-      <Card className={`${getColorClasses(constructionSitesData.color).border} bg-elec-gray`}>
+      <Card className={`${getColorClasses(constructionSitesData.color).border} bg-white/5`}>
         {renderSectionHeader(constructionSitesData.section, constructionSitesData.title, constructionSitesData.color, constructionSitesData.icon, constructionSitesData.description)}
         <CardContent className="space-y-4">
           <div className={`${getColorClasses(constructionSitesData.color).bg} p-4 rounded-lg border ${getColorClasses(constructionSitesData.color).border}`}>
@@ -780,9 +780,9 @@ const SpecialLocationsGuide = () => {
                     <Badge variant="outline" className="border-yellow-400 text-yellow-300">{volt.voltage}</Badge>
                     <span className="text-yellow-100 font-medium">{volt.use}</span>
                   </div>
-                  <div className="text-sm text-gray-300">
-                    <span className="text-gray-400">Protection: </span>{volt.protection}
-                    {volt.maxVoltage && <span className="ml-2">| <span className="text-gray-400">Max to earth: </span>{volt.maxVoltage}</span>}
+                  <div className="text-sm text-white/80">
+                    <span className="text-white">Protection: </span>{volt.protection}
+                    {volt.maxVoltage && <span className="ml-2">| <span className="text-white">Max to earth: </span>{volt.maxVoltage}</span>}
                   </div>
                 </div>
               ))}
@@ -796,7 +796,7 @@ const SpecialLocationsGuide = () => {
                 {constructionSitesData.transformerRequirements.map((trans, idx) => (
                   <div key={idx} className="text-sm">
                     <span className="text-yellow-200 font-medium">{trans.type}</span>
-                    <div className="text-gray-300 mt-1">
+                    <div className="text-white/80 mt-1">
                       Rating: {trans.rating} | Outlets: {trans.outlets}
                     </div>
                   </div>
@@ -810,7 +810,7 @@ const SpecialLocationsGuide = () => {
                 {constructionSitesData.earthingSystems.map((earth, idx) => (
                   <div key={idx} className="text-sm">
                     <span className="text-yellow-200 font-medium">{earth.system}</span>
-                    <div className="text-gray-300">{earth.description}</div>
+                    <div className="text-white/80">{earth.description}</div>
                   </div>
                 ))}
               </div>
@@ -822,7 +822,7 @@ const SpecialLocationsGuide = () => {
             {constructionSitesData.keyRequirements.map((req, idx) => (
               <div key={idx} className="flex items-start gap-2 text-sm">
                 <CheckCircle className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-300">{req}</span>
+                <span className="text-white/80">{req}</span>
               </div>
             ))}
           </div>
@@ -830,7 +830,7 @@ const SpecialLocationsGuide = () => {
       </Card>
 
       {/* Section 705 - Agricultural (Full Detail) */}
-      <Card className={`${getColorClasses(agriculturalData.color).border} bg-elec-gray`}>
+      <Card className={`${getColorClasses(agriculturalData.color).border} bg-white/5`}>
         {renderSectionHeader(agriculturalData.section, agriculturalData.title, agriculturalData.color, agriculturalData.icon, agriculturalData.description)}
         <CardContent className="space-y-4">
           <Alert className="border-green-500/50 bg-green-500/10">
@@ -849,7 +849,7 @@ const SpecialLocationsGuide = () => {
                   <span className="text-green-200 font-medium">{item.aspect}</span>
                   <div className="text-sm mt-1">
                     <span className="text-green-100">{item.requirement}</span>
-                    <div className="text-gray-400 mt-1">{item.reason}</div>
+                    <div className="text-white mt-1">{item.reason}</div>
                   </div>
                 </div>
               ))}
@@ -872,7 +872,7 @@ const SpecialLocationsGuide = () => {
                     <tr key={idx} className="border-b border-green-500/20">
                       <td className="py-2 text-white">{ip.location}</td>
                       <td className="py-2 text-green-300">{ip.ipRating}</td>
-                      <td className="py-2 text-gray-300">{ip.reason}</td>
+                      <td className="py-2 text-white/80">{ip.reason}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -886,7 +886,7 @@ const SpecialLocationsGuide = () => {
               {agriculturalData.bonding.map((item, idx) => (
                 <div key={idx} className="flex items-start gap-2 text-sm">
                   <Shield className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-300">{item}</span>
+                  <span className="text-white/80">{item}</span>
                 </div>
               ))}
             </div>
@@ -895,7 +895,7 @@ const SpecialLocationsGuide = () => {
       </Card>
 
       {/* Section 706 - Restrictive Conductive Locations */}
-      <Card className={`${getColorClasses(restrictiveLocationsData.color).border} bg-elec-gray`}>
+      <Card className={`${getColorClasses(restrictiveLocationsData.color).border} bg-white/5`}>
         {renderSectionHeader(restrictiveLocationsData.section, restrictiveLocationsData.title, restrictiveLocationsData.color, restrictiveLocationsData.icon, restrictiveLocationsData.description)}
         <CardContent className="space-y-4">
           <Alert className="border-red-500/50 bg-red-500/10">
@@ -919,7 +919,7 @@ const SpecialLocationsGuide = () => {
                 {restrictiveLocationsData.examples.map((example, idx) => (
                   <li key={idx} className="flex items-start gap-2 text-sm">
                     <Box className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">{example}</span>
+                    <span className="text-white/80">{example}</span>
                   </li>
                 ))}
               </ul>
@@ -930,8 +930,8 @@ const SpecialLocationsGuide = () => {
               {restrictiveLocationsData.requirements.map((req, idx) => (
                 <div key={idx} className="mb-3">
                   <span className="text-purple-200 font-medium">{req.measure}</span>
-                  <p className="text-sm text-gray-300">{req.details}</p>
-                  <p className="text-xs text-gray-400">{req.implementation}</p>
+                  <p className="text-sm text-white/80">{req.details}</p>
+                  <p className="text-xs text-white">{req.implementation}</p>
                 </div>
               ))}
             </div>
@@ -940,7 +940,7 @@ const SpecialLocationsGuide = () => {
       </Card>
 
       {/* Section 708 - Caravan Parks */}
-      <Card className={`${getColorClasses(caravanParksData.color).border} bg-elec-gray`}>
+      <Card className={`${getColorClasses(caravanParksData.color).border} bg-white/5`}>
         {renderSectionHeader(caravanParksData.section, caravanParksData.title, caravanParksData.color, caravanParksData.icon, caravanParksData.description)}
         <CardContent className="space-y-4">
           <div className={`${getColorClasses(caravanParksData.color).bg} p-4 rounded-lg border ${getColorClasses(caravanParksData.color).border}`}>
@@ -971,8 +971,8 @@ const SpecialLocationsGuide = () => {
               {caravanParksData.earthingRequirements.map((earth, idx) => (
                 <div key={idx} className="bg-teal-600/20 p-3 rounded border border-teal-500/30">
                   <span className="text-teal-200 font-medium">{earth.system}</span>
-                  <div className="text-sm text-gray-300">{earth.details}</div>
-                  <div className="text-xs text-gray-400">{earth.resistance || earth.notes}</div>
+                  <div className="text-sm text-white/80">{earth.details}</div>
+                  <div className="text-xs text-white">{earth.resistance || earth.notes}</div>
                 </div>
               ))}
             </div>
@@ -983,7 +983,7 @@ const SpecialLocationsGuide = () => {
             {caravanParksData.hookUpRequirements.map((req, idx) => (
               <div key={idx} className="flex items-start gap-2 text-sm">
                 <CheckCircle className="h-4 w-4 text-teal-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-300">{req}</span>
+                <span className="text-white/80">{req}</span>
               </div>
             ))}
           </div>
@@ -991,7 +991,7 @@ const SpecialLocationsGuide = () => {
       </Card>
 
       {/* Section 709 - Marinas */}
-      <Card className={`${getColorClasses(marinasData.color).border} bg-elec-gray`}>
+      <Card className={`${getColorClasses(marinasData.color).border} bg-white/5`}>
         {renderSectionHeader(marinasData.section, marinasData.title, marinasData.color, marinasData.icon, marinasData.description)}
         <CardContent className="space-y-4">
           <Alert className="border-sky-500/50 bg-sky-500/10">
@@ -1028,7 +1028,7 @@ const SpecialLocationsGuide = () => {
             {marinasData.keyRequirements.map((req, idx) => (
               <div key={idx} className="flex items-start gap-2 text-sm">
                 <CheckCircle className="h-4 w-4 text-sky-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-300">{req}</span>
+                <span className="text-white/80">{req}</span>
               </div>
             ))}
           </div>
@@ -1036,7 +1036,7 @@ const SpecialLocationsGuide = () => {
       </Card>
 
       {/* Section 710 - Medical Locations */}
-      <Card className={`${getColorClasses(medicalLocationsData.color).border} bg-elec-gray`}>
+      <Card className={`${getColorClasses(medicalLocationsData.color).border} bg-white/5`}>
         {renderSectionHeader(medicalLocationsData.section, medicalLocationsData.title, medicalLocationsData.color, medicalLocationsData.icon, medicalLocationsData.description)}
         <CardContent className="space-y-4">
           <div className={`${getColorClasses(medicalLocationsData.color).bg} p-4 rounded-lg border ${getColorClasses(medicalLocationsData.color).border}`}>
@@ -1049,8 +1049,8 @@ const SpecialLocationsGuide = () => {
                     <span className="text-red-100 font-medium">{group.description}</span>
                   </div>
                   <div className="text-sm">
-                    <div className="text-gray-300"><span className="text-gray-400">Examples:</span> {group.examples}</div>
-                    <div className="text-gray-300"><span className="text-gray-400">Requirements:</span> {group.requirements}</div>
+                    <div className="text-white/80"><span className="text-white">Examples:</span> {group.examples}</div>
+                    <div className="text-white/80"><span className="text-white">Requirements:</span> {group.requirements}</div>
                   </div>
                 </div>
               ))}
@@ -1073,7 +1073,7 @@ const SpecialLocationsGuide = () => {
                     <tr key={idx} className="border-b border-red-500/20">
                       <td className="py-2 text-white">{req.aspect}</td>
                       <td className="py-2 text-red-300">{req.requirement}</td>
-                      <td className="py-2 text-gray-300">{req.purpose}</td>
+                      <td className="py-2 text-white/80">{req.purpose}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -1092,7 +1092,7 @@ const SpecialLocationsGuide = () => {
       </Card>
 
       {/* Section 711 - Exhibitions */}
-      <Card className={`${getColorClasses(exhibitionsData.color).border} bg-elec-gray`}>
+      <Card className={`${getColorClasses(exhibitionsData.color).border} bg-white/5`}>
         {renderSectionHeader(exhibitionsData.section, exhibitionsData.title, exhibitionsData.color, exhibitionsData.icon, exhibitionsData.description)}
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1102,7 +1102,7 @@ const SpecialLocationsGuide = () => {
                 {exhibitionsData.temporaryWiring.map((item, idx) => (
                   <div key={idx} className="text-sm">
                     <span className="text-pink-200">{item.aspect}:</span>
-                    <span className="text-gray-300 ml-2">{item.requirement}</span>
+                    <span className="text-white/80 ml-2">{item.requirement}</span>
                   </div>
                 ))}
               </div>
@@ -1114,7 +1114,7 @@ const SpecialLocationsGuide = () => {
                 {exhibitionsData.keyRequirements.map((req, idx) => (
                   <div key={idx} className="flex items-start gap-2 text-sm">
                     <CheckCircle className="h-4 w-4 text-pink-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">{req}</span>
+                    <span className="text-white/80">{req}</span>
                   </div>
                 ))}
               </div>
@@ -1124,14 +1124,14 @@ const SpecialLocationsGuide = () => {
       </Card>
 
       {/* Section 712 - Solar PV (Link) */}
-      <Card className={`${getColorClasses(solarPVRef.color).border} bg-elec-gray`}>
+      <Card className={`${getColorClasses(solarPVRef.color).border} bg-white/5`}>
         {renderSectionHeader(solarPVRef.section, solarPVRef.title, solarPVRef.color, solarPVRef.icon, solarPVRef.description)}
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {solarPVRef.keyPoints.map((point, idx) => (
               <div key={idx} className="flex items-start gap-2 text-sm">
                 <Sun className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-300">{point}</span>
+                <span className="text-white/80">{point}</span>
               </div>
             ))}
           </div>
@@ -1150,7 +1150,7 @@ const SpecialLocationsGuide = () => {
       </Card>
 
       {/* Section 717 & 721 - Mobile Units & Caravans */}
-      <Card className={`${getColorClasses(mobileUnitsData.color).border} bg-elec-gray`}>
+      <Card className={`${getColorClasses(mobileUnitsData.color).border} bg-white/5`}>
         {renderSectionHeader(mobileUnitsData.section, mobileUnitsData.title, mobileUnitsData.color, mobileUnitsData.icon, mobileUnitsData.description)}
         <CardContent className="space-y-4">
           <div className={`${getColorClasses(mobileUnitsData.color).bg} p-4 rounded-lg border ${getColorClasses(mobileUnitsData.color).border}`}>
@@ -1179,7 +1179,7 @@ const SpecialLocationsGuide = () => {
             {mobileUnitsData.keyRequirements.map((req, idx) => (
               <div key={idx} className="flex items-start gap-2 text-sm">
                 <CheckCircle className="h-4 w-4 text-indigo-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-300">{req}</span>
+                <span className="text-white/80">{req}</span>
               </div>
             ))}
           </div>
@@ -1187,14 +1187,14 @@ const SpecialLocationsGuide = () => {
       </Card>
 
       {/* Section 722 - EV Charging (Link) */}
-      <Card className={`${getColorClasses(evChargingRef.color).border} bg-elec-gray`}>
+      <Card className={`${getColorClasses(evChargingRef.color).border} bg-white/5`}>
         {renderSectionHeader(evChargingRef.section, evChargingRef.title, evChargingRef.color, evChargingRef.icon, evChargingRef.description)}
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {evChargingRef.keyPoints.map((point, idx) => (
               <div key={idx} className="flex items-start gap-2 text-sm">
                 <Zap className="h-4 w-4 text-lime-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-300">{point}</span>
+                <span className="text-white/80">{point}</span>
               </div>
             ))}
           </div>
@@ -1213,7 +1213,7 @@ const SpecialLocationsGuide = () => {
       </Card>
 
       {/* Section 729 - Gangways */}
-      <Card className={`${getColorClasses(gangwaysData.color).border} bg-elec-gray`}>
+      <Card className={`${getColorClasses(gangwaysData.color).border} bg-white/5`}>
         {renderSectionHeader(gangwaysData.section, gangwaysData.title, gangwaysData.color, gangwaysData.icon, gangwaysData.description)}
         <CardContent className="space-y-4">
           <div className={`${getColorClasses(gangwaysData.color).bg} p-4 rounded-lg border ${getColorClasses(gangwaysData.color).border}`}>
@@ -1232,7 +1232,7 @@ const SpecialLocationsGuide = () => {
                     <tr key={idx} className="border-b border-slate-500/20">
                       <td className="py-2 text-white">{item.aspect}</td>
                       <td className="py-2 text-slate-300">{item.minimum}</td>
-                      <td className="py-2 text-gray-300">{item.notes}</td>
+                      <td className="py-2 text-white/80">{item.notes}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -1244,7 +1244,7 @@ const SpecialLocationsGuide = () => {
             {gangwaysData.keyRequirements.map((req, idx) => (
               <div key={idx} className="flex items-start gap-2 text-sm">
                 <CheckCircle className="h-4 w-4 text-slate-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-300">{req}</span>
+                <span className="text-white/80">{req}</span>
               </div>
             ))}
           </div>
@@ -1252,7 +1252,7 @@ const SpecialLocationsGuide = () => {
       </Card>
 
       {/* Section 740 - Fairgrounds */}
-      <Card className={`${getColorClasses(fairgroundsData.color).border} bg-elec-gray`}>
+      <Card className={`${getColorClasses(fairgroundsData.color).border} bg-white/5`}>
         {renderSectionHeader(fairgroundsData.section, fairgroundsData.title, fairgroundsData.color, fairgroundsData.icon, fairgroundsData.description)}
         <CardContent className="space-y-4">
           <div className={`${getColorClasses(fairgroundsData.color).bg} p-4 rounded-lg border ${getColorClasses(fairgroundsData.color).border}`}>
@@ -1261,8 +1261,8 @@ const SpecialLocationsGuide = () => {
               {fairgroundsData.amusementDevices.map((device, idx) => (
                 <div key={idx} className="bg-fuchsia-600/20 p-3 rounded border border-fuchsia-500/30">
                   <span className="text-fuchsia-200 font-medium">{device.type}</span>
-                  <div className="text-sm text-gray-300">{device.protection}</div>
-                  <div className="text-xs text-gray-400">{device.notes}</div>
+                  <div className="text-sm text-white/80">{device.protection}</div>
+                  <div className="text-xs text-white">{device.notes}</div>
                 </div>
               ))}
             </div>
@@ -1272,7 +1272,7 @@ const SpecialLocationsGuide = () => {
             {fairgroundsData.keyRequirements.map((req, idx) => (
               <div key={idx} className="flex items-start gap-2 text-sm">
                 <CheckCircle className="h-4 w-4 text-fuchsia-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-300">{req}</span>
+                <span className="text-white/80">{req}</span>
               </div>
             ))}
           </div>
@@ -1292,7 +1292,7 @@ const SpecialLocationsGuide = () => {
             <div className="space-y-3">
               <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/30">
                 <h4 className="font-medium text-red-200 mb-2">Always Remember</h4>
-                <ul className="space-y-1 text-gray-300">
+                <ul className="space-y-1 text-white/80">
                   <li>Part 7 requirements SUPPLEMENT Parts 1-6</li>
                   <li>Where there is conflict, Part 7 takes precedence</li>
                   <li>Specialist knowledge required for many locations</li>
@@ -1303,7 +1303,7 @@ const SpecialLocationsGuide = () => {
             <div className="space-y-3">
               <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/30">
                 <h4 className="font-medium text-orange-200 mb-2">Before Starting Work</h4>
-                <ul className="space-y-1 text-gray-300">
+                <ul className="space-y-1 text-white/80">
                   <li>Identify ALL applicable special location sections</li>
                   <li>Review specific IP rating requirements</li>
                   <li>Confirm earthing arrangements are suitable</li>

@@ -226,29 +226,29 @@ const ExamStrategiesTab = () => {
             <div className="text-center p-4 border border-elec-yellow/20 rounded-lg">
               <Clock className="h-8 w-8 text-blue-400 mx-auto mb-2" />
               <h4 className="font-semibold text-white mb-1">Preparation</h4>
-              <p className="text-xs text-muted-foreground">3-6 months consistent study</p>
+              <p className="text-xs text-white">3-6 months consistent study</p>
             </div>
             <div className="text-center p-4 border border-elec-yellow/20 rounded-lg">
               <BookOpen className="h-8 w-8 text-green-400 mx-auto mb-2" />
               <h4 className="font-semibold text-white mb-1">Practice</h4>
-              <p className="text-xs text-muted-foreground">Daily mock questions</p>
+              <p className="text-xs text-white">Daily mock questions</p>
             </div>
             <div className="text-center p-4 border border-elec-yellow/20 rounded-lg">
               <Target className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
               <h4 className="font-semibold text-white mb-1">Strategy</h4>
-              <p className="text-xs text-muted-foreground">Exam-specific techniques</p>
+              <p className="text-xs text-white">Exam-specific techniques</p>
             </div>
             <div className="text-center p-4 border border-elec-yellow/20 rounded-lg">
               <CheckCircle className="h-8 w-8 text-purple-400 mx-auto mb-2" />
               <h4 className="font-semibold text-white mb-1">Success</h4>
-              <p className="text-xs text-muted-foreground">Confident performance</p>
+              <p className="text-xs text-white">Confident performance</p>
             </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Exam-Specific Strategies */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">Comprehensive Exam Strategies</CardTitle>
         </CardHeader>
@@ -292,7 +292,7 @@ const ExamStrategiesTab = () => {
                             {strategy.priority}
                           </Badge>
                         </div>
-                        <p className="text-sm text-muted-foreground mb-3">{strategy.description}</p>
+                        <p className="text-sm text-white mb-3">{strategy.description}</p>
                         <div className="flex flex-wrap gap-2">
                           {strategy.tips.map((tip, tipIndex) => (
                             <Badge key={tipIndex} variant="outline" className="text-xs border-white/20">
@@ -311,7 +311,7 @@ const ExamStrategiesTab = () => {
       </Card>
 
       {/* General Exam Techniques */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">Universal Exam Techniques</CardTitle>
         </CardHeader>
@@ -325,10 +325,10 @@ const ExamStrategiesTab = () => {
                     {technique.timeframe}
                   </Badge>
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">{technique.description}</p>
+                <p className="text-sm text-white mb-3">{technique.description}</p>
                 <ol className="space-y-1">
                   {technique.steps.map((step, stepIndex) => (
-                    <li key={stepIndex} className="text-xs text-muted-foreground flex items-start gap-2">
+                    <li key={stepIndex} className="text-xs text-white flex items-start gap-2">
                       <span className="text-elec-yellow font-medium">{stepIndex + 1}.</span>
                       {step}
                     </li>
@@ -350,7 +350,7 @@ const ExamStrategiesTab = () => {
             {advancedStrategies.map((strategy, index) => (
               <div key={index} className="border border-purple-500/20 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-2">{strategy.title}</h4>
-                <p className="text-sm text-muted-foreground mb-3">{strategy.description}</p>
+                <p className="text-sm text-white mb-3">{strategy.description}</p>
                 <div className="bg-purple-500/10 p-3 rounded-lg">
                   <p className="text-xs text-purple-300">
                     <strong>Best for:</strong> {strategy.application}
@@ -366,7 +366,7 @@ const ExamStrategiesTab = () => {
       <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/10">
         <CardContent className="p-6 text-center">
           <h3 className="text-xl font-semibold text-green-400 mb-2">Ready to Start Your Exam Success Journey?</h3>
-          <p className="text-muted-foreground mb-4">
+          <p className="text-white mb-4">
             Choose your target exam and begin with our tailored study plan and practice resources.
           </p>
           <div className="flex flex-wrap justify-center gap-2">

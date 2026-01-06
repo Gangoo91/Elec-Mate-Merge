@@ -58,8 +58,8 @@ const HealthSafetySubsection = ({
   if (isLoading) {
     return (
       <div className="p-6 text-center animate-pulse">
-        <p className="text-muted-foreground font-medium">Loading content...</p>
-        <p className="text-xs text-muted-foreground mt-2">Please wait while we load your learning materials.</p>
+        <p className="text-white font-medium">Loading content...</p>
+        <p className="text-xs text-white mt-2">Please wait while we load your learning materials.</p>
       </div>
     );
   }
@@ -67,8 +67,8 @@ const HealthSafetySubsection = ({
   if (loadError || !Component) {
     return (
       <div className="p-6 text-center bg-red-900/10 border border-red-600/30 rounded-md">
-        <p className="text-muted-foreground">Failed to load content</p>
-        <p className="text-xs text-muted-foreground mt-2">
+        <p className="text-white">Failed to load content</p>
+        <p className="text-xs text-white mt-2">
           There was an issue loading this section. This might be due to a technical problem or missing content.
         </p>
       </div>

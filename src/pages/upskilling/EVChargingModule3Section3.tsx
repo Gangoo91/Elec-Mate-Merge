@@ -1,545 +1,468 @@
-import { ArrowLeft, ArrowRight, Shield, Target, BookOpen, CheckCircle, AlertTriangle, Zap, Settings, Gauge } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { EVChargingModule3Section3Quiz } from '@/components/upskilling/quiz/EVChargingModule3Section3Quiz';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
+import useSEO from "@/hooks/useSEO";
+
+const quickCheckQuestions = [
+  {
+    id: "evcharging-m3s3-check1",
+    question: "What is the minimum RCD type required for EV charging according to BS 7671?",
+    options: ["Type AC RCD", "Type A RCD", "Type B RCD", "No RCD required"],
+    correctIndex: 1,
+    explanation: "Regulation 722.531.2.101 specifies Type A RCD as the minimum requirement for EV charging, with Type B preferred for enhanced protection against all residual current types including smooth DC."
+  },
+  {
+    id: "evcharging-m3s3-check2",
+    question: "How should circuit breakers be sized for sustained EV loading?",
+    options: [
+      "Equal to the design current",
+      "MCB rating ≥ design current and ≤ cable capacity",
+      "As large as possible",
+      "Double the design current"
+    ],
+    correctIndex: 1,
+    explanation: "MCB rating should be greater than or equal to the design current (Ib) and less than or equal to the cable current-carrying capacity (Iz), accounting for sustained loading and derating factors."
+  },
+  {
+    id: "evcharging-m3s3-check3",
+    question: "When are SPDs (Surge Protection Devices) required for EV charging?",
+    options: [
+      "Never required",
+      "Always mandatory",
+      "Based on risk assessment, especially for outdoor installations",
+      "Only for three-phase installations"
+    ],
+    correctIndex: 2,
+    explanation: "SPDs are required based on risk assessment, particularly for outdoor installations and areas with high lightning activity. They protect sensitive EV charging equipment from transient overvoltages."
+  }
+];
+
+const faqs = [
+  {
+    question: "What's the difference between Type A and Type B RCDs?",
+    answer: "Type A RCDs detect AC and pulsating DC residual currents. Type B RCDs detect all residual current types including smooth DC. Type B is preferred for EV charging as it provides protection against DC faults that can occur in vehicle chargers."
+  },
+  {
+    question: "Why is Type AC RCD not suitable for EV charging?",
+    answer: "Type AC RCDs only detect AC residual currents and can be blinded by DC components. EV charging equipment can produce DC residual currents that Type AC cannot detect, creating a safety risk."
+  },
+  {
+    question: "What MCB characteristic should I use for EV charging?",
+    answer: "Type B MCBs are suitable for most EV charging applications. Type C may be required for installations with high inrush currents. The choice depends on the specific equipment characteristics and prospective fault current."
+  },
+  {
+    question: "How do I achieve proper discrimination between protective devices?",
+    answer: "Ensure upstream devices have higher current ratings or time delays. Use time-delayed (S-type) RCDs upstream of instantaneous 30mA RCDs. Verify fault current breaking capacity and test discrimination during commissioning."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+  question: "A commercial car park has nuisance tripping affecting multiple EV chargers. What is the most likely cause and solution?",
+  options: [
+    "Faulty chargers - replace all units",
+    "Inadequate RCD discrimination - implement selective protection",
+    "Wrong cable sizes - rewire installation",
+    "Too many chargers - reduce capacity"
+  ],
+  correctAnswer: 1,
+  explanation: "Nuisance tripping affecting multiple circuits usually indicates inadequate RCD discrimination. Installing a selective 300mA S-type RCD upstream with 30mA instantaneous RCDs at individual circuits provides fault containment."
+  }
+];
 
 const EVChargingModule3Section3 = () => {
-  useEffect(() => {
-    document.title = 'Circuit Protection and RCD Selection - EV Charging Module 3 Section 3';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Master circuit protection and RCD selection for EV charging installations. Learn about protective device sizing, coordination, and safety requirements for electric vehicle charging circuits.');
-    }
-
-    // Add JSON-LD structured data for SEO
-    const structuredData = {
-      "@context": "https://schema.org",
-      "@type": "LearningResource",
-      "name": "Circuit Protection and RCD Selection for EV Charging",
-      "description": "Comprehensive training on circuit protection devices and RCD selection for EV charging installations",
-      "provider": {
-        "@type": "Organization",
-        "name": "EV Charging Training"
-      }
-    };
-
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.textContent = JSON.stringify(structuredData);
-    document.head.appendChild(script);
-
-    return () => {
-      document.head.removeChild(script);
-    };
-  }, []);
+  useSEO({
+    title: "Circuit Protection and RCD Selection | EV Charging Module 3.3",
+    description: "Master circuit protection and RCD selection for EV charging installations including protective device sizing and coordination."
+  });
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
-        <Link to="../ev-charging-module-3">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 3
+            <Link to="../ev-charging-module-3">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 3
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="max-w-full">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
-            <Shield className="h-6 w-6 sm:h-8 sm:w-8 text-yellow-400 flex-shrink-0" />
-            <div className="min-w-0 flex-1">
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white break-words">
-                Circuit Protection and RCD Selection
-              </h1>
-              <p className="text-base sm:text-lg lg:text-xl text-gray-400 break-words">
-                Module 3, Section 3 - Protective Device Selection and Coordination
-              </p>
+        </div>
+      </div>
+
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Page Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 3.3</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Circuit Protection and RCD Selection
+          </h1>
+          <p className="text-white/80">
+            Protective device selection and coordination
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>RCD Minimum:</strong> Type A (Type B preferred)</li>
+              <li><strong>RCD Rating:</strong> 30mA for additional protection</li>
+              <li><strong>MCB Type:</strong> Type B for most EV applications</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> RCD type marked on device face</li>
+              <li><strong>Use:</strong> Type B for best protection</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Select appropriate RCD types and ratings",
+              "Size circuit breakers for EV loads",
+              "Understand discrimination principles",
+              "Apply SPD requirements",
+              "Implement AFDD protection where required",
+              "Design protective systems for different scenarios"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1 - RCD Selection */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            RCD Selection and Requirements
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Regulation 722.531.2.101 specifies mandatory RCD protection for EV charging.
+              The type of RCD determines what residual currents can be detected.
+            </p>
+
+            <div className="grid sm:grid-cols-3 gap-4 my-6">
+              <div className="p-3 rounded bg-transparent border border-red-400/30">
+                <p className="font-medium text-white mb-2">Type AC</p>
+                <ul className="text-xs text-white/90 space-y-1">
+                  <li>• AC residual currents only</li>
+                  <li>• Not suitable for EV</li>
+                  <li>• May miss DC faults</li>
+                </ul>
+                <p className="text-xs text-red-400 mt-2">Non-compliant for EV</p>
+              </div>
+              <div className="p-3 rounded bg-transparent border border-elec-yellow/30">
+                <p className="font-medium text-white mb-2">Type A</p>
+                <ul className="text-xs text-white/90 space-y-1">
+                  <li>• AC + pulsating DC</li>
+                  <li>• Minimum for EV</li>
+                  <li>• Cost-effective</li>
+                </ul>
+                <p className="text-xs text-elec-yellow mt-2">Compliant minimum</p>
+              </div>
+              <div className="p-3 rounded bg-transparent border border-green-400/30">
+                <p className="font-medium text-white mb-2">Type B</p>
+                <ul className="text-xs text-white/90 space-y-1">
+                  <li>• All residual currents</li>
+                  <li>• Including smooth DC</li>
+                  <li>• Future-proof</li>
+                </ul>
+                <p className="text-xs text-green-400 mt-2">Recommended best practice</p>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Selection Criteria</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Charging power:</strong> Higher power benefits from Type B</li>
+                <li><strong>Vehicle type:</strong> Consider DC leakage characteristics</li>
+                <li><strong>Environment:</strong> External installations need enhanced protection</li>
+                <li><strong>Future requirements:</strong> Type B provides better compatibility</li>
+              </ul>
             </div>
           </div>
-          <div className="flex flex-wrap gap-2">
-            <Badge variant="secondary" className="bg-yellow-400 text-black text-xs sm:text-sm">
-              Module 3.3
-            </Badge>
-            <Badge variant="outline" className="border-gray-600 text-gray-300 text-xs sm:text-sm">
-              32 minutes
-            </Badge>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2 - Circuit Breaker Selection */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Circuit Breaker Selection
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Circuit breakers must be correctly sized for sustained EV charging loads
+              while allowing normal operation.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Current Rating Selection</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>• MCB rating ≥ design current (Ib)</li>
+                  <li>• MCB rating ≤ cable capacity (Iz)</li>
+                  <li>• Consider sustained load factors</li>
+                  <li>• Allow for temperature derating</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Characteristic Selection</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Type B:</strong> General EV charging</li>
+                  <li><strong>Type C:</strong> High inrush current</li>
+                  <li><strong>Type D:</strong> Motor loads</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="overflow-x-auto my-6">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-white/20">
+                    <th className="text-left p-2 text-elec-yellow">Charging Power</th>
+                    <th className="text-left p-2 text-elec-yellow">Design Current</th>
+                    <th className="text-left p-2 text-elec-yellow">MCB Rating</th>
+                    <th className="text-left p-2 text-elec-yellow">Cable</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white/90">
+                  <tr className="border-b border-white/10">
+                    <td className="p-2">3.7kW (16A)</td>
+                    <td className="p-2">16A</td>
+                    <td className="p-2">20A Type B</td>
+                    <td className="p-2">2.5mm²</td>
+                  </tr>
+                  <tr className="border-b border-white/10">
+                    <td className="p-2">7.4kW (32A)</td>
+                    <td className="p-2">32A</td>
+                    <td className="p-2">40A Type B</td>
+                    <td className="p-2">6.0mm²</td>
+                  </tr>
+                  <tr className="border-b border-white/10">
+                    <td className="p-2">11kW 3-phase</td>
+                    <td className="p-2">16A</td>
+                    <td className="p-2">20A Type B</td>
+                    <td className="p-2">2.5mm²</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2">22kW 3-phase</td>
+                    <td className="p-2">32A</td>
+                    <td className="p-2">40A Type B</td>
+                    <td className="p-2">6.0mm²</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-      </header>
+        </section>
 
-      {/* Main Content */}
-      <main className="px-4 sm:px-6 lg:px-8 pb-12">
-        <div className="space-y-4 sm:space-y-6">
-          
-          {/* Introduction */}
-          <Card className="bg-card border-yellow-400/30 shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <BookOpen className="h-6 w-6 text-yellow-400" />
-                Introduction
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                Proper circuit protection is fundamental to the safe operation of EV charging installations. 
-                The selection of appropriate protective devices ensures both safety and reliability whilst 
-                providing discrimination and coordination within the electrical system.
-              </p>
-              <p>
-                This section focuses on the critical aspects of protective device selection, sizing, and 
-                coordination specifically for EV charging circuits, including RCD requirements, circuit 
-                breaker selection, and advanced protection technologies.
-              </p>
-            </CardContent>
-          </Card>
+        <InlineCheck {...quickCheckQuestions[1]} />
 
-          {/* Learning Objectives */}
-          <Card className="bg-card border-yellow-400/30 shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Target className="h-6 w-6 text-yellow-400" />
-                Learning Objectives
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <p className="mb-4">By the end of this section, you will be able to:</p>
-              <ul className="space-y-2">
-                {[
-                  "Select appropriate RCD types and ratings for EV charging circuits",
-                  "Size circuit breakers correctly for different EV charging loads",
-                  "Understand discrimination and coordination principles",
-                  "Apply surge protection device (SPD) requirements",
-                  "Implement arc fault detection device (AFDD) protection where required",
-                  "Design protective systems for different charging scenarios"
-                ].map((objective, index) => (
-                  <li key={index} className="flex items-start gap-2">
-                    <CheckCircle className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                    <span>{objective}</span>
-                  </li>
-                ))}
+        {/* Section 3 - Advanced Protection */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Advanced Protection Technologies
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Surge Protection (SPDs)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>• Type 2 SPD minimum at DB</li>
+                  <li>• Type 3 SPD at charger if &gt;30m</li>
+                  <li>• Required for outdoor installations</li>
+                  <li>• Lightning risk assessment</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Arc Fault Detection (AFDDs)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>• Enhanced fire protection</li>
+                  <li>• Beneficial for domestic</li>
+                  <li>• Check EV charger compatibility</li>
+                  <li>• Regular testing required</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
+              <p className="text-sm font-medium text-elec-yellow mb-2">SPD Selection Criteria</p>
+              <ul className="text-sm text-white space-y-1">
+                <li><strong>Uc rating:</strong> ≥ 1.1 × nominal voltage</li>
+                <li><strong>Imax:</strong> ≥ expected surge current</li>
+                <li><strong>Up:</strong> Protection level appropriate for equipment</li>
               </ul>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+        </section>
 
-          {/* RCD Selection */}
-          <Card className="bg-card border-yellow-400/30 shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-white">RCD Selection and Requirements</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="bg-gradient-to-r from-blue-900/40 to-blue-800/40 border border-yellow-400/30 p-6 rounded-lg">
-                <div className="flex items-center gap-3 mb-4">
-                  <BookOpen className="h-6 w-6 text-yellow-400" />
-                  <h3 className="text-xl font-semibold text-blue-300">BS 7671 RCD Requirements</h3>
-                </div>
-                <div className="space-y-3">
-                  <p className="text-gray-300">
-                    Regulation 722.531.2.101 specifies mandatory RCD protection for EV charging installations:
-                  </p>
-                  <ul className="space-y-2 text-gray-300 ml-4">
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <span><strong>Type A RCD minimum:</strong> Protection against AC residual currents and pulsating DC</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <span><strong>Type B RCD preferred:</strong> Additional protection against smooth DC residual currents</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <span><strong>30mA rating:</strong> Maximum permitted residual current for additional protection</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+        <InlineCheck {...quickCheckQuestions[2]} />
 
-              <h3 className="text-xl font-semibold text-white">RCD Types and Applications</h3>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <div className="bg-gradient-to-br from-green-900/40 to-emerald-800/40 border border-green-500/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-green-400 mb-3">Type AC RCD</h4>
-                  <ul className="text-sm text-gray-300 space-y-2">
-                    <li>• Detects AC residual currents only</li>
-                    <li>• <strong>Not suitable</strong> for EV charging</li>
-                    <li>• May not detect DC faults</li>
-                    <li>• Legacy installations only</li>
-                  </ul>
-                  <div className="mt-3 p-2 bg-red-900/30 border border-red-500/30 rounded">
-                    <p className="text-xs text-red-300">⚠️ Non-compliant for new EV installations</p>
-                  </div>
-                </div>
+        {/* Section 4 - Discrimination */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Discrimination and Coordination
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Proper discrimination ensures only the device closest to a fault operates,
+              maintaining supply to unaffected circuits.
+            </p>
 
-                <div className="bg-gradient-to-br from-amber-900/40 to-orange-800/40 border border-amber-500/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-amber-400 mb-3">Type A RCD</h4>
-                  <ul className="text-sm text-gray-300 space-y-2">
-                    <li>• Detects AC and pulsating DC</li>
-                    <li>• Minimum requirement for EV</li>
-                    <li>• Suitable for most Mode 2/3 charging</li>
-                    <li>• Cost-effective solution</li>
-                  </ul>
-                  <div className="mt-3 p-2 bg-amber-900/30 border border-amber-500/30 rounded">
-                    <p className="text-xs text-amber-300">✓ Compliant minimum standard</p>
-                  </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Typical Protection Hierarchy:</p>
+              <div className="space-y-2">
+                <div className="flex items-center gap-3 text-sm">
+                  <span className="w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs flex items-center justify-center">1</span>
+                  <span><strong>Incomer:</strong> Main switch/MCCB (time-delayed RCD if required)</span>
                 </div>
-
-                <div className="bg-gradient-to-br from-blue-900/40 to-cyan-800/40 border border-yellow-400/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-yellow-400 mb-3">Type B RCD</h4>
-                  <ul className="text-sm text-gray-300 space-y-2">
-                    <li>• Detects all residual currents</li>
-                    <li>• Preferred for EV charging</li>
-                    <li>• Handles smooth DC currents</li>
-                    <li>• Future-proof protection</li>
-                  </ul>
-                  <div className="mt-3 p-2 bg-blue-900/30 border border-yellow-400/30 rounded">
-                    <p className="text-xs text-blue-300">⭐ Recommended best practice</p>
-                  </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <span className="w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs flex items-center justify-center">2</span>
+                  <span><strong>Distribution:</strong> MCB (63-80A, selective RCD if required)</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <span className="w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs flex items-center justify-center">3</span>
+                  <span><strong>Final circuit:</strong> MCB + RCD (20-40A, 30mA instantaneous)</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <span className="w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs flex items-center justify-center">4</span>
+                  <span><strong>Equipment:</strong> Internal protection in charging unit</span>
                 </div>
               </div>
+            </div>
 
-              <div className="bg-card/50 p-4 rounded-lg border border-yellow-400/30">
-                <h4 className="font-semibold text-yellow-400 mb-2">Selection Criteria:</h4>
-                <ul className="space-y-1">
-                  <li className="flex items-start gap-2">
-                    <Gauge className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
-                    <span><strong>Charging power:</strong> Higher power installations benefit from Type B protection</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Gauge className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
-                    <span><strong>Vehicle type:</strong> Consider DC leakage characteristics of target vehicles</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Gauge className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
-                    <span><strong>Installation environment:</strong> External installations may require enhanced protection</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Gauge className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
-                    <span><strong>Future requirements:</strong> Type B provides better future compatibility</span>
-                  </li>
-                </ul>
+            <div className="p-3 rounded bg-transparent border border-red-400/30">
+              <p className="text-sm font-medium text-red-400/80 mb-1">Real World Issue</p>
+              <p className="text-sm text-white">A commercial car park experienced multiple charger disconnections during faults. Investigation found all circuits used 30mA instantaneous RCDs without upstream coordination.</p>
+              <p className="text-sm text-elec-yellow mt-2"><strong>Solution:</strong> 300mA S-type RCD upstream with 30mA at individual points.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Selecting Protection</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Use Type A RCD minimum, Type B preferred</li>
+                <li>Size MCBs for sustained EV loading</li>
+                <li>Plan discrimination from the outset</li>
+                <li>Consider SPDs for outdoor installations</li>
+                <li>Test protective devices during commissioning</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Type AC RCDs:</strong> — Non-compliant for EV charging</li>
+                <li><strong>No discrimination:</strong> — Causes widespread nuisance trips</li>
+                <li><strong>Undersized MCBs:</strong> — May trip during normal charging</li>
+                <li><strong>Missing SPDs:</strong> — Risk of transient damage to equipment</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
               </div>
-            </CardContent>
-          </Card>
+            ))}
+          </div>
+        </section>
 
-          {/* Circuit Breaker Selection */}
-          <Card className="bg-card border-yellow-400/30 shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-white">Circuit Breaker Selection and Sizing</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                Circuit breakers must be correctly sized to protect the installation whilst allowing normal 
-                operation. EV charging presents unique considerations due to sustained high current loads.
-              </p>
-
-              <h3 className="text-xl font-semibold text-white">Sizing Principles</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-card/50 p-4 rounded-lg border border-yellow-400/30">
-                  <h4 className="font-semibold text-yellow-400 mb-2">Current Rating Selection:</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• MCB rating ≥ design current (Ib)</li>
-                    <li>• MCB rating ≤ cable current capacity (Iz)</li>
-                    <li>• Consider sustained load factors</li>
-                    <li>• Allow for temperature derating</li>
-                    <li>• Account for grouping factors</li>
-                  </ul>
-                </div>
-                <div className="bg-card/50 p-4 rounded-lg border border-yellow-400/30">
-                  <h4 className="font-semibold text-yellow-400 mb-2">Characteristic Selection:</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• Type B: General EV charging applications</li>
-                    <li>• Type C: High inrush current scenarios</li>
-                    <li>• Type D: Motor loads and special applications</li>
-                    <li>• Consider starting characteristics</li>
-                    <li>• Ensure discrimination with upstream devices</li>
-                  </ul>
-                </div>
-              </div>
-
-              <h3 className="text-xl font-semibold text-white">EV Load Characteristics</h3>
-              <div className="bg-gradient-to-r from-purple-900/40 to-purple-800/40 border border-purple-500/30 p-4 rounded-lg">
-                <h4 className="font-semibold text-purple-400 mb-2">Key Considerations:</h4>
-                <ul className="space-y-2 text-gray-300">
-                  <li className="flex items-start gap-2">
-                    <Zap className="h-5 w-5 text-purple-400 mt-0.5 flex-shrink-0" />
-                    <span><strong>Sustained loading:</strong> EV charging operates at full load for extended periods</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Zap className="h-5 w-5 text-purple-400 mt-0.5 flex-shrink-0" />
-                    <span><strong>Switch-on transients:</strong> Initial connection may cause brief overcurrent</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Zap className="h-5 w-5 text-purple-400 mt-0.5 flex-shrink-0" />
-                    <span><strong>Power factor:</strong> Near unity power factor for resistive charging</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Zap className="h-5 w-5 text-purple-400 mt-0.5 flex-shrink-0" />
-                    <span><strong>Harmonic content:</strong> Switch-mode power supplies may generate harmonics</span>
-                  </li>
-                </ul>
-              </div>
-
-              <h3 className="text-xl font-semibold text-white">Example Sizing Calculations</h3>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm border-collapse">
-                  <thead>
-                    <tr className="border-b border-gray-600">
-                      <th className="text-left p-2 text-yellow-400">Charging Power</th>
-                      <th className="text-left p-2 text-yellow-400">Design Current</th>
-                      <th className="text-left p-2 text-yellow-400">MCB Rating</th>
-                      <th className="text-left p-2 text-yellow-400">Cable CSA</th>
-                      <th className="text-left p-2 text-yellow-400">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-gray-300">
-                    <tr className="border-b border-gray-700">
-                      <td className="p-2">3.7kW (16A)</td>
-                      <td className="p-2">16A</td>
-                      <td className="p-2">20A Type B</td>
-                      <td className="p-2">2.5mm²</td>
-                      <td className="p-2">Standard domestic</td>
-                    </tr>
-                    <tr className="border-b border-gray-700">
-                      <td className="p-2">7.4kW (32A)</td>
-                      <td className="p-2">32A</td>
-                      <td className="p-2">40A Type B</td>
-                      <td className="p-2">6.0mm²</td>
-                      <td className="p-2">Fast charging</td>
-                    </tr>
-                    <tr className="border-b border-gray-700">
-                      <td className="p-2">11kW (16A 3-phase)</td>
-                      <td className="p-2">16A</td>
-                      <td className="p-2">20A Type B</td>
-                      <td className="p-2">2.5mm²</td>
-                      <td className="p-2">Commercial 3-phase</td>
-                    </tr>
-                    <tr className="border-b border-gray-700">
-                      <td className="p-2">22kW (32A 3-phase)</td>
-                      <td className="p-2">32A</td>
-                      <td className="p-2">40A Type B</td>
-                      <td className="p-2">6.0mm²</td>
-                      <td className="p-2">High-power 3-phase</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Advanced Protection */}
-          <Card className="bg-card border-yellow-400/30 shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-white">Advanced Protection Technologies</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h3 className="text-xl font-semibold text-white">Surge Protection Devices (SPDs)</h3>
-              <p>
-                SPDs protect EV charging equipment from transient overvoltages caused by switching operations 
-                or lightning strikes, particularly important for outdoor installations.
-              </p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-gradient-to-br from-orange-900/40 to-red-800/40 border border-orange-500/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-orange-400 mb-2">SPD Requirements:</h4>
-                  <ul className="text-sm text-gray-300 space-y-1">
-                    <li>• Type 2 SPD minimum for distribution boards</li>
-                    <li>• Type 3 SPD at charging point if &gt;30m from Type 2</li>
-                    <li>• Consider lightning risk assessment</li>
-                    <li>• Coordinate with other protective devices</li>
-                  </ul>
-                </div>
-                <div className="bg-gradient-to-br from-blue-900/40 to-cyan-800/40 border border-yellow-400/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-yellow-400 mb-2">Selection Criteria:</h4>
-                  <ul className="text-sm text-gray-300 space-y-1">
-                    <li>• Uc rating ≥ 1.1 × nominal voltage</li>
-                    <li>• Imax ≥ expected surge current</li>
-                    <li>• Up protection level appropriate for equipment</li>
-                    <li>• Follow of current interruption capability</li>
-                  </ul>
-                </div>
-              </div>
-
-              <h3 className="text-xl font-semibold text-white">Arc Fault Detection Devices (AFDDs)</h3>
-              <p>
-                AFDDs provide enhanced protection against arc faults, which can cause fires. 
-                Whilst not mandatory for EV charging, they provide additional safety benefits.
-              </p>
-
-              <div className="bg-gradient-to-r from-amber-900/40 to-orange-900/40 border border-amber-500/30 p-4 rounded-lg">
-                <h4 className="font-semibold text-amber-400 mb-2">AFDD Considerations for EV Charging:</h4>
-                <ul className="space-y-2 text-gray-300">
-                  <li className="flex items-start gap-2">
-                    <Settings className="h-5 w-5 text-amber-400 mt-0.5 flex-shrink-0" />
-                    <span><strong>Enhanced safety:</strong> Particularly beneficial for domestic installations</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Settings className="h-5 w-5 text-amber-400 mt-0.5 flex-shrink-0" />
-                    <span><strong>Insurance benefits:</strong> May reduce insurance premiums</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Settings className="h-5 w-5 text-amber-400 mt-0.5 flex-shrink-0" />
-                    <span><strong>Compatibility:</strong> Ensure compatibility with EV charging equipment</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Settings className="h-5 w-5 text-amber-400 mt-0.5 flex-shrink-0" />
-                    <span><strong>Testing requirements:</strong> Regular functional testing required</span>
-                  </li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Discrimination and Coordination */}
-          <Card className="bg-card border-yellow-400/30 shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-white">Discrimination and Coordination</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                Proper discrimination ensures that only the protective device closest to a fault operates, 
-                maintaining supply to unaffected circuits whilst clearing faults safely.
-              </p>
-
-              <h3 className="text-xl font-semibold text-white">Time-Current Discrimination</h3>
-              <div className="bg-card/50 p-4 rounded-lg border border-yellow-400/30">
-                <h4 className="font-semibold text-yellow-400 mb-2">Discrimination Requirements:</h4>
-                <ul className="space-y-2">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
-                    <span><strong>Upstream devices:</strong> Must have higher current rating or longer time delay</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
-                    <span><strong>RCD coordination:</strong> Use time-delayed RCDs upstream where required</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
-                    <span><strong>Back-up protection:</strong> Ensure adequate fault current breaking capacity</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
-                    <span><strong>Testing verification:</strong> Verify discrimination through testing</span>
-                  </li>
-                </ul>
-              </div>
-
-              <h3 className="text-xl font-semibold text-white">Typical Protection Hierarchy</h3>
-              <div className="bg-gradient-to-r from-green-900/40 to-emerald-800/40 border border-green-500/30 p-4 rounded-lg">
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white text-sm font-bold">1</div>
-                    <span><strong>Incomer:</strong> Main switch/MCCB (100A+, time-delayed RCD if required)</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white text-sm font-bold">2</div>
-                    <span><strong>Distribution:</strong> MCB (63A-80A, selective RCD if required)</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white text-sm font-bold">3</div>
-                    <span><strong>Final circuit:</strong> MCB + RCD (20A-40A, 30mA instantaneous)</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white text-sm font-bold">4</div>
-                    <span><strong>Equipment:</strong> Internal protection within charging unit</span>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Real World Scenario */}
-          <Card className="border border-red-600/30 bg-red-600/10">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-yellow-400" />
-                Real World Scenario
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-3">
-              <p className="font-semibold text-yellow-400">
-                RCD Discrimination Failure
-              </p>
-              <p>
-                A commercial car park experienced nuisance tripping where multiple EV chargers 
-                would disconnect when one developed a fault. Investigation revealed inadequate 
-                RCD discrimination - all circuits used 30mA instantaneous RCDs without proper 
-                upstream coordination, causing widespread disruption.
-              </p>
-              <p className="text-sm italic">
-                Solution: Implemented selective 300mA S-type RCD upstream with maintained 30mA 
-                protection at individual charging points, ensuring fault containment.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Quick Knowledge Checks */}
-          <Card className="bg-card border-yellow-400/30 shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-white">Quick Knowledge Checks</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-4">
-                <div className="bg-card/50 p-4 rounded-lg border border-yellow-400/30">
-                  <p className="font-semibold text-yellow-400 mb-2">Q: What is the minimum RCD type required for EV charging?</p>
-                  <p className="text-sm">A: Type A RCD minimum, with Type B RCD preferred for enhanced protection against all residual current types.</p>
-                </div>
-                <div className="bg-card/50 p-4 rounded-lg border border-yellow-400/30">
-                  <p className="font-semibold text-yellow-400 mb-2">Q: How should circuit breakers be sized for sustained EV loading?</p>
-                  <p className="text-sm">A: MCB rating should be ≥ design current and ≤ cable capacity, accounting for sustained loading and derating factors.</p>
-                </div>
-                <div className="bg-card/50 p-4 rounded-lg border border-yellow-400/30">
-                  <p className="font-semibold text-yellow-400 mb-2">Q: When are SPDs required for EV charging installations?</p>
-                  <p className="text-sm">A: SPDs are required based on risk assessment, particularly for outdoor installations and areas with high lightning activity.</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Section Summary */}
-          <Card className="bg-gradient-to-r from-yellow-400/10 to-amber-900/40 border-yellow-400/30">
-            <CardHeader>
-              <CardTitle className="text-white">Section Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-3">
-              <p>
-                This section covered the critical aspects of circuit protection for EV charging installations. 
-                Key takeaways include the mandatory requirement for Type A RCD protection (with Type B preferred), 
-                proper circuit breaker sizing for sustained loads, and the importance of discrimination in 
-                protection system design.
-              </p>
-              <p>
-                Advanced protection technologies such as SPDs and AFDDs provide enhanced safety and reliability, 
-                whilst proper coordination ensures selective operation during fault conditions. 
-                Regular testing and maintenance of protective devices is essential for continued safe operation.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Component */}
-          <EVChargingModule3Section3Quiz />
-
-          {/* Navigation */}
-          <div className="flex justify-between">
-            <Link to="../ev-charging-module-3-section-2">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="../ev-charging-module-3-section-4">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+        {/* Quick Reference */}
+        <div className="mt-6 p-5 rounded-lg bg-transparent border border-white/10">
+          <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+            <div>
+              <p className="font-medium text-white mb-1">RCD Types</p>
+              <ul className="space-y-0.5">
+                <li>Type AC: Not compliant</li>
+                <li>Type A: Minimum requirement</li>
+                <li>Type B: Best practice</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-medium text-white mb-1">Protection Devices</p>
+              <ul className="space-y-0.5">
+                <li>RCD: 30mA for additional protection</li>
+                <li>MCB: Type B typically</li>
+                <li>SPD: Type 2 minimum at DB</li>
+              </ul>
+            </div>
           </div>
         </div>
-      </main>
+
+        {/* Quiz Section */}
+        <section className="mb-10 mt-12">
+          <SingleQuestionQuiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-3-section-2">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-3-section-4">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

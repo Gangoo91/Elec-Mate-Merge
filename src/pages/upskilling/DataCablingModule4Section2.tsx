@@ -1,605 +1,413 @@
-import { ArrowLeft, ArrowRight, Route, AlertTriangle, Zap, Ruler } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Link } from 'react-router-dom';
-import { Quiz } from '@/components/upskilling/Quiz';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
+import useSEO from "@/hooks/useSEO";
+
+const quickCheckQuestions = [
+  {
+    id: "datacabling-m4s2-check1",
+    question: "What is the minimum separation between data and mains power cables in shared trunking?",
+    options: ["10mm", "25mm", "50mm", "100mm"],
+    correctIndex: 1,
+    explanation: "BS 7671 requires a minimum 25mm separation between data and mains power cables, or use of a metallic barrier to prevent electromagnetic interference."
+  },
+  {
+    id: "datacabling-m4s2-check2",
+    question: "What is the minimum bend radius for Cat6 cable during installation?",
+    options: ["2× cable diameter", "4× cable diameter", "8× cable diameter", "10× cable diameter"],
+    correctIndex: 2,
+    explanation: "During installation (under tension), Cat6 cable requires 8× cable diameter bend radius. Once installed and at rest, this reduces to 4× cable diameter."
+  },
+  {
+    id: "datacabling-m4s2-check3",
+    question: "What is the maximum pulling tension for Cat6 4-pair cable?",
+    options: ["50N (11 lbs)", "80N (18 lbs)", "110N (25 lbs)", "150N (34 lbs)"],
+    correctIndex: 2,
+    explanation: "Cat6 cable has a maximum pulling tension of 110N (25 lbs). During normal installation, never exceed 50% of this (55N) to prevent damage to the twisted pairs."
+  }
+];
+
+const faqs = [
+  {
+    question: "Why is cable separation from fluorescent lights important?",
+    answer: "Fluorescent lights generate significant electromagnetic interference that can degrade data signal quality. Maintain at least 150mm separation, and if cables must cross, do so at 90 degrees only."
+  },
+  {
+    question: "What happens if I violate bend radius requirements?",
+    answer: "Excessive bending damages internal conductors, alters pair geometry, and increases crosstalk. This causes signal degradation, failed certification tests, and unreliable network performance."
+  },
+  {
+    question: "How do temperature extremes affect cable installation?",
+    answer: "Cold temperatures make cables brittle and prone to cracking. Hot temperatures increase flexibility but cause thermal expansion. Install at 15-25°C and allow for thermal movement in the completed installation."
+  },
+  {
+    question: "What's the difference between EMC zones 0, 1, and 2?",
+    answer: "Zone 0 is clean (computer rooms) - standard UTP acceptable. Zone 1 is light industrial - may need FTP and increased separation. Zone 2 is heavy industrial - requires STP cables, screened containment, and comprehensive bonding."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+  question: "You're installing Cat6 cables in a manufacturing environment with fluorescent lighting, motor control cables, and variable frequency drives. What approach should you take?",
+  options: [
+    "Use standard UTP with normal separation distances",
+    "Install screened containment, use FTP/STP cables, maintain increased separation distances",
+    "Route cables through the same trunking as power for convenience",
+    "Only use fibre optic cables throughout"
+  ],
+  correctAnswer: 1,
+  explanation: "Manufacturing environments (Zone 2) require screened containment, FTP or STP cables, and increased separation distances from interference sources. Comprehensive bonding is also essential for EMC compliance."
+  }
+];
 
 const DataCablingModule4Section2 = () => {
-  const quizQuestions = [
-    {
-      id: 1,
-      question: "What is the minimum separation distance between data and mains power cables in the same trunking?",
-      options: [
-        "10mm",
-        "25mm", 
-        "50mm",
-        "100mm"
-      ],
-      correctAnswer: 1,
-      explanation: "BS 7671 requires a minimum 25mm separation between data and mains power cables, or use of a metallic barrier."
-    },
-    {
-      id: 2,
-      question: "What is the maximum pulling tension for Cat6 cable?",
-      options: [
-        "25N (5.6 lbs)",
-        "40N (9 lbs)",
-        "110N (25 lbs)",
-        "200N (45 lbs)"
-      ],
-      correctAnswer: 2,
-      explanation: "Cat6 cable has a maximum pulling tension of 110N (25 lbs) to prevent damage to the twisted pairs and jacket."
-    },
-    {
-      id: 3,
-      question: "How far should data cables be separated from fluorescent lighting?",
-      options: [
-        "50mm minimum",
-        "100mm minimum",
-        "150mm minimum", 
-        "200mm minimum"
-      ],
-      correctAnswer: 2,
-      explanation: "Data cables should maintain at least 150mm separation from fluorescent lighting to avoid electromagnetic interference."
-    }
-  ];
+  useSEO({
+    title: "Cable Separation and Bend Radius | Data Cabling Module 4.2",
+    description: "Understand cable separation requirements, bend radius specifications, and installation stress limits for professional data cabling."
+  });
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="px-4 sm:px-6 lg:px-8 pt-8 pb-12 max-w-6xl mx-auto">
-        <Link to="../data-cabling-module-4">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
           <Button
             variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 4
+            <Link to="../data-cabling-module-4">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 4
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-8">
-          <div className="text-center">
-            <Badge variant="secondary" className="bg-yellow-400 text-black mb-4">
-              Module 4 • Section 2
-            </Badge>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
-              Cable Separation and Bend Radius
-            </h1>
-            <p className="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto">
-              Installation guidelines and physical constraints
-            </p>
-          </div>
-
-          <Alert className="border-yellow-400/30 bg-yellow-400/10">
-            <Route className="h-4 w-4 text-yellow-400" />
-            <AlertDescription className="text-foreground">
-              <strong className="text-yellow-400">Critical Success Factor:</strong> Proper cable separation and bend radius control are essential for maintaining signal integrity and preventing crosstalk.
-            </AlertDescription>
-          </Alert>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-yellow-400 flex items-center">
-                <Zap className="mr-2 h-5 w-5" />
-                Cable Separation Requirements
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold text-white mb-3">EMC and Interference Prevention</h3>
-                <p className="text-gray-300 leading-relaxed mb-4">
-                  Electromagnetic compatibility requires careful separation of data cables from power sources and other potential interference sources. 
-                  These requirements ensure reliable data transmission and compliance with performance standards.
-                </p>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b border-gray-600">
-                        <th className="text-left p-3 text-yellow-400">Interference Source</th>
-                        <th className="text-left p-3 text-yellow-400">Minimum Separation</th>
-                        <th className="text-left p-3 text-yellow-400">Alternative Solution</th>
-                      </tr>
-                    </thead>
-                    <tbody className="text-gray-300">
-                      <tr className="border-b border-gray-700">
-                        <td className="p-3">Mains Power (230V)</td>
-                        <td className="p-3">25mm or metallic barrier</td>
-                        <td className="p-3">Separate compartment in trunking</td>
-                      </tr>
-                      <tr className="border-b border-gray-700">
-                        <td className="p-3">High Voltage (&gt;1kV)</td>
-                        <td className="p-3">300mm minimum</td>
-                        <td className="p-3">Screened cable + earthed containment</td>
-                      </tr>
-                      <tr className="border-b border-gray-700">
-                        <td className="p-3">Fluorescent Lighting</td>
-                        <td className="p-3">150mm minimum</td>
-                        <td className="p-3">Cross at 90° only</td>
-                      </tr>
-                      <tr className="border-b border-gray-700">
-                        <td className="p-3">Motor Control Cables</td>
-                        <td className="p-3">200mm minimum</td>
-                        <td className="p-3">Separate cable routes</td>
-                      </tr>
-                      <tr>
-                        <td className="p-3">Radio Transmitters</td>
-                        <td className="p-3">1m minimum</td>
-                        <td className="p-3">Screened installation required</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-yellow-400 flex items-center">
-                <Ruler className="mr-2 h-5 w-5" />
-                Bend Radius Specifications
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold text-white mb-3">Cable Type Requirements</h3>
-                <p className="text-gray-300 leading-relaxed mb-4">
-                  Each cable type has specific bend radius requirements to prevent damage to internal conductors and maintain performance characteristics.
-                </p>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="bg-card p-4 rounded-lg">
-                    <h4 className="font-medium text-yellow-400 mb-3">Copper Cables</h4>
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-gray-300">Cat5e UTP:</span>
-                        <span className="text-white">4 × cable diameter</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-300">Cat6 UTP:</span>
-                        <span className="text-white">4 × cable diameter</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-300">Cat6a UTP:</span>
-                        <span className="text-white">6 × cable diameter</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-300">Cat6a STP:</span>
-                        <span className="text-white">8 × cable diameter</span>
-                      </div>
-                      <div className="border-t border-gray-600 pt-2 mt-3">
-                        <p className="text-xs text-gray-400">During installation: 8× cable diameter minimum</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-card p-4 rounded-lg">
-                    <h4 className="font-medium text-yellow-400 mb-3">Fibre Optic Cables</h4>
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-gray-300">Single Mode:</span>
-                        <span className="text-white">20 × cable diameter</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-300">Multi Mode 50/125:</span>
-                        <span className="text-white">15 × cable diameter</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-300">Multi Mode 62.5/125:</span>
-                        <span className="text-white">15 × cable diameter</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-300">Armoured Fibre:</span>
-                        <span className="text-white">25 × cable diameter</span>
-                      </div>
-                      <div className="border-t border-gray-600 pt-2 mt-3">
-                        <p className="text-xs text-gray-400">Under tension: 30× cable diameter minimum</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-yellow-400">Installation Stress Limits</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <h4 className="font-medium text-white mb-3">Pulling Tensions</h4>
-                  <div className="bg-card p-4 rounded-lg">
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-gray-300">Cat5e/6 4-pair:</span>
-                        <span className="text-white">110N (25 lbs)</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-300">Cat6a 4-pair:</span>
-                        <span className="text-white">180N (40 lbs)</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-300">Fibre 2-core:</span>
-                        <span className="text-white">270N (60 lbs)</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-300">Fibre 12-core:</span>
-                        <span className="text-white">600N (135 lbs)</span>
-                      </div>
-                    </div>
-                    <Alert className="mt-4 border-amber-500/20 bg-card">
-                      <AlertTriangle className="h-4 w-4 text-amber-500" />
-                      <AlertDescription className="text-gray-300 text-sm">
-                        Never exceed 50% of maximum rated tension during normal installation.
-                      </AlertDescription>
-                    </Alert>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-medium text-white mb-3">Support Spacing</h4>
-                  <div className="bg-card p-4 rounded-lg">
-                    <div className="space-y-3">
-                      <div>
-                        <p className="text-yellow-400 text-sm font-medium mb-1">Horizontal Runs</p>
-                        <ul className="text-sm text-gray-300 space-y-1">
-                          <li>• Copper cables: 1.5m maximum</li>
-                          <li>• Fibre cables: 1.0m maximum</li>
-                          <li>• Heavy armoured: 0.5m maximum</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="text-yellow-400 text-sm font-medium mb-1">Vertical Runs</p>
-                        <ul className="text-sm text-gray-300 space-y-1">
-                          <li>• Copper cables: 1.0m maximum</li>
-                          <li>• Fibre cables: 0.5m maximum</li>
-                          <li>• Use strain relief boots</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="text-yellow-400 text-sm font-medium mb-1">Equipment Areas</p>
-                        <ul className="text-sm text-gray-300 space-y-1">
-                          <li>• Within 300mm of equipment</li>
-                          <li>• Use service loops where required</li>
-                          <li>• Avoid tight bends near terminations</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-yellow-400">Environmental Considerations</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid md:grid-cols-3 gap-4">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="font-medium text-yellow-400 mb-2">Temperature Effects</h4>
-                  <ul className="text-sm text-gray-300 space-y-1">
-                    <li>• Cold: Cables become brittle</li>
-                    <li>• Heat: Increased flexibility but thermal expansion</li>
-                    <li>• Install at moderate temperatures (15-25°C)</li>
-                    <li>• Allow for thermal movement</li>
-                  </ul>
-                </div>
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="font-medium text-yellow-400 mb-2">Moisture Control</h4>
-                  <ul className="text-sm text-gray-300 space-y-1">
-                    <li>• Prevent water ingress in containment</li>
-                    <li>• Use appropriate cable ratings</li>
-                    <li>• Seal penetrations properly</li>
-                    <li>• Consider condensation risks</li>
-                  </ul>
-                </div>
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="font-medium text-yellow-400 mb-2">Mechanical Stress</h4>
-                  <ul className="text-sm text-gray-300 space-y-1">
-                    <li>• Avoid crushing under heavy loads</li>
-                    <li>• Protect from impact damage</li>
-                    <li>• Use appropriate containment depth</li>
-                    <li>• Consider building movement</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-yellow-400">Common Installation Errors</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <h4 className="font-medium text-white mb-3 flex items-center">
-                    <AlertTriangle className="mr-2 h-4 w-4 text-red-400" />
-                    Separation Violations
-                  </h4>
-                  <ul className="text-sm text-gray-300 space-y-2 bg-card p-4 rounded-lg">
-                    <li>• Running data cables alongside mains power</li>
-                    <li>• Insufficient separation from fluorescent fittings</li>
-                    <li>• Crossing high-voltage cables without screening</li>
-                    <li>• Installing near high-frequency equipment</li>
-                    <li>• Ignoring motor control cable interference</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-medium text-white mb-3 flex items-center">
-                    <AlertTriangle className="mr-2 h-4 w-4 text-red-400" />
-                    Bend Radius Violations
-                  </h4>
-                  <ul className="text-sm text-gray-300 space-y-2 bg-card p-4 rounded-lg">
-                    <li>• Sharp bends around containment edges</li>
-                    <li>• Excessive tension during cable pulling</li>
-                    <li>• Inadequate support causing cable sag</li>
-                    <li>• Kinking during equipment connections</li>
-                    <li>• Poor service loop management</li>
-                  </ul>
-                </div>
-              </div>
-              
-              <Alert className="border-red-500/20 bg-card">
-                <AlertTriangle className="h-4 w-4 text-red-400" />
-                <AlertDescription className="text-gray-300">
-                  <strong className="text-red-400">Performance Impact:</strong> Violations of separation and bend radius requirements can cause significant signal degradation, 
-                  failed certification tests, and unreliable network performance.
-                </AlertDescription>
-              </Alert>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-yellow-400">Advanced Installation Techniques</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold text-white mb-3">Cable Pulling Methods</h3>
-                <p className="text-gray-300 leading-relaxed mb-4">
-                  Professional installation techniques ensure cable integrity whilst maximising efficiency and minimising installation time.
-                </p>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="bg-card p-4 rounded-lg">
-                    <h4 className="font-medium text-yellow-400 mb-3">Manual Pulling Techniques</h4>
-                    <ul className="text-sm text-gray-300 space-y-2">
-                      <li><strong>Single Cable:</strong> Use pulling sock or tape</li>
-                      <li><strong>Multiple Cables:</strong> Bundle with breakout point</li>
-                      <li><strong>Pull String:</strong> Always install for future use</li>
-                      <li><strong>Lubrication:</strong> Use approved cable lubricant</li>
-                      <li><strong>Team Coordination:</strong> One puller, one feeder minimum</li>
-                      <li><strong>Force Monitoring:</strong> Stop if resistance increases</li>
-                    </ul>
-                  </div>
-                  <div className="bg-card p-4 rounded-lg">
-                    <h4 className="font-medium text-yellow-400 mb-3">Mechanical Pulling Systems</h4>
-                    <ul className="text-sm text-gray-300 space-y-2">
-                      <li><strong>Cable Winch:</strong> For long runs over 100m</li>
-                      <li><strong>Capstan Winch:</strong> Maintains constant tension</li>
-                      <li><strong>Pulling Eyes:</strong> Secure attachment points</li>
-                      <li><strong>Force Gauges:</strong> Monitor tension continuously</li>
-                      <li><strong>Guide Wheels:</strong> Reduce friction at bends</li>
-                      <li><strong>Cable Rollers:</strong> Support long cable lengths</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-card p-4 rounded-lg">
-                <h4 className="font-medium text-yellow-400 mb-3">Quality Control During Installation</h4>
-                <div className="grid md:grid-cols-3 gap-4 text-sm">
-                  <div>
-                    <p className="text-white font-medium mb-2">Pre-Installation Checks</p>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• Verify containment route is clear</li>
-                      <li>• Check for sharp edges or obstructions</li>
-                      <li>• Measure cable lengths required</li>
-                      <li>• Prepare pulling equipment and lubricants</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white font-medium mb-2">During Installation</p>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• Monitor pulling tension continuously</li>
-                      <li>• Check for cable damage at regular intervals</li>
-                      <li>• Maintain minimum bend radius requirements</li>
-                      <li>• Document any issues or deviations</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white font-medium mb-2">Post-Installation Verification</p>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• Visual inspection for physical damage</li>
-                      <li>• Continuity testing on all pairs/fibres</li>
-                      <li>• Jacket integrity check</li>
-                      <li>• Documentation of installed cable details</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-yellow-400">Electromagnetic Compatibility (EMC) Design</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold text-white mb-3">EMC Zone Concept</h3>
-                <p className="text-gray-300 leading-relaxed mb-4">
-                  Effective EMC design requires understanding of interference sources and implementing appropriate zoning strategies to maintain signal integrity.
-                </p>
-                <div className="grid md:grid-cols-3 gap-4">
-                  <div className="bg-card p-4 rounded-lg">
-                    <h4 className="font-medium text-yellow-400 mb-2">Zone 0 - Clean Environment</h4>
-                    <ul className="text-sm text-gray-300 space-y-1">
-                      <li>• Computer rooms and data centres</li>
-                      <li>• Standard containment acceptable</li>
-                      <li>• Normal separation distances apply</li>
-                      <li>• UTP cables generally suitable</li>
-                    </ul>
-                  </div>
-                  <div className="bg-card p-4 rounded-lg">
-                    <h4 className="font-medium text-yellow-400 mb-2">Zone 1 - Light Industrial</h4>
-                    <ul className="text-sm text-gray-300 space-y-1">
-                      <li>• Offices with some electrical equipment</li>
-                      <li>• Increased separation distances required</li>
-                      <li>• Consider screened containment</li>
-                      <li>• FTP cables may be necessary</li>
-                    </ul>
-                  </div>
-                  <div className="bg-card p-4 rounded-lg">
-                    <h4 className="font-medium text-yellow-400 mb-2">Zone 2 - Heavy Industrial</h4>
-                    <ul className="text-sm text-gray-300 space-y-1">
-                      <li>• Manufacturing environments</li>
-                      <li>• Screened containment mandatory</li>
-                      <li>• STP cables required</li>
-                      <li>• Comprehensive bonding essential</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-card p-4 rounded-lg">
-                <h4 className="font-medium text-yellow-400 mb-3">Bonding and Earthing Requirements</h4>
-                <div className="grid md:grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <p className="text-white font-medium mb-2">Metallic Containment Bonding</p>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• Continuous earth throughout system length</li>
-                      <li>• Maximum 2Ω resistance between any two points</li>
-                      <li>• Use bonding straps at all joints</li>
-                      <li>• Connect to main earth terminal via 6mm² minimum</li>
-                      <li>• Regular testing of bonding integrity</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white font-medium mb-2">Screen Termination</p>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• 360° screen connection at patch panels</li>
-                      <li>• Minimise pigtail lengths (&lt;6mm)</li>
-                      <li>• Use appropriate screen termination hardware</li>
-                      <li>• Maintain screen integrity through containment</li>
-                      <li>• Document all screen termination points</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-yellow-400">Temperature Management and Derating</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold text-white mb-3">Thermal Considerations</h3>
-                <p className="text-gray-300 leading-relaxed mb-4">
-                  Elevated temperatures in cable containment can significantly affect cable performance and require derating calculations for reliable operation.
-                </p>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="bg-card p-4 rounded-lg">
-                    <h4 className="font-medium text-yellow-400 mb-3">Temperature Derating Factors</h4>
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-gray-300">20°C ambient:</span>
-                        <span className="text-white">No derating (1.0)</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-300">30°C ambient:</span>
-                        <span className="text-white">0.94 factor</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-300">40°C ambient:</span>
-                        <span className="text-white">0.87 factor</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-300">50°C ambient:</span>
-                        <span className="text-white">0.78 factor</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-300">60°C ambient:</span>
-                        <span className="text-white">0.67 factor</span>
-                      </div>
-                    </div>
-                    <div className="border-t border-gray-600 pt-2 mt-3">
-                      <p className="text-xs text-gray-400">Based on 70°C maximum cable temperature</p>
-                    </div>
-                  </div>
-                  <div className="bg-card p-4 rounded-lg">
-                    <h4 className="font-medium text-yellow-400 mb-3">Heat Sources and Mitigation</h4>
-                    <ul className="text-sm text-gray-300 space-y-2">
-                      <li><strong>Solar Loading:</strong> Consider roof-mounted containment shading</li>
-                      <li><strong>Equipment Heat:</strong> Maintain distance from hot surfaces</li>
-                      <li><strong>Cable Bundling:</strong> Reduce bundle size in hot areas</li>
-                      <li><strong>Ventilation:</strong> Ensure adequate air circulation</li>
-                      <li><strong>Thermal Barriers:</strong> Use heat shields where necessary</li>
-                      <li><strong>Cable Spacing:</strong> Increase spacing in hot environments</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-card p-4 rounded-lg">
-                <h4 className="font-medium text-yellow-400 mb-3">Thermal Management Strategies</h4>
-                <div className="grid md:grid-cols-3 gap-4 text-sm">
-                  <div>
-                    <p className="text-white font-medium mb-2">Natural Ventilation</p>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• Use perforated or mesh containment</li>
-                      <li>• Allow air gaps between cable layers</li>
-                      <li>• Position intake and exhaust points</li>
-                      <li>• Consider stack effect for vertical runs</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white font-medium mb-2">Forced Air Cooling</p>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• Install ventilation fans in containment</li>
-                      <li>• Use plenum-rated equipment only</li>
-                      <li>• Monitor air flow rates regularly</li>
-                      <li>• Provide backup systems for critical areas</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white font-medium mb-2">Load Management</p>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• Distribute cables across multiple routes</li>
-                      <li>• Use larger containment to reduce density</li>
-                      <li>• Schedule installation during cooler periods</li>
-                      <li>• Monitor cable temperatures during operation</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Quiz 
-            title="Section 2 Knowledge Check"
-            description="Test your understanding of cable separation and bend radius requirements"
-            questions={quizQuestions}
-          />
-
-          <div className="flex justify-between items-center pt-8 border-t border-gray-700">
-            <Link to="../data-cabling-module-4-section-1">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="../data-cabling-module-4-section-3">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-400/10">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
         </div>
       </div>
+
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Page Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 4.2</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Cable Separation and Bend Radius
+          </h1>
+          <p className="text-white/80">
+            Installation guidelines and physical constraints
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Separation:</strong> 25mm from mains, 150mm from fluorescents</li>
+              <li><strong>Bend radius:</strong> 4× at rest, 8× during installation</li>
+              <li><strong>Tension:</strong> 110N max for Cat6, use 50% max normally</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Sharp bends and cables alongside power = problems</li>
+              <li><strong>Use:</strong> EMC zoning to determine cable and containment type</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Apply correct separation distances by interference source",
+              "Calculate bend radius for copper and fibre cables",
+              "Understand pulling tension limits",
+              "Implement EMC zone requirements",
+              "Manage thermal effects on cables",
+              "Avoid common installation errors"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Cable Separation Requirements
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Electromagnetic compatibility requires careful separation of data cables from power
+              sources and other interference sources. These requirements ensure reliable data
+              transmission and compliance with performance standards.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Separation by Interference Source:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Mains power (230V):</strong> 25mm or metallic barrier</li>
+                <li><strong>High voltage (&gt;1kV):</strong> 300mm minimum</li>
+                <li><strong>Fluorescent lighting:</strong> 150mm, cross at 90° only</li>
+                <li><strong>Motor control cables:</strong> 200mm minimum</li>
+                <li><strong>Radio transmitters:</strong> 1m minimum, screened installation</li>
+              </ul>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">230V Mains</p>
+                <p className="text-white/90 text-xs">25mm or barrier</p>
+              </div>
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">Fluorescent</p>
+                <p className="text-white/90 text-xs">150mm separation</p>
+              </div>
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">Motors</p>
+                <p className="text-white/90 text-xs">200mm separation</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Bend Radius Specifications
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Each cable type has specific bend radius requirements to prevent damage to internal
+              conductors and maintain performance characteristics. Requirements differ between
+              installation (under tension) and installed (at rest) conditions.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Copper Cables (At Rest)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Cat5e/Cat6 UTP:</strong> 4× cable diameter</li>
+                  <li><strong>Cat6a UTP:</strong> 6× cable diameter</li>
+                  <li><strong>Cat6a STP:</strong> 8× cable diameter</li>
+                  <li><strong>During installation:</strong> 8× minimum all types</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Fibre Optic Cables</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Single mode:</strong> 20× cable diameter</li>
+                  <li><strong>Multimode:</strong> 15× cable diameter</li>
+                  <li><strong>Armoured fibre:</strong> 25× cable diameter</li>
+                  <li><strong>Under tension:</strong> 30× minimum</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 3 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Installation Stress Limits
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Understanding and respecting pulling tension limits and support spacing requirements
+              is critical for maintaining cable integrity during and after installation.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Maximum Pulling Tensions</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Cat5e/Cat6:</strong> 110N (25 lbs)</li>
+                  <li><strong>Cat6a:</strong> 180N (40 lbs)</li>
+                  <li><strong>Fibre 2-core:</strong> 270N (60 lbs)</li>
+                  <li><strong>Fibre 12-core:</strong> 600N (135 lbs)</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Support Spacing</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Copper horizontal:</strong> 1.5m maximum</li>
+                  <li><strong>Copper vertical:</strong> 1.0m maximum</li>
+                  <li><strong>Fibre horizontal:</strong> 1.0m maximum</li>
+                  <li><strong>Fibre vertical:</strong> 0.5m maximum</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Installation Guidelines:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Never exceed 50% of maximum rated tension during normal installation</li>
+                <li>Use cable lubricant for long pulls</li>
+                <li>Monitor tension with force gauges for long runs</li>
+                <li>Support within 300mm of equipment connections</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Section 4 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            EMC Zone Design
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Effective EMC design requires understanding of interference sources and implementing
+              appropriate zoning strategies to maintain signal integrity.
+            </p>
+
+            <div className="grid sm:grid-cols-3 gap-4 my-6">
+              <div className="p-3 rounded bg-transparent border border-white/10">
+                <p className="font-medium text-elec-yellow/80 text-sm mb-2">Zone 0 - Clean</p>
+                <ul className="text-xs text-white space-y-0.5">
+                  <li>Computer rooms, data centres</li>
+                  <li>Standard containment OK</li>
+                  <li>UTP cables suitable</li>
+                </ul>
+              </div>
+              <div className="p-3 rounded bg-transparent border border-white/10">
+                <p className="font-medium text-elec-yellow/80 text-sm mb-2">Zone 1 - Light Industrial</p>
+                <ul className="text-xs text-white space-y-0.5">
+                  <li>Offices with equipment</li>
+                  <li>Increased separation</li>
+                  <li>Consider FTP cables</li>
+                </ul>
+              </div>
+              <div className="p-3 rounded bg-transparent border border-white/10">
+                <p className="font-medium text-elec-yellow/80 text-sm mb-2">Zone 2 - Heavy Industrial</p>
+                <ul className="text-xs text-white space-y-0.5">
+                  <li>Manufacturing environments</li>
+                  <li>Screened containment</li>
+                  <li>STP cables required</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Cable Pulling Techniques</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Use pulling socks or tape for secure attachment</li>
+                <li>Always install pull strings for future use</li>
+                <li>Use approved cable lubricant for long runs</li>
+                <li>Coordinate team: one puller, one feeder minimum</li>
+                <li>Stop immediately if resistance increases unexpectedly</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Running alongside power:</strong> — violates separation requirements</li>
+                <li><strong>Sharp bends:</strong> — damages conductors and degrades performance</li>
+                <li><strong>Excessive tension:</strong> — stretches conductors and damages jacket</li>
+                <li><strong>Ignoring temperature:</strong> — cables brittle when cold, expansion when hot</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quick Reference */}
+        <div className="mt-6 p-5 rounded-lg bg-transparent">
+          <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+            <div>
+              <p className="font-medium text-white mb-1">Separation Distances</p>
+              <ul className="space-y-0.5">
+                <li>Mains 230V: 25mm or barrier</li>
+                <li>Fluorescent: 150mm, 90° crossing</li>
+                <li>Motors: 200mm minimum</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-medium text-white mb-1">Bend Radius (Cat6)</p>
+              <ul className="space-y-0.5">
+                <li>At rest: 4× cable diameter</li>
+                <li>During install: 8× cable diameter</li>
+                <li>Max tension: 110N (use 55N normal)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Quiz Section */}
+        <section className="mb-10 mt-12">
+          <SingleQuestionQuiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../data-cabling-module-4-section-1">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../data-cabling-module-4-section-3">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

@@ -79,7 +79,7 @@ const QualityAssessmentTool = () => {
       case "good": return <CheckCircle className="h-4 w-4 text-blue-400" />;
       case "needs-improvement": return <AlertCircle className="h-4 w-4 text-yellow-400" />;
       case "missing": return <XCircle className="h-4 w-4 text-red-400" />;
-      default: return <AlertCircle className="h-4 w-4 text-gray-400" />;
+      default: return <AlertCircle className="h-4 w-4 text-white" />;
     }
   };
 
@@ -89,7 +89,7 @@ const QualityAssessmentTool = () => {
       case "good": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
       case "needs-improvement": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
       case "missing": return "bg-red-500/20 text-red-400 border-red-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+      default: return "bg-white/10 text-white border-white/30";
     }
   };
 
@@ -152,7 +152,7 @@ const QualityAssessmentTool = () => {
     <Card className="border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-red-500/10">
       <CardHeader>
         <CardTitle className="text-orange-400">Portfolio Quality Assessment</CardTitle>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-white">
           Evaluate your portfolio against assessment standards and identify areas for improvement
         </p>
       </CardHeader>
@@ -163,7 +163,7 @@ const QualityAssessmentTool = () => {
             <span className="text-lg font-bold text-orange-400">{overallScore}%</span>
           </div>
           <Progress value={overallScore} className="h-3" />
-          <p className="text-xs text-muted-foreground mt-1">
+          <p className="text-xs text-white mt-1">
             {overallScore >= 80 ? "Excellent - Ready for assessment" :
              overallScore >= 70 ? "Good - Minor improvements needed" :
              overallScore >= 60 ? "Satisfactory - Some work required" :
@@ -173,20 +173,20 @@ const QualityAssessmentTool = () => {
 
         <div className="space-y-4">
           {criteria.map((item) => (
-            <div key={item.id} className="p-4 bg-elec-gray/50 rounded-lg border border-orange-500/20">
+            <div key={item.id} className="p-4 bg-white/5 rounded-lg border border-orange-500/20">
               <div className="flex items-start justify-between mb-2">
                 <div className="flex items-center gap-3">
                   {getStatusIcon(item.status)}
                   <div>
                     <h5 className="font-medium text-white text-sm">{item.criteria}</h5>
-                    <p className="text-xs text-muted-foreground">{item.category} • {item.weight}% weight</p>
+                    <p className="text-xs text-white">{item.category} • {item.weight}% weight</p>
                   </div>
                 </div>
                 <Badge className={`text-xs ${getStatusColor(item.status)}`}>
                   {item.status.replace("-", " ")}
                 </Badge>
               </div>
-              <p className="text-xs text-muted-foreground pl-7">{item.feedback}</p>
+              <p className="text-xs text-white pl-7">{item.feedback}</p>
             </div>
           ))}
         </div>
@@ -222,7 +222,7 @@ const QualityAssessmentTool = () => {
 
         <div className="mt-4 p-4 bg-blue-500/20 rounded-lg border border-blue-500/30">
           <h6 className="font-medium text-blue-400 mb-2">Assessment Tips</h6>
-          <ul className="text-xs text-muted-foreground space-y-1">
+          <ul className="text-xs text-white space-y-1">
             <li>• Regular self-assessment helps identify gaps early</li>
             <li>• Ask your mentor or assessor to review using this tool</li>
             <li>• Focus on areas with lower scores first</li>

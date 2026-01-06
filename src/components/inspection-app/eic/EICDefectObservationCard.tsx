@@ -61,7 +61,7 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
     switch (severity) {
       case 'high': return <AlertTriangle className="h-4 w-4 text-red-500" />;
       case 'limitation': return <Info className="h-4 w-4 text-purple-500" />;
-      case 'neutral': return <Minus className="h-4 w-4 text-gray-500" />;
+      case 'neutral': return <Minus className="h-4 w-4 text-white/60" />;
       default: return <FileText className="h-4 w-4 text-elec-yellow" />;
     }
   };
@@ -70,7 +70,7 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
     switch (severity) {
       case 'high': return 'border-l-red-500';
       case 'limitation': return 'border-l-purple-500';
-      case 'neutral': return 'border-l-gray-500';
+      case 'neutral': return 'border-l-white/60';
       default: return 'border-l-elec-yellow';
     }
   };

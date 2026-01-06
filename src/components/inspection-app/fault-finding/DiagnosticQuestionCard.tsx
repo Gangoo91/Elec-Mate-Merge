@@ -48,7 +48,7 @@ const DiagnosticQuestionCard = ({
           )}
         </CardTitle>
         <div className="space-y-2">
-          <div className="flex justify-between text-sm text-gray-400">
+          <div className="flex justify-between text-sm text-white/70">
             <span>Question {currentQuestion + 1} of {totalQuestions}</span>
             <span>{Math.round(progress)}% Complete</span>
           </div>
@@ -65,7 +65,7 @@ const DiagnosticQuestionCard = ({
             {question.options.map((option, idx) => (
               <div key={idx} className="flex items-center space-x-2 p-3 rounded-lg hover:bg-muted/50">
                 <RadioGroupItem value={option} id={`option-${idx}`} />
-                <Label htmlFor={`option-${idx}`} className="text-gray-300 cursor-pointer flex-1">
+                <Label htmlFor={`option-${idx}`} className="text-white/80 cursor-pointer flex-1">
                   {option}
                 </Label>
               </div>
@@ -78,7 +78,7 @@ const DiagnosticQuestionCard = ({
             variant="outline"
             onClick={onPrevious}
             disabled={!canGoPrevious}
-            className="border-border text-gray-300 hover:bg-muted"
+            className="border-border text-white/80 hover:bg-muted"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Previous

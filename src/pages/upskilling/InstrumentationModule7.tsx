@@ -47,7 +47,7 @@ const InstrumentationModule7 = () => {
       title: "Common Wiring Faults and Loop Integrity Checks",
       icon: AlertTriangle,
       description: "Troubleshooting wiring problems and verifying loop integrity"
-    }
+  }
   ];
 
   return (

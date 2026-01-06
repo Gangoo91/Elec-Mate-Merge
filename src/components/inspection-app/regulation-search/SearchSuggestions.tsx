@@ -45,7 +45,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({ onSuggestionClick
       <CardContent className="space-y-4">
         {/* Favorites */}
         <div>
-          <h4 className="text-sm font-semibold text-gray-400 mb-2 flex items-center gap-2">
+          <h4 className="text-sm font-semibold text-white/70 mb-2 flex items-center gap-2">
             <Star className="h-4 w-4 text-elec-yellow" />
             Quick Regulations
           </h4>
@@ -66,7 +66,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({ onSuggestionClick
 
         {/* Popular Searches */}
         <div>
-          <h4 className="text-sm font-semibold text-gray-400 mb-2 flex items-center gap-2">
+          <h4 className="text-sm font-semibold text-white/70 mb-2 flex items-center gap-2">
             <BookOpen className="h-4 w-4 text-blue-400" />
             Popular Topics
           </h4>
@@ -87,7 +87,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({ onSuggestionClick
 
         {/* Recent */}
         <div>
-          <h4 className="text-sm font-semibold text-gray-400 mb-2 flex items-center gap-2">
+          <h4 className="text-sm font-semibold text-white/70 mb-2 flex items-center gap-2">
             <Clock className="h-4 w-4 text-green-400" />
             Recent Searches
           </h4>

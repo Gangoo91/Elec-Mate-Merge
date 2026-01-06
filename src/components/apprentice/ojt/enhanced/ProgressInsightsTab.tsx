@@ -135,11 +135,11 @@ const ProgressInsightsTab = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Learning Velocity</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            <TrendingUp className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-green-500">+15%</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white">
               This month vs last
             </p>
           </CardContent>
@@ -148,11 +148,11 @@ const ProgressInsightsTab = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Goal Achievement</CardTitle>
-            <Target className="h-4 w-4 text-muted-foreground" />
+            <Target className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-blue-500">8/12</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white">
               Monthly targets hit
             </p>
           </CardContent>
@@ -161,11 +161,11 @@ const ProgressInsightsTab = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Cohort Ranking</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <Users className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-purple-500">12th</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white">
               Out of 45 apprentices
             </p>
           </CardContent>
@@ -174,11 +174,11 @@ const ProgressInsightsTab = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Completion ETA</CardTitle>
-            <Calendar className="h-4 w-4 text-muted-foreground" />
+            <Calendar className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-elec-yellow">18m</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white">
               Predicted finish
             </p>
           </CardContent>
@@ -205,12 +205,12 @@ const ProgressInsightsTab = () => {
                         {metric.weeklyChange > 0 ? "+" : ""}{metric.weeklyChange}%
                       </span>
                     </div>
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-sm text-white">
                       {metric.current}% / {metric.target}%
                     </span>
                   </div>
                   <Progress value={metric.current} className="h-2" />
-                  <p className="text-xs text-muted-foreground italic">
+                  <p className="text-xs text-white italic">
                     AI Prediction: {metric.prediction}
                   </p>
                 </div>
@@ -236,7 +236,7 @@ const ProgressInsightsTab = () => {
                       {insight.type}
                     </Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground">{insight.description}</p>
+                  <p className="text-sm text-white">{insight.description}</p>
                 </div>
               ))}
             </div>
@@ -307,7 +307,7 @@ const ProgressInsightsTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Your AI-powered progress insights provide real-time analysis of your learning journey, 
             benchmark your performance against peers, and predict future outcomes. Stay motivated 
             with personalised recommendations and data-driven guidance for apprenticeship success.

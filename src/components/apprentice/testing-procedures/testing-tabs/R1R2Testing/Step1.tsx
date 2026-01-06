@@ -9,9 +9,9 @@ const R1R2Step1 = () => {
         <li>Ensure all protective conductors are correctly identified</li>
         <li>Remove any electronic devices that might be damaged by testing</li>
       </ul>
-      <div className="mt-4 bg-gray-800/30 p-4 rounded-md">
+      <div className="mt-4 bg-white/5 border border-white/10 p-4 rounded-md">
         <img src="/placeholder.svg" alt="R1+R2 Testing Equipment Setup" className="mx-auto max-h-64" />
-        <p className="text-xs text-center mt-2 text-muted-foreground">
+        <p className="text-xs text-center mt-2 text-white">
           Proper test equipment connection diagram
         </p>
       </div>

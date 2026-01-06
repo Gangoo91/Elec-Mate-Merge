@@ -226,7 +226,7 @@ const OhmsCalculator: React.FC = () => {
             <MobileSelectTrigger className="h-12 px-2 text-sm min-h-[48px]">
               <MobileSelectValue />
             </MobileSelectTrigger>
-            <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+            <MobileSelectContent className="bg-white/10 border-elec-yellow/20">
               <MobileSelectItem value="mV">mV</MobileSelectItem>
               <MobileSelectItem value="V">V</MobileSelectItem>
               <MobileSelectItem value="kV">kV</MobileSelectItem>
@@ -239,7 +239,7 @@ const OhmsCalculator: React.FC = () => {
             <MobileSelectTrigger className="h-12 px-2 text-sm min-h-[48px]">
               <MobileSelectValue />
             </MobileSelectTrigger>
-            <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+            <MobileSelectContent className="bg-white/10 border-elec-yellow/20">
               <MobileSelectItem value="mA">mA</MobileSelectItem>
               <MobileSelectItem value="A">A</MobileSelectItem>
             </MobileSelectContent>
@@ -251,7 +251,7 @@ const OhmsCalculator: React.FC = () => {
             <MobileSelectTrigger className="h-12 px-2 text-sm min-h-[48px]">
               <MobileSelectValue />
             </MobileSelectTrigger>
-            <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+            <MobileSelectContent className="bg-white/10 border-elec-yellow/20">
               <MobileSelectItem value="Ω">Ω</MobileSelectItem>
               <MobileSelectItem value="kΩ">kΩ</MobileSelectItem>
               <MobileSelectItem value="MΩ">MΩ</MobileSelectItem>
@@ -264,7 +264,7 @@ const OhmsCalculator: React.FC = () => {
             <MobileSelectTrigger className="h-12 px-2 text-sm min-h-[48px]">
               <MobileSelectValue />
             </MobileSelectTrigger>
-            <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+            <MobileSelectContent className="bg-white/10 border-elec-yellow/20">
               <MobileSelectItem value="W">W</MobileSelectItem>
               <MobileSelectItem value="kW">kW</MobileSelectItem>
             </MobileSelectContent>
@@ -280,7 +280,7 @@ const OhmsCalculator: React.FC = () => {
           Reset
         </MobileButton>
         <div className="ml-auto flex items-center gap-2 text-sm">
-          <span className="text-muted-foreground">Decimals</span>
+          <span className="text-white">Decimals</span>
           <MobileSelect value={String(dp)} onValueChange={(val) => {
             const newDp = Number(val);
             setDp(newDp);
@@ -302,7 +302,7 @@ const OhmsCalculator: React.FC = () => {
             <MobileSelectTrigger className="w-16 min-h-[40px]">
               <MobileSelectValue />
             </MobileSelectTrigger>
-            <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+            <MobileSelectContent className="bg-white/10 border-elec-yellow/20">
               <MobileSelectItem value="0">0</MobileSelectItem>
               <MobileSelectItem value="1">1</MobileSelectItem>
               <MobileSelectItem value="2">2</MobileSelectItem>

@@ -1,629 +1,542 @@
-import { ArrowLeft, ArrowRight, Zap, AlertTriangle, CheckCircle, Shield, Target, FileText, Lightbulb, Settings, Cable } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import BS7671EmbeddedQuiz from '@/components/upskilling/BS7671EmbeddedQuiz';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
+import useSEO from "@/hooks/useSEO";
+
+const quickCheckQuestions = [
+  {
+    id: "cpc-function",
+    question: "What is the main function of a CPC (Circuit Protective Conductor)?",
+    options: [
+      "To carry normal load current",
+      "To provide a path for fault current to enable automatic disconnection",
+      "To reduce electromagnetic interference",
+      "To provide neutral return path"
+    ],
+    correctIndex: 1,
+    explanation: "The CPC provides a path for fault current back to the source, allowing protective devices to operate and disconnect the supply automatically."
+  },
+  {
+    id: "selv-vs-pelv",
+    question: "How does SELV differ from PELV?",
+    options: [
+      "SELV allows higher voltages",
+      "PELV allows earth connection, SELV does not",
+      "SELV is for AC only, PELV for DC",
+      "There is no difference"
+    ],
+    correctIndex: 1,
+    explanation: "SELV (Separated Extra Low Voltage) requires complete isolation from earth, while PELV (Protective Extra Low Voltage) allows earthing."
+  },
+  {
+    id: "rcd-detection",
+    question: "What does an RCD (Residual Current Device) detect?",
+    options: [
+      "Overcurrent conditions",
+      "Voltage fluctuations",
+      "Imbalance between line and neutral currents",
+      "Power factor changes"
+    ],
+    correctIndex: 2,
+    explanation: "An RCD detects the imbalance between line and neutral currents, which indicates current leaking to earth (residual current)."
+  }
+];
+
+const faqs = [
+  {
+    question: "Where is ADS typically applied?",
+    answer: "ADS is the most commonly used protective measure in most electrical installations, providing both basic and fault protection."
+  },
+  {
+    question: "Which system allows earth connection — SELV or PELV?",
+    answer: "PELV (Protective Extra Low Voltage) allows earth connection, while SELV (Separated Extra Low Voltage) must be completely isolated from earth."
+  },
+  {
+    question: "What are the maximum disconnection times for final circuits ≤32A?",
+    answer: "0.4 seconds maximum disconnection time for final circuits ≤32A in TN systems."
+  },
+  {
+    question: "When would you use SELV instead of normal mains voltage?",
+    answer: "SELV is used in wet locations like bathrooms and swimming pools, medical areas, and other environments where the risk of electric shock is increased."
+  }
+];
+
+const quizQuestion = {
+  question: "In a swimming pool installation (Zone 1), why would SELV be chosen over PELV?",
+  options: [
+    "SELV is cheaper to install",
+    "SELV provides higher safety through complete separation from earth in wet conditions",
+    "PELV is not suitable for lighting",
+    "SELV allows higher current capacity"
+  ],
+  correctAnswer: 1,
+  explanation: "SELV provides the highest level of safety through complete separation from earth, which is essential in wet conditions where the risk of electric shock is significantly increased."
+};
 
 const BS7671Module2Section2 = () => {
-  // SEO
-  useEffect(() => {
-    const title = 'Key Terms - CPC, ADS, SELV, PELV | BS 7671 Module 2 Section 2';
-    document.title = title;
-    const desc = 'Learn essential BS 7671 terminology including CPC, ADS, SELV, PELV and protective devices. Understanding key terms for electrical safety and protection systems.';
-    let meta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.name = 'description';
-      document.head.appendChild(meta);
-    }
-    if (meta) meta.content = desc;
-  }, []);
+  useSEO({
+    title: "Key Terms - CPC, ADS, SELV, PELV | BS 7671 Module 2.2",
+    description: "Learn essential BS 7671 terminology including CPC, ADS, SELV, PELV and protective devices. Understanding key terms for electrical safety and protection systems."
+  });
 
-  const quizQuestions = [
-    {
-      id: 1,
-      question: "What is the main function of a CPC (Circuit Protective Conductor)?",
-      options: [
-        "To carry normal load current",
-        "To provide a path for fault current to enable automatic disconnection",
-        "To reduce electromagnetic interference",
-        "To provide neutral return path"
-      ],
-      correct: 1,
-      explanation: "The CPC provides a path for fault current back to the source, allowing protective devices to operate and disconnect the supply automatically."
-    },
-    {
-      id: 2,
-      question: "How does SELV differ from PELV?",
-      options: [
-        "SELV allows higher voltages",
-        "PELV allows earth connection, SELV does not",
-        "SELV is for AC only, PELV for DC",
-        "There is no difference"
-      ],
-      correct: 1,
-      explanation: "SELV (Separated Extra Low Voltage) requires complete isolation from earth, while PELV (Protective Extra Low Voltage) allows earthing."
-    },
-    {
-      id: 3,
-      question: "Where is ADS (Automatic Disconnection of Supply) typically applied?",
-      options: [
-        "Only in domestic installations",
-        "In most installations as the primary protective measure",
-        "Only in industrial installations",
-        "Only where RCDs are not available"
-      ],
-      correct: 1,
-      explanation: "ADS is the most commonly used protective measure in most electrical installations, providing both basic and fault protection."
-    },
-    {
-      id: 4,
-      question: "What does an RCD (Residual Current Device) detect?",
-      options: [
-        "Overcurrent conditions",
-        "Voltage fluctuations",
-        "Imbalance between line and neutral currents",
-        "Power factor changes"
-      ],
-      correct: 2,
-      explanation: "An RCD detects the imbalance between line and neutral currents, which indicates current leaking to earth (residual current)."
-    },
-    {
-      id: 5,
-      question: "Which system allows earth connection — SELV or PELV?",
-      options: [
-        "SELV only",
-        "PELV only",
-        "Both allow earth connection",
-        "Neither allows earth connection"
-      ],
-      correct: 1,
-      explanation: "PELV (Protective Extra Low Voltage) allows earth connection, while SELV (Separated Extra Low Voltage) must be completely isolated from earth."
-    }
+  const outcomes = [
+    "Understand and differentiate CPC, ADS, SELV, and PELV",
+    "Identify correct applications for each protective measure",
+    "Learn the role of protective devices in ensuring safety",
+    "Apply these concepts in practical installation scenarios"
   ];
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div>
-        <Link to="../bs7671-module-2">
-          <Button
-            variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 2
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../bs7671-module-2">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-4 sm:space-y-6">
-          {/* Header */}
-          <div>
-            <div className="flex items-center gap-4 mb-4">
-              <Cable className="h-8 w-8 text-yellow-400" />
+        </div>
+      </div>
+
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Page Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 2.2</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Key Terms – CPC, ADS, SELV, PELV, Protective Devices
+          </h1>
+          <p className="text-white/80">
+            Essential terminology for electrical safety and protection
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>CPC:</strong> Carries fault current for automatic disconnection</li>
+              <li><strong>ADS:</strong> Most common protective measure</li>
+              <li><strong>SELV/PELV:</strong> Extra low voltage systems ≤50V AC</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Green/yellow conductor = CPC</li>
+              <li><strong>Use:</strong> SELV in wet locations, ADS elsewhere</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {outcomes.map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 01: CPC */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            CPC - Circuit Protective Conductor
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              The Circuit Protective Conductor (CPC) is fundamental to electrical safety. It provides the path for fault current to return to the source, enabling automatic disconnection when dangerous faults occur.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <h1 className="text-xl sm:text-2xl font-bold text-white">
-                  Key Terms – CPC, ADS, SELV, PELV, Protective Devices
-                </h1>
-                <p className="text-lg sm:text-xl text-white">
-                  Essential terminology for electrical safety and protection
-                </p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Characteristics</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Primary function:</strong> Carries fault current safely back to source</li>
+                  <li><strong>Identification:</strong> Green and yellow insulation</li>
+                  <li><strong>Sizing:</strong> Based on fault current and disconnection time</li>
+                  <li><strong>Continuity:</strong> Must be continuous throughout circuit</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Requirements</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Connection:</strong> Links all exposed metalwork</li>
+                  <li><strong>Testing:</strong> Requires continuity verification</li>
+                  <li><strong>Protection:</strong> Cannot be switched or fused</li>
+                  <li><strong>Materials:</strong> Copper or appropriate conductor</li>
+                </ul>
               </div>
             </div>
-            <div className="flex gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">
-                Module 2.2
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-white">
-                30 minutes
-              </Badge>
+
+            <div className="grid grid-cols-2 gap-4 my-6">
+              <div className="p-3 rounded bg-transparent border border-white/10">
+                <p className="font-medium text-white text-sm mb-1">CPC Functions</p>
+                <ul className="text-xs space-y-0.5">
+                  <li>• Provides fault current return path</li>
+                  <li>• Enables automatic disconnection</li>
+                  <li>• Maintains safe potential on metalwork</li>
+                  <li>• Facilitates protective device operation</li>
+                </ul>
+              </div>
+              <div className="p-3 rounded bg-transparent border border-white/10">
+                <p className="font-medium text-white text-sm mb-1">Minimum Sizes</p>
+                <ul className="text-xs space-y-0.5">
+                  <li>• 1.5mm² for fixed wiring</li>
+                  <li>• Cross-sectional area calculations required</li>
+                  <li>• Must withstand fault current without damage</li>
+                  <li>• Proper termination at all points</li>
+                </ul>
+              </div>
             </div>
           </div>
+        </section>
 
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Target className="h-6 w-6 text-yellow-400" />
-                Introduction
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <p className="text-base leading-relaxed">
-                A core part of understanding the 18th Edition is familiarising yourself with key terms that appear regularly in installations and design decisions. This section breaks down essential terminology like CPC, ADS, SELV, and PELV that form the foundation of electrical safety systems.
-              </p>
-              <Alert className="bg-yellow-400/10 border-blue-600/30">
-                <Shield className="h-4 w-4" />
-                <AlertDescription className="text-white">
-                  <strong>Safety Foundation:</strong> These terms represent the core concepts of electrical protection. Misunderstanding them can lead to inadequate safety measures and non-compliant installations.
-                </AlertDescription>
-              </Alert>
-            </CardContent>
-          </Card>
+        <InlineCheck {...quickCheckQuestions[0]} />
 
-          {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-6 w-6 text-yellow-400" />
-                Learning Outcomes
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <p>By the end of this section, you should be able to:</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    Understand and differentiate CPC, ADS, SELV, and PELV
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    Identify correct applications for each protective measure
-                  </li>
-                </ul>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    Learn the role of protective devices in ensuring safety
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    Apply these concepts in practical installation scenarios
-                  </li>
+        {/* Section 02: ADS */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            ADS - Automatic Disconnection of Supply
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Automatic Disconnection of Supply (ADS) is the most common protective measure used in electrical installations. It combines basic protection (preventing contact with live parts) and fault protection (protection during fault conditions).
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-3">How ADS Works</p>
+              <div className="grid grid-cols-3 gap-3 text-center text-sm">
+                <div className="p-3 rounded bg-transparent border border-white/10">
+                  <p className="font-medium text-white mb-1">1. Normal Operation</p>
+                  <p className="text-white/90 text-xs">Basic protection prevents contact with live parts</p>
+                </div>
+                <div className="p-3 rounded bg-transparent border border-orange-500/30">
+                  <p className="font-medium text-white mb-1">2. Fault Occurs</p>
+                  <p className="text-white/90 text-xs">Current flows through CPC creating fault loop</p>
+                </div>
+                <div className="p-3 rounded bg-transparent border border-green-500/30">
+                  <p className="font-medium text-white mb-1">3. Auto Disconnection</p>
+                  <p className="text-white/90 text-xs">Protective device operates within required time</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">ADS Components</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Basic protection:</strong> Insulation, barriers, enclosures</li>
+                  <li><strong>Fault protection:</strong> Automatic disconnection when fault occurs</li>
+                  <li><strong>Protective devices:</strong> MCBs, RCDs, or fuses</li>
+                  <li><strong>Earthing system:</strong> Provides fault current return path</li>
                 </ul>
               </div>
-            </CardContent>
-          </Card>
-
-          {/* CPC - Circuit Protective Conductor */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Cable className="h-6 w-6 text-yellow-400" />
-                CPC - Circuit Protective Conductor
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <p className="text-base leading-relaxed">
-                The Circuit Protective Conductor (CPC) is fundamental to electrical safety. It provides the path for fault current to return to the source, enabling automatic disconnection when dangerous faults occur.
-              </p>
-
-              <div className="bg-card p-4 rounded-lg">
-                <h4 className="text-yellow-400 font-semibold mb-3">Key Characteristics of CPC</h4>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  <ul className="text-sm space-y-2">
-                    <li>• <strong>Primary function:</strong> Carries fault current safely back to source</li>
-                    <li>• <strong>Identification:</strong> Green and yellow insulation</li>
-                    <li>• <strong>Sizing:</strong> Based on fault current and disconnection time</li>
-                    <li>• <strong>Continuity:</strong> Must be continuous throughout circuit</li>
-                  </ul>
-                  <ul className="text-sm space-y-2">
-                    <li>• <strong>Connection:</strong> Links all exposed metalwork</li>
-                    <li>• <strong>Testing:</strong> Requires continuity verification</li>
-                    <li>• <strong>Protection:</strong> Cannot be switched or fused</li>
-                    <li>• <strong>Materials:</strong> Copper or appropriate conductor</li>
-                  </ul>
-                </div>
+              <div>
+                <p className="text-sm font-medium text-red-400/80 mb-2">Disconnection Times</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Final circuits ≤32A:</strong> 0.4 seconds maximum</li>
+                  <li><strong>Distribution circuits:</strong> 5 seconds maximum</li>
+                  <li><strong>Special locations:</strong> Reduced times (e.g., 0.04s)</li>
+                  <li><strong>TT systems:</strong> RCD required, typically 30mA</li>
+                </ul>
               </div>
+            </div>
+          </div>
+        </section>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="bg-green-600/10 p-4 rounded-lg border border-green-600/30">
-                  <h5 className="text-white font-semibold mb-3">CPC Functions</h5>
-                  <ul className="text-sm space-y-2">
-                    <li>• Provides fault current return path</li>
-                    <li>• Enables automatic disconnection</li>
-                    <li>• Maintains safe potential on metalwork</li>
-                    <li>• Facilitates protective device operation</li>
-                    <li>• Prevents dangerous voltages on equipment</li>
-                  </ul>
-                </div>
+        {/* Section 03: SELV and PELV */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            SELV and PELV - Extra Low Voltage Systems
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              SELV (Separated Extra Low Voltage) and PELV (Protective Extra Low Voltage) are special protective measures using extra low voltage (typically not exceeding 50V AC or 120V DC) to provide safety.
+            </p>
 
-                <div className="bg-yellow-400/10 p-4 rounded-lg border border-blue-600/30">
-                  <h5 className="text-white font-semibold mb-3">CPC Requirements</h5>
-                  <ul className="text-sm space-y-2">
-                    <li>• Minimum 1.5mm² for fixed wiring</li>
-                    <li>• Cross-sectional area calculations required</li>
-                    <li>• Must withstand fault current without damage</li>
-                    <li>• Continuous electrical connection essential</li>
-                    <li>• Proper termination at all points</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* ADS - Automatic Disconnection of Supply */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Zap className="h-6 w-6 text-yellow-400" />
-                ADS - Automatic Disconnection of Supply
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <p className="text-base leading-relaxed">
-                Automatic Disconnection of Supply (ADS) is the most common protective measure used in electrical installations. It combines basic protection (preventing contact with live parts) and fault protection (protection during fault conditions).
-              </p>
-
-              <div className="bg-card p-4 rounded-lg">
-                <h4 className="text-yellow-400 font-semibold mb-3">How ADS Works</h4>
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="bg-yellow-400/10 p-3 rounded-lg text-center">
-                      <p className="text-white font-semibold text-sm mb-1">1. Normal Operation</p>
-                      <p className="text-xs">Basic protection prevents contact with live parts</p>
-                    </div>
-                    <div className="bg-orange-600/10 p-3 rounded-lg text-center">
-                      <p className="text-white font-semibold text-sm mb-1">2. Fault Occurs</p>
-                      <p className="text-xs">Current flows through CPC creating fault loop</p>
-                    </div>
-                    <div className="bg-green-600/10 p-3 rounded-lg text-center">
-                      <p className="text-white font-semibold text-sm mb-1">3. Auto Disconnection</p>
-                      <p className="text-xs">Protective device operates within required time</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div>
-                  <h4 className="text-white font-semibold text-lg mb-4">ADS Components</h4>
-                  <div className="space-y-3">
-                    <div className="bg-purple-600/10 p-3 rounded-lg">
-                      <h5 className="text-white font-semibold text-sm">Basic Protection</h5>
-                      <p className="text-xs mt-1">Insulation, barriers, or enclosures prevent contact with live parts</p>
-                    </div>
-                    <div className="bg-purple-600/10 p-3 rounded-lg">
-                      <h5 className="text-white font-semibold text-sm">Fault Protection</h5>
-                      <p className="text-xs mt-1">Automatic disconnection when fault occurs</p>
-                    </div>
-                    <div className="bg-purple-600/10 p-3 rounded-lg">
-                      <h5 className="text-white font-semibold text-sm">Protective Devices</h5>
-                      <p className="text-xs mt-1">MCBs, RCDs, or fuses provide disconnection</p>
-                    </div>
-                    <div className="bg-purple-600/10 p-3 rounded-lg">
-                      <h5 className="text-white font-semibold text-sm">Earthing System</h5>
-                      <p className="text-xs mt-1">Provides fault current return path</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="text-white font-semibold text-lg mb-4">Disconnection Times</h4>
-                  <div className="space-y-3">
-                    <div className="bg-red-600/10 p-3 rounded-lg">
-                      <h5 className="text-white font-semibold text-sm">Final Circuits ≤32A</h5>
-                      <p className="text-xs mt-1">0.4 seconds maximum disconnection time</p>
-                    </div>
-                    <div className="bg-red-600/10 p-3 rounded-lg">
-                      <h5 className="text-white font-semibold text-sm">Distribution Circuits</h5>
-                      <p className="text-xs mt-1">5 seconds maximum disconnection time</p>
-                    </div>
-                    <div className="bg-red-600/10 p-3 rounded-lg">
-                      <h5 className="text-white font-semibold text-sm">Special Locations</h5>
-                      <p className="text-xs mt-1">Reduced times may apply (e.g., 0.04s for some areas)</p>
-                    </div>
-                    <div className="bg-red-600/10 p-3 rounded-lg">
-                      <h5 className="text-white font-semibold text-sm">TT Systems</h5>
-                      <p className="text-xs mt-1">RCD required - typically 30mA for socket outlets</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* SELV and PELV */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Shield className="h-6 w-6 text-yellow-400" />
-                SELV and PELV - Extra Low Voltage Systems
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <p className="text-base leading-relaxed">
-                SELV (Separated Extra Low Voltage) and PELV (Protective Extra Low Voltage) are special protective measures using extra low voltage (typically not exceeding 50V AC or 120V DC) to provide safety.
-              </p>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div>
-                  <h4 className="text-white font-semibold text-lg mb-4">SELV - Separated Extra Low Voltage</h4>
-                  <div className="bg-yellow-400/10 p-4 rounded-lg border border-blue-600/30">
-                    <div className="space-y-3">
-                      <div>
-                        <h5 className="text-white font-semibold text-sm mb-2">Key Characteristics</h5>
-                        <ul className="text-xs space-y-1">
-                          <li>• Complete electrical separation from earth</li>
-                          <li>• No part may be connected to earth</li>
-                          <li>• Maximum 50V AC / 120V DC under normal conditions</li>
-                          <li>• Requires isolation transformer or battery supply</li>
-                          <li>• No basic or fault protection needed</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="text-white font-semibold text-sm mb-2">Typical Applications</h5>
-                        <ul className="text-xs space-y-1">
-                          <li>• Bathroom shaver sockets</li>
-                          <li>• Swimming pool lighting</li>
-                          <li>• Portable tools in hazardous areas</li>
-                          <li>• Medical equipment in patient areas</li>
-                          <li>• Emergency lighting systems</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="text-white font-semibold text-lg mb-4">PELV - Protective Extra Low Voltage</h4>
-                  <div className="bg-green-600/10 p-4 rounded-lg border border-green-600/30">
-                    <div className="space-y-3">
-                      <div>
-                        <h5 className="text-white font-semibold text-sm mb-2">Key Characteristics</h5>
-                        <ul className="text-xs space-y-1">
-                          <li>• Earthing is permitted</li>
-                          <li>• May be connected to earth or CPC</li>
-                          <li>• Maximum 50V AC / 120V DC under normal conditions</li>
-                          <li>• Similar safety level to SELV</li>
-                          <li>• More flexible installation requirements</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="text-white font-semibold text-sm mb-2">Typical Applications</h5>
-                        <ul className="text-xs space-y-1">
-                          <li>• Fire alarm systems</li>
-                          <li>• Security systems</li>
-                          <li>• Telecommunications equipment</li>
-                          <li>• Computer network systems</li>
-                          <li>• Garden lighting installations</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-card p-4 rounded-lg">
-                <h4 className="text-yellow-400 font-semibold mb-3">SELV vs PELV Comparison</h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div>
-                    <h5 className="text-white font-semibold text-sm mb-2">Earthing</h5>
-                    <p className="text-xs">SELV: No earth connection allowed</p>
-                    <p className="text-xs">PELV: Earth connection permitted</p>
-                  </div>
-                  <div>
-                    <h5 className="text-white font-semibold text-sm mb-2">Flexibility</h5>
-                    <p className="text-xs">SELV: More restrictive installation</p>
-                    <p className="text-xs">PELV: More flexible requirements</p>
-                  </div>
-                  <div>
-                    <h5 className="text-white font-semibold text-sm mb-2">Safety Level</h5>
-                    <p className="text-xs">SELV: Highest level of safety</p>
-                    <p className="text-xs">PELV: Equivalent safety level</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Protective Devices */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Settings className="h-6 w-6 text-yellow-400" />
-                Protective Devices - MCBs, RCDs, Fuses
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <p className="text-base leading-relaxed">
-                Protective devices are essential components that detect abnormal conditions and automatically disconnect circuits to prevent danger. Each type serves specific protective functions.
-              </p>
-
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div>
-                  <h4 className="text-white font-semibold text-lg mb-4">MCBs (Miniature Circuit Breakers)</h4>
-                  <div className="bg-yellow-400/10 p-4 rounded-lg border border-blue-600/30">
-                    <div className="space-y-3">
-                      <div>
-                        <h5 className="text-white font-semibold text-sm mb-2">Primary Functions</h5>
-                        <ul className="text-xs space-y-1">
-                          <li>• Overcurrent protection</li>
-                          <li>• Short circuit protection</li>
-                          <li>• Manual isolation</li>
-                          <li>• Indication of tripped state</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="text-white font-semibold text-sm mb-2">Characteristics</h5>
-                        <ul className="text-xs space-y-1">
-                          <li>• Type B, C, D curves available</li>
-                          <li>• Ratings: 6A to 125A typical</li>
-                          <li>• Breaking capacity: 6kA to 25kA</li>
-                          <li>• Reusable after tripping</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="text-white font-semibold text-lg mb-4">RCDs (Residual Current Devices)</h4>
-                  <div className="bg-green-600/10 p-4 rounded-lg border border-green-600/30">
-                    <div className="space-y-3">
-                      <div>
-                        <h5 className="text-white font-semibold text-sm mb-2">Primary Functions</h5>
-                        <ul className="text-xs space-y-1">
-                          <li>• Earth leakage detection</li>
-                          <li>• Additional protection against electric shock</li>
-                          <li>• Fire protection (high sensitivity)</li>
-                          <li>• Protects against earth fault currents</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="text-white font-semibold text-sm mb-2">Characteristics</h5>
-                        <ul className="text-xs space-y-1">
-                          <li>• Ratings: 30mA, 100mA, 300mA</li>
-                          <li>• Types: AC, A, F, B</li>
-                          <li>• Test button for functional checks</li>
-                          <li>• Time delay options available</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="text-white font-semibold text-lg mb-4">Fuses</h4>
-                  <div className="bg-orange-600/10 p-4 rounded-lg border border-orange-600/30">
-                    <div className="space-y-3">
-                      <div>
-                        <h5 className="text-white font-semibold text-sm mb-2">Primary Functions</h5>
-                        <ul className="text-xs space-y-1">
-                          <li>• Overcurrent protection</li>
-                          <li>• Short circuit protection</li>
-                          <li>• Discrimination with other devices</li>
-                          <li>• High breaking capacity</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="text-white font-semibold text-sm mb-2">Characteristics</h5>
-                        <ul className="text-xs space-y-1">
-                          <li>• Types: BS 88, BS 1361, BS 3036</li>
-                          <li>• Single use - must be replaced</li>
-                          <li>• Excellent current limitation</li>
-                          <li>• No maintenance required</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-card p-4 rounded-lg">
-                <h4 className="text-yellow-400 font-semibold mb-3">Device Selection Considerations</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <ul className="text-sm space-y-2">
-                    <li>• <strong>Load characteristics:</strong> Inductive, resistive, motor loads</li>
-                    <li>• <strong>Fault levels:</strong> Available fault current at installation point</li>
-                    <li>• <strong>Discrimination:</strong> Selective operation with upstream devices</li>
-                    <li>• <strong>Environmental conditions:</strong> Temperature, humidity, corrosion</li>
-                  </ul>
-                  <ul className="text-sm space-y-2">
-                    <li>• <strong>Accessibility:</strong> Location for testing and maintenance</li>
-                    <li>• <strong>Cost considerations:</strong> Initial cost vs running costs</li>
-                    <li>• <strong>Standards compliance:</strong> BS EN 60898, BS EN 61009</li>
-                    <li>• <strong>Future expansion:</strong> Provision for additional circuits</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Real World Scenario */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-6 w-6 text-orange-500" />
-                Real World Scenario
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <div className="bg-orange-600/10 p-4 rounded-lg border border-orange-600/30">
-                <h4 className="text-white font-semibold mb-3">Swimming Pool Installation Challenge</h4>
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div className="p-4 rounded-lg bg-transparent border border-elec-yellow/30">
+                <p className="text-sm font-medium text-elec-yellow mb-3">SELV - Separated Extra Low Voltage</p>
                 <div className="space-y-3">
-                  <p className="text-sm">
-                    <strong>Situation:</strong> An electrician needs to install lighting around a swimming pool. The area is classified as Zone 1 (area likely to be wet) and requires special consideration for electrical safety.
-                  </p>
-                  
-                  <p className="text-sm">
-                    <strong>Challenge:</strong> Normal mains voltage (230V) cannot be used in Zone 1 due to the increased risk of electric shock in wet conditions.
-                  </p>
-                  
-                  <p className="text-sm">
-                    <strong>Solution Applied:</strong>
-                  </p>
-                  <ul className="text-xs space-y-1 ml-4">
+                  <div>
+                    <p className="text-xs font-medium text-white mb-1">Key Characteristics:</p>
+                    <ul className="text-xs space-y-0.5">
+                      <li>• Complete electrical separation from earth</li>
+                      <li>• No part may be connected to earth</li>
+                      <li>• Maximum 50V AC / 120V DC</li>
+                      <li>• Requires isolation transformer or battery</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-white mb-1">Typical Applications:</p>
+                    <ul className="text-xs space-y-0.5">
+                      <li>• Bathroom shaver sockets</li>
+                      <li>• Swimming pool lighting</li>
+                      <li>• Portable tools in hazardous areas</li>
+                      <li>• Medical equipment in patient areas</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-lg bg-transparent border border-green-500/30">
+                <p className="text-sm font-medium text-green-400 mb-3">PELV - Protective Extra Low Voltage</p>
+                <div className="space-y-3">
+                  <div>
+                    <p className="text-xs font-medium text-white mb-1">Key Characteristics:</p>
+                    <ul className="text-xs space-y-0.5">
+                      <li>• Earthing is permitted</li>
+                      <li>• May be connected to earth or CPC</li>
+                      <li>• Maximum 50V AC / 120V DC</li>
+                      <li>• More flexible installation requirements</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-white mb-1">Typical Applications:</p>
+                    <ul className="text-xs space-y-0.5">
+                      <li>• Fire alarm systems</li>
+                      <li>• Security systems</li>
+                      <li>• Telecommunications equipment</li>
+                      <li>• Garden lighting installations</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-lg bg-transparent border border-white/10">
+              <p className="text-sm font-medium text-white mb-3">SELV vs PELV Comparison</p>
+              <div className="grid grid-cols-3 gap-4 text-xs">
+                <div>
+                  <p className="font-medium text-elec-yellow/80 mb-1">Earthing</p>
+                  <p>SELV: No earth connection allowed</p>
+                  <p>PELV: Earth connection permitted</p>
+                </div>
+                <div>
+                  <p className="font-medium text-elec-yellow/80 mb-1">Flexibility</p>
+                  <p>SELV: More restrictive installation</p>
+                  <p>PELV: More flexible requirements</p>
+                </div>
+                <div>
+                  <p className="font-medium text-elec-yellow/80 mb-1">Safety Level</p>
+                  <p>SELV: Highest level of safety</p>
+                  <p>PELV: Equivalent safety level</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 04: Protective Devices */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Protective Devices - MCBs, RCDs, Fuses
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Protective devices are essential components that detect abnormal conditions and automatically disconnect circuits to prevent danger. Each type serves specific protective functions.
+            </p>
+
+            <div className="grid sm:grid-cols-3 gap-4 my-6">
+              <div className="p-4 rounded-lg bg-transparent border border-white/10">
+                <p className="text-sm font-medium text-elec-yellow mb-2">MCBs</p>
+                <p className="text-xs text-white/80 mb-2">Miniature Circuit Breakers</p>
+                <div className="space-y-2">
+                  <div>
+                    <p className="text-xs font-medium text-white mb-1">Functions:</p>
+                    <ul className="text-xs space-y-0.5">
+                      <li>• Overcurrent protection</li>
+                      <li>• Short circuit protection</li>
+                      <li>• Manual isolation</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-white mb-1">Types:</p>
+                    <ul className="text-xs space-y-0.5">
+                      <li>• Type B, C, D curves</li>
+                      <li>• 6A to 125A ratings</li>
+                      <li>• Reusable after tripping</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-lg bg-transparent border border-white/10">
+                <p className="text-sm font-medium text-green-400 mb-2">RCDs</p>
+                <p className="text-xs text-white/80 mb-2">Residual Current Devices</p>
+                <div className="space-y-2">
+                  <div>
+                    <p className="text-xs font-medium text-white mb-1">Functions:</p>
+                    <ul className="text-xs space-y-0.5">
+                      <li>• Earth leakage detection</li>
+                      <li>• Additional shock protection</li>
+                      <li>• Fire protection (300mA)</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-white mb-1">Ratings:</p>
+                    <ul className="text-xs space-y-0.5">
+                      <li>• 30mA, 100mA, 300mA</li>
+                      <li>• Types: AC, A, F, B</li>
+                      <li>• Test button for checks</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-lg bg-transparent border border-white/10">
+                <p className="text-sm font-medium text-orange-400 mb-2">Fuses</p>
+                <p className="text-xs text-white/80 mb-2">Cartridge and Rewirable</p>
+                <div className="space-y-2">
+                  <div>
+                    <p className="text-xs font-medium text-white mb-1">Functions:</p>
+                    <ul className="text-xs space-y-0.5">
+                      <li>• Overcurrent protection</li>
+                      <li>• Short circuit protection</li>
+                      <li>• High breaking capacity</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-white mb-1">Types:</p>
+                    <ul className="text-xs space-y-0.5">
+                      <li>• BS 88, BS 1361, BS 3036</li>
+                      <li>• Single use - must replace</li>
+                      <li>• Excellent current limiting</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Section 05: Real World Scenario */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Real World Scenario
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <div className="p-4 rounded-lg bg-transparent border border-orange-500/30">
+              <p className="text-sm font-medium text-orange-400 mb-3">Swimming Pool Installation Challenge</p>
+              <div className="text-sm space-y-3">
+                <p><strong>Situation:</strong> An electrician needs to install lighting around a swimming pool. The area is classified as Zone 1 (area likely to be wet) and requires special consideration for electrical safety.</p>
+
+                <p><strong>Challenge:</strong> Normal mains voltage (230V) cannot be used in Zone 1 due to the increased risk of electric shock in wet conditions.</p>
+
+                <div>
+                  <p className="font-medium mb-1">Solution Applied:</p>
+                  <ul className="text-xs space-y-0.5 ml-4">
                     <li>• SELV system chosen for maximum safety</li>
                     <li>• 12V LED lighting installed</li>
                     <li>• Safety isolating transformer located outside zones</li>
                     <li>• No earthing of SELV circuit (complete separation)</li>
                     <li>• IP67 rated luminaires for water protection</li>
                   </ul>
-                  
-                  <p className="text-sm">
-                    <strong>Why This Works:</strong>
-                  </p>
-                  <ul className="text-xs space-y-1 ml-4">
+                </div>
+
+                <div>
+                  <p className="font-medium mb-1">Why This Works:</p>
+                  <ul className="text-xs space-y-0.5 ml-4">
                     <li>• 12V cannot cause dangerous shock even when wet</li>
                     <li>• Complete separation prevents earth fault currents</li>
                     <li>• No protective devices needed for SELV circuit</li>
                     <li>• Compliance with BS 7671 Section 702 (Swimming Pools)</li>
-                    <li>• Safe operation in wet conditions</li>
                   </ul>
-                  
-                  <p className="text-sm">
-                    <strong>Alternative Considered:</strong> PELV could be used with earthing, but SELV provides higher level of safety in this wet environment.
-                  </p>
                 </div>
+
+                <p><strong>Alternative Considered:</strong> PELV could be used with earthing, but SELV provides higher level of safety in this wet environment.</p>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+        </section>
 
-          {/* Summary */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-6 w-6 text-green-500" />
-                Section Summary
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <p className="text-base leading-relaxed">
-                Understanding these key terms is essential for electrical safety and compliance. Each serves a specific protective function and must be correctly applied based on installation requirements and environmental conditions.
-              </p>
-              
-              <div className="bg-card p-4 rounded-lg">
-                <h4 className="text-yellow-400 font-semibold mb-3">Key Takeaways</h4>
-                <ul className="space-y-2 text-sm">
-                  <li>• CPC provides essential fault current path for automatic disconnection</li>
-                  <li>• ADS is the most common protective measure combining basic and fault protection</li>
-                  <li>• SELV offers highest safety through complete separation from earth</li>
-                  <li>• PELV provides equivalent safety with more flexible earthing options</li>
-                  <li>• MCBs, RCDs, and fuses each serve specific protective functions</li>
-                  <li>• Correct device selection depends on load, environment, and safety requirements</li>
-                </ul>
+        {/* Common Questions */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
               </div>
-            </CardContent>
-          </Card>
+            ))}
+          </div>
+        </section>
 
-          {/* Quiz Section */}
-          <BS7671EmbeddedQuiz 
-            questions={quizQuestions}
-            title="Key Terms Quiz"
-            description="Test your understanding of essential BS 7671 terminology and protective measures."
-          />
-
-          {/* Navigation */}
-          <div className="flex flex-col sm:flex-row justify-between gap-4">
-            <Link to="../bs7671-module-2-section-1">
-              <Button variant="outline" className="border-gray-600 text-white hover:bg-card w-full sm:w-auto">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="../bs7671-module-2-section-3">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600 w-full sm:w-auto">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+        {/* Quick Reference */}
+        <div className="mt-6 p-5 rounded-lg bg-transparent border border-white/10">
+          <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+            <div>
+              <p className="font-medium text-elec-yellow/80 mb-1">Key Protective Measures</p>
+              <ul className="space-y-0.5">
+                <li>CPC – fault current path (green/yellow)</li>
+                <li>ADS – most common protective measure</li>
+                <li>SELV – ≤50V AC, no earth connection</li>
+                <li>PELV – ≤50V AC, earth permitted</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-medium text-elec-yellow/80 mb-1">Device Selection</p>
+              <ul className="space-y-0.5">
+                <li>MCB – overcurrent and short circuit</li>
+                <li>RCD – earth leakage detection</li>
+                <li>Fuse – overcurrent with high breaking capacity</li>
+                <li>RCBO – combined MCB and RCD</li>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
+
+        {/* Quiz Section */}
+        <section className="mb-10 mt-12">
+          <SingleQuestionQuiz
+            question={quizQuestion.question}
+            options={quizQuestion.options}
+            correctAnswer={quizQuestion.correctAnswer}
+            explanation={quizQuestion.explanation}
+          />
+        </section>
+
+        {/* Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../bs7671-module-2-section-1">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../bs7671-module-2-section-3">
+              Next: Amendment 2 & 3 Definitions
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

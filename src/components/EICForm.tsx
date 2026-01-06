@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useEICTabs } from '@/hooks/useEICTabs';
 import { useEICObservations } from '@/hooks/useEICObservations';
 import { useEICAutoSave } from '@/hooks/useEICAutoSave';
@@ -14,6 +14,7 @@ import { checkAllResultsCompliance } from '@/utils/autoRegChecker';
 import EICFormHeader from './eic/EICFormHeader';
 import EICFormTabs from './eic/EICFormTabs';
 import StartNewEICRDialog from './StartNewEICRDialog';
+import { BoardScanFlow } from './testing/BoardScanFlow';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Save, Upload, AlertTriangle, Bell } from 'lucide-react';
@@ -120,6 +121,7 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
   const [currentReportId, setCurrentReportId] = useState<string | null>(initialReportId || null);
   const [authChecked, setAuthChecked] = useState(false);
   const [showStartNewDialog, setShowStartNewDialog] = useState(false);
+  const [showBoardScan, setShowBoardScan] = useState(false);
 
   // Generate and manage temporary report ID for photo uploads
   const { effectiveReportId } = useReportId({
@@ -306,6 +308,62 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
   const handleStartNew = () => {
     setShowStartNewDialog(true);
   };
+
+  // Handle board scan completion - populate circuits
+  const handleBoardScanComplete = useCallback((data: {
+    board: any;
+    circuits: any[];
+    images: string[];
+  }) => {
+    // Convert detected circuits to test results format
+    const newCircuits = data.circuits.map((circuit, index) => ({
+      id: `circuit-${Date.now()}-${index}`,
+      circuitNumber: circuit.index?.toString() || String(index + 1),
+      circuitDesignation: `C${circuit.index?.toString() || String(index + 1)}`,
+      circuitDescription: circuit.label_text || `Circuit ${index + 1}`,
+      circuitType: circuit.circuit_type || '',
+      type: circuit.circuit_type || '',
+      protectiveDeviceType: circuit.device?.type || 'MCB',
+      protectiveDeviceRating: circuit.device?.rating_amps?.toString() || '',
+      protectiveDeviceCurve: circuit.device?.curve || '',
+      phaseType: circuit.phase === '3P' ? '3P' : '1P' as '1P' | '3P',
+      // Default test values
+      r1r2: '',
+      r2: '',
+      zs: '',
+      rcdRating: '',
+      rcdType: '',
+      polarity: '',
+      insulationTestVoltage: '500V',
+      insulationLiveNeutral: '',
+      insulationLiveEarth: '',
+      autoFilled: true,
+      notes: `AI detected circuit - please verify`,
+    }));
+
+    // Merge with existing circuits
+    const existingCircuits = formData.scheduleOfTests || [];
+    handleUpdate('scheduleOfTests', [...existingCircuits, ...newCircuits]);
+
+    // Store board info
+    if (data.board) {
+      handleUpdate('boardBrand', data.board.brand || '');
+      handleUpdate('boardModel', data.board.model || '');
+      handleUpdate('mainSwitchRating', data.board.main_switch_rating || '');
+    }
+
+    // Store board images
+    if (data.images?.length > 0) {
+      handleUpdate('boardImages', data.images);
+    }
+
+    setShowBoardScan(false);
+
+    toast({
+      title: 'Board Scanned Successfully',
+      description: `${newCircuits.length} circuits detected and added to schedule.`,
+    });
+  }, [formData.scheduleOfTests, handleUpdate, toast]);
 
   const confirmStartNew = async () => {
     clearAutoSave();
@@ -710,6 +768,35 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
     onSyncToInspectionItem: handleSyncObservationToInspectionItem
   };
 
+  // Calculate completed sections for progress
+  const completedSections = new Set<number>();
+  if (formData.clientName && formData.installationAddress && formData.phases && formData.earthingArrangement) {
+    completedSections.add(0);
+  }
+  if (formData.inspectionItems?.length > 0) {
+    completedSections.add(1);
+  }
+  if (formData.scheduleOfTests?.length > 0) {
+    completedSections.add(2);
+  }
+  if (formData.designerName && formData.constructorName && formData.inspectorName) {
+    completedSections.add(3);
+  }
+
+  // If board scan is open, render full-screen scanner
+  if (showBoardScan) {
+    return (
+      <BoardScanFlow
+        onComplete={handleBoardScanComplete}
+        onCancel={() => setShowBoardScan(false)}
+        hints={{
+          board_type: formData.installationType === 'commercial' ? 'commercial' : 'domestic',
+          is_three_phase: formData.phases === '3' || formData.phases === 'three',
+        }}
+      />
+    );
+  }
+
   return (
     <>
       <div className="p-2 sm:p-4 space-y-3 sm:space-y-6">
@@ -723,6 +810,9 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
           syncState={syncState}
           isOnline={isOnline}
           isAuthenticated={isAuthenticated}
+          currentTab={currentTabIndex}
+          completedSections={completedSections}
+          onOpenBoardScan={() => setShowBoardScan(true)}
         />
         
         <div className="px-2 md:px-4">

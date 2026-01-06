@@ -1,685 +1,393 @@
-import { ArrowLeft, ArrowRight, Archive, BookOpen, Target, AlertTriangle, CheckCircle, Lightbulb, FileText, Users, Calendar, Shield, Database, Lock } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { EVChargingModule7Section4Quiz } from '@/components/upskilling/quiz/EVChargingModule7Section4Quiz';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
+import useSEO from "@/hooks/useSEO";
+
+const quickCheckQuestions = [
+  {
+    id: "evcharging-m7s4-check1",
+    question: "How long must installation records be retained under OZEV requirements?",
+    options: ["3 years", "5 years", "7 years", "10 years minimum"],
+    correctIndex: 3,
+    explanation: "Installation records must be retained for a minimum of 10 years. Financial records require 7 years (HMRC), and certain health and safety records must be kept for 40 years."
+  },
+  {
+    id: "evcharging-m7s4-check2",
+    question: "What is the recommended Recovery Time Objective (RTO) for critical systems?",
+    options: ["24 hours", "12 hours", "4 hours", "1 hour"],
+    correctIndex: 2,
+    explanation: "Critical systems should have an RTO of 4 hours, meaning you can recover operations within that timeframe. Recovery Point Objective (RPO) should be maximum 1 hour data loss."
+  },
+  {
+    id: "evcharging-m7s4-check3",
+    question: "Which backup strategy is recommended for business records?",
+    options: ["Single backup only", "3-2-1 rule", "Monthly backups", "Cloud only"],
+    correctIndex: 1,
+    explanation: "The 3-2-1 backup rule means: 3 copies of data, on 2 different media types, with 1 copy stored off-site. This provides robust protection against data loss."
+  }
+];
+
+const faqs = [
+  {
+    question: "What documents should be readily available for an audit?",
+    answer: "Installation certificates, customer contracts, equipment specifications, test results, training records, insurance certificates, complaint handling documentation, and quality management procedures should all be easily accessible."
+  },
+  {
+    question: "How often are OZEV audits conducted?",
+    answer: "Initial approval audit, annual surveillance audits, random spot checks, and renewal audits every 3 years. Customer complaint investigations may also trigger additional audits."
+  },
+  {
+    question: "What are the key GDPR requirements for EV installers?",
+    answer: "Lawful processing with customer consent, purpose limitation, data minimisation, accuracy, storage limitation, and security. You must also manage subject access requests and report data breaches."
+  },
+  {
+    question: "What happens if records are unavailable during an audit?",
+    answer: "Missing records can result in non-conformities, delayed approval renewal, or in serious cases, suspension of approved installer status. Always maintain comprehensive, organised documentation."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+  question: "An installer is preparing for their first OZEV audit in 4 weeks. What should be their priority action?",
+  options: [
+    "Wait until the week before to gather documents",
+    "Conduct internal document review and organise archives",
+    "Focus only on recent installations",
+    "Delete outdated records to simplify the audit"
+  ],
+  correctAnswer: 1,
+  explanation: "Comprehensive document review and organisation is critical. Verify completeness of all project files, check document versions are current, organise both physical and digital archives, and prepare a document index."
+  }
+];
 
 const EVChargingModule7Section4 = () => {
-  useEffect(() => {
-    document.title = 'Audit-Readiness and Record-Keeping Best Practice - EV Charging Module 7 Section 4';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Master comprehensive record-keeping systems and audit preparation for OZEV compliance and business excellence in EV charging installations.');
-    }
-  }, []);
+  useSEO({
+    title: "Audit-Readiness and Record-Keeping | EV Charging Module 7.4",
+    description: "Master comprehensive record-keeping systems and audit preparation for OZEV compliance and business excellence in EV charging installations."
+  });
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
-        <Link to="../ev-charging-module-7">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 7
+            <Link to="../ev-charging-module-7">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 7
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            <Archive className="h-8 w-8 text-yellow-400" />
-            <Badge 
-              variant="secondary" 
-              className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold text-sm px-3 py-1 border-0"
-            >
-              Module 7 - Section 4
-            </Badge>
+        </div>
+      </div>
+
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Page Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 7.4</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
-            Audit-Readiness and Record-Keeping Best Practice
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Audit-Readiness and Record-Keeping
           </h1>
-          <p className="text-lg sm:text-xl text-gray-400 max-w-3xl">
+          <p className="text-white/80">
             Maintaining comprehensive records for compliance and audit excellence
           </p>
-        </div>
-      </header>
+        </header>
 
-      {/* Main Content */}
-      <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="space-y-4 sm:space-y-6">
-
-          {/* Introduction */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <BookOpen className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Introduction</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                Comprehensive record-keeping and audit-readiness are fundamental requirements for OZEV approved installers. 
-                This section provides detailed guidance on establishing robust documentation systems, maintaining compliance 
-                records, and preparing for both routine and investigative audits.
-              </p>
-              <p>
-                Effective record management not only ensures regulatory compliance but also protects business interests, 
-                supports quality assurance, enables continuous improvement, and demonstrates professionalism to clients 
-                and regulatory bodies. The systems and processes covered here form the backbone of a successful, compliant installation business.
-              </p>
-              
-              <div className="bg-card/80 p-4 rounded-lg">
-                <h4 className="font-semibold text-white mb-2">Comprehensive Coverage</h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Legal and regulatory record-keeping requirements</li>
-                  <li>• Document management systems and digital archiving</li>
-                  <li>• Audit preparation and response procedures</li>
-                  <li>• Quality assurance and performance monitoring</li>
-                  <li>• Data protection and information security</li>
-                  <li>• Business continuity and disaster recovery</li>
-                  <li>• Continuous improvement and lessons learned systems</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Learning Outcomes */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Target className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Learning Outcomes</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <p className="mb-4">Upon completion of this section, you will be able to:</p>
-              <ul className="space-y-2 list-disc list-inside">
-                <li>Establish comprehensive record-keeping systems for OZEV compliance</li>
-                <li>Prepare effectively for OZEV audits and inspections</li>
-                <li>Implement digital document management and archiving systems</li>
-                <li>Understand legal requirements for record retention and data protection</li>
-                <li>Develop quality assurance monitoring and reporting procedures</li>
-                <li>Create business continuity plans for record preservation</li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          {/* Legal and Regulatory Requirements */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Shield className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Legal and Regulatory Record-Keeping Requirements</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-4">
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="font-semibold text-white mb-2">OZEV Compliance Requirements</h4>
-                  <div className="grid md:grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <h5 className="font-semibold text-yellow-400 mb-1">Mandatory Records</h5>
-                      <ul className="space-y-1">
-                        <li>• Installation certificates for all projects</li>
-                        <li>• Customer contracts and agreements</li>
-                        <li>• Equipment specifications and warranties</li>
-                        <li>• Testing and commissioning results</li>
-                        <li>• Training and qualification records</li>
-                        <li>• Insurance certificates and renewals</li>
-                        <li>• Complaint handling documentation</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="font-semibold text-yellow-400 mb-1">Retention Periods</h5>
-                      <ul className="space-y-1">
-                        <li>• Installation records: 10 years minimum</li>
-                        <li>• Financial records: 7 years (HMRC requirement)</li>
-                        <li>• Training certificates: Duration of validity + 2 years</li>
-                        <li>• Insurance records: 7 years post-expiry</li>
-                        <li>• Customer contracts: 7 years post-completion</li>
-                        <li>• Audit records: 7 years minimum</li>
-                        <li>• Health and safety records: 40 years (certain types)</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="font-semibold text-white mb-2">Industry Standard Compliance</h4>
-                  <div className="grid md:grid-cols-3 gap-4 text-sm">
-                    <div>
-                      <h5 className="font-semibold text-yellow-400 mb-1">BS 7671 Requirements</h5>
-                      <ul className="space-y-1">
-                        <li>• Electrical Installation Certificates</li>
-                        <li>• Periodic inspection records</li>
-                        <li>• Test result documentation</li>
-                        <li>• Schedule of circuits</li>
-                        <li>• Risk assessment records</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="font-semibold text-yellow-400 mb-1">CDM Regulations</h5>
-                      <ul className="space-y-1">
-                        <li>• Pre-construction information</li>
-                        <li>• Construction phase plans</li>
-                        <li>• Health and safety files</li>
-                        <li>• Risk assessment documents</li>
-                        <li>• Method statements</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="font-semibold text-yellow-400 mb-1">ISO 9001 Quality</h5>
-                      <ul className="space-y-1">
-                        <li>• Quality manual and procedures</li>
-                        <li>• Internal audit records</li>
-                        <li>• Corrective action reports</li>
-                        <li>• Management review minutes</li>
-                        <li>• Customer satisfaction data</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Document Management Systems */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Database className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Digital Document Management Systems</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-4">
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="font-semibold text-white mb-2">System Architecture and Structure</h4>
-                  <div className="grid md:grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <h5 className="font-semibold text-yellow-400 mb-1">File Organisation Structure</h5>
-                      <ul className="space-y-1">
-                        <li>• Master folder: Company_Documents</li>
-                        <li>• Year folders: 2024, 2023, etc.</li>
-                        <li>• Project folders: ProjectRef_ClientName</li>
-                        <li>• Document categories: Pre-install, Installation, Post-install</li>
-                        <li>• Version control: Document_v1, Document_v2</li>
-                        <li>• Archive folder: Completed_Projects</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="font-semibold text-yellow-400 mb-1">Metadata and Tagging</h5>
-                      <ul className="space-y-1">
-                        <li>• Project reference numbers</li>
-                        <li>• Client name and contact details</li>
-                        <li>• Installation date and location</li>
-                        <li>• Equipment types and serial numbers</li>
-                        <li>• Installer name and qualifications</li>
-                        <li>• Document type and version</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="font-semibold text-white mb-2">Cloud Storage and Backup Solutions</h4>
-                  <div className="grid md:grid-cols-3 gap-4 text-sm">
-                    <div>
-                      <h5 className="font-semibold text-yellow-400 mb-1">Primary Storage</h5>
-                      <ul className="space-y-1">
-                        <li>• Cloud-based document management</li>
-                        <li>• Real-time synchronisation</li>
-                        <li>• Multi-device access</li>
-                        <li>• Automatic version control</li>
-                        <li>• Search functionality</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="font-semibold text-yellow-400 mb-1">Backup Strategy</h5>
-                      <ul className="space-y-1">
-                        <li>• 3-2-1 backup rule implementation</li>
-                        <li>• Daily automated backups</li>
-                        <li>• Off-site storage locations</li>
-                        <li>• Monthly backup testing</li>
-                        <li>• Recovery time objectives</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="font-semibold text-yellow-400 mb-1">Security Measures</h5>
-                      <ul className="space-y-1">
-                        <li>• End-to-end encryption</li>
-                        <li>• Multi-factor authentication</li>
-                        <li>• Access control and permissions</li>
-                        <li>• Audit trails and logging</li>
-                        <li>• Regular security updates</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Audit Preparation and Response */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <CheckCircle className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Audit Preparation and Response Procedures</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-4">
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="font-semibold text-white mb-2">Pre-Audit Preparation Checklist</h4>
-                  <div className="space-y-3">
-                    <div className="flex gap-4 items-start">
-                      <div className="bg-yellow-400 text-black w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">
-                        1
-                      </div>
-                      <div className="flex-1">
-                        <h5 className="font-semibold text-white mb-1">Document Review and Organisation</h5>
-                        <p className="text-sm mb-2">Comprehensive review of all records and documentation</p>
-                        <ul className="text-xs text-gray-400 space-y-1">
-                          <li>• Verify completeness of all project files</li>
-                          <li>• Check document versions and currency</li>
-                          <li>• Organise physical and digital archives</li>
-                          <li>• Prepare document index and register</li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div className="flex gap-4 items-start">
-                      <div className="bg-yellow-400 text-black w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">
-                        2
-                      </div>
-                      <div className="flex-1">
-                        <h5 className="font-semibold text-white mb-1">Compliance Verification</h5>
-                        <p className="text-sm mb-2">Systematic check of regulatory and standard compliance</p>
-                        <ul className="text-xs text-gray-400 space-y-1">
-                          <li>• Qualification and certification status</li>
-                          <li>• Insurance coverage and validity</li>
-                          <li>• Installation standard compliance</li>
-                          <li>• Customer satisfaction records</li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div className="flex gap-4 items-start">
-                      <div className="bg-yellow-400 text-black w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">
-                        3
-                      </div>
-                      <div className="flex-1">
-                        <h5 className="font-semibold text-white mb-1">Staff Briefing and Training</h5>
-                        <p className="text-sm mb-2">Prepare team for audit interaction and procedures</p>
-                        <ul className="text-xs text-gray-400 space-y-1">
-                          <li>• Audit process overview training</li>
-                          <li>• Document location and access procedures</li>
-                          <li>• Communication protocols during audit</li>
-                          <li>• Escalation procedures for issues</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="font-semibold text-white mb-2">During Audit Best Practices</h4>
-                  <div className="grid md:grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <h5 className="font-semibold text-yellow-400 mb-1">Professional Conduct</h5>
-                      <ul className="space-y-1">
-                        <li>• Designated audit liaison person</li>
-                        <li>• Prompt response to auditor requests</li>
-                        <li>• Honest and transparent communication</li>
-                        <li>• Professional workspace preparation</li>
-                        <li>• Refreshments and facilities provision</li>
-                        <li>• Escort and security procedures</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="font-semibold text-yellow-400 mb-1">Documentation Management</h5>
-                      <ul className="space-y-1">
-                        <li>• Rapid document retrieval systems</li>
-                        <li>• Controlled access to sensitive information</li>
-                        <li>• Document tracking and sign-out procedures</li>
-                        <li>• Digital access and demonstration capability</li>
-                        <li>• Backup systems availability</li>
-                        <li>• Progress tracking and reporting</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quality Assurance and Performance Monitoring */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Target className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Quality Assurance and Performance Monitoring</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-4">
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="font-semibold text-white mb-2">Key Performance Indicators (KPIs)</h4>
-                  <div className="grid md:grid-cols-3 gap-4 text-sm">
-                    <div>
-                      <h5 className="font-semibold text-yellow-400 mb-1">Installation Quality</h5>
-                      <ul className="space-y-1">
-                        <li>• First-time installation success rate: &gt;95%</li>
-                        <li>• Customer satisfaction score: &gt;4.5/5</li>
-                        <li>• Defect rate: &lt;2% of installations</li>
-                        <li>• Compliance score: 100%</li>
-                        <li>• Rework incidents: &lt;1%</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="font-semibold text-yellow-400 mb-1">Service Delivery</h5>
-                      <ul className="space-y-1">
-                        <li>• Response time: &lt;24 hours</li>
-                        <li>• Installation completion: Within agreed timeframe</li>
-                        <li>• Documentation submission: &lt;48 hours</li>
-                        <li>• Grant claim success rate: &gt;98%</li>
-                        <li>• Call-back rate: &lt;3%</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="font-semibold text-yellow-400 mb-1">Business Performance</h5>
-                      <ul className="space-y-1">
-                        <li>• Training compliance: 100%</li>
-                        <li>• Insurance validity: Current</li>
-                        <li>• Audit compliance: 100%</li>
-                        <li>• Customer retention: &gt;90%</li>
-                        <li>• Repeat business: &gt;30%</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="font-semibold text-white mb-2">Monitoring and Reporting Systems</h4>
-                  <div className="grid md:grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <h5 className="font-semibold text-yellow-400 mb-1">Data Collection</h5>
-                      <ul className="space-y-1">
-                        <li>• Automated installation tracking</li>
-                        <li>• Customer feedback systems</li>
-                        <li>• Financial performance monitoring</li>
-                        <li>• Compliance status dashboards</li>
-                        <li>• Quality incident logging</li>
-                        <li>• Training record updates</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="font-semibold text-yellow-400 mb-1">Reporting Frequency</h5>
-                      <ul className="space-y-1">
-                        <li>• Daily: Installation completion reports</li>
-                        <li>• Weekly: Performance dashboard updates</li>
-                        <li>• Monthly: KPI summary and trends</li>
-                        <li>• Quarterly: Management review reports</li>
-                        <li>• Annually: Strategic performance analysis</li>
-                        <li>• Ad-hoc: Incident and investigation reports</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Data Protection and Security */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Lock className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Data Protection and Information Security</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-4">
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="font-semibold text-white mb-2">GDPR Compliance Requirements</h4>
-                  <div className="grid md:grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <h5 className="font-semibold text-yellow-400 mb-1">Data Processing Principles</h5>
-                      <ul className="space-y-1">
-                        <li>• Lawfulness, fairness, and transparency</li>
-                        <li>• Purpose limitation and data minimisation</li>
-                        <li>• Accuracy and timely updates</li>
-                        <li>• Storage limitation and retention policies</li>
-                        <li>• Integrity and confidentiality</li>
-                        <li>• Accountability and documentation</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="font-semibold text-yellow-400 mb-1">Subject Rights Management</h5>
-                      <ul className="space-y-1">
-                        <li>• Right to information and access</li>
-                        <li>• Right to rectification and erasure</li>
-                        <li>• Right to restrict processing</li>
-                        <li>• Right to data portability</li>
-                        <li>• Right to object to processing</li>
-                        <li>• Breach notification procedures</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="font-semibold text-white mb-2">Information Security Framework</h4>
-                  <div className="grid md:grid-cols-3 gap-4 text-sm">
-                    <div>
-                      <h5 className="font-semibold text-yellow-400 mb-1">Access Control</h5>
-                      <ul className="space-y-1">
-                        <li>• Role-based access permissions</li>
-                        <li>• Multi-factor authentication</li>
-                        <li>• Regular access reviews</li>
-                        <li>• Privileged account management</li>
-                        <li>• Session timeout controls</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="font-semibold text-yellow-400 mb-1">Data Encryption</h5>
-                      <ul className="space-y-1">
-                        <li>• At-rest encryption standards</li>
-                        <li>• In-transit encryption protocols</li>
-                        <li>• Key management procedures</li>
-                        <li>• Certificate lifecycle management</li>
-                        <li>• Encryption algorithm updates</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="font-semibold text-yellow-400 mb-1">Monitoring and Logging</h5>
-                      <ul className="space-y-1">
-                        <li>• Security event monitoring</li>
-                        <li>• Audit trail maintenance</li>
-                        <li>• Intrusion detection systems</li>
-                        <li>• Log analysis and reporting</li>
-                        <li>• Incident response procedures</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Business Continuity Planning */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Shield className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Business Continuity and Disaster Recovery</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-4">
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="font-semibold text-white mb-2">Risk Assessment and Mitigation</h4>
-                  <div className="grid md:grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <h5 className="font-semibold text-yellow-400 mb-1">Identified Risks</h5>
-                      <ul className="space-y-1">
-                        <li>• Hardware failure and data loss</li>
-                        <li>• Cyber security incidents</li>
-                        <li>• Natural disasters and emergencies</li>
-                        <li>• Staff absence and skill gaps</li>
-                        <li>• Supplier and vendor failures</li>
-                        <li>• Regulatory changes and compliance</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="font-semibold text-yellow-400 mb-1">Mitigation Strategies</h5>
-                      <ul className="space-y-1">
-                        <li>• Redundant systems and backups</li>
-                        <li>• Security awareness training</li>
-                        <li>• Emergency response procedures</li>
-                        <li>• Cross-training and documentation</li>
-                        <li>• Supplier diversity and contracts</li>
-                        <li>• Regulatory monitoring systems</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="font-semibold text-white mb-2">Recovery Procedures and Testing</h4>
-                  <ul className="text-sm space-y-1">
-                    <li>• Recovery Time Objectives (RTO): 4 hours for critical systems</li>
-                    <li>• Recovery Point Objectives (RPO): Maximum 1 hour data loss</li>
-                    <li>• Quarterly disaster recovery testing and validation</li>
-                    <li>• Annual business continuity plan review and update</li>
-                    <li>• Staff training on emergency procedures</li>
-                    <li>• Communication plans for stakeholders and clients</li>
-                    <li>• Alternative working arrangements and remote access</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Common Audit Findings */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <AlertTriangle className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Common Audit Findings and Prevention</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-4">
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="font-semibold text-white mb-2">Documentation Deficiencies</h4>
-                  <div className="space-y-3">
-                    <div>
-                      <h5 className="font-semibold text-red-400 mb-1">❌ Incomplete Project Files</h5>
-                      <p className="text-sm mb-1">Missing documentation for some projects or incomplete record sets.</p>
-                      <p className="text-sm text-green-300">✅ <strong>Prevention:</strong> Implement project file checklists and automated tracking systems to ensure completeness.</p>
-                    </div>
-                    <div>
-                      <h5 className="font-semibold text-red-400 mb-1">❌ Outdated Qualification Records</h5>
-                      <p className="text-sm mb-1">Expired certifications or missing training update records.</p>
-                      <p className="text-sm text-green-300">✅ <strong>Prevention:</strong> Set up qualification expiry alerts and maintain continuous training schedules.</p>
-                    </div>
-                    <div>
-                      <h5 className="font-semibold text-red-400 mb-1">❌ Poor Record Organisation</h5>
-                      <p className="text-sm mb-1">Difficulty locating specific documents or inconsistent filing systems.</p>
-                      <p className="text-sm text-green-300">✅ <strong>Prevention:</strong> Standardise document management systems with clear naming conventions and indexing.</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="font-semibold text-white mb-2">Process and Procedure Gaps</h4>
-                  <div className="space-y-3">
-                    <div>
-                      <h5 className="font-semibold text-red-400 mb-1">❌ Inadequate Quality Control</h5>
-                      <p className="text-sm mb-1">Lack of systematic quality checks or performance monitoring.</p>
-                      <p className="text-sm text-green-300">✅ <strong>Prevention:</strong> Implement regular internal audits and continuous improvement processes.</p>
-                    </div>
-                    <div>
-                      <h5 className="font-semibold text-red-400 mb-1">❌ Weak Customer Complaint Handling</h5>
-                      <p className="text-sm mb-1">No formal complaint process or inadequate response tracking.</p>
-                      <p className="text-sm text-green-300">✅ <strong>Prevention:</strong> Establish formal complaint procedures with documented resolution processes.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Real World Example */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Lightbulb className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Real World Case Study</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="bg-card/80 p-4 rounded-lg">
-                <h4 className="font-semibold text-yellow-400 mb-3">Successful Audit: Premium Electrical Solutions</h4>
-                
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <h5 className="font-semibold text-white mb-2">Audit Preparation</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• 6 weeks preparation time used</li>
-                      <li>• Complete document review undertaken</li>
-                      <li>• Digital archive system implemented</li>
-                      <li>• Staff training on audit procedures</li>
-                      <li>• Mock audit conducted internally</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h5 className="font-semibold text-white mb-2">Audit Results</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• Zero non-conformities identified</li>
-                      <li>• 100% document availability achieved</li>
-                      <li>• Exemplary record-keeping noted</li>
-                      <li>• Continuous improvement recognised</li>
-                      <li>• 3-year approval renewal granted</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="mt-4 p-3 bg-green-950/20 border border-green-800 rounded">
-                  <p className="text-green-200 text-sm">
-                    <strong>Outcome:</strong> The company received commendation for exceptional record-keeping standards 
-                    and was selected as a case study example for other OZEV approved installers.
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Component */}
-          <EVChargingModule7Section4Quiz />
-
-          <Separator className="bg-gray-700" />
-
-          {/* Navigation */}
-          <div className="flex justify-between items-center">
-            <Link to="../ev-charging-module-7-section-3">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <div></div>
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Retention:</strong> 10+ years for installations</li>
+              <li><strong>Backup:</strong> 3-2-1 rule (3 copies, 2 media, 1 off-site)</li>
+              <li><strong>RTO:</strong> 4 hours for critical systems</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Audit Frequency</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Initial:</strong> Before approval granted</li>
+              <li><strong>Annual:</strong> Surveillance audits</li>
+              <li><strong>Renewal:</strong> Every 3 years</li>
+            </ul>
           </div>
         </div>
-      </main>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Establish record-keeping systems for OZEV compliance",
+              "Prepare effectively for audits and inspections",
+              "Implement digital document management",
+              "Understand legal record retention requirements",
+              "Develop quality assurance monitoring",
+              "Create business continuity plans"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Legal Record-Keeping Requirements
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Comprehensive record-keeping is fundamental for OZEV approved installers. Understanding
+              retention periods and mandatory documentation ensures compliance and protects your business.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Mandatory Records</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Installation certificates (all projects)</li>
+                  <li>Customer contracts and agreements</li>
+                  <li>Equipment specifications and warranties</li>
+                  <li>Testing and commissioning results</li>
+                  <li>Training and qualification records</li>
+                  <li>Insurance certificates and renewals</li>
+                  <li>Complaint handling documentation</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Retention Periods</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Installation records:</strong> 10 years minimum</li>
+                  <li><strong>Financial records:</strong> 7 years (HMRC)</li>
+                  <li><strong>Training certificates:</strong> Validity + 2 years</li>
+                  <li><strong>Insurance records:</strong> 7 years post-expiry</li>
+                  <li><strong>Customer contracts:</strong> 7 years post-completion</li>
+                  <li><strong>H&S records:</strong> Up to 40 years (certain types)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Digital Document Management
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              A robust digital document management system ensures rapid retrieval during audits,
+              protects against data loss, and maintains security compliance.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">File Organisation</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Master folder: Company_Documents</li>
+                  <li>Year folders: 2024, 2023, etc.</li>
+                  <li>Project folders: ProjectRef_ClientName</li>
+                  <li>Categories: Pre-install, Installation, Post</li>
+                  <li>Version control: v1, v2, v_FINAL</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Security Measures</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>End-to-end encryption</li>
+                  <li>Multi-factor authentication</li>
+                  <li>Role-based access permissions</li>
+                  <li>Audit trails and logging</li>
+                  <li>Regular security updates</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">3 Copies</p>
+                <p className="text-white/90 text-xs">Multiple backups</p>
+              </div>
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">2 Media</p>
+                <p className="text-white/90 text-xs">Different types</p>
+              </div>
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">1 Off-site</p>
+                <p className="text-white/90 text-xs">Remote location</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 3 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Audit Preparation and Response
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Effective audit preparation ensures smooth inspections and demonstrates professional
+              compliance. A systematic approach prevents last-minute stress and missed documentation.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Pre-Audit Checklist:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Step 1:</strong> Review and organise all project files</li>
+                <li><strong>Step 2:</strong> Verify document versions and currency</li>
+                <li><strong>Step 3:</strong> Check qualification and insurance validity</li>
+                <li><strong>Step 4:</strong> Brief staff on audit procedures</li>
+                <li><strong>Step 5:</strong> Prepare document index and register</li>
+              </ul>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">During Audit</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Designate audit liaison person</li>
+                  <li>Respond promptly to requests</li>
+                  <li>Honest, transparent communication</li>
+                  <li>Professional workspace</li>
+                  <li>Rapid document retrieval</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">KPI Targets</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Installation success rate: &gt;95%</li>
+                  <li>Customer satisfaction: &gt;4.5/5</li>
+                  <li>Defect rate: &lt;2%</li>
+                  <li>Compliance score: 100%</li>
+                  <li>Grant claim success: &gt;98%</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Business Continuity Planning</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Recovery Time Objective (RTO): 4 hours for critical systems</li>
+                <li>Recovery Point Objective (RPO): Maximum 1 hour data loss</li>
+                <li>Quarterly disaster recovery testing and validation</li>
+                <li>Annual business continuity plan review</li>
+                <li>Staff training on emergency procedures</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Audit Findings to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Incomplete project files:</strong> — Use checklists for every installation</li>
+                <li><strong>Outdated qualifications:</strong> — Set expiry alerts for all certificates</li>
+                <li><strong>Poor organisation:</strong> — Standardise naming and filing systems</li>
+                <li><strong>Weak complaint handling:</strong> — Document all customer interactions</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quick Reference */}
+        <div className="mt-6 p-5 rounded-lg bg-transparent">
+          <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+            <div>
+              <p className="font-medium text-white mb-1">Key Retention Periods</p>
+              <ul className="space-y-0.5">
+                <li>Installation records: 10 years</li>
+                <li>Financial records: 7 years</li>
+                <li>Insurance: 7 years post-expiry</li>
+                <li>Contracts: 7 years post-completion</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-medium text-white mb-1">Recovery Objectives</p>
+              <ul className="space-y-0.5">
+                <li>RTO: 4 hours (critical)</li>
+                <li>RPO: 1 hour max data loss</li>
+                <li>Backup testing: Quarterly</li>
+                <li>Plan review: Annually</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Quiz Section */}
+        <section className="mb-10 mt-12">
+          <SingleQuestionQuiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-7-section-3">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-course">
+              Complete Course
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

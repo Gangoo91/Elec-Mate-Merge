@@ -446,7 +446,7 @@ const InstrumentationModule8Section4 = () => {
                 ],
                 correctAnswer: 1,
                 explanation: "A CMMS or electronic scheduling system provides automated reminders, tracks maintenance history, manages resources, and ensures consistent execution of PM activities."
-              }
+            }
             ]}
             title="Section 4 Knowledge Check"
           />

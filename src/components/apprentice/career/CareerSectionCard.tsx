@@ -12,7 +12,7 @@ interface CareerSectionCardProps {
 const CareerSectionCard = ({ title, description, icon, onClick }: CareerSectionCardProps) => {
   return (
     <Card 
-      className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 hover:bg-elec-gray/80 transition-all duration-300 cursor-pointer h-full flex flex-col group"
+      className="border-elec-yellow/20 bg-white/5 hover:border-elec-yellow/50 hover:bg-white/5 transition-all duration-300 cursor-pointer h-full flex flex-col group"
       onClick={onClick}
     >
       <CardHeader className="pb-3">
@@ -22,7 +22,7 @@ const CareerSectionCard = ({ title, description, icon, onClick }: CareerSectionC
               {title}
             </CardTitle>
           </div>
-          <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-elec-yellow transition-colors" />
+          <ArrowRight className="h-5 w-5 text-white group-hover:text-elec-yellow transition-colors" />
         </div>
       </CardHeader>
       
@@ -36,7 +36,7 @@ const CareerSectionCard = ({ title, description, icon, onClick }: CareerSectionC
             {icon}
           </div>
           
-          <div className="flex items-center gap-1 text-xs text-muted-foreground">
+          <div className="flex items-center gap-1 text-xs text-white">
             <Star className="h-3 w-3 fill-current text-elec-yellow" />
             <span>Popular</span>
           </div>

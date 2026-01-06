@@ -37,7 +37,7 @@ const DiagnosticResultCard = ({ result, onRestart }: DiagnosticResultCardProps) 
               <AlertTriangle className="h-4 w-4" />
               <span className="font-semibold">Safety Warning</span>
             </div>
-            <p className="text-sm text-gray-300">{result.safetyWarning}</p>
+            <p className="text-sm text-white/80">{result.safetyWarning}</p>
           </div>
         )}
 
@@ -45,7 +45,7 @@ const DiagnosticResultCard = ({ result, onRestart }: DiagnosticResultCardProps) 
           <h4 className="font-semibold text-red-400 mb-3">Immediate Actions Required</h4>
           <ul className="space-y-2">
             {result.immediateActions.map((action, idx) => (
-              <li key={idx} className="text-sm text-gray-300 flex items-start gap-2">
+              <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0" />
                 {action}
               </li>
@@ -57,7 +57,7 @@ const DiagnosticResultCard = ({ result, onRestart }: DiagnosticResultCardProps) 
           <h4 className="font-semibold text-blue-400 mb-3">Next Steps</h4>
           <ol className="space-y-2">
             {result.nextSteps.map((step, idx) => (
-              <li key={idx} className="text-sm text-gray-300 flex items-start gap-2">
+              <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
                 <span className="text-blue-400 font-semibold min-w-4">{idx + 1}.</span>
                 {step}
               </li>

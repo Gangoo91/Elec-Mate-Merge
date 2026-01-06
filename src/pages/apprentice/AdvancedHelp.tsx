@@ -20,7 +20,7 @@ const AdvancedHelp = () => {
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-fade-in">
       {/* Header Section */}
-      <div className="relative overflow-hidden rounded-xl border border-elec-yellow/30 bg-gradient-to-br from-elec-gray via-elec-gray to-elec-yellow/10 p-6 sm:p-8">
+      <div className="relative overflow-hidden rounded-xl border border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 via-white/5 to-elec-yellow/5 p-6 sm:p-8">
         <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-48 h-48 bg-orange-500/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 
@@ -37,7 +37,7 @@ const AdvancedHelp = () => {
                 </div>
                 <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Advanced Help</h1>
               </div>
-              <p className="text-muted-foreground max-w-xl">
+              <p className="text-white/70 max-w-xl">
                 AI-powered learning tools built specifically for UK electrical apprentices.
                 Get expert guidance from Dave, your 20-year veteran electrical mentor.
               </p>
@@ -52,35 +52,35 @@ const AdvancedHelp = () => {
 
       {/* Feature Highlights */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <Card className="border-elec-yellow/20 bg-elec-gray/50">
+        <Card className="border-red-500/20 bg-gradient-to-br from-red-500/10 to-red-500/5">
           <CardContent className="p-3 flex items-center gap-2">
             <Shield className="h-4 w-4 text-red-500 shrink-0" />
-            <span className="text-xs">Safety-First Guidance</span>
+            <span className="text-xs text-white">Safety-First Guidance</span>
           </CardContent>
         </Card>
-        <Card className="border-elec-yellow/20 bg-elec-gray/50">
+        <Card className="border-orange-500/20 bg-gradient-to-br from-orange-500/10 to-orange-500/5">
           <CardContent className="p-3 flex items-center gap-2">
             <BookOpen className="h-4 w-4 text-orange-500 shrink-0" />
-            <span className="text-xs">BS 7671 Expert</span>
+            <span className="text-xs text-white">BS 7671 Expert</span>
           </CardContent>
         </Card>
-        <Card className="border-elec-yellow/20 bg-elec-gray/50">
+        <Card className="border-cyan-500/20 bg-gradient-to-br from-cyan-500/10 to-cyan-500/5">
           <CardContent className="p-3 flex items-center gap-2">
             <GraduationCap className="h-4 w-4 text-cyan-500 shrink-0" />
-            <span className="text-xs">EPA Preparation</span>
+            <span className="text-xs text-white">EPA Preparation</span>
           </CardContent>
         </Card>
-        <Card className="border-elec-yellow/20 bg-elec-gray/50">
+        <Card className="border-yellow-500/20 bg-gradient-to-br from-yellow-500/10 to-yellow-500/5">
           <CardContent className="p-3 flex items-center gap-2">
             <Zap className="h-4 w-4 text-yellow-500 shrink-0" />
-            <span className="text-xs">Testing & Inspection</span>
+            <span className="text-xs text-white">Testing & Inspection</span>
           </CardContent>
         </Card>
       </div>
 
       {/* Main Tabs Section */}
       <Tabs defaultValue="helpbot" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 h-12 bg-elec-gray">
+        <TabsList className="grid w-full grid-cols-2 h-12 bg-white/5 border border-white/10">
           <TabsTrigger
             value="helpbot"
             className="flex items-center gap-2 data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow h-10"
@@ -107,7 +107,7 @@ const AdvancedHelp = () => {
       </Tabs>
 
       {/* Footer Note */}
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-gray/80">
+      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
         <CardContent className="p-4">
           <div className="flex items-start gap-3">
             <div className="p-2 rounded-lg bg-elec-yellow/10 shrink-0">
@@ -115,7 +115,7 @@ const AdvancedHelp = () => {
             </div>
             <div>
               <h3 className="font-medium text-sm text-elec-yellow mb-1">Learning Support, Not Replacement</h3>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white/70">
                 These AI tools are designed to complement your apprenticeship training, not replace it.
                 Always verify critical information with your supervisor or official documentation.
                 Dave's here to help explain concepts and guide your learning - but nothing beats

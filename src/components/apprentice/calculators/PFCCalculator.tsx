@@ -430,7 +430,7 @@ const PFCCalculator = () => {
                 >
                   {result.pfcValue.toFixed(0)} A
                 </div>
-                <p className="text-sm text-white/50 mt-1">
+                <p className="text-sm text-white/80 mt-1">
                   ({(result.pfcValue / 1000).toFixed(2)} kA)
                 </p>
               </div>
@@ -462,7 +462,7 @@ const PFCCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/40 transition-transform duration-200",
+                    "h-4 w-4 text-white/70 transition-transform duration-200",
                     showGuidance && "rotate-180"
                   )}
                 />
@@ -495,7 +495,7 @@ const PFCCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/40 transition-transform duration-200",
+                    "h-4 w-4 text-white/70 transition-transform duration-200",
                     showStandards && "rotate-180"
                   )}
                 />
@@ -541,7 +541,7 @@ const PFCCalculator = () => {
                   Quick Reference
                 </span>
               </div>
-              <ChevronDown className="h-4 w-4 text-white/40 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+              <ChevronDown className="h-4 w-4 text-white/70 transition-transform duration-200 group-data-[state=open]:rotate-180" />
             </CollapsibleTrigger>
 
             <CollapsibleContent className="p-4 pt-0">

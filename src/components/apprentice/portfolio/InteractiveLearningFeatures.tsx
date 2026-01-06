@@ -154,7 +154,7 @@ const InteractiveLearningFeatures = () => {
     <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/10">
       <CardHeader>
         <CardTitle className="text-green-400">Interactive Learning Modules</CardTitle>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-white">
           Enhance your portfolio skills with guided learning experiences
         </p>
       </CardHeader>
@@ -165,14 +165,14 @@ const InteractiveLearningFeatures = () => {
             const lessonsCompleted = Math.floor((currentProgress / 100) * module.lessons.length);
             
             return (
-              <div key={module.id} className="p-4 bg-elec-gray/50 rounded-lg border border-green-500/20">
+              <div key={module.id} className="p-4 bg-white/5 rounded-lg border border-green-500/20">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex-1">
                     <h4 className="font-medium text-white mb-1">{module.title}</h4>
-                    <p className="text-sm text-muted-foreground mb-2">
+                    <p className="text-sm text-white mb-2">
                       {module.lessons.length} lessons • {module.lessons.reduce((total, lesson) => total + lesson.duration, 0)} minutes total
                     </p>
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <div className="flex items-center gap-2 text-xs text-white">
                       <CheckCircle className="h-3 w-3 text-green-400" />
                       {lessonsCompleted} of {module.lessons.length} lessons completed
                     </div>
@@ -216,7 +216,7 @@ const InteractiveLearningFeatures = () => {
                       className={`flex items-center gap-1 px-2 py-1 rounded text-xs ${
                         index < lessonsCompleted 
                           ? "bg-green-500/20 text-green-400" 
-                          : "bg-elec-gray text-muted-foreground"
+                          : "bg-white/5 text-white"
                       }`}
                     >
                       {lesson.type === "video" && <Play className="h-3 w-3" />}
@@ -233,7 +233,7 @@ const InteractiveLearningFeatures = () => {
         
         <div className="mt-6 p-4 bg-blue-500/20 rounded-lg border border-blue-500/30">
           <h5 className="font-medium text-blue-400 mb-2">Learning Benefits</h5>
-          <ul className="text-sm text-muted-foreground space-y-1">
+          <ul className="text-sm text-white space-y-1">
             <li>• Interactive exercises with immediate feedback</li>
             <li>• Video demonstrations of best practices</li>
             <li>• Templates and examples to guide your work</li>

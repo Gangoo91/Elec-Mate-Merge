@@ -14,13 +14,13 @@ const Subsection9_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           <Zap className="h-6 w-6 text-elec-yellow" />
           Power Factor Correction and Energy Efficiency
         </h2>
-        <p className="text-muted-foreground">
+        <p className="text-white">
           Understanding power factor correction techniques and energy efficiency principles for electrical installations.
         </p>
       </div>
 
       {/* Section 1: Power Factor Fundamentals */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className="pt-6">
           <h3 className="text-xl font-semibold mb-4">Power Factor Fundamentals</h3>
           <div className="space-y-4">
@@ -29,7 +29,7 @@ const Subsection9_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               It is defined as the ratio of real power (kW) to apparent power (kVA).
             </p>
             
-            <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-md p-4">
+            <div className="bg-white/10 border border-elec-yellow/30 rounded-md p-4">
               <h4 className="text-lg font-medium text-elec-yellow mb-2">Key Power Factor Concepts:</h4>
               <ul className="list-disc pl-5 space-y-2">
                 <li>
@@ -59,7 +59,7 @@ const Subsection9_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       </Card>
 
       {/* Section 2: Power Factor Correction */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className="pt-6">
           <h3 className="text-xl font-semibold mb-4">Power Factor Correction Techniques</h3>
           <div className="space-y-4">
@@ -69,7 +69,7 @@ const Subsection9_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-              <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-md p-4 space-y-2">
+              <div className="bg-white/10 border border-elec-yellow/30 rounded-md p-4 space-y-2">
                 <div className="flex items-center gap-2">
                   <Lightbulb className="h-5 w-5 text-elec-yellow" />
                   <h4 className="font-medium">Fixed Power Factor Correction</h4>
@@ -80,7 +80,7 @@ const Subsection9_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </p>
               </div>
               
-              <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-md p-4 space-y-2">
+              <div className="bg-white/10 border border-elec-yellow/30 rounded-md p-4 space-y-2">
                 <div className="flex items-center gap-2">
                   <Lightbulb className="h-5 w-5 text-elec-yellow" />
                   <h4 className="font-medium">Automatic Power Factor Correction</h4>
@@ -92,7 +92,7 @@ const Subsection9_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </div>
             </div>
             
-            <div className="bg-elec-dark/70 p-4 rounded-md mt-4">
+            <div className="bg-white/10 p-4 rounded-md mt-4">
               <h4 className="font-medium text-elec-yellow mb-2">Benefits of Power Factor Correction:</h4>
               <ul className="list-disc pl-5 space-y-1">
                 <li>Reduced electricity bills by eliminating power factor penalties</li>
@@ -107,7 +107,7 @@ const Subsection9_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       </Card>
 
       {/* Section 3: Energy Efficiency */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className="pt-6">
           <h3 className="text-xl font-semibold mb-4">Energy Efficiency in Electrical Installations</h3>
           <div className="space-y-4">
@@ -117,7 +117,7 @@ const Subsection9_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Card className="border border-green-500/20 bg-elec-dark/50">
+              <Card className="border border-green-500/20 bg-white/10">
                 <CardContent className="pt-4">
                   <h4 className="text-lg font-medium text-green-400 mb-2">Lighting Efficiency</h4>
                   <ul className="list-disc pl-5 space-y-1 text-sm">
@@ -129,7 +129,7 @@ const Subsection9_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </CardContent>
               </Card>
               
-              <Card className="border border-green-500/20 bg-elec-dark/50">
+              <Card className="border border-green-500/20 bg-white/10">
                 <CardContent className="pt-4">
                   <h4 className="text-lg font-medium text-green-400 mb-2">Motor Efficiency</h4>
                   <ul className="list-disc pl-5 space-y-1 text-sm">
@@ -141,7 +141,7 @@ const Subsection9_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </CardContent>
               </Card>
               
-              <Card className="border border-green-500/20 bg-elec-dark/50">
+              <Card className="border border-green-500/20 bg-white/10">
                 <CardContent className="pt-4">
                   <h4 className="text-lg font-medium text-green-400 mb-2">Distribution Efficiency</h4>
                   <ul className="list-disc pl-5 space-y-1 text-sm">
@@ -168,7 +168,7 @@ const Subsection9_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       <Separator className="bg-elec-yellow/30" />
       
       {/* UK Regulations and Standards */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className="pt-6">
           <h3 className="text-xl font-semibold mb-4">UK Regulations and Standards</h3>
           <div className="space-y-4">

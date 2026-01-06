@@ -1,16 +1,28 @@
 
 import { useState } from "react";
 import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { BookOpen, Brain, Target } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  BookOpen, Brain, Target, Flame, Zap, Shield, Sparkles,
+  TrendingUp, Award, CheckCircle, Clock, Lightbulb
+} from "lucide-react";
 import FlashcardSetCard from "@/components/apprentice/flashcards/FlashcardSetCard";
 import StudyModeSelector from "@/components/apprentice/flashcards/StudyModeSelector";
 import FlashcardStudySession from "@/components/apprentice/flashcards/FlashcardStudySession";
 import StudyTipsCard from "@/components/apprentice/flashcards/StudyTipsCard";
+import { useStudyStreak } from "@/hooks/useStudyStreak";
+import { useFlashcardProgress } from "@/hooks/useFlashcardProgress";
 
 const OnJobFlashcards = () => {
   const [selectedSet, setSelectedSet] = useState<string | null>(null);
   const [showModeSelector, setShowModeSelector] = useState(false);
   const [studySession, setStudySession] = useState<{ setId: string; mode: string } | null>(null);
+
+  // Use hooks for persistence
+  const { streak, loading: streakLoading, getStreakDisplay } = useStudyStreak();
+  const { getSetProgress, loading: progressLoading } = useFlashcardProgress();
+
+  const streakInfo = getStreakDisplay();
 
   const flashcardSets = [
     {
@@ -152,53 +164,138 @@ const OnJobFlashcards = () => {
   const overallProgress = Math.round((masteredCards / totalCards) * 100);
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight text-elec-yellow mb-2">
-            Flashcards & Microlearning
-          </h1>
-          <p className="text-elec-light/80">
-            Quick-fire revision for regulations, codes, and essential knowledge
-          </p>
-        </div>
-        <SmartBackButton />
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-elec-dark via-elec-dark/98 to-elec-dark/95">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6 sm:space-y-8 animate-fade-in">
 
-      {/* Progress Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-        <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-4">
-          <div className="text-2xl font-bold text-elec-yellow">{completedSets}/{totalSets}</div>
-          <div className="text-sm text-elec-light/70">Sets Completed</div>
-        </div>
-        <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-4">
-          <div className="text-2xl font-bold text-elec-yellow">{masteredCards}/{totalCards}</div>
-          <div className="text-sm text-elec-light/70">Cards Mastered</div>
-        </div>
-        <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-4">
-          <div className="text-2xl font-bold text-elec-yellow">{overallProgress}%</div>
-          <div className="text-sm text-elec-light/70">Overall Progress</div>
-        </div>
-        <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-4">
-          <div className="text-2xl font-bold text-elec-yellow">3</div>
-          <div className="text-sm text-elec-light/70">Study Streak (days)</div>
-        </div>
-      </div>
+        {/* Hero Header */}
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-white/5 to-white/3 border border-elec-yellow/20 p-6 sm:p-8">
+          {/* Background decoration */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-orange-500/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 
-      {/* Flashcard Sets Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-        {flashcardSets.map((set) => (
-          <FlashcardSetCard
-            key={set.id}
-            set={set}
-            onStart={handleStartFlashcards}
-          />
-        ))}
-      </div>
+          <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+                  <Lightbulb className="h-6 w-6 text-elec-yellow" />
+                </div>
+                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                  Flashcards & <span className="text-elec-yellow">Microlearning</span>
+                </h1>
+              </div>
+              <p className="text-white/70 max-w-xl text-sm sm:text-base">
+                Quick-fire revision for regulations, codes, and essential knowledge.
+                Master key concepts with spaced repetition.
+              </p>
+            </div>
+            <SmartBackButton className="flex-shrink-0" />
+          </div>
+        </div>
 
-      {/* Study Tips */}
-      <StudyTipsCard />
+        {/* Progress Stats Row */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <Card className="bg-gradient-to-br from-white/5 to-white/3 border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors">
+            <CardContent className="p-4 sm:p-5">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-elec-yellow/10">
+                  <CheckCircle className="h-5 w-5 text-elec-yellow" />
+                </div>
+                <div>
+                  <div className="text-xl sm:text-2xl font-bold text-elec-yellow">{completedSets}/{totalSets}</div>
+                  <div className="text-xs sm:text-sm text-white/60">Sets Completed</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-white/5 to-white/3 border-green-500/20 hover:border-green-500/40 transition-colors">
+            <CardContent className="p-4 sm:p-5">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-green-500/10">
+                  <Brain className="h-5 w-5 text-green-400" />
+                </div>
+                <div>
+                  <div className="text-xl sm:text-2xl font-bold text-green-400">{masteredCards}/{totalCards}</div>
+                  <div className="text-xs sm:text-sm text-white/60">Cards Mastered</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-white/5 to-white/3 border-blue-500/20 hover:border-blue-500/40 transition-colors">
+            <CardContent className="p-4 sm:p-5">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-blue-500/10">
+                  <TrendingUp className="h-5 w-5 text-blue-400" />
+                </div>
+                <div>
+                  <div className="text-xl sm:text-2xl font-bold text-blue-400">{overallProgress}%</div>
+                  <div className="text-xs sm:text-sm text-white/60">Overall Progress</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-white/5 to-white/3 border-orange-500/20 hover:border-orange-500/40 transition-colors">
+            <CardContent className="p-4 sm:p-5">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-orange-500/10">
+                  <Flame className={`h-5 w-5 ${streakInfo.currentStreak > 0 ? 'text-orange-400' : 'text-white/40'}`} />
+                </div>
+                <div>
+                  <div className="text-xl sm:text-2xl font-bold text-orange-400">
+                    {streakLoading ? '-' : streakInfo.currentStreak}
+                  </div>
+                  <div className="text-xs sm:text-sm text-white/60">
+                    {streakInfo.studiedToday ? 'Day Streak 🔥' : 'Study to continue!'}
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Study Reminder Banner */}
+        {!streakInfo.studiedToday && (
+          <Card className="border-amber-500/30 bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent overflow-hidden">
+            <CardContent className="p-4 sm:p-5">
+              <div className="flex items-start gap-3">
+                <div className="p-2 rounded-lg bg-amber-500/20 flex-shrink-0">
+                  <Clock className="h-5 w-5 text-amber-400" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-amber-300 mb-1">Keep Your Streak Alive!</h3>
+                  <p className="text-sm text-white/80">
+                    Complete at least one flashcard session today to maintain your study streak.
+                    Even 5 minutes of revision helps with retention.
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Flashcard Sets Grid */}
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
+            Choose a Flashcard Set
+          </h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+            {flashcardSets.map((set) => (
+              <FlashcardSetCard
+                key={set.id}
+                set={set}
+                onStart={handleStartFlashcards}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Study Tips */}
+        <StudyTipsCard />
+
+      </div>
     </div>
   );
 };

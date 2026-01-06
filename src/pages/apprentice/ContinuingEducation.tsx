@@ -212,7 +212,7 @@ const ContinuingEducation = () => {
     <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-6">
         <h1 className="text-3xl font-bold tracking-tight mb-4">Continuing Professional Development</h1>
-        <p className="text-muted-foreground text-center max-w-2xl mb-4">
+        <p className="text-white/70 text-center max-w-2xl mb-4">
           Stay at the forefront of the electrical industry through ongoing education and professional development. 
           Meet CPD requirements whilst building expertise that advances your career and increases earning potential.
         </p>
@@ -221,7 +221,7 @@ const ContinuingEducation = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {educationOptions.map((option, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-all duration-300">
+          <Card key={index} className="border-elec-yellow/20 bg-white/5 hover:border-elec-yellow/40 transition-all duration-300">
             <CardHeader>
               <div className="flex items-start gap-3">
                 {option.icon}
@@ -240,14 +240,14 @@ const ContinuingEducation = () => {
                   </div>
                 </div>
               </div>
-              <p className="text-muted-foreground text-sm">{option.description}</p>
+              <p className="text-white/70 text-sm">{option.description}</p>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
                 <h4 className="font-semibold text-white mb-2">Training Examples:</h4>
                 <ul className="space-y-1">
                   {option.examples.map((example, exampleIndex) => (
-                    <li key={exampleIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                    <li key={exampleIndex} className="text-sm text-white/70 flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
                       {example}
                     </li>
@@ -259,7 +259,7 @@ const ContinuingEducation = () => {
                 <h4 className="font-semibold text-white mb-2">Professional Benefits:</h4>
                 <ul className="space-y-1">
                   {option.benefits.map((benefit, benefitIndex) => (
-                    <li key={benefitIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                    <li key={benefitIndex} className="text-sm text-white/70 flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
                       {benefit}
                     </li>
@@ -271,12 +271,12 @@ const ContinuingEducation = () => {
         ))}
       </div>
 
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
+      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">UK Registration Scheme CPD Requirements</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground mb-4">
+          <p className="text-white/70 mb-4">
             All UK electrical registration schemes require annual CPD to maintain competent person status. Here's what each scheme expects:
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -288,12 +288,12 @@ const ContinuingEducation = () => {
                     {scheme.hours}
                   </Badge>
                 </div>
-                <p className="text-muted-foreground text-sm mb-3">{scheme.details}</p>
+                <p className="text-white/70 text-sm mb-3">{scheme.details}</p>
                 <div>
                   <h5 className="font-medium text-white text-sm mb-2">Required Categories:</h5>
                   <div className="grid grid-cols-2 gap-1">
                     {scheme.categories.map((category, catIndex) => (
-                      <div key={catIndex} className="text-xs text-muted-foreground flex items-center gap-1">
+                      <div key={catIndex} className="text-xs text-white/70 flex items-center gap-1">
                         <span className="text-elec-yellow">•</span>
                         {category}
                       </div>
@@ -306,7 +306,7 @@ const ContinuingEducation = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">CPD Learning Methods Comparison</CardTitle>
         </CardHeader>
@@ -325,9 +325,9 @@ const ContinuingEducation = () => {
                 {learningMethods.map((method, index) => (
                   <tr key={index} className="border-b border-elec-yellow/10">
                     <td className="py-3 text-white font-medium">{method.method}</td>
-                    <td className="py-3 text-muted-foreground">{method.timeCommitment}</td>
-                    <td className="py-3 text-muted-foreground">{method.cpdValue}</td>
-                    <td className="py-3 text-muted-foreground">{method.cost}</td>
+                    <td className="py-3 text-white/70">{method.timeCommitment}</td>
+                    <td className="py-3 text-white/70">{method.cpdValue}</td>
+                    <td className="py-3 text-white/70">{method.cost}</td>
                   </tr>
                 ))}
               </tbody>
@@ -339,7 +339,7 @@ const ContinuingEducation = () => {
                 <h5 className="font-medium text-white text-sm mb-2">{method.method} Benefits:</h5>
                 <ul className="space-y-1">
                   {method.benefits.map((benefit, benefitIndex) => (
-                    <li key={benefitIndex} className="text-xs text-muted-foreground flex items-start gap-1">
+                    <li key={benefitIndex} className="text-xs text-white/70 flex items-start gap-1">
                       <span className="text-elec-yellow">•</span>
                       {benefit}
                     </li>
@@ -351,7 +351,7 @@ const ContinuingEducation = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">Creating Your Personal CPD Strategy</CardTitle>
         </CardHeader>
@@ -359,7 +359,7 @@ const ContinuingEducation = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
               <h4 className="font-semibold text-white mb-3">1. Assess Your Development Needs</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
+              <ul className="space-y-2 text-sm text-white/70">
                 <li>• Review your current role requirements</li>
                 <li>• Identify skills gaps for progression</li>
                 <li>• Consider emerging industry trends</li>
@@ -369,7 +369,7 @@ const ContinuingEducation = () => {
             </div>
             <div>
               <h4 className="font-semibold text-white mb-3">2. Plan Your Learning Journey</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
+              <ul className="space-y-2 text-sm text-white/70">
                 <li>• Set annual CPD hour targets (minimum 20)</li>
                 <li>• Budget for training investments</li>
                 <li>• Schedule learning around work commitments</li>
@@ -379,7 +379,7 @@ const ContinuingEducation = () => {
             </div>
             <div>
               <h4 className="font-semibold text-white mb-3">3. Track and Apply Learning</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
+              <ul className="space-y-2 text-sm text-white/70">
                 <li>• Maintain detailed CPD records</li>
                 <li>• Document learning outcomes achieved</li>
                 <li>• Apply new knowledge in practice</li>
@@ -390,7 +390,7 @@ const ContinuingEducation = () => {
           </div>
           <div className="mt-6 p-4 bg-elec-yellow/10 rounded-lg">
             <h4 className="font-semibold text-elec-yellow mb-2">Professional Tip:</h4>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-white/70 text-sm">
               The most successful electrical professionals exceed minimum CPD requirements and actively seek learning 
               opportunities that differentiate them in the market. Consider targeting 30-40 hours annually, with a mix 
               of technical updates, business skills, and emerging technology training. This investment in professional 

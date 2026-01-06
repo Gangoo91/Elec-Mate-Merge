@@ -1,121 +1,153 @@
-
-import { Link } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
+import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import {
+  ArrowLeft,
+  TrendingUp,
   Briefcase,
   GraduationCap,
-  TrendingUp,
-  HandHelping,
-  Users,
   UserCheck,
+  HandHelping,
   Calculator,
   CreditCard,
-  Wrench
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { BusinessCard } from "@/components/business-hub";
 
 const BusinessDevelopment = () => {
+  const navigate = useNavigate();
+
   const businessSections = [
     {
       id: 1,
-      title: "Starting an Electrical Business",
-      description: "Essential guidance for establishing your electrical contracting business, from registration to certification",
-      icon: <Briefcase className="h-12 w-12 text-elec-yellow" />,
-      link: "/electrician/business-development/startup"
+      title: "Starting a Business",
+      description: "Essential guidance for establishing your electrical contracting business",
+      icon: Briefcase,
+      link: "/electrician/business-development/startup",
     },
     {
       id: 2,
       title: "Onboarding Apprentices",
-      description: "Best practices for recruiting, mentoring and developing apprentices in your electrical business",
-      icon: <GraduationCap className="h-12 w-12 text-elec-yellow" />,
-      link: "/electrician/business-development/apprentices"
+      description: "Best practices for recruiting, mentoring and developing apprentices",
+      icon: GraduationCap,
+      link: "/electrician/business-development/apprentices",
     },
     {
       id: 3,
       title: "Onboarding Electricians",
-      description: "Effective strategies for recruiting, integrating and retaining qualified electricians",
-      icon: <UserCheck className="h-12 w-12 text-elec-yellow" />,
-      link: "/electrician/business-development/electricians"
+      description: "Strategies for recruiting, integrating and retaining qualified electricians",
+      icon: UserCheck,
+      link: "/electrician/business-development/electricians",
     },
     {
       id: 4,
       title: "Growing Your Business",
-      description: "Strategies for expanding your electrical business, from marketing to diversifying services",
-      icon: <TrendingUp className="h-12 w-12 text-elec-yellow" />,
-      link: "/electrician/business-development/growth"
+      description: "Strategies for expanding, from marketing to diversifying services",
+      icon: TrendingUp,
+      link: "/electrician/business-development/growth",
     },
     {
       id: 5,
       title: "Customer Acquisition",
-      description: "Effective methods to attract and retain clients for your electrical services",
-      icon: <HandHelping className="h-12 w-12 text-elec-yellow" />,
-      link: "/electrician/business-development/customers"
+      description: "Effective methods to attract and retain clients for your services",
+      icon: HandHelping,
+      link: "/electrician/business-development/customers",
     },
     {
       id: 6,
       title: "Tax & Finances",
-      description: "Financial management, tax obligations, and accounting best practices for electrical contractors",
-      icon: <Calculator className="h-12 w-12 text-elec-yellow" />,
-      link: "/electrician/business-development/tax-finances"
+      description: "Financial management, tax obligations, and accounting best practices",
+      icon: Calculator,
+      link: "/electrician/business-development/tax-finances",
     },
     {
       id: 7,
-      title: "Debt Recovery & Non-Payers",
-      description: "Strategies for managing late payments, debt recovery, and protecting your cash flow",
-      icon: <CreditCard className="h-12 w-12 text-elec-yellow" />,
-      link: "/electrician/business-development/debt-recovery"
+      title: "Debt Recovery",
+      description: "Strategies for managing late payments and protecting your cash flow",
+      icon: CreditCard,
+      link: "/electrician/business-development/debt-recovery",
     },
     {
       id: 8,
       title: "Business Calculators",
-      description: "Professional calculators for job costing, profitability analysis, and business planning",
-      icon: <Calculator className="h-12 w-12 text-elec-yellow" />,
-      link: "/electrician/business-development/tools"
-    }
+      description: "Professional calculators for job costing and business planning",
+      icon: Calculator,
+      link: "/electrician/business-development/tools",
+    },
   ];
 
+  const canonical = `${window.location.origin}/electrician/business-development`;
+
   return (
-    <div className="space-y-6 md:space-y-8 animate-fade-in px-4 md:px-0">
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-4 md:mb-6">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-center sm:text-left">
-            Business Development
-          </h1>
-          <p className="text-muted-foreground text-center sm:text-left">
-            Resources and guidance to establish and grow your electrical contracting business
+    <div className="min-h-screen bg-[#1a1a1a]">
+      <Helmet>
+        <title>Business Development for Electricians | Elec-Mate</title>
+        <meta
+          name="description"
+          content="Comprehensive business development resources for UK electricians. Learn to start, grow and manage your electrical contracting business."
+        />
+        <link rel="canonical" href={canonical} />
+      </Helmet>
+
+      {/* Header */}
+      <header className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="flex items-center h-14 sm:h-16">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate("/electrician/business")}
+              className="text-white/70 hover:text-white hover:bg-white/10 rounded-xl mr-3"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <div className="flex-1">
+              <h1 className="text-lg sm:text-xl font-bold text-white">Start & Grow</h1>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="border-b border-white/10 bg-gradient-to-b from-yellow-500/5 to-[#1a1a1a]">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+          <div className="flex flex-col sm:flex-row items-center gap-6">
+            <div className="p-4 bg-yellow-400/10 rounded-2xl border border-yellow-400/20">
+              <TrendingUp className="h-10 w-10 sm:h-12 sm:w-12 text-yellow-400" />
+            </div>
+            <div className="text-center sm:text-left">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white">
+                Business Development
+              </h2>
+              <p className="mt-2 text-base sm:text-lg text-white/60 max-w-2xl">
+                Resources and guidance to establish and grow your electrical contracting business
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Cards Grid */}
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8 pb-safe">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {businessSections.map((section) => (
+            <BusinessCard
+              key={section.id}
+              title={section.title}
+              description={section.description}
+              icon={section.icon}
+              href={section.link}
+            />
+          ))}
+        </div>
+
+        {/* Disclaimer */}
+        <div className="mt-8 p-4 rounded-2xl bg-white/5 border border-white/10">
+          <p className="text-xs text-white/50 leading-relaxed">
+            The information provided is for general guidance only and does not constitute financial, legal, or business advice.
+            Always consult with qualified professionals regarding your specific business circumstances.
           </p>
         </div>
-        <SmartBackButton className="flex-shrink-0 w-full sm:w-auto" />
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6">
-        {businessSections.map((section) => (
-          <Link key={section.id} to={section.link} className="group focus:outline-none hover-scale">
-            <Card className="h-full border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-all duration-200 cursor-pointer">
-              <CardHeader className="flex flex-col items-center justify-center text-center py-6 md:py-8">
-                <div className="transition-transform group-hover:scale-110 mb-3">
-                  {section.icon}
-                </div>
-                <CardTitle className="text-base sm:text-lg leading-tight">{section.title}</CardTitle>
-              </CardHeader>
-            </Card>
-          </Link>
-        ))}
-      </div>
-      
-      <Card className="border-elec-yellow/20 bg-elec-gray mt-6">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-xl">Business Development Disclaimer</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-muted-foreground">
-            The information provided is for general guidance only and does not constitute financial, legal, or business advice. 
-            Always consult with qualified professionals regarding your specific business circumstances. ElecMate is not endorsed by, 
-            directly affiliated with, maintained, authorised, or sponsored by any regulatory bodies or certification schemes mentioned. 
-            All product names, logos, and brands are property of their respective owners.
-          </p>
-        </CardContent>
-      </Card>
+      </main>
     </div>
   );
 };

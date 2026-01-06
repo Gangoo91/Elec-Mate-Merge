@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import React from "react";
 
@@ -447,6 +448,14 @@ const Module2Section5_6: React.FC = () => {
           </div>
         </Card>
 
+        {/* Quick Knowledge Check */}
+        <InlineCheck
+          question="A socket outlet shows 85°C on a thermal camera during normal 25A operation. What should you do FIRST?"
+          options={["Replace the socket", "Reduce the load", "Isolate immediately and investigate", "Call the manufacturer"]}
+          correctAnswer={2}
+          explanation="Overheating (normal should be <60°C) indicates a serious problem, often loose connections. Safety first: isolate immediately to prevent fire risk, then investigate the root cause."
+        />
+
         {/* Troubleshooting Guide */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Step-by-Step Troubleshooting Guide</h2>
@@ -675,15 +684,23 @@ const Module2Section5_6: React.FC = () => {
           <Quiz questions={quizQuestions} />
         </Card>
 
+        {/* Another InlineCheck */}
+        <InlineCheck
+          question="An EV charger keeps derating from 32A to 16A. The most likely cause is:"
+          options={["Faulty charger electronics", "Excessive voltage drop on supply cable", "Wrong type of MCB", "RCD sensitivity issue"]}
+          correctAnswer={1}
+          explanation="EV chargers monitor supply voltage continuously. Excessive voltage drop under high load causes the charger to automatically derate to maintain safe operation and comply with voltage standards."
+        />
+
         {/* Bottom nav */}
-        <div className="flex items-center justify-start mt-6">
-          <Button variant="outline" asChild>
-            <Link to="..">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 2.5
-            </Link>
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5" asChild>
+            <Link to="../5-5"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
           </Button>
-        </div>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a]" asChild>
+            <Link to="../6-1">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
+          </Button>
+        </nav>
       </div>
     </div>
   );

@@ -59,7 +59,7 @@ const QuickReferenceCharts = () => {
       case 'HIGH': return 'bg-orange-500';
       case 'MEDIUM': return 'bg-yellow-500';
       case 'LOW': return 'bg-green-500';
-      default: return 'bg-gray-500';
+      default: return 'bg-white/60';
     }
   };
 
@@ -109,11 +109,11 @@ const QuickReferenceCharts = () => {
                     {testLimits.map((item, idx) => (
                       <TableRow key={idx} className="border-border hover:bg-muted/30">
                         <TableCell className="text-foreground font-semibold border-r border-border">{item.test}</TableCell>
-                        <TableCell className="text-gray-300 border-r border-border">{item.circuit}</TableCell>
+                        <TableCell className="text-white/80 border-r border-border">{item.circuit}</TableCell>
                         <TableCell className="text-center border-r border-border">
                           <Badge className="bg-green-500/20 text-green-400">{item.limit}</Badge>
                         </TableCell>
-                        <TableCell className="text-gray-300 text-sm">{item.notes}</TableCell>
+                        <TableCell className="text-white/80 text-sm">{item.notes}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -145,8 +145,8 @@ const QuickReferenceCharts = () => {
                         <TableCell className="text-center border-r border-border">
                           <Badge className={`${getPriorityColor(item.priority)} text-foreground`}>{item.priority}</Badge>
                         </TableCell>
-                        <TableCell className="text-gray-300 border-r border-border">{item.likely}</TableCell>
-                        <TableCell className="text-gray-300 text-sm">{item.action}</TableCell>
+                        <TableCell className="text-white/80 border-r border-border">{item.likely}</TableCell>
+                        <TableCell className="text-white/80 text-sm">{item.action}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -177,7 +177,7 @@ const QuickReferenceCharts = () => {
                         <TableCell className="text-center border-r border-border">
                           <Badge className="bg-red-500/20 text-red-400">{item.maxTime}</Badge>
                         </TableCell>
-                        <TableCell className="text-gray-300">{item.application}</TableCell>
+                        <TableCell className="text-white/80">{item.application}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -209,8 +209,8 @@ const QuickReferenceCharts = () => {
                         <TableCell className="text-center border-r border-border">
                           <Badge className="bg-blue-500/20 text-blue-400">{item.voltage || item.type}</Badge>
                         </TableCell>
-                        <TableCell className="text-gray-300 border-r border-border">{item.use}</TableCell>
-                        <TableCell className="text-gray-300 text-sm">{item.standard}</TableCell>
+                        <TableCell className="text-white/80 border-r border-border">{item.use}</TableCell>
+                        <TableCell className="text-white/80 text-sm">{item.standard}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>

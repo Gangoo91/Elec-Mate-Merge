@@ -24,14 +24,20 @@ interface DropdownTabsProps {
 const renderIcon = (icon: React.ReactNode | LucideIcon | undefined) => {
   if (!icon) return null;
 
-  // Check if it's a component type (function) vs already rendered element
-  if (typeof icon === 'function') {
+  // Check if it's already a valid React element (already rendered)
+  if (React.isValidElement(icon)) {
+    return icon;
+  }
+
+  // Check if it's a component type (function or forwardRef object)
+  // LucideIcons are forwardRef components which have $$typeof and render properties
+  if (typeof icon === 'function' || (typeof icon === 'object' && icon !== null && '$$typeof' in icon)) {
     const IconComponent = icon as LucideIcon;
     return <IconComponent className="h-4 w-4" />;
   }
 
-  // It's already a ReactNode
-  return icon;
+  // Fallback - should not reach here normally
+  return null;
 };
 
 export const DropdownTabs = ({
@@ -61,14 +67,7 @@ export const DropdownTabs = ({
     <div className={cn("space-y-4", className)}>
       <Select value={currentValue} onValueChange={handleValueChange}>
         <SelectTrigger className={cn("w-full h-9 bg-muted text-foreground border-border focus:ring-1 focus:ring-elec-yellow focus:border-elec-yellow text-sm", triggerClassName)}>
-          <SelectValue placeholder={placeholder}>
-            {selectedTab && (
-              <div className="flex items-center gap-2 text-sm">
-                {renderIcon(selectedTab.icon)}
-                <span className="font-medium">{selectedTab.label}</span>
-              </div>
-            )}
-          </SelectValue>
+          <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent className="bg-muted text-foreground border-border z-[100]">
           {tabs.map((tab) => (

@@ -131,17 +131,17 @@ const CancelSubscriptionDialog = ({
           </AlertDialogHeader>
           
           <AlertDialogFooter className="flex-col space-y-2 sm:space-y-0">
-            <Button 
+            <Button
               onClick={handleDiscountOffer}
-              className="w-full sm:w-auto"
+              className="w-full sm:w-auto touch-manipulation min-h-[44px]"
               variant="default"
             >
               Yes, Give Me 25% Off
             </Button>
-            <Button 
-              onClick={() => setShowDiscountConfirmation(true)} 
+            <Button
+              onClick={() => setShowDiscountConfirmation(true)}
               variant="outline"
-              className="w-full sm:w-auto"
+              className="w-full sm:w-auto touch-manipulation min-h-[44px]"
             >
               No, Continue Cancellation
             </Button>
@@ -156,12 +156,12 @@ const CancelSubscriptionDialog = ({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setShowDiscountConfirmation(false)}>
+            <AlertDialogCancel onClick={() => setShowDiscountConfirmation(false)} className="touch-manipulation min-h-[44px]">
               Back
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleCancel}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90 touch-manipulation min-h-[44px]"
               disabled={isProcessing}
             >
               {isProcessing ? (

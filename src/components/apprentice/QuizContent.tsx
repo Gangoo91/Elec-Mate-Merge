@@ -84,7 +84,7 @@ const QuizContent = () => {
         </Link>
       </div>
       
-      <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-6">
+      <div className="bg-white/5 border border-elec-yellow/20 rounded-lg p-6">
         <div className="flex items-center gap-3 mb-6">
           <span className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-elec-yellow text-elec-dark font-bold text-lg">
             Q

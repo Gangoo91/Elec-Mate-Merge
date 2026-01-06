@@ -1,35 +1,33 @@
-import React, { useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import React, { useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, User, Settings, FileText, Calculator, Building2, Briefcase } from "lucide-react";
+import { ArrowLeft, ArrowRight, User, FileText, Settings, Check, Loader2, Send } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { useQuoteBuilder } from "@/hooks/useQuoteBuilder";
 import { ClientDetailsStep } from "./steps/ClientDetailsStep";
 import { JobDetailsStep } from "./steps/JobDetailsStep";
 import { EnhancedQuoteItemsStep } from "./steps/EnhancedQuoteItemsStep";
 import { QuoteSettingsStep } from "./steps/QuoteSettingsStep";
 import { QuoteReviewStep } from "./steps/QuoteReviewStep";
-import { CompanyBrandingStep } from "@/components/company/CompanyBrandingStep";
-import { QuoteProgressIndicator } from "./QuoteProgressIndicator";
-import { SmartContinueButton } from "./SmartContinueButton";
+import { CompanyProfileSummary } from "./CompanyProfileSummary";
 import { EmailStatusBanner } from "./EmailStatusBanner";
-import { AutoSaveIndicator } from "../shared/AutoSaveIndicator";
 import { FEATURES } from '@/config/features';
 import { transformCostOutputToQuoteItems } from '@/utils/cost-to-quote-transformer';
+import { useOptionalVoiceFormContext, FormField } from "@/contexts/VoiceFormContext";
 
 const steps = [
-  { title: "Client & Company", icon: User, description: "Customer and company details" },
-  { title: "Job & Items", icon: FileText, description: "Scope of work and pricing" },
-  { title: "Settings & Review", icon: Calculator, description: "VAT, settings, and finalise" },
+  { id: 0, title: "Client", shortTitle: "Client", icon: User },
+  { id: 1, title: "Job & Items", shortTitle: "Items", icon: FileText },
+  { id: 2, title: "Review", shortTitle: "Review", icon: Settings },
 ];
 
 interface QuoteWizardProps {
   onQuoteGenerated?: () => void;
   initialQuote?: any;
-  initialCostData?: any; // PHASE 1: Support cost data import
+  initialCostData?: any;
 }
 
 export const QuoteWizard = ({ onQuoteGenerated, initialQuote, initialCostData }: QuoteWizardProps) => {
-const {
+  const {
     quote,
     currentStep,
     priceAdjustment,
@@ -48,9 +46,150 @@ const {
     isGenerating,
   } = useQuoteBuilder(onQuoteGenerated, initialQuote);
 
-  const [lastSaved, setLastSaved] = React.useState<Date>();
+  const voiceForm = useOptionalVoiceFormContext();
 
-  // PHASE 1: Import cost data into quote items
+  // Voice form field handler
+  const handleVoiceFillField = useCallback((fieldName: string, value: string) => {
+    const field = fieldName.toLowerCase();
+
+    // Client fields
+    if (field.includes('name') || field === 'client') {
+      updateClient({ ...quote.client, name: value });
+    } else if (field.includes('email')) {
+      updateClient({ ...quote.client, email: value });
+    } else if (field.includes('phone') || field.includes('telephone')) {
+      updateClient({ ...quote.client, phone: value });
+    } else if (field.includes('address')) {
+      updateClient({ ...quote.client, address: value });
+    } else if (field.includes('postcode')) {
+      updateClient({ ...quote.client, postcode: value });
+    }
+    // Job details fields
+    else if (field.includes('title') || field === 'job') {
+      updateJobDetails({ ...quote.jobDetails, title: value });
+    } else if (field.includes('description') || field.includes('scope')) {
+      updateJobDetails({ ...quote.jobDetails, description: value });
+    } else if (field.includes('duration')) {
+      updateJobDetails({ ...quote.jobDetails, estimatedDuration: value });
+    } else if (field.includes('start') || field.includes('date')) {
+      updateJobDetails({ ...quote.jobDetails, workStartDate: value });
+    } else if (field.includes('location') || field.includes('site')) {
+      updateJobDetails({ ...quote.jobDetails, location: value });
+    }
+    // Settings fields
+    else if (field.includes('vat') && field.includes('rate')) {
+      updateSettings({ ...quote.settings, vatRate: parseFloat(value) || 20 });
+    } else if (field.includes('vat')) {
+      updateSettings({ ...quote.settings, vatRegistered: value.toLowerCase() === 'yes' || value === 'true' });
+    }
+  }, [quote, updateClient, updateJobDetails, updateSettings]);
+
+  // Voice action handler
+  const handleVoiceAction = useCallback((action: string, params: Record<string, unknown>) => {
+    switch (action) {
+      case 'add_labour_item':
+        addItem({
+          id: crypto.randomUUID(),
+          description: params.description as string || 'Labour',
+          category: 'labour',
+          quantity: params.hours as number || 1,
+          unitPrice: params.rate as number || 50,
+          totalPrice: ((params.hours as number) || 1) * ((params.rate as number) || 50),
+          unit: 'hours',
+        });
+        return true;
+      case 'add_material_item':
+        addItem({
+          id: crypto.randomUUID(),
+          description: params.description as string || 'Materials',
+          category: 'materials',
+          quantity: params.quantity as number || 1,
+          unitPrice: params.unitPrice as number || 10,
+          totalPrice: ((params.quantity as number) || 1) * ((params.unitPrice as number) || 10),
+          unit: 'each',
+        });
+        return true;
+      case 'add_line_item':
+        addItem({
+          id: crypto.randomUUID(),
+          description: params.description as string || 'Item',
+          category: 'manual',
+          quantity: params.quantity as number || 1,
+          unitPrice: params.unitPrice as number || 0,
+          totalPrice: ((params.quantity as number) || 1) * ((params.unitPrice as number) || 0),
+          unit: params.unit as string || 'each',
+        });
+        return true;
+      case 'remove_last_item':
+        if (quote.items && quote.items.length > 0) {
+          removeItem(quote.items[quote.items.length - 1].id);
+          return true;
+        }
+        return false;
+      case 'next_step':
+        if (currentStep < steps.length - 1) {
+          nextStep();
+          return true;
+        }
+        return false;
+      default:
+        return false;
+    }
+  }, [addItem, removeItem, quote.items, currentStep, nextStep]);
+
+  // Register form with voice context
+  useEffect(() => {
+    if (!voiceForm) return;
+
+    const stepFields: Record<number, FormField[]> = {
+      0: [
+        { name: 'client_name', label: 'Client Name', type: 'text', required: true, currentValue: quote.client?.name },
+        { name: 'client_email', label: 'Email', type: 'email', required: true, currentValue: quote.client?.email },
+        { name: 'client_phone', label: 'Phone', type: 'tel', required: true, currentValue: quote.client?.phone },
+        { name: 'client_address', label: 'Address', type: 'text', required: true, currentValue: quote.client?.address },
+        { name: 'client_postcode', label: 'Postcode', type: 'text', required: true, currentValue: quote.client?.postcode },
+      ],
+      1: [
+        { name: 'job_title', label: 'Job Title', type: 'text', required: true, currentValue: quote.jobDetails?.title },
+        { name: 'job_description', label: 'Description', type: 'textarea', required: true, currentValue: quote.jobDetails?.description },
+        { name: 'estimated_duration', label: 'Duration', type: 'select', options: ['Half day', '1 day', '2 days', '3 days', '1 week', '2 weeks'], currentValue: quote.jobDetails?.estimatedDuration },
+      ],
+      2: [
+        { name: 'vat_registered', label: 'VAT Registered', type: 'select', options: ['Yes', 'No'], currentValue: quote.settings?.vatRegistered ? 'Yes' : 'No' },
+      ],
+    };
+
+    const stepActions: Record<number, string[]> = {
+      0: ['next_step'],
+      1: ['add_labour_item', 'add_material_item', 'add_line_item', 'remove_last_item', 'next_step'],
+      2: ['next_step'],
+    };
+
+    voiceForm.registerForm({
+      formId: 'quote-wizard',
+      formName: `Quote Builder - ${steps[currentStep].title}`,
+      fields: stepFields[currentStep] || [],
+      actions: stepActions[currentStep] || [],
+      onFillField: handleVoiceFillField,
+      onAction: handleVoiceAction,
+      onSubmit: () => {
+        if (currentStep === steps.length - 1) {
+          generateQuote();
+        } else {
+          nextStep();
+        }
+      },
+      onClear: resetQuote,
+      onCancel: () => window.history.back(),
+      onNextStep: nextStep,
+    });
+
+    return () => {
+      voiceForm.unregisterForm('quote-wizard');
+    };
+  }, [voiceForm, currentStep, quote, handleVoiceFillField, handleVoiceAction, nextStep, generateQuote, resetQuote]);
+
+  // Import cost data
   useEffect(() => {
     if (initialCostData && initialCostData.materials) {
       const items = transformCostOutputToQuoteItems(initialCostData);
@@ -60,86 +199,67 @@ const {
 
   const canProceed = () => {
     switch (currentStep) {
-      case 0: // Client & Company combined
-        const clientValid = quote.client?.name && quote.client?.email && quote.client?.phone && quote.client?.address && quote.client?.postcode;
-        return clientValid;
-      case 1: // Job & Items combined
-        const jobValid = quote.jobDetails?.title && quote.jobDetails?.description;
-        const itemsValid = quote.items && quote.items.length > 0;
-        return jobValid && itemsValid;
-      case 2: // Settings & Review
+      case 0:
+        return quote.client?.name && quote.client?.email && quote.client?.phone && quote.client?.address && quote.client?.postcode;
+      case 1:
+        return quote.jobDetails?.title && quote.jobDetails?.description && quote.items && quote.items.length > 0;
+      case 2:
         return quote.settings?.vatRegistered !== undefined;
       default:
         return true;
     }
   };
 
-  // Keyboard shortcuts
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      // Cmd/Ctrl + S to trigger auto-save indicator
-      if ((e.metaKey || e.ctrlKey) && e.key === 's') {
-        e.preventDefault();
-        setLastSaved(new Date());
-      }
-      // Enter to advance step (if valid and not in textarea)
-      if (e.key === 'Enter' && !(e.target as HTMLElement).matches('textarea') && canProceed()) {
-        const isInInput = (e.target as HTMLElement).matches('input, select, button');
-        if (!isInInput && currentStep < steps.length - 1) {
-          nextStep();
-        }
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentStep, nextStep]);
-
-  // Track changes for auto-save indicator
-  useEffect(() => {
-    if (quote.client || quote.items?.length || quote.settings) {
-      setLastSaved(new Date());
-    }
-  }, [quote]);
-
   const renderStep = () => {
     switch (currentStep) {
       case 0:
         return (
           <div className="space-y-6">
-            <CompanyBrandingStep />
-            <div className="border-t pt-6 mt-6">
-              <h3 className="text-lg font-semibold mb-4">Client Information</h3>
-              <ClientDetailsStep client={quote.client} onUpdate={updateClient} />
-            </div>
+            <CompanyProfileSummary />
+            <div className="h-px bg-border/50" />
+            <ClientDetailsStep client={quote.client} onUpdate={updateClient} />
           </div>
         );
       case 1:
         return (
-          <div className="space-y-6">
+          <div className="space-y-8">
             <JobDetailsStep jobDetails={quote.jobDetails} onUpdate={updateJobDetails} />
-            <div className="border-t pt-6 mt-6">
-              <h3 className="text-lg font-semibold mb-4">Quote Items</h3>
-              <EnhancedQuoteItemsStep 
-                items={quote.items || []} 
-                onAdd={addItem} 
-                onUpdate={updateItem} 
-                onRemove={removeItem}
-                priceAdjustment={priceAdjustment}
-                setPriceAdjustment={setPriceAdjustment}
-                calculateAdjustedPrice={calculateAdjustedPrice}
-              />
+            <div className="relative py-2">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-border/50" />
+              </div>
+              <div className="relative flex justify-center">
+                <span className="bg-background px-3 text-xs text-muted-foreground uppercase tracking-wider">
+                  Add Items
+                </span>
+              </div>
             </div>
+            <EnhancedQuoteItemsStep
+              items={quote.items || []}
+              onAdd={addItem}
+              onUpdate={updateItem}
+              onRemove={removeItem}
+              priceAdjustment={priceAdjustment}
+              setPriceAdjustment={setPriceAdjustment}
+              calculateAdjustedPrice={calculateAdjustedPrice}
+            />
           </div>
         );
       case 2:
         return (
-          <div className="space-y-6">
+          <div className="space-y-8">
             <QuoteSettingsStep settings={quote.settings} onUpdate={updateSettings} />
-            <div className="border-t pt-6 mt-6">
-              <h3 className="text-lg font-semibold mb-4">Final Review</h3>
-              <QuoteReviewStep quote={quote} />
+            <div className="relative py-2">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-border/50" />
+              </div>
+              <div className="relative flex justify-center">
+                <span className="bg-background px-3 text-xs text-muted-foreground uppercase tracking-wider">
+                  Review & Send
+                </span>
+              </div>
             </div>
+            <QuoteReviewStep quote={quote} />
           </div>
         );
       default:
@@ -148,71 +268,102 @@ const {
   };
 
   return (
-    <div className="w-full mx-auto space-y-4 md:space-y-6">
-      {/* Email Status Banner */}
+    <div className="space-y-6">
+      {/* Email Banner */}
       {FEATURES.EMAIL_INTEGRATION_ENABLED && <EmailStatusBanner />}
-      
-      {/* Progress and Auto-Save Indicator */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        <QuoteProgressIndicator
-          currentStep={currentStep}
-          totalSteps={steps.length}
-          stepLabels={steps.map(s => s.title)}
-        />
-        <div className="flex items-center gap-3 w-full sm:w-auto">
-          <AutoSaveIndicator lastSaved={lastSaved} />
-          <div className="hidden md:block text-xs text-muted-foreground">
-            Press Enter to continue • ⌘S to save
-          </div>
-        </div>
+
+      {/* Step Progress - Clean pills */}
+      <div className="flex items-center justify-center gap-2">
+        {steps.map((step, index) => {
+          const isComplete = currentStep > index;
+          const isActive = currentStep === index;
+          const Icon = step.icon;
+
+          return (
+            <React.Fragment key={step.id}>
+              <button
+                onClick={() => {
+                  if (isComplete) {
+                    // Allow going back to completed steps
+                    while (currentStep > index) prevStep();
+                  }
+                }}
+                disabled={!isComplete && !isActive}
+                className={cn(
+                  "flex items-center gap-2 px-4 py-2.5 rounded-full transition-all active:scale-95",
+                  isComplete && "bg-emerald-500/20 text-emerald-400 cursor-pointer",
+                  isActive && "bg-elec-yellow text-elec-dark font-semibold",
+                  !isComplete && !isActive && "bg-elec-gray/30 text-muted-foreground"
+                )}
+              >
+                {isComplete ? (
+                  <Check className="h-4 w-4" />
+                ) : (
+                  <Icon className="h-4 w-4" />
+                )}
+                <span className="text-sm hidden sm:inline">{step.title}</span>
+                <span className="text-sm sm:hidden">{step.shortTitle}</span>
+              </button>
+              {index < steps.length - 1 && (
+                <div className={cn(
+                  "w-6 h-0.5 rounded-full",
+                  currentStep > index ? "bg-emerald-500" : "bg-elec-gray/50"
+                )} />
+              )}
+            </React.Fragment>
+          );
+        })}
       </div>
 
-      {/* Main Content */}
-      <Card data-quote-step="content">
-        <CardHeader className="p-3 sm:p-4 md:p-6 pb-3 sm:pb-4">
-          <CardTitle className="text-lg sm:text-xl">{steps[currentStep].title}</CardTitle>
-          <p className="text-sm text-muted-foreground">{steps[currentStep].description}</p>
-        </CardHeader>
-        <CardContent className="p-3 sm:p-4 md:p-6 space-y-4 md:space-y-6">
-          {renderStep()}
-          
-          {/* Integrated Navigation */}
-          <div className="pt-3 sm:pt-4 border-t space-y-3">
-            {/* Continue Button - Always First on Mobile */}
-            <SmartContinueButton
-              canProceed={Boolean(canProceed())}
-              isLastStep={currentStep === steps.length - 1}
-              nextStepTitle={steps[currentStep + 1]?.title}
-              onNext={nextStep}
-              onGenerate={generateQuote}
-              isGenerating={isGenerating}
-            />
-            
-            {/* Secondary Actions - Stack on Mobile */}
-            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-              <Button
-                variant="outline"
-                onClick={prevStep}
-                disabled={currentStep === 0}
-                size="sm"
-                className="w-full sm:w-auto h-10 sm:h-9"
-              >
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Previous
-              </Button>
-              
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={resetQuote} 
-                className="w-full sm:w-auto h-10 sm:h-9"
-              >
-                Start Over
-              </Button>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Step Content */}
+      <div className="min-h-[50vh]">
+        {renderStep()}
+      </div>
+
+      {/* Bottom Navigation - Fixed */}
+      <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-md border-t border-border/50 px-4 py-4 z-30">
+        <div className="flex gap-3 max-w-lg mx-auto">
+          {/* Back Button */}
+          <Button
+            variant="outline"
+            onClick={prevStep}
+            disabled={currentStep === 0}
+            className="h-14 px-6 flex-shrink-0"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
+
+          {/* Primary Action */}
+          {currentStep === steps.length - 1 ? (
+            <Button
+              onClick={generateQuote}
+              disabled={isGenerating || !canProceed()}
+              className="flex-1 h-14 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold text-base"
+            >
+              {isGenerating ? (
+                <>
+                  <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                  Creating...
+                </>
+              ) : (
+                <>
+                  <Send className="h-5 w-5 mr-2" />
+                  Create Quote
+                </>
+              )}
+            </Button>
+          ) : (
+            <Button
+              onClick={nextStep}
+              disabled={!canProceed()}
+              className="flex-1 h-14 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold text-base"
+            >
+              Continue
+              <ArrowRight className="h-5 w-5 ml-2" />
+            </Button>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

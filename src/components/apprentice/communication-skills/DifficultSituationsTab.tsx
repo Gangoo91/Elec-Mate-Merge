@@ -148,12 +148,12 @@ const DifficultSituationsTab = () => {
                       
                       <div className="mb-3">
                         <p className="text-xs text-elec-yellow font-medium mb-1">Approach:</p>
-                        <p className="text-sm text-muted-foreground">{scenario.approach}</p>
+                        <p className="text-sm text-white">{scenario.approach}</p>
                       </div>
 
                       <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3 mb-3">
                         <p className="text-xs text-green-400 font-medium mb-1">Example Response:</p>
-                        <p className="text-sm text-muted-foreground italic">"{scenario.example}"</p>
+                        <p className="text-sm text-white italic">"{scenario.example}"</p>
                       </div>
 
                       <div className="flex flex-wrap gap-2">
@@ -184,10 +184,10 @@ const DifficultSituationsTab = () => {
             {deEscalationTechniques.map((technique, index) => (
               <div key={index} className="border border-blue-500/20 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-2">{technique.technique}</h4>
-                <p className="text-sm text-muted-foreground mb-3">{technique.description}</p>
+                <p className="text-sm text-white mb-3">{technique.description}</p>
                 <ul className="space-y-1">
                   {technique.steps.map((step, stepIndex) => (
-                    <li key={stepIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                    <li key={stepIndex} className="text-sm text-white flex items-start gap-2">
                       <div className="w-1 h-1 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
                       {step}
                     </li>
@@ -211,7 +211,7 @@ const DifficultSituationsTab = () => {
             {communicationDonts.map((dont, index) => (
               <div key={index} className="flex items-start gap-2 p-2 border border-red-500/20 rounded">
                 <div className="w-2 h-2 bg-red-400 rounded-full mt-1.5 flex-shrink-0"></div>
-                <span className="text-sm text-muted-foreground">{dont}</span>
+                <span className="text-sm text-white">{dont}</span>
               </div>
             ))}
           </div>
@@ -229,15 +229,15 @@ const DifficultSituationsTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center p-4 border border-green-500/20 rounded-lg">
               <h4 className="font-medium text-green-300 mb-2">Stay Professional</h4>
-              <p className="text-sm text-muted-foreground">Maintain respect and composure regardless of the situation</p>
+              <p className="text-sm text-white">Maintain respect and composure regardless of the situation</p>
             </div>
             <div className="text-center p-4 border border-green-500/20 rounded-lg">
               <h4 className="font-medium text-green-300 mb-2">Focus on Solutions</h4>
-              <p className="text-sm text-muted-foreground">Look for ways to resolve issues rather than assigning blame</p>
+              <p className="text-sm text-white">Look for ways to resolve issues rather than assigning blame</p>
             </div>
             <div className="text-center p-4 border border-green-500/20 rounded-lg">
               <h4 className="font-medium text-green-300 mb-2">Know Your Limits</h4>
-              <p className="text-sm text-muted-foreground">Escalate to your supervisor when situations are beyond your experience</p>
+              <p className="text-sm text-white">Escalate to your supervisor when situations are beyond your experience</p>
             </div>
           </div>
         </CardContent>

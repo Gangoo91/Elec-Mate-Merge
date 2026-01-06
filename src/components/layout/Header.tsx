@@ -4,12 +4,71 @@ import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import RecordingIndicator from "../apprentice/timer/RecordingIndicator";
 import NotificationDropdown from "../notifications/NotificationDropdown";
+import { MessagesDropdown } from "./MessagesDropdown";
 import UserProfileDropdown from "../auth/UserProfileDropdown";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 interface HeaderProps {
   toggleSidebar: () => void;
 }
+
+// Live clock component with smooth animations
+const LiveClock = ({ className }: { className?: string }) => {
+  const [time, setTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => setTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const hours = format(time, 'h');
+  const minutes = format(time, 'mm');
+  const seconds = format(time, 'ss');
+  const period = format(time, 'a');
+  const day = format(time, 'EEE');
+  const date = format(time, 'd MMM');
+
+  return (
+    <div className={cn("flex items-center gap-2", className)}>
+      {/* Date pill - hidden on mobile */}
+      <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/5 border border-white/10">
+        <span className="text-xs font-medium text-white/60">{day}</span>
+        <span className="text-xs font-semibold text-white/80">{date}</span>
+      </div>
+
+      {/* Time display */}
+      <div className="flex items-center">
+        <div className="flex items-baseline gap-0.5 px-2.5 py-1 rounded-lg bg-gradient-to-br from-white/10 to-white/5 border border-white/10 backdrop-blur-sm">
+          {/* Hours */}
+          <span className="text-sm sm:text-base font-bold tabular-nums text-white tracking-tight">
+            {hours}
+          </span>
+          {/* Colon with pulse animation */}
+          <span className="text-sm sm:text-base font-bold text-elec-yellow animate-pulse">
+            :
+          </span>
+          {/* Minutes */}
+          <span className="text-sm sm:text-base font-bold tabular-nums text-white tracking-tight">
+            {minutes}
+          </span>
+          {/* Seconds - subtle, hidden on smallest screens */}
+          <span className="hidden sm:inline-flex items-baseline">
+            <span className="text-xs font-medium text-white/40 ml-0.5">:</span>
+            <span className="text-xs font-medium tabular-nums text-white/40 w-4">
+              {seconds}
+            </span>
+          </span>
+          {/* AM/PM badge */}
+          <span className="ml-1 px-1.5 py-0.5 text-[10px] sm:text-xs font-bold rounded bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30">
+            {period.toUpperCase()}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Header = ({ toggleSidebar }: HeaderProps) => {
   const isMobile = useIsMobile();
@@ -25,7 +84,7 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
   return (
     <header
       ref={headerRef}
-      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-elec-dark/80 border-b border-white/10 shadow-lg shadow-black/20"
+      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-elec-dark/90 border-b border-white/10 shadow-xl shadow-black/30"
     >
       <div className="flex items-center justify-between h-14 sm:h-16 px-3 sm:px-4">
         {/* Left side - Menu toggle and branding */}
@@ -58,8 +117,14 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
           </div>
         </div>
 
+        {/* Center - Live Clock (desktop) */}
+        <LiveClock className="hidden md:flex" />
+
         {/* Right side - Actions */}
-        <div className="flex items-center gap-1 sm:gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          {/* Mobile clock - compact */}
+          <LiveClock className="md:hidden" />
+          <MessagesDropdown />
           <NotificationDropdown />
           <UserProfileDropdown />
         </div>

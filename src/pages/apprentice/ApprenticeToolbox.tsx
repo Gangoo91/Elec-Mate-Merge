@@ -199,7 +199,7 @@ const ApprenticeToolbox = () => {
   const colorMap = {
     yellow: {
       border: "border-elec-yellow/30 hover:border-elec-yellow/60",
-      bg: "bg-gradient-to-br from-elec-gray to-elec-dark/50",
+      bg: "bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5",
       badge: "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30",
       icon: "text-elec-yellow",
       iconBg: "bg-elec-yellow/10",
@@ -207,7 +207,7 @@ const ApprenticeToolbox = () => {
     },
     green: {
       border: "border-green-500/30 hover:border-green-500/60",
-      bg: "bg-gradient-to-br from-elec-gray to-green-950/20",
+      bg: "bg-gradient-to-br from-green-500/10 to-green-500/5",
       badge: "bg-green-500/20 text-green-400 border-green-500/30",
       icon: "text-green-400",
       iconBg: "bg-green-500/10",
@@ -215,7 +215,7 @@ const ApprenticeToolbox = () => {
     },
     blue: {
       border: "border-blue-500/30 hover:border-blue-500/60",
-      bg: "bg-gradient-to-br from-elec-gray to-blue-950/20",
+      bg: "bg-gradient-to-br from-blue-500/10 to-blue-500/5",
       badge: "bg-blue-500/20 text-blue-400 border-blue-500/30",
       icon: "text-blue-400",
       iconBg: "bg-blue-500/10",
@@ -223,7 +223,7 @@ const ApprenticeToolbox = () => {
     },
     purple: {
       border: "border-purple-500/30 hover:border-purple-500/60",
-      bg: "bg-gradient-to-br from-elec-gray to-purple-950/20",
+      bg: "bg-gradient-to-br from-purple-500/10 to-purple-500/5",
       badge: "bg-purple-500/20 text-purple-400 border-purple-500/30",
       icon: "text-purple-400",
       iconBg: "bg-purple-500/10",
@@ -231,7 +231,7 @@ const ApprenticeToolbox = () => {
     },
     orange: {
       border: "border-orange-500/30 hover:border-orange-500/60",
-      bg: "bg-gradient-to-br from-elec-gray to-orange-950/20",
+      bg: "bg-gradient-to-br from-orange-500/10 to-orange-500/5",
       badge: "bg-orange-500/20 text-orange-400 border-orange-500/30",
       icon: "text-orange-400",
       iconBg: "bg-orange-500/10",
@@ -256,12 +256,12 @@ const ApprenticeToolbox = () => {
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 Apprentice Guidance Area
               </h1>
-              <p className="text-sm text-muted-foreground mt-0.5 hidden sm:block">
+              <p className="text-sm text-white/70 mt-0.5 hidden sm:block">
                 Everything you need to succeed in your apprenticeship
               </p>
             </div>
           </div>
-          <p className="text-sm sm:text-base text-muted-foreground mt-2 sm:mt-0 sm:ml-[72px]">
+          <p className="text-sm sm:text-base text-white/70 mt-2 sm:mt-0 sm:ml-[72px]">
             Essential resources, skills development, and support for UK electrical apprentices
           </p>
         </div>
@@ -270,7 +270,7 @@ const ApprenticeToolbox = () => {
 
       {/* Quick Stats Banner */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
-        <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray to-elec-dark/50">
+        <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
           <CardContent className="p-3 sm:p-4">
             <div className="flex items-start gap-2 sm:gap-3">
               <div className="p-1.5 sm:p-2 bg-elec-yellow/10 rounded-lg flex-shrink-0">
@@ -278,12 +278,12 @@ const ApprenticeToolbox = () => {
               </div>
               <div className="min-w-0">
                 <div className="text-lg sm:text-xl font-bold text-elec-yellow truncate">11</div>
-                <div className="text-[10px] sm:text-xs text-muted-foreground truncate">Guidance Topics</div>
+                <div className="text-[10px] sm:text-xs text-white/70 truncate">Guidance Topics</div>
               </div>
             </div>
           </CardContent>
         </Card>
-        <Card className="border-green-500/20 bg-gradient-to-br from-elec-gray to-green-950/10">
+        <Card className="border-green-500/20 bg-gradient-to-br from-green-500/10 to-green-500/5">
           <CardContent className="p-3 sm:p-4">
             <div className="flex items-start gap-2 sm:gap-3">
               <div className="p-1.5 sm:p-2 bg-green-500/10 rounded-lg flex-shrink-0">
@@ -291,12 +291,12 @@ const ApprenticeToolbox = () => {
               </div>
               <div className="min-w-0">
                 <div className="text-lg sm:text-xl font-bold text-green-400 truncate">3-4 yrs</div>
-                <div className="text-[10px] sm:text-xs text-muted-foreground truncate">Typical Duration</div>
+                <div className="text-[10px] sm:text-xs text-white/70 truncate">Typical Duration</div>
               </div>
             </div>
           </CardContent>
         </Card>
-        <Card className="border-blue-500/20 bg-gradient-to-br from-elec-gray to-blue-950/10">
+        <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/10 to-blue-500/5">
           <CardContent className="p-3 sm:p-4">
             <div className="flex items-start gap-2 sm:gap-3">
               <div className="p-1.5 sm:p-2 bg-blue-500/10 rounded-lg flex-shrink-0">
@@ -304,12 +304,12 @@ const ApprenticeToolbox = () => {
               </div>
               <div className="min-w-0">
                 <div className="text-lg sm:text-xl font-bold text-blue-400 truncate">20%</div>
-                <div className="text-[10px] sm:text-xs text-muted-foreground truncate">Off-Job Training</div>
+                <div className="text-[10px] sm:text-xs text-white/70 truncate">Off-Job Training</div>
               </div>
             </div>
           </CardContent>
         </Card>
-        <Card className="border-purple-500/20 bg-gradient-to-br from-elec-gray to-purple-950/10">
+        <Card className="border-purple-500/20 bg-gradient-to-br from-purple-500/10 to-purple-500/5">
           <CardContent className="p-3 sm:p-4">
             <div className="flex items-start gap-2 sm:gap-3">
               <div className="p-1.5 sm:p-2 bg-purple-500/10 rounded-lg flex-shrink-0">
@@ -317,7 +317,7 @@ const ApprenticeToolbox = () => {
               </div>
               <div className="min-w-0">
                 <div className="text-lg sm:text-xl font-bold text-purple-400 truncate">Level 3</div>
-                <div className="text-[10px] sm:text-xs text-muted-foreground truncate">NVQ Qualification</div>
+                <div className="text-[10px] sm:text-xs text-white/70 truncate">NVQ Qualification</div>
               </div>
             </div>
           </CardContent>
@@ -341,7 +341,7 @@ const ApprenticeToolbox = () => {
                 {categoryItems.length} {categoryItems.length === 1 ? 'Topic' : 'Topics'}
               </Badge>
             </div>
-            <p className="text-sm text-muted-foreground -mt-2">{category.description}</p>
+            <p className="text-sm text-white/60 -mt-2">{category.description}</p>
 
             {/* Cards Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -377,16 +377,16 @@ const ApprenticeToolbox = () => {
                       </CardHeader>
 
                       <CardContent className="pt-0 pb-4 px-4">
-                        <p className="text-xs sm:text-sm text-muted-foreground mb-3 line-clamp-2">
+                        <p className="text-xs sm:text-sm text-white/70 mb-3 line-clamp-2">
                           {item.description}
                         </p>
 
                         {item.stats && item.stats.length > 0 && (
                           <div className="grid grid-cols-2 gap-2">
                             {item.stats.map((stat, index) => (
-                              <div key={index} className="bg-elec-dark/30 rounded-lg p-2 text-center">
+                              <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-2 text-center">
                                 <div className={`text-sm font-bold ${colors.icon}`}>{stat.value}</div>
-                                <div className="text-[10px] text-muted-foreground">{stat.label}</div>
+                                <div className="text-[10px] text-white/60">{stat.label}</div>
                               </div>
                             ))}
                           </div>
@@ -413,14 +413,14 @@ const ApprenticeToolbox = () => {
       })}
 
       {/* Help Banner */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
         <CardContent className="p-4">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3 text-center sm:text-left">
               <Sparkles className="h-8 w-8 text-elec-yellow flex-shrink-0" />
               <div>
                 <h4 className="font-medium text-white">Need more help?</h4>
-                <p className="text-xs text-muted-foreground">Check out mental health resources or explore career progression options</p>
+                <p className="text-xs text-white/70">Check out mental health resources or explore career progression options</p>
               </div>
             </div>
             <div className="flex gap-2 w-full sm:w-auto">

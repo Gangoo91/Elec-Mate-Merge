@@ -108,7 +108,7 @@ const TimeEntryToPortfolioDialog = ({
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Add to Portfolio</DialogTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Convert this time entry into a detailed portfolio entry
           </p>
         </DialogHeader>

@@ -11,7 +11,7 @@ const DocumentationRequirements = () => {
         Proper documentation of hazards is crucial for maintaining safety records, ensuring appropriate action is taken, and meeting legal obligations.
       </p>
       
-      <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4 md:p-5">
+      <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-4 md:p-5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           {/* Left Column */}
           <div className="space-y-4">
@@ -23,7 +23,7 @@ const DocumentationRequirements = () => {
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="bg-elec-gray rounded-md p-3">
+              <div className="bg-white/5 rounded-md p-3">
                 <h5 className="font-medium text-elec-yellow text-sm mb-1">Hazard Details</h5>
                 <ul className="list-disc list-inside text-sm space-y-1">
                   <li>Specific location of the hazard</li>
@@ -33,7 +33,7 @@ const DocumentationRequirements = () => {
                 </ul>
               </div>
               
-              <div className="bg-elec-gray rounded-md p-3">
+              <div className="bg-white/5 rounded-md p-3">
                 <h5 className="font-medium text-elec-yellow text-sm mb-1">Risk Assessment</h5>
                 <ul className="list-disc list-inside text-sm space-y-1">
                   <li>Likelihood of incident</li>
@@ -43,7 +43,7 @@ const DocumentationRequirements = () => {
                 </ul>
               </div>
               
-              <div className="bg-elec-gray rounded-md p-3">
+              <div className="bg-white/5 rounded-md p-3">
                 <h5 className="font-medium text-elec-yellow text-sm mb-1">Reporter Information</h5>
                 <ul className="list-disc list-inside text-sm space-y-1">
                   <li>Name of person reporting</li>
@@ -53,7 +53,7 @@ const DocumentationRequirements = () => {
                 </ul>
               </div>
               
-              <div className="bg-elec-gray rounded-md p-3">
+              <div className="bg-white/5 rounded-md p-3">
                 <h5 className="font-medium text-elec-yellow text-sm mb-1">Immediate Actions</h5>
                 <ul className="list-disc list-inside text-sm space-y-1">
                   <li>Steps taken to control</li>
@@ -76,7 +76,7 @@ const DocumentationRequirements = () => {
                   <h4 className="font-medium text-elec-yellow">Record-Keeping</h4>
                 </div>
                 
-                <div className="bg-elec-gray rounded-md p-3 h-full">
+                <div className="bg-white/5 rounded-md p-3 h-full">
                   <ul className="space-y-2 text-sm">
                     <li><span className="font-medium text-elec-yellow">Retention Period:</span> Minimum 3 years, 5 years recommended</li>
                     <li><span className="font-medium text-elec-yellow">Accessibility:</span> Records must be easily accessible to safety representatives and inspectors</li>
@@ -93,7 +93,7 @@ const DocumentationRequirements = () => {
                   <h4 className="font-medium text-elec-yellow">Management Review</h4>
                 </div>
                 
-                <div className="bg-elec-gray rounded-md p-3 h-full">
+                <div className="bg-white/5 rounded-md p-3 h-full">
                   <ul className="space-y-2 text-sm">
                     <li><span className="font-medium text-elec-yellow">Regular Review:</span> All reports reviewed in safety meetings</li>
                     <li><span className="font-medium text-elec-yellow">Action Tracking:</span> Document actions taken, dates, and responsible persons</li>

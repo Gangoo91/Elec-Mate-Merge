@@ -13,7 +13,7 @@ const LadderTypes = () => {
         </p>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <div className="bg-elec-dark/50 p-4 rounded-lg border border-elec-yellow/20">
+          <div className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
             <h4 className="font-semibold text-elec-yellow mb-2">Fiberglass Ladders</h4>
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li><span className="font-medium">Non-conductive</span> - Safe for electrical work</li>
@@ -25,7 +25,7 @@ const LadderTypes = () => {
             </ul>
           </div>
           
-          <div className="bg-elec-dark/50 p-4 rounded-lg border border-elec-yellow/20">
+          <div className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
             <h4 className="font-semibold text-elec-yellow mb-2">Aluminum Ladders</h4>
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li><span className="text-red-400 font-medium">Conductive</span> - NOT suitable near live electricity</li>
@@ -37,7 +37,7 @@ const LadderTypes = () => {
             </ul>
           </div>
           
-          <div className="bg-elec-dark/50 p-4 rounded-lg border border-elec-yellow/20">
+          <div className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
             <h4 className="font-semibold text-elec-yellow mb-2">Wooden Ladders</h4>
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>Naturally non-conductive when dry</li>
@@ -83,7 +83,7 @@ const LadderTypes = () => {
               Ladders for professional electrical work must conform to EN 131 Professional standard or 
               BS 2037 Class 1. These classifications ensure appropriate duty ratings for industrial use.
             </p>
-            <div className="bg-elec-dark/70 p-3 rounded-lg border border-elec-yellow/20">
+            <div className="bg-white/10 p-3 rounded-lg border border-elec-yellow/20">
               <h5 className="font-medium text-elec-yellow mb-2">Load Ratings</h5>
               <ul className="space-y-1 text-sm">
                 <li><span className="font-medium">Class 1 (Industrial):</span> Maximum load - 175kg</li>

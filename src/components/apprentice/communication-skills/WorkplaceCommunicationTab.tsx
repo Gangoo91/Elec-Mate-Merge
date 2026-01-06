@@ -108,7 +108,7 @@ const WorkplaceCommunicationTab = () => {
                       <div key={scenarioIndex} className="bg-black/20 rounded-lg p-4">
                         <h4 className="font-medium text-white mb-2">{scenario.situation}</h4>
                         <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3 mb-3">
-                          <p className="text-sm text-muted-foreground italic">"{scenario.good}"</p>
+                          <p className="text-sm text-white italic">"{scenario.good}"</p>
                         </div>
                         <div className="flex flex-wrap gap-2">
                           {scenario.tips.map((tip, tipIndex) => (
@@ -127,7 +127,7 @@ const WorkplaceCommunicationTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Clock className="h-6 w-6 text-elec-yellow" />
@@ -139,7 +139,7 @@ const WorkplaceCommunicationTab = () => {
             {communicationChannels.map((channel, index) => (
               <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-2">{channel.method}</h4>
-                <p className="text-sm text-muted-foreground mb-3">{channel.when}</p>
+                <p className="text-sm text-white mb-3">{channel.when}</p>
                 <div className="space-y-1">
                   {channel.pros.map((pro, proIndex) => (
                     <div key={proIndex} className="text-xs text-green-400 flex items-center gap-2">

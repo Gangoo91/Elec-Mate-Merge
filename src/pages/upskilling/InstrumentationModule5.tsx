@@ -41,7 +41,7 @@ const InstrumentationModule5 = () => {
       title: "Examples: HVAC, Pressure Systems, and Motor Speed Control",
       icon: PlayCircle,
       description: "Real-world applications of control loops in different systems"
-    }
+  }
   ];
 
   return (

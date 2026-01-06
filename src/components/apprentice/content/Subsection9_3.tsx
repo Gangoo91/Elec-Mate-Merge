@@ -14,13 +14,13 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           <Lightbulb className="h-6 w-6 text-elec-yellow" />
           Sustainable Electrical Technologies
         </h2>
-        <p className="text-muted-foreground">
+        <p className="text-white">
           Exploring renewable energy systems, energy storage, and smart technologies for modern electrical installations.
         </p>
       </div>
 
       {/* Section 1: Renewable Energy Systems */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className="pt-6">
           <h3 className="text-xl font-semibold mb-4">Renewable Energy Systems for UK Installations</h3>
           <div className="space-y-4">
@@ -30,7 +30,7 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-              <div className="bg-elec-dark/50 border border-green-500/30 rounded-md p-4">
+              <div className="bg-white/10 border border-green-500/30 rounded-md p-4">
                 <h4 className="text-lg font-medium text-green-400 mb-2">Solar Photovoltaic (PV) Systems</h4>
                 <ul className="list-disc pl-5 space-y-2 text-sm">
                   <li>
@@ -48,7 +48,7 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </ul>
               </div>
               
-              <div className="bg-elec-dark/50 border border-green-500/30 rounded-md p-4">
+              <div className="bg-white/10 border border-green-500/30 rounded-md p-4">
                 <h4 className="text-lg font-medium text-green-400 mb-2">Wind Energy Systems</h4>
                 <ul className="list-disc pl-5 space-y-2 text-sm">
                   <li>
@@ -67,7 +67,7 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </div>
             </div>
             
-            <div className="bg-elec-dark/50 border border-green-500/30 rounded-md p-4 mt-4">
+            <div className="bg-white/10 border border-green-500/30 rounded-md p-4 mt-4">
               <h4 className="text-lg font-medium text-green-400 mb-2">Heat Pumps and Renewable Heating</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -94,7 +94,7 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       </Card>
 
       {/* Section 2: Energy Storage */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className="pt-6">
           <h3 className="text-xl font-semibold mb-4">Energy Storage Technologies</h3>
           <div className="space-y-4">
@@ -103,7 +103,7 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               allowing for better utilisation of renewable energy and providing backup power capabilities.
             </p>
             
-            <div className="bg-elec-dark/50 border border-blue-400/30 rounded-md p-4">
+            <div className="bg-white/10 border border-blue-400/30 rounded-md p-4">
               <h4 className="text-lg font-medium text-blue-400 mb-3">Battery Storage Systems</h4>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -153,7 +153,7 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       </Card>
 
       {/* Section 3: Smart Technologies */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className="pt-6">
           <h3 className="text-xl font-semibold mb-4">Smart Technologies and Integration</h3>
           <div className="space-y-4">
@@ -163,7 +163,7 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-md p-4">
+              <div className="bg-white/10 border border-elec-yellow/30 rounded-md p-4">
                 <div className="flex items-center gap-2 mb-3">
                   <Search className="h-5 w-5 text-elec-yellow" />
                   <h4 className="text-lg font-medium">Smart Monitoring Systems</h4>
@@ -184,7 +184,7 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </ul>
               </div>
               
-              <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-md p-4">
+              <div className="bg-white/10 border border-elec-yellow/30 rounded-md p-4">
                 <div className="flex items-center gap-2 mb-3">
                   <Wrench className="h-5 w-5 text-elec-yellow" />
                   <h4 className="text-lg font-medium">Smart Control Systems</h4>
@@ -206,7 +206,7 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </div>
             </div>
             
-            <div className="bg-elec-dark/70 rounded-md p-4 mt-4">
+            <div className="bg-white/10 rounded-md p-4 mt-4">
               <div className="flex items-center gap-2 mb-3">
                 <Shield className="h-5 w-5 text-elec-yellow" />
                 <h4 className="text-lg font-medium text-elec-yellow">Security and Safety Considerations</h4>
@@ -238,7 +238,7 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       <Separator className="bg-elec-yellow/30" />
       
       {/* UK Market and Future Trends */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className="pt-6">
           <h3 className="text-xl font-semibold mb-4">UK Market and Future Trends</h3>
           <div className="space-y-4">
@@ -248,7 +248,7 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-elec-dark/50 border border-purple-500/30 rounded-md p-4">
+              <div className="bg-white/10 border border-purple-500/30 rounded-md p-4">
                 <h4 className="text-lg font-medium text-purple-400 mb-2">Current UK Market Trends</h4>
                 <ul className="list-disc pl-5 text-sm space-y-1">
                   <li>Explosive growth in domestic EV charger installations</li>
@@ -259,7 +259,7 @@ const Subsection9_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </ul>
               </div>
               
-              <div className="bg-elec-dark/50 border border-purple-500/30 rounded-md p-4">
+              <div className="bg-white/10 border border-purple-500/30 rounded-md p-4">
                 <h4 className="text-lg font-medium text-purple-400 mb-2">Future Developments</h4>
                 <ul className="list-disc pl-5 text-sm space-y-1">
                   <li>Vehicle-to-grid (V2G) technology becoming mainstream</li>

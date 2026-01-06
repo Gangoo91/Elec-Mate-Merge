@@ -329,7 +329,7 @@ const InstrumentationCalculator = () => {
               >
                 {formatNumber(result.current, 2)} mA
               </div>
-              <p className="text-sm text-white/50 mt-1">{formatNumber(result.percentage, 1)}% of scale</p>
+              <p className="text-sm text-white/80 mt-1">{formatNumber(result.percentage, 1)}% of scale</p>
             </div>
 
             <ResultsGrid columns={2}>
@@ -366,7 +366,7 @@ const InstrumentationCalculator = () => {
             {/* Loop Analysis Results */}
             {(result.shuntVoltage || result.supplyMargin) && (
               <div className="pt-3 mt-3 border-t border-white/10">
-                <p className="text-xs text-white/50 mb-2">Loop Analysis</p>
+                <p className="text-xs text-white/80 mb-2">Loop Analysis</p>
                 <ResultsGrid columns={2}>
                   {result.shuntVoltage && (
                     <ResultValue
@@ -441,7 +441,7 @@ const InstrumentationCalculator = () => {
                   <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
                 </div>
                 <ChevronDown className={cn(
-                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  "h-4 w-4 text-white/70 transition-transform duration-200",
                   showGuidance && "rotate-180"
                 )} />
               </CollapsibleTrigger>
@@ -478,7 +478,7 @@ const InstrumentationCalculator = () => {
               <span className="text-sm sm:text-base font-medium text-amber-300">4-20mA Basics</span>
             </div>
             <ChevronDown className={cn(
-              "h-4 w-4 text-white/40 transition-transform duration-200",
+              "h-4 w-4 text-white/70 transition-transform duration-200",
               showReference && "rotate-180"
             )} />
           </CollapsibleTrigger>
@@ -488,7 +488,7 @@ const InstrumentationCalculator = () => {
               <p><strong className="text-amber-300">Live Zero (4mA):</strong> Allows detection of broken wires vs. zero reading</p>
               <p><strong className="text-amber-300">Current Loop:</strong> Immune to voltage drops over long cable runs</p>
               <p><strong className="text-amber-300">Typical Shunt:</strong> 250Ω gives 1-5V output for PLC analog inputs</p>
-              <p className="text-xs text-white/50 pt-2 border-t border-white/10">
+              <p className="text-xs text-white/80 pt-2 border-t border-white/10">
                 BS 7671: Use screened cables and proper earthing for instrumentation circuits.
               </p>
             </div>

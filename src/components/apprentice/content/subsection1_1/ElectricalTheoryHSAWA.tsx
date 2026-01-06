@@ -26,14 +26,14 @@ const ElectricalTheoryHSAWA = ({ subsectionId, isCompleted, markAsComplete }: Su
     <div className="space-y-8">
       <h1 className="text-2xl font-bold text-elec-yellow">Health and Safety at Work Act 1974</h1>
       
-      <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+      <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
         <div className="flex items-start gap-4">
           <div className="bg-elec-yellow/20 p-3 rounded-full">
             <Shield className="h-6 w-6 text-elec-yellow" />
           </div>
           <div>
             <h2 className="text-xl font-semibold text-elec-yellow">Key Information</h2>
-            <p className="text-muted-foreground mt-1">
+            <p className="text-white mt-1">
               The Health and Safety at Work etc. Act 1974 (HSWA) is the primary piece of legislation covering 
               occupational health and safety in the United Kingdom. It establishes the legal framework to 
               promote, stimulate and encourage high standards of health and safety in the workplace.
@@ -42,7 +42,7 @@ const ElectricalTheoryHSAWA = ({ subsectionId, isCompleted, markAsComplete }: Su
         </div>
       </div>
       
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow">Core Principles</CardTitle>
           <CardDescription>The fundamental requirements established by the Act</CardDescription>
@@ -55,7 +55,7 @@ const ElectricalTheoryHSAWA = ({ subsectionId, isCompleted, markAsComplete }: Su
             reasonably practicable'.
           </p>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Key Requirements:</h3>
             <ul className="list-disc pl-5 space-y-2">
               <li>Employers must ensure, so far as is reasonably practicable, the health, safety and welfare at work of all employees</li>
@@ -73,7 +73,7 @@ const ElectricalTheoryHSAWA = ({ subsectionId, isCompleted, markAsComplete }: Su
         </CardContent>
       </Card>
       
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow">Employer Responsibilities</CardTitle>
         </CardHeader>
@@ -84,7 +84,7 @@ const ElectricalTheoryHSAWA = ({ subsectionId, isCompleted, markAsComplete }: Su
             are particularly relevant to electrical work.
           </p>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mb-4">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mb-4">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Specific Employer Duties:</h3>
             <ul className="list-disc pl-5 space-y-2">
               <li><span className="font-medium text-white">Safe plant and systems of work</span> - Ensuring electrical installations and equipment are safe</li>
@@ -109,7 +109,7 @@ const ElectricalTheoryHSAWA = ({ subsectionId, isCompleted, markAsComplete }: Su
         </CardContent>
       </Card>
       
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow">Employee Responsibilities</CardTitle>
         </CardHeader>
@@ -120,7 +120,7 @@ const ElectricalTheoryHSAWA = ({ subsectionId, isCompleted, markAsComplete }: Su
           </p>
           
           <div className="grid md:grid-cols-2 gap-4">
-            <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+            <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
               <h3 className="text-lg font-semibold text-elec-yellow mb-2">Section 7 Duties</h3>
               <p className="mb-2">Every employee must:</p>
               <ul className="list-disc pl-5 space-y-2">
@@ -132,7 +132,7 @@ const ElectricalTheoryHSAWA = ({ subsectionId, isCompleted, markAsComplete }: Su
               </ul>
             </div>
             
-            <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+            <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
               <h3 className="text-lg font-semibold text-elec-yellow mb-2">Section 8 Duties</h3>
               <p className="mb-2">No person shall:</p>
               <ul className="list-disc pl-5 space-y-2">
@@ -156,7 +156,7 @@ const ElectricalTheoryHSAWA = ({ subsectionId, isCompleted, markAsComplete }: Su
         </CardContent>
       </Card>
       
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow">Enforcement and Penalties</CardTitle>
         </CardHeader>
@@ -167,7 +167,7 @@ const ElectricalTheoryHSAWA = ({ subsectionId, isCompleted, markAsComplete }: Su
           </p>
           
           <div className="grid md:grid-cols-2 gap-4">
-            <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+            <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
               <h3 className="text-lg font-semibold text-elec-yellow mb-2">Inspector Powers</h3>
               <ul className="list-disc pl-5 space-y-1">
                 <li>Enter premises at any reasonable time</li>
@@ -181,7 +181,7 @@ const ElectricalTheoryHSAWA = ({ subsectionId, isCompleted, markAsComplete }: Su
               </ul>
             </div>
             
-            <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+            <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
               <h3 className="text-lg font-semibold text-elec-yellow mb-2">Enforcement Notices</h3>
               <ul className="list-disc pl-5 space-y-1">
                 <li><span className="font-medium text-white">Improvement Notice</span> - Requires remedy of a breach within a specified time</li>
@@ -231,7 +231,7 @@ const ElectricalTheoryHSAWA = ({ subsectionId, isCompleted, markAsComplete }: Su
         </CardContent>
       </Card>
       
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow">Application to Electrical Work</CardTitle>
         </CardHeader>
@@ -242,7 +242,7 @@ const ElectricalTheoryHSAWA = ({ subsectionId, isCompleted, markAsComplete }: Su
             work together is essential.
           </p>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Regulations Relevant to Electrical Workers:</h3>
             <ul className="list-disc pl-5 space-y-2">
               <li><span className="font-medium text-white">Electricity at Work Regulations 1989</span> - Specific duties relating to electrical systems and work activities</li>
@@ -254,7 +254,7 @@ const ElectricalTheoryHSAWA = ({ subsectionId, isCompleted, markAsComplete }: Su
             </ul>
           </div>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mt-4">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mt-4">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">How the HSWA Applies to Daily Electrical Work:</h3>
             <ul className="list-disc pl-5 space-y-2">
               <li><span className="font-medium text-white">Risk Assessments</span> - Legally required before starting electrical work</li>
@@ -270,12 +270,12 @@ const ElectricalTheoryHSAWA = ({ subsectionId, isCompleted, markAsComplete }: Su
         </CardContent>
       </Card>
       
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow">Case Studies and Lessons Learned</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Case Study 1: Fatal Electric Shock</h3>
             <p className="mb-2">
               An electrician was electrocuted while working on a distribution board that was not properly isolated. 
@@ -290,7 +290,7 @@ const ElectricalTheoryHSAWA = ({ subsectionId, isCompleted, markAsComplete }: Su
             </ul>
           </div>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mt-4">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mt-4">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Case Study 2: Apprentice Injury</h3>
             <p className="mb-2">
               An apprentice electrician suffered serious burns when instructed to work on equipment that was 
@@ -308,13 +308,13 @@ const ElectricalTheoryHSAWA = ({ subsectionId, isCompleted, markAsComplete }: Su
         </CardContent>
       </Card>
       
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow">Resources and Guidance</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid md:grid-cols-2 gap-4">
-            <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 flex flex-col h-full">
+            <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 flex flex-col h-full">
               <div className="flex items-center gap-2 mb-2">
                 <BookOpen className="h-5 w-5 text-elec-yellow" />
                 <h3 className="text-lg font-semibold text-elec-yellow">Official Publications</h3>
@@ -329,7 +329,7 @@ const ElectricalTheoryHSAWA = ({ subsectionId, isCompleted, markAsComplete }: Su
               </ul>
             </div>
             
-            <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 flex flex-col h-full">
+            <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 flex flex-col h-full">
               <div className="flex items-center gap-2 mb-2">
                 <CheckSquare className="h-5 w-5 text-elec-yellow" />
                 <h3 className="text-lg font-semibold text-elec-yellow">Compliance Checklist</h3>

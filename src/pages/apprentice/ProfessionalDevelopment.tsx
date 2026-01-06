@@ -22,7 +22,7 @@ const ProfessionalDevelopment = () => {
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col items-center justify-center mb-6">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Professional Development Hub</h1>
-        <p className="text-muted-foreground text-center max-w-2xl mb-4 text-sm sm:text-base">
+        <p className="text-white/70 text-center max-w-2xl mb-4 text-sm sm:text-base">
           Your comprehensive career development resource centre - explore pathways, learn about certifications, and build the skills needed for success in the electrical industry
         </p>
         <SmartBackButton />
@@ -92,7 +92,7 @@ const ProfessionalDevelopment = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-muted-foreground">
+            <p className="text-white/70">
               Professional development is a continuous process that shapes your electrical career. Use this hub to 
               explore career pathways, understand certification requirements, discover educational opportunities, 
               develop essential skills, and build industry connections. Everything you need to support your journey 

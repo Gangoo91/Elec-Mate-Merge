@@ -1,13 +1,6 @@
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import {
   IdCard,
@@ -16,9 +9,8 @@ import {
   Wrench,
   AlertTriangle,
   Share2,
-  ChevronRight,
-  Sparkles,
-  Zap,
+  FileCheck,
+  Loader2,
 } from "lucide-react";
 import ElecIdOverview from "./elec-id/ElecIdOverview";
 import ElecIdQualifications from "./elec-id/ElecIdQualifications";
@@ -26,6 +18,9 @@ import ElecIdExperience from "./elec-id/ElecIdExperience";
 import ElecIdSkills from "./elec-id/ElecIdSkills";
 import ElecIdCompliance from "./elec-id/ElecIdCompliance";
 import ElecIdShare from "./elec-id/ElecIdShare";
+import DocumentUploader from "./elec-id/DocumentUploader";
+import ElecIdOnboarding from "./elec-id/ElecIdOnboarding";
+import { useElecIdProfile } from "@/hooks/useElecIdProfile";
 
 const ELEC_ID_TABS = [
   {
@@ -34,6 +29,13 @@ const ELEC_ID_TABS = [
     icon: IdCard,
     component: ElecIdOverview,
     description: "Your Elec-ID card",
+  },
+  {
+    id: "documents",
+    label: "Documents",
+    icon: FileCheck,
+    component: DocumentUploader,
+    description: "Verify credentials",
   },
   {
     id: "qualifications",
@@ -72,72 +74,59 @@ const ELEC_ID_TABS = [
   },
 ];
 
-interface ElecIdTabProps {
-  hasElecId?: boolean;
-}
-
-const ElecIdTab = ({ hasElecId = true }: ElecIdTabProps) => {
+const ElecIdTab = () => {
   const [activeSubTab, setActiveSubTab] = useState("overview");
+  const { profile, isLoading, isActivated, activateProfile, refetch } = useElecIdProfile();
+
   const activeConfig = ELEC_ID_TABS.find((tab) => tab.id === activeSubTab);
   const SubTabComponent = activeConfig?.component || ElecIdOverview;
 
-  // If user does not have Elec-ID, show setup prompt
-  if (!hasElecId) {
+  // Loading state
+  if (isLoading) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-center">
-        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-elec-yellow to-elec-yellow/70 flex items-center justify-center mb-6">
-          <IdCard className="h-10 w-10 text-elec-dark" />
-        </div>
-        <h3 className="text-2xl font-bold text-foreground mb-2">
-          Create Your Elec-ID
-        </h3>
-        <p className="text-muted-foreground max-w-md mb-6">
-          Your Elec-ID is your portable professional identity. It stores your
-          qualifications, experience, and skills - all owned and controlled by you.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-3">
-          <Button className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold">
-            <Sparkles className="h-4 w-4 mr-2" />
-            Generate My Elec-ID
-          </Button>
-          <Button variant="outline" className="border-white/20">
-            Learn More
-          </Button>
-        </div>
-        <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl">
-          <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-            <GraduationCap className="h-6 w-6 text-elec-yellow mb-2" />
-            <h4 className="font-medium text-foreground text-sm">Track Qualifications</h4>
-            <p className="text-xs text-muted-foreground mt-1">
-              All your certs in one place with expiry alerts
-            </p>
-          </div>
-          <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-            <Briefcase className="h-6 w-6 text-elec-yellow mb-2" />
-            <h4 className="font-medium text-foreground text-sm">Portable History</h4>
-            <p className="text-xs text-muted-foreground mt-1">
-              Your experience follows you, not your employer
-            </p>
-          </div>
-          <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-            <Share2 className="h-6 w-6 text-elec-yellow mb-2" />
-            <h4 className="font-medium text-foreground text-sm">Share Instantly</h4>
-            <p className="text-xs text-muted-foreground mt-1">
-              QR code and links to share with employers
-            </p>
-          </div>
+      <div className="flex items-center justify-center py-20">
+        <div className="text-center">
+          <Loader2 className="h-10 w-10 text-elec-yellow animate-spin mx-auto mb-4" />
+          <p className="text-muted-foreground">Loading your Elec-ID...</p>
         </div>
       </div>
     );
   }
 
+  // Show onboarding if not activated
+  if (!isActivated) {
+    const handleOnboardingComplete = async () => {
+      // The onboarding component will have collected the data
+      // For now, just activate with basic info
+      await activateProfile({});
+      await refetch();
+    };
+
+    const handleSkip = () => {
+      // User can skip - they'll see the onboarding again next time
+      // Or we could show a minimal "create later" state
+    };
+
+    return (
+      <Card className="border-border">
+        <CardContent className="p-4 sm:p-6">
+          <ElecIdOnboarding
+            onComplete={handleOnboardingComplete}
+            onSkip={handleSkip}
+          />
+        </CardContent>
+      </Card>
+    );
+  }
+
+  // Activated - show full Elec-ID interface
   return (
     <div className="space-y-4 md:space-y-6">
       {/* Sub-Tab Navigation - Scrollable pill tabs */}
       <div className="relative -mx-4 px-4 md:mx-0 md:px-0">
         {/* Gradient fade indicators for scroll */}
-        <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-elec-dark to-transparent z-10 pointer-events-none md:hidden" />
-        <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-elec-dark to-transparent z-10 pointer-events-none md:hidden" />
+        <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none md:hidden" />
+        <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none md:hidden" />
 
         {/* Scrollable tabs container */}
         <div className="overflow-x-auto scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">

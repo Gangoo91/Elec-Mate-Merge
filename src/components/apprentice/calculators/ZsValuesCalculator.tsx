@@ -245,7 +245,7 @@ const ZsValuesCalculator = () => {
                     <Info className="h-4 w-4 text-purple-400" />
                     <span className="text-sm sm:text-base font-medium text-purple-300">Origin of Zs Values</span>
                   </div>
-                  <ChevronDown className="h-4 w-4 text-white/40 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                  <ChevronDown className="h-4 w-4 text-white/70 transition-transform duration-200 group-data-[state=open]:rotate-180" />
                 </CollapsibleTrigger>
 
                 <CollapsibleContent className="p-4 pt-0">
@@ -288,7 +288,7 @@ const ZsValuesCalculator = () => {
                     <Shield className="h-4 w-4 text-orange-400" />
                     <span className="text-sm sm:text-base font-medium text-orange-300">TT System Considerations</span>
                   </div>
-                  <ChevronDown className="h-4 w-4 text-white/40 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                  <ChevronDown className="h-4 w-4 text-white/70 transition-transform duration-200 group-data-[state=open]:rotate-180" />
                 </CollapsibleTrigger>
 
                 <CollapsibleContent className="p-4 pt-0">
@@ -331,7 +331,7 @@ const ZsValuesCalculator = () => {
                     <AlertTriangle className="h-4 w-4 text-amber-400" />
                     <span className="text-sm sm:text-base font-medium text-amber-300">Voltage Factor Considerations</span>
                   </div>
-                  <ChevronDown className="h-4 w-4 text-white/40 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                  <ChevronDown className="h-4 w-4 text-white/70 transition-transform duration-200 group-data-[state=open]:rotate-180" />
                 </CollapsibleTrigger>
 
                 <CollapsibleContent className="p-4 pt-0">
@@ -362,7 +362,7 @@ const ZsValuesCalculator = () => {
                     <BookOpen className="h-4 w-4 text-slate-400" />
                     <span className="text-sm sm:text-base font-medium text-slate-300">Related Standards & Documents</span>
                   </div>
-                  <ChevronDown className="h-4 w-4 text-white/40 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                  <ChevronDown className="h-4 w-4 text-white/70 transition-transform duration-200 group-data-[state=open]:rotate-180" />
                 </CollapsibleTrigger>
 
                 <CollapsibleContent className="p-4 pt-0">

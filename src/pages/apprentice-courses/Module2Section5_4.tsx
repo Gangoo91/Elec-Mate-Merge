@@ -6,7 +6,82 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import ResistanceCalculator from "@/components/apprentice-courses/ResistanceCalculator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import React from "react";
+
+const quizQuestions = [
+  {
+    id: 1,
+    question: "Which factor has the greatest effect on cable resistance?",
+    options: ["Cable colour", "Cross-sectional area", "Cable manufacturer", "Installation date"],
+    correctAnswer: 1,
+    explanation: "Cross-sectional area (CSA) is inversely proportional to resistance. Doubling the CSA halves the resistance.",
+  },
+  {
+    id: 2,
+    question: "For copper cable at 20°C, the resistivity formula is approximately:",
+    options: ["R ≈ 0.0172 × L ÷ A", "R ≈ 0.0282 × L ÷ A", "R ≈ L × A ÷ 0.0172", "R ≈ A ÷ L"],
+    correctAnswer: 0,
+    explanation: "For copper, R (Ω) ≈ 0.0172 × L ÷ A, where L is length in metres and A is CSA in mm².",
+  },
+  {
+    id: 3,
+    question: "What happens to cable resistance as temperature increases?",
+    options: ["It decreases", "It increases", "It stays the same", "It becomes unstable"],
+    correctAnswer: 1,
+    explanation: "Most cable materials have positive temperature coefficients, meaning resistance increases with temperature.",
+  },
+  {
+    id: 4,
+    question: "A 20m copper cable with 4mm² CSA has approximately what resistance at 20°C?",
+    options: ["0.086 Ω", "0.43 Ω", "0.172 Ω", "1.72 Ω"],
+    correctAnswer: 0,
+    explanation: "R ≈ 0.0172 × 20 ÷ 4 = 0.086 Ω",
+  },
+  {
+    id: 5,
+    question: "Poor joints and terminations create problems because they:",
+    options: ["Reduce voltage", "Add contact resistance", "Increase cable length", "Change CSA"],
+    correctAnswer: 1,
+    explanation: "Poor connections have high contact resistance, causing heating and voltage drop at the joint.",
+  },
+  {
+    id: 6,
+    question: "For a radial circuit, the length used in resistance calculations should be:",
+    options: ["One-way length only", "Total path length (out and back)", "Half the cable length", "Length of live conductor only"],
+    correctAnswer: 1,
+    explanation: "Current flows out and back, so use the total path length for resistance calculations.",
+  },
+  {
+    id: 7,
+    question: "Which has lower resistance for the same CSA and length?",
+    options: ["Copper", "Aluminium", "Both the same", "Depends on temperature"],
+    correctAnswer: 0,
+    explanation: "Copper has lower resistivity (0.0172) compared to aluminium (0.0282) at 20°C.",
+  },
+  {
+    id: 8,
+    question: "To reduce resistance in an existing installation, you could:",
+    options: ["Paint the cable", "Increase the CSA", "Add more joints", "Change the voltage"],
+    correctAnswer: 1,
+    explanation: "Increasing CSA (using thicker cable) reduces resistance proportionally.",
+  },
+  {
+    id: 9,
+    question: "High-resistance joints create a safety risk because they:",
+    options: ["Look untidy", "Overheat", "Are hard to test", "Use more cable"],
+    correctAnswer: 1,
+    explanation: "High resistance causes I²R heating, which can damage insulation and create fire risk.",
+  },
+  {
+    id: 10,
+    question: "Before testing continuity, you must:",
+    options: ["Call your supervisor", "Isolate, lock-off and prove dead", "Wait 24 hours", "Paint the terminals"],
+    correctAnswer: 1,
+    explanation: "Safety first: always isolate, lock-off and prove dead before working on any electrical installation.",
+  },
+];
 
 const faqs = [
   {
@@ -109,6 +184,14 @@ const Module2Section5_4: React.FC = () => {
           </ul>
         </Card>
 
+        {/* Quick Knowledge Check */}
+        <InlineCheck
+          question="A 30m copper cable run needs to carry 20A. Which cable size will have LOWER resistance?"
+          options={["1.5mm²", "2.5mm²", "4mm²", "All the same"]}
+          correctAnswer={2}
+          explanation="4mm² has the largest cross-sectional area, therefore the lowest resistance. Larger CSA = lower resistance."
+        />
+
         {/* Quick estimator */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-2 flex items-center gap-2"><Calculator className="w-5 h-5"/>Quick resistance estimator</h2>
@@ -207,15 +290,29 @@ const Module2Section5_4: React.FC = () => {
           </div>
         </Card>
 
+        {/* Another InlineCheck */}
+        <InlineCheck
+          question="What happens to copper cable resistance when temperature increases from 20°C to 40°C?"
+          options={["Decreases by 20%", "Increases by approximately 8%", "Stays exactly the same", "Becomes zero"]}
+          correctAnswer={1}
+          explanation="Cable resistance increases with temperature. Copper has a positive temperature coefficient, increasing about 0.4% per degree Celsius."
+        />
+
+        {/* Comprehensive Quiz */}
+        <Card className="mb-6 sm:mb-8 p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Knowledge Check Quiz (10 Questions)</h2>
+          <Quiz questions={quizQuestions} />
+        </Card>
+
         {/* Navigation */}
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-          <Button variant="outline" className="flex-1" asChild>
-            <Link to="..">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 2.5
-            </Link>
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5" asChild>
+            <Link to="../5-3"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
           </Button>
-        </div>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a]" asChild>
+            <Link to="../5-5">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
+          </Button>
+        </nav>
         </div>
 
       {/* Structured data */}

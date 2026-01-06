@@ -101,7 +101,7 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
             <div className="space-y-2">
               <Label htmlFor="phases">Number of Phases *</Label>
               <Select value={formData.phases || ''} onValueChange={handlePhasesChange}>
-                <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                <SelectTrigger className="h-11 touch-manipulation border-white/10 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
@@ -113,7 +113,7 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
             <div className="space-y-2">
               <Label htmlFor="supplyVoltage">Supply Voltage *</Label>
               <Select value={formData.supplyVoltage || ''} onValueChange={(value) => onUpdate('supplyVoltage', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                <SelectTrigger className="h-11 touch-manipulation border-white/10 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                   <SelectValue placeholder="Select voltage" />
                 </SelectTrigger>
                 <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
@@ -129,7 +129,7 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
                   value={formData.supplyVoltageCustom || ''}
                   onChange={(e) => onUpdate('supplyVoltageCustom', e.target.value)}
                   placeholder="Enter custom voltage (e.g., 240V)"
-                  className="h-11 text-base touch-manipulation border-gray-300 focus:border-purple-500 focus:ring-purple-500 mt-2"
+                  className="h-11 text-base touch-manipulation border-white/10 focus:border-purple-500 focus:ring-purple-500 mt-2"
                 />
               )}
               <p className="text-xs text-blue-400 mt-1 flex items-center gap-1">
@@ -147,13 +147,13 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
                   value={formData.supplyFrequency || '50'}
                   onChange={(e) => onUpdate('supplyFrequency', e.target.value)}
                   placeholder="50"
-                  className="h-11 text-base touch-manipulation border-gray-300 focus:border-purple-500 focus:ring-purple-500"
+                  className="h-11 text-base touch-manipulation border-white/10 focus:border-purple-500 focus:ring-purple-500"
                 />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="supplyPME">Supply PME</Label>
                 <Select value={formData.supplyPME || ''} onValueChange={handleSupplyPMEChange}>
-                  <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                  <SelectTrigger className="h-11 touch-manipulation border-white/10 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                     <SelectValue placeholder="Yes/No" />
                   </SelectTrigger>
                   <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
@@ -186,7 +186,7 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
                 value={showCustomProtectiveDevice ? 'other' : (formData.mainProtectiveDevice || '')} 
                 onValueChange={handleMainProtectiveDeviceChange}
               >
-                <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                <SelectTrigger className="h-11 touch-manipulation border-white/10 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                   <SelectValue placeholder="Select protective device" />
                 </SelectTrigger>
                 <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
@@ -218,7 +218,7 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
                   value={formData.mainProtectiveDevice || ''}
                   onChange={(e) => onUpdate('mainProtectiveDevice', e.target.value)}
                   placeholder="e.g. 125A BS 88 Fuse"
-                  className="h-11 text-base touch-manipulation border-gray-300 focus:border-purple-500 focus:ring-purple-500"
+                  className="h-11 text-base touch-manipulation border-white/10 focus:border-purple-500 focus:ring-purple-500"
                 />
                 <p className="text-xs text-muted-foreground mt-1">
                   Include rating, type, and standard
@@ -239,7 +239,7 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
             <div className="space-y-2">
               <Label htmlFor="earthingArrangement">Earthing Arrangement *</Label>
               <Select value={formData.earthingArrangement || ''} onValueChange={(value) => onUpdate('earthingArrangement', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                <SelectTrigger className="h-11 touch-manipulation border-white/10 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
@@ -250,8 +250,8 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
                 </SelectContent>
               </Select>
               {formData.earthingArrangement && (
-                <p className="text-xs text-gray-400 mt-1 flex items-center gap-1">
-                  <span className="w-1 h-1 rounded-full bg-gray-400 block"></span>
+                <p className="text-xs text-white/70 mt-1 flex items-center gap-1">
+                  <span className="w-1 h-1 rounded-full bg-white/70 block"></span>
                   {getEarthingInfo(formData.earthingArrangement)}
                 </p>
               )}
@@ -259,7 +259,7 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
             <div className="space-y-2">
               <Label htmlFor="earthElectrodeType">Earth Electrode Type</Label>
               <Select value={formData.earthElectrodeType || ''} onValueChange={(value) => onUpdate('earthElectrodeType', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                <SelectTrigger className="h-11 touch-manipulation border-white/10 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
@@ -292,7 +292,7 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
             <div className="space-y-2">
               <Label htmlFor="rcdMainSwitch">RCD Main Switch</Label>
               <Select value={formData.rcdMainSwitch || ''} onValueChange={(value) => onUpdate('rcdMainSwitch', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                <SelectTrigger className="h-11 touch-manipulation border-white/10 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                   <SelectValue placeholder="Yes/No" />
                 </SelectTrigger>
                 <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
@@ -305,7 +305,7 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
               <div className="space-y-2">
                 <Label htmlFor="rcdRating">RCD Rating *</Label>
                 <Select value={formData.rcdRating || ''} onValueChange={(value) => onUpdate('rcdRating', value)}>
-                  <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                  <SelectTrigger className="h-11 touch-manipulation border-white/10 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                     <SelectValue placeholder="Select rating" />
                   </SelectTrigger>
                   <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">

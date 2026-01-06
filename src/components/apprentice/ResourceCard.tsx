@@ -47,7 +47,7 @@ const ResourceCard = ({
   };
 
   return (
-    <Card className={`border-elec-yellow/20 bg-elec-gray h-full flex flex-col ${isCompleted ? 'border-l-4 border-l-green-500' : ''}`}>
+    <Card className={`border-elec-yellow/20 bg-white/5 h-full flex flex-col ${isCompleted ? 'border-l-4 border-l-green-500' : ''}`}>
       <CardHeader className="pb-2 flex flex-row items-start gap-3">
         <div className="flex-shrink-0 relative">
           <Icon className={`h-6 w-6 ${isCompleted ? 'text-green-500' : 'text-elec-yellow'} mt-1`} />

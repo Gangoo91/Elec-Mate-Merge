@@ -110,12 +110,8 @@ export const useInspectorProfiles = () => {
 
       setProfiles(mappedProfiles);
     } catch (error) {
+      // Only log to console - don't show toast for expected failures
       console.error('Failed to load inspector profiles:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to load profiles',
-        variant: 'destructive',
-      });
     } finally {
       setIsLoading(false);
     }

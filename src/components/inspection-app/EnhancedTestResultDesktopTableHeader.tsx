@@ -42,199 +42,199 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
       <TableRow className="hover:bg-primary/5">
         {/* Circuit Number - Always visible */}
         <TableHead
-          colSpan={1} 
-          className="font-bold text-primary text-center bg-neutral-600 w-20 min-w-[80px] max-w-[80px]"
+          colSpan={1}
+          className="font-bold text-blue-300 text-center bg-blue-500/20 border-b-2 border-blue-500 w-20 min-w-[80px] max-w-[80px]"
         >
           Circuit #
         </TableHead>
-        
+
         <TableHead
-          colSpan={4} 
-          className="font-bold text-primary text-center bg-neutral-600"
+          colSpan={4}
+          className="font-bold text-blue-300 text-center bg-blue-500/20 border-b-2 border-blue-500"
         >
           <Button
             variant="ghost"
             size="sm"
             onClick={() => onToggleGroup('circuit')}
-            className="gap-1 h-6 px-2 w-full justify-center"
+            className="gap-1 h-6 px-2 w-full justify-center text-blue-300 hover:text-blue-200 hover:bg-blue-500/30"
           >
             {isGroupCollapsed('circuit') ? <ChevronRight className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
             Circuit Details
           </Button>
         </TableHead>
-        
-        <TableHead 
-          colSpan={2} 
-          className="font-bold text-primary text-center bg-neutral-600"
+
+        <TableHead
+          colSpan={2}
+          className="font-bold text-emerald-300 text-center bg-emerald-500/20 border-b-2 border-emerald-500"
         >
           <Button
             variant="ghost"
             size="sm"
             onClick={() => onToggleGroup('conductor')}
-            className="gap-1 h-6 px-2 w-full justify-center"
+            className="gap-1 h-6 px-2 w-full justify-center text-emerald-300 hover:text-emerald-200 hover:bg-emerald-500/30"
           >
             {isGroupCollapsed('conductor') ? <ChevronRight className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
             Conductors
           </Button>
         </TableHead>
-        
-        <TableHead 
-          colSpan={5} 
-          className="font-bold text-primary text-center bg-neutral-600"
+
+        <TableHead
+          colSpan={5}
+          className="font-bold text-amber-300 text-center bg-amber-500/20 border-b-2 border-amber-500"
         >
           <Button
             variant="ghost"
             size="sm"
             onClick={() => onToggleGroup('protection')}
-            className="gap-1 h-6 px-2 w-full justify-center"
+            className="gap-1 h-6 px-2 w-full justify-center text-amber-300 hover:text-amber-200 hover:bg-amber-500/30"
           >
             {isGroupCollapsed('protection') ? <ChevronRight className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
             Protective Device
           </Button>
         </TableHead>
-        
-        <TableHead 
-          colSpan={4} 
-          className="font-bold text-primary text-center bg-neutral-600"
+
+        <TableHead
+          colSpan={4}
+          className="font-bold text-rose-300 text-center bg-rose-500/20 border-b-2 border-rose-500"
         >
           <Button
             variant="ghost"
             size="sm"
             onClick={() => onToggleGroup('rcdDetails')}
-            className="gap-1 h-6 px-2 w-full justify-center"
+            className="gap-1 h-6 px-2 w-full justify-center text-rose-300 hover:text-rose-200 hover:bg-rose-500/30"
           >
             {isGroupCollapsed('rcdDetails') ? <ChevronRight className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
             RCD Details
           </Button>
         </TableHead>
-        
-        <TableHead colSpan={5} className="bg-neutral-600 text-center font-bold text-xs h-10 px-2">
+
+        <TableHead colSpan={5} className="bg-purple-500/20 border-b-2 border-purple-500 text-center font-bold text-sm h-10 px-2">
           <div className="flex items-center justify-center gap-2">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => onToggleGroup('continuity')}
-              className="h-6 px-2 hover:bg-neutral-500/50"
+              className="h-6 px-2 text-purple-300 hover:text-purple-200 hover:bg-purple-500/30"
             >
               {collapsedGroups.has('continuity') ? <ChevronRight className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
             </Button>
-            <span>Continuity Tests</span>
+            <span className="text-purple-300">Continuity Tests</span>
           </div>
         </TableHead>
-        
-        <TableHead 
-          colSpan={3} 
-          className="font-bold text-primary text-center bg-neutral-600"
+
+        <TableHead
+          colSpan={3}
+          className="font-bold text-violet-300 text-center bg-violet-500/20 border-b-2 border-violet-500"
         >
           <Button
             variant="ghost"
             size="sm"
             onClick={() => onToggleGroup('insulation')}
-            className="gap-1 h-6 px-2 w-full justify-center"
+            className="gap-1 h-6 px-2 w-full justify-center text-violet-300 hover:text-violet-200 hover:bg-violet-500/30"
           >
             {isGroupCollapsed('insulation') ? <ChevronRight className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
             Insulation Resistance
           </Button>
         </TableHead>
-        
-        <TableHead 
-          colSpan={2} 
-          className="font-bold text-primary text-center bg-neutral-600"
+
+        <TableHead
+          colSpan={2}
+          className="font-bold text-yellow-300 text-center bg-yellow-500/20 border-b-2 border-yellow-500"
         >
           <Button
             variant="ghost"
             size="sm"
             onClick={() => onToggleGroup('zs')}
-            className="gap-1 h-6 px-2 w-full justify-center"
+            className="gap-1 h-6 px-2 w-full justify-center text-yellow-300 hover:text-yellow-200 hover:bg-yellow-500/30"
           >
             {isGroupCollapsed('zs') ? <ChevronRight className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
             Zs (Ω)
           </Button>
         </TableHead>
-        
+
         <TableHead
-          colSpan={2} 
-          className="font-bold text-primary text-center bg-neutral-600"
+          colSpan={2}
+          className="font-bold text-indigo-300 text-center bg-indigo-500/20 border-b-2 border-indigo-500"
         >
           <Button
             variant="ghost"
             size="sm"
             onClick={() => onToggleGroup('rcd')}
-            className="gap-1 h-6 px-2 w-full justify-center"
+            className="gap-1 h-6 px-2 w-full justify-center text-indigo-300 hover:text-indigo-200 hover:bg-indigo-500/30"
           >
             {isGroupCollapsed('rcd') ? <ChevronRight className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
             RCD Tests
           </Button>
         </TableHead>
-        
-        <TableHead 
-          colSpan={1} 
-          className="font-bold text-primary text-center bg-neutral-600"
+
+        <TableHead
+          colSpan={1}
+          className="font-bold text-pink-300 text-center bg-pink-500/20 border-b-2 border-pink-500"
         >
           <Button
             variant="ghost"
             size="sm"
             onClick={() => onToggleGroup('afdd')}
-            className="gap-1 h-6 px-2 w-full justify-center"
+            className="gap-1 h-6 px-2 w-full justify-center text-pink-300 hover:text-pink-200 hover:bg-pink-500/30"
           >
             {isGroupCollapsed('afdd') ? <ChevronRight className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
             AFDD
           </Button>
         </TableHead>
-        
-        <TableHead 
-          colSpan={1} 
-          className="font-bold text-primary text-center bg-neutral-600"
+
+        <TableHead
+          colSpan={1}
+          className="font-bold text-cyan-300 text-center bg-cyan-500/20 border-b-2 border-cyan-500"
         >
           <Button
             variant="ghost"
             size="sm"
             onClick={() => onToggleGroup('functional')}
-            className="gap-1 h-6 px-2 w-full justify-center"
+            className="gap-1 h-6 px-2 w-full justify-center text-cyan-300 hover:text-cyan-200 hover:bg-cyan-500/30"
           >
             {isGroupCollapsed('functional') ? <ChevronRight className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
             Functional
           </Button>
         </TableHead>
-        
-        <TableHead className="font-bold text-primary text-center bg-neutral-600 px-2">
+
+        <TableHead className="font-bold text-muted-foreground text-center bg-muted/30 border-b-2 border-border px-2">
           Remarks
         </TableHead>
       </TableRow>
 
       {/* Individual Column Headers Row */}
-      <TableRow className="hover:bg-primary/5">
+      <TableRow className="hover:bg-muted/30">
         {/* Circuit Number - Always visible */}
-        <TableHead className="w-20 min-w-[80px] max-w-[80px] sticky left-0 z-40 font-semibold text-primary bg-blue-50 px-1 text-xs leading-tight text-center">
+        <TableHead className="w-20 min-w-[80px] max-w-[80px] sticky left-0 z-40 font-medium text-blue-200 bg-blue-500/10 px-1 text-sm leading-tight text-center">
           Circuit number
         </TableHead>
-        
+
         {/* Circuit Details */}
         {!isGroupCollapsed('circuit') && (
           <>
-            <TableHead className="min-w-[220px] max-w-[220px] sticky left-[80px] z-35 font-semibold text-primary bg-blue-50 px-1 text-xs leading-tight text-center">Circuit description</TableHead>
-            <TableHead className="min-w-[120px] max-w-[120px] font-semibold text-primary bg-blue-50/30 px-1 text-xs leading-tight break-words text-center">Type of wiring</TableHead>
-            <TableHead className="min-w-[100px] max-w-[100px] font-semibold text-primary bg-blue-50/30 px-1 text-xs leading-tight break-words text-center">Reference method</TableHead>
-            <TableHead className="w-16 min-w-[64px] max-w-[64px] font-semibold text-primary bg-blue-50/30 px-1 text-xs leading-tight text-center">No. of points</TableHead>
+            <TableHead className="min-w-[220px] max-w-[220px] sticky left-[80px] z-35 font-medium text-blue-200 bg-blue-500/10 px-1 text-sm leading-tight text-center">Circuit description</TableHead>
+            <TableHead className="min-w-[120px] max-w-[120px] font-medium text-blue-200 bg-blue-500/10 px-1 text-sm leading-tight break-words text-center">Type of wiring</TableHead>
+            <TableHead className="min-w-[100px] max-w-[100px] font-medium text-blue-200 bg-blue-500/10 px-1 text-sm leading-tight break-words text-center">Reference method</TableHead>
+            <TableHead className="w-16 min-w-[64px] max-w-[64px] font-medium text-blue-200 bg-blue-500/10 px-1 text-sm leading-tight text-center">No. of points</TableHead>
           </>
         )}
-        
+
         {/* Conductor Details */}
         {!isGroupCollapsed('conductor') && (
           <>
-            <TableHead className="w-28 min-w-[110px] max-w-[110px] font-semibold text-primary bg-green-50/30 px-1 text-xs leading-tight break-words text-center">Live (mm²)</TableHead>
-            <TableHead className="w-28 min-w-[110px] max-w-[110px] font-semibold text-primary bg-green-50/30 px-1 text-xs leading-tight break-words text-center">cpc (mm²)</TableHead>
+            <TableHead className="w-28 min-w-[110px] max-w-[110px] font-medium text-emerald-200 bg-emerald-500/10 px-1 text-sm leading-tight break-words text-center">Live (mm²)</TableHead>
+            <TableHead className="w-28 min-w-[110px] max-w-[110px] font-medium text-emerald-200 bg-emerald-500/10 px-1 text-sm leading-tight break-words text-center">cpc (mm²)</TableHead>
           </>
         )}
-        
+
         {/* Protective Device */}
         {!isGroupCollapsed('protection') && (
           <>
-            <TableHead className="w-32 min-w-[120px] max-w-[120px] font-semibold text-primary bg-orange-50/30 px-1 text-xs leading-tight break-words text-center">BS (EN)</TableHead>
-            <TableHead className="w-24 min-w-[85px] max-w-[85px] font-semibold text-primary bg-orange-50/30 px-1 text-xs leading-tight text-center">Type</TableHead>
-            <TableHead className="w-24 min-w-[85px] max-w-[85px] font-semibold text-primary bg-orange-50/30 px-1 text-xs leading-tight break-words text-center">Rating (A)</TableHead>
-            <TableHead className="w-24 min-w-[90px] max-w-[90px] font-semibold text-primary bg-orange-50/30 px-1 text-xs leading-tight text-center">Breaking capacity (kA)</TableHead>
-            <TableHead className="w-28 min-w-[100px] max-w-[100px] font-semibold text-primary bg-orange-50/30 px-1 text-xs leading-tight break-words text-center">
+            <TableHead className="w-32 min-w-[120px] max-w-[120px] font-medium text-amber-200 bg-amber-500/10 px-1 text-sm leading-tight break-words text-center">BS (EN)</TableHead>
+            <TableHead className="w-24 min-w-[85px] max-w-[85px] font-medium text-amber-200 bg-amber-500/10 px-1 text-sm leading-tight text-center">Type</TableHead>
+            <TableHead className="w-24 min-w-[85px] max-w-[85px] font-medium text-amber-200 bg-amber-500/10 px-1 text-sm leading-tight break-words text-center">Rating (A)</TableHead>
+            <TableHead className="w-24 min-w-[90px] max-w-[90px] font-medium text-amber-200 bg-amber-500/10 px-1 text-sm leading-tight text-center">Breaking capacity (kA)</TableHead>
+            <TableHead className="w-28 min-w-[100px] max-w-[100px] font-medium text-amber-200 bg-amber-500/10 px-1 text-sm leading-tight break-words text-center">
               <div className="flex items-center justify-center gap-1.5">
                 <span>Maximum permitted Zs (Ω)</span>
                 {onFillAllMaxZs && (
@@ -249,9 +249,9 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                     </PopoverTrigger>
                     <PopoverContent className="w-64 p-3 bg-background border-border" align="start">
                       <div className="space-y-3">
-                        <div className="text-xs text-neutral-300">
+                        <div className="text-xs text-muted-foreground">
                           <div className="font-semibold mb-1">Maximum Permitted Zs</div>
-                          <div className="text-[10px] text-neutral-400">
+                          <div className="text-[10px] text-muted-foreground/70">
                             Values from BS 7671 Tables 41.2, 41.3, 41.4. These are the maximum permitted values - the tables already account for Cmin (0.95).
                           </div>
                         </div>
@@ -267,7 +267,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             <Calculator className="h-3 w-3 mr-2" />
                             Auto-Fill All Max Zs
                           </Button>
-                          <div className="text-[10px] text-neutral-400 mt-2">
+                          <div className="text-[10px] text-muted-foreground/70 mt-2">
                             Automatically calculates Max Zs based on BS Standard, Curve, and Rating for each circuit
                           </div>
                         </div>
@@ -283,7 +283,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
         {/* RCD Details */}
         {!isGroupCollapsed('rcdDetails') && (
           <>
-            <TableHead className="w-24 min-w-[85px] max-w-[85px] font-semibold text-primary bg-red-50/30 px-1 text-xs leading-tight break-words text-center">
+            <TableHead className="w-24 min-w-[85px] max-w-[85px] font-medium text-rose-200 bg-rose-500/10 px-1 text-xs leading-tight break-words text-center">
               <div className="flex items-center justify-center gap-1.5">
                 <span>BS (EN)</span>
                 {onFillAllRcdBsStandard && (
@@ -331,7 +331,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                 )}
               </div>
             </TableHead>
-            <TableHead className="w-20 min-w-[70px] max-w-[70px] font-semibold text-primary bg-red-50/30 px-1 text-xs leading-tight text-center">
+            <TableHead className="w-20 min-w-[70px] max-w-[70px] font-medium text-rose-200 bg-rose-500/10 px-1 text-xs leading-tight text-center">
               <div className="flex items-center justify-center gap-1.5">
                 <span>Type</span>
                 {onFillAllRcdType && (
@@ -397,7 +397,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                 )}
               </div>
             </TableHead>
-            <TableHead className="w-20 min-w-[75px] max-w-[75px] font-semibold text-primary bg-red-50/30 px-1 text-xs leading-tight break-words text-center">
+            <TableHead className="w-20 min-w-[75px] max-w-[75px] font-medium text-rose-200 bg-rose-500/10 px-1 text-xs leading-tight break-words text-center">
               <div className="flex items-center justify-center gap-1.5">
                 <span>IΔn (mA)</span>
                 {onFillAllRcdRating && (
@@ -463,7 +463,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                 )}
               </div>
             </TableHead>
-            <TableHead className="w-20 min-w-[75px] max-w-[75px] font-semibold text-primary bg-red-50/30 px-1 text-xs leading-tight break-words text-center">
+            <TableHead className="w-20 min-w-[75px] max-w-[75px] font-medium text-rose-200 bg-rose-500/10 px-1 text-xs leading-tight break-words text-center">
               <div className="flex items-center justify-center gap-1.5">
                 <span>Rating (A)</span>
                 {onFillAllRcdRatingA && (
@@ -571,36 +571,36 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
         {/* Continuity Tests */}
         {!isGroupCollapsed('continuity') && (
           <>
-            <TableHead className="w-20 min-w-[75px] max-w-[75px] font-semibold text-primary bg-purple-50/30 px-1 text-xs leading-tight break-words text-center">r₁ (line) (Ω)</TableHead>
-            <TableHead className="w-20 min-w-[75px] max-w-[75px] font-semibold text-primary bg-purple-50/30 px-1 text-xs leading-tight break-words text-center">rₙ (neutral)</TableHead>
-            <TableHead className="w-20 min-w-[75px] max-w-[75px] font-semibold text-primary bg-purple-50/30 px-1 text-xs leading-tight break-words text-center">r₂ (cpc)</TableHead>
-            <TableHead className="w-20 min-w-[75px] max-w-[75px] font-semibold text-primary bg-purple-50/30 px-1 text-xs leading-tight break-words text-center">(R₁ + R₂)</TableHead>
-            <TableHead className="w-20 min-w-[75px] max-w-[75px] font-semibold text-primary bg-purple-50/30 px-1 text-xs leading-tight break-words text-center">R₂</TableHead>
+            <TableHead className="w-20 min-w-[75px] max-w-[75px] font-medium text-purple-200 bg-purple-500/10 px-1 text-xs leading-tight break-words text-center">r₁ (line) (Ω)</TableHead>
+            <TableHead className="w-20 min-w-[75px] max-w-[75px] font-medium text-purple-200 bg-purple-500/10 px-1 text-xs leading-tight break-words text-center">rₙ (neutral)</TableHead>
+            <TableHead className="w-20 min-w-[75px] max-w-[75px] font-medium text-purple-200 bg-purple-500/10 px-1 text-xs leading-tight break-words text-center">r₂ (cpc)</TableHead>
+            <TableHead className="w-20 min-w-[75px] max-w-[75px] font-medium text-purple-200 bg-purple-500/10 px-1 text-xs leading-tight break-words text-center">(R₁ + R₂)</TableHead>
+            <TableHead className="w-20 min-w-[75px] max-w-[75px] font-medium text-purple-200 bg-purple-500/10 px-1 text-xs leading-tight break-words text-center">R₂</TableHead>
           </>
         )}
         
         {/* Insulation Tests */}
         {!isGroupCollapsed('insulation') && (
           <>
-            <TableHead className="w-20 min-w-[80px] max-w-[80px] font-semibold text-primary bg-purple-50/30 px-1 text-center text-xs leading-tight break-words">Test voltage (V)</TableHead>
-            <TableHead className="w-20 min-w-[80px] max-w-[80px] font-semibold text-primary bg-purple-50/30 px-1 text-center text-xs leading-tight break-words">Live - Live (MΩ)</TableHead>
-            <TableHead className="w-20 min-w-[80px] max-w-[80px] font-semibold text-primary bg-purple-50/30 px-1 text-center text-xs leading-tight break-words">Live - Earth (MΩ)</TableHead>
+            <TableHead className="w-20 min-w-[80px] max-w-[80px] font-medium text-purple-200 bg-purple-500/10 px-1 text-center text-xs leading-tight break-words">Test voltage (V)</TableHead>
+            <TableHead className="w-20 min-w-[80px] max-w-[80px] font-medium text-purple-200 bg-purple-500/10 px-1 text-center text-xs leading-tight break-words">Live - Live (MΩ)</TableHead>
+            <TableHead className="w-20 min-w-[80px] max-w-[80px] font-medium text-purple-200 bg-purple-500/10 px-1 text-center text-xs leading-tight break-words">Live - Earth (MΩ)</TableHead>
           </>
         )}
         
         {/* Zs (Ω) Tests */}
         {!isGroupCollapsed('zs') && (
           <>
-            <TableHead className="w-24 min-w-[90px] max-w-[90px] font-semibold text-primary bg-yellow-50/30 px-1 text-center text-xs leading-tight break-words">Polarity</TableHead>
-            <TableHead className="w-24 min-w-[85px] max-w-[85px] font-semibold text-primary bg-yellow-50/30 px-1 text-center text-xs leading-tight break-words">Maximum measured</TableHead>
+            <TableHead className="w-24 min-w-[90px] max-w-[90px] font-medium text-yellow-200 bg-yellow-500/10 px-1 text-center text-xs leading-tight break-words">Polarity</TableHead>
+            <TableHead className="w-24 min-w-[85px] max-w-[85px] font-medium text-yellow-200 bg-yellow-500/10 px-1 text-center text-xs leading-tight break-words">Maximum measured</TableHead>
           </>
         )}
         
         {/* RCD Tests */}
         {!isGroupCollapsed('rcd') && (
           <>
-            <TableHead className="w-20 min-w-[80px] max-w-[80px] font-semibold text-primary bg-indigo-50/30 px-1 text-center text-xs leading-tight break-words">Disconnection time (ms)</TableHead>
-            <TableHead className="w-24 min-w-[90px] max-w-[90px] font-semibold text-primary bg-indigo-50/30 px-1 text-center text-xs leading-tight">
+            <TableHead className="w-20 min-w-[80px] max-w-[80px] font-medium text-indigo-200 bg-indigo-500/10 px-1 text-center text-xs leading-tight break-words">Disconnection time (ms)</TableHead>
+            <TableHead className="w-24 min-w-[90px] max-w-[90px] font-medium text-indigo-200 bg-indigo-500/10 px-1 text-center text-xs leading-tight">
               <div className="flex items-center justify-center gap-1">
                 <span className="break-words">Test button operation</span>
                 {onFillAllRcdTestButton && (
@@ -621,7 +621,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
         
         {/* AFDD Test */}
         {!isGroupCollapsed('afdd') && (
-          <TableHead className="min-w-[100px] max-w-fit font-semibold text-primary bg-indigo-50/30 px-1 text-center text-xs leading-tight">
+          <TableHead className="min-w-[100px] max-w-fit font-medium text-indigo-200 bg-indigo-500/10 px-1 text-center text-xs leading-tight">
             <div className="flex items-center justify-center gap-1">
               <span className="break-words">Manual test button operation</span>
               {onFillAllAfdd && (
@@ -641,15 +641,15 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
         
         {/* Functional */}
         {!isGroupCollapsed('functional') && (
-          <TableHead className="min-w-[100px] max-w-fit font-semibold text-primary bg-cyan-50/30 px-1 text-center text-xs leading-tight break-words">Functional</TableHead>
+          <TableHead className="min-w-[100px] max-w-fit font-medium text-cyan-200 bg-cyan-500/10 px-1 text-center text-xs leading-tight break-words">Functional</TableHead>
         )}
         
         {/* Remarks Column */}
-        <TableHead className="min-w-[100px] max-w-fit font-semibold text-primary bg-gray-50/30 px-1 text-xs leading-tight text-center">Remarks</TableHead>
+        <TableHead className="min-w-[100px] max-w-fit font-medium text-white/80 bg-white/5 px-1 text-xs leading-tight text-center">Remarks</TableHead>
         
         {/* Regulation Status Column */}
         {showRegulationStatus && (
-          <TableHead className="min-w-[100px] max-w-fit font-semibold text-primary bg-gray-50/30 px-2 text-xs leading-tight break-words text-center">BS 7671</TableHead>
+          <TableHead className="min-w-[100px] max-w-fit font-medium text-white/80 bg-white/5 px-2 text-xs leading-tight break-words text-center">BS 7671</TableHead>
         )}
 
         {/* Actions Column */}

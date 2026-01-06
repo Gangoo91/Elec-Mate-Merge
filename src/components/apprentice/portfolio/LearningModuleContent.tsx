@@ -50,17 +50,17 @@ const LearningModuleContent = ({ module, onProgress, onClose }: LearningModuleCo
       case "video":
         return (
           <div className="space-y-4">
-            <div className="bg-elec-gray/50 rounded-lg p-8 text-center border border-blue-500/20">
+            <div className="bg-white/5 rounded-lg p-8 text-center border border-blue-500/20">
               <Play className="h-16 w-16 mx-auto mb-4 text-blue-400" />
               <h4 className="text-lg font-medium text-white mb-2">{currentLesson.title}</h4>
-              <p className="text-muted-foreground mb-4">Video lesson - {currentLesson.duration} minutes</p>
+              <p className="text-white mb-4">Video lesson - {currentLesson.duration} minutes</p>
               <Button>
                 <Play className="h-4 w-4 mr-2" />
                 Play Video
               </Button>
             </div>
             <div className="prose prose-invert max-w-none">
-              <p className="text-muted-foreground">{currentLesson.content}</p>
+              <p className="text-white">{currentLesson.content}</p>
             </div>
           </div>
         );
@@ -70,7 +70,7 @@ const LearningModuleContent = ({ module, onProgress, onClose }: LearningModuleCo
           <div className="space-y-4">
             <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-lg p-6 border border-purple-500/20">
               <h4 className="text-lg font-medium text-white mb-4">{currentLesson.title}</h4>
-              <p className="text-muted-foreground mb-4">{currentLesson.content}</p>
+              <p className="text-white mb-4">{currentLesson.content}</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Button variant="outline" className="w-full">
                   Try Example 1
@@ -87,7 +87,7 @@ const LearningModuleContent = ({ module, onProgress, onClose }: LearningModuleCo
         return (
           <div className="prose prose-invert max-w-none">
             <h4 className="text-lg font-medium text-white mb-4">{currentLesson.title}</h4>
-            <div className="text-muted-foreground whitespace-pre-line">
+            <div className="text-white whitespace-pre-line">
               {currentLesson.content}
             </div>
           </div>
@@ -107,7 +107,7 @@ const LearningModuleContent = ({ module, onProgress, onClose }: LearningModuleCo
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">
+            <span className="text-white">
               Lesson {currentLessonIndex + 1} of {module.lessons.length}
             </span>
             <span className="text-cyan-400">{Math.round((currentLessonIndex + 1) / module.lessons.length * 100)}% Complete</span>

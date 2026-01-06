@@ -12,7 +12,7 @@ const ReportingTools = () => {
         and facilitate effective resolution.
       </p>
       
-      <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4 md:p-5">
+      <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-4 md:p-5">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {/* Reporting Methods */}
           <div>
@@ -23,17 +23,17 @@ const ReportingTools = () => {
               <h4 className="font-medium text-elec-yellow">Reporting Methods</h4>
             </div>
             
-            <div className="bg-elec-gray rounded-md p-3 mb-3">
+            <div className="bg-white/5 rounded-md p-3 mb-3">
               <h5 className="font-medium text-elec-yellow text-sm">Paper-Based Systems</h5>
               <p className="text-sm mt-1">Traditional forms, near-miss cards, and safety observation booklets for manual recording of hazards.</p>
             </div>
             
-            <div className="bg-elec-gray rounded-md p-3 mb-3">
+            <div className="bg-white/5 rounded-md p-3 mb-3">
               <h5 className="font-medium text-elec-yellow text-sm">Digital Systems</h5>
               <p className="text-sm mt-1">Health & safety software platforms, mobile reporting apps, and QR code scanning for streamlined digital reporting.</p>
             </div>
             
-            <div className="bg-elec-gray rounded-md p-3">
+            <div className="bg-white/5 rounded-md p-3">
               <h5 className="font-medium text-elec-yellow text-sm">Integrated Approaches</h5>
               <p className="text-sm mt-1">Toolbox talks, safety committee reviews, and anonymous reporting channels to ensure comprehensive coverage.</p>
             </div>
@@ -48,17 +48,17 @@ const ReportingTools = () => {
               <h4 className="font-medium text-elec-yellow">Effective Reporting</h4>
             </div>
             
-            <div className="bg-elec-gray rounded-md p-3 mb-3">
+            <div className="bg-white/5 rounded-md p-3 mb-3">
               <h5 className="font-medium text-elec-yellow text-sm">Be Specific</h5>
               <p className="text-sm mt-1">Provide exact location and detailed description. "Exposed wiring near workstation 3" is better than "Dangerous wiring."</p>
             </div>
             
-            <div className="bg-elec-gray rounded-md p-3 mb-3">
+            <div className="bg-white/5 rounded-md p-3 mb-3">
               <h5 className="font-medium text-elec-yellow text-sm">Include Evidence</h5>
               <p className="text-sm mt-1">Whenever possible, attach photographs or videos of the hazard to provide visual context for assessment.</p>
             </div>
             
-            <div className="bg-elec-gray rounded-md p-3">
+            <div className="bg-white/5 rounded-md p-3">
               <h5 className="font-medium text-elec-yellow text-sm">Suggest Solutions & Follow Up</h5>
               <p className="text-sm mt-1">Include ideas for hazard control and follow up if no action is taken within a reasonable timeframe.</p>
             </div>
@@ -73,17 +73,17 @@ const ReportingTools = () => {
               <h4 className="font-medium text-elec-yellow">Common Barriers</h4>
             </div>
             
-            <div className="bg-elec-gray rounded-md p-3 mb-3">
+            <div className="bg-white/5 rounded-md p-3 mb-3">
               <h5 className="font-medium text-elec-yellow text-sm">Fear of Blame</h5>
               <p className="text-sm mt-1">Workers may hesitate if they fear being blamed. Management should promote a no-blame culture focused on fixing problems.</p>
             </div>
             
-            <div className="bg-elec-gray rounded-md p-3 mb-3">
+            <div className="bg-white/5 rounded-md p-3 mb-3">
               <h5 className="font-medium text-elec-yellow text-sm">Perceived Lack of Action</h5>
               <p className="text-sm mt-1">If previous reports haven't led to visible action, workers may become discouraged. Ensure all reports receive feedback.</p>
             </div>
             
-            <div className="bg-elec-gray rounded-md p-3">
+            <div className="bg-white/5 rounded-md p-3">
               <h5 className="font-medium text-elec-yellow text-sm">Time Constraints & Training</h5>
               <p className="text-sm mt-1">Use simple reporting processes and provide regular hazard identification training to overcome these barriers.</p>
             </div>
@@ -91,7 +91,7 @@ const ReportingTools = () => {
         </div>
         
         {/* Case Study - Horizontal */}
-        <div className="mt-5 bg-elec-gray rounded-lg p-4">
+        <div className="mt-5 bg-white/5 rounded-lg p-4">
           <h4 className="font-medium text-elec-yellow mb-3">Case Study: Effective Hazard Reporting</h4>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

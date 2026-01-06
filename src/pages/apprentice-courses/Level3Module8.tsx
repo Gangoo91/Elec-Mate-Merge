@@ -7,30 +7,30 @@ const sections = [
   {
     number: "Section 1",
     title: "Mock Exams",
-    description: "Complete practice examinations that simulate the real Level 3 electrical installation exam conditions and timing.",
+    description: "Practice exams and timed tests",
     icon: FileText,
-    href: "../level3-module8-section1"
+    href: "level3-module8-section1"
   },
   {
-    number: "Section 2", 
-    title: "Practical Help and Guidance",
-    description: "Step-by-step guidance for practical assessments, wiring techniques, and hands-on electrical installation skills.",
+    number: "Section 2",
+    title: "Practical Help",
+    description: "Practical assessment guides and techniques",
     icon: Target,
-    href: "../level3-module8-section2"
+    href: "level3-module8-section2"
   },
   {
     number: "Section 3",
-    title: "How to Pass Exams – Tips and Techniques",
-    description: "Essential exam strategies, time management techniques, and proven methods to maximise your examination performance.",
+    title: "Exam Tips",
+    description: "Time management, memory techniques, stress management",
     icon: Clock,
-    href: "../level3-module8-section3"
+    href: "level3-module8-section3"
   },
   {
     number: "Section 4",
-    title: "Reviewing Results and Targeted Revision",
-    description: "Analyse your performance, identify knowledge gaps, and create focused revision plans for exam success.",
+    title: "Results Review",
+    description: "Score analysis and progress tracking",
     icon: BarChart3,
-    href: "../level3-module8-section4"
+    href: "level3-module8-section4"
   }
 ];
 
@@ -41,12 +41,12 @@ const Level3Module8 = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-[#1a1a1a] p-4 sm:p-6 lg:p-8">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center gap-4 mb-8">
           <Link 
             to="../.." 
-            className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors"
+            className="inline-flex items-center text-white/70 hover:text-white transition-colors"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Level 3 Overview
@@ -54,7 +54,7 @@ const Level3Module8 = () => {
         </div>
         
         <div className="mb-8">
-          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
             Module 8: Mock Examinations & Assessment
           </h1>
         </div>

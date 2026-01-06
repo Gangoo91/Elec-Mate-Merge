@@ -704,7 +704,7 @@ const IndustrialTestingGuide = () => {
   return (
     <div className="space-y-6">
       {/* Testing Overview */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <TestTube className="h-6 w-6 text-elec-yellow" />
@@ -728,7 +728,7 @@ const IndustrialTestingGuide = () => {
 
         {/* Testing Safety */}
         <TabsContent value="safety" className="space-y-4">
-          <Card className="border-red-500/30 bg-elec-gray">
+          <Card className="border-red-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Shield className="h-6 w-6 text-red-400" />
@@ -756,7 +756,7 @@ const IndustrialTestingGuide = () => {
           </Card>
 
           {/* GS38 Requirements */}
-          <Card className="border-orange-500/30 bg-elec-gray">
+          <Card className="border-orange-500/30 bg-white/5">
             <CardHeader>
               <CardTitle className="text-orange-300 flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5" />
@@ -776,7 +776,7 @@ const IndustrialTestingGuide = () => {
           </Card>
 
           {/* Prospective Fault Current */}
-          <Card className="border-purple-500/30 bg-elec-gray">
+          <Card className="border-purple-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Zap className="h-6 w-6 text-purple-400" />
@@ -823,7 +823,7 @@ const IndustrialTestingGuide = () => {
 
         {/* Motor Testing */}
         <TabsContent value="motors" className="space-y-4">
-          <Card className="border-blue-500/30 bg-elec-gray">
+          <Card className="border-blue-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Cog className="h-6 w-6 text-blue-400" />
@@ -888,7 +888,7 @@ const IndustrialTestingGuide = () => {
         {/* System Testing */}
         <TabsContent value="systems" className="space-y-4">
           {/* Earth Fault Loop Impedance */}
-          <Card className="border-green-500/30 bg-elec-gray">
+          <Card className="border-green-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Gauge className="h-6 w-6 text-green-400" />
@@ -953,7 +953,7 @@ const IndustrialTestingGuide = () => {
           </Card>
 
           {/* Safety Circuit Testing */}
-          <Card className="border-red-500/30 bg-elec-gray">
+          <Card className="border-red-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Shield className="h-6 w-6 text-red-400" />
@@ -983,7 +983,7 @@ const IndustrialTestingGuide = () => {
         {/* Predictive Testing */}
         <TabsContent value="predictive" className="space-y-4">
           {/* Thermographic Surveys */}
-          <Card className="border-orange-500/30 bg-elec-gray">
+          <Card className="border-orange-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Thermometer className="h-6 w-6 text-orange-400" />
@@ -1073,7 +1073,7 @@ const IndustrialTestingGuide = () => {
           </Card>
 
           {/* Vibration Analysis */}
-          <Card className="border-blue-500/30 bg-elec-gray">
+          <Card className="border-blue-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Activity className="h-6 w-6 text-blue-400" />
@@ -1155,7 +1155,7 @@ const IndustrialTestingGuide = () => {
           </Card>
 
           {/* PAT Testing */}
-          <Card className="border-purple-500/30 bg-elec-gray">
+          <Card className="border-purple-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Settings className="h-6 w-6 text-purple-400" />
@@ -1228,7 +1228,7 @@ const IndustrialTestingGuide = () => {
         {/* Documentation */}
         <TabsContent value="documentation" className="space-y-4">
           {/* EIC */}
-          <Card className="border-green-500/30 bg-elec-gray">
+          <Card className="border-green-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <FileCheck className="h-6 w-6 text-green-400" />
@@ -1264,7 +1264,7 @@ const IndustrialTestingGuide = () => {
           </Card>
 
           {/* EICR */}
-          <Card className="border-blue-500/30 bg-elec-gray">
+          <Card className="border-blue-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <ClipboardCheck className="h-6 w-6 text-blue-400" />
@@ -1337,7 +1337,7 @@ const IndustrialTestingGuide = () => {
           </Card>
 
           {/* Commissioning */}
-          <Card className="border-purple-500/30 bg-elec-gray">
+          <Card className="border-purple-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <CheckCircle className="h-6 w-6 text-purple-400" />

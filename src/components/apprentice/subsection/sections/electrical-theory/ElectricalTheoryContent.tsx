@@ -41,7 +41,7 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
         <div className="space-y-8">
           <h1 className="text-2xl font-bold text-elec-yellow">Building Regulations (Part P)</h1>
           
-          <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-lg p-6 mb-6">
+          <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-6 mb-6">
             <h2 className="text-xl font-semibold text-elec-yellow mb-4 flex items-center">
               <Home className="mr-3 h-6 w-6 text-elec-yellow" />
               Introduction to Building Regulations Part P
@@ -58,7 +58,7 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
             </p>
           </div>
           
-          <Card className="border-elec-yellow/30 bg-elec-dark/50">
+          <Card className="border-elec-yellow/30 bg-white/10">
             <CardHeader className="pb-2">
               <CardTitle className="text-xl text-elec-yellow flex items-center">
                 <BookOpen className="mr-3 h-6 w-6" />
@@ -73,7 +73,7 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
                 work in these properties.
               </p>
               
-              <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+              <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
                 <h3 className="text-lg font-semibold text-elec-yellow mb-2">Key Requirements of Part P:</h3>
                 <ul className="list-disc pl-5 space-y-2">
                   <li>Electrical installations must be designed and installed to provide reasonable protection against damage from fire and injury from electric shock</li>
@@ -84,7 +84,7 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
                 </ul>
               </div>
 
-              <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mt-4">
+              <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mt-4">
                 <h3 className="text-lg font-semibold text-elec-yellow mb-2">What is a Dwelling?</h3>
                 <p className="mb-2">For the purposes of Part P, a dwelling is defined as:</p>
                 <ul className="list-disc pl-5 space-y-2">
@@ -99,7 +99,7 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
             </CardContent>
           </Card>
           
-          <Card className="border-elec-yellow/30 bg-elec-dark/50">
+          <Card className="border-elec-yellow/30 bg-white/10">
             <CardHeader className="pb-2">
               <CardTitle className="text-xl text-elec-yellow flex items-center">
                 <AlertTriangle className="mr-3 h-6 w-6" />
@@ -114,7 +114,7 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
                 is essential for compliance.
               </p>
               
-              <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+              <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
                 <h3 className="text-lg font-semibold text-elec-yellow mb-2">Notifiable Electrical Work:</h3>
                 <ul className="list-disc pl-5 space-y-2">
                   <li><span className="font-semibold">Installation of a new consumer unit (fuse box)</span> or complete replacement of an existing one</li>
@@ -131,7 +131,7 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
                 </ul>
               </div>
 
-              <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mt-4">
+              <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mt-4">
                 <h3 className="text-lg font-semibold text-elec-yellow mb-2">Non-Notifiable Work Examples:</h3>
                 <ul className="list-disc pl-5 space-y-2">
                   <li>Replacing damaged accessories (like-for-like)</li>
@@ -150,7 +150,7 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
             </CardContent>
           </Card>
           
-          <Card className="border-elec-yellow/30 bg-elec-dark/50">
+          <Card className="border-elec-yellow/30 bg-white/10">
             <CardHeader className="pb-2">
               <CardTitle className="text-xl text-elec-yellow flex items-center">
                 <BookOpen className="mr-3 h-6 w-6" />
@@ -163,7 +163,7 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
                 There are two main routes to demonstrate compliance with Part P for notifiable electrical work:
               </p>
               
-              <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+              <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
                 <h3 className="text-lg font-semibold text-elec-yellow mb-2">Route 1: Self-Certification Schemes</h3>
                 <p className="mb-3">
                   The most common route for professional electricians is to register with a competent person self-certification scheme such as:
@@ -181,7 +181,7 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
                 </p>
               </div>
 
-              <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mt-4">
+              <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mt-4">
                 <h3 className="text-lg font-semibold text-elec-yellow mb-2">Route 2: Building Control Notification</h3>
                 <p className="mb-3">
                   If not registered with a competent person scheme, you must:
@@ -203,7 +203,7 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
             </CardContent>
           </Card>
           
-          <Card className="border-elec-yellow/30 bg-elec-dark/50">
+          <Card className="border-elec-yellow/30 bg-white/10">
             <CardHeader className="pb-2">
               <CardTitle className="text-xl text-elec-yellow flex items-center">
                 <FileCheck className="mr-3 h-6 w-6" />
@@ -217,7 +217,7 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
                 to confirm it meets the requirements of BS 7671 (the IET Wiring Regulations).
               </p>
               
-              <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+              <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
                 <h3 className="text-lg font-semibold text-elec-yellow mb-2">Required Documentation:</h3>
                 <ul className="list-disc pl-5 space-y-3">
                   <li>
@@ -266,7 +266,7 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
             </CardContent>
           </Card>
           
-          <Card className="border-elec-yellow/30 bg-elec-dark/50">
+          <Card className="border-elec-yellow/30 bg-white/10">
             <CardHeader className="pb-2">
               <CardTitle className="text-xl text-elec-yellow flex items-center">
                 <ClipboardCheck className="mr-3 h-6 w-6" />
@@ -280,7 +280,7 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
                 Local authorities have powers to enforce the regulations and take action against non-compliant work.
               </p>
               
-              <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+              <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
                 <h3 className="text-lg font-semibold text-elec-yellow mb-2">Enforcement Actions:</h3>
                 <ul className="list-disc pl-5 space-y-2">
                   <li>Local authorities can require homeowners to remove or alter non-compliant electrical installations</li>
@@ -291,7 +291,7 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
                 </ul>
               </div>
 
-              <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mt-4">
+              <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mt-4">
                 <h3 className="text-lg font-semibold text-elec-yellow mb-2">Importance for Homeowners:</h3>
                 <p className="mb-3">
                   Homeowners should be aware that:
@@ -306,7 +306,7 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
             </CardContent>
           </Card>
           
-          <Card className="border-elec-yellow/30 bg-elec-dark/50">
+          <Card className="border-elec-yellow/30 bg-white/10">
             <CardHeader className="pb-2">
               <CardTitle className="text-xl text-elec-yellow flex items-center">
                 <CheckCircle className="mr-3 h-6 w-6" />
@@ -319,7 +319,7 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
                 For EAL Level 2 assessments, you should be familiar with these key points about Part P:
               </p>
               
-              <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+              <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
                 <h3 className="text-lg font-semibold text-elec-yellow mb-2">Examination Key Points:</h3>
                 <ul className="list-disc pl-5 space-y-2">
                   <li>Part P applies to domestic electrical installations in England and Wales</li>
@@ -333,7 +333,7 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
                 </ul>
               </div>
 
-              <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mt-4">
+              <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mt-4">
                 <h3 className="text-lg font-semibold text-elec-yellow mb-2">Practice Assessment Questions:</h3>
                 <ol className="list-decimal pl-5 space-y-3">
                   <li>

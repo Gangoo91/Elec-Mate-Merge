@@ -614,7 +614,7 @@ const VoltageDropCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/40 transition-transform duration-200",
+                    "h-4 w-4 text-white/70 transition-transform duration-200",
                     showFormula && "rotate-180"
                   )}
                 />
@@ -667,7 +667,7 @@ const VoltageDropCalculator = () => {
                     >
                       <span className="text-white font-medium">
                         {alt.size}mm²
-                        <span className="text-white/50 text-xs ml-2">({alt.mvam} mV/A/m)</span>
+                        <span className="text-white/80 text-xs ml-2">({alt.mvam} mV/A/m)</span>
                       </span>
                       <span className="text-green-400 font-mono">{alt.pct.toFixed(2)}% ✓</span>
                     </div>
@@ -708,7 +708,7 @@ const VoltageDropCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/40 transition-transform duration-200",
+                    "h-4 w-4 text-white/70 transition-transform duration-200",
                     showReference && "rotate-180"
                   )}
                 />

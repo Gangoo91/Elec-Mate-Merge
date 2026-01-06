@@ -75,7 +75,7 @@ const ExamCard = ({ exam, isSubscribed }: { exam: MockExam; isSubscribed: boolea
   return (
     <Card
       className={`group relative overflow-hidden border-elec-yellow/20 transition-all duration-300 hover:border-elec-yellow/50 hover:shadow-lg hover:shadow-elec-yellow/5 ${
-        isLocked ? 'bg-elec-gray/60' : 'bg-gradient-to-br from-elec-gray to-elec-gray/80'
+        isLocked ? 'bg-white/5' : 'bg-gradient-to-br from-white/10 to-white/5'
       }`}
     >
       {/* Premium indicator strip */}
@@ -113,11 +113,11 @@ const ExamCard = ({ exam, isSubscribed }: { exam: MockExam; isSubscribed: boolea
       <CardContent className="space-y-4">
         {/* Stats */}
         <div className="flex gap-4 text-sm">
-          <div className="flex items-center gap-1.5 text-muted-foreground">
+          <div className="flex items-center gap-1.5 text-white/70">
             <Clock className="h-4 w-4 text-elec-yellow/70" />
             <span>{exam.duration} mins</span>
           </div>
-          <div className="flex items-center gap-1.5 text-muted-foreground">
+          <div className="flex items-center gap-1.5 text-white/70">
             <FileText className="h-4 w-4 text-elec-yellow/70" />
             <span>{exam.questionCount} questions</span>
           </div>
@@ -126,9 +126,9 @@ const ExamCard = ({ exam, isSubscribed }: { exam: MockExam; isSubscribed: boolea
         {/* Action */}
         {isLocked ? (
           <div className="space-y-3">
-            <div className="flex items-center gap-2 p-3 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
+            <div className="flex items-center gap-2 p-3 bg-white/5 border border-white/10 rounded-lg">
               <Lock className="h-4 w-4 text-elec-yellow" />
-              <span className="text-sm text-muted-foreground">Subscribe to unlock premium exams</span>
+              <span className="text-sm text-white/70">Subscribe to unlock premium exams</span>
             </div>
             <Button variant="outline" className="w-full border-elec-yellow/30" disabled>
               <Lock className="mr-2 h-4 w-4" />
@@ -160,7 +160,7 @@ const ExamGrid = ({ exams, isSubscribed }: { exams: MockExam[]; isSubscribed: bo
         <ExamCard key={exam.id} exam={exam} isSubscribed={isSubscribed} />
       ))
     ) : (
-      <div className="col-span-full text-center py-12 text-muted-foreground">
+      <div className="col-span-full text-center py-12 text-white/70">
         No exams available for this level yet.
       </div>
     )}
@@ -189,7 +189,7 @@ const MockExams = () => {
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Mock Exams</h1>
           </div>
-          <p className="text-sm sm:text-base text-muted-foreground">
+          <p className="text-sm sm:text-base text-white/70">
             Prepare for your qualifications with practice exams and assessments
           </p>
         </div>
@@ -198,34 +198,34 @@ const MockExams = () => {
 
       {/* Stats Overview */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <Card className="border-elec-yellow/20 bg-elec-gray/50">
+        <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
           <CardContent className="p-3 sm:p-4 text-center">
             <div className="text-2xl font-bold text-elec-yellow">{mockExams.length}</div>
-            <div className="text-xs text-muted-foreground">Total Exams</div>
+            <div className="text-xs text-white/70">Total Exams</div>
           </CardContent>
         </Card>
-        <Card className="border-elec-yellow/20 bg-elec-gray/50">
+        <Card className="border-green-500/20 bg-gradient-to-br from-green-500/10 to-green-500/5">
           <CardContent className="p-3 sm:p-4 text-center">
             <div className="text-2xl font-bold text-green-400">
               {mockExams.filter(e => !e.isPremium).length}
             </div>
-            <div className="text-xs text-muted-foreground">Free Exams</div>
+            <div className="text-xs text-white/70">Free Exams</div>
           </CardContent>
         </Card>
-        <Card className="border-elec-yellow/20 bg-elec-gray/50">
+        <Card className="border-amber-500/20 bg-gradient-to-br from-amber-500/10 to-amber-500/5">
           <CardContent className="p-3 sm:p-4 text-center">
             <div className="text-2xl font-bold text-amber-400">
               {mockExams.filter(e => e.isPremium).length}
             </div>
-            <div className="text-xs text-muted-foreground">Premium</div>
+            <div className="text-xs text-white/70">Premium</div>
           </CardContent>
         </Card>
-        <Card className="border-elec-yellow/20 bg-elec-gray/50">
+        <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/10 to-blue-500/5">
           <CardContent className="p-3 sm:p-4 text-center">
             <div className="text-2xl font-bold text-blue-400">
               {mockExams.reduce((acc, e) => acc + e.questionCount, 0)}
             </div>
-            <div className="text-xs text-muted-foreground">Questions</div>
+            <div className="text-xs text-white/70">Questions</div>
           </CardContent>
         </Card>
       </div>

@@ -91,12 +91,12 @@ const InteractiveProgressTracker = () => {
             <Target className="h-5 w-5" />
             Interactive Progress Tracker
           </CardTitle>
-          <p className="text-sm text-muted-foreground">Track your apprenticeship milestones and earn points</p>
+          <p className="text-sm text-white">Track your apprenticeship milestones and earn points</p>
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
             {/* Overall Progress */}
-            <div className="p-4 bg-elec-gray/50 rounded-lg border border-elec-yellow/20">
+            <div className="p-4 bg-white/5 rounded-lg border border-elec-yellow/20">
               <div className="flex items-center justify-between mb-2">
                 <h4 className="font-medium text-white">Overall Progress</h4>
                 <div className="flex items-center gap-2">
@@ -105,7 +105,7 @@ const InteractiveProgressTracker = () => {
                 </div>
               </div>
               <Progress value={(totalPoints / maxPoints) * 100} className="h-2" />
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-xs text-white mt-1">
                 {Math.round((totalPoints / maxPoints) * 100)}% complete
               </p>
             </div>
@@ -150,7 +150,7 @@ const InteractiveProgressTracker = () => {
                       className={`p-3 rounded-lg border cursor-pointer transition-all ${
                         completedMilestones.includes(milestone.id)
                           ? "bg-green-500/20 border-green-500/40"
-                          : "bg-elec-gray/50 border-elec-yellow/20 hover:border-elec-yellow/40"
+                          : "bg-white/5 border-elec-yellow/20 hover:border-elec-yellow/40"
                       }`}
                       onClick={() => toggleMilestone(milestone.id)}
                     >
@@ -159,12 +159,12 @@ const InteractiveProgressTracker = () => {
                           {completedMilestones.includes(milestone.id) ? (
                             <CheckCircle className="h-5 w-5 text-green-400" />
                           ) : (
-                            <Circle className="h-5 w-5 text-muted-foreground" />
+                            <Circle className="h-5 w-5 text-white" />
                           )}
                           <span className={`text-sm ${
                             completedMilestones.includes(milestone.id) 
                               ? "text-green-300 line-through" 
-                              : "text-muted-foreground"
+                              : "text-white"
                           }`}>
                             {milestone.text}
                           </span>
@@ -183,12 +183,12 @@ const InteractiveProgressTracker = () => {
             {/* Achievement Summary */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               {yearMilestones.map((year) => (
-                <div key={year.year} className="text-center p-3 bg-elec-gray/30 rounded-lg">
+                <div key={year.year} className="text-center p-3 bg-white/5 rounded-lg">
                   <h5 className="text-sm font-medium text-white mb-1">Year {year.year}</h5>
                   <div className="mb-2">
                     <Progress value={getYearProgress(year.year)} className="h-1" />
                   </div>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-white">
                     {year.milestones.filter(m => completedMilestones.includes(m.id)).length} / {year.milestones.length}
                   </p>
                 </div>

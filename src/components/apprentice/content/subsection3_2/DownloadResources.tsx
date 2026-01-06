@@ -103,7 +103,7 @@ const DownloadResources = () => {
             {resources.map((resource) => (
               <div 
                 key={resource.id} 
-                className="flex items-start p-3 border border-elec-yellow/10 rounded-md bg-elec-dark/20 hover:bg-elec-dark/40 cursor-pointer transition-colors"
+                className="flex items-start p-3 border border-elec-yellow/10 rounded-md bg-white/10 hover:bg-white/10 cursor-pointer transition-colors"
                 onClick={() => setSelectedResource(resource)}
               >
                 <div className="p-2 rounded bg-elec-yellow/10 mr-3">
@@ -111,8 +111,8 @@ const DownloadResources = () => {
                 </div>
                 <div className="flex-1">
                   <h4 className="font-medium text-sm">{resource.title}</h4>
-                  <p className="text-xs text-muted-foreground line-clamp-2">{resource.description}</p>
-                  <div className="flex items-center text-xs text-muted-foreground mt-1">
+                  <p className="text-xs text-white line-clamp-2">{resource.description}</p>
+                  <div className="flex items-center text-xs text-white mt-1">
                     <span className="bg-elec-yellow/20 text-elec-yellow px-2 py-0.5 rounded text-[10px] font-medium">{resource.fileType}</span>
                     <span className="ml-2">{resource.fileSize}</span>
                   </div>

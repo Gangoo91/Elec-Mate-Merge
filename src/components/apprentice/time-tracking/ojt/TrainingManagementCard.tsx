@@ -42,7 +42,7 @@ const TrainingManagementCard = ({ initialActiveTab = "recent", className }: Trai
   };
 
   return (
-    <Card className={cn("bg-elec-gray", className)}>
+    <Card className={cn("bg-white/5", className)}>
       <CardHeader className={isMobile ? "pb-2" : ""}>
         <div className={`flex items-center ${isMobile ? "justify-between flex-wrap gap-1" : "justify-between gap-4"}`}>
           <CardTitle className={isMobile ? "text-2xl" : ""}>
@@ -50,7 +50,7 @@ const TrainingManagementCard = ({ initialActiveTab = "recent", className }: Trai
               <div className="flex flex-col">
                 <div className="text-3xl font-bold">Off-The-Job</div>
                 <div className="text-3xl font-bold">Training Logger</div>
-                <div className="text-sm text-muted-foreground mt-1">Track your 20% off-the-job training time</div>
+                <div className="text-sm text-white mt-1">Track your 20% off-the-job training time</div>
               </div>
             ) : (
               "Training Management"
@@ -63,7 +63,7 @@ const TrainingManagementCard = ({ initialActiveTab = "recent", className }: Trai
                 <span>Automatic</span>
               </div>
               <div className="flex items-center ml-3">
-                <div className="w-3 h-3 bg-elec-gray rounded-full border border-elec-yellow/40 mr-1.5"></div>
+                <div className="w-3 h-3 bg-white/5 rounded-full border border-elec-yellow/40 mr-1.5"></div>
                 <span>Manual</span>
               </div>
               <div className="flex items-center ml-3">
@@ -82,7 +82,7 @@ const TrainingManagementCard = ({ initialActiveTab = "recent", className }: Trai
               <span className="text-sm">Automatic</span>
             </div>
             <div className="flex items-center">
-              <div className="w-3 h-3 bg-elec-gray rounded-full border border-elec-yellow/40 mr-1.5"></div>
+              <div className="w-3 h-3 bg-white/5 rounded-full border border-elec-yellow/40 mr-1.5"></div>
               <span className="text-sm">Manual</span>
             </div>
             <div className="flex items-center">
@@ -94,7 +94,7 @@ const TrainingManagementCard = ({ initialActiveTab = "recent", className }: Trai
         
         <Tabs defaultValue={activeTab} value={activeTab} onValueChange={setActiveTab}>
           {isMobile ? (
-            <div className="mb-4 bg-elec-dark rounded-md p-2">
+            <div className="mb-4 bg-white/10 rounded-md p-2">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="w-full justify-between bg-transparent text-white">
@@ -102,7 +102,7 @@ const TrainingManagementCard = ({ initialActiveTab = "recent", className }: Trai
                     <ChevronDown className="h-4 w-4 ml-2" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="center" className="w-full min-w-[200px] bg-elec-dark border-elec-gray/40">
+                <DropdownMenuContent align="center" className="w-full min-w-[200px] bg-white/10 border-elec-gray/40">
                   <DropdownMenuItem onClick={() => setActiveTab("auto")} className="justify-center">
                     Auto-Track
                   </DropdownMenuItem>
@@ -125,7 +125,7 @@ const TrainingManagementCard = ({ initialActiveTab = "recent", className }: Trai
               </DropdownMenu>
             </div>
           ) : (
-            <TabsList className="mb-4 bg-elec-dark w-full">
+            <TabsList className="mb-4 bg-white/10 w-full">
               <TabsTrigger value="auto" className="flex-1">Auto-Track</TabsTrigger>
               <TabsTrigger value="recent" className="flex-1">Recent</TabsTrigger>
               <TabsTrigger value="logbook" className="flex-1">Logbook</TabsTrigger>
@@ -168,7 +168,7 @@ const TrainingManagementCard = ({ initialActiveTab = "recent", className }: Trai
             </div>
             <div>
               <div className="text-3xl font-bold">3m</div>
-              <div className="text-xs text-right text-muted-foreground">Total logged time</div>
+              <div className="text-xs text-right text-white">Total logged time</div>
             </div>
           </div>
         )}

@@ -252,14 +252,14 @@ const SpecialistOverviewCards = () => {
       case "Very High": return "border-green-500 text-green-400";
       case "High": return "border-lime-500 text-lime-400";
       case "Moderate": return "border-yellow-500 text-yellow-400";
-      default: return "border-gray-500 text-gray-400";
+      default: return "border-white/50 text-white";
     }
   };
 
   return (
     <div className="space-y-6">
       {/* Introduction to Special Locations */}
-      <Card className="border-yellow-500/30 bg-elec-gray">
+      <Card className="border-yellow-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <BookOpen className="h-6 w-6 text-yellow-400" />
@@ -267,7 +267,7 @@ const SpecialistOverviewCards = () => {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-gray-200">{specialLocations.description}</p>
+          <p className="text-white/90">{specialLocations.description}</p>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             {specialLocations.sections.map((section, idx) => (
@@ -278,7 +278,7 @@ const SpecialistOverviewCards = () => {
                 <Badge variant="outline" className={`text-xs mb-2 border-${section.color}-400 text-${section.color}-300`}>
                   Section {section.section}
                 </Badge>
-                <p className="text-xs text-gray-200">{section.title}</p>
+                <p className="text-xs text-white/90">{section.title}</p>
               </div>
             ))}
           </div>
@@ -286,7 +286,7 @@ const SpecialistOverviewCards = () => {
       </Card>
 
       {/* Why Additional Requirements */}
-      <Card className="border-orange-500/30 bg-elec-gray">
+      <Card className="border-orange-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <AlertTriangle className="h-6 w-6 text-orange-400" />
@@ -304,7 +304,7 @@ const SpecialistOverviewCards = () => {
                   <item.icon className={`h-5 w-5 text-${item.color}-400`} />
                   <h4 className={`font-medium text-${item.color}-200`}>{item.factor}</h4>
                 </div>
-                <p className="text-sm text-gray-300">{item.description}</p>
+                <p className="text-sm text-white/80">{item.description}</p>
               </div>
             ))}
           </div>
@@ -320,7 +320,7 @@ const SpecialistOverviewCards = () => {
       </Card>
 
       {/* Career Opportunities */}
-      <Card className="border-green-500/30 bg-elec-gray">
+      <Card className="border-green-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <TrendingUp className="h-6 w-6 text-green-400" />
@@ -342,7 +342,7 @@ const SpecialistOverviewCards = () => {
                 <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3 mb-3">
                   <div>
                     <h4 className="font-medium text-white text-lg">{career.specialization}</h4>
-                    <p className="text-sm text-gray-300 mt-1">{career.description}</p>
+                    <p className="text-sm text-white/80 mt-1">{career.description}</p>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     <Badge variant="outline" className={getGrowthColor(career.growth)}>
@@ -357,14 +357,14 @@ const SpecialistOverviewCards = () => {
 
                 <div className="space-y-2 mb-3">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-300">Industry Demand</span>
+                    <span className="text-white/80">Industry Demand</span>
                     <span className="text-green-300">{career.demand}%</span>
                   </div>
                   <Progress value={career.demand} className="h-2" />
                 </div>
 
                 <div className="flex flex-wrap gap-2">
-                  <span className="text-xs text-gray-400">Required Certifications:</span>
+                  <span className="text-xs text-white">Required Certifications:</span>
                   {career.certifications.map((cert, certIdx) => (
                     <Badge key={certIdx} variant="secondary" className="text-xs bg-green-600/20 text-green-200">
                       {cert}
@@ -378,7 +378,7 @@ const SpecialistOverviewCards = () => {
       </Card>
 
       {/* Market Trends */}
-      <Card className="border-blue-500/30 bg-elec-gray">
+      <Card className="border-blue-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Globe className="h-6 w-6 text-blue-400" />
@@ -393,7 +393,7 @@ const SpecialistOverviewCards = () => {
                   <trend.icon className="h-5 w-5 text-blue-400" />
                   <h4 className="font-medium text-blue-200">{trend.trend}</h4>
                 </div>
-                <p className="text-sm text-gray-300">{trend.impact}</p>
+                <p className="text-sm text-white/80">{trend.impact}</p>
               </div>
             ))}
           </div>
@@ -401,7 +401,7 @@ const SpecialistOverviewCards = () => {
       </Card>
 
       {/* Certification Requirements */}
-      <Card className="border-purple-500/30 bg-elec-gray">
+      <Card className="border-purple-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Award className="h-6 w-6 text-purple-400" />
@@ -423,7 +423,7 @@ const SpecialistOverviewCards = () => {
                   <h5 className="font-medium text-white text-sm mb-2">Requirements</h5>
                   <ul className="space-y-1">
                     {cert.requirements.map((req, reqIdx) => (
-                      <li key={reqIdx} className="text-xs text-gray-300 flex items-start gap-2">
+                      <li key={reqIdx} className="text-xs text-white/80 flex items-start gap-2">
                         <CheckCircle className={`h-3 w-3 text-${cert.color}-400 mt-0.5 flex-shrink-0`} />
                         {req}
                       </li>
@@ -434,7 +434,7 @@ const SpecialistOverviewCards = () => {
                   <h5 className="font-medium text-white text-sm mb-2">Benefits</h5>
                   <ul className="space-y-1">
                     {cert.benefits.map((benefit, benefitIdx) => (
-                      <li key={benefitIdx} className="text-xs text-gray-300 flex items-start gap-2">
+                      <li key={benefitIdx} className="text-xs text-white/80 flex items-start gap-2">
                         <TrendingUp className={`h-3 w-3 text-${cert.color}-400 mt-0.5 flex-shrink-0`} />
                         {benefit}
                       </li>
@@ -448,7 +448,7 @@ const SpecialistOverviewCards = () => {
       </Card>
 
       {/* Getting Started Roadmap */}
-      <Card className="border-cyan-500/30 bg-elec-gray">
+      <Card className="border-cyan-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <GraduationCap className="h-6 w-6 text-cyan-400" />
@@ -472,7 +472,7 @@ const SpecialistOverviewCards = () => {
                       {step.duration}
                     </Badge>
                   </div>
-                  <p className="text-sm text-gray-300 mt-1">{step.description}</p>
+                  <p className="text-sm text-white/80 mt-1">{step.description}</p>
                 </div>
               </div>
             ))}
@@ -481,7 +481,7 @@ const SpecialistOverviewCards = () => {
       </Card>
 
       {/* Specialist Installation Areas Quick Links */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Zap className="h-6 w-6 text-elec-yellow" />
@@ -493,7 +493,7 @@ const SpecialistOverviewCards = () => {
             <div className="bg-yellow-500/10 p-6 rounded-lg border border-yellow-500/30 hover:border-yellow-500/50 transition-colors">
               <Sun className="h-10 w-10 text-yellow-400 mb-3" />
               <h4 className="font-medium text-yellow-200 text-lg mb-2">Solar PV Systems</h4>
-              <p className="text-sm text-gray-300 mb-3">
+              <p className="text-sm text-white/80 mb-3">
                 Learn about DC generation, inverters, MCS certification, and G98/G99 grid connection requirements.
               </p>
               <Badge variant="outline" className="border-yellow-400 text-yellow-300">
@@ -504,7 +504,7 @@ const SpecialistOverviewCards = () => {
             <div className="bg-green-500/10 p-6 rounded-lg border border-green-500/30 hover:border-green-500/50 transition-colors">
               <Car className="h-10 w-10 text-green-400 mb-3" />
               <h4 className="font-medium text-green-200 text-lg mb-2">EV Charging</h4>
-              <p className="text-sm text-gray-300 mb-3">
+              <p className="text-sm text-white/80 mb-3">
                 Master charging modes, protection requirements, O-PEN devices, and OZEV grant installations.
               </p>
               <Badge variant="outline" className="border-green-400 text-green-300">
@@ -515,7 +515,7 @@ const SpecialistOverviewCards = () => {
             <div className="bg-cyan-500/10 p-6 rounded-lg border border-cyan-500/30 hover:border-cyan-500/50 transition-colors">
               <Waves className="h-10 w-10 text-cyan-400 mb-3" />
               <h4 className="font-medium text-cyan-200 text-lg mb-2">Swimming Pools</h4>
-              <p className="text-sm text-gray-300 mb-3">
+              <p className="text-sm text-white/80 mb-3">
                 Understand zone definitions, IP ratings, SELV requirements, and supplementary bonding.
               </p>
               <Badge variant="outline" className="border-cyan-400 text-cyan-300">

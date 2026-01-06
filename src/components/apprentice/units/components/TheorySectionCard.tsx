@@ -27,7 +27,7 @@ const TheorySectionCard = ({
       onClick={onClick}
       className="block transition-transform hover:scale-102 duration-200 h-full"
     >
-      <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
+      <Card className="border-elec-yellow/30 bg-gradient-to-b from-white/5 to-white/5/80 hover:from-white/5/90 hover:to-white/5/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
         <CardContent className="p-6 h-full">
           <div className="flex flex-col space-y-3">
             <div className="flex items-center gap-3">
@@ -36,7 +36,7 @@ const TheorySectionCard = ({
               </div>
               <h3 className="text-lg font-medium">{title}</h3>
             </div>
-            <p className="text-sm text-muted-foreground pl-[52px]">
+            <p className="text-sm text-white pl-[52px]">
               {description}
             </p>
           </div>

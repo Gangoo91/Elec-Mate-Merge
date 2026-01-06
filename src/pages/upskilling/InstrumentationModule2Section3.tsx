@@ -67,8 +67,7 @@ const InstrumentationModule2Section3 = () => {
       ],
       correct: 2,
       explanation: "A differential pressure sensor measures the difference in pressure between two points. This is useful for applications like flow measurement across an orifice plate or filter monitoring."
-    }
-  ];
+  }  ];
 
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">

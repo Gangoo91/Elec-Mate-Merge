@@ -1,12 +1,35 @@
-import { useState, useEffect } from "react";
-import { HeroWelcome } from "@/components/dashboard/HeroWelcome";
-import { SmartStatsBar } from "@/components/dashboard/SmartStatsBar";
-import { HubGrid } from "@/components/dashboard/HubGrid";
-import { SecondaryQuickAccess } from "@/components/dashboard/SecondaryQuickAccess";
-import { ActionRequired } from "@/components/dashboard/ActionRequired";
-import TrialBanner from "@/components/dashboard/TrialBanner";
-import WelcomeModal from "@/components/onboarding/WelcomeModal";
-import { useAuth } from "@/contexts/AuthContext";
+/**
+ * Dashboard
+ *
+ * Main dashboard page - the first thing users see.
+ * Premium design with real personalized stats, glass morphism,
+ * and best-in-class mobile experience.
+ */
+
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { DashboardContainer } from '@/components/dashboard/DashboardContainer';
+import { PremiumHero } from '@/components/dashboard/PremiumHero';
+import { LiveStatsBar } from '@/components/dashboard/LiveStatsBar';
+import { PremiumHubGrid } from '@/components/dashboard/PremiumHubGrid';
+import { SmartActions } from '@/components/dashboard/SmartActions';
+import { SecondaryQuickAccess } from '@/components/dashboard/SecondaryQuickAccess';
+import TrialBanner from '@/components/dashboard/TrialBanner';
+import WelcomeModal from '@/components/onboarding/WelcomeModal';
+import { useAuth } from '@/contexts/AuthContext';
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (delay: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.4,
+      ease: 'easeOut',
+      delay: delay * 0.1,
+    },
+  }),
+};
 
 const Dashboard = () => {
   const { profile, isLoading } = useAuth();
@@ -22,40 +45,70 @@ const Dashboard = () => {
   }, [profile, isLoading]);
 
   return (
-    <div className="min-h-screen mobile-safe-area">
-      <div className="space-y-4 sm:space-y-5 animate-fade-in px-4 sm:px-6 py-4 md:py-6 pb-8 md:pb-12">
-        {/* Hero Welcome Section */}
-        <section className="animate-fade-in">
-          <HeroWelcome />
-        </section>
+    <DashboardContainer>
+      <div className="space-y-6 sm:space-y-8">
+        {/* Premium Hero Welcome */}
+        <motion.section
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+          custom={0}
+        >
+          <PremiumHero />
+        </motion.section>
 
-        {/* Smart Stats Bar - Swipeable on mobile */}
-        <section className="animate-fade-in" style={{ animationDelay: "50ms" }}>
-          <SmartStatsBar />
-        </section>
+        {/* Live Stats Bar - Real data, swipeable on mobile */}
+        <motion.section
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+          custom={1}
+        >
+          <LiveStatsBar />
+        </motion.section>
 
         {/* Trial Banner (if applicable) */}
-        <section className="animate-fade-in" style={{ animationDelay: "100ms" }}>
+        <motion.section
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+          custom={2}
+        >
           <TrialBanner />
-        </section>
+        </motion.section>
 
-        {/* Main Hub Cards */}
-        <section className="animate-fade-in" style={{ animationDelay: "150ms" }}>
-          <h2 className="text-xs sm:text-sm font-medium text-white/40 uppercase tracking-wider mb-2.5 px-0.5">
+        {/* Premium Hub Cards */}
+        <motion.section
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+          custom={3}
+        >
+          <h2 className="text-xs sm:text-sm font-medium text-white/70 uppercase tracking-wider mb-3 px-0.5">
             Your Hubs
           </h2>
-          <HubGrid />
-        </section>
+          <PremiumHubGrid />
+        </motion.section>
 
-        {/* Action Required Panel */}
-        <section className="animate-fade-in" style={{ animationDelay: "200ms" }}>
-          <ActionRequired />
-        </section>
+        {/* Smart Actions - Prioritized action queue */}
+        <motion.section
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+          custom={4}
+        >
+          <SmartActions />
+        </motion.section>
 
         {/* Secondary Quick Access */}
-        <section className="animate-fade-in" style={{ animationDelay: "250ms" }}>
+        <motion.section
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+          custom={5}
+        >
           <SecondaryQuickAccess />
-        </section>
+        </motion.section>
 
         {/* Footer spacing for mobile nav */}
         <div className="h-4 sm:h-6" />
@@ -66,7 +119,7 @@ const Dashboard = () => {
         isOpen={showWelcome}
         onClose={() => setShowWelcome(false)}
       />
-    </div>
+    </DashboardContainer>
   );
 };
 

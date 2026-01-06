@@ -247,7 +247,7 @@ const MaximumDemandCalculator = () => {
                   {loads.length > 1 && (
                     <button
                       onClick={() => removeLoad(load.id)}
-                      className="p-2 rounded-lg hover:bg-white/10 text-white/40 hover:text-red-400 transition-colors touch-manipulation mt-6"
+                      className="p-2 rounded-lg hover:bg-white/10 text-white/70 hover:text-red-400 transition-colors touch-manipulation mt-6"
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
@@ -312,7 +312,7 @@ const MaximumDemandCalculator = () => {
               >
                 {result.maximumDemand} kW
               </div>
-              <p className="text-sm text-white/50 mt-1">
+              <p className="text-sm text-white/80 mt-1">
                 {(result.overallDiversityFactor * 100).toFixed(1)}% overall diversity
               </p>
             </div>
@@ -384,7 +384,7 @@ const MaximumDemandCalculator = () => {
                   <span className="text-sm sm:text-base font-medium text-purple-300">How It Worked Out</span>
                 </div>
                 <ChevronDown className={cn(
-                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  "h-4 w-4 text-white/70 transition-transform duration-200",
                   showWorkings && "rotate-180"
                 )} />
               </CollapsibleTrigger>
@@ -426,7 +426,7 @@ const MaximumDemandCalculator = () => {
                   <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
                 </div>
                 <ChevronDown className={cn(
-                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  "h-4 w-4 text-white/70 transition-transform duration-200",
                   showGuidance && "rotate-180"
                 )} />
               </CollapsibleTrigger>
@@ -454,7 +454,7 @@ const MaximumDemandCalculator = () => {
                   <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 Regs at a Glance</span>
                 </div>
                 <ChevronDown className={cn(
-                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  "h-4 w-4 text-white/70 transition-transform duration-200",
                   showBsRegs && "rotate-180"
                 )} />
               </CollapsibleTrigger>

@@ -67,8 +67,7 @@ const InstrumentationModule3Section2 = () => {
       ],
       correct: 2,
       explanation: "In a 4-20mA system, 0mA indicates a fault condition such as a broken wire, power failure, or sensor malfunction. Normal operation should never produce 0mA since the minimum signal is 4mA."
-    }
-  ];
+  }  ];
 
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">

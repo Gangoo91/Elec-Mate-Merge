@@ -42,7 +42,7 @@ const EmergencyLightingGuidance: React.FC<EmergencyLightingGuidanceProps> = ({ r
       case 'compliant': return 'bg-green-500/20 text-green-400 border-green-500/30';
       case 'warning': return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
       case 'non-compliant': return 'bg-red-500/20 text-red-400 border-red-500/30';
-      default: return 'bg-elec-gray/20 text-elec-light border-elec-gray/30';
+      default: return 'bg-white/5 text-elec-light border-white/5';
     }
   };
 

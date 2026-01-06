@@ -68,13 +68,13 @@ const LearningFromMistakes = () => {
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-6">
         <h1 className="text-3xl font-bold tracking-tight mb-4">Learning From Mistakes</h1>
-        <p className="text-muted-foreground text-center max-w-2xl mb-4">
+        <p className="text-white/70 text-center max-w-2xl mb-4">
           Understanding which mistakes are normal learning experiences and which ones are serious safety issues
         </p>
         <SmartBackButton />
       </div>
 
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
+      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <AlertTriangle className="h-6 w-6 text-elec-yellow" />
@@ -87,7 +87,7 @@ const LearningFromMistakes = () => {
               <div key={index} className={`border rounded-lg p-4 ${
                 item.severity === 'Dangerous' 
                   ? 'border-red-500/50 bg-card' 
-                  : 'border-elec-yellow/20 bg-elec-gray/50'
+                  : 'border-elec-yellow/20 bg-white/5 border border-white/10'
               }`}>
                 <div className="flex items-start justify-between mb-2">
                   <h4 className="font-semibold text-white">{item.mistake}</h4>
@@ -101,11 +101,11 @@ const LearningFromMistakes = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <span className="text-sm font-medium text-orange-300">Consequence:</span>
-                    <p className="text-sm text-muted-foreground">{item.consequence}</p>
+                    <p className="text-sm text-white/70">{item.consequence}</p>
                   </div>
                   <div>
                     <span className="text-sm font-medium text-green-300">Lesson:</span>
-                    <p className="text-sm text-muted-foreground">{item.lesson}</p>
+                    <p className="text-sm text-white/70">{item.lesson}</p>
                   </div>
                 </div>
               </div>
@@ -114,7 +114,7 @@ const LearningFromMistakes = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <ThumbsUp className="h-6 w-6 text-elec-yellow" />
@@ -126,9 +126,9 @@ const LearningFromMistakes = () => {
             {copingStrategies.map((strategy, index) => (
               <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-2">{strategy.strategy}</h4>
-                <p className="text-sm text-muted-foreground mb-3">{strategy.description}</p>
+                <p className="text-sm text-white/70 mb-3">{strategy.description}</p>
                 <div className="bg-elec-yellow/10 p-3 rounded-lg">
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-white/70">
                     <strong className="text-elec-yellow">Example:</strong> {strategy.example}
                   </p>
                 </div>
@@ -138,7 +138,7 @@ const LearningFromMistakes = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">Building Confidence</CardTitle>
         </CardHeader>
@@ -148,7 +148,7 @@ const LearningFromMistakes = () => {
               <h4 className="font-semibold text-white mb-3">Remember These Truths</h4>
               <ul className="space-y-2">
                 {confidenceBuilders.map((truth, index) => (
-                  <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                  <li key={index} className="text-sm text-white/70 flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                     {truth}
                   </li>
@@ -157,11 +157,11 @@ const LearningFromMistakes = () => {
             </div>
             <div className="bg-elec-yellow/10 p-4 rounded-lg">
               <h4 className="font-semibold text-elec-yellow mb-2">Imposter Syndrome is Normal</h4>
-              <p className="text-sm text-muted-foreground mb-3">
+              <p className="text-sm text-white/70 mb-3">
                 Feeling like you don't belong or aren't good enough is incredibly common. 
                 Even experienced electricians felt this way during their apprenticeships.
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white/70">
                 The fact that you're worried about doing well probably means you care 
                 about quality work - that's exactly what the industry needs.
               </p>
@@ -181,14 +181,14 @@ const LearningFromMistakes = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <h4 className="font-semibold text-white mb-2">Safety Shortcuts</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white/70">
                 Taking shortcuts with safety procedures, working live when you shouldn't, 
                 or ignoring isolation procedures.
               </p>
             </div>
             <div>
               <h4 className="font-semibold text-white mb-2">Covering Up Problems</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white/70">
                 Hiding mistakes, not reporting dangerous conditions, or pretending 
                 you understand when you don't.
               </p>
@@ -202,7 +202,7 @@ const LearningFromMistakes = () => {
           <CardTitle className="text-green-300">The Bottom Line</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">
+          <p className="text-white/70">
             You're an apprentice, which means you're learning. Mistakes are part of learning, 
             but safety is non-negotiable. Ask questions, admit when you're unsure, and remember 
             that every skilled electrician was exactly where you are now. Focus on getting better 

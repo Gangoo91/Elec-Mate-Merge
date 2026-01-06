@@ -48,7 +48,7 @@ const QualificationConfirmationDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[95vh] overflow-hidden bg-elec-dark border-elec-yellow/20 mx-2 w-[calc(100vw-1rem)] sm:w-full sm:mx-4">
+      <DialogContent className="max-w-2xl max-h-[95vh] overflow-hidden bg-white/10 border-elec-yellow/20 mx-2 w-[calc(100vw-1rem)] sm:w-full sm:mx-4">
         <div className="overflow-y-auto max-h-[calc(95vh-8rem)] pr-2 -mr-2">
           <DialogHeader className="pb-4">
             <DialogTitle className="flex items-center gap-2 text-lg sm:text-xl">
@@ -62,14 +62,14 @@ const QualificationConfirmationDialog = ({
 
           <div className="space-y-4">
             {/* Qualification Details */}
-            <Card className="border-elec-yellow/20 bg-elec-gray">
+            <Card className="border-elec-yellow/20 bg-white/5">
               <CardContent className="p-3 sm:p-4">
                 <div className="space-y-3">
                   <div className="flex items-center justify-between flex-wrap gap-2">
                     <Badge variant="outline" className="border-elec-yellow bg-elec-yellow text-elec-dark font-semibold text-xs sm:text-sm">
                       {qualification.level}
                     </Badge>
-                    <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2 text-xs sm:text-sm text-white">
                       <GraduationCap className="h-3 w-3 sm:h-4 sm:w-4" />
                       <span className="hidden sm:inline">{qualification.awarding_body}</span>
                       <span className="sm:hidden">City & Guilds</span>
@@ -77,11 +77,11 @@ const QualificationConfirmationDialog = ({
                   </div>
                   <div>
                     <h3 className="font-semibold text-sm sm:text-lg line-clamp-3">{qualification.title}</h3>
-                    <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+                    <p className="text-xs sm:text-sm text-white mt-1">
                       Code: {qualification.code}
                     </p>
                     {qualification.description && (
-                      <p className="text-xs sm:text-sm text-muted-foreground mt-2 line-clamp-2">
+                      <p className="text-xs sm:text-sm text-white mt-2 line-clamp-2">
                         {qualification.description}
                       </p>
                     )}
@@ -97,7 +97,7 @@ const QualificationConfirmationDialog = ({
                 <h4 className="font-semibold text-sm sm:text-base">Portfolio Requirements</h4>
               </div>
               
-              <Card className="border-elec-yellow/20 bg-elec-gray">
+              <Card className="border-elec-yellow/20 bg-white/5">
                 <CardContent className="p-3 sm:p-4">
                   <div className="grid gap-2 sm:gap-3">
                     <div className="flex items-center justify-between text-xs sm:text-sm">
@@ -111,10 +111,10 @@ const QualificationConfirmationDialog = ({
                   </div>
                   
                   <div className="mt-3 space-y-2">
-                    <p className="text-xs sm:text-sm font-medium text-muted-foreground">Portfolio Categories:</p>
+                    <p className="text-xs sm:text-sm font-medium text-white">Portfolio Categories:</p>
                     <div className="grid gap-1.5 sm:gap-2">
                       {categories.map((category) => (
-                        <div key={category.id} className="flex items-center justify-between p-2 rounded border border-elec-yellow/10 bg-elec-dark/50">
+                        <div key={category.id} className="flex items-center justify-between p-2 rounded border border-elec-yellow/10 bg-white/10">
                           <span className="text-xs sm:text-sm line-clamp-2 flex-1 mr-2">{category.name}</span>
                           <Badge variant="outline" className="text-xs shrink-0">
                             {category.required_entries}
@@ -139,9 +139,9 @@ const QualificationConfirmationDialog = ({
                 value={targetDate}
                 onChange={(e) => setTargetDate(e.target.value)}
                 min={new Date().toISOString().split('T')[0]}
-                className="bg-elec-dark border-elec-yellow/20 text-sm"
+                className="bg-white/10 border-elec-yellow/20 text-sm"
               />
-              <p className="text-xs text-muted-foreground leading-tight">
+              <p className="text-xs text-white leading-tight">
                 Setting a target date helps track your progress and plan your portfolio completion.
               </p>
             </div>

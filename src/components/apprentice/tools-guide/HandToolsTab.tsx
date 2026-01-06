@@ -138,7 +138,7 @@ const HandToolsTab = () => {
     <div className="p-3 sm:p-6 space-y-4 sm:space-y-6">
       <div className="text-center space-y-2">
         <h2 className="text-xl sm:text-2xl font-semibold text-elec-yellow">Essential Hand Tools</h2>
-        <p className="text-muted-foreground max-w-3xl mx-auto leading-relaxed text-sm sm:text-base px-2 sm:px-0">
+        <p className="text-white max-w-3xl mx-auto leading-relaxed text-sm sm:text-base px-2 sm:px-0">
           Every apprentice electrician in the UK should have these fundamental hand tools in their kit. 
           Quality hand tools will last your entire career when properly maintained.
         </p>
@@ -187,7 +187,7 @@ const HandToolsTab = () => {
           <Wrench className="h-4 w-4 sm:h-5 sm:w-5" />
           UK Electrical Standards & Budget Guidance
         </h3>
-        <div className="space-y-2 text-xs sm:text-sm text-muted-foreground leading-relaxed">
+        <div className="space-y-2 text-xs sm:text-sm text-white leading-relaxed">
           <p>
             <strong>Safety Standards:</strong> All tools must comply with BS EN 60900 for electrical safety. 
             Look for VDE certification and the BSI Kitemark on safety equipment.

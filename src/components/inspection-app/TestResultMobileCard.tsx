@@ -37,7 +37,7 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
 
   const getBorderColor = () => {
     if (result.sourceCircuitId) return 'border-blue-400';
-    return 'border-gray-300';
+    return 'border-white/10';
   };
 
   const handleBulkUpdate = (id: string, updates: Partial<TestResult>) => {
@@ -687,7 +687,7 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
               <AccordionItem value="remarks" className="border-b">
                 <AccordionTrigger className="py-3 hover:no-underline">
                   <div className="flex items-center gap-2">
-                    <div className="w-1 h-4 bg-gray-500 rounded" />
+                    <div className="w-1 h-4 bg-white/15 rounded" />
                     <span className="font-semibold">Remarks</span>
                   </div>
                 </AccordionTrigger>

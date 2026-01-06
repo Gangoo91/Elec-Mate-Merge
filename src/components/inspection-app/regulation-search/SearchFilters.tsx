@@ -48,20 +48,20 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({
     <div className="space-y-4">
       {/* Main Search */}
       <div className="relative w-full">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/70" />
         <Input
           type="text"
           placeholder="Search regulations, keywords, or numbers..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-10 bg-muted border-border text-foreground placeholder-gray-400"
+          className="pl-10 bg-muted border-border text-foreground placeholder-white/70"
         />
         {searchTerm && (
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setSearchTerm('')}
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 text-gray-400 hover:text-foreground"
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 text-white/70 hover:text-foreground"
           >
             <X className="h-4 w-4" />
           </Button>
@@ -71,8 +71,8 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({
       {/* Filter Row - Mobile Optimized */}
       <div className="space-y-3">
         <div className="flex items-center gap-2">
-          <Filter className="h-4 w-4 text-gray-400" />
-          <span className="text-sm text-gray-400 font-medium">Filters:</span>
+          <Filter className="h-4 w-4 text-white/70" />
+          <span className="text-sm text-white/70 font-medium">Filters:</span>
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
@@ -136,7 +136,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({
               variant="outline"
               size="sm"
               onClick={clearAllFilters}
-              className="w-full border-gray-600 text-gray-300 hover:bg-gray-700"
+              className="w-full border-white/20 text-white/80 hover:bg-white/10"
             >
               <X className="h-4 w-4 mr-2" />
               Clear All
@@ -149,7 +149,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({
       {/* Active Filters Display - Mobile Optimized */}
       {hasActiveFilters && (
         <div className="space-y-2">
-          <span className="text-sm text-gray-400 block">Active filters:</span>
+          <span className="text-sm text-white/70 block">Active filters:</span>
           <div className="flex flex-wrap gap-2">
             {searchTerm && (
               <Badge variant="outline" className="border-elec-yellow text-elec-yellow">
@@ -182,7 +182,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({
 
       {/* Results Counter */}
       <div className="text-center">
-        <p className="text-gray-400 text-sm">
+        <p className="text-white/70 text-sm">
           Found {resultCount} regulation{resultCount !== 1 ? 's' : ''}
           {searchTerm && ` matching "${searchTerm}"`}
         </p>

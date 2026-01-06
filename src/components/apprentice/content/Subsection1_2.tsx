@@ -17,7 +17,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
     <div className="space-y-8">
       <h1 className="text-2xl font-bold text-elec-yellow">Roles and Responsibilities in Electrical Safety</h1>
       
-      <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-lg p-6 mb-6">
+      <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-6 mb-6">
         <h2 className="text-xl font-semibold text-elec-yellow mb-4 flex items-center">
           <Shield className="mr-3 h-6 w-6 text-elec-yellow" />
           Introduction to Electrical Safety Responsibilities
@@ -34,7 +34,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </p>
       </div>
       
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow flex items-center">
             <Users className="mr-3 h-6 w-6" />
@@ -49,7 +49,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             at Work Act and the Electricity at Work Regulations.
           </p>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Key Employer Duties:</h3>
             <ul className="list-disc pl-5 space-y-2">
               <li>Ensure electrical systems are designed, constructed, and maintained to be safe</li>
@@ -83,7 +83,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </ul>
           </div>
 
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mt-4">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mt-4">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Specific Employer Responsibilities Under EWR 1989:</h3>
             <p className="mb-3">The Electricity at Work Regulations place specific duties on employers:</p>
             <ul className="list-disc pl-5 space-y-2">
@@ -97,7 +97,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </CardContent>
       </Card>
       
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow flex items-center">
             <BookOpen className="mr-3 h-6 w-6" />
@@ -112,7 +112,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             legal obligations and essential practices for preventing electrical incidents.
           </p>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Key Employee Duties:</h3>
             <ul className="list-disc pl-5 space-y-2">
               <li>Take reasonable care of their own health and safety and that of others</li>
@@ -128,7 +128,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </ul>
           </div>
 
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mt-4">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mt-4">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Electrician-Specific Responsibilities:</h3>
             <p className="mb-3">
               Qualified electricians have additional responsibilities due to their specialized knowledge and role:
@@ -149,7 +149,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </CardContent>
       </Card>
       
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow flex items-center">
             <ClipboardCheck className="mr-3 h-6 w-6" />
@@ -163,7 +163,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             electrical safety. These include clients, designers, contractors, manufacturers, and regulatory bodies.
           </p>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mb-4">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mb-4">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Clients and Building Owners:</h3>
             <ul className="list-disc pl-5 space-y-2">
               <li>Select competent contractors for electrical work</li>
@@ -177,7 +177,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </ul>
           </div>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mb-4">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mb-4">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Designers and Consultants:</h3>
             <ul className="list-disc pl-5 space-y-2">
               <li>Design electrical systems that comply with regulations</li>
@@ -191,7 +191,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </ul>
           </div>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Regulatory Bodies:</h3>
             <ul className="list-disc pl-5 space-y-2">
               <li><span className="font-semibold">Health and Safety Executive (HSE):</span> Enforcement and guidance, investigation of serious incidents, publishing safety alerts and bulletins</li>
@@ -203,7 +203,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </ul>
           </div>
 
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mt-4">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mt-4">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Manufacturers and Suppliers:</h3>
             <ul className="list-disc pl-5 space-y-2">
               <li>Ensure products comply with relevant standards and regulations</li>
@@ -218,7 +218,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </CardContent>
       </Card>
       
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow flex items-center">
             <BookOpen className="mr-3 h-6 w-6" />
@@ -232,7 +232,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             experience, and ongoing professional development.
           </p>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Elements of Electrical Competence:</h3>
             <ul className="list-disc pl-5 space-y-2">
               <li>Appropriate technical knowledge</li>
@@ -247,7 +247,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </ul>
           </div>
 
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mt-4">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mt-4">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Key UK Electrical Qualifications:</h3>
             <p className="mb-3">Several recognised qualifications demonstrate electrical competence:</p>
             
@@ -300,7 +300,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow">Best Practice for Managing Electrical Safety Responsibilities</CardTitle>
         </CardHeader>
@@ -310,7 +310,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+            <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
               <h3 className="text-lg font-semibold text-elec-yellow mb-2">Clear Documentation</h3>
               <ul className="list-disc pl-5 space-y-1">
                 <li>Written safety policies and procedures</li>
@@ -321,7 +321,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </ul>
             </div>
             
-            <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+            <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
               <h3 className="text-lg font-semibold text-elec-yellow mb-2">Regular Training</h3>
               <ul className="list-disc pl-5 space-y-1">
                 <li>Initial safety induction for all staff</li>
@@ -332,7 +332,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </ul>
             </div>
             
-            <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+            <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
               <h3 className="text-lg font-semibold text-elec-yellow mb-2">Effective Communication</h3>
               <ul className="list-disc pl-5 space-y-1">
                 <li>Clear safety briefings before work begins</li>
@@ -343,7 +343,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </ul>
             </div>
             
-            <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+            <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
               <h3 className="text-lg font-semibold text-elec-yellow mb-2">Monitoring and Review</h3>
               <ul className="list-disc pl-5 space-y-1">
                 <li>Regular safety inspections and audits</li>

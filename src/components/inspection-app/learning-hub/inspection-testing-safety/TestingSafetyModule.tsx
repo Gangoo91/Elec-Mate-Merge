@@ -27,7 +27,7 @@ const TestingSafetyModule = ({ module, onModuleClick }: TestingSafetyModuleProps
       case 'critical': return 'bg-red-500/20 text-red-300 border-red-500/30';
       case 'essential': return 'bg-orange-500/20 text-orange-300 border-orange-500/30';
       case 'required': return 'bg-blue-500/20 text-blue-300 border-blue-500/30';
-      default: return 'bg-gray-500/20 text-white border-gray-500/30';
+      default: return 'bg-white/10 text-white border-white/30';
     }
   };
 

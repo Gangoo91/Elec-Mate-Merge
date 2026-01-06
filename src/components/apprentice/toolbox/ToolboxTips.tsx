@@ -9,7 +9,7 @@ const ToolboxTips = () => {
   }
 
   return (
-    <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-4 mt-6">
+    <div className="bg-white/5 border border-elec-yellow/20 rounded-lg p-4 mt-6">
       <h3 className="text-lg font-medium text-elec-yellow mb-2">Essential Guidance for Apprentices</h3>
       <ul className="list-disc list-inside space-y-2 text-sm">
         <li>Use the chat feature to get instant help with electrical questions and problems</li>

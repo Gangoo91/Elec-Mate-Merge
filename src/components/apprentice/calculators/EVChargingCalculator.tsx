@@ -271,14 +271,14 @@ const EVChargingCalculator = () => {
                 <div className="text-3xl font-bold bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}>
                   {results.energyRequired.toFixed(1)}
                 </div>
-                <p className="text-xs text-white/50">kWh</p>
+                <p className="text-xs text-white/80">kWh</p>
               </div>
               <div className="text-center">
                 <p className="text-sm text-white/60 mb-1">Charging Time</p>
                 <div className="text-3xl font-bold bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}>
                   {results.chargingTime.toFixed(1)}
                 </div>
-                <p className="text-xs text-white/50">hours</p>
+                <p className="text-xs text-white/80">hours</p>
               </div>
             </div>
 
@@ -345,7 +345,7 @@ const EVChargingCalculator = () => {
                   <Calculator className="h-4 w-4 text-purple-400" />
                   <span className="text-sm sm:text-base font-medium text-purple-300">How It Worked Out</span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showFormula && "rotate-180")} />
+                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showFormula && "rotate-180")} />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0 space-y-3 font-mono text-sm">
                 <div className="p-2 rounded bg-white/5">
@@ -380,7 +380,7 @@ const EVChargingCalculator = () => {
                   <BookOpen className="h-4 w-4 text-amber-400" />
                   <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 Section 722</span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showRegs && "rotate-180")} />
+                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showRegs && "rotate-180")} />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0 space-y-2 text-sm text-amber-200/80">
                 <p><strong className="text-amber-300">722.531.2:</strong> RCD protection (30mA Type A minimum) mandatory</p>

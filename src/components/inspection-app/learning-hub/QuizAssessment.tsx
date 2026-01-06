@@ -34,7 +34,7 @@ const QuizAssessment = () => {
       case 'Beginner': return 'text-green-400 bg-green-400/10';
       case 'Intermediate': return 'text-yellow-400 bg-yellow-400/10';
       case 'Advanced': return 'text-red-400 bg-red-400/10';
-      default: return 'text-white/80 bg-gray-400/10';
+      default: return 'text-white/80 bg-white/5';
     }
   };
 

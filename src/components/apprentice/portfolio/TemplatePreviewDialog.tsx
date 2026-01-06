@@ -29,7 +29,7 @@ const TemplatePreviewDialog = ({ template, isOpen, onClose, onDownload }: Templa
       case "Beginner": return "bg-green-500/20 text-green-400 border-green-500/30";
       case "Intermediate": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
       case "Advanced": return "bg-red-500/20 text-red-400 border-red-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+      default: return "bg-white/10 text-white border-white/30";
     }
   };
 
@@ -46,7 +46,7 @@ const TemplatePreviewDialog = ({ template, isOpen, onClose, onDownload }: Templa
         </DialogHeader>
         
         <div className="space-y-4">
-          <p className="text-muted-foreground">{template.description}</p>
+          <p className="text-white">{template.description}</p>
           
           <div>
             <h4 className="font-medium text-white mb-2">Template Includes:</h4>
@@ -62,7 +62,7 @@ const TemplatePreviewDialog = ({ template, isOpen, onClose, onDownload }: Templa
           
           <div className="p-4 bg-blue-500/20 rounded-lg border border-blue-500/30">
             <h5 className="font-medium text-blue-400 mb-2">What You'll Get:</h5>
-            <ul className="text-sm text-muted-foreground space-y-1">
+            <ul className="text-sm text-white space-y-1">
               <li>• Pre-formatted document template</li>
               <li>• Section guidelines and examples</li>
               <li>• Assessment criteria checklist</li>

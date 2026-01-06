@@ -235,7 +235,7 @@ const SiteJargon = () => {
     <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-4 sm:mb-6">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 sm:mb-4 px-2">Site Slang & Jargon Decoder</h1>
-        <p className="text-sm sm:text-base text-muted-foreground text-center max-w-2xl mb-3 sm:mb-4 px-2">
+        <p className="text-sm sm:text-base text-white/70 text-center max-w-2xl mb-3 sm:mb-4 px-2">
           Master the language of the trade and communicate confidently on any UK construction site
         </p>
         <SmartBackButton />
@@ -253,7 +253,7 @@ const SiteJargon = () => {
           {/* Search and Filters */}
           <div className="flex flex-col md:flex-row gap-4">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/70 h-4 w-4" />
               <Input
                 placeholder="Search electrical terms..."
                 value={searchTerm}
@@ -277,34 +277,34 @@ const SiteJargon = () => {
 
           {/* Statistics */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
-            <Card className="border-elec-yellow/20 bg-elec-gray/50">
+            <Card className="border-elec-yellow/20 bg-white/5 border border-white/10">
               <CardContent className="p-3 sm:p-4 text-center">
                 <div className="text-xl sm:text-2xl font-bold text-elec-yellow">{filteredTerms.length}</div>
-                <div className="text-xs sm:text-sm text-muted-foreground">Terms Found</div>
+                <div className="text-xs sm:text-sm text-white/70">Terms Found</div>
               </CardContent>
             </Card>
-            <Card className="border-elec-yellow/20 bg-elec-gray/50">
+            <Card className="border-elec-yellow/20 bg-white/5 border border-white/10">
               <CardContent className="p-3 sm:p-4 text-center">
                 <div className="text-xl sm:text-2xl font-bold text-green-400">
                   {filteredTerms.filter(t => t.difficulty === "beginner").length}
                 </div>
-                <div className="text-xs sm:text-sm text-muted-foreground">Beginner</div>
+                <div className="text-xs sm:text-sm text-white/70">Beginner</div>
               </CardContent>
             </Card>
-            <Card className="border-elec-yellow/20 bg-elec-gray/50">
+            <Card className="border-elec-yellow/20 bg-white/5 border border-white/10">
               <CardContent className="p-3 sm:p-4 text-center">
                 <div className="text-xl sm:text-2xl font-bold text-yellow-400">
                   {filteredTerms.filter(t => t.difficulty === "intermediate").length}
                 </div>
-                <div className="text-xs sm:text-sm text-muted-foreground">Intermediate</div>
+                <div className="text-xs sm:text-sm text-white/70">Intermediate</div>
               </CardContent>
             </Card>
-            <Card className="border-elec-yellow/20 bg-elec-gray/50">
+            <Card className="border-elec-yellow/20 bg-white/5 border border-white/10">
               <CardContent className="p-3 sm:p-4 text-center">
                 <div className="text-xl sm:text-2xl font-bold text-red-400">
                   {filteredTerms.filter(t => t.difficulty === "advanced").length}
                 </div>
-                <div className="text-xs sm:text-sm text-muted-foreground">Advanced</div>
+                <div className="text-xs sm:text-sm text-white/70">Advanced</div>
               </CardContent>
             </Card>
           </div>
@@ -312,7 +312,7 @@ const SiteJargon = () => {
           {/* Terms Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             {filteredTerms.map((item, index) => (
-              <Card key={index} className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-colors">
+              <Card key={index} className="border-elec-yellow/20 bg-white/5 hover:bg-white/10 transition-colors">
                 <CardHeader className="pb-2">
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-lg text-elec-yellow flex items-center gap-2">
@@ -339,7 +339,7 @@ const SiteJargon = () => {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-muted-foreground">{item.meaning}</p>
+                  <p className="text-sm text-white/70">{item.meaning}</p>
                 </CardContent>
               </Card>
             ))}
@@ -347,22 +347,22 @@ const SiteJargon = () => {
         </TabsContent>
 
         <TabsContent value="phrases" className="space-y-6">
-          <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
+          <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <MessageSquare className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-elec-yellow">Common Site Phrases</CardTitle>
               </div>
-              <p className="text-muted-foreground">
+              <p className="text-white/70">
                 Context matters - here's when and how to use these phrases appropriately
               </p>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {filteredPhrases.map((phrase, index) => (
-                  <div key={index} className="border border-elec-yellow/20 rounded-lg p-4 bg-elec-dark/30">
+                  <div key={index} className="border border-elec-yellow/20 rounded-lg p-4 bg-white/5 border border-white/10">
                     <h4 className="font-semibold text-white mb-1">"{phrase.phrase}"</h4>
-                    <p className="text-sm text-muted-foreground mb-2">{phrase.meaning}</p>
+                    <p className="text-sm text-white/70 mb-2">{phrase.meaning}</p>
                     <div className="flex gap-2">
                       <Badge variant="outline" className="text-xs">
                         {phrase.situation}
@@ -400,17 +400,17 @@ const SiteJargon = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {filteredRegionalTerms.map((region, index) => (
-              <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+              <Card key={index} className="border-elec-yellow/20 bg-white/5">
                 <CardHeader>
                   <CardTitle className="text-elec-yellow">{region.region}</CardTitle>
-                  <p className="text-sm text-muted-foreground">{region.accent}</p>
+                  <p className="text-sm text-white/70">{region.accent}</p>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
                     {region.terms.map((term, termIndex) => (
                       <div key={termIndex} className="flex justify-between items-start">
                         <span className="font-medium text-white">{term.term}</span>
-                        <span className="text-sm text-muted-foreground text-right">{term.meaning}</span>
+                        <span className="text-sm text-white/70 text-right">{term.meaning}</span>
                       </div>
                     ))}
                   </div>
@@ -421,7 +421,7 @@ const SiteJargon = () => {
         </TabsContent>
 
         <TabsContent value="learning" className="space-y-6">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
+          <Card className="border-elec-yellow/20 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Lightbulb className="h-6 w-6 text-elec-yellow" />
@@ -433,7 +433,7 @@ const SiteJargon = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <h3 className="font-semibold text-white">Memory Techniques</h3>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
+                  <ul className="space-y-2 text-sm text-white/70">
                     <li className="flex items-start gap-2">
                       <Star className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       Group terms by category (tools, safety, people)
@@ -455,7 +455,7 @@ const SiteJargon = () => {
                 
                 <div className="space-y-4">
                   <h3 className="font-semibold text-white">Communication Tips</h3>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
+                  <ul className="space-y-2 text-sm text-white/70">
                     <li className="flex items-start gap-2">
                       <Star className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       Don't be afraid to ask for clarification
@@ -488,7 +488,7 @@ const SiteJargon = () => {
                           {term.difficulty}
                         </Badge>
                       </div>
-                      <p className="text-sm text-muted-foreground mt-1">{term.meaning}</p>
+                      <p className="text-sm text-white/70 mt-1">{term.meaning}</p>
                     </div>
                   ))}
                 </div>
@@ -507,19 +507,19 @@ const SiteJargon = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
               <h4 className="font-semibold text-white">Safety</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white/70">
                 Quick understanding of urgent safety instructions can prevent accidents and save lives.
               </p>
             </div>
             <div className="space-y-2">
               <h4 className="font-semibold text-white">Efficiency</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white/70">
                 Clear communication reduces mistakes, rework, and project delays.
               </p>
             </div>
             <div className="space-y-2">
               <h4 className="font-semibold text-white">Integration</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white/70">
                 Speaking the trade language helps you fit in and gain respect from colleagues.
               </p>
             </div>

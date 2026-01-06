@@ -94,7 +94,7 @@ const QuizInterface = ({ assessment, questions, onComplete, onExit }: QuizInterf
       case 'Beginner': return 'text-green-400 bg-green-400/10 border-green-400/20';
       case 'Intermediate': return 'text-yellow-400 bg-yellow-400/10 border-yellow-400/20';
       case 'Advanced': return 'text-red-400 bg-red-400/10 border-red-400/20';
-      default: return 'text-white/80 bg-gray-400/10 border-gray-400/20';
+      default: return 'text-white/80 bg-white/5 border-white/20';
     }
   };
 
@@ -112,7 +112,7 @@ const QuizInterface = ({ assessment, questions, onComplete, onExit }: QuizInterf
               <Clock className="h-4 w-4" />
               <span>{formatTime(totalElapsed)}</span>
             </div>
-            <Button variant="outline" onClick={onExit} className="border-gray-600 text-white">
+            <Button variant="outline" onClick={onExit} className="border-white/15 text-white">
               Exit Quiz
             </Button>
           </div>

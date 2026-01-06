@@ -90,7 +90,7 @@ const TroubleshootingGuide = () => {
       case "critical": return "border-red-500 bg-card";
       case "high": return "border-orange-500 bg-orange-500/10";
       case "medium": return "border-yellow-500 bg-card";
-      default: return "border-elec-yellow/20 bg-elec-gray";
+      default: return "border-elec-yellow/20 bg-white/5";
     }
   };
 
@@ -107,7 +107,7 @@ const TroubleshootingGuide = () => {
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-6">
         <h1 className="text-3xl font-bold tracking-tight mb-4">Electrical Troubleshooting Guide</h1>
-        <p className="text-muted-foreground text-center max-w-2xl mb-4">
+        <p className="text-white/70 text-center max-w-2xl mb-4">
           Common electrical problems, their causes, and systematic approaches to diagnosis and resolution
         </p>
         <SmartBackButton />
@@ -167,7 +167,7 @@ const TroubleshootingGuide = () => {
                   <h4 className="font-semibold text-white mb-2">Symptoms:</h4>
                   <ul className="space-y-1">
                     {problem.symptoms.map((symptom, idx) => (
-                      <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                      <li key={idx} className="text-sm text-white/70 flex items-start gap-2">
                         <span className="text-elec-yellow mt-1">•</span>
                         {symptom}
                       </li>
@@ -179,7 +179,7 @@ const TroubleshootingGuide = () => {
                   <h4 className="font-semibold text-white mb-2">Possible Causes:</h4>
                   <ul className="space-y-1">
                     {problem.causes.map((cause, idx) => (
-                      <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                      <li key={idx} className="text-sm text-white/70 flex items-start gap-2">
                         <span className="text-elec-yellow mt-1">•</span>
                         {cause}
                       </li>
@@ -191,7 +191,7 @@ const TroubleshootingGuide = () => {
                   <h4 className="font-semibold text-white mb-2">Troubleshooting Steps:</h4>
                   <ol className="space-y-1">
                     {problem.solutions.map((solution, idx) => (
-                      <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                      <li key={idx} className="text-sm text-white/70 flex items-start gap-2">
                         <span className="text-elec-yellow mt-1">{idx + 1}.</span>
                         {solution}
                       </li>
@@ -211,25 +211,25 @@ const TroubleshootingGuide = () => {
 
         <TabsContent value="testing" className="space-y-6">
           {testingProcedures.map((test, index) => (
-            <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+            <Card key={index} className="border-elec-yellow/20 bg-white/5">
               <CardHeader>
                 <CardTitle className="text-xl text-elec-yellow">{test.test}</CardTitle>
-                <p className="text-muted-foreground">{test.when}</p>
+                <p className="text-white/70">{test.when}</p>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
                   <h4 className="font-semibold text-white mb-2">Test Method:</h4>
-                  <p className="text-sm text-muted-foreground">{test.method}</p>
+                  <p className="text-sm text-white/70">{test.method}</p>
                 </div>
 
                 <div>
                   <h4 className="font-semibold text-white mb-2">Acceptable Limits:</h4>
-                  <p className="text-sm text-muted-foreground">{test.acceptableLimits}</p>
+                  <p className="text-sm text-white/70">{test.acceptableLimits}</p>
                 </div>
 
                 <div>
                   <h4 className="font-semibold text-white mb-2">Required Equipment:</h4>
-                  <p className="text-sm text-muted-foreground">{test.equipment}</p>
+                  <p className="text-sm text-white/70">{test.equipment}</p>
                 </div>
               </CardContent>
             </Card>

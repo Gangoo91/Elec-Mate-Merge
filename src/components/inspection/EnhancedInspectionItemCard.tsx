@@ -93,7 +93,7 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
       case 'C2': return 'border-l-orange-500';
       case 'C3': return 'border-l-amber-500';
       case 'limitation': return 'border-l-purple-500';
-      case 'not-applicable': return 'border-l-gray-500';
+      case 'not-applicable': return 'border-l-white/50';
       default: return 'border-l-border';
     }
   };
@@ -152,7 +152,7 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
                   : `BS 7671:${sectionItem.clause}`}
               </Badge>
             ) : (
-              <Badge variant="secondary" className="mt-1 text-[10px] md:text-xs font-mono px-1.5 md:px-2 py-0.5 bg-gray-500/10 border-gray-500/30 text-gray-400">
+              <Badge variant="secondary" className="mt-1 text-[10px] md:text-xs font-mono px-1.5 md:px-2 py-0.5 bg-white/5 border-white/20 text-white/70">
                 No Specific Reg
               </Badge>
             )}

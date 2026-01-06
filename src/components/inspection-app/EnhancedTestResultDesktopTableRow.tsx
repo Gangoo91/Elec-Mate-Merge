@@ -144,7 +144,7 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
     } else if (completionPercentage >= 50) {
       return { icon: '⚠️', color: 'text-amber-600', title: `${Math.round(completionPercentage)}% Complete` };
     } else {
-      return { icon: '⭕', color: 'text-gray-400', title: `${Math.round(completionPercentage)}% Complete` };
+      return { icon: '⭕', color: 'text-white/70', title: `${Math.round(completionPercentage)}% Complete` };
     }
   };
 

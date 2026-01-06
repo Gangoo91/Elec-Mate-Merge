@@ -167,7 +167,7 @@ const BasicACCircuitCalculator = () => {
   };
 
   const getCircuitStatus = () => {
-    if (!results) return { text: "Enter values", color: "text-white/50" };
+    if (!results) return { text: "Enter values", color: "text-white/80" };
     if (results.resonantFreq && Math.abs(parseFloat(frequency) - results.resonantFreq) < 5) {
       return { text: "Near Resonance", color: "text-red-400" };
     }
@@ -377,7 +377,7 @@ const BasicACCircuitCalculator = () => {
               </div>
             )}
 
-            <div className="pt-2 text-xs text-white/40">
+            <div className="pt-2 text-xs text-white/70">
               <strong>Indicative Protection:</strong> {results.protectiveDeviceRange} (advisory only)
             </div>
           </CalculatorResult>
@@ -390,7 +390,7 @@ const BasicACCircuitCalculator = () => {
                   <Activity className="h-4 w-4 text-purple-400" />
                   <span className="text-sm sm:text-base font-medium text-purple-300">How It Worked Out</span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showCalculation && "rotate-180")} />
+                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showCalculation && "rotate-180")} />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0 space-y-3">
                 <div className="space-y-2">
@@ -478,7 +478,7 @@ const BasicACCircuitCalculator = () => {
                   <Info className="h-4 w-4 text-blue-400" />
                   <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showGuidance && "rotate-180")} />
+                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showGuidance && "rotate-180")} />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0 space-y-2">
                 <p className="text-sm text-blue-200/80">
@@ -507,7 +507,7 @@ const BasicACCircuitCalculator = () => {
                   <BookOpen className="h-4 w-4 text-amber-400" />
                   <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 Regs at a Glance</span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showBsRegs && "rotate-180")} />
+                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showBsRegs && "rotate-180")} />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0">
                 <div className="space-y-2 text-sm text-amber-200/80">

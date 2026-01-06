@@ -58,18 +58,18 @@ const BudgetPlanningCalculator = () => {
       case "essential": return "bg-red-500/20 text-red-400 border-red-500/30";
       case "recommended": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
       case "optional": return "bg-green-500/20 text-green-400 border-green-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+      default: return "bg-white/10 text-white border-white/20";
     }
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border-elec-yellow/20 bg-white/5">
       <CardHeader>
         <div className="flex items-center gap-2">
           <Calculator className="h-5 w-5 text-elec-yellow" />
           <CardTitle className="text-elec-yellow">Budget Planning Calculator</CardTitle>
         </div>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-white">
           Plan your tool investments based on your available budget and timeframe
         </p>
       </CardHeader>
@@ -84,7 +84,7 @@ const BudgetPlanningCalculator = () => {
               placeholder="150"
               value={monthlyBudget}
               onChange={(e) => setMonthlyBudget(e.target.value)}
-              className="bg-elec-gray border-elec-yellow/30"
+              className="bg-white/5 border-elec-yellow/30"
             />
           </div>
           
@@ -96,7 +96,7 @@ const BudgetPlanningCalculator = () => {
               placeholder="12"
               value={timeframe}
               onChange={(e) => setTimeframe(e.target.value)}
-              className="bg-elec-gray border-elec-yellow/30"
+              className="bg-white/5 border-elec-yellow/30"
             />
           </div>
         </div>
@@ -106,7 +106,7 @@ const BudgetPlanningCalculator = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3 text-center">
                 <PoundSterling className="h-6 w-6 text-blue-400 mx-auto mb-1" />
-                <p className="text-sm text-muted-foreground">Total Budget</p>
+                <p className="text-sm text-white">Total Budget</p>
                 <p className="text-lg font-bold text-blue-400">£{budget.totalBudget}</p>
               </div>
               
@@ -118,7 +118,7 @@ const BudgetPlanningCalculator = () => {
                 <TrendingUp className={`h-6 w-6 mx-auto mb-1 ${
                   budget.canAffordEssentials ? 'text-green-400' : 'text-red-400'
                 }`} />
-                <p className="text-sm text-muted-foreground">Essential Tools</p>
+                <p className="text-sm text-white">Essential Tools</p>
                 <p className={`text-lg font-bold ${
                   budget.canAffordEssentials ? 'text-green-400' : 'text-red-400'
                 }`}>
@@ -128,7 +128,7 @@ const BudgetPlanningCalculator = () => {
               
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-3 text-center">
                 <Calendar className="h-6 w-6 text-elec-yellow mx-auto mb-1" />
-                <p className="text-sm text-muted-foreground">Remaining</p>
+                <p className="text-sm text-white">Remaining</p>
                 <p className="text-lg font-bold text-elec-yellow">£{budget.remainingBudget}</p>
               </div>
             </div>
@@ -167,7 +167,7 @@ const BudgetPlanningCalculator = () => {
                       {category.priority}
                     </Badge>
                   </div>
-                  <p className="text-xs text-muted-foreground">{category.timeframe}</p>
+                  <p className="text-xs text-white">{category.timeframe}</p>
                 </div>
                 <div className="text-right">
                   <p className="text-sm text-elec-yellow">£{category.minCost} - £{category.maxCost}</p>

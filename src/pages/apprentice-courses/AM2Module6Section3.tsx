@@ -120,19 +120,19 @@ const AM2Module6Section3 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
+      <div className="border-b border-white/10 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between gap-2">
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-2 sm:p-0 text-sm sm:text-base" asChild>
+            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
               <Link to="..">
                 <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
                 <span className="hidden xs:inline">Back to Module 6</span>
                 <span className="xs:hidden">Back</span>
               </Link>
             </Button>
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-2 sm:p-0 text-sm sm:text-base" asChild>
+            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
               <Link to="../section4">
                 <span className="hidden xs:inline">Module 6 Section 4</span>
                 <span className="xs:hidden">Section 4</span>
@@ -151,13 +151,13 @@ const AM2Module6Section3 = () => {
             <BookOpen className="w-4 h-4" />
             Module 6 – Section 3
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4 sm:mb-6 leading-tight">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6 leading-tight">
             Time Management Strategies
           </h1>
-          <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
+          <p className="text-sm sm:text-base text-white mb-6 sm:mb-8 leading-relaxed">
             The AM2 online knowledge test is 90 minutes long with around 30–40 questions. That gives you roughly 2–3 minutes per question. Candidates often fail not because they lack knowledge, but because they mismanage time — either spending too long on one tricky question or rushing and making careless mistakes.
           </p>
-          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+          <p className="text-sm sm:text-base text-white leading-relaxed">
             Time management ensures you attempt every question, work steadily, and stay calm under pressure.
           </p>
         </div>
@@ -183,16 +183,16 @@ const AM2Module6Section3 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground mb-4">
+            <p className="text-xs sm:text-sm text-white mb-4">
               By the end of this section, you will be able to:
             </p>
-            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
+            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Plan how to use the 90 minutes effectively
@@ -234,18 +234,18 @@ const AM2Module6Section3 = () => {
 
               <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Detailed Pacing Strategy:</h3>
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="p-4 bg-background border border-border rounded-lg">
-                  <h4 className="font-semibold text-foreground mb-2">Time Allocation Breakdown:</h4>
-                  <ul className="space-y-1 text-xs sm:text-sm text-muted-foreground">
+                <div className="p-4 bg-[#1a1a1a] border border-border rounded-lg">
+                  <h4 className="font-semibold text-white mb-2">Time Allocation Breakdown:</h4>
+                  <ul className="space-y-1 text-xs sm:text-sm text-white">
                     <li>• <strong>First 30 minutes:</strong> 10-12 easy questions</li>
                     <li>• <strong>Next 30 minutes:</strong> 10-12 medium questions</li>
                     <li>• <strong>Next 20 minutes:</strong> Remaining questions</li>
                     <li>• <strong>Final 10 minutes:</strong> Review flagged questions</li>
                   </ul>
                 </div>
-                <div className="p-4 bg-background border border-border rounded-lg">
-                  <h4 className="font-semibold text-foreground mb-2">Pace Indicators:</h4>
-                  <ul className="space-y-1 text-xs sm:text-sm text-muted-foreground">
+                <div className="p-4 bg-[#1a1a1a] border border-border rounded-lg">
+                  <h4 className="font-semibold text-white mb-2">Pace Indicators:</h4>
+                  <ul className="space-y-1 text-xs sm:text-sm text-white">
                     <li>• <strong>On track:</strong> 1/3 complete at 30 minutes</li>
                     <li>• <strong>Good pace:</strong> 2/3 complete at 60 minutes</li>
                     <li>• <strong>Warning:</strong> Less than 1/4 at 30 minutes</li>
@@ -292,27 +292,27 @@ const AM2Module6Section3 = () => {
 
               <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Advanced Question Handling:</h3>
               <div className="space-y-4">
-                <div className="p-4 bg-background border border-border rounded-lg">
-                  <h4 className="font-semibold text-foreground mb-2">The FLAGGING System:</h4>
-                  <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
+                <div className="p-4 bg-[#1a1a1a] border border-border rounded-lg">
+                  <h4 className="font-semibold text-white mb-2">The FLAGGING System:</h4>
+                  <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm text-white">
                     <div>
-                      <p className="font-medium text-foreground mb-1">🔴 RED FLAG</p>
+                      <p className="font-medium text-white mb-1">🔴 RED FLAG</p>
                       <p>Complex calculations requiring 5+ minutes</p>
                     </div>
                     <div>
-                      <p className="font-medium text-foreground mb-1">🟡 YELLOW FLAG</p>
+                      <p className="font-medium text-white mb-1">🟡 YELLOW FLAG</p>
                       <p>Uncertain between 2 options</p>
                     </div>
                     <div>
-                      <p className="font-medium text-foreground mb-1">🟢 GREEN FLAG</p>
+                      <p className="font-medium text-white mb-1">🟢 GREEN FLAG</p>
                       <p>Quick review needed but manageable</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="p-4 bg-background border border-border rounded-lg">
-                  <h4 className="font-semibold text-foreground mb-2">Question Types & Time Allocation:</h4>
-                  <ul className="space-y-1 text-xs sm:text-sm text-muted-foreground">
+                <div className="p-4 bg-[#1a1a1a] border border-border rounded-lg">
+                  <h4 className="font-semibold text-white mb-2">Question Types & Time Allocation:</h4>
+                  <ul className="space-y-1 text-xs sm:text-sm text-white">
                     <li>• <strong>Regulation recall (30 seconds):</strong> "Maximum Zs for 32A Type B MCB?"</li>
                     <li>• <strong>Simple calculation (1-2 minutes):</strong> "Current drawn by 3kW heater at 230V?"</li>
                     <li>• <strong>Application questions (2-3 minutes):</strong> "RCD requirements in bathroom zones"</li>
@@ -320,9 +320,9 @@ const AM2Module6Section3 = () => {
                   </ul>
                 </div>
 
-                <div className="p-4 bg-background border border-border rounded-lg">
-                  <h4 className="font-semibold text-foreground mb-2">Emergency Time Recovery:</h4>
-                  <ul className="space-y-1 text-xs sm:text-sm text-muted-foreground">
+                <div className="p-4 bg-[#1a1a1a] border border-border rounded-lg">
+                  <h4 className="font-semibold text-white mb-2">Emergency Time Recovery:</h4>
+                  <ul className="space-y-1 text-xs sm:text-sm text-white">
                     <li>• <strong>If 15+ minutes behind:</strong> Flag ALL calculations, focus on recall questions</li>
                     <li>• <strong>If 10 minutes behind:</strong> Speed up elimination, guess more confidently</li>
                     <li>• <strong>If 5 minutes behind:</strong> Reduce checking, trust first instincts</li>
@@ -351,18 +351,18 @@ const AM2Module6Section3 = () => {
 
               <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Stress Management Techniques:</h3>
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="p-4 bg-background border border-border rounded-lg">
-                  <h4 className="font-semibold text-foreground mb-2">Physical Calm Techniques:</h4>
-                  <ul className="space-y-1 text-xs sm:text-sm text-muted-foreground">
+                <div className="p-4 bg-[#1a1a1a] border border-border rounded-lg">
+                  <h4 className="font-semibold text-white mb-2">Physical Calm Techniques:</h4>
+                  <ul className="space-y-1 text-xs sm:text-sm text-white">
                     <li>• <strong>4-7-8 Breathing:</strong> Inhale 4, hold 7, exhale 8 counts</li>
                     <li>• <strong>Shoulder roll:</strong> Release tension every 15 minutes</li>
                     <li>• <strong>Posture reset:</strong> Sit back, straighten spine</li>
                     <li>• <strong>Hand shake:</strong> If sweaty palms, quick shake and wipe</li>
                   </ul>
                 </div>
-                <div className="p-4 bg-background border border-border rounded-lg">
-                  <h4 className="font-semibold text-foreground mb-2">Mental Calm Strategies:</h4>
-                  <ul className="space-y-1 text-xs sm:text-sm text-muted-foreground">
+                <div className="p-4 bg-[#1a1a1a] border border-border rounded-lg">
+                  <h4 className="font-semibold text-white mb-2">Mental Calm Strategies:</h4>
+                  <ul className="space-y-1 text-xs sm:text-sm text-white">
                     <li>• <strong>Positive self-talk:</strong> "I know this material"</li>
                     <li>• <strong>Progress focus:</strong> "10 down, only 5 more to go"</li>
                     <li>• <strong>Reset mantras:</strong> "One question at a time"</li>
@@ -423,9 +423,9 @@ const AM2Module6Section3 = () => {
 
               <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">What Assessors Look For:</h3>
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="p-4 bg-background border border-border rounded-lg">
-                  <h4 className="font-semibold text-foreground mb-2">✅ Good Exam Discipline:</h4>
-                  <ul className="space-y-1 text-xs sm:text-sm text-muted-foreground">
+                <div className="p-4 bg-[#1a1a1a] border border-border rounded-lg">
+                  <h4 className="font-semibold text-white mb-2">✅ Good Exam Discipline:</h4>
+                  <ul className="space-y-1 text-xs sm:text-sm text-white">
                     <li>• Consistent pacing throughout the test</li>
                     <li>• Every question attempted (no blanks)</li>
                     <li>• Logical sequence of answering</li>
@@ -433,9 +433,9 @@ const AM2Module6Section3 = () => {
                     <li>• Evidence of review and checking</li>
                   </ul>
                 </div>
-                <div className="p-4 bg-background border border-border rounded-lg">
-                  <h4 className="font-semibold text-foreground mb-2">❌ Poor Time Management:</h4>
-                  <ul className="space-y-1 text-xs sm:text-sm text-muted-foreground">
+                <div className="p-4 bg-[#1a1a1a] border border-border rounded-lg">
+                  <h4 className="font-semibold text-white mb-2">❌ Poor Time Management:</h4>
+                  <ul className="space-y-1 text-xs sm:text-sm text-white">
                     <li>• Large gaps of unanswered questions</li>
                     <li>• Erratic timing patterns</li>
                     <li>• Rush of answers in final minutes</li>
@@ -525,28 +525,28 @@ const AM2Module6Section3 = () => {
             
             <div className="space-y-4 text-sm sm:text-base">
               <div className="border-l-4 border-elec-yellow pl-4">
-                <p className="font-semibold text-foreground mb-1">Q1: Should I guess if I don't know the answer?</p>
-                <p className="text-muted-foreground">A: Yes — there's no negative marking.</p>
+                <p className="font-semibold text-white mb-1">Q1: Should I guess if I don't know the answer?</p>
+                <p className="text-white">A: Yes — there's no negative marking.</p>
               </div>
               
               <div className="border-l-4 border-elec-yellow pl-4">
-                <p className="font-semibold text-foreground mb-1">Q2: How many questions should I aim to finish in the first 30 minutes?</p>
-                <p className="text-muted-foreground">A: Around 10–12.</p>
+                <p className="font-semibold text-white mb-1">Q2: How many questions should I aim to finish in the first 30 minutes?</p>
+                <p className="text-white">A: Around 10–12.</p>
               </div>
               
               <div className="border-l-4 border-elec-yellow pl-4">
-                <p className="font-semibold text-foreground mb-1">Q3: What happens if I run out of time?</p>
-                <p className="text-muted-foreground">A: Any unanswered questions are marked wrong.</p>
+                <p className="font-semibold text-white mb-1">Q3: What happens if I run out of time?</p>
+                <p className="text-white">A: Any unanswered questions are marked wrong.</p>
               </div>
               
               <div className="border-l-4 border-elec-yellow pl-4">
-                <p className="font-semibold text-foreground mb-1">Q4: Can I change answers once selected?</p>
-                <p className="text-muted-foreground">A: Yes — until you submit at the end.</p>
+                <p className="font-semibold text-white mb-1">Q4: Can I change answers once selected?</p>
+                <p className="text-white">A: Yes — until you submit at the end.</p>
               </div>
               
               <div className="border-l-4 border-elec-yellow pl-4">
-                <p className="font-semibold text-foreground mb-1">Q5: Should I spend equal time on every question?</p>
-                <p className="text-muted-foreground">A: No — answer easy ones quickly, spend more time on hard ones later.</p>
+                <p className="font-semibold text-white mb-1">Q5: Should I spend equal time on every question?</p>
+                <p className="text-white">A: No — answer easy ones quickly, spend more time on hard ones later.</p>
               </div>
             </div>
           </CardContent>
@@ -587,7 +587,7 @@ const AM2Module6Section3 = () => {
         </Card>
 
         {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 border-t border-border/20">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 border-t border-white/10">
           <Button variant="outline" asChild className="w-full sm:w-auto">
             <Link to="../section2">
               <ArrowLeft className="w-4 h-4 mr-2" />

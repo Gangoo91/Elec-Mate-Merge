@@ -466,13 +466,13 @@ const VisualInspectionGuide = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-white">
+    <div className="min-h-screen bg-[#1a1a1a] text-white">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="module-8/section-3">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Practical Assessment
@@ -481,7 +481,7 @@ const VisualInspectionGuide = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3 mb-4">
-            <Eye className="h-8 w-8 text-yellow-400" />
+            <Eye className="h-8 w-8 text-elec-yellow" />
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
               Visual Inspection Guide
             </h1>
@@ -497,9 +497,9 @@ const VisualInspectionGuide = () => {
         <div className="max-w-6xl mx-auto space-y-8">
           
           {/* Introduction */}
-          <Card className="bg-card border-yellow-400/30">
+          <Card className="bg-transparent border-elec-yellow/30">
             <CardHeader>
-              <CardTitle className="text-yellow-400 flex items-center gap-2">
+              <CardTitle className="text-elec-yellow flex items-center gap-2">
                 <Target className="h-6 w-6" />
                 Assessment Objectives
               </CardTitle>
@@ -511,7 +511,7 @@ const VisualInspectionGuide = () => {
                 and accurately record findings using the correct observation codes.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-yellow-400/20 p-4 rounded-lg">
+                <div className="bg-elec-yellow/20 p-4 rounded-lg">
                   <h4 className="font-semibold text-blue-300 mb-2">Knowledge</h4>
                   <p className="text-sm">Understanding of current regulations and inspection requirements</p>
                 </div>
@@ -529,13 +529,13 @@ const VisualInspectionGuide = () => {
 
           {/* Step-by-Step Guide */}
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-yellow-400 mb-6">Step-by-Step Inspection Process</h2>
+            <h2 className="text-2xl font-bold text-elec-yellow mb-6">Step-by-Step Inspection Process</h2>
             
             {inspectionSteps.map((step) => (
-              <Card key={step.step} className="bg-card border-transparent hover:border-yellow-400/30 transition-all duration-300">
+              <Card key={step.step} className="bg-transparent border-transparent hover:border-elec-yellow/30 transition-all duration-300">
                 <CardHeader>
                   <div className="flex items-start gap-4">
-                    <Badge className="bg-yellow-400 text-black font-bold px-3 py-1 text-sm">
+                    <Badge className="bg-elec-yellow text-black font-bold px-3 py-1 text-sm">
                       Step {step.step}
                     </Badge>
                     <div>
@@ -547,14 +547,14 @@ const VisualInspectionGuide = () => {
                 <CardContent className="space-y-6">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div>
-                      <h4 className="font-semibold text-yellow-400 mb-3 flex items-center gap-2">
+                      <h4 className="font-semibold text-elec-yellow mb-3 flex items-center gap-2">
                         <CheckCircle className="h-4 w-4" />
                         What to Do
                       </h4>
                       <ul className="space-y-2">
                         {step.details.map((detail, index) => (
                           <li key={index} className="text-white text-sm flex items-start gap-2">
-                            <span className="text-yellow-400 mt-1">•</span>
+                            <span className="text-elec-yellow mt-1">•</span>
                             {detail}
                           </li>
                         ))}
@@ -583,15 +583,15 @@ const VisualInspectionGuide = () => {
 
           {/* Common Defects */}
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-yellow-400 mb-6">Common Defects and Observation Codes</h2>
+            <h2 className="text-2xl font-bold text-elec-yellow mb-6">Common Defects and Observation Codes</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {commonDefects.map((defect, index) => (
-                <Card key={index} className="bg-card border-transparent">
+                <Card key={index} className="bg-transparent border-transparent">
                   <CardHeader>
                     <CardTitle className="text-lg flex items-center gap-2">
-                      <AlertTriangle className={`h-5 w-5 ${index === 0 ? 'text-red-400' : index === 1 ? 'text-orange-400' : 'text-yellow-400'}`} />
-                      <span className={index === 0 ? 'text-red-400' : index === 1 ? 'text-orange-400' : 'text-yellow-400'}>
+                      <AlertTriangle className={`h-5 w-5 ${index === 0 ? 'text-red-400' : index === 1 ? 'text-orange-400' : 'text-elec-yellow'}`} />
+                      <span className={index === 0 ? 'text-red-400' : index === 1 ? 'text-orange-400' : 'text-elec-yellow'}>
                         {defect.category}
                       </span>
                     </CardTitle>
@@ -600,7 +600,7 @@ const VisualInspectionGuide = () => {
                     <ul className="space-y-2">
                       {defect.examples.map((example, exIndex) => (
                         <li key={exIndex} className="text-white text-sm flex items-start gap-2">
-                          <span className={`mt-1 ${index === 0 ? 'text-red-400' : index === 1 ? 'text-orange-400' : 'text-yellow-400'}`}>•</span>
+                          <span className={`mt-1 ${index === 0 ? 'text-red-400' : index === 1 ? 'text-orange-400' : 'text-elec-yellow'}`}>•</span>
                           {example}
                         </li>
                       ))}
@@ -613,13 +613,13 @@ const VisualInspectionGuide = () => {
 
           {/* Assessor Tips */}
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-yellow-400 mb-6">Professional Tips for Assessment Success</h2>
+            <h2 className="text-2xl font-bold text-elec-yellow mb-6">Professional Tips for Assessment Success</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {assessorTips.map((tip, index) => (
-                <Card key={index} className="bg-gradient-to-br from-elec-gray to-[#323232] border-yellow-400/30">
+                <Card key={index} className="bg-gradient-to-br from-elec-gray to-[#323232] border-elec-yellow/30">
                   <CardContent className="p-4">
-                    <h4 className="font-semibold text-yellow-400 mb-2">{tip.title}</h4>
+                    <h4 className="font-semibold text-elec-yellow mb-2">{tip.title}</h4>
                     <p className="text-white text-sm">{tip.tip}</p>
                   </CardContent>
                 </Card>
@@ -685,16 +685,16 @@ const VisualInspectionGuide = () => {
 
           {/* Regulatory Guidance */}
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-yellow-400 mb-6 flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-elec-yellow mb-6 flex items-center gap-2">
               <BookOpen className="h-6 w-6" />
               Regulatory Framework & Standards
             </h2>
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {regulatoryGuidance.map((reg, index) => (
-                <Card key={index} className="bg-card border-yellow-400/30">
+                <Card key={index} className="bg-transparent border-elec-yellow/30">
                   <CardHeader>
-                    <CardTitle className="text-yellow-400 text-lg flex items-center gap-2">
+                    <CardTitle className="text-elec-yellow text-lg flex items-center gap-2">
                       <Settings className="h-5 w-5" />
                       {reg.regulation}
                     </CardTitle>
@@ -704,7 +704,7 @@ const VisualInspectionGuide = () => {
                     <ul className="space-y-2">
                       {reg.requirements.map((req, reqIndex) => (
                         <li key={reqIndex} className="text-gray-300 text-sm flex items-start gap-2">
-                          <CheckCircle className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                          <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                           {req}
                         </li>
                       ))}
@@ -717,7 +717,7 @@ const VisualInspectionGuide = () => {
 
           {/* Detailed Defect Examples */}
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-yellow-400 mb-6 flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-elec-yellow mb-6 flex items-center gap-2">
               <Lightbulb className="h-6 w-6" />
               Detailed Defect Analysis
             </h2>
@@ -727,14 +727,14 @@ const VisualInspectionGuide = () => {
                 <h3 className="text-xl font-semibold text-white mb-4">Distribution Board Defects</h3>
                 <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
                   {detailedExamples.distributionBoard.map((example, index) => (
-                    <Card key={index} className="bg-card border-transparent">
+                    <Card key={index} className="bg-transparent border-transparent">
                       <CardHeader className="pb-3">
                         <div className="flex items-center justify-between">
                           <CardTitle className="text-white text-base">{example.defect}</CardTitle>
                           <Badge className={`
                             ${example.code === 'C1' ? 'bg-red-600/40 text-red-300' : 
                               example.code === 'C2' ? 'bg-orange-600/40 text-orange-300' : 
-                              'bg-yellow-600/40 text-yellow-300'}
+                              'bg-elec-yellow/40 text-yellow-300'}
                           `}>
                             {example.code}
                           </Badge>
@@ -743,7 +743,7 @@ const VisualInspectionGuide = () => {
                       <CardContent className="space-y-3 pt-0">
                         <p className="text-white text-sm">{example.description}</p>
                         <div className="space-y-2">
-                          <p className="text-xs text-yellow-400 font-semibold">Regulation: {example.regulation}</p>
+                          <p className="text-xs text-elec-yellow font-semibold">Regulation: {example.regulation}</p>
                           <p className="text-xs text-white"><span className="font-semibold">Look for:</span> {example.whatToLook}</p>
                           <p className="text-xs text-orange-400"><span className="font-semibold">Assessor expects:</span> {example.assessorExpects}</p>
                         </div>
@@ -757,14 +757,14 @@ const VisualInspectionGuide = () => {
                 <h3 className="text-xl font-semibold text-white mb-4">Wiring and Cable Defects</h3>
                 <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
                   {detailedExamples.wiring.map((example, index) => (
-                    <Card key={index} className="bg-card border-transparent">
+                    <Card key={index} className="bg-transparent border-transparent">
                       <CardHeader className="pb-3">
                         <div className="flex items-center justify-between">
                           <CardTitle className="text-white text-base">{example.defect}</CardTitle>
                           <Badge className={`
                             ${example.code === 'C1' ? 'bg-red-600/40 text-red-300' : 
                               example.code === 'C2' ? 'bg-orange-600/40 text-orange-300' : 
-                              example.code === 'C3' ? 'bg-yellow-600/40 text-yellow-300' :
+                              example.code === 'C3' ? 'bg-elec-yellow/40 text-yellow-300' :
                               'bg-green-600/40 text-green-300'}
                           `}>
                             {example.code}
@@ -774,7 +774,7 @@ const VisualInspectionGuide = () => {
                       <CardContent className="space-y-3 pt-0">
                         <p className="text-white text-sm">{example.description}</p>
                         <div className="space-y-2">
-                          <p className="text-xs text-yellow-400 font-semibold">Regulation: {example.regulation}</p>
+                          <p className="text-xs text-elec-yellow font-semibold">Regulation: {example.regulation}</p>
                           <p className="text-xs text-white"><span className="font-semibold">Look for:</span> {example.whatToLook}</p>
                           <p className="text-xs text-orange-400"><span className="font-semibold">Assessor expects:</span> {example.assessorExpects}</p>
                         </div>
@@ -788,7 +788,7 @@ const VisualInspectionGuide = () => {
 
           {/* Common Mistakes */}
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-yellow-400 mb-6 flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-elec-yellow mb-6 flex items-center gap-2">
               <XCircle className="h-6 w-6" />
               Common Student Mistakes
             </h2>
@@ -809,8 +809,8 @@ const VisualInspectionGuide = () => {
                       <h4 className="text-green-400 font-semibold text-sm mb-1">Avoid by:</h4>
                       <p className="text-white text-sm">{mistake.avoidBy}</p>
                     </div>
-                    <div className="bg-card/50 p-3 rounded-lg">
-                      <h4 className="text-yellow-400 font-semibold text-sm mb-1">Example:</h4>
+                    <div className="bg-transparent/50 p-3 rounded-lg">
+                      <h4 className="text-elec-yellow font-semibold text-sm mb-1">Example:</h4>
                       <p className="text-white text-sm italic">{mistake.example}</p>
                     </div>
                   </CardContent>
@@ -821,14 +821,14 @@ const VisualInspectionGuide = () => {
 
           {/* Environmental Factors */}
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-yellow-400 mb-6 flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-elec-yellow mb-6 flex items-center gap-2">
               <Building className="h-6 w-6" />
               Environmental Considerations
             </h2>
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {environmentalFactors.map((factor, index) => (
-                <Card key={index} className="bg-card border-transparent">
+                <Card key={index} className="bg-transparent border-transparent">
                   <CardHeader>
                     <CardTitle className="text-cyan-400 text-lg">{factor.factor}</CardTitle>
                     <div className="flex flex-wrap gap-2 mt-2">
@@ -861,14 +861,14 @@ const VisualInspectionGuide = () => {
 
           {/* Practical Scenarios */}
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-yellow-400 mb-6 flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-elec-yellow mb-6 flex items-center gap-2">
               <Users className="h-6 w-6" />
               Assessment Scenarios
             </h2>
             
             <div className="space-y-6">
               {practicalScenarios.map((scenario, index) => (
-                <Card key={index} className="bg-card border-transparent">
+                <Card key={index} className="bg-transparent border-transparent">
                   <CardHeader>
                     <CardTitle className="text-purple-400 text-xl">{scenario.scenario}</CardTitle>
                     <p className="text-white">{scenario.setup}</p>
@@ -913,16 +913,16 @@ const VisualInspectionGuide = () => {
 
           {/* Advanced Techniques */}
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-yellow-400 mb-6 flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-elec-yellow mb-6 flex items-center gap-2">
               <Target className="h-6 w-6" />
               Professional Techniques
             </h2>
             
             <div className="space-y-4">
               {advancedTechniques.map((technique, index) => (
-                <Card key={index} className="bg-gradient-to-r from-elec-gray to-[#323232] border-yellow-400/30">
+                <Card key={index} className="bg-gradient-to-r from-elec-gray to-[#323232] border-elec-yellow/30">
                   <CardHeader>
-                    <CardTitle className="text-yellow-400 text-lg">{technique.technique}</CardTitle>
+                    <CardTitle className="text-elec-yellow text-lg">{technique.technique}</CardTitle>
                     <p className="text-white">{technique.description}</p>
                   </CardHeader>
                   <CardContent className="space-y-4">
@@ -931,7 +931,7 @@ const VisualInspectionGuide = () => {
                       <ul className="space-y-1">
                         {technique.application.map((app, appIndex) => (
                           <li key={appIndex} className="text-white text-sm flex items-start gap-2">
-                            <span className="text-yellow-400 mt-1">•</span>
+                            <span className="text-elec-yellow mt-1">•</span>
                             {app}
                           </li>
                         ))}

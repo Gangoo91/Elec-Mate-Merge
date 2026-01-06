@@ -1,575 +1,398 @@
-import { ArrowLeft, ArrowRight, Zap } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
-import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { evModule1Section1Questions } from '@/data/upskilling/evChargingQuizzes';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
+import useSEO from "@/hooks/useSEO";
+
+const quickCheckQuestions = [
+  {
+    id: "evcharging-m1s1-check1",
+    question: "What percentage of electrical energy do EV motors typically convert into motion?",
+    options: ["50-60%", "70-75%", "85-90%", "95-99%"],
+    correctIndex: 2,
+    explanation: "EV motors are highly efficient, converting approximately 85-90% of electrical energy into motion. Compare this to internal combustion engines which typically convert only 20-30% of fuel energy into motion."
+  },
+  {
+    id: "evcharging-m1s1-check2",
+    question: "Which connector type is the European standard for AC charging?",
+    options: ["Type 1", "Type 2", "CHAdeMO", "Tesla Supercharger"],
+    correctIndex: 1,
+    explanation: "Type 2 (Mennekes) is the European standard for AC charging. It supports both single-phase and three-phase charging and is now mandatory for new public charging points in Europe."
+  },
+  {
+    id: "evcharging-m1s1-check3",
+    question: "What is the maximum RCD rating required by BS 7671 Section 722 for EV charging?",
+    options: ["10mA", "30mA", "100mA", "300mA"],
+    correctIndex: 1,
+    explanation: "BS 7671 Section 722 requires RCD protection with a maximum rating of 30mA for EV charging installations to provide adequate protection against electric shock."
+  }
+];
+
+const faqs = [
+  {
+    question: "Can I plug an EV directly into a standard 13A socket?",
+    answer: "Yes, but charging will be very slow (Level 1 - around 2-3kW). This is only suitable for occasional top-ups. For regular use, a dedicated 7kW charger is recommended as it's significantly faster and safer for continuous use."
+  },
+  {
+    question: "Do all EVs support rapid DC charging?",
+    answer: "No. The vehicle must have the appropriate battery management system and charging port. Many older EVs and some plug-in hybrids have limited or no DC charging capability. Always check the vehicle specifications."
+  },
+  {
+    question: "Is three-phase power required for home EV chargers?",
+    answer: "No. Most domestic chargers use single-phase 230V supply (7kW maximum). Three-phase allows faster charging (up to 22kW) if available, but single-phase is adequate for most overnight charging needs."
+  },
+  {
+    question: "Why does charging slow down above 80% state of charge?",
+    answer: "The battery management system reduces charging speed to protect battery health. Rapid charging generates heat, and lithium-ion batteries can be damaged by overcharging. The 80-100% range uses a slower 'constant voltage' phase."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+  question: "A 7kW home charger connected to a 230V single-phase supply will draw approximately what current?",
+  options: [
+    "16A",
+    "25A",
+    "30A",
+    "32A"
+  ],
+  correctAnswer: 3,
+  explanation: "Using P = V × I, a 7kW charger on 230V draws approximately 30A (7000 ÷ 230 = 30.4A). In practice, these chargers are typically rated at 32A to account for the continuous load requirement."
+  }
+];
 
 const EVChargingModule1Section1 = () => {
-  const quizQuestions = evModule1Section1Questions.map(q => ({
-    id: q.id,
-    question: q.question,
-    options: q.options,
-    correct: q.correctAnswer,
-    explanation: q.explanation
-  }));
+  useSEO({
+    title: "EV Basics and Charging Principles | EV Charging Module 1.1",
+    description: "Understand electric vehicle fundamentals, charging levels, connector types, and safety requirements for EV charging installations."
+  });
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-8 sm:pb-12">
-        <Link to="../ev-charging-module-1">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
           <Button
             variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 1
-          </Button>
-        </Link>
-        
-        <div className="space-y-6">
-          <div>
-            <div className="flex items-center gap-3 sm:gap-4 mb-4">
-              <Zap className="h-6 w-6 sm:h-8 sm:w-8 text-yellow-400 flex-shrink-0" />
-              <div>
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
-                  EV Basics and Charging Principles
-                </h1>
-                <p className="text-lg sm:text-xl text-white">
-                  Understanding electric vehicle charging fundamentals
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-2 sm:gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">
-                Module 1
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-white">
-                Section 1
-              </Badge>
-            </div>
-          </div>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Introduction</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <p>
-                Electric vehicles (EVs) are transforming the transport industry, offering a cleaner alternative to traditional internal combustion engine vehicles. As EV adoption grows, so does the need for skilled professionals who understand EV charging principles.
-              </p>
-              <div className="bg-blue-900/30 p-4 rounded-lg border-l-4 border-yellow-400">
-                <p className="text-blue-200">
-                  <strong className="text-blue-300">Did you know?</strong> The UK government plans to ban the sale of new petrol and diesel cars by 2030, making EV charging infrastructure critical for the future.
-                </p>
-              </div>
-              <p>
-                This section provides a foundation in EV operation and charging — covering battery technology, charging types, safety, and key considerations for installation.
-              </p>
-              <p>
-                Whether working on domestic or commercial sites, understanding EV charging basics is essential for compliance, safety, and efficiency.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Learning Outcomes</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-3">
-              <p className="text-sm text-white mb-4">By the end of this section, you should be able to:</p>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                  <span>Explain the basic operating principles of electric vehicles</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                  <span>Describe the different EV charging levels and connector types</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                  <span>Understand AC and DC charging differences</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                  <span>Identify safety and regulatory requirements for EV charging installations</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                  <span>Recognise factors affecting charging speed and efficiency</span>
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">How EVs Work – The Basics</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <div className="bg-card p-4 rounded-lg mb-4 border-l-4 border-yellow-400">
-                <h4 className="text-yellow-400 font-semibold mb-3">How Electric Vehicles Actually Work</h4>
-              </div>
-              <ul className="space-y-4">
-                <li className="flex items-start gap-3 bg-card p-3 rounded-lg">
-                  <div className="w-3 h-3 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                  <div>
-                    <span className="text-yellow-400 font-semibold">Electric Motor Power:</span>
-                    <span className="ml-2">EVs are powered by electric motors drawing energy from rechargeable lithium-ion battery packs. These motors are incredibly efficient, converting about 85-90% of electrical energy into motion.</span>
-                  </div>
-                </li>
-                <li className="flex items-start gap-3 bg-card p-3 rounded-lg">
-                  <div className="w-3 h-3 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                  <div>
-                    <span className="text-yellow-400 font-semibold">Motor Controller:</span>
-                    <span className="ml-2">The motor controller manages power delivery based on driver input, acting like the 'brain' that determines how much power flows from the battery to the motor.</span>
-                  </div>
-                </li>
-                <li className="flex items-start gap-3 bg-card p-3 rounded-lg">
-                  <div className="w-3 h-3 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                  <div>
-                    <span className="text-yellow-400 font-semibold">Regenerative Braking:</span>
-                    <span className="ml-2">During deceleration, the motor works in reverse as a generator, converting kinetic energy back to electricity and returning it to the battery - extending range by up to 20%.</span>
-                  </div>
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Charging Levels Explained</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                <div className="bg-card p-4 rounded-lg border-l-4 border-red-500">
-                  <h4 className="text-red-300 font-bold mb-3 text-lg">Level 1 (Slow)</h4>
-                  <div className="space-y-2 text-sm">
-                     <div className="flex justify-between">
-                       <span className="text-white">Supply:</span>
-                       <span className="text-white">230V AC single-phase</span>
-                     </div>
-                     <div className="flex justify-between">
-                       <span className="text-white">Current:</span>
-                       <span className="text-white">10–16A</span>
-                     </div>
-                     <div className="flex justify-between">
-                       <span className="text-white">Time:</span>
-                       <span className="text-white">6–12 hours</span>
-                     </div>
-                     <div className="flex justify-between">
-                       <span className="text-white">Use case:</span>
-                       <span className="text-white">Overnight home charging</span>
-                     </div>
-                  </div>
-                </div>
-                
-                <div className="bg-card p-4 rounded-lg border-l-4 border-yellow-400">
-                  <h4 className="text-yellow-300 font-bold mb-3 text-lg">Level 2 (Fast)</h4>
-                  <div className="space-y-2 text-sm">
-                     <div className="flex justify-between">
-                       <span className="text-white">Supply:</span>
-                       <span className="text-white">230V/400V AC</span>
-                     </div>
-                     <div className="flex justify-between">
-                       <span className="text-white">Current:</span>
-                       <span className="text-white">16–32A</span>
-                     </div>
-                     <div className="flex justify-between">
-                       <span className="text-white">Time:</span>
-                       <span className="text-white">3–6 hours</span>
-                     </div>
-                     <div className="flex justify-between">
-                       <span className="text-white">Use case:</span>
-                       <span className="text-white">Home & workplace</span>
-                     </div>
-                  </div>
-                </div>
-                
-                <div className="bg-card p-4 rounded-lg border-l-4 border-green-500">
-                  <h4 className="text-green-300 font-bold mb-3 text-lg">Level 3 (Rapid)</h4>
-                  <div className="space-y-2 text-sm">
-                     <div className="flex justify-between">
-                       <span className="text-white">Supply:</span>
-                       <span className="text-white">DC direct current</span>
-                     </div>
-                     <div className="flex justify-between">
-                       <span className="text-white">Power:</span>
-                       <span className="text-white">50–350kW</span>
-                     </div>
-                     <div className="flex justify-between">
-                       <span className="text-white">Time:</span>
-                       <span className="text-white">20–60 min</span>
-                     </div>
-                     <div className="flex justify-between">
-                       <span className="text-white">Use case:</span>
-                       <span className="text-white">Motorway services</span>
-                     </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-blue-900/30 p-4 rounded-lg border border-yellow-400">
-                <h5 className="text-blue-300 font-semibold mb-2">Professional Tip:</h5>
-                <p className="text-blue-200 text-sm">
-                  Most domestic installations use Level 2 charging as it provides the best balance of charging speed and installation cost. Level 1 is too slow for daily use, while Level 3 requires expensive infrastructure.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Connector Types - Know Your Plugs</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="bg-card p-4 rounded-lg border border-gray-600">
-                  <span className="text-yellow-400 font-bold text-lg">Type 1</span>
-                   <p className="text-white text-sm mt-2">Single-phase AC connector, mainly found on older EV models (pre-2018). Becoming less common in the UK market.</p>
-                   <div className="text-xs text-white mt-2 bg-gray-800 p-2 rounded">
-                     <strong>Common on:</strong> Older Nissan Leaf, some imports
-                   </div>
-                </div>
-                <div className="bg-card p-4 rounded-lg border border-gray-600">
-                  <span className="text-yellow-400 font-bold text-lg">Type 2</span>
-                   <p className="text-white text-sm mt-2">The European standard! Supports both single and three-phase AC charging. Most versatile connector.</p>
-                   <div className="text-xs text-white mt-2 bg-gray-800 p-2 rounded">
-                     <strong>Common on:</strong> BMW, Audi, Mercedes, Tesla Model S/X
-                   </div>
-                </div>
-                <div className="bg-card p-4 rounded-lg border border-gray-600">
-                  <span className="text-yellow-400 font-bold text-lg">CHAdeMO</span>
-                   <p className="text-white text-sm mt-2">Japanese rapid DC charging standard. Reliable but being phased out in favour of CCS.</p>
-                   <div className="text-xs text-white mt-2 bg-gray-800 p-2 rounded">
-                     <strong>Common on:</strong> Nissan Leaf, Mitsubishi Outlander
-                   </div>
-                </div>
-                <div className="bg-card p-4 rounded-lg border border-gray-600">
-                  <span className="text-yellow-400 font-bold text-lg">CCS</span>
-                   <p className="text-white text-sm mt-2">Combined Charging System - the future! Handles both AC and DC in one connector. European standard.</p>
-                   <div className="text-xs text-white mt-2 bg-gray-800 p-2 rounded">
-                     <strong>Common on:</strong> BMW i3, Volkswagen ID series, most new EVs
-                   </div>
-                </div>
-              </div>
-              <div className="bg-card p-4 rounded-lg border border-gray-600">
-                <span className="text-yellow-400 font-bold text-lg">Tesla Supercharger</span>
-                 <p className="text-white text-sm mt-2">Proprietary high-speed DC network. Tesla vehicles only (though Tesla is opening up to other brands with adapters).</p>
-                 <div className="text-xs text-white mt-2 bg-gray-800 p-2 rounded">
-                   <strong>Note:</strong> Tesla is transitioning to CCS in Europe
-                 </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">AC vs DC Charging - Understanding the Difference</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-                <div className="bg-card p-4 sm:p-6 rounded-lg border border-yellow-400">
-                  <h4 className="text-blue-300 font-bold mb-4 text-lg sm:text-xl">AC Charging (Alternating Current)</h4>
-                  <ul className="space-y-3 text-sm">
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 rounded-full bg-blue-400 mt-2"></div>
-                      <span>Electricity comes from the grid as AC</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 rounded-full bg-blue-400 mt-2"></div>
-                      <span>Vehicle's onboard charger converts AC to DC</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 rounded-full bg-blue-400 mt-2"></div>
-                      <span>Charging speed limited by onboard charger capacity</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 rounded-full bg-blue-400 mt-2"></div>
-                      <span>Cheaper infrastructure, perfect for overnight charging</span>
-                    </li>
-                  </ul>
-                  <div className="mt-4 p-3 bg-blue-900/30 rounded text-blue-200 text-xs">
-                    <strong>Best for:</strong> Home, workplace, and destination charging
-                  </div>
-                </div>
-                <div className="bg-card p-4 sm:p-6 rounded-lg border border-green-500">
-                  <h4 className="text-green-300 font-bold mb-4 text-lg sm:text-xl">DC Charging (Direct Current)</h4>
-                  <ul className="space-y-3 text-sm">
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 rounded-full bg-green-400 mt-2"></div>
-                      <span>Charger converts AC to DC before reaching vehicle</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 rounded-full bg-green-400 mt-2"></div>
-                      <span>Bypasses onboard charger completely</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 rounded-full bg-green-400 mt-2"></div>
-                      <span>Much higher power delivery possible</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 rounded-full bg-green-400 mt-2"></div>
-                      <span>Expensive infrastructure, requires dedicated equipment</span>
-                    </li>
-                  </ul>
-                  <div className="mt-4 p-3 bg-green-900/30 rounded text-green-200 text-xs">
-                    <strong>Best for:</strong> Rapid charging during long journeys
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-yellow-900/30 p-4 rounded-lg border border-yellow-400">
-                <h5 className="text-yellow-300 font-semibold mb-2">Key Installation Insight:</h5>
-                <p className="text-yellow-200 text-sm">
-                  AC charging installations are much simpler and cheaper because they use standard electrical supply. DC charging requires specialized power electronics and costs £20,000-£150,000+ per unit, making it unsuitable for most domestic applications.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Factors Affecting Charging Speed</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-card p-4 rounded-lg border border-gray-600">
-                  <h5 className="text-yellow-400 font-semibold mb-3">Infrastructure Factors</h5>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                      <span><strong>Supply voltage:</strong> Higher voltage = faster charging (400V three-phase vs 230V single-phase)</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                      <span><strong>Current capacity:</strong> Limited by cables, MCBs, and supply capacity</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                      <span><strong>Charger rating:</strong> A 7kW charger can't exceed 7kW regardless of supply</span>
-                    </li>
-                  </ul>
-                </div>
-                
-                <div className="bg-card p-4 rounded-lg border border-gray-600">
-                  <h5 className="text-yellow-400 font-semibold mb-3">Vehicle Factors</h5>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                      <span><strong>Battery capacity:</strong> Larger batteries take longer to charge to 100%</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                      <span><strong>Onboard charger:</strong> Many vehicles limited to 7kW even on 22kW supply</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                      <span><strong>Battery management:</strong> System protects battery health by controlling charge rate</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="bg-card p-4 rounded-lg border border-gray-600">
-                <h5 className="text-yellow-400 font-semibold mb-3">Environmental Factors</h5>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <strong className="text-white">Temperature Effects:</strong>
-                    <ul className="mt-2 space-y-1">
-                      <li>• Cold weather (below 0°C): 20-40% slower charging</li>
-                      <li>• Hot weather (above 35°C): Battery cooling reduces charge rate</li>
-                      <li>• Optimal range: 15-25°C for maximum charging speed</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <strong className="text-white">State of Charge (SoC):</strong>
-                    <ul className="mt-2 space-y-1">
-                      <li>• 0-50%: Maximum charging speed</li>
-                      <li>• 50-80%: Gradual speed reduction</li>
-                      <li>• 80-100%: Significantly slower for battery protection</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-green-900/30 p-4 rounded-lg border border-green-500">
-                <h5 className="text-green-300 font-semibold mb-2">Real-World Example:</h5>
-                <p className="text-green-200 text-sm">
-                  A BMW i3 with a 7kW onboard charger will charge at 7kW maximum, even when connected to a 22kW public charger. The charging speed is always limited by the weakest link in the chain!
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Safety and Compliance - Critical Requirements</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <div className="bg-red-900/30 p-4 rounded-lg border border-red-500 mb-4">
-                <h5 className="text-red-300 font-bold mb-2">Legal Requirement</h5>
-                <p className="text-red-200 text-sm">
-                  All EV charging installations MUST comply with BS 7671 Section 722. Non-compliance can result in insurance invalidation, safety hazards, and legal liability.
-                </p>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-card p-4 rounded-lg border border-gray-600">
-                  <h5 className="text-yellow-400 font-semibold mb-3">Protection Requirements</h5>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2"></div>
-                      <span><strong>RCD Protection:</strong> Type A (minimum) or Type B (DC fault protection)</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2"></div>
-                      <span><strong>MCB Rating:</strong> Correctly sized for continuous load (125% rule)</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2"></div>
-                      <span><strong>Cable Rating:</strong> Must handle continuous current + ambient derating</span>
-                    </li>
-                  </ul>
-                </div>
-                
-                <div className="bg-card p-4 rounded-lg border border-gray-600">
-                  <h5 className="text-yellow-400 font-semibold mb-3">Earthing Considerations</h5>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2"></div>
-                      <span><strong>PME Restrictions:</strong> Earth electrode may be required for outdoor installations</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2"></div>
-                      <span><strong>Open PEN Detection:</strong> Built-in protection on most modern chargers</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2"></div>
-                      <span><strong>Equipotential Bonding:</strong> All metalwork must be properly bonded</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="bg-card p-4 rounded-lg border border-gray-600">
-                <h5 className="text-yellow-400 font-semibold mb-3">Installation Standards</h5>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                  <ul className="space-y-2">
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2"></div>
-                      <span><strong>IP Rating:</strong> Minimum IP54 for outdoor units</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2"></div>
-                      <span><strong>Cable Management:</strong> SWA cable or proper conduit systems</span>
-                    </li>
-                  </ul>
-                  <ul className="space-y-2">
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2"></div>
-                      <span><strong>Isolation:</strong> Local isolator within 2m of charge point</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2"></div>
-                      <span><strong>Testing:</strong> Full electrical installation testing required</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Real-World Case Study</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white">
-              <div className="bg-red-900/30 p-6 rounded-lg border-l-4 border-red-500">
-                <div className="flex items-start gap-4">
-                  <div className="bg-red-600/30 p-3 rounded-full">
-                    <span className="text-2xl">⚠️</span>
-                  </div>
-                  <div>
-                    <h4 className="text-red-300 font-bold text-lg mb-3">Installation Failure Case Study</h4>
-                    <div className="space-y-3 text-sm">
-                      <p className="text-red-200">
-                        <strong>The Problem:</strong> A residential 7kW EV charger installation failed its inspection because the installer didn't address PME earthing requirements for the outdoor charging unit.
-                      </p>
-                      <p className="text-orange-200">
-                        <strong>The Issue:</strong> BS 7671 requires special earthing arrangements for EV charging points, particularly where PME (Protective Multiple Earthing) supplies are used with outdoor equipment.
-                      </p>
-                      <p className="text-green-200">
-                        <strong>The Solution:</strong> The charger was replaced with a model featuring built-in open PEN fault detection, eliminating the need for a separate earth electrode while ensuring full compliance with BS 7671.
-                      </p>
-                      <div className="bg-yellow-900/30 p-3 rounded mt-4 border border-yellow-600">
-                        <p className="text-yellow-200">
-                          <strong>Key Lesson:</strong> Always check PME earthing requirements before installation. Modern charge points with integrated protection can simplify compliance significantly.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Frequently Asked Questions</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <div>
-                <h4 className="text-yellow-400 font-semibold mb-2">Q: Can I plug an EV directly into a standard 13 A socket?</h4>
-                <p>A: Yes, but charging will be slow (Level 1) and may not be ideal for long-term use.</p>
-              </div>
-              <div>
-                <h4 className="text-yellow-400 font-semibold mb-2">Q: Do all EVs support rapid charging?</h4>
-                <p>A: No — the vehicle must have the appropriate battery management system and charging port.</p>
-              </div>
-              <div>
-                <h4 className="text-yellow-400 font-semibold mb-2">Q: Is three-phase power required for home EV chargers?</h4>
-                <p>A: No — most domestic chargers use single-phase, but three-phase allows faster charging if available.</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white">
-              <p>
-                EV basics and charging principles cover the key concepts needed to safely and efficiently charge electric vehicles. Understanding charging levels, connector types, and safety requirements ensures installations meet both user needs and regulatory standards.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Test Your Knowledge</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <SingleQuestionQuiz 
-                questions={quizQuestions}
-                title="EV Basics and Charging Principles Quiz"
-              />
-            </CardContent>
-          </Card>
-
-          <div className="flex justify-between">
-            <div></div>
-            <Link to="../ev-charging-module-1-section-2">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
+            <Link to="../ev-charging-module-1">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 1
             </Link>
-          </div>
+          </Button>
         </div>
       </div>
+
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Page Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 1.1</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            EV Basics and Charging Principles
+          </h1>
+          <p className="text-white/80">
+            Understanding electric vehicle charging fundamentals
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Level 1:</strong> 2-3kW slow (13A socket) - emergency only</li>
+              <li><strong>Level 2:</strong> 7-22kW fast (dedicated charger) - typical</li>
+              <li><strong>Level 3:</strong> 50-350kW rapid DC - motorways</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Type 2 connectors, 7kW wallboxes, CCS for rapid</li>
+              <li><strong>Use:</strong> BS 7671 Section 722 for all EV installations</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Basic operating principles of EVs",
+              "Charging levels and connector types",
+              "AC vs DC charging differences",
+              "Safety and regulatory requirements",
+              "Factors affecting charging speed",
+              "BS 7671 Section 722 requirements"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            How Electric Vehicles Work
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Electric vehicles are powered by electric motors drawing energy from rechargeable
+              lithium-ion battery packs. These motors are highly efficient, converting 85-90%
+              of electrical energy into motion.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key EV Components</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Battery pack:</strong> Stores electrical energy (40-100kWh typical)</li>
+                  <li><strong>Motor:</strong> Converts electrical energy to motion</li>
+                  <li><strong>Controller:</strong> Manages power delivery from battery to motor</li>
+                  <li><strong>Onboard charger:</strong> Converts AC to DC for battery</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Energy Recovery</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Regenerative braking:</strong> Motor works as generator</li>
+                  <li><strong>Kinetic energy:</strong> Converted back to electricity</li>
+                  <li><strong>Range extension:</strong> Up to 20% additional range</li>
+                  <li><strong>Brake wear:</strong> Significantly reduced</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Charging Levels Explained
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              EV charging is categorised into three levels based on power delivery.
+              Understanding these levels helps determine appropriate solutions for each application.
+            </p>
+
+            <div className="grid sm:grid-cols-3 gap-4 my-6">
+              <div>
+                <p className="text-sm font-medium text-red-400/80 mb-2">Level 1 (Slow)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Supply:</strong> 230V AC single-phase</li>
+                  <li><strong>Current:</strong> 10-16A</li>
+                  <li><strong>Power:</strong> 2-3kW</li>
+                  <li><strong>Time:</strong> 8-12+ hours</li>
+                  <li><strong>Use:</strong> Emergency only</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Level 2 (Fast)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Supply:</strong> 230V/400V AC</li>
+                  <li><strong>Current:</strong> 16-32A</li>
+                  <li><strong>Power:</strong> 7-22kW</li>
+                  <li><strong>Time:</strong> 3-6 hours</li>
+                  <li><strong>Use:</strong> Home/workplace</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-green-400/80 mb-2">Level 3 (Rapid)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Supply:</strong> DC direct</li>
+                  <li><strong>Power:</strong> 50-350kW</li>
+                  <li><strong>Time:</strong> 20-60 min</li>
+                  <li><strong>Use:</strong> Motorway services</li>
+                  <li><strong>Cost:</strong> £20k-£150k+</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 3 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Connector Types
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Several connector standards exist for EV charging. Type 2 is the European standard
+              for AC, while CCS (Combined Charging System) handles both AC and DC in one connector.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">AC Connectors</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Type 1:</strong> Older standard, mainly pre-2018 vehicles</li>
+                  <li><strong>Type 2:</strong> European standard, single/three-phase</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">DC Connectors</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>CHAdeMO:</strong> Japanese standard, being phased out</li>
+                  <li><strong>CCS:</strong> Combined AC/DC, European standard</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Section 4 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Safety and Compliance
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              All EV charging installations must comply with BS 7671 Section 722. Non-compliance
+              can result in insurance invalidation, safety hazards, and legal liability.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Protection Requirements</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>RCD:</strong> Type A (minimum) or Type B for DC fault detection</li>
+                  <li><strong>MCB:</strong> Correctly sized (125% continuous load)</li>
+                  <li><strong>Cable:</strong> Sized for continuous current + derating</li>
+                  <li><strong>Isolation:</strong> Local isolator within 2m of charger</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Earthing Considerations</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>PME:</strong> Special measures for outdoor installations</li>
+                  <li><strong>Open PEN:</strong> Detection on most modern chargers</li>
+                  <li><strong>Bonding:</strong> All metalwork properly bonded</li>
+                  <li><strong>IP rating:</strong> Minimum IP54 for outdoor units</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Tips</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Most domestic installations use Level 2 (7kW) single-phase</li>
+                <li>Charging speed limited by weakest link (charger, supply, or vehicle)</li>
+                <li>Check supply capacity before sizing the installation</li>
+                <li>Consider future expansion (second vehicle, higher power charger)</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Ignoring PME requirements:</strong> — Always assess earthing arrangements</li>
+                <li><strong>Undersized cables:</strong> — Account for continuous load and derating</li>
+                <li><strong>No local isolation:</strong> — Required within 2m of charge point</li>
+                <li><strong>Missing RCD protection:</strong> — 30mA Type A minimum required</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quick Reference */}
+        <div className="mt-6 p-5 rounded-lg bg-transparent">
+          <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+            <div>
+              <p className="font-medium text-white mb-1">Charging Levels</p>
+              <ul className="space-y-0.5">
+                <li>Level 1: 2-3kW (slow)</li>
+                <li>Level 2: 7-22kW (fast)</li>
+                <li>Level 3: 50-350kW (rapid DC)</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-medium text-white mb-1">Key Standards</p>
+              <ul className="space-y-0.5">
+                <li>BS 7671 Section 722</li>
+                <li>RCD: 30mA Type A minimum</li>
+                <li>IP54 minimum outdoor</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Quiz Section */}
+        <section className="mb-10 mt-12">
+          <SingleQuestionQuiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-1">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module
+            </Link>
+          </Button>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-1-section-2">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

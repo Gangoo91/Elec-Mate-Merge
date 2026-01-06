@@ -81,13 +81,13 @@ const RingFinalContinuityGuide = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="module-8/section-3">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Practical Tests
@@ -96,7 +96,7 @@ const RingFinalContinuityGuide = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <RotateCcw className="h-8 w-8 text-yellow-400" />
+            <RotateCcw className="h-8 w-8 text-elec-yellow" />
             <Badge 
               variant="secondary" 
               className="bg-green-600/40 text-green-300 hover:bg-green-600/50 font-semibold text-sm px-3 py-1 border-0"
@@ -118,10 +118,10 @@ const RingFinalContinuityGuide = () => {
         <div className="max-w-6xl mx-auto space-y-8">
 
           {/* Why We Test Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <BookOpen className="h-6 w-6 text-yellow-400" />
+                <BookOpen className="h-6 w-6 text-elec-yellow" />
                 Why We Test Ring Final Circuits
               </CardTitle>
             </CardHeader>
@@ -130,9 +130,9 @@ const RingFinalContinuityGuide = () => {
                 {whyWeTest.map((reason, index) => {
                   const IconComponent = reason.icon;
                   return (
-                    <div key={index} className="bg-card/80 p-4 rounded-lg">
+                    <div key={index} className="bg-transparent/80 p-4 rounded-lg">
                       <div className="flex items-center gap-3 mb-2">
-                        <IconComponent className="h-5 w-5 text-yellow-400" />
+                        <IconComponent className="h-5 w-5 text-elec-yellow" />
                         <h3 className="text-white font-semibold">{reason.title}</h3>
                       </div>
                       <p className="text-white text-sm">{reason.description}</p>
@@ -144,21 +144,21 @@ const RingFinalContinuityGuide = () => {
           </Card>
 
           {/* Test Methods Overview */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Target className="h-6 w-6 text-yellow-400" />
+                <Target className="h-6 w-6 text-elec-yellow" />
                 Ring Final Test Methods
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {testMethods.map((method, index) => (
-                <div key={index} className="bg-card/80 p-4 rounded-lg">
+                <div key={index} className="bg-transparent/80 p-4 rounded-lg">
                   <h3 className="text-white font-semibold mb-2">{method.method}</h3>
                   <p className="text-white text-sm mb-3">{method.description}</p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div>
-                      <p className="text-yellow-400 font-medium text-sm">When to use:</p>
+                      <p className="text-elec-yellow font-medium text-sm">When to use:</p>
                       <p className="text-white text-xs">{method.when}</p>
                     </div>
                     <div>
@@ -172,24 +172,24 @@ const RingFinalContinuityGuide = () => {
           </Card>
 
           {/* Hands-On Testing Guide */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Settings className="h-6 w-6 text-yellow-400" />
+                <Settings className="h-6 w-6 text-elec-yellow" />
                 Step-by-Step: How to Test Ring Finals
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               
               {/* Test 1: End-to-End */}
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
-                  <span className="bg-yellow-400 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">1</span>
+                  <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">1</span>
                   End-to-End Continuity Test
                 </h3>
                 
                 <div className="space-y-4">
-                  <div className="bg-yellow-400/20 p-4 rounded border-l-4 border-yellow-400">
+                  <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
                     <p className="text-blue-200 text-sm">
                       <strong>Purpose:</strong> Verify each conductor forms a complete ring with no breaks
                     </p>
@@ -221,17 +221,17 @@ const RingFinalContinuityGuide = () => {
 
                   <div className="space-y-3">
                     <h4 className="text-white font-medium">Test Sequence:</h4>
-                    <div className="bg-card p-4 rounded space-y-2">
-                      <p className="text-yellow-400 font-mono text-sm">1. Test L1 to L2: Connect leads, record reading (should be ~0.15Ω)</p>
-                      <p className="text-yellow-400 font-mono text-sm">2. Test N1 to N2: Connect leads, record reading (should be ~0.15Ω)</p>
-                      <p className="text-yellow-400 font-mono text-sm">3. Test E1 to E2: Connect leads, record reading (should be ~0.25Ω)</p>
+                    <div className="bg-transparent p-4 rounded space-y-2">
+                      <p className="text-elec-yellow font-mono text-sm">1. Test L1 to L2: Connect leads, record reading (should be ~0.15Ω)</p>
+                      <p className="text-elec-yellow font-mono text-sm">2. Test N1 to N2: Connect leads, record reading (should be ~0.15Ω)</p>
+                      <p className="text-elec-yellow font-mono text-sm">3. Test E1 to E2: Connect leads, record reading (should be ~0.25Ω)</p>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Test 2: Cross-Connection */}
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
                   <span className="bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">2</span>
                   Cross-Connection Test
@@ -246,12 +246,12 @@ const RingFinalContinuityGuide = () => {
 
                   <div className="space-y-3">
                     <h4 className="text-white font-medium">What to Test:</h4>
-                    <div className="bg-card p-4 rounded space-y-2">
-                      <p className="text-yellow-400 font-mono text-sm">L1 to N1: Should read ∞ (open circuit)</p>
-                      <p className="text-yellow-400 font-mono text-sm">L1 to N2: Should read ∞ (open circuit)</p>
-                      <p className="text-yellow-400 font-mono text-sm">L2 to N1: Should read ∞ (open circuit)</p>
-                      <p className="text-yellow-400 font-mono text-sm">L2 to N2: Should read ∞ (open circuit)</p>
-                      <p className="text-yellow-400 font-mono text-sm">All conductor to CPC tests: Should read ∞</p>
+                    <div className="bg-transparent p-4 rounded space-y-2">
+                      <p className="text-elec-yellow font-mono text-sm">L1 to N1: Should read ∞ (open circuit)</p>
+                      <p className="text-elec-yellow font-mono text-sm">L1 to N2: Should read ∞ (open circuit)</p>
+                      <p className="text-elec-yellow font-mono text-sm">L2 to N1: Should read ∞ (open circuit)</p>
+                      <p className="text-elec-yellow font-mono text-sm">L2 to N2: Should read ∞ (open circuit)</p>
+                      <p className="text-elec-yellow font-mono text-sm">All conductor to CPC tests: Should read ∞</p>
                     </div>
                   </div>
 
@@ -264,7 +264,7 @@ const RingFinalContinuityGuide = () => {
               </div>
 
               {/* Test 3: R1 + R2 */}
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
                   <span className="bg-purple-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">3</span>
                   R1 + R2 Test
@@ -306,10 +306,10 @@ const RingFinalContinuityGuide = () => {
           </Card>
 
           {/* Expected Results */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Activity className="h-6 w-6 text-yellow-400" />
+                <Activity className="h-6 w-6 text-elec-yellow" />
                 Expected Results & Interpretation
               </CardTitle>
             </CardHeader>
@@ -329,10 +329,10 @@ const RingFinalContinuityGuide = () => {
                       <tr key={index} className="border-b border-gray-700">
                         <td className="text-white p-3 font-medium">{result.test}</td>
                         <td className="text-white p-3">{result.range}</td>
-                        <td className={`p-3 ${result.status === 'good' ? 'text-green-400' : result.status === 'critical' ? 'text-red-400' : 'text-yellow-400'}`}>
+                        <td className={`p-3 ${result.status === 'good' ? 'text-green-400' : result.status === 'critical' ? 'text-red-400' : 'text-elec-yellow'}`}>
                           {result.cable25}
                         </td>
-                        <td className={`p-3 ${result.status === 'good' ? 'text-green-400' : result.status === 'critical' ? 'text-red-400' : 'text-yellow-400'}`}>
+                        <td className={`p-3 ${result.status === 'good' ? 'text-green-400' : result.status === 'critical' ? 'text-red-400' : 'text-elec-yellow'}`}>
                           {result.cable4}
                         </td>
                       </tr>
@@ -351,8 +351,8 @@ const RingFinalContinuityGuide = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-yellow-600/20 p-4 rounded border border-yellow-600/30">
-                  <h4 className="text-yellow-400 font-semibold mb-2">Check Further</h4>
+                <div className="bg-elec-yellow/20 p-4 rounded border border-elec-yellow/30">
+                  <h4 className="text-elec-yellow font-semibold mb-2">Check Further</h4>
                   <ul className="text-yellow-200 text-sm space-y-1">
                     <li>• Readings higher than expected</li>
                     <li>• Inconsistent results between tests</li>
@@ -373,16 +373,16 @@ const RingFinalContinuityGuide = () => {
           </Card>
 
           {/* Common Problems */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <AlertTriangle className="h-6 w-6 text-yellow-400" />
+                <AlertTriangle className="h-6 w-6 text-elec-yellow" />
                 Common Problems & Solutions
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-4">
-                <div className="bg-card/80 p-4 rounded-lg">
+                <div className="bg-transparent/80 p-4 rounded-lg">
                   <h3 className="text-red-400 font-semibold mb-3">Problem: Open Circuit on End-to-End Test</h3>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div>
@@ -406,7 +406,7 @@ const RingFinalContinuityGuide = () => {
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-4 rounded-lg">
+                <div className="bg-transparent/80 p-4 rounded-lg">
                   <h3 className="text-red-400 font-semibold mb-3">Problem: Low Reading on Cross-Connection</h3>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div>
@@ -430,7 +430,7 @@ const RingFinalContinuityGuide = () => {
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-4 rounded-lg">
+                <div className="bg-transparent/80 p-4 rounded-lg">
                   <h3 className="text-red-400 font-semibold mb-3">Problem: High R1 + R2 Reading</h3>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div>
@@ -458,17 +458,17 @@ const RingFinalContinuityGuide = () => {
           </Card>
 
           {/* Exam Tips */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Eye className="h-6 w-6 text-yellow-400" />
+                <Eye className="h-6 w-6 text-elec-yellow" />
                 Practical Exam Tips
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h3 className="text-yellow-400 font-semibold mb-3">Before You Start</h3>
+                <div className="bg-transparent/80 p-4 rounded-lg">
+                  <h3 className="text-elec-yellow font-semibold mb-3">Before You Start</h3>
                   <ul className="text-white text-sm space-y-2">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
@@ -489,8 +489,8 @@ const RingFinalContinuityGuide = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h3 className="text-yellow-400 font-semibold mb-3">During Testing</h3>
+                <div className="bg-transparent/80 p-4 rounded-lg">
+                  <h3 className="text-elec-yellow font-semibold mb-3">During Testing</h3>
                   <ul className="text-white text-sm space-y-2">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
@@ -526,17 +526,17 @@ const RingFinalContinuityGuide = () => {
           </Card>
 
           {/* Advanced Practical Techniques */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Target className="h-6 w-6 text-yellow-400" />
+                <Target className="h-6 w-6 text-elec-yellow" />
                 Advanced Ring Circuit Testing Techniques
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               
               {/* Advanced Method 1 */}
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
                   <span className="bg-purple-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">1</span>
                   The "Socket-by-Socket" Method
@@ -552,8 +552,8 @@ const RingFinalContinuityGuide = () => {
                   <div className="space-y-3">
                     <h4 className="text-white font-medium">Step-by-Step Process:</h4>
                     <div className="space-y-3">
-                      <div className="bg-card p-3 rounded">
-                        <p className="text-yellow-400 font-medium text-sm">Stage 1: Map the Ring</p>
+                      <div className="bg-transparent p-3 rounded">
+                        <p className="text-elec-yellow font-medium text-sm">Stage 1: Map the Ring</p>
                         <ul className="text-white text-sm mt-2 space-y-1">
                           <li>• Start with all sockets disconnected from ring</li>
                           <li>• Test end-to-end continuity from CU</li>
@@ -563,8 +563,8 @@ const RingFinalContinuityGuide = () => {
                         </ul>
                       </div>
                       
-                      <div className="bg-card p-3 rounded">
-                        <p className="text-yellow-400 font-medium text-sm">Stage 2: Identify the Pattern</p>
+                      <div className="bg-transparent p-3 rounded">
+                        <p className="text-elec-yellow font-medium text-sm">Stage 2: Identify the Pattern</p>
                         <ul className="text-white text-sm mt-2 space-y-1">
                           <li>• Resistance should decrease as you complete the ring</li>
                           <li>• Any sudden increases indicate problems</li>
@@ -573,8 +573,8 @@ const RingFinalContinuityGuide = () => {
                         </ul>
                       </div>
                       
-                      <div className="bg-card p-3 rounded">
-                        <p className="text-yellow-400 font-medium text-sm">Stage 3: Verification Test</p>
+                      <div className="bg-transparent p-3 rounded">
+                        <p className="text-elec-yellow font-medium text-sm">Stage 3: Verification Test</p>
                         <ul className="text-white text-sm mt-2 space-y-1">
                           <li>• Remove mid-point socket temporarily</li>
                           <li>• Reading should approximately double</li>
@@ -595,7 +595,7 @@ const RingFinalContinuityGuide = () => {
               </div>
 
               {/* Advanced Method 2 */}
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
                   <span className="bg-orange-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">2</span>
                   Load Balance Verification Test
@@ -632,7 +632,7 @@ const RingFinalContinuityGuide = () => {
                     </div>
                   </div>
 
-                  <div className="bg-yellow-600/20 p-4 rounded border-l-4 border-yellow-400">
+                  <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
                     <p className="text-yellow-200 text-sm">
                       <strong>Practical Note:</strong> This test requires a variable load (like a portable heater) and clamp meter. 
                       Not always practical on site, but valuable for commissioning critical installations.
@@ -642,7 +642,7 @@ const RingFinalContinuityGuide = () => {
               </div>
 
               {/* Advanced Method 3 */}
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
                   <span className="bg-teal-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">3</span>
                   Temperature Rise Testing
@@ -657,7 +657,7 @@ const RingFinalContinuityGuide = () => {
 
                   <div className="space-y-3">
                     <h4 className="text-white font-medium">Testing Procedure:</h4>
-                    <div className="bg-card p-4 rounded space-y-2">
+                    <div className="bg-transparent p-4 rounded space-y-2">
                       <p className="text-white text-sm"><strong>1. Baseline Measurements:</strong></p>
                       <ul className="text-white text-sm ml-4 space-y-1">
                         <li>• Record ambient temperature</li>
@@ -689,17 +689,17 @@ const RingFinalContinuityGuide = () => {
           </Card>
 
           {/* Real-World Fault Scenarios */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <AlertTriangle className="h-6 w-6 text-yellow-400" />
+                <AlertTriangle className="h-6 w-6 text-elec-yellow" />
                 Real-World Fault Investigation Scenarios
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               
               {/* Fault Scenario 1 */}
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
                   <span className="bg-red-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">1</span>
                   Case Study: The "Mystery" Open Circuit
@@ -715,8 +715,8 @@ const RingFinalContinuityGuide = () => {
                   <div className="space-y-3">
                     <h4 className="text-white font-medium">Investigation Process:</h4>
                     <div className="space-y-3">
-                      <div className="bg-card p-3 rounded">
-                        <p className="text-yellow-400 font-medium text-sm">Initial Observations</p>
+                      <div className="bg-transparent p-3 rounded">
+                        <p className="text-elec-yellow font-medium text-sm">Initial Observations</p>
                         <ul className="text-white text-sm mt-2 space-y-1">
                           <li>• All sockets visually wired correctly</li>
                           <li>• Neutral and CPC show normal continuity</li>
@@ -725,8 +725,8 @@ const RingFinalContinuityGuide = () => {
                         </ul>
                       </div>
                       
-                      <div className="bg-card p-3 rounded">
-                        <p className="text-yellow-400 font-medium text-sm">Systematic Testing</p>
+                      <div className="bg-transparent p-3 rounded">
+                        <p className="text-elec-yellow font-medium text-sm">Systematic Testing</p>
                         <ul className="text-white text-sm mt-2 space-y-1">
                           <li>• Test each socket back to previous socket</li>
                           <li>• Find break between sockets 4 and 5</li>
@@ -735,8 +735,8 @@ const RingFinalContinuityGuide = () => {
                         </ul>
                       </div>
                       
-                      <div className="bg-card p-3 rounded">
-                        <p className="text-yellow-400 font-medium text-sm">Root Cause Discovery</p>
+                      <div className="bg-transparent p-3 rounded">
+                        <p className="text-elec-yellow font-medium text-sm">Root Cause Discovery</p>
                         <ul className="text-white text-sm mt-2 space-y-1">
                           <li>• Builder drilled through cable in wall cavity</li>
                           <li>• Screw went through line conductor only</li>
@@ -757,14 +757,14 @@ const RingFinalContinuityGuide = () => {
               </div>
 
               {/* Fault Scenario 2 */}
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
-                  <span className="bg-yellow-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">2</span>
+                  <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">2</span>
                   Case Study: The Intermittent Cross-Connection
                 </h3>
                 
                 <div className="space-y-4">
-                  <div className="bg-yellow-600/20 p-4 rounded border-l-4 border-yellow-400">
+                  <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
                     <p className="text-yellow-200 text-sm">
                       <strong>Problem:</strong> Cross-connection test sometimes passes, sometimes fails. Reading varies from ∞ to 15Ω
                     </p>
@@ -794,8 +794,8 @@ const RingFinalContinuityGuide = () => {
                     </div>
                   </div>
 
-                  <div className="bg-card p-4 rounded">
-                    <h4 className="text-yellow-400 font-medium mb-2">Discovery:</h4>
+                  <div className="bg-transparent p-4 rounded">
+                    <h4 className="text-elec-yellow font-medium mb-2">Discovery:</h4>
                     <p className="text-white text-sm mb-2">
                       External junction box with poor IP rating allowing water ingress. 
                       When wet, insulation breaks down creating cross-connection path.
@@ -811,14 +811,14 @@ const RingFinalContinuityGuide = () => {
               </div>
 
               {/* Fault Scenario 3 */}
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
-                  <span className="bg-yellow-400 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">3</span>
+                  <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">3</span>
                   Case Study: The "Perfect" Tests with No Ring
                 </h3>
                 
                 <div className="space-y-4">
-                  <div className="bg-yellow-400/20 p-4 rounded border-l-4 border-yellow-400">
+                  <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
                     <p className="text-blue-200 text-sm">
                       <strong>Problem:</strong> All tests pass perfectly, but circuit doesn't behave like a ring. High voltage drop under load.
                     </p>
@@ -826,7 +826,7 @@ const RingFinalContinuityGuide = () => {
 
                   <div className="space-y-3">
                     <h4 className="text-white font-medium">The Investigation:</h4>
-                    <div className="bg-card p-4 rounded space-y-2">
+                    <div className="bg-transparent p-4 rounded space-y-2">
                       <p className="text-white text-sm"><strong>Initial Test Results:</strong></p>
                       <ul className="text-white text-sm ml-4 space-y-1">
                         <li>• End-to-end continuity: 0.16Ω ✓</li>
@@ -865,16 +865,16 @@ const RingFinalContinuityGuide = () => {
           </Card>
 
           {/* Professional Tips Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Info className="h-6 w-6 text-yellow-400" />
+                <Info className="h-6 w-6 text-elec-yellow" />
                 Professional Tips & Industry Insights
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-lg font-semibold mb-4">What Experienced Electricians Look For</h3>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -932,34 +932,34 @@ const RingFinalContinuityGuide = () => {
                 </div>
               </div>
 
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-lg font-semibold mb-4">Time Management for Commercial Work</h3>
                 
                 <div className="space-y-4">
-                  <div className="bg-card p-4 rounded">
-                    <h4 className="text-yellow-400 font-medium mb-2">Typical Time Allocations:</h4>
+                  <div className="bg-transparent p-4 rounded">
+                    <h4 className="text-elec-yellow font-medium mb-2">Typical Time Allocations:</h4>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                       <div className="text-center">
                         <p className="text-white font-semibold">Simple Ring</p>
-                        <p className="text-yellow-400 text-lg">15-20 mins</p>
+                        <p className="text-elec-yellow text-lg">15-20 mins</p>
                         <p className="text-white text-sm">Domestic, easy access</p>
                       </div>
                       <div className="text-center">
                         <p className="text-white font-semibold">Standard Ring</p>
-                        <p className="text-yellow-400 text-lg">25-35 mins</p>
+                        <p className="text-elec-yellow text-lg">25-35 mins</p>
                         <p className="text-white text-sm">Commercial, normal access</p>
                       </div>
                       <div className="text-center">
                         <p className="text-white font-semibold">Complex Ring</p>
-                        <p className="text-yellow-400 text-lg">45-60 mins</p>
+                        <p className="text-elec-yellow text-lg">45-60 mins</p>
                         <p className="text-white text-sm">Multiple levels, difficult access</p>
                       </div>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-yellow-400/20 p-4 rounded">
-                      <h4 className="text-yellow-400 font-semibold mb-2">Speed Tips</h4>
+                    <div className="bg-elec-yellow/20 p-4 rounded">
+                      <h4 className="text-elec-yellow font-semibold mb-2">Speed Tips</h4>
                       <ul className="text-blue-200 text-sm space-y-1">
                         <li>• Use R1+R2 method for most circuits</li>
                         <li>• Pre-organize test certificate</li>
@@ -969,8 +969,8 @@ const RingFinalContinuityGuide = () => {
                       </ul>
                     </div>
                     
-                    <div className="bg-yellow-600/20 p-4 rounded">
-                      <h4 className="text-yellow-400 font-semibold mb-2">Quality Checks</h4>
+                    <div className="bg-elec-yellow/20 p-4 rounded">
+                      <h4 className="text-elec-yellow font-semibold mb-2">Quality Checks</h4>
                       <ul className="text-yellow-200 text-sm space-y-1">
                         <li>• Never rush the safety aspects</li>
                         <li>• Double-check unusual readings</li>
@@ -983,31 +983,31 @@ const RingFinalContinuityGuide = () => {
                 </div>
               </div>
 
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-lg font-semibold mb-4">Examiner Expectations (City & Guilds / EAL)</h3>
                 
                 <div className="space-y-4">
-                  <div className="bg-card p-4 rounded">
-                    <h4 className="text-yellow-400 font-medium mb-2">What Examiners Want to See:</h4>
+                  <div className="bg-transparent p-4 rounded">
+                    <h4 className="text-elec-yellow font-medium mb-2">What Examiners Want to See:</h4>
                     <ul className="text-white text-sm space-y-2">
                       <li className="flex items-start gap-2">
-                        <span className="text-yellow-400">•</span>
+                        <span className="text-elec-yellow">•</span>
                         <span><strong>Logical test sequence:</strong> Safe isolation → End-to-end → Cross-connection → R1+R2</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <span className="text-yellow-400">•</span>
+                        <span className="text-elec-yellow">•</span>
                         <span><strong>Proper equipment setup:</strong> Nulled test leads, correct settings, calibrated meter</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <span className="text-yellow-400">•</span>
+                        <span className="text-elec-yellow">•</span>
                         <span><strong>Clear documentation:</strong> All readings recorded, any anomalies noted</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <span className="text-yellow-400">•</span>
+                        <span className="text-elec-yellow">•</span>
                         <span><strong>Safety awareness:</strong> Isolation checks, PPE, risk assessment</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <span className="text-yellow-400">•</span>
+                        <span className="text-elec-yellow">•</span>
                         <span><strong>Result interpretation:</strong> Explain what readings mean, identify problems</span>
                       </li>
                     </ul>

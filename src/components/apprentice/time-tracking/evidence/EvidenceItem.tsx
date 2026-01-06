@@ -24,7 +24,7 @@ const EvidenceItem = ({ item, onDelete }: EvidenceItemProps) => {
   };
 
   return (
-    <Card key={item.id} className="border-elec-yellow/20 bg-elec-dark">
+    <Card key={item.id} className="border-elec-yellow/20 bg-white/10">
       <CardContent className="p-4">
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
@@ -36,7 +36,7 @@ const EvidenceItem = ({ item, onDelete }: EvidenceItemProps) => {
               <span className="bg-elec-yellow/10 text-elec-yellow text-xs px-2 py-0.5 rounded-full">
                 {item.type}
               </span>
-              <span className="text-xs text-muted-foreground flex items-center">
+              <span className="text-xs text-white flex items-center">
                 <Calendar className="h-3 w-3 mr-1" />
                 {item.date}
               </span>
@@ -69,10 +69,10 @@ const EvidenceItem = ({ item, onDelete }: EvidenceItemProps) => {
 
         {item.files.length > 0 && (
           <div className="mt-3">
-            <p className="text-xs text-muted-foreground mb-1">Attached files:</p>
+            <p className="text-xs text-white mb-1">Attached files:</p>
             <div className="flex flex-wrap gap-2">
               {item.files.map((file: string) => (
-                <div key={file} className="bg-elec-dark border border-elec-yellow/20 rounded px-2 py-1 text-xs flex items-center">
+                <div key={file} className="bg-white/10 border border-elec-yellow/20 rounded px-2 py-1 text-xs flex items-center">
                   <FileText className="h-3 w-3 mr-1.5" />
                   <span className="truncate max-w-[150px]">{file}</span>
                 </div>

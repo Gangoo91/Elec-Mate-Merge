@@ -1,7 +1,7 @@
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Check, X, ChevronRight, Loader2, Zap, Building2, Sparkles, Mail, Users, CheckCircle, GraduationCap, Star } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Check, X, ChevronRight, Loader2, Zap, Building2, GraduationCap, Star, Sparkles } from "lucide-react";
+import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from '@/contexts/AuthContext';
@@ -13,13 +13,9 @@ interface PlansListProps {
 }
 
 const PlansList = ({ billing }: PlansListProps) => {
-  const { isSubscribed, subscriptionTier, checkSubscriptionStatus } = useAuth();
+  const { isSubscribed, subscriptionTier } = useAuth();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState<{[key: string]: boolean}>({});
-
-  useEffect(() => {
-    checkSubscriptionStatus();
-  }, [billing]);
 
   const handleSubscribe = async (planId: string, priceId: string) => {
     try {
@@ -56,34 +52,27 @@ const PlansList = ({ billing }: PlansListProps) => {
     }
   };
 
-  const handleContactEnterprise = (email: string) => {
-    window.location.href = `mailto:${email}?subject=Enterprise%20Subscription%20Inquiry`;
-  };
-
   const getPlanIcon = (planName: string) => {
     switch (planName) {
       case 'Apprentice':
-        return <GraduationCap className="h-8 w-8" />;
+        return <GraduationCap className="h-6 w-6 sm:h-7 sm:w-7" />;
       case 'Electrician':
-        return <Zap className="h-8 w-8" />;
+        return <Zap className="h-6 w-6 sm:h-7 sm:w-7" />;
       case 'Employer':
-        return <Building2 className="h-8 w-8" />;
-      case 'Enterprise':
-        return <Sparkles className="h-8 w-8" />;
+        return <Building2 className="h-6 w-6 sm:h-7 sm:w-7" />;
       default:
-        return <Zap className="h-8 w-8" />;
+        return <Zap className="h-6 w-6 sm:h-7 sm:w-7" />;
     }
   };
 
   const plans = stripePriceData[billing];
 
   return (
-    <div className="space-y-8">
-      {/* Pricing Cards Grid */}
-      <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
-        {plans.map((plan: PlanDetails) => {
+    <div className="space-y-6 sm:space-y-8">
+      {/* Pricing Cards Grid - Stack on mobile */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+        {plans.map((plan: PlanDetails, index: number) => {
           const isCurrentPlan = subscriptionTier === plan.name && isSubscribed;
-          const isEnterprise = plan.enterprise;
 
           return (
             <Card
@@ -91,18 +80,31 @@ const PlansList = ({ billing }: PlansListProps) => {
               className={cn(
                 "relative overflow-hidden transition-all duration-300",
                 "bg-white/[0.02] backdrop-blur-xl",
-                "border border-white/10 rounded-2xl",
-                "hover:-translate-y-2 hover:shadow-2xl hover:shadow-elec-yellow/15",
-                "active:scale-[0.98]",
-                plan.popular && !isCurrentPlan && "ring-2 ring-elec-yellow/50 shadow-lg shadow-elec-yellow/25 border-elec-yellow/30",
-                !plan.popular && !isCurrentPlan && "hover:border-elec-yellow/40 hover:ring-1 hover:ring-elec-yellow/20",
-                isCurrentPlan && "ring-2 ring-green-500/50 shadow-lg shadow-green-500/20 border-green-500/30"
+                "border rounded-2xl sm:rounded-3xl",
+                // Mobile: horizontal layout for non-popular plans
+                "md:flex md:flex-col",
+                // Popular plan styling
+                plan.popular && !isCurrentPlan && [
+                  "ring-2 ring-elec-yellow/60 shadow-xl shadow-elec-yellow/20",
+                  "border-elec-yellow/40",
+                  "md:scale-[1.02]",
+                ],
+                // Regular plan styling
+                !plan.popular && !isCurrentPlan && [
+                  "border-white/10",
+                  "hover:border-white/20 hover:bg-white/[0.03]",
+                ],
+                // Current plan styling
+                isCurrentPlan && [
+                  "ring-2 ring-green-500/60 shadow-lg shadow-green-500/15",
+                  "border-green-500/40",
+                ],
               )}
             >
               {/* Current Plan Banner */}
               {isCurrentPlan && (
-                <div className="absolute top-0 left-0 right-0 bg-green-500 text-foreground text-sm font-bold py-2 px-4 text-center flex items-center justify-center gap-2">
-                  <CheckCircle className="h-4 w-4" />
+                <div className="bg-green-500 text-foreground text-xs sm:text-sm font-bold py-2 px-4 text-center flex items-center justify-center gap-2">
+                  <Check className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   YOUR CURRENT PLAN
                 </div>
               )}
@@ -110,66 +112,70 @@ const PlansList = ({ billing }: PlansListProps) => {
               {/* Popular Badge */}
               {plan.popular && !isCurrentPlan && (
                 <div className="absolute -top-px left-1/2 -translate-x-1/2 z-10">
-                  <div className="px-4 py-1.5 rounded-b-xl bg-gradient-to-r from-elec-yellow to-yellow-500 text-elec-dark text-xs font-bold tracking-wide flex items-center gap-1.5 shadow-lg shadow-elec-yellow/30">
+                  <div className="px-3 sm:px-4 py-1 sm:py-1.5 rounded-b-xl bg-gradient-to-r from-elec-yellow to-yellow-500 text-elec-dark text-[10px] sm:text-xs font-bold tracking-wide flex items-center gap-1 sm:gap-1.5 shadow-lg shadow-elec-yellow/30">
                     <Star className="h-3 w-3 fill-current" />
                     MOST POPULAR
                   </div>
                 </div>
               )}
 
-              <CardHeader className={cn("pb-6", isCurrentPlan && "pt-14", plan.popular && !isCurrentPlan && "pt-10")}>
-                {/* Plan Icon */}
-                <div className={cn(
-                  "w-16 h-16 rounded-2xl flex items-center justify-center mb-5",
-                  "transition-all duration-300",
-                  plan.popular
-                    ? "bg-gradient-to-br from-elec-yellow to-yellow-500 text-elec-dark shadow-lg shadow-elec-yellow/30"
-                    : "bg-gradient-to-br from-white/10 to-white/5 text-elec-yellow"
-                )}>
-                  {getPlanIcon(plan.name)}
+              <CardHeader className={cn(
+                "pb-4 sm:pb-5",
+                isCurrentPlan && "pt-4",
+                plan.popular && !isCurrentPlan && "pt-8 sm:pt-10"
+              )}>
+                {/* Plan Icon & Name Row */}
+                <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+                  <div className={cn(
+                    "w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center transition-all",
+                    plan.popular
+                      ? "bg-gradient-to-br from-elec-yellow to-yellow-500 text-elec-dark shadow-lg shadow-elec-yellow/25"
+                      : "bg-gradient-to-br from-white/10 to-white/5 text-elec-yellow border border-white/10"
+                  )}>
+                    {getPlanIcon(plan.name)}
+                  </div>
+                  <div>
+                    <h3 className="text-xl sm:text-2xl font-bold text-foreground">{plan.name}</h3>
+                    <p className="text-xs sm:text-sm text-white/60 mt-0.5">{plan.description}</p>
+                  </div>
                 </div>
-
-                {/* Plan Name & Description */}
-                <h3 className="text-2xl font-bold text-foreground">{plan.name}</h3>
-                <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">{plan.description}</p>
 
                 {/* Price */}
-                <div className="mt-5">
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-5xl font-bold tracking-tight text-foreground">{plan.price}</span>
-                    {plan.period && (
-                      <span className="text-lg text-muted-foreground">{plan.period}</span>
-                    )}
-                  </div>
-                  {plan.savings && (
-                    <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20">
-                      <span className="text-sm font-medium text-green-400">{plan.savings}</span>
-                    </div>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground">{plan.price}</span>
+                  {plan.period && (
+                    <span className="text-base sm:text-lg text-white/60">{plan.period}</span>
                   )}
                 </div>
+                {plan.savings && (
+                  <div className="mt-2 sm:mt-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-500/15 border border-green-500/25">
+                    <Sparkles className="h-3 w-3 text-green-400" />
+                    <span className="text-xs sm:text-sm font-medium text-green-400">{plan.savings}</span>
+                  </div>
+                )}
               </CardHeader>
 
-              <CardContent className="pb-6">
+              <CardContent className="pb-4 sm:pb-5 flex-1">
                 {/* Divider */}
-                <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-6" />
+                <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-4 sm:mb-5" />
 
-                {/* Features List */}
-                <div className="space-y-3">
+                {/* Features List - Compact on mobile */}
+                <div className="space-y-2 sm:space-y-2.5">
                   {plan.features.map((feature, i) => (
-                    <div key={i} className="flex items-start gap-3 py-0.5">
-                      <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                        <Check className="h-4 w-4 text-elec-yellow" />
+                    <div key={i} className="flex items-start gap-2.5 sm:gap-3">
+                      <div className="w-5 h-5 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <Check className="h-3 w-3 text-elec-yellow" />
                       </div>
                       <span className="text-sm text-foreground/90 leading-relaxed">{feature}</span>
                     </div>
                   ))}
                   {plan.notIncluded.length > 0 && (
-                    <div className="h-px bg-white/5 my-4" />
+                    <div className="h-px bg-white/5 my-3 sm:my-4" />
                   )}
                   {plan.notIncluded.map((feature, i) => (
-                    <div key={i} className="flex items-start gap-3 py-0.5 opacity-50">
-                      <div className="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0">
-                        <X className="h-4 w-4 text-foreground/30" />
+                    <div key={i} className="flex items-start gap-2.5 sm:gap-3 opacity-40">
+                      <div className="w-5 h-5 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <X className="h-3 w-3 text-foreground/30" />
                       </div>
                       <span className="text-sm text-foreground/40 leading-relaxed">{feature}</span>
                     </div>
@@ -177,64 +183,58 @@ const PlansList = ({ billing }: PlansListProps) => {
                 </div>
               </CardContent>
 
-              <CardFooter className="pt-2">
-                {isEnterprise ? (
-                  <Button
-                    className="w-full h-14 text-base font-semibold rounded-xl bg-white/10 hover:bg-white/20 text-foreground border border-white/20 transition-all duration-300 active:scale-[0.98]"
-                    onClick={() => handleContactEnterprise(plan.contactEmail || 'info@elec-mate.com')}
-                  >
-                    <Mail className="h-5 w-5 mr-2" />
-                    Contact Us
-                  </Button>
-                ) : (
-                  <Button
-                    className={cn(
-                      "w-full h-14 text-base font-semibold rounded-xl transition-all duration-300 relative overflow-hidden active:scale-[0.98]",
-                      plan.popular
-                        ? "bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark shadow-lg shadow-elec-yellow/20 hover:shadow-xl hover:shadow-elec-yellow/30"
-                        : "bg-white/10 hover:bg-white/20 text-foreground border border-white/20",
-                      isCurrentPlan && "bg-green-500/20 text-green-400 border-green-500/30 cursor-default shadow-none",
-                      plan.popular && !isCurrentPlan && "before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/25 before:to-transparent before:translate-x-[-200%] hover:before:translate-x-[200%] before:transition-transform before:duration-700"
-                    )}
-                    disabled={isCurrentPlan || isLoading[plan.id]}
-                    onClick={() => handleSubscribe(plan.id, plan.priceId)}
-                  >
-                    {isLoading[plan.id] ? (
-                      <>
-                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                        Processing...
-                      </>
-                    ) : isCurrentPlan ? (
-                      <>
-                        <CheckCircle className="mr-2 h-5 w-5" />
-                        Current Plan
-                      </>
-                    ) : (
-                      <>
-                        Get Started
-                        <ChevronRight className="ml-2 h-5 w-5 group-hover:translate-x-0.5 transition-transform" />
-                      </>
-                    )}
-                  </Button>
-                )}
+              <CardFooter className="pt-2 pb-5 sm:pb-6">
+                <Button
+                  className={cn(
+                    "w-full h-12 sm:h-14 text-sm sm:text-base font-semibold rounded-xl transition-all duration-300 relative overflow-hidden",
+                    "active:scale-[0.98] touch-manipulation",
+                    plan.popular && !isCurrentPlan
+                      ? "bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark shadow-lg shadow-elec-yellow/20 hover:shadow-xl hover:shadow-elec-yellow/30"
+                      : "bg-white/10 hover:bg-white/15 text-foreground border border-white/20",
+                    isCurrentPlan && "bg-green-500/20 text-green-400 border-green-500/30 cursor-default shadow-none hover:bg-green-500/20",
+                    // Shimmer effect for popular button
+                    plan.popular && !isCurrentPlan && "before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:translate-x-[-200%] hover:before:translate-x-[200%] before:transition-transform before:duration-700"
+                  )}
+                  disabled={isCurrentPlan || isLoading[plan.id]}
+                  onClick={() => handleSubscribe(plan.id, plan.priceId)}
+                >
+                  {isLoading[plan.id] ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
+                      Processing...
+                    </>
+                  ) : isCurrentPlan ? (
+                    <>
+                      <Check className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                      Current Plan
+                    </>
+                  ) : (
+                    <>
+                      Get Started
+                      <ChevronRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+                    </>
+                  )}
+                </Button>
               </CardFooter>
             </Card>
           );
         })}
       </div>
 
-      {/* Team Discount Callout */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/20 p-6 md:p-8">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-        <div className="relative flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6">
-          <div className="w-14 h-14 rounded-2xl bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-            <Users className="h-7 w-7 text-elec-yellow" />
+      {/* Enterprise CTA - Simplified */}
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-white/[0.03] to-white/[0.01] border border-white/10 p-5 sm:p-6 md:p-8">
+        <div className="absolute top-0 right-0 w-48 h-48 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
+        <div className="relative flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/10 flex items-center justify-center flex-shrink-0 border border-elec-yellow/20">
+            <Building2 className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow" />
           </div>
           <div className="flex-1">
-            <h3 className="text-lg font-bold text-foreground mb-1">Team Discount for Employers</h3>
-            <p className="text-foreground/70">
-              Subscribe to Employer or Enterprise and your electricians get Desktop Price access at a discounted rate.
-              Contact us at <a href="mailto:info@elec-mate.com" className="text-elec-yellow hover:underline">info@elec-mate.com</a> for team pricing options.
+            <h3 className="text-base sm:text-lg font-bold text-foreground mb-1">Need Enterprise or Team Pricing?</h3>
+            <p className="text-sm text-white/70">
+              For larger teams, custom integrations, or volume discounts, contact us at{" "}
+              <a href="mailto:info@elec-mate.com" className="text-elec-yellow hover:underline font-medium">
+                info@elec-mate.com
+              </a>
             </p>
           </div>
         </div>

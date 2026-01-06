@@ -118,7 +118,7 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
               <Trophy className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow flex-shrink-0" />
               <div>
                 <CardTitle className="text-xl sm:text-2xl">Quiz Complete!</CardTitle>
-                <p className="text-muted-foreground text-sm sm:text-base">{assessment.title}</p>
+                <p className="text-white/80 text-sm sm:text-base">{assessment.title}</p>
               </div>
             </div>
             <Button variant="outline" onClick={onBackToHub} className="min-h-[44px] touch-manipulation w-full sm:w-auto">
@@ -136,7 +136,7 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
             <div className={`text-3xl sm:text-4xl md:text-5xl font-bold mb-2 ${getScoreColor(result.percentage)}`}>
               {result.percentage}%
             </div>
-            <p className="text-xs sm:text-sm text-muted-foreground">Overall Score</p>
+            <p className="text-xs sm:text-sm text-white/80">Overall Score</p>
           </CardContent>
         </Card>
 
@@ -145,7 +145,7 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
             <div className="text-xl sm:text-2xl font-bold mb-2 text-foreground">
               {result.correctAnswers}/{result.totalQuestions}
             </div>
-            <p className="text-xs sm:text-sm text-muted-foreground">Correct Answers</p>
+            <p className="text-xs sm:text-sm text-white/80">Correct Answers</p>
           </CardContent>
         </Card>
 
@@ -154,7 +154,7 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
             <div className="text-xl sm:text-2xl font-bold mb-2 text-foreground">
               {formatTime(result.timeSpent)}
             </div>
-            <p className="text-xs sm:text-sm text-muted-foreground">Time Taken</p>
+            <p className="text-xs sm:text-sm text-white/80">Time Taken</p>
           </CardContent>
         </Card>
 
@@ -163,7 +163,7 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
             <div className="text-xl sm:text-2xl font-bold mb-2 text-foreground">
               {Math.round(result.timeSpent / result.totalQuestions)}s
             </div>
-            <p className="text-xs sm:text-sm text-muted-foreground">Avg. per Question</p>
+            <p className="text-xs sm:text-sm text-white/80">Avg. per Question</p>
           </CardContent>
         </Card>
       </div>
@@ -220,7 +220,7 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
                   <Progress value={percentage} className="h-3 sm:h-2" />
                   
                   {showCategoryDetails && (
-                    <div className="mt-2 text-xs sm:text-sm text-muted-foreground">
+                    <div className="mt-2 text-xs sm:text-sm text-white/80">
                       <div className="flex items-center gap-4">
                         <span className="flex items-center gap-1">
                           <CheckCircle className="h-3 w-3 text-green-500" />
@@ -259,7 +259,7 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
                 ))}
               </div>
             ) : (
-              <p className="text-muted-foreground">Keep practising to identify your strengths!</p>
+              <p className="text-white/80">Keep practising to identify your strengths!</p>
             )}
           </CardContent>
         </Card>
@@ -281,7 +281,7 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
                 ))}
               </div>
             ) : (
-              <p className="text-muted-foreground">Excellent! No major weak areas identified.</p>
+              <p className="text-white/80">Excellent! No major weak areas identified.</p>
             )}
           </CardContent>
         </Card>

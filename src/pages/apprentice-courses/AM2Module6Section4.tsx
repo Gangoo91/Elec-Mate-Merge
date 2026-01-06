@@ -120,12 +120,12 @@ const AM2Module6Section4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
+      <div className="border-b border-white/10 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between gap-2">
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-2 sm:p-0 text-sm sm:text-base" asChild>
+            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
               <Link to="..">
                 <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
                 <span className="hidden xs:inline">Back to Module 6</span>
@@ -144,10 +144,10 @@ const AM2Module6Section4 = () => {
             <BookOpen className="w-4 h-4" />
             Module 6 – Section 4
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4 sm:mb-6 leading-tight">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6 leading-tight">
             Exam Techniques and Mindset
           </h1>
-          <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
+          <p className="text-sm sm:text-base text-white mb-6 sm:mb-8 leading-relaxed">
             The AM2 online knowledge test is as much about exam discipline and mindset as it is about knowledge. Many candidates know the material but lose marks because they misread questions, panic under pressure, or second-guess themselves. This section teaches you how to approach questions with the right techniques, avoid common pitfalls, and maintain a confident, professional mindset.
           </p>
         </div>
@@ -173,16 +173,16 @@ const AM2Module6Section4 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground mb-4">
+            <p className="text-xs sm:text-sm text-white mb-4">
               By the end of this section, you will be able to:
             </p>
-            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
+            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Apply proven exam techniques to maximise your score
@@ -280,9 +280,9 @@ const AM2Module6Section4 = () => {
             <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">Detailed Reading Strategies:</h3>
             <div className="space-y-4 text-sm sm:text-base leading-relaxed">
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="p-4 bg-background border border-border rounded-lg">
-                  <h4 className="font-semibold text-foreground mb-2">Key Words to Watch For:</h4>
-                  <ul className="space-y-1 text-xs sm:text-sm text-muted-foreground">
+                <div className="p-4 bg-[#1a1a1a] border border-border rounded-lg">
+                  <h4 className="font-semibold text-white mb-2">Key Words to Watch For:</h4>
+                  <ul className="space-y-1 text-xs sm:text-sm text-white">
                     <li>• <strong>"Minimum"</strong> vs <strong>"Maximum"</strong> (most common trap)</li>
                     <li>• <strong>"Must"</strong> vs <strong>"Should"</strong> (legal vs recommended)</li>
                     <li>• <strong>"NOT"</strong> or <strong>"EXCEPT"</strong> (reverse logic)</li>
@@ -290,9 +290,9 @@ const AM2Module6Section4 = () => {
                     <li>• <strong>"Always"</strong> vs <strong>"Usually"</strong> (frequency)</li>
                   </ul>
                 </div>
-                <div className="p-4 bg-background border border-border rounded-lg">
-                  <h4 className="font-semibold text-foreground mb-2">Active Reading Technique:</h4>
-                  <ul className="space-y-1 text-xs sm:text-sm text-muted-foreground">
+                <div className="p-4 bg-[#1a1a1a] border border-border rounded-lg">
+                  <h4 className="font-semibold text-white mb-2">Active Reading Technique:</h4>
+                  <ul className="space-y-1 text-xs sm:text-sm text-white">
                     <li>• Read question twice before looking at options</li>
                     <li>• Circle or highlight key words</li>
                     <li>• Rephrase question in your own words</li>
@@ -311,17 +311,17 @@ const AM2Module6Section4 = () => {
             <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-0 mb-3">Advanced Elimination Strategies:</h3>
             <div className="space-y-4 text-sm sm:text-base leading-relaxed">
               <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-                <div className="p-4 bg-background border border-border rounded-lg">
-                  <h4 className="font-semibold text-foreground mb-2 text-sm">Step 1: Obvious Wrong</h4>
-                  <p className="text-xs text-muted-foreground">Cross out answers that are clearly impossible or irrelevant to the question context.</p>
+                <div className="p-4 bg-[#1a1a1a] border border-border rounded-lg">
+                  <h4 className="font-semibold text-white mb-2 text-sm">Step 1: Obvious Wrong</h4>
+                  <p className="text-xs text-white">Cross out answers that are clearly impossible or irrelevant to the question context.</p>
                 </div>
-                <div className="p-4 bg-background border border-border rounded-lg">
-                  <h4 className="font-semibold text-foreground mb-2 text-sm">Step 2: Context Check</h4>
-                  <p className="text-xs text-muted-foreground">Eliminate answers that don't fit the scenario (e.g., domestic vs industrial).</p>
+                <div className="p-4 bg-[#1a1a1a] border border-border rounded-lg">
+                  <h4 className="font-semibold text-white mb-2 text-sm">Step 2: Context Check</h4>
+                  <p className="text-xs text-white">Eliminate answers that don't fit the scenario (e.g., domestic vs industrial).</p>
                 </div>
-                <div className="p-4 bg-background border border-border rounded-lg">
-                  <h4 className="font-semibold text-foreground mb-2 text-sm">Step 3: Best Fit</h4>
-                  <p className="text-xs text-muted-foreground">Choose the most complete and accurate answer from remaining options.</p>
+                <div className="p-4 bg-[#1a1a1a] border border-border rounded-lg">
+                  <h4 className="font-semibold text-white mb-2 text-sm">Step 3: Best Fit</h4>
+                  <p className="text-xs text-white">Choose the most complete and accurate answer from remaining options.</p>
                 </div>
               </div>
               
@@ -394,7 +394,7 @@ const AM2Module6Section4 = () => {
             <div className="space-y-4 text-sm sm:text-base leading-relaxed">
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <h4 className="font-semibold text-foreground mb-3">When You Feel Overwhelmed:</h4>
+                  <h4 className="font-semibold text-white mb-3">When You Feel Overwhelmed:</h4>
                   <ul className="space-y-2 ml-4">
                     <li>• <strong>Take 3 deep breaths</strong> - reset your nervous system</li>
                     <li>• <strong>Remind yourself:</strong> "I know this material"</li>
@@ -404,7 +404,7 @@ const AM2Module6Section4 = () => {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-foreground mb-3">Physical Stress Response:</h4>
+                  <h4 className="font-semibold text-white mb-3">Physical Stress Response:</h4>
                   <ul className="space-y-2 ml-4">
                     <li>• <strong>Tight shoulders?</strong> Roll them back 3 times</li>
                     <li>• <strong>Racing heart?</strong> Slow, controlled breathing</li>
@@ -424,21 +424,21 @@ const AM2Module6Section4 = () => {
             <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-0 mb-3">Strategic Answering - The FAST Method:</h3>
             <div className="space-y-4 text-sm sm:text-base leading-relaxed">
               <div className="grid md:grid-cols-4 gap-4">
-                <div className="p-4 bg-background border border-border rounded-lg">
-                  <h4 className="font-semibold text-foreground mb-2 text-sm">F - Flag</h4>
-                  <p className="text-xs text-muted-foreground">Mark difficult questions for later review instead of getting stuck.</p>
+                <div className="p-4 bg-[#1a1a1a] border border-border rounded-lg">
+                  <h4 className="font-semibold text-white mb-2 text-sm">F - Flag</h4>
+                  <p className="text-xs text-white">Mark difficult questions for later review instead of getting stuck.</p>
                 </div>
-                <div className="p-4 bg-background border border-border rounded-lg">
-                  <h4 className="font-semibold text-foreground mb-2 text-sm">A - Answer</h4>
-                  <p className="text-xs text-muted-foreground">Give your best guess using elimination - never leave blank.</p>
+                <div className="p-4 bg-[#1a1a1a] border border-border rounded-lg">
+                  <h4 className="font-semibold text-white mb-2 text-sm">A - Answer</h4>
+                  <p className="text-xs text-white">Give your best guess using elimination - never leave blank.</p>
                 </div>
-                <div className="p-4 bg-background border border-border rounded-lg">
-                  <h4 className="font-semibold text-foreground mb-2 text-sm">S - Skip</h4>
-                  <p className="text-xs text-muted-foreground">Move on quickly to maintain momentum and confidence.</p>
+                <div className="p-4 bg-[#1a1a1a] border border-border rounded-lg">
+                  <h4 className="font-semibold text-white mb-2 text-sm">S - Skip</h4>
+                  <p className="text-xs text-white">Move on quickly to maintain momentum and confidence.</p>
                 </div>
-                <div className="p-4 bg-background border border-border rounded-lg">
-                  <h4 className="font-semibold text-foreground mb-2 text-sm">T - Time</h4>
-                  <p className="text-xs text-muted-foreground">Return with remaining time for fresh perspective.</p>
+                <div className="p-4 bg-[#1a1a1a] border border-border rounded-lg">
+                  <h4 className="font-semibold text-white mb-2 text-sm">T - Time</h4>
+                  <p className="text-xs text-white">Return with remaining time for fresh perspective.</p>
                 </div>
               </div>
               
@@ -529,28 +529,28 @@ const AM2Module6Section4 = () => {
             
             <div className="space-y-4 text-sm sm:text-base">
               <div className="border-l-4 border-elec-yellow pl-4">
-                <p className="font-semibold text-foreground mb-1">Q1: Should I always change my first answer if I feel unsure?</p>
-                <p className="text-muted-foreground">A: No — research shows your first instinct is usually right. Change only if you see clear evidence.</p>
+                <p className="font-semibold text-white mb-1">Q1: Should I always change my first answer if I feel unsure?</p>
+                <p className="text-white">A: No — research shows your first instinct is usually right. Change only if you see clear evidence.</p>
               </div>
               
               <div className="border-l-4 border-elec-yellow pl-4">
-                <p className="font-semibold text-foreground mb-1">Q2: How do I handle a maths-heavy question under time pressure?</p>
-                <p className="text-muted-foreground">A: Flag it, move on, return later.</p>
+                <p className="font-semibold text-white mb-1">Q2: How do I handle a maths-heavy question under time pressure?</p>
+                <p className="text-white">A: Flag it, move on, return later.</p>
               </div>
               
               <div className="border-l-4 border-elec-yellow pl-4">
-                <p className="font-semibold text-foreground mb-1">Q3: What's the biggest trap in AM2 questions?</p>
-                <p className="text-muted-foreground">A: Misreading key words like "minimum/maximum" or mixing up units.</p>
+                <p className="font-semibold text-white mb-1">Q3: What's the biggest trap in AM2 questions?</p>
+                <p className="text-white">A: Misreading key words like "minimum/maximum" or mixing up units.</p>
               </div>
               
               <div className="border-l-4 border-elec-yellow pl-4">
-                <p className="font-semibold text-foreground mb-1">Q4: How many questions can I afford to get wrong and still pass?</p>
-                <p className="text-muted-foreground">A: Around 12–14 wrong (if 40 questions total), depending on pass mark.</p>
+                <p className="font-semibold text-white mb-1">Q4: How many questions can I afford to get wrong and still pass?</p>
+                <p className="text-white">A: Around 12–14 wrong (if 40 questions total), depending on pass mark.</p>
               </div>
               
               <div className="border-l-4 border-elec-yellow pl-4">
-                <p className="font-semibold text-foreground mb-1">Q5: How can I calm nerves before starting?</p>
-                <p className="text-muted-foreground">A: Take deep breaths, remind yourself you've practised, and treat it like a normal work task.</p>
+                <p className="font-semibold text-white mb-1">Q5: How can I calm nerves before starting?</p>
+                <p className="text-white">A: Take deep breaths, remind yourself you've practised, and treat it like a normal work task.</p>
               </div>
             </div>
           </CardContent>
@@ -591,7 +591,7 @@ const AM2Module6Section4 = () => {
         </Card>
 
         {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 border-t border-border/20">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 border-t border-white/10">
           <Button variant="outline" asChild className="w-full sm:w-auto">
             <Link to="../section3">
               <ArrowLeft className="w-4 h-4 mr-2" />

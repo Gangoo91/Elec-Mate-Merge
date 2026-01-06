@@ -12,7 +12,7 @@ const EmergencyProcedures = () => {
         Knowing what to do during an emergency can prevent injuries and save lives.
       </p>
       
-      <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4 md:p-5">
+      <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-4 md:p-5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           {/* Left Column */}
           <div className="space-y-4">
@@ -23,7 +23,7 @@ const EmergencyProcedures = () => {
               <h4 className="font-medium text-elec-yellow text-lg">Evacuation Procedures</h4>
             </div>
             
-            <div className="bg-elec-gray rounded-md p-3">
+            <div className="bg-white/5 rounded-md p-3">
               <h5 className="font-medium text-elec-yellow text-base mb-1">Primary Evacuation Steps</h5>
               <ol className="list-decimal list-inside text-base space-y-1">
                 <li>Raise the alarm according to site protocols</li>
@@ -34,7 +34,7 @@ const EmergencyProcedures = () => {
               </ol>
             </div>
             
-            <div className="bg-elec-gray rounded-md p-3">
+            <div className="bg-white/5 rounded-md p-3">
               <h5 className="font-medium text-elec-yellow text-base mb-1">Assembly Points</h5>
               <ul className="list-disc list-inside text-base space-y-1">
                 <li>Know the location of primary and secondary assembly points</li>
@@ -55,7 +55,7 @@ const EmergencyProcedures = () => {
               <h4 className="font-medium text-elec-yellow text-lg">Emergency Response Roles</h4>
             </div>
             
-            <div className="bg-elec-gray rounded-md p-3">
+            <div className="bg-white/5 rounded-md p-3">
               <h5 className="font-medium text-elec-yellow text-base mb-1">Key Personnel</h5>
               <ul className="list-disc list-inside text-base space-y-1">
                 <li><span className="text-elec-yellow">Fire Wardens:</span> Coordinate evacuations and conduct head counts</li>
@@ -65,7 +65,7 @@ const EmergencyProcedures = () => {
               </ul>
             </div>
             
-            <div className="bg-elec-gray rounded-md p-3">
+            <div className="bg-white/5 rounded-md p-3">
               <h5 className="font-medium text-elec-yellow text-base mb-1">Emergency Communication</h5>
               <ul className="list-disc list-inside text-base space-y-1">
                 <li>Use emergency call points when applicable</li>
@@ -78,7 +78,7 @@ const EmergencyProcedures = () => {
           </div>
         </div>
         
-        <div className="mt-4 p-4 bg-elec-dark/70 rounded-lg text-base">
+        <div className="mt-4 p-4 bg-white/10 rounded-lg text-base">
           <p className="font-medium mb-1 text-elec-yellow">Regulatory Requirements:</p>
           <p>Under the Health and Safety (First-Aid) Regulations 1981 and the Regulatory Reform (Fire Safety) Order 2005, 
           employers must ensure adequate emergency procedures are established and communicated to all employees. This includes 

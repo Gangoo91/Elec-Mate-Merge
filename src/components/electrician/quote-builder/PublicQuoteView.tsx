@@ -148,7 +148,7 @@ const PublicQuoteView = () => {
       // Upload signature to storage
       const signatureBlob = dataURLtoBlob(signatureData);
       const signatureFileName = `signature-${quote.id}-${Date.now()}.png`;
-      
+
       const { data: signatureUpload, error: uploadError } = await supabase.storage
         .from("company-branding")
         .upload(signatureFileName, signatureBlob);
@@ -159,7 +159,7 @@ const PublicQuoteView = () => {
         .from("company-branding")
         .getPublicUrl(signatureFileName);
 
-      // Update quote with acceptance
+      // Update quote with acceptance (invoice created later when work is complete)
       const { error: updateError } = await supabase
         .from("quotes")
         .update({
@@ -177,8 +177,46 @@ const PublicQuoteView = () => {
 
       if (updateError) throw updateError;
 
+      // Get the quote owner to send them a notification
+      const { data: quoteData } = await supabase
+        .from("quotes")
+        .select("user_id")
+        .eq("id", quote.id)
+        .single();
+
+      // Try to send notification email to the electrician (best effort, don't fail if this errors)
+      if (quoteData?.user_id) {
+        try {
+          // Get electrician's email from their profile
+          const { data: userData } = await supabase
+            .from("profiles")
+            .select("email, full_name")
+            .eq("id", quoteData.user_id)
+            .single();
+
+          if (userData?.email) {
+            // Call edge function to notify electrician about acceptance
+            await supabase.functions.invoke("send-invoice-smart", {
+              body: {
+                documentType: "quote-acceptance-notification",
+                quoteId: quote.id,
+                electricianEmail: userData.email,
+                electricianName: userData.full_name || "Electrician",
+                clientName: clientName,
+                quoteNumber: quote.quoteNumber,
+                total: quote.total
+              }
+            });
+          }
+        } catch (notifyError) {
+          console.warn("Could not send acceptance notification:", notifyError);
+          // Don't fail the overall operation
+        }
+      }
+
       toast({
         title: "Quote accepted",
+        description: "The electrician has been notified. Invoice will be raised when work is complete.",
         variant: "success"
       });
 

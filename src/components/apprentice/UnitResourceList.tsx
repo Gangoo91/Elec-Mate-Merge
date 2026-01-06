@@ -40,7 +40,7 @@ const UnitResourceList: React.FC<UnitResourceListProps> = ({
       {resources.map((resource) => (
         <div 
           key={resource.id}
-          className="flex items-center justify-between p-3 rounded-md border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-800 shadow-sm hover:shadow transition cursor-pointer"
+          className="flex items-center justify-between p-3 rounded-md border border-white/20 bg-white/10 shadow-sm hover:shadow transition cursor-pointer"
           onClick={() => onResourceClick(resource.id)}
         >
           <div className="flex items-center space-x-3">

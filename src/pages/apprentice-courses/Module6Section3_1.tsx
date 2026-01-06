@@ -200,7 +200,7 @@ const Module6Section3_1 = () => {
                 </li>
               </ul>
             </div>
-            <div className="rounded-lg p-4 bg-emerald-950/30 border border-emerald-700/40">
+            <div className="rounded-lg p-4 bg-elec-yellow/10 border border-elec-yellow/30">
               <p className="font-medium mb-3">Spot it / Use it</p>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">

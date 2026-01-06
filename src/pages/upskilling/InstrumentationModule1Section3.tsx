@@ -67,8 +67,7 @@ const InstrumentationModule1Section3 = () => {
       ],
       correct: 1,
       explanation: "Even in automated systems, indication provides essential operator awareness, enables troubleshooting, supports system monitoring, and ensures safety oversight."
-    }
-  ];
+  }  ];
 
 
   return (

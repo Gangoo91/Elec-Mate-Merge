@@ -63,7 +63,7 @@ const InsulationTablesSection = () => (
           <h5 className="font-medium text-foreground mb-3">Correction Formula:</h5>
           <div className="bg-muted rounded-lg p-3 text-sm space-y-2">
             <p className="font-mono text-foreground">R₂₀ = R_measured × 1.07^(20-T_measured)</p>
-            <div className="text-muted-foreground space-y-1">
+            <div className="text-white/80 space-y-1">
               <p><strong>Where:</strong></p>
               <p>• R₂₀ = Resistance corrected to 20°C</p>
               <p>• R_measured = Actual measured resistance</p>
@@ -89,7 +89,7 @@ const InsulationTablesSection = () => (
         <div className="bg-card border border-border rounded-lg p-4">
           <h5 className="font-medium text-foreground mb-3">New Installations</h5>
           <div className="space-y-2 text-sm">
-            <p className="font-medium text-muted-foreground">Typical readings:</p>
+            <p className="font-medium text-white/80">Typical readings:</p>
             <div className="space-y-1">
               <p>• New PVC cables: &gt; 999MΩ</p>
               <p>• XLPE cables: &gt; 999MΩ</p>
@@ -107,7 +107,7 @@ const InsulationTablesSection = () => (
         <div className="bg-card border border-border rounded-lg p-4">
           <h5 className="font-medium text-foreground mb-3">Aged Installations</h5>
           <div className="space-y-2 text-sm">
-            <p className="font-medium text-muted-foreground">Acceptable ranges:</p>
+            <p className="font-medium text-white/80">Acceptable ranges:</p>
             <div className="space-y-1">
               <p>• 10-20 years: 10-100MΩ</p>
               <p>• 20-30 years: 2-50MΩ</p>
@@ -125,7 +125,7 @@ const InsulationTablesSection = () => (
         <div className="bg-card border border-border rounded-lg p-4">
           <h5 className="font-medium text-foreground mb-3">Problem Indicators</h5>
           <div className="space-y-2 text-sm">
-            <p className="font-medium text-muted-foreground">Investigation required:</p>
+            <p className="font-medium text-white/80">Investigation required:</p>
             <div className="space-y-1">
               <p>• &lt; 1.0MΩ (new installation)</p>
               <p>• &lt; 0.5MΩ (existing installation)</p>

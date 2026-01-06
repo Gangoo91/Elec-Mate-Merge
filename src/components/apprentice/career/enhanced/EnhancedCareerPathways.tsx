@@ -106,17 +106,17 @@ const EnhancedCareerPathways = () => {
     };
 
     return (
-      <div className="space-y-6">
+      <div className="space-y-6 animate-fade-in">
         <div className="flex items-center gap-4">
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             size="sm"
             onClick={() => setSelectedPath(null)}
-            className="flex items-center gap-2"
+            className="h-10 flex items-center gap-2 border-white/20 hover:bg-white/10 hover:border-elec-yellow/30 touch-manipulation active:scale-95 transition-all"
           >
             <ArrowLeft className="h-4 w-4" /> Back to Career Pathways
           </Button>
-          <h2 className="text-2xl font-semibold">{path.title}</h2>
+          <h2 className="text-2xl font-semibold text-white">{path.title}</h2>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -218,7 +218,7 @@ const EnhancedCareerPathways = () => {
           <TrendingUp className="h-8 w-8 text-elec-yellow" />
           UK Electrical Career Pathways
         </h1>
-        <p className="text-muted-foreground text-center max-w-3xl mb-4">
+        <p className="text-white text-center max-w-3xl mb-4">
           Comprehensive career development framework including skills matrices, professional development strategies, 
           industry insights, and progression pathways for electrical professionals in the UK
         </p>

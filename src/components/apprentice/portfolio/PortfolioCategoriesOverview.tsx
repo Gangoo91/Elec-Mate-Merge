@@ -44,7 +44,7 @@ const PortfolioCategoriesOverview = ({ categories, entries }: PortfolioCategorie
           const colorClasses = getColorClasses(category.color);
 
           return (
-            <Card key={category.id} className={`bg-elec-gray border-elec-yellow/20 ${colorClasses.border}`}>
+            <Card key={category.id} className={`bg-white/5 border-elec-yellow/20 ${colorClasses.border}`}>
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2 min-w-0">
@@ -60,7 +60,7 @@ const PortfolioCategoriesOverview = ({ categories, entries }: PortfolioCategorie
               </CardHeader>
               
               <CardContent className="space-y-3 pt-0">
-                <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">
+                <p className="text-xs sm:text-sm text-white line-clamp-2">
                   {category.description}
                 </p>
                 
@@ -76,15 +76,15 @@ const PortfolioCategoriesOverview = ({ categories, entries }: PortfolioCategorie
                   <div className="grid grid-cols-3 gap-2 text-center">
                     <div>
                       <p className="text-sm sm:text-lg font-semibold">{categoryEntries.length}</p>
-                      <p className="text-xs text-muted-foreground">Total</p>
+                      <p className="text-xs text-white">Total</p>
                     </div>
                     <div>
                       <p className="text-sm sm:text-lg font-semibold">{completedEntries}</p>
-                      <p className="text-xs text-muted-foreground">Complete</p>
+                      <p className="text-xs text-white">Complete</p>
                     </div>
                     <div>
                       <p className="text-sm sm:text-lg font-semibold">{categoryEntries.filter(e => e.status === 'in-progress').length}</p>
-                      <p className="text-xs text-muted-foreground">Progress</p>
+                      <p className="text-xs text-white">Progress</p>
                     </div>
                   </div>
                 </div>
@@ -95,13 +95,13 @@ const PortfolioCategoriesOverview = ({ categories, entries }: PortfolioCategorie
       </div>
 
       {/* Recent Activity */}
-      <Card className="bg-elec-gray border-elec-yellow/20">
+      <Card className="bg-white/5 border-elec-yellow/20">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg">Recent Activity</CardTitle>
         </CardHeader>
         <CardContent className="pt-0">
           {entries.length === 0 ? (
-            <p className="text-muted-foreground text-center py-6 text-sm">
+            <p className="text-white text-center py-6 text-sm">
               No portfolio entries yet. Start by adding your first entry!
             </p>
           ) : (
@@ -117,7 +117,7 @@ const PortfolioCategoriesOverview = ({ categories, entries }: PortfolioCategorie
                       </div>
                       <div className="min-w-0">
                         <p className="font-medium text-sm truncate">{entry.title}</p>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-xs text-white">
                           {entry.category.name} • {new Date(entry.dateCreated).toLocaleDateString('en-GB')}
                         </p>
                       </div>

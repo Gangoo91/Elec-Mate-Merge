@@ -79,7 +79,7 @@ const InteractiveToolsTab = () => {
       case "high": return "text-red-400 border-red-400";
       case "medium": return "text-yellow-400 border-yellow-400";
       case "low": return "text-green-400 border-green-400";
-      default: return "text-gray-400 border-gray-400";
+      default: return "text-white border-white/60";
     }
   };
 
@@ -92,13 +92,13 @@ const InteractiveToolsTab = () => {
   return (
     <div className="space-y-6">
       {/* Task Manager */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
             <CheckCircle className="h-6 w-6" />
             Task Manager
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Keep track of work and study tasks with priority levels
           </p>
         </CardHeader>
@@ -114,7 +114,7 @@ const InteractiveToolsTab = () => {
             <select
               value={newPriority}
               onChange={(e) => setNewPriority(e.target.value)}
-              className="px-3 py-2 border border-elec-yellow/20 rounded-md bg-elec-gray text-white"
+              className="px-3 py-2 border border-elec-yellow/20 rounded-md bg-white/5 text-white"
             >
               <option value="low">Low</option>
               <option value="medium">Medium</option>
@@ -132,11 +132,11 @@ const InteractiveToolsTab = () => {
                   {task.completed ? (
                     <CheckCircle className="h-5 w-5 text-green-400" />
                   ) : (
-                    <Circle className="h-5 w-5 text-muted-foreground" />
+                    <Circle className="h-5 w-5 text-white" />
                   )}
                 </button>
                 
-                <span className={`flex-1 ${task.completed ? 'line-through text-muted-foreground' : 'text-white'}`}>
+                <span className={`flex-1 ${task.completed ? 'line-through text-white' : 'text-white'}`}>
                   {task.text}
                 </span>
                 
@@ -156,20 +156,20 @@ const InteractiveToolsTab = () => {
             ))}
           </div>
 
-          <div className="text-sm text-muted-foreground">
+          <div className="text-sm text-white">
             {tasks.filter(t => !t.completed).length} of {tasks.length} tasks remaining
           </div>
         </CardContent>
       </Card>
 
       {/* Weekly Schedule Planner */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
             <Calendar className="h-6 w-6" />
             Weekly Schedule Planner
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Plan your weekly activities including work, college, and personal time
           </p>
         </CardHeader>
@@ -180,7 +180,7 @@ const InteractiveToolsTab = () => {
               <select
                 value={newEntry.day}
                 onChange={(e) => setNewEntry({...newEntry, day: e.target.value})}
-                className="w-full px-2 py-1 border border-elec-yellow/20 rounded bg-elec-gray text-white text-sm"
+                className="w-full px-2 py-1 border border-elec-yellow/20 rounded bg-white/5 text-white text-sm"
               >
                 <option>Monday</option>
                 <option>Tuesday</option>
@@ -240,11 +240,11 @@ const InteractiveToolsTab = () => {
                       <div key={entry.id} className="flex items-center gap-3 text-sm">
                         <span className="text-elec-yellow font-mono">{entry.time}</span>
                         <span className="text-white">{entry.activity}</span>
-                        <span className="text-muted-foreground">({entry.duration})</span>
+                        <span className="text-white">({entry.duration})</span>
                       </div>
                     ))}
                   {scheduleEntries.filter(entry => entry.day === day).length === 0 && (
-                    <span className="text-muted-foreground text-sm">No activities planned</span>
+                    <span className="text-white text-sm">No activities planned</span>
                   )}
                 </div>
               </div>
@@ -254,13 +254,13 @@ const InteractiveToolsTab = () => {
       </Card>
 
       {/* Daily Stress Level Tracker */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
             <Clock className="h-6 w-6" />
             Daily Stress Level Tracker
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Monitor your daily stress levels and identify patterns
           </p>
         </CardHeader>
@@ -269,7 +269,7 @@ const InteractiveToolsTab = () => {
             <div>
               <Label className="text-sm">Today's stress level (1-10)</Label>
               <div className="flex items-center gap-2 mt-1">
-                <span className="text-sm text-muted-foreground">1</span>
+                <span className="text-sm text-white">1</span>
                 <input
                   type="range"
                   min="1"
@@ -278,7 +278,7 @@ const InteractiveToolsTab = () => {
                   onChange={(e) => setNewStressEntry({...newStressEntry, level: parseInt(e.target.value)})}
                   className="flex-1"
                 />
-                <span className="text-sm text-muted-foreground">10</span>
+                <span className="text-sm text-white">10</span>
                 <span className={`text-lg font-bold ${getStressColor(newStressEntry.level)}`}>
                   {newStressEntry.level}
                 </span>
@@ -306,7 +306,7 @@ const InteractiveToolsTab = () => {
             {stressEntries.slice(-5).reverse().map((entry) => (
               <div key={entry.id} className="border border-elec-yellow/20 rounded-lg p-3">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-muted-foreground">{entry.date}</span>
+                  <span className="text-sm text-white">{entry.date}</span>
                   <span className={`text-lg font-bold ${getStressColor(entry.level)}`}>
                     {entry.level}/10
                   </span>

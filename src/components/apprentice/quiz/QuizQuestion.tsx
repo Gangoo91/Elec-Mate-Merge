@@ -16,7 +16,7 @@ const QuestionComponent: React.FC<QuestionProps> = ({
 
   return (
     <div className="space-y-6">
-      <div className="p-6 bg-elec-dark border border-elec-yellow/20 rounded-lg">
+      <div className="p-6 bg-white/5 border border-elec-yellow/20 rounded-lg">
         <h3 className="text-lg font-semibold mb-6 border-b border-elec-yellow/20 pb-3">
           {question.question}
         </h3>
@@ -32,7 +32,7 @@ const QuestionComponent: React.FC<QuestionProps> = ({
             if (isSelected) {
               optionClasses += " border-elec-yellow bg-elec-yellow/10";
             } else {
-              optionClasses += " border-elec-gray/30 hover:border-elec-yellow/50 hover:bg-elec-yellow/5";
+              optionClasses += " border-white/10/30 hover:border-elec-yellow/50 hover:bg-elec-yellow/5";
             }
             
             if (isAnswered) {

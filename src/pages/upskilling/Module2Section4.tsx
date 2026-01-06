@@ -172,13 +172,13 @@ const Module2Section4 = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="../module-2">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 2
@@ -187,7 +187,7 @@ const Module2Section4 = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <Badge variant="secondary" className="bg-yellow-600/40 text-yellow-400 text-sm">
+            <Badge variant="secondary" className="bg-elec-yellow/40 text-elec-yellow text-sm">
               Section 4
             </Badge>
           </div>
@@ -205,10 +205,10 @@ const Module2Section4 = () => {
         <div className="space-y-4 sm:space-y-6">
           
           {/* Introduction */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <Wrench className="h-6 w-6 text-yellow-400" />
+                <Wrench className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-white text-xl">Introduction</CardTitle>
               </div>
             </CardHeader>
@@ -227,10 +227,10 @@ const Module2Section4 = () => {
           </Card>
 
           {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-yellow-400" />
+                <CheckCircle className="h-5 w-5 text-elec-yellow" />
                 Learning Outcomes
               </CardTitle>
             </CardHeader>
@@ -238,23 +238,23 @@ const Module2Section4 = () => {
               <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
               <ul className="text-white space-y-3">
                 <li className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Identify and select appropriate test instruments for specific testing requirements</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Understand the capabilities and limitations of different instrument types</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Recognise compliance standards and safety requirements for test equipment</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Apply proper calibration and maintenance procedures</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Evaluate instrument features for professional testing applications</span>
                 </li>
               </ul>
@@ -262,10 +262,10 @@ const Module2Section4 = () => {
           </Card>
 
           {/* Essential Test Instruments */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <BookOpen className="h-6 w-6 text-yellow-400" />
+                <BookOpen className="h-6 w-6 text-elec-yellow" />
                 Essential Test Instruments for BS 7671 Compliance
               </CardTitle>
             </CardHeader>
@@ -282,8 +282,8 @@ const Module2Section4 = () => {
                 </p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="bg-card/80 p-6 rounded-lg">
-                    <h4 className="text-yellow-400 font-semibold mb-3 flex items-center gap-2">
+                  <div className="bg-transparent/80 p-6 rounded-lg">
+                    <h4 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
                       <Zap className="h-5 w-5" />
                       Dead Testing Instruments
                     </h4>
@@ -295,8 +295,8 @@ const Module2Section4 = () => {
                     </ul>
                   </div>
                   
-                  <div className="bg-card/80 p-6 rounded-lg">
-                    <h4 className="text-yellow-400 font-semibold mb-3 flex items-center gap-2">
+                  <div className="bg-transparent/80 p-6 rounded-lg">
+                    <h4 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
                       <Settings className="h-5 w-5" />
                       Live Testing Instruments
                     </h4>
@@ -308,8 +308,8 @@ const Module2Section4 = () => {
                     </ul>
                   </div>
                   
-                  <div className="bg-card/80 p-6 rounded-lg">
-                    <h4 className="text-yellow-400 font-semibold mb-3 flex items-center gap-2">
+                  <div className="bg-transparent/80 p-6 rounded-lg">
+                    <h4 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
                       <Eye className="h-5 w-5" />
                       Safety and Verification Equipment
                     </h4>
@@ -321,8 +321,8 @@ const Module2Section4 = () => {
                     </ul>
                   </div>
                   
-                  <div className="bg-card/80 p-6 rounded-lg">
-                    <h4 className="text-yellow-400 font-semibold mb-3 flex items-center gap-2">
+                  <div className="bg-transparent/80 p-6 rounded-lg">
+                    <h4 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
                       <Brain className="h-5 w-5" />
                       Advanced and Multifunction Options
                     </h4>
@@ -339,14 +339,14 @@ const Module2Section4 = () => {
           </Card>
 
           {/* Detailed Instrument Functions */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Detailed Instrument Functions and Applications</CardTitle>
             </CardHeader>
             <CardContent className="space-y-8">
               
-              <div className="bg-card p-6 rounded-lg border border-gray-700">
-                <h4 className="text-yellow-400 font-semibold mb-4 flex items-center gap-2">
+              <div className="bg-transparent p-6 rounded-lg border border-gray-700">
+                <h4 className="text-elec-yellow font-semibold mb-4 flex items-center gap-2">
                   <Zap className="h-5 w-5" />
                   Continuity Testing Equipment
                 </h4>
@@ -378,8 +378,8 @@ const Module2Section4 = () => {
                 </div>
               </div>
 
-              <div className="bg-card p-6 rounded-lg border border-gray-700">
-                <h4 className="text-yellow-400 font-semibold mb-4">Insulation Resistance Testing</h4>
+              <div className="bg-transparent p-6 rounded-lg border border-gray-700">
+                <h4 className="text-elec-yellow font-semibold mb-4">Insulation Resistance Testing</h4>
                 <p className="text-white mb-4">
                   Measures resistance between conductors and to earth to detect insulation breakdown, moisture ingress, 
                   or deterioration that could lead to dangerous conditions or equipment failure.
@@ -408,8 +408,8 @@ const Module2Section4 = () => {
                 </div>
               </div>
 
-              <div className="bg-card p-6 rounded-lg border border-gray-700">
-                <h4 className="text-yellow-400 font-semibold mb-4">Earth Fault Loop Impedance Testing</h4>
+              <div className="bg-transparent p-6 rounded-lg border border-gray-700">
+                <h4 className="text-elec-yellow font-semibold mb-4">Earth Fault Loop Impedance Testing</h4>
                 <p className="text-white mb-4">
                   Measures the impedance of the earth fault current path to verify that sufficient fault current will flow 
                   to operate protective devices within required disconnection times specified in BS 7671.
@@ -438,8 +438,8 @@ const Module2Section4 = () => {
                 </div>
               </div>
 
-              <div className="bg-card p-6 rounded-lg border border-gray-700">
-                <h4 className="text-yellow-400 font-semibold mb-4">RCD Testing Equipment</h4>
+              <div className="bg-transparent p-6 rounded-lg border border-gray-700">
+                <h4 className="text-elec-yellow font-semibold mb-4">RCD Testing Equipment</h4>
                 <p className="text-white mb-4">
                   Specialised instruments for testing residual current devices to ensure they provide adequate protection 
                   against electric shock and comply with their rated specifications and BS EN 61008/61009 standards.
@@ -471,7 +471,7 @@ const Module2Section4 = () => {
           </Card>
 
           {/* Multifunction Tester Advantages */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Multifunction Tester Advantages and Considerations</CardTitle>
             </CardHeader>
@@ -508,7 +508,7 @@ const Module2Section4 = () => {
               </div>
 
               <div className="bg-blue-900/20 border border-blue-600/20 p-6 rounded-lg">
-                <h4 className="text-yellow-400 font-semibold mb-4">Selection Criteria for Professional Use</h4>
+                <h4 className="text-elec-yellow font-semibold mb-4">Selection Criteria for Professional Use</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <h5 className="text-blue-300 font-semibold mb-2">Technical Requirements:</h5>
@@ -536,20 +536,20 @@ const Module2Section4 = () => {
           </Card>
 
           {/* Calibration and Maintenance */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Calibration and Maintenance Requirements</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-4">Calibration Standards and Frequency</h4>
+                <h4 className="text-elec-yellow font-semibold mb-4">Calibration Standards and Frequency</h4>
                 <p className="text-white mb-4">
                   Regular calibration ensures test instruments maintain accuracy and comply with BS EN 61557 requirements. 
                   Calibration must be traceable to national standards and performed by accredited laboratories.
                 </p>
                 
-                <div className="bg-card/80 p-6 rounded-lg">
+                <div className="bg-transparent/80 p-6 rounded-lg">
                   <h5 className="text-white font-semibold mb-3">Typical Calibration Intervals:</h5>
                   <Table>
                     <TableHeader>
@@ -591,9 +591,9 @@ const Module2Section4 = () => {
               </div>
 
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-4">Daily and Pre-Use Checks</h4>
+                <h4 className="text-elec-yellow font-semibold mb-4">Daily and Pre-Use Checks</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="bg-card/80 p-4 rounded-lg">
+                  <div className="bg-transparent/80 p-4 rounded-lg">
                     <h5 className="text-white font-semibold mb-3">Visual Inspection:</h5>
                     <ul className="text-white space-y-1 text-sm">
                       <li>• Case integrity and damage assessment</li>
@@ -604,7 +604,7 @@ const Module2Section4 = () => {
                       <li>• Calibration date validity</li>
                     </ul>
                   </div>
-                  <div className="bg-card/80 p-4 rounded-lg">
+                  <div className="bg-transparent/80 p-4 rounded-lg">
                     <h5 className="text-white font-semibold mb-3">Functional Testing:</h5>
                     <ul className="text-white space-y-1 text-sm">
                       <li>• Proving unit verification before use</li>
@@ -633,7 +633,7 @@ const Module2Section4 = () => {
           </Card>
 
           {/* Quick Knowledge Checks */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Quick Knowledge Checks</CardTitle>
             </CardHeader>
@@ -641,7 +641,7 @@ const Module2Section4 = () => {
               <div className="space-y-4">
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       What standard must electrical test instruments comply with?
                     </summary>
@@ -659,16 +659,16 @@ const Module2Section4 = () => {
           </Card>
 
           {/* Real World Scenario */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <HardHat className="h-5 w-5 text-yellow-400" />
+                <HardHat className="h-5 w-5 text-elec-yellow" />
                 Real World Scenario
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
               <div className="bg-blue-900/20 border border-blue-600/20 p-4 rounded-lg">
-                <h4 className="text-yellow-400 font-semibold mb-2">Scenario: Multi-Site Commercial Testing Contract</h4>
+                <h4 className="text-elec-yellow font-semibold mb-2">Scenario: Multi-Site Commercial Testing Contract</h4>
                 <p className="text-blue-200 text-sm">
                   You've been awarded a contract to conduct periodic inspection and testing across 15 retail outlets 
                   for a major chain. Each site has different configurations including domestic-type supplies, small power 
@@ -677,9 +677,9 @@ const Module2Section4 = () => {
               </div>
 
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-3">Equipment Selection Process:</h4>
+                <h4 className="text-elec-yellow font-semibold mb-3">Equipment Selection Process:</h4>
                 <div className="space-y-4">
-                  <div className="bg-card/80 p-4 rounded-lg">
+                  <div className="bg-transparent/80 p-4 rounded-lg">
                     <h5 className="text-white font-semibold mb-2">Primary Instrument Choice</h5>
                     <p className="text-white text-sm mb-2">Selected: High-specification multifunction tester with data logging</p>
                      <ul className="text-white space-y-1 text-sm">
@@ -691,7 +691,7 @@ const Module2Section4 = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-card/80 p-4 rounded-lg">
+                  <div className="bg-transparent/80 p-4 rounded-lg">
                     <h5 className="text-white font-semibold mb-2">Supporting Equipment</h5>
                      <ul className="text-white space-y-1 text-sm">
                       <li>• <strong>Dedicated RCD tester:</strong> Backup for complex RCD testing scenarios</li>
@@ -702,7 +702,7 @@ const Module2Section4 = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-card/80 p-4 rounded-lg">
+                  <div className="bg-transparent/80 p-4 rounded-lg">
                     <h5 className="text-white font-semibold mb-2">Practical Considerations</h5>
                     <ul className="text-white space-y-1 text-sm">
                       <li>• All instruments within current calibration dates</li>
@@ -727,7 +727,7 @@ const Module2Section4 = () => {
           </Card>
 
           {/* Frequently Asked Questions */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Frequently Asked Questions</CardTitle>
             </CardHeader>
@@ -735,7 +735,7 @@ const Module2Section4 = () => {
               <div className="space-y-4">
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       Can I use a basic multimeter for electrical installation testing?
                     </summary>
@@ -747,7 +747,7 @@ const Module2Section4 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       How do I know if my test instrument needs recalibrating?
                     </summary>
@@ -759,7 +759,7 @@ const Module2Section4 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       What's the difference between high-current and non-trip loop testing?
                     </summary>
@@ -771,7 +771,7 @@ const Module2Section4 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       Can I test Type B RCDs with a standard RCD tester?
                     </summary>
@@ -783,7 +783,7 @@ const Module2Section4 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       Should I buy individual testers or a multifunction tester?
                     </summary>
@@ -795,7 +795,7 @@ const Module2Section4 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       What happens if I use an out-of-calibration instrument?
                     </summary>
@@ -807,7 +807,7 @@ const Module2Section4 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       How do I choose the right IP rating for site conditions?
                     </summary>
@@ -821,22 +821,22 @@ const Module2Section4 = () => {
           </Card>
 
           {/* Practical Exercises */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <Users className="h-6 w-6 text-yellow-400" />
+                <Users className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-white text-xl">Practical Exercises</CardTitle>
               </div>
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-3">Exercise 1: Instrument Selection Matrix</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-3">Exercise 1: Instrument Selection Matrix</h4>
                    <p className="text-white mb-3">
                     Create a decision matrix for selecting test instruments for different project types.
                   </p>
-                  <div className="bg-card/50 p-4 rounded-lg">
-                    <p className="text-yellow-400 font-semibold mb-2">Your task:</p>
+                  <div className="bg-transparent/50 p-4 rounded-lg">
+                    <p className="text-elec-yellow font-semibold mb-2">Your task:</p>
                     <ol className="text-white text-sm space-y-1 list-decimal list-inside">
                       <li>Define project types (domestic, commercial, industrial)</li>
                       <li>List required test functions for each project type</li>
@@ -847,12 +847,12 @@ const Module2Section4 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-3">Exercise 2: Calibration Schedule Planning</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-3">Exercise 2: Calibration Schedule Planning</h4>
                    <p className="text-white mb-3">
                     Develop a calibration and maintenance schedule for a test equipment inventory.
                   </p>
-                  <div className="bg-card/50 p-4 rounded-lg">
-                    <p className="text-yellow-400 font-semibold mb-2">Include:</p>
+                  <div className="bg-transparent/50 p-4 rounded-lg">
+                    <p className="text-elec-yellow font-semibold mb-2">Include:</p>
                      <ul className="text-white text-sm space-y-1 list-disc list-inside">
                       <li>Equipment inventory with serial numbers and purchase dates</li>
                       <li>Calibration intervals and due dates</li>
@@ -863,12 +863,12 @@ const Module2Section4 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-3">Exercise 3: Cost-Benefit Analysis</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-3">Exercise 3: Cost-Benefit Analysis</h4>
                   <p className="text-white mb-3">
                     Compare the total cost of ownership for different instrument strategies.
                   </p>
-                  <div className="bg-card/50 p-4 rounded-lg">
-                    <p className="text-yellow-400 font-semibold mb-2">Calculate:</p>
+                  <div className="bg-transparent/50 p-4 rounded-lg">
+                    <p className="text-elec-yellow font-semibold mb-2">Calculate:</p>
                     <ul className="text-white text-sm space-y-1 list-disc list-inside">
                       <li>Initial purchase costs for different options</li>
                       <li>Annual calibration and maintenance costs</li>
@@ -901,7 +901,7 @@ const Module2Section4 = () => {
           </Card>
 
           {/* Quiz Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Knowledge Check (10 Questions)</CardTitle>
             </CardHeader>

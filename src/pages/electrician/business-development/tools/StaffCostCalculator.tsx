@@ -1,292 +1,579 @@
 import * as React from "react";
 import { Helmet } from "react-helmet";
-import BackButton from "@/components/common/BackButton";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import InfoBox from "@/components/common/InfoBox";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import { Users, Calendar, Receipt, Truck, Wrench, Shield, GraduationCap, Target, TrendingUp } from "lucide-react";
+import {
+  Users,
+  Calendar,
+  Receipt,
+  Truck,
+  Wrench,
+  Shield,
+  GraduationCap,
+  Target,
+  TrendingUp,
+  Calculator,
+  RotateCcw,
+  ChevronDown,
+  BookOpen,
+  Info,
+} from "lucide-react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { cn } from "@/lib/utils";
+import {
+  CalculatorCard,
+  CalculatorInput,
+  CalculatorResult,
+  ResultValue,
+  ResultsGrid,
+  CALCULATOR_CONFIG,
+} from "@/components/calculators/shared";
 
 const currency = (n: number) => `£${n.toFixed(2)}`;
 
 const StaffCostCalculator: React.FC = () => {
-  const [basePayHr, setBasePayHr] = React.useState(26); // Updated for 2025: above new minimum wage rates
-  const [weeklyHours, setWeeklyHours] = React.useState(40);
-  const [paidWeeks, setPaidWeeks] = React.useState(52);
-  const [holidaysDays, setHolidaysDays] = React.useState(28);
-  const [sickDays, setSickDays] = React.useState(3);
-  const [niRate, setNiRate] = React.useState(13.8);
-  const [pensionRate, setPensionRate] = React.useState(3);
-  const [vanYear, setVanYear] = React.useState(4200); // Updated for 2025: increased fuel, insurance, maintenance
-  const [toolsYear, setToolsYear] = React.useState(1000); // Updated for 2025: tool inflation
-  const [insuranceYear, setInsuranceYear] = React.useState(1500); // Updated for 2025: public liability increases
-  const [trainingYear, setTrainingYear] = React.useState(600); // Updated for 2025: course price increases
-  const [utilisation, setUtilisation] = React.useState(65); // % of paid time billed
-  const [targetMargin, setTargetMargin] = React.useState(20);
+  const config = CALCULATOR_CONFIG["business"];
 
-  const annualBase = basePayHr * weeklyHours * paidWeeks;
-  const oncostNI = annualBase * (niRate / 100);
-  const pension = annualBase * (pensionRate / 100);
-  const annualOnCosts = vanYear + toolsYear + insuranceYear + trainingYear + oncostNI + pension;
+  const [basePayHr, setBasePayHr] = React.useState("26");
+  const [weeklyHours, setWeeklyHours] = React.useState("40");
+  const [paidWeeks, setPaidWeeks] = React.useState("52");
+  const [holidaysDays, setHolidaysDays] = React.useState("28");
+  const [sickDays, setSickDays] = React.useState("3");
+  const [niRate, setNiRate] = React.useState("13.8");
+  const [pensionRate, setPensionRate] = React.useState("3");
+  const [vanYear, setVanYear] = React.useState("4200");
+  const [toolsYear, setToolsYear] = React.useState("1000");
+  const [insuranceYear, setInsuranceYear] = React.useState("1500");
+  const [trainingYear, setTrainingYear] = React.useState("600");
+  const [utilisation, setUtilisation] = React.useState("65");
+  const [targetMargin, setTargetMargin] = React.useState("20");
+
+  const [calculated, setCalculated] = React.useState(false);
+  const [showBreakdown, setShowBreakdown] = React.useState(false);
+  const [showReference, setShowReference] = React.useState(false);
+
+  const basePayHrNum = parseFloat(basePayHr) || 0;
+  const weeklyHoursNum = parseFloat(weeklyHours) || 0;
+  const paidWeeksNum = parseFloat(paidWeeks) || 0;
+  const niRateNum = parseFloat(niRate) || 0;
+  const pensionRateNum = parseFloat(pensionRate) || 0;
+  const vanYearNum = parseFloat(vanYear) || 0;
+  const toolsYearNum = parseFloat(toolsYear) || 0;
+  const insuranceYearNum = parseFloat(insuranceYear) || 0;
+  const trainingYearNum = parseFloat(trainingYear) || 0;
+  const utilisationNum = parseFloat(utilisation) || 0;
+  const targetMarginNum = parseFloat(targetMargin) || 0;
+
+  const annualBase = basePayHrNum * weeklyHoursNum * paidWeeksNum;
+  const oncostNI = annualBase * (niRateNum / 100);
+  const pension = annualBase * (pensionRateNum / 100);
+  const annualOnCosts = vanYearNum + toolsYearNum + insuranceYearNum + trainingYearNum + oncostNI + pension;
 
   const totalAnnualCost = annualBase + annualOnCosts;
-  const effectiveHours = weeklyHours * paidWeeks * (utilisation / 100);
+  const effectiveHours = weeklyHoursNum * paidWeeksNum * (utilisationNum / 100);
   const loadedHourlyCost = effectiveHours > 0 ? totalAnnualCost / effectiveHours : 0;
-  const recommendedChargeOut = targetMargin > 0 ? loadedHourlyCost / (1 - targetMargin / 100) : loadedHourlyCost;
+  const recommendedChargeOut = targetMarginNum > 0 ? loadedHourlyCost / (1 - targetMarginNum / 100) : loadedHourlyCost;
+
+  const handleCalculate = () => {
+    setCalculated(true);
+  };
+
+  const handleReset = () => {
+    setBasePayHr("26");
+    setWeeklyHours("40");
+    setPaidWeeks("52");
+    setHolidaysDays("28");
+    setSickDays("3");
+    setNiRate("13.8");
+    setPensionRate("3");
+    setVanYear("4200");
+    setToolsYear("1000");
+    setInsuranceYear("1500");
+    setTrainingYear("600");
+    setUtilisation("65");
+    setTargetMargin("20");
+    setCalculated(false);
+  };
+
+  const isValid = basePayHrNum > 0 && weeklyHoursNum > 0;
 
   return (
-    <main className="min-h-screen bg-elec-dark px-3 sm:px-4 md:px-6 py-4 sm:py-6">
+    <div className="space-y-4">
       <Helmet>
         <title>Fully Loaded Staff Cost Calculator UK</title>
-        <meta name="description" content="Calculate fully loaded electrician staff cost: wages, NI, pension, holidays, van, tools and overheads." />
+        <meta
+          name="description"
+          content="Calculate fully loaded electrician staff cost: wages, NI, pension, holidays, van, tools and overheads."
+        />
         <link rel="canonical" href="/electrician/business-development/tools/staff-cost" />
       </Helmet>
 
-      <div className="max-w-3xl mx-auto">
-        <header className="mb-4 sm:mb-6">
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-elec-light">Fully Loaded Staff Cost</h1>
-          <p className="text-sm sm:text-base text-elec-light/70 mt-2">See the real hourly cost of a spark or mate after all on-costs in the UK.</p>
-        </header>
+      <CalculatorCard
+        category="business"
+        title="Staff Cost Calculator"
+        description="Calculate the true hourly cost of employing staff including all overheads"
+        badge="Employment"
+      >
+        {/* Basic Pay Section */}
+        <div className="flex items-center gap-2 mb-3">
+          <Users className="h-4 w-4 text-blue-400" />
+          <span className="text-sm font-medium text-white/80">Basic Pay Details</span>
+        </div>
 
-        <BackButton customUrl="/electrician/business-development/tools" />
-
-        <section className="mt-4 sm:mt-6 space-y-4 sm:space-y-6">
-          <InfoBox
-            title="Why this matters"
-            points={[
-              "Prevents pricing below true labour cost.",
-              "Includes NI, pension, holidays, training and downtime.",
-              "Feeds directly into hourly rate and project pricing.",
-            ]}
+        <div className="grid grid-cols-3 gap-3">
+          <CalculatorInput
+            label="Base Pay"
+            unit="£/hr"
+            type="text"
+            inputMode="decimal"
+            value={basePayHr}
+            onChange={(val) => {
+              setBasePayHr(val);
+              setCalculated(false);
+            }}
+            placeholder="e.g., 26"
+            hint="Hourly wage"
           />
 
-          <Card className="bg-elec-card border-elec-yellow/20">
-            <CardHeader className="pb-3 sm:pb-6">
-              <CardTitle className="text-lg sm:text-xl text-elec-light flex items-center gap-2">
-                <Users className="h-5 w-5 text-elec-yellow" />
-                Basic Pay Details
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3 sm:space-y-4">
-              <div className="grid gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <MobileInputWrapper
-                  label="Base Pay"
-                  value={basePayHr.toString()}
-                  onChange={(val) => setBasePayHr(Number(val) || 0)}
-                  type="number"
-                  step="0.1"
-                  inputMode="decimal"
-                  unit="£/hr"
-                  hint="Hourly wage before on-costs. UK min £12.21 (21+). Typical: £18-30/hr"
-                  icon={<Users className="h-4 w-4" />}
-                />
-                <MobileInputWrapper
-                  label="Weekly Hours"
-                  value={weeklyHours.toString()}
-                  onChange={(val) => setWeeklyHours(Number(val) || 0)}
-                  type="number"
-                  inputMode="numeric"
-                  unit="hrs"
-                  hint="Standard working hours per week. Typical: 37-40 hours"
-                  icon={<Calendar className="h-4 w-4" />}
-                />
-                <MobileInputWrapper
-                  label="Paid Weeks"
-                  value={paidWeeks.toString()}
-                  onChange={(val) => setPaidWeeks(Number(val) || 0)}
-                  type="number"
-                  inputMode="numeric"
-                  unit="wks/yr"
-                  hint="Weeks paid per year. Usually 52 for full-time staff"
-                  icon={<Calendar className="h-4 w-4" />}
-                />
-              </div>
-            </CardContent>
-          </Card>
+          <CalculatorInput
+            label="Weekly Hours"
+            unit="hrs"
+            type="text"
+            inputMode="numeric"
+            value={weeklyHours}
+            onChange={(val) => {
+              setWeeklyHours(val);
+              setCalculated(false);
+            }}
+            placeholder="e.g., 40"
+            hint="Per week"
+          />
 
-          <Card className="bg-elec-card border-elec-yellow/20">
-            <CardHeader className="pb-3 sm:pb-6">
-              <CardTitle className="text-lg sm:text-xl text-elec-light flex items-center gap-2">
-                <Receipt className="h-5 w-5 text-purple-400" />
-                Employment Costs
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3 sm:space-y-4">
-              <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
-                <MobileInputWrapper
-                  label="Holiday Days"
-                  value={holidaysDays.toString()}
-                  onChange={(val) => setHolidaysDays(Number(val) || 0)}
-                  type="number"
-                  inputMode="numeric"
-                  unit="days"
-                  hint="UK statutory minimum: 28 days (inc. bank holidays)"
-                  icon={<Calendar className="h-4 w-4" />}
-                />
-                <MobileInputWrapper
-                  label="Sick Days"
-                  value={sickDays.toString()}
-                  onChange={(val) => setSickDays(Number(val) || 0)}
-                  type="number"
-                  inputMode="numeric"
-                  unit="days"
-                  hint="Average sick days per year. UK average: 3-5 days"
-                  icon={<Calendar className="h-4 w-4" />}
-                />
-                <MobileInputWrapper
-                  label="Employer NI"
-                  value={niRate.toString()}
-                  onChange={(val) => setNiRate(Number(val) || 0)}
-                  type="number"
-                  step="0.1"
-                  inputMode="decimal"
-                  unit="%"
-                  hint="UK rate: 13.8% on earnings above £175/week (2025)"
-                  icon={<Receipt className="h-4 w-4" />}
-                />
-                <MobileInputWrapper
-                  label="Pension"
-                  value={pensionRate.toString()}
-                  onChange={(val) => setPensionRate(Number(val) || 0)}
-                  type="number"
-                  step="0.1"
-                  inputMode="decimal"
-                  unit="%"
-                  hint="UK minimum: 3% employer contribution (auto-enrolment)"
-                  icon={<Receipt className="h-4 w-4" />}
-                />
-              </div>
-            </CardContent>
-          </Card>
+          <CalculatorInput
+            label="Paid Weeks"
+            unit="wks"
+            type="text"
+            inputMode="numeric"
+            value={paidWeeks}
+            onChange={(val) => {
+              setPaidWeeks(val);
+              setCalculated(false);
+            }}
+            placeholder="e.g., 52"
+            hint="Per year"
+          />
+        </div>
 
-          <Card className="bg-elec-card border-elec-yellow/20">
-            <CardHeader className="pb-3 sm:pb-6">
-              <CardTitle className="text-lg sm:text-xl text-elec-light flex items-center gap-2">
-                <Wrench className="h-5 w-5 text-orange-400" />
-                Equipment & Overheads
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3 sm:space-y-4">
-              <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
-                <MobileInputWrapper
-                  label="Van Costs"
-                  value={vanYear.toString()}
-                  onChange={(val) => setVanYear(Number(val) || 0)}
-                  type="number"
-                  inputMode="numeric"
-                  unit="£/yr"
-                  hint="Lease/finance, fuel, insurance, servicing. Typical: £3-5k"
-                  icon={<Truck className="h-4 w-4" />}
-                />
-                <MobileInputWrapper
-                  label="Tools & Equipment"
-                  value={toolsYear.toString()}
-                  onChange={(val) => setToolsYear(Number(val) || 0)}
-                  type="number"
-                  inputMode="numeric"
-                  unit="£/yr"
-                  hint="Annual tool replacement & upgrades. Typical: £800-1.5k"
-                  icon={<Wrench className="h-4 w-4" />}
-                />
-                <MobileInputWrapper
-                  label="Insurance"
-                  value={insuranceYear.toString()}
-                  onChange={(val) => setInsuranceYear(Number(val) || 0)}
-                  type="number"
-                  inputMode="numeric"
-                  unit="£/yr"
-                  hint="Public liability, professional indemnity. Typical: £1-2k"
-                  icon={<Shield className="h-4 w-4" />}
-                />
-                <MobileInputWrapper
-                  label="Training & Certs"
-                  value={trainingYear.toString()}
-                  onChange={(val) => setTrainingYear(Number(val) || 0)}
-                  type="number"
-                  inputMode="numeric"
-                  unit="£/yr"
-                  hint="18th Edition updates, testing courses. Typical: £500-800"
-                  icon={<GraduationCap className="h-4 w-4" />}
-                />
-              </div>
-            </CardContent>
-          </Card>
+        {/* Employment Costs Section */}
+        <div className="flex items-center gap-2 mb-3 mt-6 pt-4 border-t border-white/10">
+          <Receipt className="h-4 w-4 text-purple-400" />
+          <span className="text-sm font-medium text-white/80">Employment Costs</span>
+        </div>
 
-          <Card className="bg-elec-card border-elec-yellow/20">
-            <CardHeader className="pb-3 sm:pb-6">
-              <CardTitle className="text-lg sm:text-xl text-elec-light flex items-center gap-2">
-                <Target className="h-5 w-5 text-green-400" />
-                Efficiency & Margins
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3 sm:space-y-4">
-              <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
-                <MobileInputWrapper
-                  label="Utilisation"
-                  value={utilisation.toString()}
-                  onChange={(val) => setUtilisation(Number(val) || 0)}
-                  type="number"
-                  inputMode="decimal"
-                  unit="%"
-                  hint="% of paid time that's billable. Industry avg: 60-70%. Includes admin, travel."
-                  icon={<Target className="h-4 w-4" />}
-                />
-                <MobileInputWrapper
-                  label="Target Margin"
-                  value={targetMargin.toString()}
-                  onChange={(val) => setTargetMargin(Number(val) || 0)}
-                  type="number"
-                  inputMode="decimal"
-                  unit="%"
-                  hint="Profit margin on labour. Typical: 15-25% for small firms"
-                  icon={<TrendingUp className="h-4 w-4" />}
-                />
-              </div>
-            </CardContent>
-          </Card>
+        <div className="grid grid-cols-2 gap-3">
+          <CalculatorInput
+            label="Holiday Days"
+            unit="days"
+            type="text"
+            inputMode="numeric"
+            value={holidaysDays}
+            onChange={(val) => {
+              setHolidaysDays(val);
+              setCalculated(false);
+            }}
+            placeholder="e.g., 28"
+            hint="UK min: 28 days"
+          />
 
-          <Card className="bg-gradient-to-br from-elec-card to-elec-dark border-elec-yellow/30">
-            <CardHeader>
-              <CardTitle className="text-lg sm:text-xl text-elec-light">Results Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="grid gap-3 sm:grid-cols-2">
-                <div className="p-3 sm:p-4 rounded-lg bg-elec-dark/50 border border-primary/20">
-                  <p className="text-xs sm:text-sm text-elec-light/70 mb-1">Annual Base Pay</p>
-                  <p className="text-lg sm:text-xl font-bold text-blue-400">{currency(annualBase)}</p>
+          <CalculatorInput
+            label="Sick Days"
+            unit="days"
+            type="text"
+            inputMode="numeric"
+            value={sickDays}
+            onChange={(val) => {
+              setSickDays(val);
+              setCalculated(false);
+            }}
+            placeholder="e.g., 3"
+            hint="Average/year"
+          />
+
+          <CalculatorInput
+            label="Employer NI"
+            unit="%"
+            type="text"
+            inputMode="decimal"
+            value={niRate}
+            onChange={(val) => {
+              setNiRate(val);
+              setCalculated(false);
+            }}
+            placeholder="e.g., 13.8"
+            hint="UK: 13.8%"
+          />
+
+          <CalculatorInput
+            label="Pension"
+            unit="%"
+            type="text"
+            inputMode="decimal"
+            value={pensionRate}
+            onChange={(val) => {
+              setPensionRate(val);
+              setCalculated(false);
+            }}
+            placeholder="e.g., 3"
+            hint="UK min: 3%"
+          />
+        </div>
+
+        {/* Equipment Section */}
+        <div className="flex items-center gap-2 mb-3 mt-6 pt-4 border-t border-white/10">
+          <Wrench className="h-4 w-4 text-orange-400" />
+          <span className="text-sm font-medium text-white/80">Equipment & Overheads</span>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3">
+          <CalculatorInput
+            label="Van Costs"
+            unit="£/yr"
+            type="text"
+            inputMode="numeric"
+            value={vanYear}
+            onChange={(val) => {
+              setVanYear(val);
+              setCalculated(false);
+            }}
+            placeholder="e.g., 4200"
+            hint="Lease, fuel, insurance"
+          />
+
+          <CalculatorInput
+            label="Tools & Equipment"
+            unit="£/yr"
+            type="text"
+            inputMode="numeric"
+            value={toolsYear}
+            onChange={(val) => {
+              setToolsYear(val);
+              setCalculated(false);
+            }}
+            placeholder="e.g., 1000"
+            hint="Replacements"
+          />
+
+          <CalculatorInput
+            label="Insurance"
+            unit="£/yr"
+            type="text"
+            inputMode="numeric"
+            value={insuranceYear}
+            onChange={(val) => {
+              setInsuranceYear(val);
+              setCalculated(false);
+            }}
+            placeholder="e.g., 1500"
+            hint="Public liability"
+          />
+
+          <CalculatorInput
+            label="Training"
+            unit="£/yr"
+            type="text"
+            inputMode="numeric"
+            value={trainingYear}
+            onChange={(val) => {
+              setTrainingYear(val);
+              setCalculated(false);
+            }}
+            placeholder="e.g., 600"
+            hint="Courses, certs"
+          />
+        </div>
+
+        {/* Efficiency Section */}
+        <div className="flex items-center gap-2 mb-3 mt-6 pt-4 border-t border-white/10">
+          <Target className="h-4 w-4 text-green-400" />
+          <span className="text-sm font-medium text-white/80">Efficiency & Margins</span>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3">
+          <CalculatorInput
+            label="Utilisation"
+            unit="%"
+            type="text"
+            inputMode="decimal"
+            value={utilisation}
+            onChange={(val) => {
+              setUtilisation(val);
+              setCalculated(false);
+            }}
+            placeholder="e.g., 65"
+            hint="Billable % of time"
+          />
+
+          <CalculatorInput
+            label="Target Margin"
+            unit="%"
+            type="text"
+            inputMode="decimal"
+            value={targetMargin}
+            onChange={(val) => {
+              setTargetMargin(val);
+              setCalculated(false);
+            }}
+            placeholder="e.g., 20"
+            hint="Profit target"
+          />
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex gap-2 pt-4">
+          <button
+            onClick={handleCalculate}
+            disabled={!isValid}
+            className={cn(
+              "flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation",
+              isValid ? "text-black" : "bg-white/10 text-white/30 cursor-not-allowed"
+            )}
+            style={
+              isValid
+                ? {
+                    background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                  }
+                : undefined
+            }
+          >
+            <Calculator className="h-5 w-5" />
+            Calculate Cost
+          </button>
+          <button
+            onClick={handleReset}
+            className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/90 hover:bg-white/10 transition-colors touch-manipulation"
+          >
+            <RotateCcw className="h-5 w-5" />
+          </button>
+        </div>
+      </CalculatorCard>
+
+      {/* Results Section */}
+      {calculated && isValid && (
+        <div className="space-y-4 animate-fade-in">
+          {/* Key Results */}
+          <div className="grid grid-cols-2 gap-4">
+            <CalculatorResult category="business">
+              <div className="text-center">
+                <p className="text-sm text-white mb-1">True Hourly Cost</p>
+                <div
+                  className="text-3xl font-bold"
+                  style={{
+                    backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
+                  {currency(loadedHourlyCost)}/hr
                 </div>
-                <div className="p-3 sm:p-4 rounded-lg bg-elec-dark/50 border border-primary/20">
-                  <p className="text-xs sm:text-sm text-elec-light/70 mb-1">Total On-costs</p>
-                  <p className="text-lg sm:text-xl font-bold text-purple-400">{currency(annualOnCosts)}</p>
-                  <p className="text-xs text-elec-light/60 mt-1">NI, pension, van, tools, insurance, training</p>
-                </div>
-                <div className="p-3 sm:p-4 rounded-lg bg-elec-dark/50 border border-orange-400/30">
-                  <p className="text-xs sm:text-sm text-elec-light/70 mb-1">Total Annual Cost</p>
-                  <p className="text-xl sm:text-2xl font-bold text-orange-400">{currency(totalAnnualCost)}</p>
-                </div>
-                <div className="p-3 sm:p-4 rounded-lg bg-elec-dark/50 border border-primary/20">
-                  <p className="text-xs sm:text-sm text-elec-light/70 mb-1">Effective Billable Hours</p>
-                  <p className="text-lg sm:text-xl font-bold text-elec-light">{effectiveHours.toFixed(0)} hrs/yr</p>
-                </div>
+                <p className="text-xs text-white mt-1">Fully loaded cost</p>
               </div>
-              
-              <div className="mt-4 pt-4 border-t border-elec-yellow/20 space-y-3">
-                <div className="p-4 sm:p-5 rounded-lg bg-elec-dark/70 border-2 border-elec-yellow/40">
-                  <p className="text-sm text-elec-light/80 mb-1">True Hourly Cost</p>
-                  <p className="text-2xl sm:text-3xl font-bold text-elec-yellow">{currency(loadedHourlyCost)}/hr</p>
-                  <p className="text-xs text-elec-light/60 mt-1">This is what one hour actually costs your business</p>
+            </CalculatorResult>
+
+            <CalculatorResult category="business">
+              <div className="text-center">
+                <p className="text-sm text-white mb-1">Charge-Out Rate</p>
+                <div className="text-3xl font-bold text-green-400">
+                  {currency(recommendedChargeOut)}/hr
                 </div>
-                
-                <div className="p-4 sm:p-5 rounded-lg bg-green-500/10 border-2 border-green-400/40">
-                  <p className="text-sm text-elec-light/80 mb-1">Recommended Charge-Out Rate</p>
-                  <p className="text-2xl sm:text-3xl font-bold text-green-400">{currency(recommendedChargeOut)}/hr</p>
-                  <p className="text-xs text-elec-light/60 mt-1">At {targetMargin}% target margin</p>
-                </div>
+                <p className="text-xs text-white mt-1">At {targetMarginNum}% margin</p>
               </div>
-            </CardContent>
-          </Card>
-        </section>
-      </div>
-    </main>
+            </CalculatorResult>
+          </div>
+
+          {/* Annual Summary */}
+          <CalculatorResult category="business">
+            <ResultsGrid columns={2}>
+              <ResultValue
+                label="Annual Base Pay"
+                value={currency(annualBase)}
+                category="business"
+                size="sm"
+              />
+              <ResultValue
+                label="Total On-costs"
+                value={currency(annualOnCosts)}
+                category="business"
+                size="sm"
+              />
+              <ResultValue
+                label="Total Annual Cost"
+                value={currency(totalAnnualCost)}
+                category="business"
+                size="sm"
+              />
+              <ResultValue
+                label="Billable Hours"
+                value={`${effectiveHours.toFixed(0)} hrs/yr`}
+                category="business"
+                size="sm"
+              />
+            </ResultsGrid>
+          </CalculatorResult>
+
+          {/* Cost Breakdown */}
+          <Collapsible open={showBreakdown} onOpenChange={setShowBreakdown}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: "#60a5fa15" }}>
+              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                <div className="flex items-center gap-3">
+                  <Info className="h-4 w-4 text-blue-400" />
+                  <span className="text-sm sm:text-base font-medium text-blue-300">
+                    Cost Breakdown
+                  </span>
+                </div>
+                <ChevronDown
+                  className={cn(
+                    "h-4 w-4 text-white/80 transition-transform duration-200",
+                    showBreakdown && "rotate-180"
+                  )}
+                />
+              </CollapsibleTrigger>
+
+              <CollapsibleContent className="p-4 pt-0">
+                <div className="space-y-2 text-sm">
+                  <h4 className="text-xs font-medium text-white uppercase tracking-wide mb-2">
+                    Annual Costs
+                  </h4>
+                  <div className="flex justify-between items-center py-2 border-b border-white/10">
+                    <span className="text-white/80">Base Pay ({basePayHrNum}/hr × {weeklyHoursNum}hrs × {paidWeeksNum}wks)</span>
+                    <span className="text-white font-mono">{currency(annualBase)}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-white/10">
+                    <span className="text-white/80">Employer NI ({niRateNum}%)</span>
+                    <span className="text-white font-mono">+ {currency(oncostNI)}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-white/10">
+                    <span className="text-white/80">Pension ({pensionRateNum}%)</span>
+                    <span className="text-white font-mono">+ {currency(pension)}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-white/10">
+                    <span className="text-white/80">Van costs</span>
+                    <span className="text-white font-mono">+ {currency(vanYearNum)}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-white/10">
+                    <span className="text-white/80">Tools & equipment</span>
+                    <span className="text-white font-mono">+ {currency(toolsYearNum)}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-white/10">
+                    <span className="text-white/80">Insurance</span>
+                    <span className="text-white font-mono">+ {currency(insuranceYearNum)}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-white/10">
+                    <span className="text-white/80">Training</span>
+                    <span className="text-white font-mono">+ {currency(trainingYearNum)}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 font-medium bg-white/5 px-2 rounded">
+                    <span className="text-white">= Total Annual Cost</span>
+                    <span className="text-white font-mono">{currency(totalAnnualCost)}</span>
+                  </div>
+
+                  <h4 className="text-xs font-medium text-white uppercase tracking-wide mb-2 mt-6 pt-4 border-t border-white/10">
+                    Hourly Calculation
+                  </h4>
+                  <div className="flex justify-between items-center py-2 border-b border-white/10">
+                    <span className="text-white/80">Total Hours ({weeklyHoursNum}hrs × {paidWeeksNum}wks)</span>
+                    <span className="text-white font-mono">{(weeklyHoursNum * paidWeeksNum).toFixed(0)} hrs</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-white/10">
+                    <span className="text-white/80">Billable at {utilisationNum}%</span>
+                    <span className="text-white font-mono">{effectiveHours.toFixed(0)} hrs</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 font-medium bg-blue-500/10 px-2 rounded">
+                    <span className="text-blue-300">= True Hourly Cost</span>
+                    <span className="text-blue-400 font-mono text-base">{currency(loadedHourlyCost)}/hr</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 font-medium bg-green-500/10 px-2 rounded">
+                    <span className="text-green-300">+ {targetMarginNum}% margin</span>
+                    <span className="text-green-400 font-mono text-base">{currency(recommendedChargeOut)}/hr</span>
+                  </div>
+                </div>
+              </CollapsibleContent>
+            </div>
+          </Collapsible>
+        </div>
+      )}
+
+      {/* Prompt to Calculate */}
+      {!calculated && (
+        <div className="p-6 rounded-xl border border-white/10 bg-white/5 text-center">
+          <Info className="h-10 w-10 text-blue-400 mx-auto mb-3 opacity-50" />
+          <h3 className="text-white text-lg font-semibold mb-2">Ready to Calculate</h3>
+          <p className="text-white text-sm">
+            Enter your staff costs and overheads above, then click "Calculate Cost" to see the true
+            hourly cost of employing someone.
+          </p>
+        </div>
+      )}
+
+      {/* Quick Reference */}
+      <Collapsible open={showReference} onOpenChange={setShowReference}>
+        <div className="calculator-card overflow-hidden" style={{ borderColor: "#fbbf2415" }}>
+          <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+            <div className="flex items-center gap-3">
+              <BookOpen className="h-4 w-4 text-amber-400" />
+              <span className="text-sm sm:text-base font-medium text-amber-300">
+                Employment Costs Reference
+              </span>
+            </div>
+            <ChevronDown
+              className={cn(
+                "h-4 w-4 text-white/80 transition-transform duration-200",
+                showReference && "rotate-180"
+              )}
+            />
+          </CollapsibleTrigger>
+
+          <CollapsibleContent className="p-4 pt-0">
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              <div className="space-y-1">
+                <p className="text-amber-300 font-medium">UK Wage Rates (2025)</p>
+                <p className="text-amber-200/70">NMW 21+: £12.21/hr</p>
+                <p className="text-amber-200/70">Spark: £18-30/hr</p>
+                <p className="text-amber-200/70">Mate: £12-18/hr</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-amber-300 font-medium">Employer Costs</p>
+                <p className="text-amber-200/70">Employer NI: 13.8%</p>
+                <p className="text-amber-200/70">Pension min: 3%</p>
+                <p className="text-amber-200/70">Holidays: 28 days</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-amber-300 font-medium">Typical Overheads</p>
+                <p className="text-amber-200/70">Van: £3-5k/yr</p>
+                <p className="text-amber-200/70">Tools: £800-1.5k/yr</p>
+                <p className="text-amber-200/70">Insurance: £1-2k/yr</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-amber-300 font-medium">Utilisation</p>
+                <p className="text-amber-200/70">Target: 65-75%</p>
+                <p className="text-amber-200/70">Includes: admin, travel</p>
+                <p className="text-amber-200/70">Non-billable: 25-35%</p>
+              </div>
+            </div>
+
+            <div className="mt-4 pt-3 border-t border-amber-500/20">
+              <p className="text-xs text-amber-200/60">
+                <Info className="h-3 w-3 inline mr-1" />
+                True hourly cost is typically 50-80% higher than base pay once all on-costs are included.
+                Use this to price jobs accurately and avoid undercharging for labour.
+              </p>
+            </div>
+          </CollapsibleContent>
+        </div>
+      </Collapsible>
+    </div>
   );
 };
 

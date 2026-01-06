@@ -172,13 +172,13 @@ const Module2Section2 = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="../module-2">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 2
@@ -189,7 +189,7 @@ const Module2Section2 = () => {
           <div className="flex items-center gap-3">
             <Badge 
               variant="secondary" 
-              className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold px-3 py-1 border-0"
+              className="bg-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/50 font-semibold px-3 py-1 border-0"
             >
               Section 2
             </Badge>
@@ -208,10 +208,10 @@ const Module2Section2 = () => {
         <div className="space-y-4 sm:space-y-6">
           
           {/* Introduction */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <Shield className="h-6 w-6 text-yellow-400" />
+                <Shield className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-white text-xl">Introduction</CardTitle>
               </div>
             </CardHeader>
@@ -230,10 +230,10 @@ const Module2Section2 = () => {
           </Card>
 
           {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-yellow-400" />
+                <CheckCircle className="h-5 w-5 text-elec-yellow" />
                 Learning Outcomes
               </CardTitle>
             </CardHeader>
@@ -253,10 +253,10 @@ const Module2Section2 = () => {
           </Card>
 
           {/* What Is a Risk Assessment */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-yellow-400" />
+                <AlertTriangle className="h-5 w-5 text-elec-yellow" />
                 1. What Is a Risk Assessment?
               </CardTitle>
             </CardHeader>
@@ -264,7 +264,7 @@ const Module2Section2 = () => {
               <p>A risk assessment is a systematic process to identify potential hazards and evaluate the risk of harm occurring.</p>
               
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-2">Key Components:</h4>
+                <h4 className="text-elec-yellow font-semibold mb-2">Key Components:</h4>
                 <ul className="list-disc list-inside space-y-1 ml-4">
                   <li>The task being undertaken</li>
                   <li>The hazards present</li>
@@ -283,10 +283,10 @@ const Module2Section2 = () => {
           </Card>
 
           {/* What Is a Method Statement */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Clipboard className="h-5 w-5 text-yellow-400" />
+                <Clipboard className="h-5 w-5 text-elec-yellow" />
                 2. What Is a Method Statement?
               </CardTitle>
             </CardHeader>
@@ -294,7 +294,7 @@ const Module2Section2 = () => {
               <p>A method statement outlines how the job will be carried out safely, step by step.</p>
               
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-2">Key Components:</h4>
+                <h4 className="text-elec-yellow font-semibold mb-2">Key Components:</h4>
                 <ul className="list-disc list-inside space-y-1 ml-4">
                   <li>Step-by-step procedures</li>
                   <li>Tools and equipment required</li>
@@ -307,24 +307,24 @@ const Module2Section2 = () => {
                 </ul>
               </div>
               
-              <div className="bg-yellow-400/10 border border-yellow-400/30 p-4 rounded-lg">
-                <p className="text-yellow-400 font-semibold">Together, these are called RAMS.</p>
+              <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
+                <p className="text-elec-yellow font-semibold">Together, these are called RAMS.</p>
                 <p className="text-white text-sm mt-1">Risk Assessment + Method Statement = Your complete safety planning document</p>
               </div>
             </CardContent>
           </Card>
 
           {/* Legal Framework */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <FileText className="h-5 w-5 text-yellow-400" />
+                <FileText className="h-5 w-5 text-elec-yellow" />
                 3. Legal Framework & Requirements
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-2">Key Legislation:</h4>
+                <h4 className="text-elec-yellow font-semibold mb-2">Key Legislation:</h4>
                 <ul className="list-disc list-inside space-y-2 ml-4">
                   <li><strong>Health & Safety at Work Act 1974</strong> - Makes risk assessments a legal duty for all workers</li>
                   <li><strong>Management of Health & Safety at Work Regulations 1999</strong> - Requires written assessments for 5+ employees</li>
@@ -334,7 +334,7 @@ const Module2Section2 = () => {
               </div>
 
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-2">Who Needs RAMS?</h4>
+                <h4 className="text-elec-yellow font-semibold mb-2">Who Needs RAMS?</h4>
                 <ul className="list-disc list-inside space-y-1 ml-4">
                   <li>All employers (legal requirement)</li>
                   <li>Self-employed persons working with others</li>
@@ -351,16 +351,16 @@ const Module2Section2 = () => {
           </Card>
 
           {/* Why RAMS Are Essential */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Shield className="h-5 w-5 text-yellow-400" />
+                <Shield className="h-5 w-5 text-elec-yellow" />
                 4. Why RAMS Are Essential
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-2">Legal Protection:</h4>
+                <h4 className="text-elec-yellow font-semibold mb-2">Legal Protection:</h4>
                 <ul className="list-disc list-inside space-y-1 ml-4">
                   <li>Required under the Health & Safety at Work Act</li>
                   <li>Demonstrates due diligence in health and safety</li>
@@ -369,7 +369,7 @@ const Module2Section2 = () => {
               </div>
 
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-2">Business Benefits:</h4>
+                <h4 className="text-elec-yellow font-semibold mb-2">Business Benefits:</h4>
                 <ul className="list-disc list-inside space-y-1 ml-4">
                   <li>Required by many clients, contractors, and insurance firms</li>
                   <li>Demonstrates professional competence</li>
@@ -380,7 +380,7 @@ const Module2Section2 = () => {
               </div>
 
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-2">Safety Benefits:</h4>
+                <h4 className="text-elec-yellow font-semibold mb-2">Safety Benefits:</h4>
                 <ul className="list-disc list-inside space-y-1 ml-4">
                   <li>Protects your staff, others on site, and the public</li>
                   <li>Forces you to think through potential problems</li>
@@ -397,17 +397,17 @@ const Module2Section2 = () => {
           </Card>
 
           {/* Common Electrical Hazards */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Zap className="h-5 w-5 text-yellow-400" />
+                <Zap className="h-5 w-5 text-elec-yellow" />
                 5. Common Electrical Hazards to Assess
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-3">Primary Electrical Hazards:</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-3">Primary Electrical Hazards:</h4>
                   <ul className="list-disc list-inside space-y-1">
                     <li>Contact with live conductors</li>
                     <li>Electric shock and electrocution</li>
@@ -418,7 +418,7 @@ const Module2Section2 = () => {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-3">Secondary Hazards:</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-3">Secondary Hazards:</h4>
                   <ul className="list-disc list-inside space-y-1">
                     <li>Falls from height (ladders, platforms)</li>
                     <li>Manual handling injuries</li>
@@ -431,7 +431,7 @@ const Module2Section2 = () => {
               </div>
               
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-3">Environmental Hazards:</h4>
+                <h4 className="text-elec-yellow font-semibold mb-3">Environmental Hazards:</h4>
                 <div className="grid md:grid-cols-2 gap-4">
                   <ul className="list-disc list-inside space-y-1">
                     <li>Wet or damp environments</li>
@@ -451,45 +451,45 @@ const Module2Section2 = () => {
           </Card>
 
           {/* Risk Assessment Process */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Eye className="h-5 w-5 text-yellow-400" />
+                <Eye className="h-5 w-5 text-elec-yellow" />
                 6. The 5-Step Risk Assessment Process
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
               <div className="space-y-4">
                 <div className="flex gap-4">
-                  <div className="bg-yellow-400 text-black rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm flex-shrink-0">1</div>
+                  <div className="bg-elec-yellow text-black rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm flex-shrink-0">1</div>
                   <div>
                     <p className="font-semibold text-white mb-1">Identify the hazards</p>
                     <p className="text-sm">Look for anything that could cause harm during electrical testing. Walk around the site, check drawings, and consider all activities.</p>
                   </div>
                 </div>
                 <div className="flex gap-4">
-                  <div className="bg-yellow-400 text-black rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm flex-shrink-0">2</div>
+                  <div className="bg-elec-yellow text-black rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm flex-shrink-0">2</div>
                   <div>
                     <p className="font-semibold text-white mb-1">Decide who might be harmed</p>
                     <p className="text-sm">Consider workers, clients, visitors, members of the public, and anyone else who might be affected by your work.</p>
                   </div>
                 </div>
                 <div className="flex gap-4">
-                  <div className="bg-yellow-400 text-black rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm flex-shrink-0">3</div>
+                  <div className="bg-elec-yellow text-black rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm flex-shrink-0">3</div>
                   <div>
                     <p className="font-semibold text-white mb-1">Evaluate the risks</p>
                     <p className="text-sm">Rate likelihood and severity using a risk matrix. Consider existing precautions and whether they can be improved.</p>
                   </div>
                 </div>
                 <div className="flex gap-4">
-                  <div className="bg-yellow-400 text-black rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm flex-shrink-0">4</div>
+                  <div className="bg-elec-yellow text-black rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm flex-shrink-0">4</div>
                   <div>
                     <p className="font-semibold text-white mb-1">Record significant findings</p>
                     <p className="text-sm">Document hazards, people at risk, control measures, and residual risk ratings. Keep records for legal protection.</p>
                   </div>
                 </div>
                 <div className="flex gap-4">
-                  <div className="bg-yellow-400 text-black rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm flex-shrink-0">5</div>
+                  <div className="bg-elec-yellow text-black rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm flex-shrink-0">5</div>
                   <div>
                     <p className="font-semibold text-white mb-1">Review and update</p>
                     <p className="text-sm">Regularly review assessments, especially when conditions change, after incidents, or when new information becomes available.</p>
@@ -500,7 +500,7 @@ const Module2Section2 = () => {
           </Card>
 
           {/* Risk Rating Matrix */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Risk Rating Matrix (5×5)</CardTitle>
             </CardHeader>
@@ -522,7 +522,7 @@ const Module2Section2 = () => {
                   <TableBody>
                     <TableRow className="border-gray-600">
                       <TableCell className="text-white font-semibold">5 - Catastrophic</TableCell>
-                      <TableCell className="bg-yellow-600/30 text-center">5</TableCell>
+                      <TableCell className="bg-elec-yellow/30 text-center">5</TableCell>
                       <TableCell className="bg-orange-600/30 text-center">10</TableCell>
                       <TableCell className="bg-red-600/30 text-center">15</TableCell>
                       <TableCell className="bg-red-600/50 text-center">20</TableCell>
@@ -531,7 +531,7 @@ const Module2Section2 = () => {
                     <TableRow className="border-gray-600">
                       <TableCell className="text-white font-semibold">4 - Major</TableCell>
                       <TableCell className="bg-green-600/30 text-center">4</TableCell>
-                      <TableCell className="bg-yellow-600/30 text-center">8</TableCell>
+                      <TableCell className="bg-elec-yellow/30 text-center">8</TableCell>
                       <TableCell className="bg-orange-600/30 text-center">12</TableCell>
                       <TableCell className="bg-red-600/30 text-center">16</TableCell>
                       <TableCell className="bg-red-600/50 text-center">20</TableCell>
@@ -540,7 +540,7 @@ const Module2Section2 = () => {
                       <TableCell className="text-white font-semibold">3 - Moderate</TableCell>
                       <TableCell className="bg-green-600/30 text-center">3</TableCell>
                       <TableCell className="bg-green-600/30 text-center">6</TableCell>
-                      <TableCell className="bg-yellow-600/30 text-center">9</TableCell>
+                      <TableCell className="bg-elec-yellow/30 text-center">9</TableCell>
                       <TableCell className="bg-orange-600/30 text-center">12</TableCell>
                       <TableCell className="bg-red-600/30 text-center">15</TableCell>
                     </TableRow>
@@ -549,7 +549,7 @@ const Module2Section2 = () => {
                       <TableCell className="bg-green-600/30 text-center">2</TableCell>
                       <TableCell className="bg-green-600/30 text-center">4</TableCell>
                       <TableCell className="bg-green-600/30 text-center">6</TableCell>
-                      <TableCell className="bg-yellow-600/30 text-center">8</TableCell>
+                      <TableCell className="bg-elec-yellow/30 text-center">8</TableCell>
                       <TableCell className="bg-orange-600/30 text-center">10</TableCell>
                     </TableRow>
                     <TableRow className="border-gray-600">
@@ -558,7 +558,7 @@ const Module2Section2 = () => {
                       <TableCell className="bg-green-600/30 text-center">2</TableCell>
                       <TableCell className="bg-green-600/30 text-center">3</TableCell>
                       <TableCell className="bg-green-600/30 text-center">4</TableCell>
-                      <TableCell className="bg-yellow-600/30 text-center">5</TableCell>
+                      <TableCell className="bg-elec-yellow/30 text-center">5</TableCell>
                     </TableRow>
                   </TableBody>
                 </Table>
@@ -569,8 +569,8 @@ const Module2Section2 = () => {
                   <p className="text-green-400 font-semibold">Low Risk (1-6)</p>
                   <p className="text-green-200">Generally acceptable with existing controls</p>
                 </div>
-                <div className="bg-yellow-900/20 border border-yellow-600/20 p-3 rounded-lg">
-                  <p className="text-yellow-400 font-semibold">Medium Risk (8-12)</p>
+                <div className="bg-yellow-900/20 border border-elec-yellow/20 p-3 rounded-lg">
+                  <p className="text-elec-yellow font-semibold">Medium Risk (8-12)</p>
                   <p className="text-yellow-200">Additional controls may be needed</p>
                 </div>
                 <div className="bg-red-900/20 border border-red-600/20 p-3 rounded-lg">
@@ -582,7 +582,7 @@ const Module2Section2 = () => {
           </Card>
 
           {/* Hierarchy of Controls */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Hierarchy of Controls</CardTitle>
             </CardHeader>
@@ -599,9 +599,9 @@ const Module2Section2 = () => {
                 </div>
                 
                 <div className="flex items-center gap-3 p-3 bg-blue-900/20 border border-blue-600/20 rounded-lg">
-                  <div className="bg-yellow-400 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">2</div>
+                  <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">2</div>
                   <div>
-                    <p className="text-yellow-400 font-semibold">Substitution</p>
+                    <p className="text-elec-yellow font-semibold">Substitution</p>
                     <p className="text-sm">Replace with something less dangerous (e.g., lower voltage systems)</p>
                   </div>
                 </div>
@@ -634,14 +634,14 @@ const Module2Section2 = () => {
           </Card>
 
           {/* What Should Be Included in RAMS */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">What Should Be Included in RAMS</CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-3">Risk Assessment Section:</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-3">Risk Assessment Section:</h4>
                   <ul className="list-disc list-inside space-y-1 text-sm">
                     <li>Project/task description</li>
                     <li>Location and site conditions</li>
@@ -657,7 +657,7 @@ const Module2Section2 = () => {
                 </div>
                 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-3">Method Statement Section:</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-3">Method Statement Section:</h4>
                   <ul className="list-disc list-inside space-y-1 text-sm">
                     <li>Step-by-step procedures</li>
                     <li>Safe isolation procedures</li>
@@ -673,8 +673,8 @@ const Module2Section2 = () => {
                 </div>
               </div>
 
-              <div className="bg-yellow-400/10 border border-yellow-400/30 p-4 rounded-lg">
-                <p className="text-yellow-400 font-semibold mb-2">Essential Documentation:</p>
+              <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
+                <p className="text-elec-yellow font-semibold mb-2">Essential Documentation:</p>
                 <p className="text-white text-sm">
                   RAMS must be signed by competent persons, shared with all workers, and kept readily available on site. 
                   Include relevant drawings, permits, and emergency procedures.
@@ -684,7 +684,7 @@ const Module2Section2 = () => {
           </Card>
 
           {/* Quick Knowledge Checks */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Quick Knowledge Checks</CardTitle>
             </CardHeader>
@@ -692,7 +692,7 @@ const Module2Section2 = () => {
               <div className="space-y-4">
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       What are the 5 steps of the risk assessment process?
                     </summary>
@@ -708,7 +708,7 @@ const Module2Section2 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       What does the hierarchy of control prioritise?
                     </summary>
@@ -724,7 +724,7 @@ const Module2Section2 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       Who needs RAMS?
                     </summary>
@@ -757,7 +757,7 @@ const Module2Section2 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-3">Hazards Identified:</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-3">Hazards Identified:</h4>
                   <div className="grid md:grid-cols-2 gap-4">
                     <ul className="list-disc list-inside space-y-1 text-sm text-white">
                       <li>Live electrical circuits (high voltage cooking equipment)</li>
@@ -777,7 +777,7 @@ const Module2Section2 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-3">Control Measures Applied:</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-3">Control Measures Applied:</h4>
                   <ul className="list-disc list-inside space-y-1 text-sm text-white">
                     <li><strong>Elimination:</strong> Complete isolation of all circuits being tested</li>
                     <li><strong>Engineering:</strong> Use of RCD protection and proper earthing</li>
@@ -799,7 +799,7 @@ const Module2Section2 = () => {
           </Card>
 
           {/* Frequently Asked Questions */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Frequently Asked Questions</CardTitle>
             </CardHeader>
@@ -807,7 +807,7 @@ const Module2Section2 = () => {
               <div className="space-y-4">
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       Do I need RAMS for every small domestic job?
                     </summary>
@@ -820,7 +820,7 @@ const Module2Section2 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       Who should write the RAMS - me or the client?
                     </summary>
@@ -833,7 +833,7 @@ const Module2Section2 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       What if I discover new hazards while working?
                     </summary>
@@ -845,7 +845,7 @@ const Module2Section2 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       How detailed should my method statement be?
                     </summary>
@@ -857,7 +857,7 @@ const Module2Section2 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       Can I reuse RAMS from previous jobs?
                     </summary>
@@ -869,7 +869,7 @@ const Module2Section2 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       What happens if someone doesn't follow the RAMS?
                     </summary>
@@ -881,7 +881,7 @@ const Module2Section2 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       Do apprentices need to write their own RAMS?
                     </summary>
@@ -895,22 +895,22 @@ const Module2Section2 = () => {
           </Card>
 
           {/* Practical Exercises */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <Clipboard className="h-6 w-6 text-yellow-400" />
+                <Clipboard className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-white text-xl">Practical Exercises</CardTitle>
               </div>
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-3">Exercise 1: Hazard Identification</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-3">Exercise 1: Hazard Identification</h4>
                   <p className="text-white mb-3">
                     You're testing a distribution board in a school kitchen during half-term.
                   </p>
-                  <div className="bg-card/50 p-4 rounded-lg">
-                    <p className="text-yellow-400 font-semibold mb-2">Your task:</p>
+                  <div className="bg-transparent/50 p-4 rounded-lg">
+                    <p className="text-elec-yellow font-semibold mb-2">Your task:</p>
                     <ol className="text-white text-sm space-y-1 list-decimal list-inside">
                       <li>List at least 8 potential hazards</li>
                       <li>Identify who might be harmed by each hazard</li>
@@ -921,12 +921,12 @@ const Module2Section2 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-3">Exercise 2: Method Statement Development</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-3">Exercise 2: Method Statement Development</h4>
                   <p className="text-white mb-3">
                     Create a step-by-step method statement for testing RCD protection on a ring final circuit.
                   </p>
-                  <div className="bg-card/50 p-4 rounded-lg">
-                    <p className="text-yellow-400 font-semibold mb-2">Include:</p>
+                  <div className="bg-transparent/50 p-4 rounded-lg">
+                    <p className="text-elec-yellow font-semibold mb-2">Include:</p>
                     <ul className="text-white text-sm space-y-1 list-disc list-inside">
                       <li>Pre-work checks and equipment needed</li>
                       <li>Safe isolation procedure</li>
@@ -938,21 +938,21 @@ const Module2Section2 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-3">Exercise 3: Risk Rating Practice</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-3">Exercise 3: Risk Rating Practice</h4>
                   <p className="text-white mb-3">
                     Rate these scenarios using the 5×5 matrix:
                   </p>
-                  <div className="bg-card/50 p-4 rounded-lg space-y-3">
+                  <div className="bg-transparent/50 p-4 rounded-lg space-y-3">
                     <div>
-                      <p className="text-yellow-400 font-semibold">Scenario A:</p>
+                      <p className="text-elec-yellow font-semibold">Scenario A:</p>
                       <p className="text-white text-sm">Working on a domestic consumer unit during the day with proper isolation</p>
                     </div>
                     <div>
-                      <p className="text-yellow-400 font-semibold">Scenario B:</p>
+                      <p className="text-elec-yellow font-semibold">Scenario B:</p>
                       <p className="text-white text-sm">Testing a 400V motor circuit in a wet industrial environment</p>
                     </div>
                     <div>
-                      <p className="text-yellow-400 font-semibold">Scenario C:</p>
+                      <p className="text-elec-yellow font-semibold">Scenario C:</p>
                       <p className="text-white text-sm">Tracing cables in a cluttered loft space with poor lighting</p>
                     </div>
                   </div>
@@ -981,7 +981,7 @@ const Module2Section2 = () => {
           </Card>
 
           {/* Quiz Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Knowledge Check (10 Questions)</CardTitle>
             </CardHeader>

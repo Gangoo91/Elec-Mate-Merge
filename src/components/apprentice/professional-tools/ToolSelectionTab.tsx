@@ -130,37 +130,48 @@ const ToolSelectionTab = () => {
   ];
 
   return (
-    <div className="space-y-6">
-      <Alert className="border-green-500/50 bg-green-500/10">
-        <CheckCircle className="h-4 w-4 text-green-400" />
-        <AlertDescription className="text-green-200">
-          Quality tool selection is crucial for your professional development. This guide helps you make informed decisions and avoid costly mistakes.
-        </AlertDescription>
-      </Alert>
+    <div className="space-y-6 animate-fade-in">
+      {/* Hero Alert */}
+      <div className="p-4 rounded-xl bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/30">
+        <div className="flex items-start gap-3">
+          <div className="p-2 rounded-lg bg-green-500/20">
+            <CheckCircle className="h-5 w-5 text-green-400" />
+          </div>
+          <div>
+            <p className="font-medium text-green-400 mb-1">Quality Tool Selection</p>
+            <p className="text-sm text-white/70">
+              Quality tool selection is crucial for your professional development. This guide helps you make informed decisions and avoid costly mistakes.
+            </p>
+          </div>
+        </div>
+      </div>
 
       {/* Quality Assessment Guide */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Star className="h-5 w-5" />
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+              <Star className="h-5 w-5 text-elec-yellow" />
+            </div>
             Quality Assessment Guide
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white/60">
             Learn to identify quality tools and avoid poor purchases
           </p>
         </CardHeader>
-        <CardContent>
+        <CardContent className="relative">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {qualityIndicators.map((indicator, index) => (
-              <div key={index} className="space-y-3">
-                <h3 className="font-medium text-white">{indicator.category}</h3>
-                
+              <div key={index} className="p-4 rounded-xl bg-white/10 border border-white/10 space-y-4">
+                <h3 className="font-semibold text-white">{indicator.category}</h3>
+
                 <div className="space-y-2">
-                  <h4 className="text-sm font-medium text-green-300">Look For:</h4>
-                  <ul className="space-y-1">
+                  <h4 className="text-sm font-medium text-green-400">Look For:</h4>
+                  <ul className="space-y-1.5">
                     {indicator.factors.map((factor, idx) => (
-                      <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
-                        <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                      <li key={idx} className="text-sm text-white/60 flex items-start gap-2">
+                        <CheckCircle className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                         {factor}
                       </li>
                     ))}
@@ -168,11 +179,11 @@ const ToolSelectionTab = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <h4 className="text-sm font-medium text-red-300">Red Flags:</h4>
-                  <ul className="space-y-1">
+                  <h4 className="text-sm font-medium text-red-400">Red Flags:</h4>
+                  <ul className="space-y-1.5">
                     {indicator.redFlags.map((flag, idx) => (
-                      <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
-                        <AlertTriangle className="h-3 w-3 text-red-400 mt-0.5 flex-shrink-0" />
+                      <li key={idx} className="text-sm text-white/60 flex items-start gap-2">
+                        <AlertTriangle className="h-3.5 w-3.5 text-red-400 mt-0.5 flex-shrink-0" />
                         {flag}
                       </li>
                     ))}
@@ -185,37 +196,40 @@ const ToolSelectionTab = () => {
       </Card>
 
       {/* Brand Comparison Example */}
-      <ToolComparisonChart 
+      <ToolComparisonChart
         title="Digital Multimeter Comparison"
         tools={multimeterComparison}
         category="test equipment"
       />
 
       {/* Smart Purchasing Process */}
-      <Card className="border-blue-500/20 bg-blue-500/10">
-        <CardHeader>
-          <CardTitle className="text-blue-300 flex items-center gap-2">
-            <TrendingUp className="h-5 w-5" />
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-blue-500/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
+              <TrendingUp className="h-5 w-5 text-blue-400" />
+            </div>
             Smart Purchasing Process
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white/60">
             Follow this structured approach to make better tool purchases
           </p>
         </CardHeader>
-        <CardContent>
+        <CardContent className="relative">
           <div className="space-y-4">
             {purchasingGuidelines.map((stage, index) => (
-              <div key={index} className="border border-blue-500/30 rounded-lg p-4">
+              <div key={index} className="p-5 rounded-xl bg-blue-500/5 border border-blue-500/20 hover:border-blue-500/40 transition-all">
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-medium text-blue-200">{stage.stage}</h3>
-                  <Badge variant="outline" className="border-blue-500/40 text-blue-400">
+                  <h3 className="font-semibold text-white">{stage.stage}</h3>
+                  <Badge variant="outline" className="bg-blue-500/10 border-blue-500/30 text-blue-400">
                     {stage.duration}
                   </Badge>
                 </div>
-                <ul className="space-y-1">
+                <ul className="space-y-2">
                   {stage.activities.map((activity, idx) => (
-                    <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-2 flex-shrink-0" />
+                    <li key={idx} className="text-sm text-white/60 flex items-start gap-2">
+                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 flex-shrink-0" />
                       {activity}
                     </li>
                   ))}
@@ -226,12 +240,20 @@ const ToolSelectionTab = () => {
         </CardContent>
       </Card>
 
-      <Alert className="border-orange-500/50 bg-orange-500/10">
-        <Shield className="h-4 w-4 text-orange-400" />
-        <AlertDescription className="text-orange-200">
-          <strong>Investment Tip:</strong> Buy quality tools once rather than cheap tools multiple times. A good tool will last your entire career and maintain its resale value.
-        </AlertDescription>
-      </Alert>
+      {/* Investment Tip Alert */}
+      <div className="p-4 rounded-xl bg-gradient-to-br from-orange-500/10 to-orange-500/5 border border-orange-500/30">
+        <div className="flex items-start gap-3">
+          <div className="p-2 rounded-lg bg-orange-500/20">
+            <Shield className="h-5 w-5 text-orange-400" />
+          </div>
+          <div>
+            <p className="font-medium text-orange-400 mb-1">Investment Tip</p>
+            <p className="text-sm text-white/70">
+              Buy quality tools once rather than cheap tools multiple times. A good tool will last your entire career and maintain its resale value.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

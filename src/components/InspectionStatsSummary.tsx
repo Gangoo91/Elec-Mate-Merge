@@ -27,7 +27,7 @@ const InspectionStatsSummary = ({ inspectionItems }: InspectionStatsSummaryProps
   }
 
   return (
-    <Card className="bg-elec-gray-dark border border-border rounded-xl">
+    <Card className="bg-card border border-border/30 rounded-xl">
       <CardContent className="p-3 sm:p-4">
         <div className="grid grid-cols-3 gap-3 sm:gap-4 text-center">
           <div className="space-y-1">

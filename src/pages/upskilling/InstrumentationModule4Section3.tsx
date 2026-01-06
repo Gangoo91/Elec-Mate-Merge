@@ -80,7 +80,7 @@ const InstrumentationModule4Section3 = () => {
       ],
       correctAnswer: 1,
       explanation: "Calibration corrects systematic errors and compensates for instrument drift over time, improving measurement accuracy."
-    }
+  }
   ];
 
   // ... quiz handling functions (same as previous sections)
@@ -89,58 +89,58 @@ const InstrumentationModule4Section3 = () => {
       ...prev,
       [currentQuestionIndex]: answerIndex
     }));
-  }
+};
 
   function handleNext() {
     if (currentQuestionIndex < quizQuestions.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1);
     } else {
       setShowResults(true);
-    }
-  }
+  };
+};
 
   function handlePrevious() {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(prev => prev - 1);
-    }
-  }
+  };
+};
 
   function calculateScore() {
     let correct = 0;
     quizQuestions.forEach((question, index) => {
       if (selectedAnswers[index] === question.correctAnswer) {
         correct++;
-      }
+    };
     });
     return correct;
-  }
+};
 
   function resetQuiz() {
     setCurrentQuestionIndex(0);
     setSelectedAnswers({});
     setShowResults(false);
     setQuizStarted(false);
-  }
+};
 
   function startQuiz() {
     setQuizStarted(true);
     setCurrentQuestionIndex(0);
     setSelectedAnswers({});
     setShowResults(false);
-  }
+};
 
   const currentQuestion = quizQuestions[currentQuestionIndex];
   const score = calculateScore();
   const percentage = Math.round((score / quizQuestions.length) * 100);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="../instrumentation-module-4">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 4
@@ -149,10 +149,10 @@ const InstrumentationModule4Section3 = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <Target className="h-8 w-8 text-yellow-400" />
+            <Target className="h-8 w-8 text-elec-yellow" />
             <Badge 
               variant="secondary" 
-              className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold text-sm px-3 py-1 border-0"
+              className="bg-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/50 font-semibold text-sm px-3 py-1 border-0"
             >
               Module 4 - Section 3
             </Badge>
@@ -171,10 +171,10 @@ const InstrumentationModule4Section3 = () => {
         <div className="space-y-4 sm:space-y-6">
           
           {/* Quick Introduction */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <Eye className="h-6 w-6 text-yellow-400" />
+                <Eye className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-white text-xl">Quick Introduction</CardTitle>
               </div>
             </CardHeader>
@@ -186,7 +186,7 @@ const InstrumentationModule4Section3 = () => {
           </Card>
 
           {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Learning Outcomes</CardTitle>
             </CardHeader>
@@ -194,23 +194,23 @@ const InstrumentationModule4Section3 = () => {
               <p className="text-gray-300 mb-4">By the end of this section, you'll be able to:</p>
               <ul className="space-y-2 text-gray-300">
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Define accuracy, precision, resolution and their practical significance</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Identify and understand different sources of measurement error</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Interpret instrument specifications and tolerance ratings</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Choose appropriate instruments based on accuracy requirements</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Calculate and manage measurement uncertainty in critical applications</span>
                 </li>
               </ul>
@@ -218,22 +218,22 @@ const InstrumentationModule4Section3 = () => {
           </Card>
 
           {/* Accuracy vs Precision */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <Target className="h-5 w-5 text-yellow-400" />
+                <Target className="h-5 w-5 text-elec-yellow" />
                 Accuracy vs Precision
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Understanding the Difference</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Understanding the Difference</h4>
                   <p className="text-gray-300 mb-3">
                     These fundamental concepts are often confused but represent different aspects of measurement quality:
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-4">
+                    <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
                       <h5 className="text-blue-200 font-medium mb-2">Accuracy</h5>
                       <ul className="text-gray-300 text-sm space-y-1">
                         <li>• How close to the true value</li>
@@ -255,7 +255,7 @@ const InstrumentationModule4Section3 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Target Analogy</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Target Analogy</h4>
                   <div className="bg-gray-700/50 rounded-lg p-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
                       <div className="space-y-2">
@@ -266,8 +266,8 @@ const InstrumentationModule4Section3 = () => {
                         <p className="text-xs text-gray-400">Close to target, tight grouping</p>
                       </div>
                       <div className="space-y-2">
-                        <div className="w-16 h-16 mx-auto bg-yellow-400/10 rounded-full flex items-center justify-center">
-                          <div className="w-3 h-3 bg-yellow-400 rounded-full ml-4"></div>
+                        <div className="w-16 h-16 mx-auto bg-elec-yellow/10 rounded-full flex items-center justify-center">
+                          <div className="w-3 h-3 bg-elec-yellow rounded-full ml-4"></div>
                         </div>
                         <p className="text-sm text-yellow-300">Precise but Inaccurate</p>
                         <p className="text-xs text-gray-400">Consistent but off-target</p>
@@ -280,42 +280,42 @@ const InstrumentationModule4Section3 = () => {
           </Card>
 
           {/* Resolution */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <TrendingUp className="h-5 w-5 text-yellow-400" />
+                <TrendingUp className="h-5 w-5 text-elec-yellow" />
                 Resolution and Sensitivity
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">What is Resolution?</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">What is Resolution?</h4>
                   <p className="text-gray-300 mb-3">
                     Resolution is the smallest detectable change an instrument can measure:
                   </p>
                   <ul className="text-gray-300 space-y-2">
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Digital meters: Limited by least significant digit
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Analogue meters: Limited by scale divisions
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Higher resolution allows detection of smaller changes
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Critical for low-level signal measurements
                     </li>
                   </ul>
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Resolution Examples</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Resolution Examples</h4>
                   <div className="bg-purple-600/10 border border-purple-600/20 rounded-lg p-4">
                     <div className="space-y-3">
                       <div className="flex justify-between items-center">
@@ -335,7 +335,7 @@ const InstrumentationModule4Section3 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Why Resolution Matters</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Why Resolution Matters</h4>
                   <div className="bg-orange-600/10 border border-orange-600/20 rounded-lg p-4">
                     <p className="text-gray-300 text-sm mb-3">
                       In low-voltage circuits, small changes can indicate:
@@ -353,17 +353,17 @@ const InstrumentationModule4Section3 = () => {
           </Card>
 
           {/* Error Sources */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <AlertTriangle className="h-5 w-5 text-yellow-400" />
+                <AlertTriangle className="h-5 w-5 text-elec-yellow" />
                 Sources of Measurement Error
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Systematic Errors</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Systematic Errors</h4>
                   <p className="text-gray-300 mb-3">
                     Predictable, consistent errors that can often be corrected:
                   </p>
@@ -390,11 +390,11 @@ const InstrumentationModule4Section3 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Random Errors</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Random Errors</h4>
                   <p className="text-gray-300 mb-3">
                     Unpredictable variations that affect precision:
                   </p>
-                  <div className="bg-yellow-600/10 border border-yellow-600/20 rounded-lg p-4">
+                  <div className="bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg p-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <h5 className="text-yellow-200 font-medium mb-2">Environmental</h5>
@@ -422,27 +422,27 @@ const InstrumentationModule4Section3 = () => {
           </Card>
 
           {/* Interpreting Specifications */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <Calculator className="h-5 w-5 text-yellow-400" />
+                <Calculator className="h-5 w-5 text-elec-yellow" />
                 Interpreting Tolerance Specifications
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Understanding ±1.5% + 2 digits</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Understanding ±1.5% + 2 digits</h4>
                   <p className="text-gray-300 mb-3">
                     Common accuracy specification format explained:
                   </p>
-                  <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-4">
+                  <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
                     <div className="space-y-3">
                       <div>
                         <p className="text-blue-200 font-medium">Example: Reading 100.0V on 200V range</p>
                         <p className="text-gray-300 text-sm">±1.5% of reading = ±1.5V</p>
                         <p className="text-gray-300 text-sm">±2 digits = ±0.2V (last digit = 0.1V)</p>
-                        <p className="text-yellow-400 text-sm font-medium">Total uncertainty = ±1.7V</p>
+                        <p className="text-elec-yellow text-sm font-medium">Total uncertainty = ±1.7V</p>
                         <p className="text-gray-300 text-sm">True value lies between 98.3V and 101.7V</p>
                       </div>
                     </div>
@@ -450,13 +450,13 @@ const InstrumentationModule4Section3 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Range Selection Impact</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Range Selection Impact</h4>
                   <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
                     <p className="text-green-200 font-medium mb-2">Same 10V measurement on different ranges:</p>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
                         <span className="text-gray-300">20V range (±1% + 1 digit):</span>
-                        <span className="text-yellow-400">±0.11V</span>
+                        <span className="text-elec-yellow">±0.11V</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-300">200V range (±1% + 1 digit):</span>
@@ -473,13 +473,13 @@ const InstrumentationModule4Section3 = () => {
           </Card>
 
           {/* Error Stacking and Management */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Error Stacking and Uncertainty Management</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-2">Error Propagation</h4>
+                <h4 className="text-elec-yellow font-semibold mb-2">Error Propagation</h4>
                 <p className="text-gray-300 mb-3">
                   In multistep measurements, errors can accumulate:
                 </p>
@@ -489,7 +489,7 @@ const InstrumentationModule4Section3 = () => {
                     <div>Voltage: 230V ±1% = ±2.3V</div>
                     <div>Current: 10A ±2% = ±0.2A</div>
                     <div>Power = V × I = 2300W</div>
-                    <div className="text-yellow-400">Combined uncertainty ≈ ±3% = ±69W</div>
+                    <div className="text-elec-yellow">Combined uncertainty ≈ ±3% = ±69W</div>
                   </div>
                 </div>
               </div>
@@ -497,14 +497,14 @@ const InstrumentationModule4Section3 = () => {
           </Card>
 
           {/* Real-World Scenario */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Real-World Scenario</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-blue-900/20 border border-yellow-400/30 rounded-lg p-4">
+              <div className="bg-blue-900/20 border border-elec-yellow/30 rounded-lg p-4">
                 <div className="flex items-start gap-3">
-                  <AlertTriangle className="h-5 w-5 text-yellow-400 mt-1 flex-shrink-0" />
+                  <AlertTriangle className="h-5 w-5 text-elec-yellow mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="font-medium text-white mb-2">Lab System Requirements</h4>
                     <p className="text-gray-300 leading-relaxed">
@@ -517,7 +517,7 @@ const InstrumentationModule4Section3 = () => {
           </Card>
 
           {/* Summary */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Summary</CardTitle>
             </CardHeader>
@@ -529,10 +529,10 @@ const InstrumentationModule4Section3 = () => {
           </Card>
 
           {/* Interactive Quiz */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <Brain className="h-5 w-5 text-yellow-400" />
+                <Brain className="h-5 w-5 text-elec-yellow" />
                 Knowledge Check Quiz
               </CardTitle>
             </CardHeader>
@@ -544,7 +544,7 @@ const InstrumentationModule4Section3 = () => {
                   </p>
                   <Button 
                     onClick={startQuiz}
-                    className="bg-yellow-400 text-black hover:bg-yellow-600 font-semibold px-8 py-2"
+                    className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-2"
                   >
                     Start Quiz
                   </Button>
@@ -557,7 +557,7 @@ const InstrumentationModule4Section3 = () => {
                     </span>
                     <div className="w-32 bg-gray-700 rounded-full h-2">
                       <div 
-                        className="bg-yellow-400 h-2 rounded-full transition-all duration-300"
+                        className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
                         style={{ width: `${((currentQuestionIndex + 1) / quizQuestions.length) * 100}%` }}
                       ></div>
                     </div>
@@ -572,7 +572,7 @@ const InstrumentationModule4Section3 = () => {
                           onClick={() => handleAnswerSelect(index)}
                           className={`w-full text-left p-3 rounded border transition-colors ${
                             selectedAnswers[currentQuestionIndex] === index
-                              ? 'border-yellow-400 bg-yellow-600/20 text-yellow-400'
+                              ? 'border-elec-yellow bg-elec-yellow/20 text-elec-yellow'
                               : 'border-gray-600 bg-gray-800/50 text-gray-300 hover:border-gray-500'
                           }`}
                         >
@@ -587,14 +587,14 @@ const InstrumentationModule4Section3 = () => {
                       onClick={handlePrevious}
                       disabled={currentQuestionIndex === 0}
                       variant="outline"
-                      className="border-gray-600 text-gray-300 hover:bg-card disabled:opacity-50"
+                      className="border-gray-600 text-gray-300 hover:bg-transparent disabled:opacity-50"
                     >
                       Previous
                     </Button>
                     <Button
                       onClick={handleNext}
                       disabled={selectedAnswers[currentQuestionIndex] === undefined}
-                      className="bg-yellow-400 text-black hover:bg-yellow-600 disabled:opacity-50"
+                      className="bg-elec-yellow text-black hover:bg-elec-yellow disabled:opacity-50"
                     >
                       {currentQuestionIndex === quizQuestions.length - 1 ? 'Finish' : 'Next'}
                     </Button>
@@ -653,7 +653,7 @@ const InstrumentationModule4Section3 = () => {
                   <div className="text-center">
                     <Button 
                       onClick={resetQuiz}
-                      className="bg-yellow-400 text-black hover:bg-yellow-600 font-semibold px-8 py-2"
+                      className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-2"
                     >
                       Retake Quiz
                     </Button>

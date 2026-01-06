@@ -308,7 +308,7 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 animate-in fade-in">
-      <Card className="w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col bg-elec-gray border-elec-yellow/20">
+      <Card className="w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col bg-white/5 border-elec-yellow/20">
         <div className="flex items-center justify-between p-4 border-b border-elec-yellow/20">
           <h2 className="text-lg font-medium flex items-center gap-2">
             <MapPin className="h-5 w-5 text-elec-yellow" />
@@ -326,7 +326,7 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
               value={postcode}
               onChange={handlePostcodeChange}
               onKeyDown={handleKeyDown}
-              className="bg-elec-dark/40"
+              className="bg-white/10"
             />
             <Button 
               onClick={searchProviders} 
@@ -360,21 +360,21 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
             {isLoading ? (
               <div className="flex flex-col items-center justify-center h-full p-4">
                 <div className="h-8 w-8 border-4 border-elec-yellow/30 border-t-elec-yellow animate-spin rounded-full mb-4"></div>
-                <p className="text-sm text-muted-foreground">Searching for training providers...</p>
+                <p className="text-sm text-white">Searching for training providers...</p>
               </div>
             ) : providers.length > 0 ? (
               <div className="space-y-2">
-                <p className="text-xs text-muted-foreground p-2">Found {providers.length} training providers</p>
+                <p className="text-xs text-white p-2">Found {providers.length} training providers</p>
                 {providers.map(provider => (
                   <div
                     key={provider.id}
                     className={`p-3 rounded-md cursor-pointer transition-colors ${
-                      selectedProvider?.id === provider.id ? "bg-elec-yellow/20" : "hover:bg-elec-dark/40"
+                      selectedProvider?.id === provider.id ? "bg-elec-yellow/20" : "hover:bg-white/10"
                     }`}
                     onClick={() => handleProviderClick(provider)}
                   >
                     <h3 className="font-medium text-sm">{provider.name}</h3>
-                    <p className="text-xs text-muted-foreground mt-1">{provider.vicinity}</p>
+                    <p className="text-xs text-white mt-1">{provider.vicinity}</p>
                     {provider.rating && (
                       <div className="flex items-center gap-1 mt-1">
                         <div className="text-yellow-500 text-xs">
@@ -393,8 +393,8 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
             ) : (
               !isLoading && (
                 <div className="flex flex-col items-center justify-center h-full p-4 text-center">
-                  <MapPin className="h-8 w-8 text-muted-foreground mb-2" />
-                  <p className="text-muted-foreground">Enter a postcode to find training providers</p>
+                  <MapPin className="h-8 w-8 text-white mb-2" />
+                  <p className="text-white">Enter a postcode to find training providers</p>
                 </div>
               )
             )}
@@ -404,7 +404,7 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
             <div ref={mapRef} className="w-full h-full"></div>
             {!mapInitialized && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-                <div className="p-4 bg-elec-dark rounded-md shadow-lg">
+                <div className="p-4 bg-white/10 rounded-md shadow-lg">
                   <div className="h-6 w-6 border-4 border-elec-yellow/30 border-t-elec-yellow animate-spin rounded-full mx-auto mb-2"></div>
                   <p className="text-sm text-center">Loading map...</p>
                 </div>
@@ -414,9 +414,9 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
         </div>
 
         {selectedProvider && (
-          <div className="p-4 border-t border-elec-yellow/20 bg-elec-dark/30">
+          <div className="p-4 border-t border-elec-yellow/20 bg-white/10">
             <h3 className="font-medium">{selectedProvider.name}</h3>
-            <p className="text-sm text-muted-foreground">{selectedProvider.address || selectedProvider.vicinity}</p>
+            <p className="text-sm text-white">{selectedProvider.address || selectedProvider.vicinity}</p>
             
             <div className="flex flex-wrap justify-between items-center mt-3 gap-2">
               <div className="flex flex-col gap-2">
@@ -462,10 +462,10 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
                     Enquire About Apprenticeships
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="bg-elec-gray border-elec-yellow/20">
+                <PopoverContent className="bg-white/5 border-elec-yellow/20">
                   <div className="space-y-3">
                     <h4 className="font-medium">Contact {selectedProvider.name}</h4>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-white">
                       Get in touch with this training provider to discuss apprenticeship opportunities.
                     </p>
                     <div className="grid gap-2">

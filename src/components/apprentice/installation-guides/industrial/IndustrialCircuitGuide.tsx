@@ -763,7 +763,7 @@ const IndustrialCircuitGuide = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Factory className="h-6 w-6 text-elec-yellow" />
@@ -787,7 +787,7 @@ const IndustrialCircuitGuide = () => {
 
         {/* Motor Starting Methods */}
         <TabsContent value="starting" className="space-y-4">
-          <Card className="border-blue-500/30 bg-elec-gray">
+          <Card className="border-blue-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Cog className="h-6 w-6 text-blue-400" />
@@ -863,7 +863,7 @@ const IndustrialCircuitGuide = () => {
           </Card>
 
           {/* Comparison Table */}
-          <Card className="border-purple-500/30 bg-elec-gray">
+          <Card className="border-purple-500/30 bg-white/5">
             <CardHeader>
               <CardTitle className="text-purple-300">Quick Comparison Table</CardTitle>
             </CardHeader>
@@ -917,7 +917,7 @@ const IndustrialCircuitGuide = () => {
 
         {/* Motor Protection */}
         <TabsContent value="protection" className="space-y-4">
-          <Card className="border-green-500/30 bg-elec-gray">
+          <Card className="border-green-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Shield className="h-6 w-6 text-green-400" />
@@ -1000,7 +1000,7 @@ const IndustrialCircuitGuide = () => {
 
         {/* Control Circuits */}
         <TabsContent value="control" className="space-y-4">
-          <Card className="border-purple-500/30 bg-elec-gray">
+          <Card className="border-purple-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Settings className="h-6 w-6 text-purple-400" />
@@ -1058,7 +1058,7 @@ const IndustrialCircuitGuide = () => {
           </Card>
 
           {/* Interlock Circuits */}
-          <Card className="border-blue-500/30 bg-elec-gray">
+          <Card className="border-blue-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Lock className="h-6 w-6 text-blue-400" />
@@ -1099,7 +1099,7 @@ const IndustrialCircuitGuide = () => {
         {/* Emergency Stop & LOTO */}
         <TabsContent value="estop" className="space-y-4">
           {/* Emergency Stop */}
-          <Card className="border-red-500/30 bg-elec-gray">
+          <Card className="border-red-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <StopCircle className="h-6 w-6 text-red-400" />
@@ -1184,7 +1184,7 @@ const IndustrialCircuitGuide = () => {
           </Card>
 
           {/* Lockout/Tagout */}
-          <Card className="border-orange-500/30 bg-elec-gray">
+          <Card className="border-orange-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Lock className="h-6 w-6 text-orange-400" />
@@ -1250,7 +1250,7 @@ const IndustrialCircuitGuide = () => {
         {/* Cables & Sizing */}
         <TabsContent value="cables" className="space-y-4">
           {/* Cable Types */}
-          <Card className="border-blue-500/30 bg-elec-gray">
+          <Card className="border-blue-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Cable className="h-6 w-6 text-blue-400" />
@@ -1307,7 +1307,7 @@ const IndustrialCircuitGuide = () => {
           </Card>
 
           {/* Derating Factors */}
-          <Card className="border-purple-500/30 bg-elec-gray">
+          <Card className="border-purple-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Gauge className="h-6 w-6 text-purple-400" />
@@ -1403,7 +1403,7 @@ const IndustrialCircuitGuide = () => {
           </Card>
 
           {/* Busbar Systems */}
-          <Card className="border-green-500/30 bg-elec-gray">
+          <Card className="border-green-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Power className="h-6 w-6 text-green-400" />
@@ -1453,7 +1453,7 @@ const IndustrialCircuitGuide = () => {
           </Card>
 
           {/* Power Factor Correction */}
-          <Card className="border-yellow-500/30 bg-elec-gray">
+          <Card className="border-yellow-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Gauge className="h-6 w-6 text-yellow-400" />
@@ -1512,7 +1512,7 @@ const IndustrialCircuitGuide = () => {
           </Card>
 
           {/* Harmonic Filtering */}
-          <Card className="border-orange-500/30 bg-elec-gray">
+          <Card className="border-orange-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Thermometer className="h-6 w-6 text-orange-400" />

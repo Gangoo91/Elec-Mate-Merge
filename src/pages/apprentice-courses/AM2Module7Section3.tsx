@@ -180,19 +180,19 @@ const AM2Module7Section3 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
+      <div className="border-b border-white/10 bg-card/50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between gap-2">
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-2 sm:p-0 text-sm sm:text-base" asChild>
+            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
               <Link to="..">
                 <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
                 <span className="hidden xs:inline">Back to Module 7</span>
                 <span className="xs:hidden">Back</span>
               </Link>
             </Button>
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-2 sm:p-0 text-sm sm:text-base" asChild>
+            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
               <Link to="../section4">
                 <span className="hidden xs:inline">Module 7 Section 4</span>
                 <span className="xs:hidden">Section 4</span>
@@ -211,10 +211,10 @@ const AM2Module7Section3 = () => {
             <Shield className="w-4 h-4" />
             Module 7 – Section 3
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4 sm:mb-6 leading-tight">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6 leading-tight">
             Safety-first Approach – "Show the Assessor You're Safe"
           </h1>
-          <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
+          <p className="text-sm sm:text-base text-white mb-6 sm:mb-8 leading-relaxed">
             The AM2 is not just a test of technical skill — it is a test of whether you can be trusted to work safely in the electrical industry. Assessors are trained to watch for safe behaviour at all times, not only during specific tasks like isolation. If you show unsafe practice, it can result in instant failure, regardless of how well you complete the rest of the exam.
           </p>
         </div>
@@ -240,16 +240,16 @@ const AM2Module7Section3 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground mb-4">
+            <p className="text-xs sm:text-sm text-white mb-4">
               By the end of this section, you will be able to:
             </p>
-            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
+            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Explain why NET places safety above everything else in AM2
@@ -275,14 +275,14 @@ const AM2Module7Section3 = () => {
         </Card>
 
         {/* Why Safety is Everything */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5" />
               1. Why Safety is Everything in AM2
             </h2>
             
-            <p className="text-xs sm:text-sm text-muted-foreground mb-4 leading-relaxed">
+            <p className="text-xs sm:text-sm text-white mb-4 leading-relaxed">
               NET's primary objective is to prove you are safe to work unsupervised:
             </p>
 
@@ -320,14 +320,14 @@ const AM2Module7Section3 = () => {
         />
 
         {/* Key Safety Behaviours */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Eye className="w-5 h-5" />
               2. Key Safety Behaviours Assessors Look For
             </h2>
             
-            <p className="text-xs sm:text-sm text-muted-foreground mb-6 leading-relaxed">
+            <p className="text-xs sm:text-sm text-white mb-6 leading-relaxed">
               Assessors are trained to watch for these critical safety behaviours throughout your AM2 exam:
             </p>
 
@@ -336,8 +336,8 @@ const AM2Module7Section3 = () => {
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
                 <div className="flex-1">
-                  <h5 className="font-medium text-foreground mb-2">Safe Isolation</h5>
-                  <p className="text-xs sm:text-sm text-muted-foreground mb-3">
+                  <h5 className="font-medium text-white mb-2">Safe Isolation</h5>
+                  <p className="text-xs sm:text-sm text-white mb-3">
                     Following the 10-step process, including prove/re-prove. This is the foundation of electrical safety.
                   </p>
                   <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 rounded p-3 text-xs sm:text-sm">
@@ -357,8 +357,8 @@ const AM2Module7Section3 = () => {
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
                 <div className="flex-1">
-                  <h5 className="font-medium text-foreground mb-2">PPE and Tool Use</h5>
-                  <p className="text-xs sm:text-sm text-muted-foreground mb-3">
+                  <h5 className="font-medium text-white mb-2">PPE and Tool Use</h5>
+                  <p className="text-xs sm:text-sm text-white mb-3">
                     Correct PPE usage, proper tools, no makeshift shortcuts, no damaged equipment.
                   </p>
                   <div className="bg-green-50 dark:bg-green-950/20 rounded p-3 text-xs sm:text-sm">
@@ -376,8 +376,8 @@ const AM2Module7Section3 = () => {
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 bg-orange-600 text-white rounded-full flex items-center justify-center text-sm font-bold">3</div>
                 <div className="flex-1">
-                  <h5 className="font-medium text-foreground mb-2">Work Area Management</h5>
-                  <p className="text-xs sm:text-sm text-muted-foreground mb-3">
+                  <h5 className="font-medium text-white mb-2">Work Area Management</h5>
+                  <p className="text-xs sm:text-sm text-white mb-3">
                     Tidy workspace, no trailing leads or trip hazards, organised approach.
                   </p>
                   <div className="bg-orange-50 dark:bg-orange-950/20 rounded p-3 text-xs sm:text-sm">
@@ -409,14 +409,14 @@ const AM2Module7Section3 = () => {
         />
 
         {/* Instant Fail Errors */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" />
               3. "Instant Fail" Safety Errors (NET Published)
             </h2>
             
-            <p className="text-xs sm:text-sm text-muted-foreground mb-6 leading-relaxed">
+            <p className="text-xs sm:text-sm text-white mb-6 leading-relaxed">
               These safety-critical errors result in immediate failure, regardless of performance elsewhere:
             </p>
 
@@ -457,14 +457,14 @@ const AM2Module7Section3 = () => {
         />
 
         {/* Showing the Assessor */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Target className="w-5 h-5" />
               4. Showing the Assessor You Are Safe
             </h2>
             
-            <p className="text-xs sm:text-sm text-muted-foreground mb-6 leading-relaxed">
+            <p className="text-xs sm:text-sm text-white mb-6 leading-relaxed">
               It's not just about being safe — it's about making it clear to the assessor that safety is your priority:
             </p>
 
@@ -493,14 +493,14 @@ const AM2Module7Section3 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Lightbulb className="w-5 h-5" />
               Practical Guidance
             </h2>
             
-            <p className="text-xs sm:text-sm text-muted-foreground mb-6 leading-relaxed">
+            <p className="text-xs sm:text-sm text-white mb-6 leading-relaxed">
               Think like you're on-site with a client or inspector watching - every action reflects your professionalism:
             </p>
 
@@ -599,7 +599,7 @@ const AM2Module7Section3 = () => {
         </Card>
 
         {/* Real-world Examples */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
@@ -635,7 +635,7 @@ const AM2Module7Section3 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Brain className="w-5 h-5" />
@@ -644,36 +644,36 @@ const AM2Module7Section3 = () => {
 
             <div className="space-y-6">
               <div>
-                <h3 className="font-semibold text-foreground mb-2 text-sm sm:text-base">Q1: Do assessors allow small safety mistakes?</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">
+                <h3 className="font-semibold text-white mb-2 text-sm sm:text-base">Q1: Do assessors allow small safety mistakes?</h3>
+                <p className="text-xs sm:text-sm text-white">
                   No — safety errors are heavily penalised, and critical errors result in instant failure. There are no "small" safety mistakes in electrical work.
                 </p>
               </div>
 
               <div>
-                <h3 className="font-semibold text-foreground mb-2 text-sm sm:text-base">Q2: What if I realise I've made a safety error during the exam?</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">
+                <h3 className="font-semibold text-white mb-2 text-sm sm:text-base">Q2: What if I realise I've made a safety error during the exam?</h3>
+                <p className="text-xs sm:text-sm text-white">
                   Stop immediately, inform the assessor, isolate if necessary, and correct it properly. Honesty and immediate correction show professional integrity.
                 </p>
               </div>
 
               <div>
-                <h3 className="font-semibold text-foreground mb-2 text-sm sm:text-base">Q3: Is it better to be slow and safe, or fast and efficient?</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">
+                <h3 className="font-semibold text-white mb-2 text-sm sm:text-base">Q3: Is it better to be slow and safe, or fast and efficient?</h3>
+                <p className="text-xs sm:text-sm text-white">
                   Always slow and safe. Speed is never prioritised over safety in AM2. A methodical, safe approach will always score higher than rushing.
                 </p>
               </div>
 
               <div>
-                <h3 className="font-semibold text-foreground mb-2 text-sm sm:text-base">Q4: Should I verbalise my safety steps?</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">
+                <h3 className="font-semibold text-white mb-2 text-sm sm:text-base">Q4: Should I verbalise my safety steps?</h3>
+                <p className="text-xs sm:text-sm text-white">
                   Yes! Talking through safety steps like "proving my tester on known live source" clearly demonstrates your understanding to the assessor.
                 </p>
               </div>
 
               <div>
-                <h3 className="font-semibold text-foreground mb-2 text-sm sm:text-base">Q5: What happens if my test equipment fails during the exam?</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">
+                <h3 className="font-semibold text-white mb-2 text-sm sm:text-base">Q5: What happens if my test equipment fails during the exam?</h3>
+                <p className="text-xs sm:text-sm text-white">
                   Stop work immediately, inform the assessor, and request replacement equipment. Never continue with faulty or unsafe test equipment.
                 </p>
               </div>
@@ -682,7 +682,7 @@ const AM2Module7Section3 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
@@ -708,13 +708,13 @@ const AM2Module7Section3 = () => {
         </Card>
 
         {/* Quiz Section */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <TestTube className="w-5 h-5" />
               10-Question Quiz
             </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground mb-6">
+            <p className="text-xs sm:text-sm text-white mb-6">
               Test your understanding of safety requirements in AM2:
             </p>
             <Quiz questions={quizQuestions} />
@@ -722,7 +722,7 @@ const AM2Module7Section3 = () => {
         </Card>
 
         {/* Footer Navigation */}
-        <div className="flex items-center justify-between pt-6 sm:pt-8 border-t border-border/20">
+        <div className="flex items-center justify-between pt-6 sm:pt-8 border-t border-white/10">
           <Button variant="outline" className="text-sm sm:text-base" asChild>
             <Link to="../section2">
               <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />

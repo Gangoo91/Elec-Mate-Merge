@@ -163,7 +163,7 @@ const HeatPumpCalculator = () => {
   }));
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-6 p-4 bg-elec-gray rounded-lg">
+    <div className="w-full max-w-4xl mx-auto space-y-6 p-4 bg-white/5 rounded-lg">
       {/* Header */}
       <div className="text-center space-y-2 mb-6">
         <div className="flex items-center justify-center gap-2 text-elec-yellow">

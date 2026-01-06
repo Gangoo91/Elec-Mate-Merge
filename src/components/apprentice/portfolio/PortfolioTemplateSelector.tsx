@@ -63,7 +63,7 @@ const PortfolioTemplateSelector = () => {
       case "Beginner": return "bg-green-500/20 text-green-400 border-green-500/30";
       case "Intermediate": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
       case "Advanced": return "bg-red-500/20 text-red-400 border-red-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+      default: return "bg-white/10 text-white border-white/30";
     }
   };
 
@@ -97,27 +97,27 @@ const PortfolioTemplateSelector = () => {
       <Card className="border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-cyan-500/10">
         <CardHeader>
           <CardTitle className="text-blue-400">Portfolio Templates</CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Choose a template that matches your apprenticeship focus and experience level
           </p>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {templates.map((template) => (
-              <div key={template.id} className="p-4 bg-elec-gray/50 rounded-lg border border-blue-500/20">
+              <div key={template.id} className="p-4 bg-white/5 rounded-lg border border-blue-500/20">
                 <div className="flex items-start justify-between mb-3">
                   <h4 className="font-medium text-white">{template.name}</h4>
                   <Badge className={`text-xs ${getDifficultyColor(template.difficulty)}`}>
                     {template.difficulty}
                   </Badge>
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">{template.description}</p>
+                <p className="text-sm text-white mb-3">{template.description}</p>
                 
                 <div className="mb-4">
                   <span className="text-xs font-medium text-blue-400">Includes:</span>
                   <ul className="mt-1 space-y-1">
                     {template.sections.map((section, idx) => (
-                      <li key={idx} className="text-xs text-muted-foreground flex items-center gap-2">
+                      <li key={idx} className="text-xs text-white flex items-center gap-2">
                         <CheckCircle className="h-3 w-3 text-green-400" />
                         {section}
                       </li>

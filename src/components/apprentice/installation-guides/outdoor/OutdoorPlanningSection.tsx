@@ -175,7 +175,7 @@ const OutdoorPlanningSection = () => {
   return (
     <div className="space-y-6">
       {/* Planning Phases Timeline */}
-      <Card className="border-blue-500/30 bg-elec-gray">
+      <Card className="border-blue-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <ClipboardList className="h-6 w-6 text-blue-400" />
@@ -206,7 +206,7 @@ const OutdoorPlanningSection = () => {
       </Card>
 
       {/* Design Considerations */}
-      <Card className="border-purple-500/30 bg-elec-gray">
+      <Card className="border-purple-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Eye className="h-6 w-6 text-purple-400" />
@@ -235,7 +235,7 @@ const OutdoorPlanningSection = () => {
       </Card>
 
       {/* Environmental Factors */}
-      <Card className="border-green-500/30 bg-elec-gray">
+      <Card className="border-green-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Cloud className="h-6 w-6 text-green-400" />
@@ -277,7 +277,7 @@ const OutdoorPlanningSection = () => {
       </Card>
 
       {/* Regulatory Requirements */}
-      <Card className="border-red-500/30 bg-elec-gray">
+      <Card className="border-red-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <HardHat className="h-6 w-6 text-red-400" />

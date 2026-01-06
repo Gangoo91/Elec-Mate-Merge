@@ -214,7 +214,7 @@ const SpecialistInstallations = () => {
   const renderOverviewContent = () => (
     <div className="space-y-6">
       {/* What is Specialist Electrical Work */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Lightbulb className="h-6 w-6 text-elec-yellow" />
@@ -233,7 +233,7 @@ const SpecialistInstallations = () => {
             {whatIsSpecialist.riskFactors.map((factor, idx) => {
               const Icon = factor.icon;
               return (
-                <div key={idx} className="bg-elec-dark/40 p-4 rounded-lg border border-elec-yellow/20">
+                <div key={idx} className="bg-white/5 border border-white/10 p-4 rounded-lg border border-elec-yellow/20">
                   <div className="flex items-center gap-2 mb-2">
                     <Icon className="h-5 w-5 text-elec-yellow" />
                     <h4 className="font-medium text-elec-yellow">{factor.factor}</h4>
@@ -254,7 +254,7 @@ const SpecialistInstallations = () => {
       </Card>
 
       {/* Special Location Categories Overview */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <MapPin className="h-6 w-6 text-elec-yellow" />
@@ -290,18 +290,18 @@ const SpecialistInstallations = () => {
       </Card>
 
       {/* Common Installation Types */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <CheckCircle className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Specialist Installation Types</CardTitle>
           </div>
-          <p className="text-muted-foreground">Advanced electrical installations requiring specialist knowledge</p>
+          <p className="text-white/70">Advanced electrical installations requiring specialist knowledge</p>
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {commonTypes.map((type, index) => (
-              <div key={index} className="bg-elec-dark/40 p-4 rounded-lg">
+              <div key={index} className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 text-white">
                   <Zap className="h-4 w-4 text-elec-yellow" />
                   {type}
@@ -313,7 +313,7 @@ const SpecialistInstallations = () => {
       </Card>
 
       {/* Key Differences from Standard Installations */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Shield className="h-6 w-6 text-elec-yellow" />
@@ -414,7 +414,7 @@ const SpecialistInstallations = () => {
       </Card>
 
       {/* Career Opportunities */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <GraduationCap className="h-6 w-6 text-elec-yellow" />
@@ -458,22 +458,22 @@ const SpecialistInstallations = () => {
   const renderCircuitsContent = () => (
     <div className="space-y-6">
       {/* Cable Types & Protection */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Cable className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Specialist Cable Types & Protection</CardTitle>
           </div>
-          <p className="text-muted-foreground">Cable specifications for specialist installations</p>
+          <p className="text-white/70">Cable specifications for specialist installations</p>
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="space-y-4">
             {cableTypes.map((cable, index) => (
-              <div key={index} className="bg-elec-dark/40 p-4 rounded-lg border border-elec-yellow/20">
+              <div key={index} className="bg-white/5 border border-white/10 p-4 rounded-lg border border-elec-yellow/20">
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
                   <div className="flex-1">
                     <h4 className="font-medium text-white text-base mb-1">{cable.application}</h4>
-                    <p className="text-sm text-muted-foreground">{cable.notes}</p>
+                    <p className="text-sm text-white/70">{cable.notes}</p>
                   </div>
                   <div className="flex flex-col sm:flex-row gap-2">
                     <Badge variant="outline" className="border-elec-yellow text-elec-yellow">
@@ -491,25 +491,25 @@ const SpecialistInstallations = () => {
       </Card>
 
       {/* Grid Connection Requirements */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Plug className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Grid Connection Requirements</CardTitle>
           </div>
-          <p className="text-muted-foreground">DNO requirements for renewable energy connections</p>
+          <p className="text-white/70">DNO requirements for renewable energy connections</p>
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {gridConnectionRequirements.map((req, index) => (
-              <div key={index} className="bg-elec-dark/40 p-5 rounded-lg border border-elec-yellow/20">
+              <div key={index} className="bg-white/5 border border-white/10 p-5 rounded-lg border border-elec-yellow/20">
                 <h4 className="font-medium text-white text-lg mb-2">{req.standard}</h4>
-                <p className="text-sm text-muted-foreground mb-4">{req.description}</p>
+                <p className="text-sm text-white/70 mb-4">{req.description}</p>
                 <div className="space-y-2">
                   {req.requirements.map((requirement, reqIndex) => (
                     <div key={reqIndex} className="flex items-start gap-2">
                       <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
-                      <span className="text-sm text-muted-foreground">{requirement}</span>
+                      <span className="text-sm text-white/70">{requirement}</span>
                     </div>
                   ))}
                 </div>
@@ -520,7 +520,7 @@ const SpecialistInstallations = () => {
       </Card>
 
       {/* Special Circuit Considerations */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Zap className="h-6 w-6 text-elec-yellow" />
@@ -593,20 +593,20 @@ const SpecialistInstallations = () => {
   const renderComplianceContent = () => (
     <div className="space-y-6">
       {/* Key Standards */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Award className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Key Standards & Regulations</CardTitle>
           </div>
-          <p className="text-muted-foreground">Essential compliance requirements for specialist installations</p>
+          <p className="text-white/70">Essential compliance requirements for specialist installations</p>
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="space-y-3">
             {keyStandards.map((standard, index) => (
               <div key={index} className="flex items-start gap-3">
                 <Award className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-muted-foreground">{standard}</span>
+                <span className="text-white/70">{standard}</span>
               </div>
             ))}
           </div>
@@ -615,12 +615,12 @@ const SpecialistInstallations = () => {
 
       {/* Compliance Overview Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="border-elec-yellow/30 bg-elec-gray">
+        <Card className="border-elec-yellow/30 bg-white/5">
           <CardHeader>
             <CardTitle className="text-elec-yellow text-lg">Planning & Approvals</CardTitle>
           </CardHeader>
           <CardContent className="p-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/70">
               Specialist installations often require additional approvals and notifications. Check with local
               building control and DNO requirements for grid connections. Plan cable routes considering special
               environmental conditions and access for maintenance. Consider ongoing monitoring requirements.
@@ -628,12 +628,12 @@ const SpecialistInstallations = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/30 bg-elec-gray">
+        <Card className="border-elec-yellow/30 bg-white/5">
           <CardHeader>
             <CardTitle className="text-elec-yellow text-lg">Enhanced Safety Measures</CardTitle>
           </CardHeader>
           <CardContent className="p-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/70">
               Special locations require enhanced safety measures including additional RCD protection, bonding
               requirements, and IP rating considerations. Ensure all personnel are trained for the specific
               installation type and environmental hazards present.
@@ -641,12 +641,12 @@ const SpecialistInstallations = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/30 bg-elec-gray">
+        <Card className="border-elec-yellow/30 bg-white/5">
           <CardHeader>
             <CardTitle className="text-elec-yellow text-lg">Certification & Warranties</CardTitle>
           </CardHeader>
           <CardContent className="p-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/70">
               Specialist installations may require additional certification such as MCS for solar PV or specific
               commissioning procedures for EV charging points. Ensure all relevant standards are followed and
               appropriate warranties provided to the customer.
@@ -665,20 +665,20 @@ const SpecialistInstallations = () => {
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="space-y-3">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/70">
               <strong className="text-orange-300">Competency Requirements:</strong> Specialist installations require
               additional training and certification. Ensure you have appropriate qualifications before undertaking
               specialist work.
             </p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/70">
               <strong className="text-orange-300">Type A RCD Protection:</strong> Many specialist installations require
               Type A RCDs due to DC leakage currents or electronic equipment.
             </p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/70">
               <strong className="text-orange-300">Environmental Considerations:</strong> Consider IP ratings, UV
               resistance, and environmental conditions specific to each installation type.
             </p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/70">
               <strong className="text-orange-300">Part 7 Takes Precedence:</strong> Where Part 7 requirements conflict
               with general BS 7671 requirements, Part 7 takes precedence for the specific installation type.
             </p>
@@ -719,7 +719,7 @@ const SpecialistInstallations = () => {
           <div className="flex items-center justify-center gap-4">
             <div className="relative">
               <div className="absolute inset-0 bg-elec-yellow/20 blur-xl rounded-full" />
-              <div className="relative bg-elec-gray/80 p-3 rounded-xl border border-elec-yellow/30">
+              <div className="relative bg-white/5/80 p-3 rounded-xl border border-elec-yellow/30">
                 <Plug className="h-10 w-10 text-elec-yellow" />
               </div>
             </div>
@@ -735,7 +735,7 @@ const SpecialistInstallations = () => {
         <div className="w-full space-y-6">
           <div className="flex justify-center">
             <Select value={activeTab} onValueChange={setActiveTab}>
-              <SelectTrigger className="w-[320px] md:w-[400px] bg-elec-gray border-elec-yellow/30 hover:border-elec-yellow/50 transition-colors text-white h-12 text-base font-medium shadow-lg shadow-black/20">
+              <SelectTrigger className="w-[320px] md:w-[400px] bg-white/5 border-elec-yellow/30 hover:border-elec-yellow/50 transition-colors text-white h-12 text-base font-medium shadow-lg shadow-black/20">
                 <SelectValue placeholder="Select section">
                   <div className="flex items-center gap-3">
                     {(() => {
@@ -751,7 +751,7 @@ const SpecialistInstallations = () => {
                   </div>
                 </SelectValue>
               </SelectTrigger>
-              <SelectContent className="bg-elec-gray border-elec-yellow/30 shadow-xl shadow-black/30">
+              <SelectContent className="bg-white/5 border-elec-yellow/30 shadow-xl shadow-black/30">
                 {tabOptions.map((tab) => {
                   const IconComponent = tab.icon;
                   return (

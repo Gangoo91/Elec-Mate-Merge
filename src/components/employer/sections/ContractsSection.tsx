@@ -1,18 +1,16 @@
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { SectionHeader } from "@/components/employer/SectionHeader";
+import { QuickStats, QuickStat } from "@/components/employer/QuickStats";
 import { Input } from "@/components/ui/input";
-import { 
-  FileText, 
+import {
+  FileText,
   UserPlus,
   Briefcase,
-  GraduationCap,
   ClipboardList,
   UserCheck,
-  AlertCircle,
   Search,
   CheckCircle2,
-  Clock,
   FileCheck
 } from "lucide-react";
 
@@ -82,26 +80,22 @@ export function ContractsSection() {
       </div>
 
       {/* Quick Stats */}
-      <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4 md:mx-0 md:px-0">
-        <Card className="bg-elec-yellow/10 border-elec-yellow/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <FileCheck className="h-4 w-4 text-elec-yellow" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{templateCount}</p>
-              <p className="text-xs text-muted-foreground">Templates</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-success/10 border-success/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-success" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{activeCount}</p>
-              <p className="text-xs text-muted-foreground">Active Contracts</p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <QuickStats
+        stats={[
+          {
+            icon: FileCheck,
+            value: templateCount,
+            label: "Templates",
+            color: "yellow",
+          },
+          {
+            icon: CheckCircle2,
+            value: activeCount,
+            label: "Active Contracts",
+            color: "green",
+          },
+        ]}
+      />
 
       {/* Active Contracts */}
       <div>

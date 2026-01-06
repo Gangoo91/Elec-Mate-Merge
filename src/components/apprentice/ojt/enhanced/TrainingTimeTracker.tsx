@@ -209,7 +209,7 @@ const TrainingTimeTracker = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-green-600">{trackingStats.todayHours}h</div>
-            <p className="text-sm text-muted-foreground">Today</p>
+            <p className="text-sm text-white">Today</p>
           </div>
         </CardContent>
       </Card>
@@ -218,7 +218,7 @@ const TrainingTimeTracker = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-blue-600">{trackingStats.weekHours}h</div>
-            <p className="text-sm text-muted-foreground">This Week</p>
+            <p className="text-sm text-white">This Week</p>
             <Progress value={(trackingStats.weekHours / trackingStats.weeklyTarget) * 100} className="mt-2" />
           </div>
         </CardContent>
@@ -228,7 +228,7 @@ const TrainingTimeTracker = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-purple-600">{trackingStats.monthHours}h</div>
-            <p className="text-sm text-muted-foreground">This Month</p>
+            <p className="text-sm text-white">This Month</p>
           </div>
         </CardContent>
       </Card>
@@ -237,7 +237,7 @@ const TrainingTimeTracker = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-orange-600">{trackingStats.streak}</div>
-            <p className="text-sm text-muted-foreground">Day Streak</p>
+            <p className="text-sm text-white">Day Streak</p>
           </div>
         </CardContent>
       </Card>
@@ -249,7 +249,7 @@ const TrainingTimeTracker = () => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">Advanced Time Tracking</h2>
-          <p className="text-muted-foreground">Track your off-the-job training time with precision</p>
+          <p className="text-white">Track your off-the-job training time with precision</p>
         </div>
       </div>
 

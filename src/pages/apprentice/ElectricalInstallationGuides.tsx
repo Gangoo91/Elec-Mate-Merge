@@ -81,7 +81,7 @@ const ElectricalInstallationGuides = () => {
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-elec-yellow">
           Electrical Installation Guides
         </h1>
-        <p className="text-muted-foreground text-base md:text-lg max-w-3xl mx-auto mb-6">
+        <p className="text-white/70 text-base md:text-lg max-w-3xl mx-auto mb-6">
           Comprehensive electrical installation guidance for UK electricians. 
           Choose your installation type to access detailed guides with BS 7671 compliance information.
         </p>
@@ -98,7 +98,7 @@ const ElectricalInstallationGuides = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {installationTypes.map((installation) => (
               <Link key={installation.id} to={`/apprentice/electrical-installation-guides/${installation.id}`}>
-                <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/5 via-elec-gray to-elec-dark/80 hover:bg-elec-yellow/10 transition-all duration-300 h-full cursor-pointer group">
+                <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/5 via-white/5 to-white/3 hover:bg-elec-yellow/10 transition-all duration-300 h-full cursor-pointer group">
                   <CardHeader className="pb-4">
                     <div className="flex items-start justify-between">
                       <div className="flex items-center gap-3">
@@ -118,7 +118,7 @@ const ElectricalInstallationGuides = () => {
                             }`}>
                               {installation.difficulty}
                             </Badge>
-                            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                            <div className="flex items-center gap-1 text-xs text-white/70">
                               <Clock className="h-3 w-3" />
                               {installation.estimatedTime}
                             </div>
@@ -128,12 +128,12 @@ const ElectricalInstallationGuides = () => {
                     </div>
                   </CardHeader>
                   <CardContent className="pt-0">
-                    <p className="text-muted-foreground text-sm mb-4">{installation.description}</p>
+                    <p className="text-white/70 text-sm mb-4">{installation.description}</p>
                     <div className="space-y-2">
                       <h4 className="text-sm font-medium text-white">Key Topics:</h4>
                       <div className="grid grid-cols-2 gap-1">
                         {installation.features.map((feature, index) => (
-                          <div key={index} className="text-xs text-muted-foreground flex items-center gap-1">
+                          <div key={index} className="text-xs text-white/70 flex items-center gap-1">
                             <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
                             {feature}
                           </div>
@@ -153,7 +153,7 @@ const ElectricalInstallationGuides = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {additionalGuides.map((guide) => (
               <Link key={guide.id} to={`/apprentice/electrical-installation-guides/${guide.id}`}>
-                <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/5 via-elec-gray to-elec-dark/80 hover:bg-elec-yellow/10 transition-all duration-300 h-full cursor-pointer group">
+                <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/5 via-white/5 to-white/3 hover:bg-elec-yellow/10 transition-all duration-300 h-full cursor-pointer group">
                   <CardHeader className="pb-4">
                     <div className="flex items-start justify-between">
                       <div className="flex items-center gap-3">
@@ -165,7 +165,7 @@ const ElectricalInstallationGuides = () => {
                             {guide.title}
                             <ArrowRight className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                           </CardTitle>
-                          <div className="flex items-center gap-1 text-xs text-muted-foreground mt-2">
+                          <div className="flex items-center gap-1 text-xs text-white/70 mt-2">
                             <Clock className="h-3 w-3" />
                             {guide.estimatedTime}
                           </div>
@@ -174,12 +174,12 @@ const ElectricalInstallationGuides = () => {
                     </div>
                   </CardHeader>
                   <CardContent className="pt-0">
-                    <p className="text-muted-foreground text-sm mb-4">{guide.description}</p>
+                    <p className="text-white/70 text-sm mb-4">{guide.description}</p>
                     <div className="space-y-2">
                       <h4 className="text-sm font-medium text-white">Includes:</h4>
                       <div className="grid grid-cols-2 gap-1">
                         {guide.features.map((feature, index) => (
-                          <div key={index} className="text-xs text-muted-foreground flex items-center gap-1">
+                          <div key={index} className="text-xs text-white/70 flex items-center gap-1">
                             <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
                             {feature}
                           </div>
@@ -206,14 +206,14 @@ const ElectricalInstallationGuides = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <h4 className="font-semibold text-white mb-3">For Apprentices</h4>
-              <p className="text-sm text-muted-foreground mb-2">
+              <p className="text-sm text-white/70 mb-2">
                 Start with <strong className="text-orange-300">Domestic Installations</strong> to learn the fundamentals, 
                 then progress to commercial and industrial work as you gain experience.
               </p>
             </div>
             <div>
               <h4 className="font-semibold text-white mb-3">For Qualified Electricians</h4>
-              <p className="text-sm text-muted-foreground mb-2">
+              <p className="text-sm text-white/70 mb-2">
                 Use these guides as quick reference materials and to stay updated with the latest 
                 <strong className="text-orange-300"> BS 7671 requirements</strong> and best practices.
               </p>

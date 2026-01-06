@@ -125,7 +125,7 @@ const ZsLookupResult = ({ searchType, results, complianceCheck, measuredZs }: Zs
     else if (percentage < 25) colorClass = "bg-yellow-500";
     
     return (
-      <div className="w-16 h-2 bg-gray-600 rounded-full overflow-hidden">
+      <div className="w-16 h-2 bg-white/15 rounded-full overflow-hidden">
         <div 
           className={`h-full ${colorClass} transition-all duration-300`}
           style={{ width: `${percentage}%` }}
@@ -164,7 +164,7 @@ const ZsLookupResult = ({ searchType, results, complianceCheck, measuredZs }: Zs
                   placeholder="e.g., B, C, D"
                   value={filterCurve}
                   onChange={(e) => setFilterCurve(e.target.value)}
-                  className="h-8 text-xs bg-elec-dark border-elec-yellow/20"
+                  className="h-8 text-xs bg-white/10 border-elec-yellow/20"
                 />
               </div>
               <div>
@@ -176,7 +176,7 @@ const ZsLookupResult = ({ searchType, results, complianceCheck, measuredZs }: Zs
                   placeholder="e.g., 6"
                   value={filterRatingMin}
                   onChange={(e) => setFilterRatingMin(e.target.value)}
-                  className="h-8 text-xs bg-elec-dark border-elec-yellow/20"
+                  className="h-8 text-xs bg-white/10 border-elec-yellow/20"
                 />
               </div>
               <div>
@@ -188,7 +188,7 @@ const ZsLookupResult = ({ searchType, results, complianceCheck, measuredZs }: Zs
                   placeholder="e.g., 32"
                   value={filterRatingMax}
                   onChange={(e) => setFilterRatingMax(e.target.value)}
-                  className="h-8 text-xs bg-elec-dark border-elec-yellow/20"
+                  className="h-8 text-xs bg-white/10 border-elec-yellow/20"
                 />
               </div>
             </div>
@@ -255,7 +255,7 @@ const ZsLookupResult = ({ searchType, results, complianceCheck, measuredZs }: Zs
                 </tbody>
               </table>
               {sortedResults.length === 0 && (
-                <p className="text-center text-muted-foreground py-4">
+                <p className="text-center text-white py-4">
                   No devices match your filter criteria
                 </p>
               )}
@@ -349,7 +349,7 @@ const ZsLookupResult = ({ searchType, results, complianceCheck, measuredZs }: Zs
                     </tbody>
                   </table>
                   {complianceCheck.compliantDevices.length > 20 && (
-                    <p className="text-xs text-muted-foreground mt-2">
+                    <p className="text-xs text-white mt-2">
                       Showing top 20 results of {complianceCheck.compliantDevices.length} compliant devices.
                     </p>
                   )}

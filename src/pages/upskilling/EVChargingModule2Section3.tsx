@@ -1,549 +1,404 @@
-import { ArrowLeft, ArrowRight, Smartphone, Wifi, Database, Zap, Gauge, Settings, Globe, Shield, Users, Clock, CheckCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
-import EVChargingModule2Section3Quiz from '@/components/upskilling/quiz/EVChargingModule2Section3Quiz';
-import EVChargingModule2Section3FAQ from '@/components/upskilling/quiz/EVChargingModule2Section3FAQ';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
+import useSEO from "@/hooks/useSEO";
+
+const quickCheckQuestions = [
+  {
+    id: "evcharging-m2s3-check1",
+    question: "What does OCPP stand for and what is its purpose?",
+    options: ["Open Charge Point Protocol - standard for EVSE-to-backend communication", "Operational Charging Power Protocol - regulates charging speeds", "Online Connection Point Protocol - manages internet connectivity", "Optimised Charging Power Performance - battery management"],
+    correctIndex: 0,
+    explanation: "OCPP (Open Charge Point Protocol) is an open standard communication protocol between charging stations and central management systems, ensuring interoperability and preventing vendor lock-in."
+  },
+  {
+    id: "evcharging-m2s3-check2",
+    question: "Which connectivity option provides the highest reliability for EV chargers?",
+    options: ["Wi-Fi 2.4GHz", "4G cellular", "Ethernet/hardwired", "Power Line Communication"],
+    correctIndex: 2,
+    explanation: "Ethernet/hardwired connections offer the highest stability with no wireless interference, making them ideal for commercial installations and critical infrastructure where reliability is paramount."
+  },
+  {
+    id: "evcharging-m2s3-check3",
+    question: "In dynamic load management, what happens when total demand exceeds supply capacity?",
+    options: ["Charging stops completely", "The system reduces power to each charger proportionally", "Only the last connected vehicle charges", "The main breaker trips"],
+    correctIndex: 1,
+    explanation: "Dynamic load management automatically reduces power allocation to each charging point to stay within the available supply capacity, allowing all vehicles to continue charging at reduced rates rather than stopping completely."
+  }
+];
+
+const faqs = [
+  {
+    question: "What's the difference between OCPP 1.6 and OCPP 2.0.1?",
+    answer: "OCPP 2.0.1 offers enhanced security (device model framework), ISO 15118 support for Plug & Charge, display messaging, and 80+ message types vs 44 in version 1.6. Most new installations should specify OCPP 2.0.1 for future-proofing."
+  },
+  {
+    question: "Can I use Wi-Fi in a commercial car park installation?",
+    answer: "Wi-Fi can work but has limitations - range (30-100m), interference, and network congestion. For commercial installations, consider Ethernet for reliability or 4G/5G cellular as backup. A hybrid approach provides redundancy."
+  },
+  {
+    question: "What cybersecurity measures should smart chargers have?",
+    answer: "Essential measures include TLS 1.3 encryption, certificate-based authentication (PKI), secure firmware updates, network segmentation, and regular security patches. OCPP 2.0.1 includes enhanced security features as standard."
+  },
+  {
+    question: "How does solar integration work with smart chargers?",
+    answer: "Smart chargers with solar integration monitor PV generation and adjust charging power to maximise self-consumption. When solar output is high, charging power increases; when low, it reduces or pauses, optimising for lowest cost or greenest energy."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+  question: "A workplace with 20 charging bays on a 100A supply needs to manage charging. What system feature is most critical?",
+  options: [
+    "RFID card authentication",
+    "Dynamic load management with OCPP",
+    "Individual energy metering",
+    "Mobile app payment processing"
+  ],
+  correctAnswer: 1,
+  explanation: "With 20 bays potentially demanding 640A (32A × 20), dynamic load management via OCPP is essential to distribute the 100A supply across active sessions without overloading. Authentication and payment are important but secondary to managing the electrical capacity."
+  }
+];
 
 const EVChargingModule2Section3 = () => {
+  useSEO({
+    title: "Smart Chargers, App Control & APIs | EV Charging Module 2.3",
+    description: "Learn about connected EV charging systems including OCPP protocol, mobile app features, API integration, and dynamic load management."
+  });
+
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="px-4 sm:px-8 pt-8 pb-12">
-        <Link to="../ev-charging-module-2">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
           <Button
             variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 2
+            <Link to="../ev-charging-module-2">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 2
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-6">
-          <div>
-            <div className="flex items-center gap-4 mb-4">
-              <Smartphone className="h-8 w-8 text-yellow-400" />
-              <div>
-                <h1 className="text-2xl sm:text-4xl font-bold text-white">
-                  Smart Chargers, App Control, and APIs
-                </h1>
-                <p className="text-lg sm:text-xl text-gray-400">
-                  Connected charging systems and remote management
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">
-                Module 2
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">
-                Section 3
-              </Badge>
-            </div>
-          </div>
-
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
-                <Wifi className="h-5 w-5 text-yellow-400" />
-                Introduction to Smart Charging
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                Smart charging represents the evolution of EV charging infrastructure beyond simple power delivery. 
-                These systems incorporate connectivity, intelligence, and user interaction to optimise charging 
-                operations, enhance user experience, and integrate with broader energy management systems.
-              </p>
-              <p>
-                Modern smart chargers combine hardware functionality with software intelligence, enabling 
-                remote monitoring, dynamic load management, payment processing, and integration with 
-                renewable energy sources and grid services.
-              </p>
-              <div className="bg-yellow-400/20 border border-blue-600/30 rounded-lg p-4">
-                <p className="text-blue-200 font-medium mb-2">Key Benefits:</p>
-                <ul className="text-blue-100 text-sm space-y-1">
-                  <li>• Remote monitoring and control capabilities</li>
-                  <li>• Energy cost optimisation through time-of-use scheduling</li>
-                  <li>• Integration with renewable energy sources</li>
-                  <li>• Enhanced user experience through mobile applications</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Connectivity Technologies */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
-                <Globe className="h-5 w-5 text-yellow-400" />
-                Connectivity Technologies
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-purple-600/10 border border-purple-600/20 rounded-lg p-4">
-                  <h4 className="font-semibold text-purple-300 mb-3">Wi-Fi Connectivity</h4>
-                  <div className="text-purple-100 text-sm space-y-2">
-                    <p><strong>Frequency:</strong> 2.4GHz/5GHz IEEE 802.11 standards</p>
-                    <p><strong>Range:</strong> 30-100m depending on environment</p>
-                    <p><strong>Data Rate:</strong> Up to 1.3Gbps (802.11ac)</p>
-                    <p><strong>Applications:</strong> High-bandwidth data, firmware updates, real-time monitoring</p>
-                    <p><strong>Security:</strong> WPA3 encryption, enterprise authentication</p>
-                  </div>
-                </div>
-                
-                <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
-                  <h4 className="font-semibold text-green-300 mb-3">4G/5G Cellular</h4>
-                  <div className="text-green-100 text-sm space-y-2">
-                    <p><strong>Coverage:</strong> Extensive network coverage</p>
-                    <p><strong>Reliability:</strong> 99.9% network availability</p>
-                    <p><strong>Latency:</strong> 4G: 50ms, 5G: &lt;10ms</p>
-                    <p><strong>Applications:</strong> Remote locations, redundant connectivity</p>
-                    <p><strong>Cost:</strong> Ongoing data charges, SIM management</p>
-                  </div>
-                </div>
-                
-                <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-4">
-                  <h4 className="font-semibold text-blue-300 mb-3">Ethernet/Hardwired</h4>
-                  <div className="text-blue-100 text-sm space-y-2">
-                    <p><strong>Standards:</strong> IEEE 802.3, Cat5e/Cat6 cabling</p>
-                    <p><strong>Speed:</strong> 100Mbps to 10Gbps</p>
-                    <p><strong>Reliability:</strong> Highest stability, no interference</p>
-                    <p><strong>Applications:</strong> Commercial installations, critical infrastructure</p>
-                    <p><strong>Installation:</strong> Requires structured cabling</p>
-                  </div>
-                </div>
-                
-                <div className="bg-orange-600/10 border border-orange-600/20 rounded-lg p-4">
-                  <h4 className="font-semibold text-orange-300 mb-3">OCPP Over PLC</h4>
-                  <div className="text-orange-100 text-sm space-y-2">
-                    <p><strong>Technology:</strong> Power Line Communication</p>
-                    <p><strong>Frequency:</strong> 2-30MHz over existing power cables</p>
-                    <p><strong>Range:</strong> Up to 300m on low voltage networks</p>
-                    <p><strong>Applications:</strong> Retrofit installations, cost reduction</p>
-                    <p><strong>Limitations:</strong> Noise susceptibility, variable performance</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* FAQ Section */}
-          <EVChargingModule2Section3FAQ />
-
-          {/* Mobile Applications */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
-                <Users className="h-5 w-5 text-yellow-400" />
-                Mobile Application Features
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-white">Core Functionality</h4>
-                  <div className="space-y-3">
-                    <div className="bg-card p-3 rounded-md">
-                      <p className="text-yellow-400 font-medium">Remote Start/Stop</p>
-                      <p className="text-gray-300 text-sm">Initiate or terminate charging sessions remotely with instant feedback</p>
-                    </div>
-                    <div className="bg-card p-3 rounded-md">
-                      <p className="text-yellow-400 font-medium">Real-time Monitoring</p>
-                      <p className="text-gray-300 text-sm">Live power consumption, charging speed, and session duration tracking</p>
-                    </div>
-                    <div className="bg-card p-3 rounded-md">
-                      <p className="text-yellow-400 font-medium">Scheduling & Timers</p>
-                      <p className="text-gray-300 text-sm">Programme charging to start/stop at specific times for off-peak rates</p>
-                    </div>
-                    <div className="bg-card p-3 rounded-md">
-                      <p className="text-yellow-400 font-medium">Energy Management</p>
-                      <p className="text-gray-300 text-sm">Set charging limits, track energy consumption, and manage costs</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-white">Advanced Features</h4>
-                  <div className="space-y-3">
-                    <div className="bg-card p-3 rounded-md">
-                      <p className="text-yellow-400 font-medium">Load Balancing</p>
-                      <p className="text-gray-300 text-sm">Automatic power distribution across multiple charging points</p>
-                    </div>
-                    <div className="bg-card p-3 rounded-md">
-                      <p className="text-yellow-400 font-medium">Solar Integration</p>
-                      <p className="text-gray-300 text-sm">Optimise charging to maximise use of solar generation</p>
-                    </div>
-                    <div className="bg-card p-3 rounded-md">
-                      <p className="text-yellow-400 font-medium">Access Control</p>
-                      <p className="text-gray-300 text-sm">RFID, PIN, or app-based authentication for user management</p>
-                    </div>
-                    <div className="bg-card p-3 rounded-md">
-                      <p className="text-yellow-400 font-medium">Diagnostics</p>
-                      <p className="text-gray-300 text-sm">Fault detection, maintenance alerts, and performance analytics</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* OCPP Protocol */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
-                <Database className="h-5 w-5 text-yellow-400" />
-                Open Charge Point Protocol (OCPP)
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4 mb-4">
-                <p className="text-green-200 font-medium mb-2">Protocol Overview</p>
-                <p className="text-green-100 text-sm">
-                  OCPP is an open standard communication protocol between charging stations and central 
-                  management systems, ensuring interoperability and preventing vendor lock-in.
-                </p>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-4">
-                  <h4 className="font-semibold text-blue-300 mb-3">OCPP 1.6J</h4>
-                  <div className="text-blue-100 text-sm space-y-2">
-                    <p><strong>Release:</strong> 2015</p>
-                    <p><strong>Transport:</strong> WebSocket over TLS</p>
-                    <p><strong>Messages:</strong> 44 message types</p>
-                    <p><strong>Features:</strong></p>
-                    <ul className="ml-2 space-y-1">
-                      <li>• Smart charging profiles</li>
-                      <li>• Local authorisation lists</li>
-                      <li>• Firmware management</li>
-                      <li>• Remote diagnostics</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <div className="bg-purple-600/10 border border-purple-600/20 rounded-lg p-4">
-                  <h4 className="font-semibold text-purple-300 mb-3">OCPP 2.0.1</h4>
-                  <div className="text-purple-100 text-sm space-y-2">
-                    <p><strong>Release:</strong> 2020</p>
-                    <p><strong>Transport:</strong> WebSocket over TLS</p>
-                    <p><strong>Messages:</strong> 80+ message types</p>
-                    <p><strong>New Features:</strong></p>
-                    <ul className="ml-2 space-y-1">
-                      <li>• Device model framework</li>
-                      <li>• ISO 15118 support</li>
-                      <li>• Enhanced security</li>
-                      <li>• Display message support</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <div className="bg-orange-600/10 border border-orange-600/20 rounded-lg p-4">
-                  <h4 className="font-semibold text-orange-300 mb-3">Key Messages</h4>
-                  <div className="text-orange-100 text-sm space-y-2">
-                    <p><strong>Core Operations:</strong></p>
-                    <ul className="ml-2 space-y-1">
-                      <li>• Authorize</li>
-                      <li>• StartTransaction</li>
-                      <li>• StopTransaction</li>
-                      <li>• StatusNotification</li>
-                      <li>• MeterValues</li>
-                      <li>• Heartbeat</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* API Integration */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
-                <Settings className="h-5 w-5 text-yellow-400" />
-                API Integration and Development
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div>
-                  <h4 className="font-semibold text-white mb-4">REST API Architecture</h4>
-                  <div className="bg-card p-4 rounded-md space-y-3">
-                    <div>
-                      <p className="text-yellow-400 font-medium">Authentication</p>
-                      <p className="text-gray-300 text-sm">OAuth 2.0, API keys, JWT tokens</p>
-                    </div>
-                    <div>
-                      <p className="text-yellow-400 font-medium">Endpoints</p>
-                      <div className="text-gray-300 text-sm font-mono">
-                        <p>GET /api/v1/chargers</p>
-                        <p>POST /api/v1/sessions/start</p>
-                        <p>PUT /api/v1/settings</p>
-                        <p>DELETE /api/v1/sessions/:id</p>
-                      </div>
-                    </div>
-                    <div>
-                      <p className="text-yellow-400 font-medium">Response Formats</p>
-                      <p className="text-gray-300 text-sm">JSON, XML, rate limiting (100 req/min)</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold text-white mb-4">WebSocket Real-time</h4>
-                  <div className="bg-card p-4 rounded-md space-y-3">
-                    <div>
-                      <p className="text-yellow-400 font-medium">Live Data Streams</p>
-                      <p className="text-gray-300 text-sm">Power consumption, charging status, error notifications</p>
-                    </div>
-                    <div>
-                      <p className="text-yellow-400 font-medium">Event Types</p>
-                      <div className="text-gray-300 text-sm">
-                        <p>• session_started</p>
-                        <p>• power_changed</p>
-                        <p>• fault_detected</p>
-                        <p>• session_completed</p>
-                      </div>
-                    </div>
-                    <div>
-                      <p className="text-yellow-400 font-medium">Connection Management</p>
-                      <p className="text-gray-300 text-sm">Auto-reconnection, heartbeat monitoring</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Load Management */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
-                <Gauge className="h-5 w-5 text-yellow-400" />
-                Dynamic Load Management
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-white">Load Balancing Algorithms</h4>
-                  <div className="space-y-3">
-                    <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-3">
-                      <p className="text-blue-300 font-medium">Equal Distribution</p>
-                      <p className="text-blue-100 text-sm">Available power divided equally among active sessions</p>
-                    </div>
-                    <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-3">
-                      <p className="text-green-300 font-medium">Priority-based</p>
-                      <p className="text-green-100 text-sm">Allocation based on user hierarchy or payment tiers</p>
-                    </div>
-                    <div className="bg-purple-600/10 border border-purple-600/20 rounded-lg p-3">
-                      <p className="text-purple-300 font-medium">First-come-first-served</p>
-                      <p className="text-purple-100 text-sm">Earlier connections receive priority allocation</p>
-                    </div>
-                    <div className="bg-orange-600/10 border border-orange-600/20 rounded-lg p-3">
-                      <p className="text-orange-300 font-medium">Adaptive Scheduling</p>
-                      <p className="text-orange-100 text-sm">ML-based prediction of charging patterns and grid conditions</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-white">Implementation Example</h4>
-                  <div className="bg-card p-4 rounded-md">
-                    <div className="text-sm space-y-2">
-                      <p className="text-yellow-400 font-medium">Scenario: 100A supply, 4 chargers</p>
-                      <div className="text-gray-300 space-y-1">
-                        <p>• Charger 1: 32A (Tesla Model S)</p>
-                        <p>• Charger 2: 16A (Nissan Leaf)</p>
-                        <p>• Charger 3: Standby</p>
-                        <p>• Charger 4: 32A (BMW i3)</p>
-                      </div>
-                      <p className="text-green-300 font-medium mt-3">Total Demand: 80A (within limit)</p>
-                      <p className="text-blue-300 text-sm">If Charger 3 activates (32A request):</p>
-                      <p className="text-orange-300 text-sm">System reduces all to 25A each = 100A total</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Security and Cyber Protection */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
-                <Shield className="h-5 w-5 text-yellow-400" />
-                Cybersecurity Considerations
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-white">Security Threats</h4>
-                  <div className="space-y-3">
-                    <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-3">
-                      <p className="text-red-300 font-medium">Unauthorised Access</p>
-                      <p className="text-red-100 text-sm">Weak authentication, default passwords, unsecured APIs</p>
-                    </div>
-                    <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-3">
-                      <p className="text-red-300 font-medium">Data Interception</p>
-                      <p className="text-red-100 text-sm">Unencrypted communications, man-in-the-middle attacks</p>
-                    </div>
-                    <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-3">
-                      <p className="text-red-300 font-medium">DoS Attacks</p>
-                      <p className="text-red-100 text-sm">Service disruption, resource exhaustion, network flooding</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-white">Protection Measures</h4>
-                  <div className="space-y-3">
-                    <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-3">
-                      <p className="text-green-300 font-medium">Transport Layer Security</p>
-                      <p className="text-green-100 text-sm">TLS 1.3, certificate validation, perfect forward secrecy</p>
-                    </div>
-                    <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-3">
-                      <p className="text-green-300 font-medium">Multi-factor Authentication</p>
-                      <p className="text-green-100 text-sm">RFID + PIN, biometric verification, time-based OTP</p>
-                    </div>
-                    <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-3">
-                      <p className="text-green-300 font-medium">Network Segmentation</p>
-                      <p className="text-green-100 text-sm">VLANs, firewalls, intrusion detection systems</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Real-world Implementation */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
-                <Clock className="h-5 w-5 text-yellow-400" />
-                Real-world Implementation Examples
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-4">
-                  <h4 className="font-semibold text-blue-300 mb-3">Commercial Fleet Management</h4>
-                  <div className="text-blue-100 text-sm space-y-2">
-                    <p><strong>Application:</strong> DHL delivery fleet charging</p>
-                    <p><strong>Chargers:</strong> 50 x 22kW AC chargers</p>
-                    <p><strong>Smart Features:</strong></p>
-                    <ul className="ml-2 space-y-1">
-                      <li>• Route-based charging scheduling</li>
-                      <li>• Vehicle-to-grid integration</li>
-                      <li>• Predictive maintenance alerts</li>
-                      <li>• Real-time fleet status dashboard</li>
-                    </ul>
-                    <p><strong>Results:</strong> 25% reduction in energy costs, 99.8% uptime</p>
-                  </div>
-                </div>
-                
-                <div className="bg-purple-600/10 border border-purple-600/20 rounded-lg p-4">
-                  <h4 className="font-semibold text-purple-300 mb-3">Smart Home Integration</h4>
-                  <div className="text-purple-100 text-sm space-y-2">
-                    <p><strong>Application:</strong> Residential smart home ecosystem</p>
-                    <p><strong>System:</strong> 7kW wallbox with solar PV</p>
-                    <p><strong>Smart Features:</strong></p>
-                    <ul className="ml-2 space-y-1">
-                      <li>• Home energy management integration</li>
-                      <li>• Solar surplus charging priority</li>
-                      <li>• Time-of-use rate optimisation</li>
-                      <li>• Emergency backup power capability</li>
-                    </ul>
-                    <p><strong>Results:</strong> 60% solar-powered charging, £400/year savings</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Summary Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
-                <CheckCircle className="h-5 w-5 text-yellow-400" />
-                Section Summary
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p className="text-lg font-medium text-white mb-4">
-                Key Takeaways from Smart Chargers, App Control, and APIs:
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-3">
-                  <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-3">
-                    <h4 className="text-blue-300 font-medium mb-2">Connectivity Options</h4>
-                    <p className="text-blue-100 text-sm">
-                      Choose between Wi-Fi (high bandwidth), cellular (reliable coverage), 
-                      Ethernet (maximum stability), or PLC (retrofit friendly) based on installation requirements.
-                    </p>
-                  </div>
-                  <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-3">
-                    <h4 className="text-green-300 font-medium mb-2">OCPP Protocol</h4>
-                    <p className="text-green-100 text-sm">
-                      OCPP ensures interoperability between manufacturers, with version 2.0.1 
-                      offering enhanced security and ISO 15118 support for future-proof installations.
-                    </p>
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  <div className="bg-purple-600/10 border border-purple-600/20 rounded-lg p-3">
-                    <h4 className="text-purple-300 font-medium mb-2">Smart Features</h4>
-                    <p className="text-purple-100 text-sm">
-                      Mobile apps enable remote control, scheduling, and monitoring whilst dynamic 
-                      load management optimises power distribution across multiple charging points.
-                    </p>
-                  </div>
-                  <div className="bg-orange-600/10 border border-orange-600/20 rounded-lg p-3">
-                    <h4 className="text-orange-300 font-medium mb-2">API Integration</h4>
-                    <p className="text-orange-100 text-sm">
-                      REST APIs and WebSocket connections allow seamless integration with fleet 
-                      management systems and real-time monitoring applications.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-card p-4 rounded-lg mt-4">
-                <p className="text-yellow-400 font-medium mb-2">
-                  Professional Application:
-                </p>
-                <p className="text-gray-300 text-sm">
-                  Understanding smart charging technologies is essential for designing modern EV infrastructure 
-                  that can scale, integrate with existing systems, and adapt to future requirements. 
-                  These systems not only improve user experience but also enable energy cost optimisation 
-                  and grid integration capabilities.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Section */}
-          <EVChargingModule2Section3Quiz />
-
-          <div className="flex justify-between">
-            <Link to="../ev-charging-module-2-section-2">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="../ev-charging-module-2-section-4">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
         </div>
       </div>
+
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Page Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 2.3</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Smart Chargers, App Control & APIs
+          </h1>
+          <p className="text-white/80">
+            Connected charging systems and remote management
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Smart charging:</strong> Remote control, scheduling, load management</li>
+              <li><strong>OCPP:</strong> Industry standard for charger-to-backend communication</li>
+              <li><strong>APIs:</strong> Enable integration with apps and energy systems</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Wi-Fi antenna, Ethernet port, SIM slot on EVSE</li>
+              <li><strong>Use:</strong> Load management on multi-bay installations</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Understand smart charger connectivity options",
+              "Explain OCPP protocol versions and messages",
+              "Configure dynamic load management",
+              "Integrate chargers with mobile applications",
+              "Implement cybersecurity best practices",
+              "Design scalable charging infrastructure"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Connectivity Technologies
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Smart chargers require network connectivity for remote management, load balancing,
+              payment processing, and user authentication. The choice of connectivity affects
+              reliability, cost, and installation complexity.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Wi-Fi (802.11)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Range:</strong> 30-100m depending on environment</li>
+                  <li><strong>Speed:</strong> Up to 1.3Gbps (802.11ac)</li>
+                  <li><strong>Pros:</strong> No ongoing costs, easy setup</li>
+                  <li><strong>Cons:</strong> Interference, range limitations</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">4G/5G Cellular</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Coverage:</strong> 99.9% network availability</li>
+                  <li><strong>Latency:</strong> 4G: 50ms, 5G: &lt;10ms</li>
+                  <li><strong>Pros:</strong> Works anywhere with signal</li>
+                  <li><strong>Cons:</strong> Ongoing data charges, SIM management</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Ethernet (Hardwired)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Speed:</strong> 100Mbps to 10Gbps</li>
+                  <li><strong>Reliability:</strong> Highest - no interference</li>
+                  <li><strong>Pros:</strong> Most stable, no signal issues</li>
+                  <li><strong>Cons:</strong> Requires structured cabling</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Power Line Communication</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Range:</strong> Up to 300m on LV networks</li>
+                  <li><strong>Technology:</strong> 2-30MHz over power cables</li>
+                  <li><strong>Pros:</strong> No additional cabling needed</li>
+                  <li><strong>Cons:</strong> Noise susceptibility, variable speed</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            OCPP Protocol
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Open Charge Point Protocol (OCPP) is the industry standard for communication
+              between charging stations and central management systems. It ensures interoperability
+              and prevents vendor lock-in.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">OCPP 1.6J (2015)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>44 message types</li>
+                  <li>WebSocket over TLS transport</li>
+                  <li>Smart charging profiles</li>
+                  <li>Local authorisation lists</li>
+                  <li>Firmware management</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">OCPP 2.0.1 (2020)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>80+ message types</li>
+                  <li>Device model framework</li>
+                  <li>ISO 15118 Plug & Charge support</li>
+                  <li>Enhanced security features</li>
+                  <li>Display message support</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Core OCPP Messages:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Authorize:</strong> Validate user credentials (RFID, app)</li>
+                <li><strong>StartTransaction:</strong> Begin charging session</li>
+                <li><strong>MeterValues:</strong> Report energy consumption</li>
+                <li><strong>StatusNotification:</strong> Report charger status</li>
+                <li><strong>StopTransaction:</strong> End session and finalise billing</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 3 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Dynamic Load Management
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Dynamic load management (DLM) automatically distributes available electrical
+              capacity across multiple charging points, preventing supply overload while
+              maximising charging utilisation.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Load Balancing Algorithms</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Equal distribution:</strong> Available power divided equally among active sessions</li>
+                <li><strong>Priority-based:</strong> Allocation based on user tier or payment level</li>
+                <li><strong>First-come-first-served:</strong> Earlier connections get priority</li>
+                <li><strong>Adaptive scheduling:</strong> ML-based prediction of patterns</li>
+              </ul>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">100A Supply</p>
+                <p className="text-white/90 text-xs">Total available</p>
+              </div>
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">4 × 32A</p>
+                <p className="text-white/90 text-xs">Max per charger</p>
+              </div>
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">25A each</p>
+                <p className="text-white/90 text-xs">When all active</p>
+              </div>
+            </div>
+
+            <p>
+              Example: A 100A supply with 4 chargers each rated 32A. When all four are active,
+              DLM reduces each to 25A (100A ÷ 4). As vehicles complete charging, remaining
+              sessions can increase power.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Best Practices</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Specify OCPP 2.0.1 for new installations</li>
+                <li>Provide redundant connectivity (Wi-Fi + cellular backup)</li>
+                <li>Install CT clamps for dynamic load monitoring</li>
+                <li>Configure appropriate load management algorithm for use case</li>
+                <li>Test communication before handover</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Vendor lock-in:</strong> — Always insist on OCPP compliance</li>
+                <li><strong>Single connectivity:</strong> — Wi-Fi alone often unreliable in car parks</li>
+                <li><strong>No load management:</strong> — Essential for multi-bay installations</li>
+                <li><strong>Weak security:</strong> — Change default passwords, enable TLS</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quick Reference */}
+        <div className="mt-6 p-5 rounded-lg bg-transparent">
+          <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+            <div>
+              <p className="font-medium text-white mb-1">Smart Features</p>
+              <ul className="space-y-0.5">
+                <li>Remote start/stop</li>
+                <li>Scheduled charging</li>
+                <li>Energy monitoring</li>
+                <li>Load management</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-medium text-white mb-1">Connectivity Options</p>
+              <ul className="space-y-0.5">
+                <li>Wi-Fi: Easy, low cost</li>
+                <li>Cellular: Reliable, ongoing cost</li>
+                <li>Ethernet: Most stable</li>
+                <li>PLC: No extra cabling</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Quiz Section */}
+        <section className="mb-10 mt-12">
+          <SingleQuestionQuiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-2-section-2">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-2-section-4">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

@@ -74,7 +74,7 @@ const CommercialInstallations = () => {
             Commercial Installations
           </h1>
         </div>
-        <p className="text-muted-foreground text-base md:text-lg max-w-3xl mx-auto mb-6">
+        <p className="text-white/70 text-base md:text-lg max-w-3xl mx-auto mb-6">
           Comprehensive guide to commercial electrical installations including offices, shops, restaurants 
           and small commercial premises with enhanced safety requirements.
         </p>
@@ -82,18 +82,18 @@ const CommercialInstallations = () => {
       </div>
 
       {/* Common Installation Types */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <CheckCircle className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Common Commercial Installation Types</CardTitle>
           </div>
-          <p className="text-muted-foreground">Typical commercial electrical work and systems</p>
+          <p className="text-white/70">Typical commercial electrical work and systems</p>
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {commonTypes.map((type, index) => (
-              <div key={index} className="bg-elec-dark/40 p-4 rounded-lg">
+              <div key={index} className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 text-white">
                   <Zap className="h-4 w-4 text-elec-yellow" />
                   {type}
@@ -105,22 +105,22 @@ const CommercialInstallations = () => {
       </Card>
 
       {/* Cable Types & Protection */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Cable className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Cable Types & Protection</CardTitle>
           </div>
-          <p className="text-muted-foreground">Commercial cable specifications and protection requirements</p>
+          <p className="text-white/70">Commercial cable specifications and protection requirements</p>
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="space-y-4">
             {cableTypes.map((cable, index) => (
-              <div key={index} className="bg-elec-dark/40 p-4 rounded-lg border border-elec-yellow/20">
+              <div key={index} className="bg-white/5 border border-white/10 p-4 rounded-lg border border-elec-yellow/20">
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
                   <div className="flex-1">
                     <h4 className="font-medium text-white text-base mb-1">{cable.application}</h4>
-                    <p className="text-sm text-muted-foreground">{cable.notes}</p>
+                    <p className="text-sm text-white/70">{cable.notes}</p>
                   </div>
                   <div className="flex flex-col sm:flex-row gap-2">
                     <Badge variant="outline" className="border-elec-yellow text-elec-yellow">
@@ -138,25 +138,25 @@ const CommercialInstallations = () => {
       </Card>
 
       {/* Special Considerations */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <FileText className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Commercial Installation Considerations</CardTitle>
           </div>
-          <p className="text-muted-foreground">Key factors specific to commercial environments</p>
+          <p className="text-white/70">Key factors specific to commercial environments</p>
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {specialConsiderations.map((consideration, index) => (
-              <div key={index} className="bg-elec-dark/40 p-4 rounded-lg">
+              <div key={index} className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-start gap-3">
                   <div className="p-2 rounded-md bg-elec-yellow/10">
                     {consideration.icon}
                   </div>
                   <div>
                     <h4 className="font-medium text-white mb-2">{consideration.title}</h4>
-                    <p className="text-sm text-muted-foreground">{consideration.description}</p>
+                    <p className="text-sm text-white/70">{consideration.description}</p>
                   </div>
                 </div>
               </div>
@@ -166,20 +166,20 @@ const CommercialInstallations = () => {
       </Card>
 
       {/* Key Standards */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Shield className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Key Standards & Regulations</CardTitle>
           </div>
-          <p className="text-muted-foreground">Essential compliance requirements for commercial installations</p>
+          <p className="text-white/70">Essential compliance requirements for commercial installations</p>
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="space-y-3">
             {keyStandards.map((standard, index) => (
               <div key={index} className="flex items-start gap-3">
                 <Award className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-muted-foreground">{standard}</span>
+                <span className="text-white/70">{standard}</span>
               </div>
             ))}
           </div>
@@ -188,12 +188,12 @@ const CommercialInstallations = () => {
 
       {/* Detailed Guidance */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="border-elec-yellow/30 bg-elec-gray">
+        <Card className="border-elec-yellow/30 bg-white/5">
           <CardHeader>
             <CardTitle className="text-elec-yellow text-lg">Planning & Coordination</CardTitle>
           </CardHeader>
           <CardContent className="p-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/70">
               Commercial installations require careful coordination with other trades. Plan cable routes to 
               avoid interference with HVAC and data systems. Consider business hours for installation timing 
               and plan phases to minimise disruption. Ensure adequate cable containment and segregation.
@@ -201,12 +201,12 @@ const CommercialInstallations = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/30 bg-elec-gray">
+        <Card className="border-elec-yellow/30 bg-white/5">
           <CardHeader>
             <CardTitle className="text-elec-yellow text-lg">Enhanced Safety Procedures</CardTitle>
           </CardHeader>
           <CardContent className="p-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/70">
               Additional safety considerations for commercial premises include maintaining fire escape routes 
               during installation. Coordinate with building management for safe isolation procedures. Ensure 
               all work areas are properly signed and barriers in place to protect public access.
@@ -214,12 +214,12 @@ const CommercialInstallations = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/30 bg-elec-gray">
+        <Card className="border-elec-yellow/30 bg-white/5">
           <CardHeader>
             <CardTitle className="text-elec-yellow text-lg">Documentation & Handover</CardTitle>
           </CardHeader>
           <CardContent className="p-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/70">
               Commercial installations require comprehensive documentation including electrical schematic 
               drawings, equipment schedules, and operation and maintenance manuals. Provide training to 
               building maintenance staff on new systems installed.
@@ -240,7 +240,7 @@ const CommercialInstallations = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <h4 className="font-semibold text-white mb-3">Emergency Lighting (BS 5266)</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
+              <ul className="space-y-2 text-sm text-white/70">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400" />
                   Minimum 3-hour battery backup required
@@ -257,7 +257,7 @@ const CommercialInstallations = () => {
             </div>
             <div>
               <h4 className="font-semibold text-white mb-3">Fire Alarm Systems (BS 5839)</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
+              <ul className="space-y-2 text-sm text-white/70">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400" />
                   Fire-rated cables throughout system
@@ -286,15 +286,15 @@ const CommercialInstallations = () => {
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="space-y-3">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/70">
               <strong className="text-orange-300">Enhanced RCD Protection:</strong> Commercial installations typically 
               require Type A RCDs due to frequency inverters and electronic equipment.
             </p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/70">
               <strong className="text-orange-300">Periodic Inspection:</strong> Commercial installations should be 
               inspected every 5 years or as determined by risk assessment.
             </p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/70">
               <strong className="text-orange-300">Public Safety:</strong> Additional safety measures and signage 
               required due to public access and higher occupancy levels.
             </p>

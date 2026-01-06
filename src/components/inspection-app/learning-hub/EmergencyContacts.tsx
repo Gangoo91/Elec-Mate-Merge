@@ -40,7 +40,7 @@ const EmergencyContacts = () => {
       case 'critical': return 'text-red-400 bg-red-400/10';
       case 'high': return 'text-orange-400 bg-orange-400/10';
       case 'medium': return 'text-blue-400 bg-blue-400/10';
-      default: return 'text-white/80 bg-gray-400/10';
+      default: return 'text-white/80 bg-white/5';
     }
   };
 

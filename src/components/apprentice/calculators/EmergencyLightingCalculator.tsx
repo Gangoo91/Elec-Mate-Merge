@@ -199,7 +199,7 @@ const EmergencyLightingCalculator = () => {
             </div>
             <ChevronDown
               className={cn(
-                "h-4 w-4 text-white/40 transition-transform duration-200",
+                "h-4 w-4 text-white/70 transition-transform duration-200",
                 showAdvanced && "rotate-180"
               )}
             />
@@ -339,7 +339,7 @@ const EmergencyLightingCalculator = () => {
             </div>
             <ChevronDown
               className={cn(
-                "h-4 w-4 text-white/40 transition-transform duration-200",
+                "h-4 w-4 text-white/70 transition-transform duration-200",
                 showReference && "rotate-180"
               )}
             />

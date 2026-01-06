@@ -39,7 +39,7 @@ const TrainingEvidence = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h3 className="text-lg font-semibold">Training Evidence</h3>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Upload and manage evidence of your off-the-job training activities
           </p>
         </div>
@@ -60,7 +60,7 @@ const TrainingEvidence = () => {
       <div className="space-y-4">
         <div className="w-full">
           <Select value={activeTab} onValueChange={setActiveTab}>
-            <SelectTrigger className="w-full bg-elec-dark">
+            <SelectTrigger className="w-full bg-white/10">
               <SelectValue placeholder="Filter by type" />
             </SelectTrigger>
             <SelectContent>

@@ -1,11 +1,10 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ShieldCheck, HardHat, Eye, Hand, Footprints, Ear, Zap } from 'lucide-react';
 import type { PPEItem } from '@/types/rams';
 
 interface PPEGridViewProps {
-  ppeDetails?: PPEItem[];
+  ppeDetails?: PPEEtem[];
   requiredPPE?: string[];
 }
 
@@ -21,11 +20,10 @@ const getPPEIcon = (ppeType: string) => {
 };
 
 export const PPEGridView: React.FC<PPEGridViewProps> = ({ ppeDetails, requiredPPE }) => {
-  // Use ppeDetails if available, otherwise fall back to requiredPPE
   const items = ppeDetails && ppeDetails.length > 0 
     ? ppeDetails 
     : requiredPPE?.map((ppe, idx) => ({
-        id: `ppe-${idx}`,
+        id: 'ppe-' + idx,
         itemNumber: idx + 1,
         ppeType: ppe,
         standard: 'BS EN Standard',
@@ -35,78 +33,62 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({ ppeDetails, requiredPP
 
   if (items.length === 0) {
     return (
-      <Card className="bg-card border-elec-yellow/20">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-base font-semibold text-elec-light flex items-center gap-2">
+      <div className="py-6 border-t border-white/5">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-xl bg-elec-yellow/10 flex items-center justify-center">
             <ShieldCheck className="h-5 w-5 text-elec-yellow" />
-            Required PPE
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-elec-light/60">No PPE requirements specified</p>
-        </CardContent>
-      </Card>
+          </div>
+          <h4 className="font-semibold text-white">Required PPE</h4>
+        </div>
+        <p className="text-sm text-white/50">No PPE requirements specified</p>
+      </div>
     );
   }
 
   return (
-    <Card className="bg-card border-elec-yellow/20">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-base font-semibold text-elec-light flex items-center gap-2">
-          <ShieldCheck className="h-5 w-5 text-elec-yellow" />
-          Required PPE ({items.length} items)
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-          {items.map((item) => {
-            const Icon = getPPEIcon(item.ppeType);
-            return (
-              <div
-                key={item.id}
-                className="relative bg-gradient-to-br from-elec-gray to-elec-gray/80 rounded-xl p-4 border border-elec-yellow/30 hover:border-elec-yellow/60 transition-all hover:scale-105 group"
-              >
-                {/* Item Number Badge */}
-                <div className="absolute top-2 right-2 w-6 h-6 bg-elec-yellow/20 text-elec-yellow rounded-full flex items-center justify-center text-xs font-bold border border-elec-yellow/40">
-                  {item.itemNumber}
-                </div>
-
-                {/* Icon */}
-                <div className="mb-3">
-                  <div className="w-12 h-12 bg-elec-yellow/10 rounded-lg flex items-center justify-center group-hover:bg-elec-yellow/20 transition-colors">
-                    <Icon className="h-6 w-6 text-elec-yellow" />
-                  </div>
-                </div>
-
-                {/* PPE Name */}
-                <h4 className="font-bold text-elec-light mb-2 text-sm">
-                  {item.ppeType}
-                </h4>
-
-                {/* Standard Badge */}
-                <Badge className="bg-blue-500/10 text-blue-400 border-blue-500/30 text-xs mb-2">
-                  {item.standard}
-                </Badge>
-
-                {/* Mandatory/Recommended Badge */}
-                <div className="mb-2">
-                  <Badge className={item.mandatory 
-                    ? "bg-red-500/20 text-red-400 border-red-500/40 text-xs" 
-                    : "bg-gray-500/20 text-gray-400 border-gray-500/40 text-xs"
-                  }>
-                    {item.mandatory ? 'MANDATORY' : 'Recommended'}
-                  </Badge>
-                </div>
-
-                {/* Purpose */}
-                <p className="text-xs text-elec-light/70 leading-relaxed">
-                  {item.purpose}
-                </p>
-              </div>
-            );
-          })}
+    <div className="py-6 border-t border-white/5 animate-fade-in-up">
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-elec-yellow/10 flex items-center justify-center">
+            <ShieldCheck className="h-5 w-5 text-elec-yellow" />
+          </div>
+          <h4 className="font-semibold text-white">Required PPE</h4>
         </div>
-      </CardContent>
-    </Card>
+        <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20">
+          {items.length} items
+        </Badge>
+      </div>
+
+      <div className="flex flex-wrap gap-2">
+        {items.map((item) => {
+          const Icon = getPPEIcon(item.ppeType);
+          return (
+            <div
+              key={item.id}
+              className={[
+                'inline-flex items-center gap-2 px-3 py-2 rounded-full border transition-all',
+                item.mandatory 
+                  ? 'bg-red-500/10 border-red-500/30 text-red-400'
+                  : 'bg-white/[0.03] border-white/10 text-white/70'
+              ].join(' ')}
+            >
+              <Icon className="h-4 hw-4" />
+              <span className="text-sm font-medium">{item.ppeType}</span>
+              {item.mandatory && (
+                <span className="text-xs bg-red-500/20 px-1.5 py-0.5 rounded-full">Required</span>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      <style>{`
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up { animation: fadeInUp 0.3s ease-out forwards; }
+      `}</style>
+    </div>
   );
 };

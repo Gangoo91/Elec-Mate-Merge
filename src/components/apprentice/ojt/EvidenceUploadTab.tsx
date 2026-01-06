@@ -59,7 +59,7 @@ const EvidenceUploadTab = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-elec-dark px-4 py-6">
+    <div className="min-h-screen bg-white/10 px-4 py-6">
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <Card className="bg-elec-card border-elec-gray/50 hover:border-elec-yellow/30 transition-colors">
@@ -193,7 +193,7 @@ const EvidenceUploadTab = () => {
         </CardHeader>
         <CardContent className="p-6">
           <div className="space-y-6">
-            <div className="border border-elec-gray/30 rounded-xl p-4 bg-elec-dark/30">
+            <div className="border border-elec-gray/30 rounded-xl p-4 bg-white/10">
               <h4 className="font-semibold mb-3 text-elec-light flex items-center gap-2">
                 <Image className="h-4 w-4 text-elec-yellow" />
                 Photo Evidence
@@ -218,7 +218,7 @@ const EvidenceUploadTab = () => {
               </ul>
             </div>
 
-            <div className="border border-elec-gray/30 rounded-xl p-4 bg-elec-dark/30">
+            <div className="border border-elec-gray/30 rounded-xl p-4 bg-white/10">
               <h4 className="font-semibold mb-3 text-elec-light flex items-center gap-2">
                 <Video className="h-4 w-4 text-elec-yellow" />
                 Video Evidence
@@ -243,7 +243,7 @@ const EvidenceUploadTab = () => {
               </ul>
             </div>
 
-            <div className="border border-elec-gray/30 rounded-xl p-4 bg-elec-dark/30">
+            <div className="border border-elec-gray/30 rounded-xl p-4 bg-white/10">
               <h4 className="font-semibold mb-3 text-elec-light flex items-center gap-2">
                 <FileText className="h-4 w-4 text-elec-yellow" />
                 Documents

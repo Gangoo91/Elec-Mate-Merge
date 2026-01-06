@@ -27,10 +27,10 @@ const SafetyMeetings = () => {
         
         {/* Content sections */}
         <div className="space-y-6">
-          <section className="bg-elec-dark p-6 rounded-lg border border-elec-yellow/20">
+          <section className="bg-white/10 p-6 rounded-lg border border-elec-yellow/20">
             <h2 className="text-xl font-semibold text-elec-yellow mb-4">Types of Safety Meetings</h2>
             <div className="space-y-4">
-              <div className="bg-elec-dark/50 p-4 rounded-md border border-elec-yellow/10">
+              <div className="bg-white/5 p-4 rounded-md border border-elec-yellow/10">
                 <h3 className="font-medium text-elec-yellow mb-2">Daily Toolbox Talks (5-15 minutes)</h3>
                 <ul className="list-disc pl-6 space-y-1 text-elec-light/90">
                   <li>Focus on immediate daily tasks and hazards</li>
@@ -40,7 +40,7 @@ const SafetyMeetings = () => {
                 </ul>
               </div>
               
-              <div className="bg-elec-dark/50 p-4 rounded-md border border-elec-yellow/10">
+              <div className="bg-white/5 p-4 rounded-md border border-elec-yellow/10">
                 <h3 className="font-medium text-elec-yellow mb-2">Weekly Safety Meetings (15-30 minutes)</h3>
                 <ul className="list-disc pl-6 space-y-1 text-elec-light/90">
                   <li>Review of the week's incidents or near-misses</li>
@@ -50,7 +50,7 @@ const SafetyMeetings = () => {
                 </ul>
               </div>
               
-              <div className="bg-elec-dark/50 p-4 rounded-md border border-elec-yellow/10">
+              <div className="bg-white/5 p-4 rounded-md border border-elec-yellow/10">
                 <h3 className="font-medium text-elec-yellow mb-2">Monthly Safety Committee Meetings (30-60 minutes)</h3>
                 <ul className="list-disc pl-6 space-y-1 text-elec-light/90">
                   <li>Formal review of safety performance metrics</li>
@@ -60,7 +60,7 @@ const SafetyMeetings = () => {
                 </ul>
               </div>
               
-              <div className="bg-elec-dark/50 p-4 rounded-md border border-elec-yellow/10">
+              <div className="bg-white/5 p-4 rounded-md border border-elec-yellow/10">
                 <h3 className="font-medium text-elec-yellow mb-2">Emergency Response Drills (varies)</h3>
                 <ul className="list-disc pl-6 space-y-1 text-elec-light/90">
                   <li>Practical exercises testing emergency procedures</li>
@@ -72,7 +72,7 @@ const SafetyMeetings = () => {
             </div>
           </section>
           
-          <section className="bg-elec-dark p-6 rounded-lg border border-elec-yellow/20">
+          <section className="bg-white/10 p-6 rounded-lg border border-elec-yellow/20">
             <h2 className="text-xl font-semibold text-elec-yellow mb-4">Effective Meeting Structure</h2>
             <ol className="list-decimal pl-6 space-y-4 text-elec-light/90">
               <li>
@@ -133,10 +133,10 @@ const SafetyMeetings = () => {
             </ol>
           </section>
           
-          <section className="bg-elec-dark p-6 rounded-lg border border-elec-yellow/20">
+          <section className="bg-white/10 p-6 rounded-lg border border-elec-yellow/20">
             <h2 className="text-xl font-semibold text-elec-yellow mb-4">Meeting Documentation</h2>
             <p className="mb-4">Every safety meeting should be documented to track attendance and content covered:</p>
-            <div className="bg-elec-dark/50 p-4 rounded-md border border-elec-yellow/10 space-y-3">
+            <div className="bg-white/5 p-4 rounded-md border border-elec-yellow/10 space-y-3">
               <p className="font-medium text-elec-yellow">Essential Documentation Elements:</p>
               <ul className="list-disc pl-6 text-elec-light/90">
                 <li>Date, time, and location of meeting</li>
@@ -151,25 +151,25 @@ const SafetyMeetings = () => {
             </div>
           </section>
           
-          <section className="bg-elec-dark p-6 rounded-lg border border-elec-yellow/20">
+          <section className="bg-white/10 p-6 rounded-lg border border-elec-yellow/20">
             <h2 className="text-xl font-semibold text-elec-yellow mb-4">Best Practices for Engaging Safety Meetings</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-elec-dark/50 p-4 rounded-md border border-elec-yellow/10">
+              <div className="bg-white/5 p-4 rounded-md border border-elec-yellow/10">
                 <p className="font-medium text-elec-yellow mb-2">Keep It Relevant</p>
                 <p className="text-elec-light/90">Focus on topics directly applicable to current work tasks and actual conditions on site.</p>
               </div>
               
-              <div className="bg-elec-dark/50 p-4 rounded-md border border-elec-yellow/10">
+              <div className="bg-white/5 p-4 rounded-md border border-elec-yellow/10">
                 <p className="font-medium text-elec-yellow mb-2">Use Visual Aids</p>
                 <p className="text-elec-light/90">Include photos, diagrams, or actual equipment to illustrate key points and improve retention.</p>
               </div>
               
-              <div className="bg-elec-dark/50 p-4 rounded-md border border-elec-yellow/10">
+              <div className="bg-white/5 p-4 rounded-md border border-elec-yellow/10">
                 <p className="font-medium text-elec-yellow mb-2">Encourage Participation</p>
                 <p className="text-elec-light/90">Ask questions, invite experiences, and create an environment where workers feel comfortable contributing.</p>
               </div>
               
-              <div className="bg-elec-dark/50 p-4 rounded-md border border-elec-yellow/10">
+              <div className="bg-white/5 p-4 rounded-md border border-elec-yellow/10">
                 <p className="font-medium text-elec-yellow mb-2">Rotate Leadership</p>
                 <p className="text-elec-light/90">Allow different team members to lead meetings to increase engagement and develop safety leadership.</p>
               </div>
@@ -178,22 +178,22 @@ const SafetyMeetings = () => {
         </div>
         
         {/* Resources */}
-        <div className="bg-elec-dark/70 p-6 rounded-lg border border-elec-yellow/20 mt-8">
+        <div className="bg-white/[0.07] p-6 rounded-lg border border-elec-yellow/20 mt-8">
           <h2 className="text-xl font-semibold text-elec-yellow mb-4">Meeting Resources</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="flex items-center gap-3 p-3 bg-elec-dark/30 rounded-md">
+            <div className="flex items-center gap-3 p-3 bg-white/[0.03] rounded-md">
               <FileText className="text-elec-yellow h-5 w-5" />
               <span>Toolbox Talk Templates</span>
             </div>
-            <div className="flex items-center gap-3 p-3 bg-elec-dark/30 rounded-md">
+            <div className="flex items-center gap-3 p-3 bg-white/[0.03] rounded-md">
               <FileText className="text-elec-yellow h-5 w-5" />
               <span>Safety Meeting Attendance Log</span>
             </div>
-            <div className="flex items-center gap-3 p-3 bg-elec-dark/30 rounded-md">
+            <div className="flex items-center gap-3 p-3 bg-white/[0.03] rounded-md">
               <FileText className="text-elec-yellow h-5 w-5" />
               <span>Monthly Safety Topics Calendar</span>
             </div>
-            <div className="flex items-center gap-3 p-3 bg-elec-dark/30 rounded-md">
+            <div className="flex items-center gap-3 p-3 bg-white/[0.03] rounded-md">
               <FileText className="text-elec-yellow h-5 w-5" />
               <span>Safety Meeting Evaluation Form</span>
             </div>

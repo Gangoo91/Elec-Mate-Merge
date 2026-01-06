@@ -41,7 +41,7 @@ const InstrumentationModule2 = () => {
       title: "Choosing the Right Sensor for the Application",
       icon: Gauge,
       description: "Decision-making framework for sensor selection based on technical and environmental criteria"
-    }
+  }
   ];
 
   return (

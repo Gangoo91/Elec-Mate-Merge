@@ -11,7 +11,7 @@ const Module1Section4 = () => {
       title: "Visual Inspection",
       description: "The first step before any electrical testing. Identifies physical faults, poor workmanship, or missing components. Checks enclosures, terminations, labelling, IP ratings, and accessibility.",
       icon: Eye,
-      color: "text-yellow-400",
+      color: "text-elec-yellow",
       details: "Must check for damaged equipment, correct IP ratings, proper labelling, and compliance with manufacturer instructions.",
       whenRequired: "Always performed first, before any live testing"
     },
@@ -35,7 +35,7 @@ const Module1Section4 = () => {
       title: "Polarity Testing",
       description: "Confirms correct connection of line, neutral, and earth. Prevents reverse polarity which can be dangerous in certain devices.",
       icon: Zap,
-      color: "text-yellow-400",
+      color: "text-elec-yellow",
       details: "Ensures line conductors are connected to fuses/MCBs, switches control line conductors, and accessories are correctly wired.",
       whenRequired: "Can be combined with continuity testing"
     },
@@ -130,13 +130,13 @@ const Module1Section4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
         <Link to="../module-1">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 1
@@ -145,10 +145,10 @@ const Module1Section4 = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <Badge variant="secondary" className="bg-yellow-600/40 text-yellow-400 border-0">
+            <Badge variant="secondary" className="bg-elec-yellow/40 text-elec-yellow border-0">
               Section 4
             </Badge>
-            <Badge variant="secondary" className="bg-yellow-400/40 text-blue-200 border-0">
+            <Badge variant="secondary" className="bg-elec-yellow/40 text-blue-200 border-0">
               Essential Knowledge
             </Badge>
           </div>
@@ -166,10 +166,10 @@ const Module1Section4 = () => {
         <div className="max-w-6xl mx-auto space-y-8">
           
           {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Target className="h-6 w-6 text-yellow-400" />
+                <Target className="h-6 w-6 text-elec-yellow" />
                 Learning Outcomes
               </CardTitle>
             </CardHeader>
@@ -178,7 +178,7 @@ const Module1Section4 = () => {
               <ul className="space-y-2">
                 {learningOutcomes.map((outcome, index) => (
                   <li key={index} className="text-white flex items-start gap-2">
-                    <span className="text-yellow-400 mt-1">•</span>
+                    <span className="text-elec-yellow mt-1">•</span>
                     {outcome}
                   </li>
                 ))}
@@ -187,10 +187,10 @@ const Module1Section4 = () => {
           </Card>
 
           {/* Testing Sequence Overview */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Clock className="h-6 w-6 text-yellow-400" />
+                <Clock className="h-6 w-6 text-elec-yellow" />
                 Testing Sequence Overview
               </CardTitle>
             </CardHeader>
@@ -200,9 +200,9 @@ const Module1Section4 = () => {
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {testingSequence.map((phase, index) => (
-                  <div key={index} className="bg-card/80 p-4 rounded-lg border border-gray-700">
+                  <div key={index} className="bg-transparent/80 p-4 rounded-lg border border-gray-700">
                     <div className="flex items-center gap-3 mb-2">
-                      <div className="w-8 h-8 bg-yellow-400 text-black rounded-full flex items-center justify-center font-bold text-sm">
+                      <div className="w-8 h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center font-bold text-sm">
                         {phase.step}
                       </div>
                       <h3 className="text-white font-semibold text-sm">{phase.title}</h3>
@@ -215,10 +215,10 @@ const Module1Section4 = () => {
           </Card>
 
           {/* Detailed Test Types */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <BookOpen className="h-6 w-6 text-yellow-400" />
+                <BookOpen className="h-6 w-6 text-elec-yellow" />
                 Detailed Test Types
               </CardTitle>
             </CardHeader>
@@ -230,18 +230,18 @@ const Module1Section4 = () => {
                 {testTypes.map((test, index) => {
                   const IconComponent = test.icon;
                   return (
-                    <div key={index} className="bg-card/80 p-6 rounded-lg border border-gray-700">
+                    <div key={index} className="bg-transparent/80 p-6 rounded-lg border border-gray-700">
                       <div className="flex items-start gap-4">
                         <IconComponent className={`h-8 w-8 ${test.color} mt-1 flex-shrink-0`} />
                         <div className="flex-1">
                           <h3 className="text-white font-semibold text-lg mb-2">{index + 1}. {test.title}</h3>
                           <p className="text-white mb-3 leading-relaxed">{test.description}</p>
                           <div className="space-y-2">
-                            <div className="bg-card p-3 rounded">
+                            <div className="bg-transparent p-3 rounded">
                               <p className="text-sm text-white mb-1"><strong className="text-white">Details:</strong></p>
                               <p className="text-sm text-white">{test.details}</p>
                             </div>
-                            <div className="bg-card p-3 rounded">
+                            <div className="bg-transparent p-3 rounded">
                               <p className="text-sm text-white mb-1"><strong className="text-white">When Required:</strong></p>
                               <p className="text-sm text-white">{test.whenRequired}</p>
                             </div>
@@ -256,7 +256,7 @@ const Module1Section4 = () => {
           </Card>
 
           {/* Safety Considerations */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 <Shield className="h-6 w-6 text-red-400" />
@@ -269,7 +269,7 @@ const Module1Section4 = () => {
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {safetyConsiderations.map((consideration, index) => (
-                  <div key={index} className="bg-card/80 p-4 rounded-lg border border-red-700/30">
+                  <div key={index} className="bg-transparent/80 p-4 rounded-lg border border-red-700/30">
                     <p className="text-white text-sm flex items-start gap-2">
                       <span className="text-red-400 mt-1">⚠</span>
                       {consideration}
@@ -281,7 +281,7 @@ const Module1Section4 = () => {
           </Card>
 
           {/* Common Mistakes */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 <AlertTriangle className="h-6 w-6 text-orange-400" />
@@ -291,7 +291,7 @@ const Module1Section4 = () => {
             <CardContent>
               <div className="space-y-4">
                 {commonMistakes.map((item, index) => (
-                  <div key={index} className="bg-card/80 p-4 rounded-lg border border-orange-700/30">
+                  <div key={index} className="bg-transparent/80 p-4 rounded-lg border border-orange-700/30">
                     <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
                       <span className="text-orange-400">✗</span>
                       {item.mistake}
@@ -309,14 +309,14 @@ const Module1Section4 = () => {
           </Card>
 
           {/* On-the-Job Scenario */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 🧰 Real-World Scenario
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-card/80 p-6 rounded-lg border border-gray-700">
+              <div className="bg-transparent/80 p-6 rounded-lg border border-gray-700">
                 <h4 className="text-white font-semibold mb-3">Scenario: New Office Installation Testing</h4>
                  <p className="text-white mb-4">
                   You arrive at a new office building to carry out initial verification testing on a recently completed electrical installation. The contractor mentions they've already done "some basic checks" and suggests you can skip the visual inspection to save time.
@@ -338,10 +338,10 @@ const Module1Section4 = () => {
           </Card>
 
           {/* Key Takeaways */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Info className="h-6 w-6 text-yellow-400" />
+                <Info className="h-6 w-6 text-elec-yellow" />
                 Key Takeaways
               </CardTitle>
             </CardHeader>
@@ -349,7 +349,7 @@ const Module1Section4 = () => {
               <ul className="space-y-3">
                 {keyTakeaways.map((takeaway, index) => (
                   <li key={index} className="text-white flex items-start gap-3">
-                    <span className="text-yellow-400 mt-1">•</span>
+                    <span className="text-elec-yellow mt-1">•</span>
                     <span className="leading-relaxed">{takeaway}</span>
                   </li>
                 ))}
@@ -358,20 +358,20 @@ const Module1Section4 = () => {
           </Card>
 
           {/* Quick Knowledge Checks */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-6 w-6 text-yellow-400" />
+                <CheckCircle className="h-6 w-6 text-elec-yellow" />
                 Quick Knowledge Checks
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-yellow-400/10 p-4 rounded-lg">
+                <div className="bg-elec-yellow/10 p-4 rounded-lg">
                   <h4 className="text-white font-semibold mb-2">Check 1: Testing Sequence</h4>
                   <p className="text-sm">What must always come first in any testing procedure?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">Visual inspection - to identify obvious hazards before any electrical testing</p>
                   </details>
                 </div>
@@ -379,7 +379,7 @@ const Module1Section4 = () => {
                   <h4 className="text-white font-semibold mb-2">Check 2: Insulation Values</h4>
                   <p className="text-sm">What's the minimum insulation resistance for circuits up to 500V?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">1 MΩ (1 Megohm) minimum</p>
                   </details>
                 </div>
@@ -387,7 +387,7 @@ const Module1Section4 = () => {
                   <h4 className="text-white font-semibold mb-2">Check 3: RCD Testing</h4>
                   <p className="text-sm">At what percentage of rated current should an RCD NOT trip?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">50% - this ensures the RCD isn't over-sensitive</p>
                   </details>
                 </div>
@@ -395,7 +395,7 @@ const Module1Section4 = () => {
                   <h4 className="text-white font-semibold mb-2">Check 4: Dead vs Live Testing</h4>
                   <p className="text-sm">Which tests are performed with the supply disconnected?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">Continuity, Insulation Resistance, and Polarity (dead tests)</p>
                   </details>
                 </div>
@@ -404,10 +404,10 @@ const Module1Section4 = () => {
           </Card>
 
           {/* Frequently Asked Questions */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-6 w-6 text-yellow-400" />
+                <AlertTriangle className="h-6 w-6 text-elec-yellow" />
                 Frequently Asked Questions
               </CardTitle>
             </CardHeader>
@@ -442,7 +442,7 @@ const Module1Section4 = () => {
           </Card>
 
           {/* Quiz Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 🧠 Knowledge Check Quiz - 10 Questions

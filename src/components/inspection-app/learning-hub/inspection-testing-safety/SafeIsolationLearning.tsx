@@ -359,7 +359,7 @@ const SafeIsolationLearning = ({ onBack }: SafeIsolationLearningProps) => {
                 className={`h-2 flex-1 rounded ${
                   completedSections.includes(section) 
                     ? 'bg-elec-yellow' 
-                    : 'bg-gray-600'
+                    : 'bg-white/15'
                 }`}
               />
             ))}

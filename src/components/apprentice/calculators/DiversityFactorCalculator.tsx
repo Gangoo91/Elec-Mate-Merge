@@ -184,7 +184,7 @@ const DiversityFactorCalculator = () => {
               <Zap className="h-4 w-4 text-amber-400" />
               Circuit Loads
             </h3>
-            <p className="text-xs text-white/50 mt-1">
+            <p className="text-xs text-white/80 mt-1">
               Add loads for comprehensive diversity calculation
             </p>
           </div>
@@ -317,7 +317,7 @@ const DiversityFactorCalculator = () => {
                           {(breakdown.diversityFactor * 100).toFixed(0)}%
                         </span>
                       </div>
-                      <div className="flex justify-between text-xs text-white/50">
+                      <div className="flex justify-between text-xs text-white/80">
                         <span>
                           {breakdown.installedLoad.toFixed(2)} kW →{" "}
                           {breakdown.diversifiedLoad.toFixed(2)} kW
@@ -368,7 +368,7 @@ const DiversityFactorCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/40 transition-transform duration-200",
+                    "h-4 w-4 text-white/70 transition-transform duration-200",
                     showGuidance && "rotate-180"
                   )}
                 />
@@ -448,7 +448,7 @@ const DiversityFactorCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/40 transition-transform duration-200",
+                    "h-4 w-4 text-white/70 transition-transform duration-200",
                     showPractical && "rotate-180"
                   )}
                 />
@@ -507,7 +507,7 @@ const DiversityFactorCalculator = () => {
               </div>
               <div className="space-y-1">
                 {result.complianceNotes.map((note, index) => (
-                  <p key={index} className="text-xs text-white/50 flex items-start gap-2">
+                  <p key={index} className="text-xs text-white/80 flex items-start gap-2">
                     <span className="text-white/30">•</span>
                     {note}
                   </p>
@@ -520,7 +520,7 @@ const DiversityFactorCalculator = () => {
         <div className="calculator-card p-8 text-center">
           <Calculator className="h-12 w-12 mx-auto mb-3 text-white/20" />
           <p className="text-lg font-medium text-white/60 mb-2">Ready to Calculate</p>
-          <p className="text-sm text-white/40">
+          <p className="text-sm text-white/70">
             Add your circuit loads and click "Calculate Diversity" to see results
           </p>
           <div className="mt-4 text-xs text-white/30 space-y-1">
@@ -544,7 +544,7 @@ const DiversityFactorCalculator = () => {
             </div>
             <ChevronDown
               className={cn(
-                "h-4 w-4 text-white/40 transition-transform duration-200",
+                "h-4 w-4 text-white/70 transition-transform duration-200",
                 showReference && "rotate-180"
               )}
             />

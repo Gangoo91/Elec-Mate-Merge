@@ -88,9 +88,9 @@ const ElectricalSymbolsDisplay = ({ subsectionId }: ElectricalSymbolsDisplayProp
       
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4">
         {filteredSymbols.map(symbol => (
-          <div key={symbol.id} className="border border-elec-yellow/20 rounded p-3 bg-elec-dark/40">
+          <div key={symbol.id} className="border border-elec-yellow/20 rounded p-3 bg-white/10">
             <div className="flex items-center gap-3">
-              <div className="bg-elec-dark/70 w-12 h-12 flex items-center justify-center text-xl font-mono rounded border border-elec-yellow/30 text-elec-yellow">
+              <div className="bg-white/15 w-12 h-12 flex items-center justify-center text-xl font-mono rounded border border-elec-yellow/30 text-elec-yellow">
                 {symbol.symbol}
               </div>
               <div>
@@ -102,7 +102,7 @@ const ElectricalSymbolsDisplay = ({ subsectionId }: ElectricalSymbolsDisplayProp
         ))}
       </div>
       
-      <div className="mt-6 text-sm text-elec-light/60 italic bg-elec-dark/30 p-3 rounded-lg">
+      <div className="mt-6 text-sm text-elec-light/60 italic bg-white/10 p-3 rounded-lg">
         <p className="flex items-center">
           <ShieldAlert className="h-4 w-4 mr-2 text-elec-yellow/70" />
           These symbols conform to BS7671 (18th Edition IET Wiring Regulations) and may vary slightly from older installations or specialist applications.

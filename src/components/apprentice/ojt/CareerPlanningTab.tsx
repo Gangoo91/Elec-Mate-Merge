@@ -60,7 +60,7 @@ const CareerPlanningTab = () => {
       case "planned":
         return "bg-orange-500/20 text-orange-700";
       default:
-        return "bg-gray-500/20 text-gray-700";
+        return "bg-white/10 text-white/80";
     }
   };
 
@@ -70,11 +70,11 @@ const CareerPlanningTab = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Career Goals</CardTitle>
-            <Target className="h-4 w-4 text-muted-foreground" />
+            <Target className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">3</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white">
               Active goals
             </p>
           </CardContent>
@@ -83,11 +83,11 @@ const CareerPlanningTab = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Network Contacts</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <Users className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">12</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white">
               Professional connections
             </p>
           </CardContent>
@@ -96,11 +96,11 @@ const CareerPlanningTab = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Skill Development</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            <TrendingUp className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">8/12</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white">
               Core skills mastered
             </p>
           </CardContent>
@@ -132,7 +132,7 @@ const CareerPlanningTab = () => {
                       <span>{goal.progress}%</span>
                     </div>
                     <Progress value={goal.progress} className="h-2" />
-                    <div className="text-sm text-muted-foreground">
+                    <div className="text-sm text-white">
                       Target: {new Date(goal.deadline).toLocaleDateString()}
                     </div>
                   </div>
@@ -154,11 +154,11 @@ const CareerPlanningTab = () => {
               {careerPaths.map((path, index) => (
                 <div key={index} className="border rounded-lg p-4">
                   <h4 className="font-medium mb-2">{path.title}</h4>
-                  <p className="text-sm text-muted-foreground mb-3">{path.description}</p>
+                  <p className="text-sm text-white mb-3">{path.description}</p>
                   
                   <div className="space-y-2">
                     <div className="text-sm font-medium">Requirements:</div>
-                    <ul className="text-sm text-muted-foreground space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       {path.requirements.map((req, reqIndex) => (
                         <li key={reqIndex}>• {req}</li>
                       ))}
@@ -189,7 +189,7 @@ const CareerPlanningTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="border rounded-lg p-4">
               <h4 className="font-medium mb-2">Recommended Qualifications</h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>• 18th Edition BS 7671 (Update)</li>
                 <li>• Testing & Inspection (2391)</li>
                 <li>• PAT Testing Certification</li>
@@ -203,7 +203,7 @@ const CareerPlanningTab = () => {
 
             <div className="border rounded-lg p-4">
               <h4 className="font-medium mb-2">Skill Development Areas</h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>• Advanced fault finding</li>
                 <li>• Motor control systems</li>
                 <li>• Renewable energy systems</li>

@@ -597,7 +597,7 @@ const CableCurrentCapacityCalculator = () => {
             </div>
             
             {!isValidForCalculation() && (
-              <p className="text-xs sm:text-sm text-muted-foreground text-center px-2">
+              <p className="text-xs sm:text-sm text-white text-center px-2">
                 Please enter design current, device rating, and select cable details to calculate
               </p>
             )}
@@ -609,31 +609,31 @@ const CableCurrentCapacityCalculator = () => {
               <>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div className="space-y-2 p-3 bg-elec-card/30 rounded-lg border border-elec-yellow/20">
-                    <p className="text-xs sm:text-sm text-muted-foreground">Base Capacity</p>
+                    <p className="text-xs sm:text-sm text-white">Base Capacity</p>
                     <p className="text-lg sm:text-xl font-medium text-elec-light">{formatValue(result.baseCapacity, "A")}</p>
                   </div>
                   <div className="space-y-2 p-3 bg-elec-card/30 rounded-lg border border-elec-yellow/20">
-                    <p className="text-xs sm:text-sm text-muted-foreground">Final Capacity Iz</p>
+                    <p className="text-xs sm:text-sm text-white">Final Capacity Iz</p>
                     <p className="text-lg sm:text-xl font-medium text-elec-yellow">{formatValue(result.finalCapacity, "A")}</p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-3 gap-2 sm:gap-3 text-xs sm:text-sm">
                   <div className="text-center p-2 sm:p-3 bg-elec-card/30 rounded border border-elec-yellow/20">
-                    <p className="text-muted-foreground text-xs">Temp Factor</p>
+                    <p className="text-white text-xs">Temp Factor</p>
                     <p className="font-medium text-elec-light text-sm sm:text-base">{result.tempCorrectionFactor.toFixed(3)}</p>
                   </div>
                   <div className="text-center p-2 sm:p-3 bg-elec-card/30 rounded border border-elec-yellow/20">
-                    <p className="text-muted-foreground text-xs">Group Factor</p>
+                    <p className="text-white text-xs">Group Factor</p>
                     <p className="font-medium text-elec-light text-sm sm:text-base">{result.groupingCorrectionFactor.toFixed(2)}</p>
                   </div>
                   <div className="text-center p-2 sm:p-3 bg-elec-card/30 rounded border border-elec-yellow/20">
-                    <p className="text-muted-foreground text-xs">Soil Factor</p>
+                    <p className="text-white text-xs">Soil Factor</p>
                     <p className="font-medium text-elec-light text-sm sm:text-base">{result.soilCorrectionFactor.toFixed(3)}</p>
                   </div>
                 </div>
 
-                <div className="text-xs text-muted-foreground p-2 sm:p-3 bg-elec-card/20 rounded border border-elec-yellow/20 overflow-x-auto">
+                <div className="text-xs text-white p-2 sm:p-3 bg-elec-card/20 rounded border border-elec-yellow/20 overflow-x-auto">
                   <p className="whitespace-nowrap sm:whitespace-normal">Iz = {result.baseCapacity} × {result.tempCorrectionFactor.toFixed(3)} × {result.groupingCorrectionFactor} × {result.soilCorrectionFactor.toFixed(3)} = {result.finalCapacity.toFixed(1)}A</p>
                 </div>
 

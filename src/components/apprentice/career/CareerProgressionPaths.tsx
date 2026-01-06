@@ -4,7 +4,7 @@ import { Award } from "lucide-react";
 
 const CareerProgressionPaths = () => {
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray/50 p-4">
+    <Card className="border-elec-yellow/20 bg-white/5 p-4">
       <div className="flex gap-3 items-start">
         <Award className="h-6 w-6 text-elec-yellow mt-1" />
         <div>

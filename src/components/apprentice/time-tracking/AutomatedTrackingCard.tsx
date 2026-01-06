@@ -61,7 +61,7 @@ const AutomatedTrackingCard = () => {
               <Label htmlFor="auto-sync" className="text-sm font-medium">
                 Auto-sync to Portfolio
               </Label>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white">
                 Automatically add activities to your portfolio with smart categorisation
               </p>
             </div>
@@ -73,7 +73,7 @@ const AutomatedTrackingCard = () => {
           </div>
           
           {lastSyncTimestamp && (
-            <div className="text-xs text-muted-foreground">
+            <div className="text-xs text-white">
               Last sync: {formatDate(lastSyncTimestamp)}
             </div>
           )}
@@ -101,13 +101,13 @@ const AutomatedTrackingCard = () => {
               <div className="text-2xl font-bold text-elec-yellow">
                 {hours}h {minutes}m
               </div>
-              <div className="text-sm text-muted-foreground">Total Auto-Tracked</div>
+              <div className="text-sm text-white">Total Auto-Tracked</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-elec-yellow">
                 {automaticEntries.length}
               </div>
-              <div className="text-sm text-muted-foreground">Activities Tracked</div>
+              <div className="text-sm text-white">Activities Tracked</div>
             </div>
           </div>
 
@@ -118,7 +118,7 @@ const AutomatedTrackingCard = () => {
             </h4>
             
             {recentAutoEntries.length === 0 ? (
-              <div className="text-center py-6 text-muted-foreground">
+              <div className="text-center py-6 text-white">
                 <Bot className="h-8 w-8 mx-auto mb-2 opacity-50" />
                 <p>No automatic activities yet</p>
                 <p className="text-xs">Complete quizzes or study sessions to see them here</p>
@@ -138,7 +138,7 @@ const AutomatedTrackingCard = () => {
                       )}
                       <div>
                         <div className="font-medium text-sm">{entry.activity}</div>
-                        <div className="text-xs text-muted-foreground">
+                        <div className="text-xs text-white">
                           {formatDate(entry.date)}
                         </div>
                       </div>
@@ -147,7 +147,7 @@ const AutomatedTrackingCard = () => {
                       <Badge className={entry.isQuiz ? "bg-blue-500/20 text-blue-400" : "bg-elec-yellow/20 text-elec-yellow"}>
                         {entry.isQuiz ? "Quiz" : "Study"}
                       </Badge>
-                      <div className="text-xs text-muted-foreground mt-1">
+                      <div className="text-xs text-white mt-1">
                         {Math.floor(entry.duration / 60)}h {entry.duration % 60}m
                       </div>
                     </div>

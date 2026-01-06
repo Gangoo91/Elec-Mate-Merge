@@ -1,11 +1,15 @@
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Copy, Download, Mail, MessageSquare, FileText, Printer, Share } from "lucide-react";
+import {
+  Copy, Download, Mail, MessageSquare, FileText, CheckCircle,
+  Sparkles, Send, FileDown
+} from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { generateProfessionalElectricalPDF } from '@/utils/professional-electrical-pdf';
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 interface OutputPanelProps {
   content: string;
@@ -22,64 +26,58 @@ interface OutputPanelProps {
 const OutputPanel = ({ content, settings }: OutputPanelProps) => {
   const { toast } = useToast();
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+  const [copied, setCopied] = useState(false);
 
-  // Process content for better mobile rendering
-const processContentForDisplay = (text: string) => {
-  if (!text) return text;
-  
-  // Normalize whitespace but preserve intentional breaks
-  let cleanText = text.replace(/[ \t]+/g, ' ').trim();
-  
-  // If AI didn't add double line breaks, try to detect paragraph boundaries
-  // Look for section headers or sentence endings followed by capitals
-  if (!cleanText.includes('\n\n')) {
-    cleanText = cleanText
-      .replace(/(\*\*[^*]+\*\*:?)(\s+)(?=[A-Z])/g, '$1\n\n')  // Break after headers
-      .replace(/([.!?])\s+(?=[A-Z][a-z]+ [A-Z])/g, '$1\n\n')  // Break between major sentences
-      .replace(/([.!?])\s+(What |Why |How |Next |This )/g, '$1\n\n$2');  // Break before key phrases
-  }
-  
-  // Split by double line breaks to preserve paragraph structure
-  const sections = cleanText.split(/\n\n+/);
-  
-  return sections.map(section => {
-    let formatted = section.trim();
-    
-    if (!formatted) return '';
-    
-    // Check if it's a heading (starts with ** and ends with : or **)
-    if (/^\*\*.*\*\*:?$/.test(formatted)) {
-      const headingText = formatted.replace(/\*\*/g, '').replace(/:$/, '');
-      return `<h3 class="text-lg font-bold text-elec-yellow mb-4 mt-6 first:mt-0">${headingText}</h3>`;
+  const processContentForDisplay = (text: string) => {
+    if (!text) return text;
+
+    let cleanText = text.replace(/[ \t]+/g, ' ').trim();
+
+    if (!cleanText.includes('\n\n')) {
+      cleanText = cleanText
+        .replace(/(\*\*[^*]+\*\*:?)(\s+)(?=[A-Z])/g, '$1\n\n')
+        .replace(/([.!?])\s+(?=[A-Z][a-z]+ [A-Z])/g, '$1\n\n')
+        .replace(/([.!?])\s+(What |Why |How |Next |This )/g, '$1\n\n$2');
     }
-    
-    // Format inline styling - ENSURE white text for body content
-    formatted = formatted
-      .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-foreground">$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em class="italic text-foreground">$1</em>')
-      .replace(/BS 7671/gi, '<span class="text-elec-yellow font-medium">BS 7671</span>')
-      .replace(/(\d{3}\.\d+\.\d+)/g, '<span class="text-blue-400 font-mono text-sm">$1</span>')
-      .replace(/(C[123]|FI)\b/g, '<span class="px-1.5 py-0.5 rounded bg-red-500/20 text-red-400 text-xs font-semibold">$1</span>');
-    
-    // Check if it's a numbered or bulleted list
-    if (/^[\d\-\*•]\s/.test(formatted)) {
-      const items = formatted.split(/\n/).filter(item => item.trim());
-      return '<ul class="space-y-3 mb-6 ml-0 list-none">' + 
-        items.map(item => {
-          const cleanItem = item.replace(/^[\d\-\*•]\s*/, '').trim();
-          return `<li class="text-foreground leading-relaxed pl-6 relative before:content-['•'] before:absolute before:left-0 before:text-elec-yellow before:font-bold text-base">${cleanItem}</li>`;
-        }).join('') + 
-      '</ul>';
-    }
-    
-    // Otherwise render as paragraph with WHITE text
-    return `<p class="text-foreground leading-relaxed mb-6 text-base">${formatted}</p>`;
-  }).filter(s => s).join('');
-};
+
+    const sections = cleanText.split(/\n\n+/);
+
+    return sections.map(section => {
+      let formatted = section.trim();
+
+      if (!formatted) return '';
+
+      if (/^\*\*.*\*\*:?$/.test(formatted)) {
+        const headingText = formatted.replace(/\*\*/g, '').replace(/:$/, '');
+        return `<h3 class="text-lg font-bold text-elec-yellow mb-4 mt-6 first:mt-0">${headingText}</h3>`;
+      }
+
+      formatted = formatted
+        .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-foreground">$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em class="italic text-foreground">$1</em>')
+        .replace(/BS 7671/gi, '<span class="text-elec-yellow font-medium">BS 7671</span>')
+        .replace(/(\d{3}\.\d+\.\d+)/g, '<span class="text-blue-400 font-mono text-sm">$1</span>')
+        .replace(/(C[123]|FI)\b/g, '<span class="px-1.5 py-0.5 rounded bg-red-500/20 text-red-400 text-xs font-semibold">$1</span>');
+
+      if (/^[\d\-\*•]\s/.test(formatted)) {
+        const items = formatted.split(/\n/).filter(item => item.trim());
+        return '<ul class="space-y-3 mb-6 ml-0 list-none">' +
+          items.map(item => {
+            const cleanItem = item.replace(/^[\d\-\*•]\s*/, '').trim();
+            return `<li class="text-foreground leading-relaxed pl-6 relative before:content-['•'] before:absolute before:left-0 before:text-elec-yellow before:font-bold text-base">${cleanItem}</li>`;
+          }).join('') +
+          '</ul>';
+      }
+
+      return `<p class="text-foreground leading-relaxed mb-6 text-base">${formatted}</p>`;
+    }).filter(s => s).join('');
+  };
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(content);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
       toast({
         title: "Copied",
         description: "Explanation copied to clipboard",
@@ -107,7 +105,6 @@ const processContentForDisplay = (text: string) => {
   const handleDownloadPDF = async () => {
     setIsGeneratingPDF(true);
     try {
-      // Format content for professional PDF generation
       const formattedContent = `
 # Client Explanation Document
 
@@ -127,14 +124,14 @@ ${content}
 *Generated by ElecConnect AI Client Explainer Tool*
 *Date: ${new Date().toLocaleDateString('en-GB')}*
       `;
-      
+
       await generateProfessionalElectricalPDF(formattedContent, "Client Explanation", 'client-explanation.pdf', {
         reportType: "Client Explanation",
         companyName: "ElecConnect Professional",
         includeSignatures: false,
         watermark: "CLIENT COMMUNICATION"
       });
-      
+
       toast({
         title: "Success",
         description: "Professional PDF downloaded successfully",
@@ -164,7 +161,6 @@ ${content}
   };
 
   const formatForEmail = (content: string) => {
-    // Clean content by removing markdown formatting
     const cleanContent = content
       .replace(/\*\*(.*?)\*\*/g, '$1')
       .replace(/\*(.*?)\*/g, '$1')
@@ -192,7 +188,6 @@ Qualified Electrician
   };
 
   const formatForSMS = (content: string) => {
-    // SMS version - much shorter
     const shortContent = content.split('.')[0] + '.';
     return `Hi! Quick update on your electrical work: ${shortContent} Call me for more details.`;
   };
@@ -212,180 +207,232 @@ Next Steps:
 Thank you for choosing our electrical services.`;
   };
 
-  return (
-    <Card className="mobile-card border-border/50 bg-card/50">
-      <CardHeader className="p-0 pb-3">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <div className="flex items-center space-x-2">
-            <MessageSquare className="h-5 w-5 text-elec-yellow" />
-            <CardTitle className="mobile-heading text-foreground">Client Explanation</CardTitle>
+  // Empty state
+  if (!content) {
+    return (
+      <div className="rounded-2xl border border-border/30 bg-gradient-to-br from-card via-card/95 to-card/90 backdrop-blur-xl p-8 overflow-hidden relative">
+        <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/[0.02] via-transparent to-transparent pointer-events-none" />
+
+        <div className="relative flex flex-col items-center justify-center text-center space-y-4">
+          <div className="p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
+            <MessageSquare className="h-10 w-10 text-elec-yellow/60" />
           </div>
-          {content && (
-            <div className="flex gap-2 w-full sm:w-auto">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleCopy}
-                className="mobile-button-secondary flex-1 sm:flex-none touch-target border-border/50 hover:bg-card text-foreground"
-              >
-                <Copy className="h-4 w-4 mr-1" />
-                Copy
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleDownloadPDF}
-                disabled={isGeneratingPDF}
-                className="mobile-button-secondary flex-1 sm:flex-none touch-target border-border/50 hover:bg-card text-foreground"
-              >
-                <Download className="h-4 w-4 mr-1" />
-                {isGeneratingPDF ? "Creating..." : "PDF"}
-              </Button>
-            </div>
-          )}
+          <div className="space-y-2">
+            <h3 className="text-lg font-semibold text-foreground">Ready to Generate</h3>
+            <p className="text-sm text-muted-foreground max-w-sm">
+              Your client-friendly explanation will appear here. Available in multiple formats: standard, email, SMS, and quotation.
+            </p>
+          </div>
         </div>
-      </CardHeader>
-      <CardContent className="p-0 space-y-4">
-        {content ? (
-          <>
-            {/* Output formats */}
-            <Tabs defaultValue="standard" className="w-full">
-              <TabsList className="mobile-grid-responsive grid w-full grid-cols-2 sm:grid-cols-4 h-auto">
-                <TabsTrigger value="standard" className="mobile-tap-highlight touch-target text-xs sm:text-sm px-2">
-                  Explanation
-                </TabsTrigger>
-                <TabsTrigger value="email" className="mobile-tap-highlight touch-target text-xs sm:text-sm">
-                  Email
-                </TabsTrigger>
-                <TabsTrigger value="sms" className="mobile-tap-highlight touch-target text-xs sm:text-sm">
-                  Text/SMS
-                </TabsTrigger>
-                <TabsTrigger value="quote" className="mobile-tap-highlight touch-target text-xs sm:text-sm">
-                  Quote
-                </TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="standard" className="mt-4">
-                <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-4 sm:p-6">
-                  <div 
-                    className="text-left max-w-none prose prose-invert"
-                    style={{ 
-                      fontSize: '16px',
-                      lineHeight: '1.8',
-                      fontFamily: 'system-ui, -apple-system, sans-serif',
-                      color: 'white'
-                    }}
-                    dangerouslySetInnerHTML={{ 
-                      __html: processContentForDisplay(content)
-                    }}
-                  />
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="email" className="mt-4">
-                <div className="space-y-3">
-                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                    <h4 className="mobile-small-text font-medium text-foreground">Email Template</h4>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={handleEmailTemplate}
-                      className="mobile-button-secondary touch-target w-full sm:w-auto"
-                    >
-                      <Mail className="h-4 w-4 mr-1" />
-                      Open in Email App
-                    </Button>
-                  </div>
-                  <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-4 sm:p-6">
-                    <div 
-                      className="text-left max-w-none"
-                      style={{ 
-                        fontSize: '16px',
-                        lineHeight: '1.8',
-                        fontFamily: 'system-ui, -apple-system, sans-serif',
-                        color: 'white'
-                      }}
-                    >
-                      {formatForEmail(content).split('\n').map((line, index) => (
-                        <p key={index} className="mb-4 leading-relaxed text-foreground">{line}</p>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="sms" className="mt-4">
-                <div className="space-y-3">
-                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                    <h4 className="mobile-small-text font-medium text-foreground">Text Message Version</h4>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={handleSMSTemplate}
-                      className="mobile-button-secondary touch-target w-full sm:w-auto"
-                    >
-                      <MessageSquare className="h-4 w-4 mr-1" />
-                      Send Text Message
-                    </Button>
-                  </div>
-                  <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-4 sm:p-6">
-                    <p className="text-foreground leading-relaxed text-base" style={{ lineHeight: '1.8' }}>
-                      {formatForSMS(content)}
-                    </p>
-                    <div className="mt-3 text-xs text-foreground/70 bg-muted/20 rounded px-2 py-1">
-                      Characters: {formatForSMS(content).length}/160
-                    </div>
-                  </div>
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="quote" className="mt-4">
-                <div className="space-y-3">
-                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                    <h4 className="mobile-small-text font-medium text-foreground">Quotation Format</h4>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={handleDownloadTxt}
-                      className="mobile-button-secondary touch-target w-full sm:w-auto"
-                    >
-                      <FileText className="h-4 w-4 mr-1" />
-                      Download Document
-                    </Button>
-                  </div>
-                  <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-4 sm:p-6">
-                    <div 
-                      className="text-left max-w-none prose prose-invert"
-                      style={{ 
-                        fontSize: '16px',
-                        lineHeight: '1.8',
-                        fontFamily: 'system-ui, -apple-system, sans-serif',
-                        color: 'white'
-                      }}
-                      dangerouslySetInnerHTML={{ 
-                        __html: processContentForDisplay(formatForQuote(content))
-                      }}
-                    />
-                  </div>
-                </div>
-              </TabsContent>
-            </Tabs>
-          </>
-        ) : (
-          <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-8 text-center">
-            <MessageSquare className="h-12 w-12 text-foreground/50 mx-auto mb-4" />
-            <div className="space-y-2">
-              <p className="mobile-text text-foreground">
-                Your client-friendly explanation will appear here
-              </p>
-              <p className="mobile-small-text text-foreground/70">
-                Available in multiple formats: standard explanation, email template, text message, and quotation format
-              </p>
+      </div>
+    );
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="rounded-2xl border border-border/30 bg-gradient-to-br from-card via-card/95 to-card/90 backdrop-blur-xl overflow-hidden"
+    >
+      {/* Header */}
+      <div className="px-5 py-4 border-b border-border/30 bg-gradient-to-r from-elec-yellow/5 to-transparent">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-elec-yellow/20">
+              <Sparkles className="h-5 w-5 text-elec-yellow" />
+            </div>
+            <div>
+              <h2 className="font-bold text-foreground">Generated Explanation</h2>
+              <p className="text-xs text-muted-foreground capitalize">{settings.tone} tone • {settings.clientType}</p>
             </div>
           </div>
-        )}
-      </CardContent>
-    </Card>
+
+          {/* Quick Actions */}
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleCopy}
+              className={cn(
+                "h-10 px-4 min-w-[80px] border-border/30 transition-all",
+                copied && "bg-green-500/10 border-green-500/30 text-green-400"
+              )}
+            >
+              {copied ? (
+                <>
+                  <CheckCircle className="h-4 w-4 mr-2" />
+                  Copied
+                </>
+              ) : (
+                <>
+                  <Copy className="h-4 w-4 mr-2" />
+                  Copy
+                </>
+              )}
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleDownloadPDF}
+              disabled={isGeneratingPDF}
+              className="h-10 px-4 border-border/30"
+            >
+              <FileDown className="h-4 w-4 mr-2" />
+              {isGeneratingPDF ? "..." : "PDF"}
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Tabbed Content */}
+      <Tabs defaultValue="standard" className="w-full">
+        <div className="px-4 pt-4">
+          <TabsList className="w-full grid grid-cols-4 h-12 p-1 bg-muted/30 rounded-xl">
+            <TabsTrigger
+              value="standard"
+              className="rounded-lg data-[state=active]:bg-card data-[state=active]:shadow-sm text-sm font-medium min-h-[44px]"
+            >
+              Standard
+            </TabsTrigger>
+            <TabsTrigger
+              value="email"
+              className="rounded-lg data-[state=active]:bg-card data-[state=active]:shadow-sm text-sm font-medium min-h-[44px]"
+            >
+              Email
+            </TabsTrigger>
+            <TabsTrigger
+              value="sms"
+              className="rounded-lg data-[state=active]:bg-card data-[state=active]:shadow-sm text-sm font-medium min-h-[44px]"
+            >
+              SMS
+            </TabsTrigger>
+            <TabsTrigger
+              value="quote"
+              className="rounded-lg data-[state=active]:bg-card data-[state=active]:shadow-sm text-sm font-medium min-h-[44px]"
+            >
+              Quote
+            </TabsTrigger>
+          </TabsList>
+        </div>
+
+        {/* Standard Tab */}
+        <TabsContent value="standard" className="m-0 p-4">
+          <div className="rounded-xl bg-background/50 border border-border/30 p-5">
+            <div
+              className="text-left max-w-none"
+              style={{
+                fontSize: '16px',
+                lineHeight: '1.8',
+              }}
+              dangerouslySetInnerHTML={{
+                __html: processContentForDisplay(content)
+              }}
+            />
+          </div>
+        </TabsContent>
+
+        {/* Email Tab */}
+        <TabsContent value="email" className="m-0 p-4 space-y-4">
+          <div className="flex items-center justify-between">
+            <Badge variant="outline" className="text-xs">
+              <Mail className="h-3 w-3 mr-1" />
+              Email Template
+            </Badge>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleEmailTemplate}
+              className="h-10 border-border/30"
+            >
+              <Send className="h-4 w-4 mr-2" />
+              Open in Email
+            </Button>
+          </div>
+
+          <div className="rounded-xl bg-background/50 border border-border/30 p-5">
+            <div className="space-y-4">
+              {formatForEmail(content).split('\n').map((line, index) => (
+                <p key={index} className="text-foreground leading-relaxed text-base">
+                  {line || <br />}
+                </p>
+              ))}
+            </div>
+          </div>
+        </TabsContent>
+
+        {/* SMS Tab */}
+        <TabsContent value="sms" className="m-0 p-4 space-y-4">
+          <div className="flex items-center justify-between">
+            <Badge variant="outline" className="text-xs">
+              <MessageSquare className="h-3 w-3 mr-1" />
+              Text Message
+            </Badge>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleSMSTemplate}
+              className="h-10 border-border/30"
+            >
+              <Send className="h-4 w-4 mr-2" />
+              Send SMS
+            </Button>
+          </div>
+
+          <div className="rounded-xl bg-background/50 border border-border/30 p-5">
+            <p className="text-foreground leading-relaxed text-base" style={{ lineHeight: '1.8' }}>
+              {formatForSMS(content)}
+            </p>
+
+            <div className="mt-4 pt-3 border-t border-border/30">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-muted-foreground">Character count</span>
+                <Badge
+                  variant="outline"
+                  className={cn(
+                    "text-xs",
+                    formatForSMS(content).length > 160 ? "text-red-400 border-red-500/30" : "text-green-400 border-green-500/30"
+                  )}
+                >
+                  {formatForSMS(content).length}/160
+                </Badge>
+              </div>
+            </div>
+          </div>
+        </TabsContent>
+
+        {/* Quote Tab */}
+        <TabsContent value="quote" className="m-0 p-4 space-y-4">
+          <div className="flex items-center justify-between">
+            <Badge variant="outline" className="text-xs">
+              <FileText className="h-3 w-3 mr-1" />
+              Quotation Format
+            </Badge>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleDownloadTxt}
+              className="h-10 border-border/30"
+            >
+              <Download className="h-4 w-4 mr-2" />
+              Download
+            </Button>
+          </div>
+
+          <div className="rounded-xl bg-background/50 border border-border/30 p-5">
+            <div
+              className="text-left max-w-none"
+              style={{
+                fontSize: '16px',
+                lineHeight: '1.8',
+              }}
+              dangerouslySetInnerHTML={{
+                __html: processContentForDisplay(formatForQuote(content))
+              }}
+            />
+          </div>
+        </TabsContent>
+      </Tabs>
+    </motion.div>
   );
 };
 

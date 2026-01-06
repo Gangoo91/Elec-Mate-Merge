@@ -78,7 +78,7 @@ const RiskAssessmentCard = () => {
                       <div className="space-y-1">
                         {step.examples.map((example, exampleIndex) => (
                           <div key={exampleIndex} className="flex items-center gap-2 text-xs text-white/80">
-                            <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
+                            <div className="w-1 h-1 bg-white/60 rounded-full"></div>
                             {example}
                           </div>
                         ))}

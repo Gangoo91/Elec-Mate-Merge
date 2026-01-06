@@ -11,7 +11,7 @@ export interface TimeEntryDialogProps {
 export const TimeEntryDialog = ({ isOpen, onClose, onSubmit }: TimeEntryDialogProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl w-[95vw] max-h-[90vh] bg-elec-gray border-elec-yellow/20 overflow-y-auto">
+      <DialogContent className="max-w-2xl w-[95vw] max-h-[90vh] bg-white/5 border-elec-yellow/20 overflow-y-auto">
         <DialogHeader className="pb-4 border-b border-elec-yellow/20">
           <DialogTitle className="text-elec-light flex items-center gap-2">
             Log Training Hours

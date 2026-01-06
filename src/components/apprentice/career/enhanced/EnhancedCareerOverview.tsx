@@ -378,10 +378,10 @@ const EnhancedCareerOverview = () => {
 
       <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-4'}`}>
         {careerMetrics.map((metric, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3 text-center space-y-2">
-            {metric.icon}
+          <Card key={index} className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 p-3 text-center space-y-2">
+            <div className="flex justify-center">{metric.icon}</div>
             <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
-            <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
+            <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white/80`}>{metric.data}</div>
           </Card>
         ))}
       </div>
@@ -391,7 +391,7 @@ const EnhancedCareerOverview = () => {
           <MobileAccordionTrigger icon={<TrendingUp className="h-5 w-5 text-green-400" />}>
             Career Progression Stages
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-6">
+          <MobileAccordionContent className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-6">
             {progressionStages.map((stage, index) => (
               <div key={index} className="space-y-3">
                 <div className="space-y-2">
@@ -406,7 +406,7 @@ const EnhancedCareerOverview = () => {
                   </div>
                 </div>
                 
-                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{stage.description}</p>
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{stage.description}</p>
                 
                 <div>
                   <h6 className={`font-medium text-green-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Key Milestones</h6>
@@ -453,16 +453,16 @@ const EnhancedCareerOverview = () => {
               <div>
                 <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Typical Roles by Stage</h6>
                 <div className="mt-2 grid grid-cols-2 gap-2">
-                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                     Foundation: Electrical Mate, Trainee Installer
                   </div>
-                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                     Development: Improver, Installation Electrician
                   </div>
-                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                     Specialisation: Testing & Inspection, EV Installer, Industrial Maintenance
                   </div>
-                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                     Mastery: Supervisor, Qualified Supervisor (QS), Project Manager
                   </div>
                 </div>
@@ -492,7 +492,7 @@ const EnhancedCareerOverview = () => {
           <MobileAccordionTrigger icon={<Target className="h-5 w-5 text-blue-400" />}>
             Popular Career Pathways
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+          <MobileAccordionContent className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
             {careerPathHighlights.map((path, index) => (
               <div key={index} className="space-y-2">
                 <div className="flex items-center gap-3">
@@ -511,7 +511,7 @@ const EnhancedCareerOverview = () => {
                   </div>
                 </div>
                 
-                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{path.speciality}</p>
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{path.speciality}</p>
               </div>
             ))}
 
@@ -528,11 +528,11 @@ const EnhancedCareerOverview = () => {
                 </li>
               </ul>
               <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Common Employers</h6>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 Electrical contractors, facilities management, housebuilders, local authorities, utilities/DNOs
               </p>
               <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Salary Benchmarks</h6>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 Entry £24–28k · Experienced £35–45k · Specialist £45–60k+ (London weighting +10–20%)
               </p>
             </div>
@@ -543,7 +543,7 @@ const EnhancedCareerOverview = () => {
           <MobileAccordionTrigger icon={<GraduationCap className="h-5 w-5 text-purple-400" />}>
             Career Advancement Tips
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+          <MobileAccordionContent className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
             {advancementTips.map((section, index) => (
               <div key={index} className="space-y-3">
                 <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{section.category}</h4>
@@ -589,14 +589,14 @@ const EnhancedCareerOverview = () => {
           <MobileAccordionTrigger icon={<Sparkles className="h-5 w-5 text-orange-400" />}>
             Industry Context & Trends
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+          <MobileAccordionContent className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
             {industryContext.map((context, index) => (
               <div key={index} className="space-y-3">
                 <div className="flex items-center gap-3">
                   {context.icon}
                   <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{context.title}</h4>
                 </div>
-                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{context.description}</p>
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{context.description}</p>
                 <div className="space-y-2">
                   <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-300 font-medium`}>Impact: </span>
                   <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200`}>{context.impact}</span>
@@ -617,7 +617,7 @@ const EnhancedCareerOverview = () => {
                 </li>
               </ul>
               <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Skills to focus on</h6>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 Testing & verification, commissioning, data cabling, basic PLC awareness, safe systems of work
               </p>
             </div>
@@ -628,7 +628,7 @@ const EnhancedCareerOverview = () => {
           <MobileAccordionTrigger icon={<BookOpen className="h-5 w-5 text-indigo-400" />}>
             Qualification Pathways
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-6">
+          <MobileAccordionContent className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-6">
             {qualificationPathways.map((pathway, index) => (
               <div key={index} className="space-y-4">
                 <div className="space-y-2">
@@ -666,15 +666,15 @@ const EnhancedCareerOverview = () => {
 
             <div className="pt-2 border-t border-elec-yellow/10 space-y-3">
               <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Entry requirements</h6>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 GCSEs (or equivalent) typically in Maths and English; aptitude for practical work; health & safety awareness.
               </p>
               <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Assessment methods</h6>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 Portfolio evidence, on‑site observations, written/practical exams, AM2/EPA as applicable.
               </p>
               <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Funding routes</h6>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 Employer apprenticeship levy, adult learning loans, regional grants; check local colleges/providers.
               </p>
             </div>
@@ -685,7 +685,7 @@ const EnhancedCareerOverview = () => {
           <MobileAccordionTrigger icon={<Network className="h-5 w-5 text-cyan-400" />}>
             Professional Development Journey
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+          <MobileAccordionContent className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
             {professionalDevelopment.map((stage, index) => (
               <div key={index} className="space-y-3">
                 <div className="space-y-2">
@@ -711,7 +711,7 @@ const EnhancedCareerOverview = () => {
 
             <div className="pt-2 border-t border-elec-yellow/10 space-y-3">
               <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>CPD Targets</h6>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 Early 10–15h/yr · Mid 15–25h/yr · Senior 25h+/yr (mix of formal, informal, and on‑the‑job learning)
               </p>
               <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Simple Learning Plan</h6>
@@ -733,7 +733,7 @@ const EnhancedCareerOverview = () => {
           <MobileAccordionTrigger icon={<Building className="h-5 w-5 text-teal-400" />}>
             Industry Sectors & Opportunities
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+          <MobileAccordionContent className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
             {industrySectors.map((sector, index) => (
               <div key={index} className="space-y-3">
                 <div className="flex items-center justify-between">
@@ -764,15 +764,15 @@ const EnhancedCareerOverview = () => {
 
             <div className="pt-2 border-t border-elec-yellow/10 space-y-3">
               <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Mandatory certs</h6>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 BS 7671, ECS/JIB, site inductions; sector‑specific may include IPAF, PASMA, confined spaces.
               </p>
               <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Key risks</h6>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 Live work exposure, working at height, isolation errors—mitigate via SSOW, permits, and competency checks.
               </p>
               <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Essential tools</h6>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 Calibrated testers, lock‑off kits, voltage indicators (GS38), appropriate PPE per task and environment.
               </p>
             </div>
@@ -783,7 +783,7 @@ const EnhancedCareerOverview = () => {
           <MobileAccordionTrigger icon={<Briefcase className="h-5 w-5 text-amber-400" />}>
             Entrepreneurship & Self-Employment
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-6">
+          <MobileAccordionContent className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-6">
             {entrepreneurshipGuide.map((path, index) => (
               <div key={index} className="space-y-4">
                 <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{path.path}</h4>
@@ -821,11 +821,11 @@ const EnhancedCareerOverview = () => {
 
             <div className="pt-2 border-t border-elec-yellow/10 space-y-3">
               <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Start‑up costs (indicative)</h6>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 Insurance, test equipment, van/tools, scheme fees, marketing, accounting software: £5k–£15k+ depending on scope.
               </p>
               <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Day rates & pricing</h6>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 Typical day rate £180–£350+ region dependent. Price by value with allowances for testing, certification, and warranty.
               </p>
               <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Compliance checklist</h6>
@@ -841,22 +841,22 @@ const EnhancedCareerOverview = () => {
               </ul>
               <h6 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Useful UK links</h6>
               <ul className="space-y-1">
-                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                   <a href="https://www.gov.uk/set-up-business" target="_blank" rel="noreferrer" className="underline">
                     GOV.UK — Set up a business
                   </a>
                 </li>
-                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                   <a href="https://www.niceic.com/" target="_blank" rel="noreferrer" className="underline">
                     NICEIC — Certification schemes
                   </a>
                 </li>
-                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                   <a href="https://www.napit.org.uk/" target="_blank" rel="noreferrer" className="underline">
                     NAPIT — Competent Person scheme
                   </a>
                 </li>
-                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                   <a href="https://www.hse.gov.uk/electricity/index.htm" target="_blank" rel="noreferrer" className="underline">
                     HSE — Electrical safety
                   </a>

@@ -139,7 +139,7 @@ const IndustrialReferenceGuide = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Book className="h-6 w-6 text-elec-yellow" />
@@ -159,7 +159,7 @@ const IndustrialReferenceGuide = () => {
 
         <TabsContent value="standards" className="space-y-4">
           {standardsAndRegulations.map((category, index) => (
-            <Card key={index} className="border-blue-500/30 bg-elec-gray">
+            <Card key={index} className="border-blue-500/30 bg-white/5">
               <CardHeader>
                 <div className="flex items-center gap-2">
                   <Shield className="h-6 w-6 text-blue-400" />
@@ -184,7 +184,7 @@ const IndustrialReferenceGuide = () => {
         </TabsContent>
 
         <TabsContent value="emergency" className="space-y-4">
-          <Card className="border-red-500/30 bg-elec-gray">
+          <Card className="border-red-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <AlertTriangle className="h-6 w-6 text-red-400" />
@@ -221,7 +221,7 @@ const IndustrialReferenceGuide = () => {
         </TabsContent>
 
         <TabsContent value="testing" className="space-y-4">
-          <Card className="border-green-500/30 bg-elec-gray">
+          <Card className="border-green-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <FileCheck className="h-6 w-6 text-green-400" />
@@ -257,7 +257,7 @@ const IndustrialReferenceGuide = () => {
         </TabsContent>
 
         <TabsContent value="protection" className="space-y-4">
-          <Card className="border-purple-500/30 bg-elec-gray">
+          <Card className="border-purple-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Settings className="h-6 w-6 text-purple-400" />

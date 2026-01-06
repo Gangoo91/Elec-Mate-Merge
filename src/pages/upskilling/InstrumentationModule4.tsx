@@ -35,7 +35,7 @@ const InstrumentationModule4 = () => {
       title: "Interpreting and Logging Readings in Real-World Systems",
       icon: FileText,
       description: "Practical application of measurements in industrial systems"
-    }
+  }
   ];
 
   return (

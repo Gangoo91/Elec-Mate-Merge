@@ -109,7 +109,7 @@ const ProfessionalSkillsTab = () => {
                     <IconComponent className="h-6 w-6 text-elec-yellow" />
                     <div className="flex-1">
                       <h3 className="text-lg font-semibold text-white">{skill.skill}</h3>
-                      <p className="text-sm text-muted-foreground">{skill.description}</p>
+                      <p className="text-sm text-white">{skill.description}</p>
                     </div>
                     <div className="text-right">
                       <div className="text-sm text-elec-yellow font-medium">{skill.level}%</div>
@@ -122,7 +122,7 @@ const ProfessionalSkillsTab = () => {
                       <h4 className="font-medium text-white mb-2">Key Techniques</h4>
                       <ul className="space-y-1">
                         {skill.techniques.map((technique, techIndex) => (
-                          <li key={techIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                          <li key={techIndex} className="text-sm text-white flex items-start gap-2">
                             <div className="w-1 h-1 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                             {technique}
                           </li>
@@ -132,7 +132,7 @@ const ProfessionalSkillsTab = () => {
                     
                     <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
                       <h4 className="font-medium text-blue-400 mb-2">Practice Exercise</h4>
-                      <p className="text-sm text-muted-foreground">{skill.practice}</p>
+                      <p className="text-sm text-white">{skill.practice}</p>
                     </div>
                   </div>
                 </div>
@@ -142,7 +142,7 @@ const ProfessionalSkillsTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">Professional Language Examples</CardTitle>
         </CardHeader>
@@ -156,11 +156,11 @@ const ProfessionalSkillsTab = () => {
                     <div key={exampleIndex} className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3">
                         <div className="text-xs text-red-400 font-medium mb-1">Avoid saying:</div>
-                        <p className="text-sm text-muted-foreground italic">"{example.poor}"</p>
+                        <p className="text-sm text-white italic">"{example.poor}"</p>
                       </div>
                       <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
                         <div className="text-xs text-green-400 font-medium mb-1">Better approach:</div>
-                        <p className="text-sm text-muted-foreground italic">"{example.better}"</p>
+                        <p className="text-sm text-white italic">"{example.better}"</p>
                       </div>
                     </div>
                   ))}

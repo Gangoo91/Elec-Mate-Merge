@@ -127,13 +127,13 @@ const EvidenceAssessmentTab = () => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-muted-foreground">Loading evidence...</div>
+        <div className="text-white">Loading evidence...</div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6 bg-elec-gray min-h-screen p-4 sm:p-6">
+    <div className="space-y-6 bg-white/5 min-h-screen p-4 sm:p-6">
       {/* Header Section */}
       <div className="text-center space-y-4">
         <div className="space-y-2">
@@ -153,8 +153,8 @@ const EvidenceAssessmentTab = () => {
               Upload Evidence
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl w-[95vw] max-h-[90vh] bg-elec-gray border-elec-yellow/20 overflow-y-auto">
-            <DialogHeader className="sticky top-0 bg-elec-gray pb-4 border-b border-elec-yellow/20">
+          <DialogContent className="max-w-2xl w-[95vw] max-h-[90vh] bg-white/5 border-elec-yellow/20 overflow-y-auto">
+            <DialogHeader className="sticky top-0 bg-white/5 pb-4 border-b border-elec-yellow/20">
               <DialogTitle className="text-elec-light">Upload Training Evidence</DialogTitle>
             </DialogHeader>
             <div className="overflow-y-auto max-h-[calc(90vh-120px)] pb-4">
@@ -272,7 +272,7 @@ const EvidenceAssessmentTab = () => {
 
                 {/* Suggested Tags */}
                 <div className="space-y-2">
-                  <p className="text-xs text-muted-foreground">Suggested tags:</p>
+                  <p className="text-xs text-white">Suggested tags:</p>
                   <div className="flex flex-wrap gap-2">
                     {suggestedTags.map((tag) => (
                       <Badge
@@ -327,42 +327,42 @@ const EvidenceAssessmentTab = () => {
 
       {/* Summary Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="border-elec-yellow/20 bg-elec-dark">
+        <Card className="border-elec-yellow/20 bg-white/10">
           <CardContent className="p-4 flex flex-col items-center justify-center text-center min-h-[100px]">
             <FileText className="h-6 w-6 text-elec-yellow mb-3" />
             <div className="space-y-1">
-              <p className="text-xs text-muted-foreground leading-tight">Total Evidence</p>
+              <p className="text-xs text-white leading-tight">Total Evidence</p>
               <p className="text-xl sm:text-2xl font-bold text-elec-yellow">{evidenceItems.length}</p>
             </div>
           </CardContent>
         </Card>
-        <Card className="border-elec-yellow/20 bg-elec-dark">
+        <Card className="border-elec-yellow/20 bg-white/10">
           <CardContent className="p-4 flex flex-col items-center justify-center text-center min-h-[100px]">
             <CheckCircle className="h-6 w-6 text-green-400 mb-3" />
             <div className="space-y-1">
-              <p className="text-xs text-muted-foreground leading-tight">Portfolio Linked</p>
+              <p className="text-xs text-white leading-tight">Portfolio Linked</p>
               <p className="text-xl sm:text-2xl font-bold text-green-400">
                 {evidenceItems.filter(item => item.portfolio_linked).length}
               </p>
             </div>
           </CardContent>
         </Card>
-        <Card className="border-elec-yellow/20 bg-elec-dark">
+        <Card className="border-elec-yellow/20 bg-white/10">
           <CardContent className="p-4 flex flex-col items-center justify-center text-center min-h-[100px]">
             <Clock className="h-6 w-6 text-purple-400 mb-3" />
             <div className="space-y-1">
-              <p className="text-xs text-muted-foreground leading-tight">Total Hours</p>
+              <p className="text-xs text-white leading-tight">Total Hours</p>
               <p className="text-xl sm:text-2xl font-bold text-purple-400">
                 {Math.round(evidenceItems.reduce((sum, item) => sum + (item.time_spent || 0), 0) / 60)}h
               </p>
             </div>
           </CardContent>
         </Card>
-        <Card className="border-elec-yellow/20 bg-elec-dark">
+        <Card className="border-elec-yellow/20 bg-white/10">
           <CardContent className="p-4 flex flex-col items-center justify-center text-center min-h-[100px]">
             <Tag className="h-6 w-6 text-blue-400 mb-3" />
             <div className="space-y-1">
-              <p className="text-xs text-muted-foreground leading-tight">Unique Skills</p>
+              <p className="text-xs text-white leading-tight">Unique Skills</p>
               <p className="text-xl sm:text-2xl font-bold text-blue-400">
                 {new Set(evidenceItems.flatMap(item => item.tags || [])).size}
               </p>
@@ -373,7 +373,7 @@ const EvidenceAssessmentTab = () => {
 
       {/* Evidence Grid */}
       {filteredEvidence.length === 0 ? (
-        <Card className="border-elec-yellow/20 bg-elec-dark">
+        <Card className="border-elec-yellow/20 bg-white/10">
           <CardContent className="p-8 text-center">
             <Upload className="h-12 w-12 mx-auto text-elec-yellow/50 mb-4" />
             <h3 className="text-lg font-semibold mb-2 text-elec-light">No Evidence Found</h3>
@@ -395,7 +395,7 @@ const EvidenceAssessmentTab = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredEvidence.map((evidence) => (
-            <Card key={evidence.id} className="border-elec-yellow/20 bg-elec-dark hover:border-elec-yellow/50 transition-colors">
+            <Card key={evidence.id} className="border-elec-yellow/20 bg-white/10 hover:border-elec-yellow/50 transition-colors">
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
                   <div className="space-y-1 flex-1">
@@ -433,12 +433,12 @@ const EvidenceAssessmentTab = () => {
               </CardHeader>
               <CardContent className="space-y-3">
                 {evidence.description && (
-                  <p className="text-sm text-muted-foreground line-clamp-2">
+                  <p className="text-sm text-white line-clamp-2">
                     {evidence.description}
                   </p>
                 )}
                 
-                <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                <div className="flex items-center gap-4 text-xs text-white">
                   <div className="flex items-center gap-1">
                     <Clock className="h-3 w-3" />
                     {Math.round((evidence.time_spent || 0) / 60)}h
@@ -519,7 +519,7 @@ const EvidenceAssessmentTab = () => {
                   {selectedEvidence.description && (
                     <div>
                       <h4 className="font-semibold mb-2">Description</h4>
-                      <p className="text-sm text-muted-foreground">{selectedEvidence.description}</p>
+                      <p className="text-sm text-white">{selectedEvidence.description}</p>
                     </div>
                   )}
 
@@ -544,7 +544,7 @@ const EvidenceAssessmentTab = () => {
                         <div className="flex-1">
                           <p className="font-medium">{selectedEvidence.file_name}</p>
                           {selectedEvidence.file_size && (
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-xs text-white">
                               {Math.round(selectedEvidence.file_size / 1024)}KB
                             </p>
                           )}

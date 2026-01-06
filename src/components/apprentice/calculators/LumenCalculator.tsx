@@ -306,7 +306,7 @@ const LumenCalculator = () => {
               options={[{ value: "", label: "Select room type..." }, ...roomPresetOptions]}
             />
             {selectedRoom && (
-              <p className="text-xs text-white/50 pl-1">
+              <p className="text-xs text-white/80 pl-1">
                 {ROOM_PRESETS[selectedRoom as keyof typeof ROOM_PRESETS].description}
               </p>
             )}
@@ -503,7 +503,7 @@ const LumenCalculator = () => {
             </div>
             <ChevronDown
               className={cn(
-                "h-4 w-4 text-white/40 transition-transform duration-200",
+                "h-4 w-4 text-white/70 transition-transform duration-200",
                 showAdvanced && "rotate-180"
               )}
             />
@@ -691,7 +691,7 @@ const LumenCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/40 transition-transform duration-200",
+                    "h-4 w-4 text-white/70 transition-transform duration-200",
                     showGuidance && "rotate-180"
                   )}
                 />
@@ -738,7 +738,7 @@ const LumenCalculator = () => {
             </div>
             <ChevronDown
               className={cn(
-                "h-4 w-4 text-white/40 transition-transform duration-200",
+                "h-4 w-4 text-white/70 transition-transform duration-200",
                 showReference && "rotate-180"
               )}
             />

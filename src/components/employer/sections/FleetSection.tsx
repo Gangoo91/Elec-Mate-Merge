@@ -4,9 +4,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SectionHeader } from "@/components/employer/SectionHeader";
-import { 
-  Car, 
-  Search, 
+import { QuickStats, QuickStat } from "@/components/employer/QuickStats";
+import {
+  Car,
+  Search,
   AlertTriangle,
   CheckCircle,
   Calendar,
@@ -14,7 +15,6 @@ import {
   MapPin,
   ChevronDown,
   ChevronUp,
-  Plus,
   Clock,
   Wrench
 } from "lucide-react";
@@ -69,46 +69,39 @@ export function FleetSection() {
       />
 
       {/* Stats */}
-      <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4 md:mx-0 md:px-0">
-        <Card className="bg-elec-yellow/10 border-elec-yellow/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <Car className="h-4 w-4 text-elec-yellow" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{activeVehicles}</p>
-              <p className="text-xs text-muted-foreground">Active</p>
-            </div>
-          </CardContent>
-        </Card>
-        {motDueCount > 0 && (
-          <Card className="bg-warning/10 border-warning/20 shrink-0">
-            <CardContent className="p-3 flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4 text-warning" />
-              <div>
-                <p className="text-lg font-bold text-foreground">{motDueCount}</p>
-                <p className="text-xs text-muted-foreground">MOT Due</p>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-        <Card className="bg-info/10 border-info/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <MapPin className="h-4 w-4 text-info" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{(totalMileage / 1000).toFixed(0)}k</p>
-              <p className="text-xs text-muted-foreground">Total Miles</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-success/10 border-success/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <Fuel className="h-4 w-4 text-success" />
-            <div>
-              <p className="text-lg font-bold text-foreground">£{monthlyFuelCost.toFixed(0)}</p>
-              <p className="text-xs text-muted-foreground">Fuel (Feb)</p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <QuickStats
+        stats={[
+          {
+            icon: Car,
+            value: activeVehicles,
+            label: "Active",
+            color: "yellow",
+          },
+          ...(motDueCount > 0
+            ? [
+                {
+                  icon: AlertTriangle,
+                  value: motDueCount,
+                  label: "MOT Due",
+                  color: "orange" as const,
+                  pulse: true,
+                },
+              ]
+            : []),
+          {
+            icon: MapPin,
+            value: `${(totalMileage / 1000).toFixed(0)}k`,
+            label: "Total Miles",
+            color: "blue",
+          },
+          {
+            icon: Fuel,
+            value: `£${monthlyFuelCost.toFixed(0)}`,
+            label: "Fuel (Feb)",
+            color: "green",
+          },
+        ]}
+      />
 
       {/* Tabs */}
       <div className="flex gap-2 -mx-4 px-4 md:mx-0 md:px-0">

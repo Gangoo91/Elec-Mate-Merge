@@ -66,11 +66,11 @@ const Level3Module7Section5_3 = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
+      <div className="border-b border-white/10 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white/70 hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="../section5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 5
@@ -81,22 +81,22 @@ const Level3Module7Section5_3 = () => {
 
       {/* Main Content */}
       <div className="max-w-4xl mx-auto px-6 py-12">
-        <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
+        <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-6">
           5.3 Setting up as a Self-employed Electrician (insurance, UTR, HMRC)
         </h1>
-        <p className="text-xl text-muted-foreground mb-8">
+        <p className="text-xl text-white/70 mb-8">
           Requirements and procedures for establishing a self-employed electrical business
         </p>
 
         {/* Spot it in 30 Seconds */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-elec-yellow/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-elec-yellow/20">
           <div className="flex items-start gap-3 mb-4">
             <Target className="w-6 h-6 text-elec-yellow flex-shrink-0 mt-1" />
             <div className="flex-1">
               <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow dark:text-elec-yellow mb-3 sm:mb-4">
                 Spot it in 30 Seconds
               </h2>
-              <div className="space-y-2 text-xs sm:text-sm text-foreground">
+              <div className="space-y-2 text-xs sm:text-sm text-white">
                 <p><strong>Before starting work:</strong> Register with HMRC and obtain UTR number</p>
                 <p><strong>Essential insurance:</strong> £2M public liability minimum</p>
                 <p><strong>Key deadline:</strong> Register by 5th October in second tax year</p>
@@ -112,12 +112,12 @@ const Level3Module7Section5_3 = () => {
             <CardTitle className="text-lg sm:text-xl font-semibold">Introduction</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-foreground mb-4">
+            <p className="text-white mb-4">
               Starting as a self-employed electrician requires careful planning and compliance with legal requirements. 
               This section covers the essential steps for setting up your electrical business, including registration 
               with HMRC, obtaining necessary insurance, and understanding your professional obligations.
             </p>
-            <p className="text-foreground">
+            <p className="text-white">
               Proper setup protects both you and your clients while ensuring you operate within the law and 
               industry standards.
             </p>
@@ -130,8 +130,8 @@ const Level3Module7Section5_3 = () => {
             <CardTitle className="text-lg sm:text-xl font-semibold">Learning Outcomes</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-foreground mb-4">After completing this section, you will be able to:</p>
-            <ul className="list-disc list-inside space-y-2 text-foreground">
+            <p className="text-white mb-4">After completing this section, you will be able to:</p>
+            <ul className="list-disc list-inside space-y-2 text-white">
               <li>Understand HMRC registration requirements and deadlines</li>
               <li>Identify essential insurance types and coverage levels</li>
               <li>Navigate the UTR number application process</li>
@@ -142,17 +142,17 @@ const Level3Module7Section5_3 = () => {
         </Card>
 
         {/* Content / Learning */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/10">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Content / Learning</h2>
 
           {/* Section 1: HMRC Registration */}
           <section className="mb-6 sm:mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-elec-yellow bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-elec-yellow bg-transparent">
               <div className="flex items-start gap-3 mb-4">
                 <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                 <div className="flex-1">
                   <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-4 text-base">HMRC Registration Requirements</h3>
-                  <div className="space-y-4 text-xs sm:text-sm text-foreground">
+                  <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p>
                       <strong>Unique Taxpayer Reference (UTR):</strong> Essential for all self-employed individuals. 
                       Apply through HMRC's online portal or by phone. Processing typically takes 10-15 working days.
@@ -190,12 +190,12 @@ const Level3Module7Section5_3 = () => {
 
           {/* Section 2: Insurance Requirements */}
           <section className="mb-6 sm:mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-green-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-green-500 bg-transparent">
               <div className="flex items-start gap-3 mb-4">
                 <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                 <div className="flex-1">
                   <h3 className="font-semibold text-green-600 dark:text-green-400 mb-4 text-base">Essential Insurance Coverage</h3>
-                  <div className="space-y-4 text-xs sm:text-sm text-foreground">
+                  <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p>
                       <strong>Public Liability Insurance:</strong> Legally required, minimum £2 million coverage recommended. 
                       Protects against claims for injury or property damage caused by your work.
@@ -233,12 +233,12 @@ const Level3Module7Section5_3 = () => {
 
           {/* Section 3: Business Structure */}
           <section className="mb-6 sm:mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-amber-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-amber-500 bg-transparent">
               <div className="flex items-start gap-3 mb-4">
                 <span className="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                 <div className="flex-1">
                   <h3 className="font-semibold text-amber-600 dark:text-amber-400 mb-4 text-base">Business Structure and Banking</h3>
-                  <div className="space-y-4 text-xs sm:text-sm text-foreground">
+                  <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p>
                       <strong>Sole Trader vs Limited Company:</strong> Most start as sole traders for simplicity. 
                       Consider limited company structure for tax efficiency as profits increase.
@@ -276,12 +276,12 @@ const Level3Module7Section5_3 = () => {
 
           {/* Section 4: Professional Obligations */}
           <section className="mb-6 sm:mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-purple-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-purple-500 bg-transparent">
               <div className="flex items-start gap-3 mb-4">
                 <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                 <div className="flex-1">
                   <h3 className="font-semibold text-purple-600 dark:text-elec-yellow mb-4 text-base">Professional Memberships and Compliance</h3>
-                  <div className="space-y-4 text-xs sm:text-sm text-foreground">
+                  <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p>
                       <strong>Competent Person Schemes:</strong> Join schemes like NICEIC, ELECSA, or NAPIT for 
                       self-certification of work and enhanced credibility with clients.
@@ -325,13 +325,13 @@ const Level3Module7Section5_3 = () => {
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Case Study 1 */}
-            <div className="rounded-lg p-4 border-l-4 border-l-red-500 bg-card">
+            <div className="rounded-lg p-4 border-l-4 border-l-red-500 bg-transparent">
               <h4 className="font-semibold text-red-600 dark:text-elec-yellow mb-2">Case Study: Late Registration Penalties</h4>
-              <p className="text-xs sm:text-sm text-foreground mb-2">
+              <p className="text-xs sm:text-sm text-white mb-2">
                 An electrician started working in April 2023 but forgot to register with HMRC. 
                 By missing the October 2024 deadline, they faced:
               </p>
-              <ul className="text-xs sm:text-sm text-foreground list-disc list-inside ml-4 space-y-1">
+              <ul className="text-xs sm:text-sm text-white list-disc list-inside ml-4 space-y-1">
                 <li>£100 initial penalty for late registration</li>
                 <li>Additional daily penalties of £10 after 3 months</li>
                 <li>Potential investigation and interest on unpaid tax</li>
@@ -342,11 +342,11 @@ const Level3Module7Section5_3 = () => {
             {/* Case Study 2 */}
             <div className="rounded-lg p-4 border-l-4 border-l-elec-yellow bg-elec-yellow/5">
               <h4 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2">Case Study: Proper Insurance Saves Business</h4>
-              <p className="text-xs sm:text-sm text-foreground mb-2">
+              <p className="text-xs sm:text-sm text-white mb-2">
                 A self-employed electrician with comprehensive insurance faced a claim when their work 
                 allegedly caused damage to a customer's expensive home automation system:
               </p>
-              <ul className="text-xs sm:text-sm text-foreground list-disc list-inside ml-4 space-y-1">
+              <ul className="text-xs sm:text-sm text-white list-disc list-inside ml-4 space-y-1">
                 <li>Professional indemnity insurance covered the £15,000 claim</li>
                 <li>Legal costs of £8,000 were also covered</li>
                 <li>Business continued operating without financial impact</li>
@@ -365,19 +365,19 @@ const Level3Module7Section5_3 = () => {
             <div className="space-y-3">
               <div className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-                <p className="text-xs sm:text-sm text-foreground">
+                <p className="text-xs sm:text-sm text-white">
                   <strong>Early Registration:</strong> Register with HMRC promptly and maintain accurate records to avoid penalties and ensure smooth operations.
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-                <p className="text-xs sm:text-sm text-foreground">
+                <p className="text-xs sm:text-sm text-white">
                   <strong>Comprehensive Insurance:</strong> Invest in proper coverage levels - it's essential business protection, not optional expense.
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-                <p className="text-xs sm:text-sm text-foreground">
+                <p className="text-xs sm:text-sm text-white">
                   <strong>Professional Development:</strong> Join competent person schemes and maintain ongoing training to enhance credibility and capability.
                 </p>
               </div>

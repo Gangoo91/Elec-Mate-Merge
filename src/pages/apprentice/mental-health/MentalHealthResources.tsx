@@ -25,7 +25,7 @@ const MentalHealthResources = () => {
       type: "Helpline"
     },
     {
-      title: "CALM - Campaign Against Living Miserably", 
+      title: "CALM - Campaign Against Living Miserably",
       description: "Support specifically for men facing difficult times",
       url: "https://www.thecalmzone.net/",
       type: "Support"
@@ -75,27 +75,27 @@ const MentalHealthResources = () => {
       color="blue"
     >
       <div className="space-y-6">
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-blue-500/20 bg-white/5">
           <CardHeader>
-            <CardTitle className="text-elec-yellow">External Support Services</CardTitle>
+            <CardTitle className="text-blue-400">External Support Services</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {resources.map((resource, index) => (
-                <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
+                <div key={index} className="border border-white/10 bg-white/5 rounded-lg p-4 hover:border-blue-500/30 transition-all">
                   <div className="flex justify-between items-start mb-3">
                     <div>
                       <h4 className="font-semibold text-white">{resource.title}</h4>
-                      <p className="text-sm text-muted-foreground mt-1">{resource.description}</p>
+                      <p className="text-sm text-white/70 mt-1">{resource.description}</p>
                     </div>
-                    <span className="text-xs px-2 py-1 bg-elec-yellow/10 rounded-md text-elec-yellow">
+                    <span className="text-xs px-2 py-1 bg-blue-500/10 rounded-md text-blue-400">
                       {resource.type}
                     </span>
                   </div>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="w-full border-elec-yellow/20 hover:bg-elec-yellow/10"
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full border-blue-500/30 text-white hover:bg-blue-500/10"
                     onClick={() => window.open(resource.url, '_blank')}
                   >
                     Visit Resource
@@ -107,27 +107,27 @@ const MentalHealthResources = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-green-500/20 bg-white/5">
           <CardHeader>
-            <CardTitle className="text-elec-yellow">Self-Help Resources</CardTitle>
+            <CardTitle className="text-green-400">Self-Help Resources</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {selfHelpResources.map((resource, index) => (
-                <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
+                <div key={index} className="border border-white/10 bg-white/5 rounded-lg p-4 hover:border-green-500/30 transition-all">
                   <div className="flex justify-between items-start mb-3">
                     <div>
                       <h4 className="font-semibold text-white">{resource.title}</h4>
-                      <p className="text-sm text-muted-foreground mt-1">{resource.description}</p>
+                      <p className="text-sm text-white/70 mt-1">{resource.description}</p>
                     </div>
-                    <span className="text-xs px-2 py-1 bg-blue-500/10 rounded-md text-blue-400">
+                    <span className="text-xs px-2 py-1 bg-green-500/10 rounded-md text-green-400">
                       {resource.type}
                     </span>
                   </div>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="w-full border-elec-yellow/20 hover:bg-elec-yellow/10"
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full border-green-500/30 text-white hover:bg-green-500/10"
                   >
                     Access Resource
                   </Button>
@@ -137,28 +137,28 @@ const MentalHealthResources = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-red-500/20 bg-white/5">
           <CardHeader>
-            <CardTitle className="text-elec-yellow">Emergency Contacts</CardTitle>
+            <CardTitle className="text-red-400">Emergency Contacts</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="text-center border border-red-500/20 rounded-lg p-4 bg-red-500/5">
-                <h4 className="font-semibold text-red-400 mb-2">🚨 Emergency</h4>
+              <div className="text-center border border-red-500/30 rounded-lg p-4 bg-red-500/10">
+                <h4 className="font-semibold text-red-400 mb-2">Emergency</h4>
                 <a href="tel:999" className="text-2xl font-bold text-white mb-1 block underline hover:text-red-400 transition-colors">999</a>
-                <p className="text-xs text-muted-foreground">Immediate danger or serious mental health crisis</p>
+                <p className="text-xs text-white/70">Immediate danger or serious mental health crisis</p>
               </div>
 
-              <div className="text-center border border-orange-500/20 rounded-lg p-4 bg-orange-500/5">
-                <h4 className="font-semibold text-orange-400 mb-2">📞 Crisis Support</h4>
+              <div className="text-center border border-orange-500/30 rounded-lg p-4 bg-orange-500/10">
+                <h4 className="font-semibold text-orange-400 mb-2">Crisis Support</h4>
                 <a href="tel:116123" className="text-lg font-bold text-white mb-1 block underline hover:text-orange-400 transition-colors">116 123</a>
-                <p className="text-xs text-muted-foreground">Samaritans - Free 24/7 emotional support</p>
+                <p className="text-xs text-white/70">Samaritans - Free 24/7 emotional support</p>
               </div>
 
-              <div className="text-center border border-blue-500/20 rounded-lg p-4 bg-blue-500/5">
-                <h4 className="font-semibold text-blue-400 mb-2">💬 Text Support</h4>
+              <div className="text-center border border-blue-500/30 rounded-lg p-4 bg-blue-500/10">
+                <h4 className="font-semibold text-blue-400 mb-2">Text Support</h4>
                 <a href="sms:85258?body=SHOUT" className="text-lg font-bold text-white mb-1 block underline hover:text-blue-400 transition-colors">Text SHOUT to 85258</a>
-                <p className="text-xs text-muted-foreground">Free 24/7 crisis text line</p>
+                <p className="text-xs text-white/70">Free 24/7 crisis text line</p>
               </div>
             </div>
           </CardContent>

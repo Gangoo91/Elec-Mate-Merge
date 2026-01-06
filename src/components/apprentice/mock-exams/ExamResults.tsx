@@ -50,14 +50,14 @@ const ExamResults: React.FC<ExamResultsProps> = ({
   const results = calculateResults();
 
   return (
-    <Card className="border-elec-yellow/30 bg-elec-gray">
+    <Card className="border-elec-yellow/30 bg-white/5">
       <CardHeader>
         <CardTitle>{examTitle}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="text-center p-6">
           <div className="text-6xl font-bold text-elec-yellow mb-2">{results.percentage}%</div>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             You got {results.correct} out of {results.total} questions correct
           </p>
         </div>
@@ -86,7 +86,7 @@ const ExamResults: React.FC<ExamResultsProps> = ({
                             ? 'bg-green-500/20 border border-green-500/30' 
                             : optionIndex === selectedAnswers[question.id]
                               ? 'bg-red-500/20 border border-red-500/30'
-                              : 'bg-elec-dark/30'
+                              : 'bg-white/10'
                         }`}
                       >
                         {option}
@@ -94,9 +94,9 @@ const ExamResults: React.FC<ExamResultsProps> = ({
                     ))}
                   </div>
                   {selectedAnswers[question.id] !== question.correctAnswer && (
-                    <div className="mt-3 p-3 bg-elec-dark/50 rounded-md">
+                    <div className="mt-3 p-3 bg-white/10 rounded-md">
                       <p className="text-sm font-medium">Explanation:</p>
-                      <p className="text-sm text-muted-foreground">{question.explanation}</p>
+                      <p className="text-sm text-white">{question.explanation}</p>
                     </div>
                   )}
                 </div>

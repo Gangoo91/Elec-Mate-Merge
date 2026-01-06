@@ -368,7 +368,7 @@ export const SavedRAMSLibrary = () => {
             </div>
             <div className="text-center">
               <p className="text-white font-medium">Loading Documents</p>
-              <p className="text-sm text-white/50 mt-1">Fetching your saved RAMS...</p>
+              <p className="text-sm text-white/70 mt-1">Fetching your saved RAMS...</p>
             </div>
           </div>
         </CardContent>
@@ -422,7 +422,7 @@ export const SavedRAMSLibrary = () => {
       {/* Document count and View All toggle */}
       {filteredDocuments.length > 12 && (
         <div className="flex items-center justify-between px-1">
-          <p className="text-sm text-white/50">
+          <p className="text-sm text-white/70">
             Showing {displayedDocuments.length} of {filteredDocuments.length} documents
             {hasActiveFilters && ` (filtered from ${documents.length} total)`}
           </p>
@@ -485,7 +485,7 @@ export const SavedRAMSLibrary = () => {
                     </div>
                     <div className="flex-1 min-w-0">
                       <h3 className="font-semibold text-white text-base truncate">{doc.project_name}</h3>
-                      <p className="text-sm text-white/50 truncate">{doc.location}</p>
+                      <p className="text-sm text-white/70 truncate">{doc.location}</p>
                     </div>
                   </div>
                 </div>
@@ -495,7 +495,7 @@ export const SavedRAMSLibrary = () => {
                   <Badge variant="outline" className={`${getStatusColor(doc.status)} capitalize`}>
                     {doc.status}
                   </Badge>
-                  <div className="flex items-center gap-1.5 text-white/40 text-xs">
+                  <div className="flex items-center gap-1.5 text-white/70 text-xs">
                     <Calendar className="h-3.5 w-3.5" />
                     <span>{format(new Date(doc.created_at), 'dd/MM/yy')}</span>
                   </div>
@@ -562,7 +562,7 @@ export const SavedRAMSLibrary = () => {
                 </CardTitle>
                 {displayedDocuments.length > 0 && (
                   <div className="flex items-center gap-3">
-                    <span className="text-sm text-white/50">Select All</span>
+                    <span className="text-sm text-white/70">Select All</span>
                     <Checkbox
                       checked={selectedDocIds.size === displayedDocuments.length && displayedDocuments.length > 0}
                       onCheckedChange={toggleSelectAll}
@@ -577,14 +577,14 @@ export const SavedRAMSLibrary = () => {
               <table className="w-full">
                 <thead className="bg-[#1a1a1a] border-b border-white/5">
                   <tr>
-                    <th className="px-4 py-3 text-center text-xs font-semibold text-white/40 w-12">
+                    <th className="px-4 py-3 text-center text-xs font-semibold text-white/70 w-12">
                       <span className="sr-only">Select</span>
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-white/40 uppercase tracking-wider">Document</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-white/40 uppercase tracking-wider">Location</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-white/40 uppercase tracking-wider">Status</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-white/40 uppercase tracking-wider">Created</th>
-                    <th className="px-4 py-3 text-right text-xs font-semibold text-white/40 uppercase tracking-wider">Actions</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-white/70 uppercase tracking-wider">Document</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-white/70 uppercase tracking-wider">Location</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-white/70 uppercase tracking-wider">Status</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-white/70 uppercase tracking-wider">Created</th>
+                    <th className="px-4 py-3 text-right text-xs font-semibold text-white/70 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/5">
@@ -611,13 +611,13 @@ export const SavedRAMSLibrary = () => {
                           <span className="font-medium text-sm text-white">{doc.project_name}</span>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-sm text-white/50">{doc.location}</td>
+                      <td className="px-4 py-3 text-sm text-white/70">{doc.location}</td>
                       <td className="px-4 py-3">
                         <Badge variant="outline" className={`${getStatusColor(doc.status)} capitalize`}>
                           {doc.status}
                         </Badge>
                       </td>
-                      <td className="px-4 py-3 text-sm text-white/50">
+                      <td className="px-4 py-3 text-sm text-white/70">
                         {format(new Date(doc.created_at), 'dd MMM yyyy')}
                       </td>
                       <td className="px-4 py-3">

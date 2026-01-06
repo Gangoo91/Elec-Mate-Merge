@@ -32,7 +32,7 @@ export function CourseCard({ title, description, icon: Icon, href, number, comin
       <h3 className={`text-elec-light font-semibold text-base mb-3 group-hover:text-elec-yellow transition-colors leading-tight flex-shrink-0 ${comingSoon ? 'opacity-70' : ''}`}>
         {title}
       </h3>
-      <p className={`text-muted-foreground leading-relaxed text-sm line-clamp-4 ${comingSoon ? 'opacity-70' : ''}`}>
+      <p className={`text-white leading-relaxed text-sm line-clamp-4 ${comingSoon ? 'opacity-70' : ''}`}>
         {description}
       </p>
     </div>

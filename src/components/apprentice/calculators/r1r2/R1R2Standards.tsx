@@ -60,12 +60,12 @@ const R1R2Standards = () => {
         as="section"
       >
         <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
-          <div className="bg-elec-dark/50 rounded p-4">
+          <div className="bg-white/10 rounded p-4">
             <h4 className="text-elec-yellow font-medium mb-3">BS7671 Testing Sequence</h4>
             <div className="grid gap-3 sm:grid-cols-2">
               <div>
                 <h5 className="text-sm font-medium text-elec-light mb-1">Test 1: Continuity</h5>
-                <ul className="text-xs space-y-0.5 text-muted-foreground">
+                <ul className="text-xs space-y-0.5 text-white">
                   <li>• Protective conductor continuity (R2)</li>
                   <li>• Ring final circuit continuity (R1, R2, Rn)</li>
                   <li>• R1+R2 at each point on radial circuits</li>
@@ -75,7 +75,7 @@ const R1R2Standards = () => {
               
               <div>
                 <h5 className="text-sm font-medium text-elec-light mb-1">When to Test</h5>
-                <ul className="text-xs space-y-0.5 text-muted-foreground">
+                <ul className="text-xs space-y-0.5 text-white">
                   <li>• Initial verification of new installations</li>
                   <li>• After alterations or additions</li>
                   <li>• Periodic inspection and testing</li>
@@ -102,7 +102,7 @@ const R1R2Standards = () => {
       >
         <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
           <div className="grid gap-4 lg:grid-cols-2">
-            <Card className="bg-elec-dark/30 border-elec-yellow/20">
+            <Card className="bg-white/10 border-elec-yellow/20">
               <CardHeader className="pb-2">
                 <CardTitle className="text-elec-light text-sm">Adiabatic Equation (543.1.3)</CardTitle>
               </CardHeader>
@@ -122,7 +122,7 @@ const R1R2Standards = () => {
               </CardContent>
             </Card>
             
-            <Card className="bg-elec-dark/30 border-elec-yellow/20">
+            <Card className="bg-white/10 border-elec-yellow/20">
               <CardHeader className="pb-2">
                 <CardTitle className="text-elec-light text-sm">Material K Factors (Table 54.4)</CardTitle>
               </CardHeader>
@@ -153,7 +153,7 @@ const R1R2Standards = () => {
         as="section"
       >
         <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
-          <div className="bg-elec-dark/50 rounded p-4">
+          <div className="bg-white/10 rounded p-4">
             <h4 className="text-elec-yellow font-medium mb-3">GS 38 Requirements</h4>
             <div className="space-y-3">
               <div className="bg-yellow-500/10 border border-yellow-500/30 rounded p-3">
@@ -193,7 +193,7 @@ const R1R2Standards = () => {
         as="section"
       >
         <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
-          <div className="bg-elec-dark/50 rounded p-4">
+          <div className="bg-white/10 rounded p-4">
             <h4 className="text-elec-yellow font-medium mb-3">BS EN 60228 Standard</h4>
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
@@ -255,7 +255,7 @@ const R1R2Standards = () => {
             
             <div className="space-y-3">
               <h4 className="text-elec-yellow font-medium">Test Records</h4>
-              <div className="bg-gray-500/10 border border-gray-500/30 rounded p-3">
+              <div className="bg-white/5 border border-white/30 rounded p-3">
                 <p className="text-xs mb-2"><strong>Required information:</strong></p>
                 <ul className="text-xs space-y-1">
                   <li>• Circuit identification</li>
@@ -307,8 +307,8 @@ const R1R2Standards = () => {
             </div>
           </div>
           
-          <div className="bg-gray-500/10 border border-gray-500/30 rounded p-3">
-            <p className="text-gray-300 text-xs">
+          <div className="bg-white/5 border border-white/30 rounded p-3">
+            <p className="text-white/80 text-xs">
               <strong>Note:</strong> This calculator and guidance is based on BS7671:2018+A3:2024. 
               Always refer to the latest edition of relevant standards and seek advice from 
               qualified persons for complex installations.

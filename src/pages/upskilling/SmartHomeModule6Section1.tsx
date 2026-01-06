@@ -16,13 +16,13 @@ import { SmartHomeModule6Section1Quiz } from '@/components/upskilling/smart-home
 
 const SmartHomeModule6Section1 = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
         <Link to="../smart-home-module-6">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 6
@@ -31,7 +31,7 @@ const SmartHomeModule6Section1 = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <CircleDot className="h-8 w-8 text-yellow-400" />
+            <CircleDot className="h-8 w-8 text-elec-yellow" />
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
               Hub Types (Home Assistant, SmartThings, Proprietary)
             </h1>
@@ -40,7 +40,7 @@ const SmartHomeModule6Section1 = () => {
             Understanding different smart home hub options and their applications
           </p>
           <div className="flex gap-4">
-            <Badge variant="secondary" className="bg-yellow-400 text-black">
+            <Badge variant="secondary" className="bg-elec-yellow text-black">
               Module 6.1
             </Badge>
             <Badge variant="outline" className="border-gray-600 text-gray-300">
@@ -74,7 +74,7 @@ const SmartHomeModule6Section1 = () => {
             <Link to="../smart-home-module-6">
               <Button 
                 variant="outline" 
-                className="bg-transparent border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black transition-all duration-200"
+                className="bg-transparent border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black transition-all duration-200"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Module 6
@@ -83,7 +83,7 @@ const SmartHomeModule6Section1 = () => {
             
             <Link to="../smart-home-module-6-section-2">
               <Button 
-                className="bg-yellow-400 text-black hover:bg-yellow-400 transition-all duration-200"
+                className="bg-elec-yellow text-black hover:bg-elec-yellow transition-all duration-200"
               >
                 Next: Voice Assistant Integration
                 <ArrowLeft className="ml-2 h-4 w-4 rotate-180" />

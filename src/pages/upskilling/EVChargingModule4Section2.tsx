@@ -1,677 +1,392 @@
-import { ArrowLeft, ArrowRight, AlertTriangle, BookOpen, Target, Zap, Shield, CheckCircle, Lightbulb, Eye } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { EVChargingModule4Section2Quiz } from '@/components/upskilling/quiz/EVChargingModule4Section2Quiz';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
+import useSEO from "@/hooks/useSEO";
+
+const quickCheckQuestions = [
+  {
+    id: "evcharging-m4s2-check1",
+    question: "What is the typical VMR trip voltage threshold for EV charging installations?",
+    options: ["25V", "35-50V", "100V", "230V"],
+    correctIndex: 1,
+    explanation: "VMR trip thresholds for EV charging are typically set at 35-50V. This is lower than the general 50V limit due to outdoor installation and higher exposure risks associated with EV charging equipment."
+  },
+  {
+    id: "evcharging-m4s2-check2",
+    question: "What is the recommended VMR trip time for safety-critical EV charging applications?",
+    options: ["5 seconds", "1 second", "40ms", "200ms"],
+    correctIndex: 2,
+    explanation: "A 40ms trip time is recommended for EV charging to provide fast disconnection for touch safety. This ensures rapid protection when dangerous voltages appear on exposed metalwork."
+  },
+  {
+    id: "evcharging-m4s2-check3",
+    question: "During automatic earth changeover, what happens when a PEN fault is detected?",
+    options: [
+      "System remains on TN-C-S with alarm only",
+      "Installation switches from TN-C-S to TT using local earth electrode",
+      "Power is disconnected permanently until manual reset",
+      "Only the affected charger is isolated"
+    ],
+    correctIndex: 1,
+    explanation: "Automatic earth changeover systems switch from TN-C-S to TT operation, activating a pre-installed local earth electrode. This maintains protection while isolating from the faulty PEN conductor."
+  }
+];
+
+const faqs = [
+  {
+    question: "Why is 50V the typical VMR trip setting?",
+    answer: "50V is considered the maximum safe touch voltage for general applications. For EV charging, lower settings (35-50V) are preferred due to outdoor installation and higher exposure risks from users touching the charger during operation."
+  },
+  {
+    question: "Can I use existing earth electrodes for PEN protection?",
+    answer: "Yes, but they must meet resistance requirements (<200Ω for 30mA RCD protection). Additional electrodes may be needed to achieve adequate performance for reliable earth changeover operation."
+  },
+  {
+    question: "How often should PEN protection be tested?",
+    answer: "Monthly automatic tests plus annual manual verification. More frequent testing may be required in high-risk environments or critical applications such as rapid charging hubs."
+  },
+  {
+    question: "Do I need PEN protection for every charge point?",
+    answer: "Not necessarily. A single VMR system can protect multiple charge points on the same supply, but consider selective protection for large installations to maintain partial operation during faults."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+  question: "A TN-C-S installation experiences an open PEN fault. What voltage could appear on exposed metalwork relative to true earth?",
+  options: [
+    "Maximum 50V due to RCD protection",
+    "Only a few volts from normal earth resistance",
+    "Up to 230V depending on load balance",
+    "No voltage as the system trips instantly"
+  ],
+  correctAnswer: 2,
+  explanation: "During an open PEN fault in a TN-C-S system, the installation earth can rise to dangerous potentials up to 230V relative to true earth, depending on the load balance. This occurs because conventional protective devices may not trip, and the fault can persist for extended periods."
+  }
+];
 
 const EVChargingModule4Section2 = () => {
-  useEffect(() => {
-    document.title = 'Open PEN Fault Protection Methods - EV Charging Module 4 Section 2';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Learn protection methods against open PEN conductor faults in EV charging installations. Covers detection systems, mitigation strategies, and BS 7671 compliance.');
-    }
-  }, []);
+  useSEO({
+    title: "Open PEN Fault Protection Methods | EV Charging Module 4.2",
+    description: "Learn protection methods against open PEN conductor faults in EV charging installations. Covers VMR systems, earth changeover, and BS 7671 compliance."
+  });
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
-        <Link to="../ev-charging-module-4">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 4
+            <Link to="../ev-charging-module-4">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 4
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            <AlertTriangle className="h-8 w-8 text-yellow-400" />
-            <Badge 
-              variant="secondary" 
-              className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold text-sm px-3 py-1 border-0"
-            >
-              Module 4 - Section 2
-            </Badge>
+        </div>
+      </div>
+
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Page Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 4.2</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Open PEN Fault Protection Methods
           </h1>
-          <p className="text-lg sm:text-xl text-gray-400 max-w-3xl">
-            Protecting against open PEN conductor faults in EV charging installations with advanced detection and mitigation systems
+          <p className="text-white/80">
+            Protecting against dangerous voltages from PEN conductor failures
           </p>
-        </div>
-      </header>
+        </header>
 
-      {/* Main Content */}
-      <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="space-y-4 sm:space-y-6">
-          
-          {/* Introduction */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <BookOpen className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Introduction</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                Open PEN (Protective Earth and Neutral) faults represent one of the most serious electrical hazards in EV charging installations using TN-C-S earthing systems. When the combined PEN conductor breaks or becomes disconnected, dangerous voltages can appear on exposed metalwork, creating severe shock and fire risks.
-              </p>
-              <p>
-                This section covers the detection, protection, and mitigation methods required to maintain safety during open PEN fault conditions. Understanding these protection systems is essential for designing compliant EV charging installations that meet BS 7671 requirements and ensure user safety.
-              </p>
-              <p>
-                Modern protection methods include voltage monitoring relays, current monitoring systems, and earth electrode switching arrangements that provide comprehensive protection against open PEN conductor failures whilst maintaining operational continuity.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Learning Outcomes */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Target className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Learning Outcomes</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <p className="mb-4">Upon completion of this section, you will be able to:</p>
-              <ul className="space-y-2 list-disc list-inside">
-                <li>Identify the causes and consequences of open PEN conductor faults</li>
-                <li>Specify appropriate protection devices for open PEN fault detection</li>
-                <li>Design voltage monitoring systems for EV charging installations</li>
-                <li>Implement current-based protection methods and earth switching systems</li>
-                <li>Apply BS 7671 requirements for PEN conductor protection</li>
-                <li>Coordinate protection systems with existing earthing arrangements</li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          {/* Understanding Open PEN Faults */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-red-400" />
-                Understanding Open PEN Faults
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-semibold text-red-400 mb-2">Fault Mechanisms and Causes</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Overhead line conductor failure due to weather or vehicle impact</li>
-                    <li>Underground cable damage from excavation or corrosion</li>
-                    <li>Joint failure in distribution networks or service connections</li>
-                    <li>Deliberate disconnection during network maintenance</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold text-red-400 mb-2">Voltage Rise Consequences</h4>
-                  <div className="bg-gray-800 p-4 rounded-lg space-y-3">
-                    <h5 className="font-medium text-red-300 mb-2">Voltage Distribution During Open PEN</h5>
-                    <div className="text-sm space-y-2">
-                      <p><strong>Normal Operation:</strong> Installation earth at 0V (referenced to supply neutral)</p>
-                      <p><strong>Open PEN Condition:</strong> Installation earth rises to dangerous potentials</p>
-                      <p><strong>Worst Case:</strong> Up to 230V on exposed metalwork relative to true earth</p>
-                      <p><strong>Load Dependent:</strong> Voltage rise depends on installation load balance</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-red-400 mb-2">Safety Implications</h4>
-                  <div className="overflow-x-auto">
-                    <table className="w-full border-collapse border border-gray-600 text-sm">
-                      <thead>
-                        <tr className="bg-gray-800">
-                          <th className="border border-gray-600 p-2 text-left">Hazard Type</th>
-                          <th className="border border-gray-600 p-2 text-left">Risk Level</th>
-                          <th className="border border-gray-600 p-2 text-left">Potential Consequences</th>
-                          <th className="border border-gray-600 p-2 text-left">Protection Required</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td className="border border-gray-600 p-2">Electric shock</td>
-                          <td className="border border-gray-600 p-2 text-red-400">Critical</td>
-                          <td className="border border-gray-600 p-2">Fatal injury from touch voltage</td>
-                          <td className="border border-gray-600 p-2">Voltage monitoring</td>
-                        </tr>
-                        <tr>
-                          <td className="border border-gray-600 p-2">Equipment damage</td>
-                          <td className="border border-gray-600 p-2 text-orange-400">High</td>
-                          <td className="border border-gray-600 p-2">Insulation failure, component damage</td>
-                          <td className="border border-gray-600 p-2">Fast disconnection</td>
-                        </tr>
-                        <tr>
-                          <td className="border border-gray-600 p-2">Fire risk</td>
-                          <td className="border border-gray-600 p-2 text-orange-400">High</td>
-                          <td className="border border-gray-600 p-2">Arcing, overheating, ignition</td>
-                          <td className="border border-gray-600 p-2">Current monitoring</td>
-                        </tr>
-                        <tr>
-                          <td className="border border-gray-600 p-2">Vehicle damage</td>
-                          <td className="border border-gray-600 p-2 text-yellow-400">Medium</td>
-                          <td className="border border-gray-600 p-2">Battery system damage</td>
-                          <td className="border border-gray-600 p-2">Isolation systems</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-red-400 mb-2">Detection Challenges</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Fault may not trip conventional protective devices</li>
-                    <li>Installation continues to operate normally in many cases</li>
-                    <li>Dangerous voltages may persist for extended periods</li>
-                    <li>Users may be unaware of the hazardous condition</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Voltage Monitoring Protection */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Zap className="h-5 w-5 text-yellow-400" />
-                Voltage Monitoring Protection Systems
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-semibold text-yellow-400 mb-2">Voltage Monitoring Relay (VMR) Operation</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Continuous monitoring of neutral-earth voltage difference</li>
-                    <li>Trip threshold typically set at 50V (adjustable 25-70V)</li>
-                    <li>Fast response time: typically &lt;40ms for safety critical applications</li>
-                    <li>Automatic reconnection when fault clears (with time delay)</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold text-yellow-400 mb-2">VMR System Components</h4>
-                  <div className="space-y-3">
-                    <div className="bg-gray-800 p-3 rounded">
-                      <h5 className="font-medium text-blue-300 mb-2">Monitoring Circuit</h5>
-                      <ul className="text-sm space-y-1">
-                        <li>• High impedance voltage measurement (typically 1MΩ)</li>
-                        <li>• Isolated measurement to prevent nuisance tripping</li>
-                        <li>• Built-in filtering for transient immunity</li>
-                        <li>• LED indication for status monitoring</li>
-                      </ul>
-                    </div>
-                    <div className="bg-gray-800 p-3 rounded">
-                      <h5 className="font-medium text-blue-300 mb-2">Switching Circuit</h5>
-                      <ul className="text-sm space-y-1">
-                        <li>• Contactor control for main circuit isolation</li>
-                        <li>• Earth changeover switching capability</li>
-                        <li>• Auxiliary contacts for alarm and monitoring</li>
-                        <li>• Manual override and test facilities</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-yellow-400 mb-2">Installation Requirements</h4>
-                  <div className="overflow-x-auto">
-                    <table className="w-full border-collapse border border-gray-600 text-sm">
-                      <thead>
-                        <tr className="bg-gray-800">
-                          <th className="border border-gray-600 p-2 text-left">Parameter</th>
-                          <th className="border border-gray-600 p-2 text-left">Standard Setting</th>
-                          <th className="border border-gray-600 p-2 text-left">EV Charging Setting</th>
-                          <th className="border border-gray-600 p-2 text-left">Rationale</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td className="border border-gray-600 p-2">Trip voltage</td>
-                          <td className="border border-gray-600 p-2">50V</td>
-                          <td className="border border-gray-600 p-2">35-50V</td>
-                          <td className="border border-gray-600 p-2">Enhanced safety for outdoor use</td>
-                        </tr>
-                        <tr>
-                          <td className="border border-gray-600 p-2">Trip time</td>
-                          <td className="border border-gray-600 p-2">1 second</td>
-                          <td className="border border-gray-600 p-2">40ms</td>
-                          <td className="border border-gray-600 p-2">Fast disconnection for touch safety</td>
-                        </tr>
-                        <tr>
-                          <td className="border border-gray-600 p-2">Reconnect delay</td>
-                          <td className="border border-gray-600 p-2">30 seconds</td>
-                          <td className="border border-gray-600 p-2">3 minutes</td>
-                          <td className="border border-gray-600 p-2">Prevent cycling on intermittent faults</td>
-                        </tr>
-                        <tr>
-                          <td className="border border-gray-600 p-2">Test facility</td>
-                          <td className="border border-gray-600 p-2">Manual only</td>
-                          <td className="border border-gray-600 p-2">Automatic + Manual</td>
-                          <td className="border border-gray-600 p-2">Regular system verification</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-yellow-400 mb-2">Connection and Wiring</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Sensing connections to neutral and earth terminals in main panel</li>
-                    <li>Separate control circuit isolated from main power circuits</li>
-                    <li>Direct connection to earth electrode where fitted</li>
-                    <li>Integration with charge point control and safety systems</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Current-Based Protection */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Shield className="h-5 w-5 text-green-400" />
-                Current-Based Protection Methods
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-semibold text-green-400 mb-2">Neutral Current Monitoring</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Current transformer monitoring of neutral conductor</li>
-                    <li>Detection of abnormal neutral current flow patterns</li>
-                    <li>Discrimination between normal load imbalance and fault conditions</li>
-                    <li>Integration with smart charging systems for load management</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold text-green-400 mb-2">Earth Fault Current Detection</h4>
-                  <div className="space-y-3">
-                    <div className="bg-gray-800 p-3 rounded">
-                      <h5 className="font-medium text-green-300 mb-2">Residual Current Monitoring</h5>
-                      <ul className="text-sm space-y-1">
-                        <li>• Core balance current transformers on main supply</li>
-                        <li>• Sensitive detection of earth fault currents (&gt;10mA)</li>
-                        <li>• Directional discrimination for selective protection</li>
-                        <li>• Time-graded coordination with downstream RCDs</li>
-                      </ul>
-                    </div>
-                    <div className="bg-gray-800 p-3 rounded">
-                      <h5 className="font-medium text-green-300 mb-2">Active Current Monitoring</h5>
-                      <ul className="text-sm space-y-1">
-                        <li>• Continuous measurement of earth electrode current</li>
-                        <li>• Detection of abnormal earth current flow</li>
-                        <li>• Alarm and protection trip coordination</li>
-                        <li>• Data logging for fault analysis and reporting</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-green-400 mb-2">Protection Coordination</h4>
-                  <div className="overflow-x-auto">
-                    <table className="w-full border-collapse border border-gray-600 text-sm">
-                      <thead>
-                        <tr className="bg-gray-800">
-                          <th className="border border-gray-600 p-2 text-left">Protection Level</th>
-                          <th className="border border-gray-600 p-2 text-left">Detection Method</th>
-                          <th className="border border-gray-600 p-2 text-left">Trip Time</th>
-                          <th className="border border-gray-600 p-2 text-left">Application</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td className="border border-gray-600 p-2">Primary (VMR)</td>
-                          <td className="border border-gray-600 p-2">Voltage monitoring</td>
-                          <td className="border border-gray-600 p-2">40ms</td>
-                          <td className="border border-gray-600 p-2">Immediate safety protection</td>
-                        </tr>
-                        <tr>
-                          <td className="border border-gray-600 p-2">Secondary (Current)</td>
-                          <td className="border border-gray-600 p-2">Neutral current</td>
-                          <td className="border border-gray-600 p-2">200ms</td>
-                          <td className="border border-gray-600 p-2">Backup voltage protection</td>
-                        </tr>
-                        <tr>
-                          <td className="border border-gray-600 p-2">Tertiary (RCD)</td>
-                          <td className="border border-gray-600 p-2">Earth leakage</td>
-                          <td className="border border-gray-600 p-2">300ms</td>
-                          <td className="border border-gray-600 p-2">Final protection level</td>
-                        </tr>
-                        <tr>
-                          <td className="border border-gray-600 p-2">Alarm only</td>
-                          <td className="border border-gray-600 p-2">Earth current trend</td>
-                          <td className="border border-gray-600 p-2">N/A</td>
-                          <td className="border border-gray-600 p-2">Preventive maintenance</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-green-400 mb-2">Implementation Considerations</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Coordination with charge point communication systems</li>
-                    <li>Integration with building management and monitoring systems</li>
-                    <li>Remote monitoring and diagnostic capabilities</li>
-                    <li>Maintenance access and test procedures</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Real-World Examples */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Eye className="h-5 w-5 text-cyan-400" />
-                Real-World Case Studies
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <div className="space-y-6">
-                <div className="border-l-4 border-cyan-400 pl-4 bg-gray-800 p-4 rounded-r">
-                  <h4 className="font-semibold text-cyan-400 mb-2">Case Study 1: Motorway Service Station</h4>
-                  <div className="space-y-3">
-                    <p><strong>Situation:</strong> 22kW rapid chargers installed at remote motorway services with unreliable TN-C-S supply</p>
-                    <p><strong>Challenge:</strong> Frequent PEN conductor issues due to overhead line exposure to weather</p>
-                    <p><strong>Solution:</strong> Implemented automatic earth changeover with 15Ω earth electrode and VMR set to 35V/40ms</p>
-                    <p><strong>Outcome:</strong> Zero safety incidents, 99.8% uptime maintained during network faults</p>
-                  </div>
-                </div>
-                
-                <div className="border-l-4 border-cyan-400 pl-4 bg-gray-800 p-4 rounded-r">
-                  <h4 className="font-semibold text-cyan-400 mb-2">Case Study 2: Urban Car Park</h4>
-                  <div className="space-y-3">
-                    <p><strong>Situation:</strong> Multiple 7kW charge points in underground car park</p>
-                    <p><strong>Challenge:</strong> Limited space for earth electrodes, high earth resistance</p>
-                    <p><strong>Solution:</strong> Current-based protection with smart load management to reduce neutral current</p>
-                    <p><strong>Outcome:</strong> Successful detection of two PEN faults, prevented equipment damage</p>
-                  </div>
-                </div>
-                
-                <div className="border-l-4 border-cyan-400 pl-4 bg-gray-800 p-4 rounded-r">
-                  <h4 className="font-semibold text-cyan-400 mb-2">Case Study 3: Industrial Site</h4>
-                  <div className="space-y-3">
-                    <p><strong>Situation:</strong> Fleet charging for delivery vehicles, high-power DC chargers</p>
-                    <p><strong>Challenge:</strong> Integration with existing site earthing system</p>
-                    <p><strong>Solution:</strong> Coordinated protection with existing systems, selective VMR settings</p>
-                    <p><strong>Outcome:</strong> Seamless integration, no interference with plant operations</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* FAQs Section */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Lightbulb className="h-5 w-5 text-amber-400" />
-                Frequently Asked Questions
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-4">
-                <div className="border border-gray-600 rounded-lg p-4">
-                  <h4 className="font-semibold text-amber-400 mb-2">Q: Why is 50V the typical VMR trip setting?</h4>
-                  <p className="text-sm">A: 50V is considered the maximum safe touch voltage for general applications. For EV charging, lower settings (35-50V) are preferred due to outdoor installation and higher exposure risks.</p>
-                </div>
-                
-                <div className="border border-gray-600 rounded-lg p-4">
-                  <h4 className="font-semibold text-amber-400 mb-2">Q: Can I use existing earth electrodes for PEN protection?</h4>
-                  <p className="text-sm">A: Yes, but they must meet resistance requirements (&lt;200Ω for 30mA RCD protection). Additional electrodes may be needed to achieve adequate performance.</p>
-                </div>
-                
-                <div className="border border-gray-600 rounded-lg p-4">
-                  <h4 className="font-semibold text-amber-400 mb-2">Q: What happens during VMR testing?</h4>
-                  <p className="text-sm">A: The VMR should trip within the set time when test voltage is applied. Manual and automatic test functions verify correct operation without affecting the installation.</p>
-                </div>
-                
-                <div className="border border-gray-600 rounded-lg p-4">
-                  <h4 className="font-semibold text-amber-400 mb-2">Q: How often should PEN protection be tested?</h4>
-                  <p className="text-sm">A: Monthly automatic tests plus annual manual verification. More frequent testing may be required in high-risk environments or critical applications.</p>
-                </div>
-                
-                <div className="border border-gray-600 rounded-lg p-4">
-                  <h4 className="font-semibold text-amber-400 mb-2">Q: Do I need PEN protection for every charge point?</h4>
-                  <p className="text-sm">A: Not necessarily. A single system can protect multiple charge points on the same supply, but consider selective protection for large installations.</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Earth Switching Systems */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-orange-400" />
-                Earth Switching and Changeover Systems
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-semibold text-orange-400 mb-2">Automatic Earth Changeover</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Switching from TN-C-S to TT system during PEN fault</li>
-                    <li>Pre-installed earth electrode activated automatically</li>
-                    <li>Contactor-based switching with position indication</li>
-                    <li>Manual override capability for testing and maintenance</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold text-purple-400 mb-2">System Architecture</h4>
-                  <div className="space-y-3">
-                    <div className="bg-gray-800 p-4 rounded">
-                      <h5 className="font-medium text-purple-300 mb-2">Normal Operation (TN-C-S Mode)</h5>
-                      <div className="text-sm space-y-2">
-                        <p><strong>Earth Connection:</strong> Installation earth connected to DNO PEN</p>
-                        <p><strong>Protection:</strong> Standard TN system protection (MCB + RCD)</p>
-                        <p><strong>Earth Electrode:</strong> Isolated and monitored</p>
-                        <p><strong>Fault Loop:</strong> Low impedance through DNO network</p>
-                      </div>
-                    </div>
-                    
-                    <div className="bg-gray-800 p-4 rounded">
-                      <h5 className="font-medium text-purple-300 mb-2">Fault Operation (TT Mode)</h5>
-                      <div className="text-sm space-y-2">
-                        <p><strong>Earth Connection:</strong> Switched to local earth electrode</p>
-                        <p><strong>Protection:</strong> RCD protection mandatory (≤200Ω electrode)</p>
-                        <p><strong>PEN Isolation:</strong> Complete isolation from faulty PEN</p>
-                        <p><strong>Fault Loop:</strong> High impedance requiring RCD operation</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-purple-400 mb-2">Switching Sequence and Timing</h4>
-                  <div className="overflow-x-auto">
-                    <table className="w-full border-collapse border border-gray-600 text-sm">
-                      <thead>
-                        <tr className="bg-gray-800">
-                          <th className="border border-gray-600 p-2 text-left">Time</th>
-                          <th className="border border-gray-600 p-2 text-left">Event</th>
-                          <th className="border border-gray-600 p-2 text-left">Action</th>
-                          <th className="border border-gray-600 p-2 text-left">Status</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td className="border border-gray-600 p-2">T+0ms</td>
-                          <td className="border border-gray-600 p-2">PEN fault detected</td>
-                          <td className="border border-gray-600 p-2">VMR initiates trip sequence</td>
-                          <td className="border border-gray-600 p-2">System armed</td>
-                        </tr>
-                        <tr>
-                          <td className="border border-gray-600 p-2">T+40ms</td>
-                          <td className="border border-gray-600 p-2">Main contactor opens</td>
-                          <td className="border border-gray-600 p-2">Load disconnection</td>
-                          <td className="border border-gray-600 p-2">Installation isolated</td>
-                        </tr>
-                        <tr>
-                          <td className="border border-gray-600 p-2">T+100ms</td>
-                          <td className="border border-gray-600 p-2">Earth changeover</td>
-                          <td className="border border-gray-600 p-2">Switch to TT electrode</td>
-                          <td className="border border-gray-600 p-2">TT mode active</td>
-                        </tr>
-                        <tr>
-                          <td className="border border-gray-600 p-2">T+200ms</td>
-                          <td className="border border-gray-600 p-2">System verification</td>
-                          <td className="border border-gray-600 p-2">Check earth integrity</td>
-                          <td className="border border-gray-600 p-2">Ready for reconnection</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-purple-400 mb-2">Design Requirements</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Make-before-break earth switching to prevent momentary isolation</li>
-                    <li>Mechanical interlocking to prevent simultaneous connection</li>
-                    <li>Fail-safe operation with battery backup for control circuits</li>
-                    <li>Position indication and remote monitoring capabilities</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Practical Implementation */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Lightbulb className="h-5 w-5 text-orange-400" />
-                Practical Implementation Examples
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-semibold text-orange-400 mb-3">Example 1: Domestic Driveway Installation</h4>
-                  <div className="bg-gray-800 p-4 rounded-lg space-y-3">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <h5 className="font-medium text-orange-300 mb-2">System Configuration</h5>
-                        <ul className="text-sm space-y-1">
-                          <li>• 7kW home charge point (32A, single phase)</li>
-                          <li>• Existing TN-C-S supply with PME restrictions</li>
-                          <li>• VMR protection with earth changeover</li>
-                          <li>• 1.2m earth rod with 45Ω resistance</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="font-medium text-orange-300 mb-2">Protection Settings</h5>
-                        <ul className="text-sm space-y-1">
-                          <li>• VMR trip: 50V, 1-second delay</li>
-                          <li>• RCD: 30mA Type A for socket protection</li>
-                          <li>• MCB: 32A Type B for overcurrent</li>
-                          <li>• Earth switching: Automatic with manual override</li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div>
-                      <h5 className="font-medium text-orange-300 mb-2">Cost-Benefit Analysis</h5>
-                      <p className="text-sm">
-                        Additional cost of £800-1,200 for VMR and earth electrode system vs. £25,000+ liability 
-                        exposure and potential safety issues. ROI achieved through insurance compliance and enhanced safety.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-orange-400 mb-3">Example 2: Commercial Car Park (50 Charging Points)</h4>
-                  <div className="bg-gray-800 p-4 rounded-lg space-y-3">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <h5 className="font-medium text-orange-300 mb-2">System Architecture</h5>
-                        <ul className="text-sm space-y-1">
-                          <li>• Zone-based protection with 5 VMR units</li>
-                          <li>• Central monitoring and control system</li>
-                          <li>• Integrated earth electrode network</li>
-                          <li>• Load management coordination</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="font-medium text-orange-300 mb-2">Advanced Features</h5>
-                        <ul className="text-sm space-y-1">
-                          <li>• Predictive fault detection algorithms</li>
-                          <li>• Remote diagnostics and maintenance alerts</li>
-                          <li>• Integration with building management system</li>
-                          <li>• Automatic fault reporting to DNO</li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div>
-                      <h5 className="font-medium text-orange-300 mb-2">Protection Coordination</h5>
-                      <p className="text-sm">
-                        Selective protection allows unaffected zones to continue operation during localised PEN faults. 
-                        Fast fault clearing (&lt;100ms) minimises disruption and maintains service availability.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-orange-400 mb-2">Testing and Maintenance</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Monthly automatic self-test sequences for VMR systems</li>
-                    <li>Annual earth electrode resistance testing (BS 7430)</li>
-                    <li>Coordination testing with upstream and downstream protection</li>
-                    <li>Documentation and certification requirements</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Section */}
-          <EVChargingModule4Section2Quiz />
-
-          {/* Navigation */}
-          <div className="flex justify-between items-center pt-8">
-            <Link to="../ev-charging-module-4-section-1">
-              <Button variant="outline" className="bg-card border-gray-600 text-white hover:bg-gray-700">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="../ev-charging-module-4-section-3">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Open PEN:</strong> Can cause up to 230V on metalwork</li>
+              <li><strong>VMR:</strong> Detects voltage rise, trips within 40ms</li>
+              <li><strong>Changeover:</strong> Switches to TT system automatically</li>
+            </ul>
           </div>
-
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> VMR unit with voltage display, earth electrode</li>
+              <li><strong>Use:</strong> Essential for outdoor TN-C-S EV charging</li>
+            </ul>
+          </div>
         </div>
-      </main>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Identify causes and consequences of open PEN faults",
+              "Specify VMR protection devices for EV charging",
+              "Design voltage monitoring systems",
+              "Implement current-based protection methods",
+              "Apply BS 7671 PEN conductor protection requirements",
+              "Coordinate protection with existing earthing"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Understanding Open PEN Faults
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Open PEN (Protective Earth and Neutral) faults represent one of the most serious
+              electrical hazards in TN-C-S systems. When the combined PEN conductor breaks, dangerous
+              voltages can appear on exposed metalwork, creating severe shock and fire risks.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Fault Causes</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Overhead lines:</strong> Weather or vehicle impact</li>
+                  <li><strong>Underground:</strong> Excavation or corrosion damage</li>
+                  <li><strong>Joints:</strong> Distribution network failures</li>
+                  <li><strong>Maintenance:</strong> Deliberate disconnection</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Voltage Consequences</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Normal:</strong> Earth at 0V (supply neutral)</li>
+                  <li><strong>Open PEN:</strong> Earth rises to dangerous levels</li>
+                  <li><strong>Worst case:</strong> Up to 230V on metalwork</li>
+                  <li><strong>Load dependent:</strong> Varies with balance</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-red-400/80 mb-2">Detection Challenges:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Fault may not trip conventional protective devices</li>
+                <li>Installation continues to operate normally in many cases</li>
+                <li>Dangerous voltages may persist for extended periods</li>
+                <li>Users may be unaware of the hazardous condition</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Voltage Monitoring Relay (VMR) Protection
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              VMR systems continuously monitor the neutral-earth voltage difference and disconnect
+              the installation when dangerous voltages are detected. For EV charging, fast response
+              times are essential.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">VMR Components</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Monitoring circuit:</strong> High impedance (1MΩ)</li>
+                  <li><strong>Isolation:</strong> Prevents nuisance tripping</li>
+                  <li><strong>Filtering:</strong> Transient immunity built-in</li>
+                  <li><strong>Indication:</strong> LED status monitoring</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Switching Circuit</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Contactor:</strong> Main circuit isolation</li>
+                  <li><strong>Changeover:</strong> Earth switching capability</li>
+                  <li><strong>Auxiliary:</strong> Alarm and monitoring contacts</li>
+                  <li><strong>Override:</strong> Manual test facilities</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">EV Charging VMR Settings:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Trip voltage:</strong> 35-50V (enhanced for outdoor use)</li>
+                <li><strong>Trip time:</strong> 40ms (fast disconnection)</li>
+                <li><strong>Reconnect delay:</strong> 3 minutes (prevent cycling)</li>
+                <li><strong>Test facility:</strong> Automatic + manual verification</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 3 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Earth Changeover Systems
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Automatic earth changeover systems switch from TN-C-S to TT operation during a PEN
+              fault, maintaining protection using a pre-installed local earth electrode.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Normal Operation (TN-C-S)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Earth:</strong> Connected to DNO PEN</li>
+                  <li><strong>Protection:</strong> Standard MCB + RCD</li>
+                  <li><strong>Electrode:</strong> Isolated and monitored</li>
+                  <li><strong>Fault loop:</strong> Low impedance via DNO</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Fault Operation (TT)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Earth:</strong> Switched to local electrode</li>
+                  <li><strong>Protection:</strong> RCD mandatory (≤200Ω)</li>
+                  <li><strong>PEN:</strong> Complete isolation from fault</li>
+                  <li><strong>Fault loop:</strong> High impedance, RCD required</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Switching Sequence:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>T+0ms:</strong> PEN fault detected, VMR initiates trip</li>
+                <li><strong>T+40ms:</strong> Main contactor opens, load disconnected</li>
+                <li><strong>T+100ms:</strong> Earth changeover to TT electrode</li>
+                <li><strong>T+200ms:</strong> System verification, ready for reconnection</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Design Requirements</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Make-before-break earth switching prevents momentary isolation</li>
+                <li>Mechanical interlocking prevents simultaneous connection</li>
+                <li>Fail-safe operation with battery backup for control circuits</li>
+                <li>Position indication and remote monitoring capabilities</li>
+                <li>Earth electrode: typically 15-45Ω for reliable RCD operation</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Poor earth electrode:</strong> — Must achieve required resistance</li>
+                <li><strong>Slow trip time:</strong> — 40ms maximum for EV charging safety</li>
+                <li><strong>No testing:</strong> — Monthly automatic + annual manual required</li>
+                <li><strong>Missing documentation:</strong> — Record all settings and test results</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quick Reference */}
+        <div className="mt-6 p-5 rounded-lg bg-transparent">
+          <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+            <div>
+              <p className="font-medium text-white mb-1">VMR Settings (EV Charging)</p>
+              <ul className="space-y-0.5">
+                <li>Trip voltage: 35-50V</li>
+                <li>Trip time: 40ms</li>
+                <li>Reconnect delay: 3 minutes</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-medium text-white mb-1">Earth Electrode Requirements</p>
+              <ul className="space-y-0.5">
+                <li>Resistance: &lt;200Ω (ideally &lt;100Ω)</li>
+                <li>Testing: Annual verification</li>
+                <li>Type: Typically 1.2-2.4m rod</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Quiz Section */}
+        <section className="mb-10 mt-12">
+          <SingleQuestionQuiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-4-section-1">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-4-section-3">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

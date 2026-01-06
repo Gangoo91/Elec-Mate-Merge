@@ -53,7 +53,7 @@ const OutdoorOverviewCards = () => {
       {/* Quick Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {overviewStats.map((stat, index) => (
-          <Card key={index} className="border-elec-yellow/30 bg-elec-gray">
+          <Card key={index} className="border-elec-yellow/30 bg-white/5">
             <CardContent className="p-4">
               <div className="flex items-center gap-2 mb-2">
                 <stat.icon className="h-4 w-4 text-elec-yellow" />
@@ -66,7 +66,7 @@ const OutdoorOverviewCards = () => {
       </div>
 
       {/* Project Types Guide */}
-      <Card className="border-blue-500/30 bg-elec-gray">
+      <Card className="border-blue-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <MapPin className="h-6 w-6 text-blue-400" />
@@ -100,7 +100,7 @@ const OutdoorOverviewCards = () => {
       </Card>
 
       {/* Weather & Environmental Factors */}
-      <Card className="border-purple-500/30 bg-elec-gray">
+      <Card className="border-purple-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Cloud className="h-6 w-6 text-purple-400" />
@@ -132,7 +132,7 @@ const OutdoorOverviewCards = () => {
       </Card>
 
       {/* Installation Challenges */}
-      <Card className="border-orange-500/30 bg-elec-gray">
+      <Card className="border-orange-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <AlertTriangle className="h-6 w-6 text-orange-400" />
@@ -154,7 +154,7 @@ const OutdoorOverviewCards = () => {
       </Card>
 
       {/* Seasonal Considerations */}
-      <Card className="border-cyan-500/30 bg-elec-gray">
+      <Card className="border-cyan-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Sun className="h-6 w-6 text-cyan-400" />
@@ -192,7 +192,7 @@ const OutdoorOverviewCards = () => {
       </Card>
 
       {/* Pre-Installation Checklist */}
-      <Card className="border-green-500/30 bg-elec-gray">
+      <Card className="border-green-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <CheckCircle className="h-6 w-6 text-green-400" />

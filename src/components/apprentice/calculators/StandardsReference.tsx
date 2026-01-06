@@ -17,7 +17,7 @@ const StandardsReference = () => {
     if (code.includes('60898')) return <Zap className="h-5 w-5 text-yellow-500" />;
     if (code.includes('61008')) return <CheckCircle className="h-5 w-5 text-green-500" />;
     if (code.includes('60439')) return <Settings className="h-5 w-5 text-blue-500" />;
-    return <FileText className="h-5 w-5 text-muted-foreground" />;
+    return <FileText className="h-5 w-5 text-white" />;
   };
 
   return (
@@ -39,11 +39,11 @@ const StandardsReference = () => {
                 <MobileAccordionItem key={index} value={`standard-${index}`}>
                    <MobileAccordionTrigger 
                     icon={getStandardIcon(standard.code)}
-                    className="text-left bg-elec-gray hover:bg-elec-gray/80"
+                    className="text-left bg-white/5 hover:bg-white/5"
                   >
                     <div className="space-y-1">
                       <div className="font-medium">{standard.code}</div>
-                      <div className="text-sm text-muted-foreground">{standard.description}</div>
+                      <div className="text-sm text-white">{standard.description}</div>
                     </div>
                   </MobileAccordionTrigger>
                   <MobileAccordionContent>

@@ -61,7 +61,7 @@ const getSeverityIcon = (code: string) => {
     case 'C2': return <AlertTriangle className="h-4 w-4 text-orange-500" />;
     case 'C3': return <Info className="h-4 w-4 text-blue-500" />;
     case 'FI': return <Search className="h-4 w-4 text-purple-500" />;
-    case 'N/A': return <Minus className="h-4 w-4 text-gray-500" />;
+    case 'N/A': return <Minus className="h-4 w-4 text-white/60" />;
     default: return <AlertTriangle className="h-4 w-4 text-yellow-500" />;
   }
 };
@@ -72,7 +72,7 @@ const getBorderColor = (code: string) => {
     case 'C2': return 'border-l-orange-500';
     case 'C3': return 'border-l-blue-500';
     case 'FI': return 'border-l-purple-500';
-    case 'N/A': return 'border-l-gray-500';
+    case 'N/A': return 'border-l-white/60';
     default: return 'border-l-yellow-500';
   }
 };

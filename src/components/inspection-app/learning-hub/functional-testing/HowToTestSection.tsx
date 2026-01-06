@@ -213,7 +213,7 @@ const HowToTestSection = () => {
           </div>
 
           {/* Test Documentation */}
-          <div className="bg-gray-500/10 border border-gray-500/20 rounded-lg p-4">
+          <div className="bg-white/5 border border-white/20 rounded-lg p-4">
             <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
               <Clock className="h-4 w-4" />
               Documentation Requirements

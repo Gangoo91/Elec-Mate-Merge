@@ -1,625 +1,421 @@
-import { ArrowLeft, Car, Zap, Info, CheckCircle, AlertTriangle, Settings, Battery, Gauge, Clock } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
+import useSEO from "@/hooks/useSEO";
+
+const quickCheckQuestions = [
+  {
+    id: "evcharging-m2s5-check1",
+    question: "What charging speed can a Tesla Model 3 achieve on a European Supercharger V3?",
+    options: ["7kW AC only", "Up to 150kW DC", "Up to 250kW DC", "350kW DC"],
+    correctIndex: 2,
+    explanation: "Tesla Model 3 can achieve up to 250kW on Supercharger V3 stations in Europe (using CCS2 connector). Peak rates depend on battery temperature, state of charge, and station capability."
+  },
+  {
+    id: "evcharging-m2s5-check2",
+    question: "Why might a BMW iX achieve faster home charging than a Nissan Leaf?",
+    options: ["Larger battery capacity", "Three-phase 22kW AC capability vs single-phase 6.6kW", "Better thermal management", "More efficient motor"],
+    correctIndex: 1,
+    explanation: "The BMW iX supports 22kW three-phase AC charging, while the Nissan Leaf is typically limited to 6.6kW single-phase. This means the iX can charge over 3× faster on a suitable AC supply."
+  },
+  {
+    id: "evcharging-m2s5-check3",
+    question: "Which connector standard is used by all Tesla vehicles sold in Europe since 2019?",
+    options: ["Proprietary Tesla connector", "Type 1 SAE J1772", "CCS2 (Type 2 Combo)", "CHAdeMO"],
+    correctIndex: 2,
+    explanation: "Since 2019, all Tesla vehicles sold in Europe use CCS2 (Combined Charging System Type 2) for DC charging and Type 2 for AC charging, complying with EU standardisation requirements."
+  }
+];
+
+const faqs = [
+  {
+    question: "Can I install a charger before knowing what EV the customer will buy?",
+    answer: "Yes - install a socketed Type 2 outlet for maximum flexibility. This works with all European EVs for AC charging. For DC capability, you'd need to know the vehicle (CCS2 is standard for most new EVs in Europe)."
+  },
+  {
+    question: "Why do some vehicles charge slower than their maximum rated speed?",
+    answer: "Actual charging speed depends on: battery temperature (cold batteries charge slower), state of charge (speed reduces above 80%), charger capability, and the vehicle's Battery Management System protecting battery health."
+  },
+  {
+    question: "Should I recommend a three-phase supply upgrade for home charging?",
+    answer: "Only if the customer has a vehicle that supports three-phase charging (BMW iX, Audi e-tron, etc.) and regularly needs faster home charging. Many EVs only support single-phase AC, making the upgrade unnecessary."
+  },
+  {
+    question: "What about older EVs with CHAdeMO - are they still supported?",
+    answer: "CHAdeMO infrastructure is declining but still available. Public rapid chargers often have both CCS and CHAdeMO. For home installation, focus on AC charging (Type 2) which all CHAdeMO vehicles support."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+  question: "A customer has a BMW iX and wants the fastest possible home charging. What would you recommend?",
+  options: [
+    "7kW single-phase tethered charger",
+    "22kW three-phase Type 2 installation",
+    "DC rapid charger installation",
+    "Standard 13A plug charging"
+  ],
+  correctAnswer: 1,
+  explanation: "The BMW iX supports 22kW three-phase AC charging. A 22kW Type 2 installation maximises the vehicle's AC charging capability. DC rapid chargers are impractical for home use (cost, supply requirements), and slower options don't utilise the vehicle's full capability."
+  }
+];
 
 const EVChargingModule2Section5 = () => {
+  useSEO({
+    title: "Compatibility by Manufacturer | EV Charging Module 2.5",
+    description: "Understand vehicle-specific charging requirements for Tesla, BMW, Volkswagen, Nissan, and other major EV manufacturers."
+  });
+
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="px-4 sm:px-8 pt-8 pb-12">
-        <Link to="../ev-charging-module-2">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
           <Button
             variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 2
+            <Link to="../ev-charging-module-2">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 2
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-6">
-          <div>
-            <div className="flex items-center gap-4 mb-4">
-              <Car className="h-8 w-8 text-yellow-400" />
-              <div>
-                <h1 className="text-2xl sm:text-4xl font-bold text-white">
-                  Compatibility by Manufacturer
-                </h1>
-                <p className="text-lg sm:text-xl text-gray-400">
-                  Vehicle-specific charging requirements and compatibility
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">
-                Module 2
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">
-                Section 5
-              </Badge>
-            </div>
-          </div>
+        </div>
+      </div>
 
-          {/* Manufacturer Overview */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
-                <Info className="h-5 w-5 text-yellow-400" />
-                Manufacturer Charging Landscape
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                Each vehicle manufacturer has adopted different charging standards, connector types, and 
-                communication protocols based on regional requirements, technical preferences, and market 
-                timing. Understanding these differences is crucial for EVSE selection and installation planning.
-              </p>
-              <p>
-                This section provides detailed compatibility information for major manufacturers, including 
-                charging capabilities, connector types, and specific requirements for optimal charging performance.
-              </p>
-              <div className="bg-yellow-400/20 border border-blue-600/30 rounded-lg p-4">
-                <p className="text-blue-200 font-medium mb-2">Key Considerations:</p>
-                <ul className="text-blue-100 text-sm space-y-1">
-                  <li>• Regional variations in connector standards</li>
-                  <li>• Model year differences in charging capabilities</li>
-                  <li>• Software updates affecting charging behaviour</li>
-                  <li>• Thermal management and charging curve optimisation</li>
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Page Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 2.5</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Compatibility by Manufacturer
+          </h1>
+          <p className="text-white/80">
+            Vehicle-specific charging requirements and capabilities
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Europe:</strong> Type 2 AC + CCS2 DC standard</li>
+              <li><strong>Speeds vary:</strong> 3.7kW to 350kW by model</li>
+              <li><strong>Check vehicle:</strong> Not all support three-phase</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Check vehicle spec sheet for AC/DC speeds</li>
+              <li><strong>Use:</strong> Match charger to vehicle's max AC rate</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Identify charging specs by manufacturer",
+              "Match charger capacity to vehicle capability",
+              "Understand regional connector differences",
+              "Advise on three-phase vs single-phase",
+              "Plan for multi-vehicle households",
+              "Future-proof installations"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Tesla Vehicles
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Tesla has transitioned to regional standard connectors in Europe while maintaining
+              proprietary connectors in North America. All Tesla models support high-speed DC
+              charging via the Supercharger network.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">European Models (2019+)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>AC:</strong> Type 2, 11kW three-phase</li>
+                  <li><strong>DC:</strong> CCS2, up to 250kW</li>
+                  <li><strong>Model 3/Y:</strong> 250kW peak DC</li>
+                  <li><strong>Model S/X Plaid:</strong> 250kW peak DC</li>
                 </ul>
               </div>
-            </CardContent>
-          </Card>
-
-          {/* Tesla */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
-                <Zap className="h-5 w-5 text-yellow-400" />
-                Tesla - Proprietary Leadership
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-white">North American Models</h4>
-                  <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4">
-                    <div className="space-y-3">
-                      <div>
-                        <p className="text-red-300 font-medium">Model S/X (2012-2021)</p>
-                        <div className="text-red-100 text-sm space-y-1">
-                          <p>• AC: 48A (11.5kW) single-phase via Tesla connector</p>
-                          <p>• DC: 150kW peak via Supercharger V2</p>
-                          <p>• Charging curve: 150kW to 10%, tapering to 75kW at 50%</p>
-                          <p>• Preconditioning: Automatic thermal management</p>
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <p className="text-red-300 font-medium">Model S/X Plaid (2021+)</p>
-                        <div className="text-red-100 text-sm space-y-1">
-                          <p>• AC: 48A (11.5kW) single-phase</p>
-                          <p>• DC: 250kW peak via Supercharger V3</p>
-                          <p>• Battery: 100kWh+ with improved thermal management</p>
-                          <p>• 10-80% charge time: 27 minutes (Supercharger V3)</p>
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <p className="text-red-300 font-medium">Model 3/Y</p>
-                        <div className="text-red-100 text-sm space-y-1">
-                          <p>• AC: 32A (7.7kW) single-phase standard</p>
-                          <p>• AC: 48A (11.5kW) with High Power Wall Connector</p>
-                          <p>• DC: 250kW peak (Model 3 Performance/Model Y)</p>
-                          <p>• DC: 170kW peak (Model 3 Standard Range)</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-white">European/Asian Models</h4>
-                  <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-4">
-                    <div className="space-y-3">
-                      <div>
-                        <p className="text-blue-300 font-medium">Type 2 AC Charging</p>
-                        <div className="text-blue-100 text-sm space-y-1">
-                          <p>• Three-phase: 16A per phase (11kW total)</p>
-                          <p>• Single-phase: 32A (7.4kW) domestic installations</p>
-                          <p>• Connector: Standard Type 2 (IEC 62196-2)</p>
-                          <p>• Communication: Basic PWM control pilot</p>
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <p className="text-blue-300 font-medium">CCS2 DC Charging</p>
-                        <div className="text-blue-100 text-sm space-y-1">
-                          <p>• Peak power: 250kW (V3 Superchargers)</p>
-                          <p>• Voltage range: 50-500V</p>
-                          <p>• Current: Up to 500A</p>
-                          <p>• ISO 15118: Plug & Charge capability</p>
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <p className="text-blue-300 font-medium">Supercharger Network Access</p>
-                        <div className="text-blue-100 text-sm space-y-1">
-                          <p>• Open to non-Tesla vehicles via app</p>
-                          <p>• Magic Dock technology (CCS1 adapter)</p>
-                          <p>• Regional rollout: Europe 2022, US 2023+</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">North American Models</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>AC:</strong> Proprietary, up to 11.5kW</li>
+                  <li><strong>DC:</strong> Proprietary Supercharger</li>
+                  <li><strong>V3 Supercharger:</strong> 250kW peak</li>
+                  <li><strong>Opening to CCS:</strong> Via adapters/Magic Dock</li>
+                </ul>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+        </section>
 
-          {/* BMW Group */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
-                <Battery className="h-5 w-5 text-yellow-400" />
-                BMW Group - Efficient Dynamics
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-white">Pure Electric Models</h4>
-                  <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-4">
-                    <div className="space-y-3">
-                      <div>
-                        <p className="text-blue-300 font-medium">BMW iX (2021+)</p>
-                        <div className="text-blue-100 text-sm space-y-1">
-                          <p>• AC: 22kW three-phase (Type 2)</p>
-                          <p>• DC: 195kW peak (CCS)</p>
-                          <p>• Battery: 76.6kWh/105.2kWh options</p>
-                          <p>• 10-80%: 31 minutes at 150kW+ charger</p>
-                          <p>• Preconditioning: GPS-based battery warming</p>
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <p className="text-blue-300 font-medium">BMW i4 (2021+)</p>
-                        <div className="text-blue-100 text-sm space-y-1">
-                          <p>• AC: 11kW three-phase standard</p>
-                          <p>• DC: 205kW peak (i4 M50), 180kW (i4 eDrive40)</p>
-                          <p>• Battery: 70kWh/80.7kWh</p>
-                          <p>• Charging curve: Optimised for consistent speeds</p>
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <p className="text-blue-300 font-medium">BMW iX3 (2020+)</p>
-                        <div className="text-blue-100 text-sm space-y-1">
-                          <p>• AC: 11kW three-phase</p>
-                          <p>• DC: 150kW peak</p>
-                          <p>• Battery: 80kWh usable</p>
-                          <p>• 400V architecture</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-white">Plug-in Hybrids (PHEVs)</h4>
-                  <div className="bg-purple-600/10 border border-purple-600/20 rounded-lg p-4">
-                    <div className="space-y-3">
-                      <div>
-                        <p className="text-purple-300 font-medium">X5/X3 xDrive45e</p>
-                        <div className="text-purple-100 text-sm space-y-1">
-                          <p>• AC only: 3.7kW single-phase (Type 2)</p>
-                          <p>• Battery: 24kWh gross, 21.3kWh usable</p>
-                          <p>• Charge time: 5 hours (3.7kW), 3 hours (7.4kW)</p>
-                          <p>• No DC charging capability</p>
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <p className="text-purple-300 font-medium">3/5 Series PHEVs</p>
-                        <div className="text-purple-100 text-sm space-y-1">
-                          <p>• AC: 3.7kW standard, 7.4kW optional</p>
-                          <p>• Battery: 12-18kWh depending on model</p>
-                          <p>• Intelligent charging: Time-of-use optimisation</p>
-                          <p>• Remote control via BMW ConnectedDrive</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            German Manufacturers (BMW, VW Group, Mercedes)
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              German manufacturers typically offer the fastest AC charging (up to 22kW) and
+              competitive DC speeds. Many models support three-phase charging, making the most
+              of European electrical infrastructure.
+            </p>
+
+            <div className="grid sm:grid-cols-3 gap-4 my-6">
+              <div className="p-3 rounded bg-transparent border border-white/10">
+                <p className="font-medium text-white mb-2">BMW iX / i4</p>
+                <ul className="text-xs text-white/90 space-y-1">
+                  <li>AC: 11-22kW three-phase</li>
+                  <li>DC: 195-205kW CCS2</li>
+                  <li>Battery: 70-105kWh</li>
+                  <li>Preconditioning: GPS-based</li>
+                </ul>
               </div>
-            </CardContent>
-          </Card>
-
-          {/* Volkswagen Group */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
-                <Settings className="h-5 w-5 text-yellow-400" />
-                Volkswagen Group - MEB Platform
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
-                  <h4 className="font-semibold text-green-300 mb-3">Volkswagen ID Series</h4>
-                  <div className="text-green-100 text-sm space-y-2">
-                    <p><strong>ID.3:</strong></p>
-                    <p>• AC: 11kW three-phase (Type 2)</p>
-                    <p>• DC: 100kW/120kW (CCS2)</p>
-                    <p>• Battery: 45/58/77kWh</p>
-                    <p>• Charge speed: 5-80% in 30min</p>
-                    
-                    <p><strong>ID.4/ID.5:</strong></p>
-                    <p>• AC: 11kW three-phase standard</p>
-                    <p>• DC: 125kW peak (135kW GTX)</p>
-                    <p>• Battery: 52/77kWh options</p>
-                    <p>• 800V architecture (future models)</p>
-                    
-                    <p><strong>Features:</strong></p>
-                    <p>• We Charge network integration</p>
-                    <p>• Plug & Charge (ISO 15118)</p>
-                    <p>• Battery preconditioning</p>
-                  </div>
-                </div>
-                
-                <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-4">
-                  <h4 className="font-semibold text-blue-300 mb-3">Audi e-tron Series</h4>
-                  <div className="text-blue-100 text-sm space-y-2">
-                    <p><strong>e-tron/e-tron S:</strong></p>
-                    <p>• AC: 22kW three-phase (optional)</p>
-                    <p>• DC: 150kW peak</p>
-                    <p>• Battery: 95kWh gross, 86kWh usable</p>
-                    <p>• Thermal management: Advanced cooling</p>
-                    
-                    <p><strong>e-tron GT:</strong></p>
-                    <p>• AC: 11kW three-phase</p>
-                    <p>• DC: 270kW peak (800V)</p>
-                    <p>• Battery: 93.4kWh</p>
-                    <p>• 5-80%: 22.5 minutes</p>
-                    
-                    <p><strong>Q4 e-tron:</strong></p>
-                    <p>• Based on MEB platform</p>
-                    <p>• Similar to ID.4 specifications</p>
-                    <p>• Premium charging features</p>
-                  </div>
-                </div>
-                
-                <div className="bg-purple-600/10 border border-purple-600/20 rounded-lg p-4">
-                  <h4 className="font-semibold text-purple-300 mb-3">Porsche Taycan</h4>
-                  <div className="text-purple-100 text-sm space-y-2">
-                    <p><strong>800V Architecture:</strong></p>
-                    <p>• AC: 11kW three-phase (22kW option)</p>
-                    <p>• DC: 270kW peak (800V native)</p>
-                    <p>• Battery: 79.2kWh/93.4kWh</p>
-                    <p>• 5-80%: 22.5 minutes</p>
-                    
-                    <p><strong>Performance Focus:</strong></p>
-                    <p>• Consistent high-speed charging</p>
-                    <p>• Multiple charge cycles capability</p>
-                    <p>• Track-oriented thermal management</p>
-                    
-                    <p><strong>Charging Network:</strong></p>
-                    <p>• IONITY partnership</p>
-                    <p>• Premium charging locations</p>
-                    <p>• Integrated payment system</p>
-                  </div>
-                </div>
+              <div className="p-3 rounded bg-transparent border border-white/10">
+                <p className="font-medium text-white mb-2">VW ID.3 / ID.4</p>
+                <ul className="text-xs text-white/90 space-y-1">
+                  <li>AC: 11kW three-phase</li>
+                  <li>DC: 100-135kW CCS2</li>
+                  <li>Battery: 45-77kWh</li>
+                  <li>Plug & Charge: Supported</li>
+                </ul>
               </div>
-            </CardContent>
-          </Card>
-
-          {/* Japanese Manufacturers */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
-                <Gauge className="h-5 w-5 text-yellow-400" />
-                Japanese Manufacturers - CHAdeMO Legacy
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-white">Nissan</h4>
-                  <div className="bg-yellow-600/10 border border-yellow-600/20 rounded-lg p-4">
-                    <div className="space-y-3">
-                      <div>
-                        <p className="text-yellow-300 font-medium">Leaf (2010-2017)</p>
-                        <div className="text-yellow-100 text-sm space-y-1">
-                          <p>• AC: 6.6kW single-phase (Type 1/2)</p>
-                          <p>• DC: 50kW CHAdeMO</p>
-                          <p>• Battery: 24kWh/30kWh</p>
-                          <p>• Passive thermal management</p>
-                          <p>• Limited rapid charging sessions</p>
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <p className="text-yellow-300 font-medium">Leaf (2018+)</p>
-                        <div className="text-yellow-100 text-sm space-y-1">
-                          <p>• AC: 6.6kW standard, 22kW (Europe)</p>
-                          <p>• DC: 100kW CHAdeMO (62kWh), 70kW (40kWh)</p>
-                          <p>• Battery: 40kWh/62kWh options</p>
-                          <p>• Improved thermal management</p>
-                          <p>• ProPILOT Park integration</p>
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <p className="text-yellow-300 font-medium">Ariya (2022+)</p>
-                        <div className="text-yellow-100 text-sm space-y-1">
-                          <p>• AC: 22kW three-phase (Type 2)</p>
-                          <p>• DC: 130kW CHAdeMO + CCS2 (Europe)</p>
-                          <p>• Battery: 63kWh/87kWh</p>
-                          <p>• Bi-directional charging capability</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-white">Toyota/Lexus</h4>
-                  <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
-                    <div className="space-y-3">
-                      <div>
-                        <p className="text-green-300 font-medium">bZ4X (2022+)</p>
-                        <div className="text-green-100 text-sm space-y-1">
-                          <p>• AC: 11kW three-phase (Type 2)</p>
-                          <p>• DC: 150kW CCS2 (Europe), CHAdeMO (Japan)</p>
-                          <p>• Battery: 71.4kWh (FWD/AWD)</p>
-                          <p>• Solar roof option (Europe)</p>
-                          <p>• Heat pump standard</p>
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <p className="text-green-300 font-medium">Prius Prime/Plug-in</p>
-                        <div className="text-green-100 text-sm space-y-1">
-                          <p>• AC only: 3.3kW/6.6kW (regional)</p>
-                          <p>• Battery: 8.8kWh/13.6kWh</p>
-                          <p>• Type 1 (US/Japan), Type 2 (Europe)</p>
-                          <p>• No DC charging capability</p>
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <p className="text-green-300 font-medium">Future Platform</p>
-                        <div className="text-green-100 text-sm space-y-1">
-                          <p>• Transitioning to CCS standards globally</p>
-                          <p>• LFP and solid-state battery plans</p>
-                          <p>• Enhanced charging speeds (&gt;200kW)</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div className="p-3 rounded bg-transparent border border-white/10">
+                <p className="font-medium text-white mb-2">Porsche Taycan</p>
+                <ul className="text-xs text-white/90 space-y-1">
+                  <li>AC: 11-22kW three-phase</li>
+                  <li>DC: 270kW (800V native)</li>
+                  <li>Battery: 79-93kWh</li>
+                  <li>5-80%: 22.5 minutes</li>
+                </ul>
               </div>
-            </CardContent>
-          </Card>
+            </div>
 
-          {/* Ford and GM */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
-                <CheckCircle className="h-5 w-5 text-yellow-400" />
-                North American Manufacturers
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-white">Ford</h4>
-                  <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-4">
-                    <div className="space-y-3">
-                      <div>
-                        <p className="text-blue-300 font-medium">Mustang Mach-E</p>
-                        <div className="text-blue-100 text-sm space-y-1">
-                          <p>• AC: 10.5kW (48A) single-phase</p>
-                          <p>• DC: 150kW CCS1 (RWD), 115kW (AWD)</p>
-                          <p>• Battery: 68kWh/88kWh options</p>
-                          <p>• 10-80%: 38-45 minutes</p>
-                          <p>• FordPass charging network</p>
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <p className="text-blue-300 font-medium">F-150 Lightning</p>
-                        <div className="text-blue-100 text-sm space-y-1">
-                          <p>• AC: 19.2kW (80A) with Ford Charge Station Pro</p>
-                          <p>• DC: 155kW CCS1</p>
-                          <p>• Battery: 98kWh/131kWh</p>
-                          <p>• Vehicle-to-load: 9.6kW output</p>
-                          <p>• Home backup power capability</p>
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <p className="text-blue-300 font-medium">E-Transit</p>
-                        <div className="text-blue-100 text-sm space-y-1">
-                          <p>• AC: 11.3kW (48A)</p>
-                          <p>• DC: 115kW CCS1</p>
-                          <p>• Battery: 68kWh usable</p>
-                          <p>• Commercial fleet integration</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-white">General Motors</h4>
-                  <div className="bg-purple-600/10 border border-purple-600/20 rounded-lg p-4">
-                    <div className="space-y-3">
-                      <div>
-                        <p className="text-purple-300 font-medium">Chevrolet Bolt EV/EUV</p>
-                        <div className="text-purple-100 text-sm space-y-1">
-                          <p>• AC: 11.5kW (48A) single-phase</p>
-                          <p>• DC: 55kW CCS1</p>
-                          <p>• Battery: 65kWh (259 miles EPA)</p>
-                          <p>• 10-80%: 60 minutes (50kW)</p>
-                          <p>• Affordable long-range option</p>
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <p className="text-purple-300 font-medium">GMC Hummer EV</p>
-                        <div className="text-purple-100 text-sm space-y-1">
-                          <p>• AC: 19.2kW (80A)</p>
-                          <p>• DC: 350kW CCS1 (Ultium platform)</p>
-                          <p>• Battery: 212kWh</p>
-                          <p>• 10-80%: 40 minutes (350kW)</p>
-                          <p>• Crab mode and watts-to-freedom</p>
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <p className="text-purple-300 font-medium">Cadillac Lyriq</p>
-                        <div className="text-purple-100 text-sm space-y-1">
-                          <p>• AC: 19.2kW (80A)</p>
-                          <p>• DC: 190kW CCS1</p>
-                      <p>• Battery: 100kWh+</p>
-                          <p>• Luxury charging experience</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            <p>
+              <strong>Note:</strong> The Porsche Taycan and Audi e-tron GT use 800V architecture,
+              enabling significantly faster DC charging than 400V vehicles. However, AC charging
+              speeds are similar across voltage architectures.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 3 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Japanese & Other Manufacturers
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Japanese manufacturers historically used CHAdeMO for DC charging but are
+              transitioning to CCS for new models. AC charging speeds are often more limited
+              than European brands.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Nissan</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Leaf (2018+):</strong> AC 6.6kW, DC 50-100kW CHAdeMO</li>
+                  <li><strong>Ariya:</strong> AC 22kW, DC 130kW CHAdeMO/CCS2</li>
+                  <li><strong>Note:</strong> V2G capability via CHAdeMO</li>
+                </ul>
               </div>
-            </CardContent>
-          </Card>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Hyundai/Kia</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Ioniq 5/6, EV6:</strong> AC 11kW, DC 220kW CCS2</li>
+                  <li><strong>Architecture:</strong> 800V E-GMP platform</li>
+                  <li><strong>Feature:</strong> V2L vehicle-to-load output</li>
+                </ul>
+              </div>
+            </div>
 
-          {/* Charging Compatibility Matrix */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
-                <Clock className="h-5 w-5 text-yellow-400" />
-                Regional Compatibility Matrix
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Regional Compatibility Matrix (UK/Europe):</p>
               <div className="overflow-x-auto">
-                <table className="w-full text-sm">
+                <table className="w-full text-xs">
                   <thead>
-                    <tr className="border-b border-gray-600">
-                      <th className="text-left p-2 text-white font-medium">Region</th>
-                      <th className="text-left p-2 text-white font-medium">AC Standard</th>
-                      <th className="text-left p-2 text-white font-medium">DC Standard</th>
-                      <th className="text-left p-2 text-white font-medium">Tesla</th>
-                      <th className="text-left p-2 text-white font-medium">Typical Power</th>
+                    <tr className="border-b border-white/20">
+                      <th className="text-left p-2">Manufacturer</th>
+                      <th className="text-left p-2">AC Connector</th>
+                      <th className="text-left p-2">DC Connector</th>
+                      <th className="text-left p-2">Max AC</th>
                     </tr>
                   </thead>
-                  <tbody className="text-gray-300">
-                    <tr className="border-b border-gray-700">
-                      <td className="p-2 font-medium">North America</td>
-                      <td className="p-2">Type 1 (SAE J1772)</td>
-                      <td className="p-2">CCS1 / CHAdeMO</td>
-                      <td className="p-2">Proprietary connector</td>
-                      <td className="p-2">AC: 7-19kW, DC: 50-350kW</td>
+                  <tbody className="text-white/90">
+                    <tr className="border-b border-white/10">
+                      <td className="p-2">Tesla (EU)</td>
+                      <td className="p-2">Type 2</td>
+                      <td className="p-2">CCS2</td>
+                      <td className="p-2">11kW</td>
                     </tr>
-                    <tr className="border-b border-gray-700">
-                      <td className="p-2 font-medium">Europe</td>
-                      <td className="p-2">Type 2 (IEC 62196-2)</td>
-                      <td className="p-2">CCS2 / CHAdeMO</td>
-                      <td className="p-2">CCS2 (post-2019)</td>
-                      <td className="p-2">AC: 3-43kW, DC: 50-350kW</td>
+                    <tr className="border-b border-white/10">
+                      <td className="p-2">BMW</td>
+                      <td className="p-2">Type 2</td>
+                      <td className="p-2">CCS2</td>
+                      <td className="p-2">22kW</td>
                     </tr>
-                    <tr className="border-b border-gray-700">
-                      <td className="p-2 font-medium">China</td>
-                      <td className="p-2">Type 2 (GB/T AC)</td>
-                      <td className="p-2">GB/T DC</td>
-                      <td className="p-2">CCS2 via adapter</td>
-                      <td className="p-2">AC: 7-22kW, DC: 60-200kW</td>
+                    <tr className="border-b border-white/10">
+                      <td className="p-2">VW Group</td>
+                      <td className="p-2">Type 2</td>
+                      <td className="p-2">CCS2</td>
+                      <td className="p-2">11-22kW</td>
                     </tr>
-                    <tr className="border-b border-gray-700">
-                      <td className="p-2 font-medium">Japan</td>
-                      <td className="p-2">Type 1 / Type 2</td>
+                    <tr className="border-b border-white/10">
+                      <td className="p-2">Nissan Leaf</td>
+                      <td className="p-2">Type 2</td>
                       <td className="p-2">CHAdeMO</td>
-                      <td className="p-2">Proprietary (limited)</td>
-                      <td className="p-2">AC: 3-22kW, DC: 50-150kW</td>
+                      <td className="p-2">6.6kW</td>
                     </tr>
                     <tr>
-                      <td className="p-2 font-medium">Australia</td>
+                      <td className="p-2">Hyundai/Kia</td>
                       <td className="p-2">Type 2</td>
-                      <td className="p-2">CCS2 / CHAdeMO</td>
-                      <td className="p-2">CCS2 (post-2019)</td>
-                      <td className="p-2">AC: 7-22kW, DC: 50-350kW</td>
+                      <td className="p-2">CCS2</td>
+                      <td className="p-2">11kW</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+        </section>
 
-          {/* Installation Recommendations */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
-                <AlertTriangle className="h-5 w-5 text-yellow-400" />
-                Installation Recommendations by Use Case
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-white">Residential Installations</h4>
-                  <div className="space-y-3">
-                    <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-3">
-                      <p className="text-green-300 font-medium">Universal Compatibility</p>
-                      <p className="text-green-100 text-sm">Install tethered Type 2 (Europe) or untethered NEMA 14-50 (US) for maximum compatibility</p>
-                    </div>
-                    <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-3">
-                      <p className="text-blue-300 font-medium">Power Sizing</p>
-                      <p className="text-blue-100 text-sm">7-22kW for single vehicle, 22kW+ for multiple vehicles or future-proofing</p>
-                    </div>
-                    <div className="bg-purple-600/10 border border-purple-600/20 rounded-lg p-3">
-                      <p className="text-purple-300 font-medium">Smart Features</p>
-                      <p className="text-purple-100 text-sm">Load balancing, solar integration, time-of-use scheduling for cost optimisation</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-white">Commercial Installations</h4>
-                  <div className="space-y-3">
-                    <div className="bg-orange-600/10 border border-orange-600/20 rounded-lg p-3">
-                      <p className="text-orange-300 font-medium">Multi-Standard Support</p>
-                      <p className="text-orange-100 text-sm">Dual connector or socket outlets supporting regional standards plus CHAdeMO where required</p>
-                    </div>
-                    <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-3">
-                      <p className="text-red-300 font-medium">Scalable Infrastructure</p>
-                      <p className="text-red-100 text-sm">Modular systems with dynamic load management and future expansion capability</p>
-                    </div>
-                    <div className="bg-yellow-600/10 border border-yellow-600/20 rounded-lg p-3">
-                      <p className="text-yellow-300 font-medium">Payment Integration</p>
-                      <p className="text-yellow-100 text-sm">RFID, contactless payment, and app-based systems with multiple payment providers</p>
-                    </div>
-                  </div>
-                </div>
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Recommendations</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Always check vehicle spec before sizing charger</li>
+                <li>Type 2 socketed for unknown future vehicles</li>
+                <li>Only upgrade to three-phase if vehicle supports it</li>
+                <li>Consider 22kW for premium German EVs</li>
+                <li>7kW sufficient for most Japanese/Korean EVs</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Oversizing:</strong> — 22kW charger for 6.6kW vehicle wastes money</li>
+                <li><strong>Wrong phase:</strong> — Three-phase charger on single-phase supply</li>
+                <li><strong>Ignoring onboard limit:</strong> — Vehicle limits AC regardless of charger</li>
+                <li><strong>CHAdeMO assumption:</strong> — Check if Nissan has CCS2 (Ariya does)</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
               </div>
-            </CardContent>
-          </Card>
+            ))}
+          </div>
+        </section>
 
-          <div className="flex justify-between">
-            <Link to="../ev-charging-module-2-section-4">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="../ev-charging-module-2">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
-                Complete Module
-                <CheckCircle className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+        {/* Quick Reference */}
+        <div className="mt-6 p-5 rounded-lg bg-transparent">
+          <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+            <div>
+              <p className="font-medium text-white mb-1">22kW Three-Phase Capable</p>
+              <ul className="space-y-0.5">
+                <li>BMW iX, i4, iX3</li>
+                <li>Audi e-tron, Q4</li>
+                <li>Mercedes EQ series</li>
+                <li>Porsche Taycan</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-medium text-white mb-1">Single-Phase Limited</p>
+              <ul className="space-y-0.5">
+                <li>Nissan Leaf (6.6kW)</li>
+                <li>Tesla (11kW max)</li>
+                <li>VW ID series (11kW)</li>
+                <li>Hyundai/Kia (11kW)</li>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
+
+        {/* Quiz Section */}
+        <section className="mb-10 mt-12">
+          <SingleQuestionQuiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-2-section-4">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-3">
+              Next Module
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

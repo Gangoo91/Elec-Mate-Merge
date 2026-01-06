@@ -54,7 +54,7 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
           <h3 className="text-lg sm:text-xl font-medium text-white mb-2">
             Enhanced Cable Calculator Ready
           </h3>
-          <p className="text-sm sm:text-base text-muted-foreground max-w-md">
+          <p className="text-sm sm:text-base text-white max-w-md">
             Enter your project details and calculation parameters to get comprehensive cable sizing recommendations with compliance checking.
           </p>
         </div>
@@ -85,7 +85,7 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
   return (
     <div className="space-y-4 sm:space-y-6 h-full overflow-y-auto">
       {/* Action Buttons - Mobile First */}
-      <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 sticky top-0 z-10 bg-elec-dark/95 backdrop-blur-sm p-2 -m-2 rounded-lg">
+      <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 sticky top-0 z-10 bg-white/10 backdrop-blur-sm p-2 -m-2 rounded-lg">
         <Button
           onClick={onSaveToHistory}
           className="w-full sm:w-auto bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80 text-sm sm:text-base"
@@ -120,7 +120,7 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
                 <div className="text-2xl sm:text-3xl font-bold text-green-400">
                   {result.recommendedCable.cable.size}
                 </div>
-                <div className="text-sm text-muted-foreground">
+                <div className="text-sm text-white">
                   {result.recommendedCable.cable.coreConfig} • {result.recommendedCable.cable.cableType}
                 </div>
               </div>
@@ -136,20 +136,20 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
 
             {/* Cable Properties - Responsive Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 pt-2">
-              <div className="bg-elec-gray-light/10 p-3 rounded-lg">
-                <div className="text-xs text-muted-foreground mb-1">Current Rating</div>
+              <div className="bg-white/10 p-3 rounded-lg">
+                <div className="text-xs text-white mb-1">Current Rating</div>
                 <div className="font-medium text-sm sm:text-base">
                   {result.recommendedCable.cable.currentRating.pvc}A (PVC)
                 </div>
               </div>
-              <div className="bg-elec-gray-light/10 p-3 rounded-lg">
-                <div className="text-xs text-muted-foreground mb-1">Max Operating Temp</div>
+              <div className="bg-white/10 p-3 rounded-lg">
+                <div className="text-xs text-white mb-1">Max Operating Temp</div>
                 <div className="font-medium text-sm sm:text-base">
                   {result.recommendedCable.cable.maxOperatingTemp}°C
                 </div>
               </div>
-              <div className="bg-elec-gray-light/10 p-3 rounded-lg sm:col-span-2 lg:col-span-1">
-                <div className="text-xs text-muted-foreground mb-1">Voltage Drop</div>
+              <div className="bg-white/10 p-3 rounded-lg sm:col-span-2 lg:col-span-1">
+                <div className="text-xs text-white mb-1">Voltage Drop</div>
                 <div className="font-medium text-sm sm:text-base">
                   {result.recommendedCable.cable.calculatedVoltageDrop?.toFixed(2)}V
                 </div>
@@ -186,23 +186,23 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div className="space-y-3">
               <div>
-                <div className="text-xs text-muted-foreground">Design Current</div>
+                <div className="text-xs text-white">Design Current</div>
                 <div className="font-medium text-sm sm:text-base">{result.designCurrent.toFixed(1)}A</div>
               </div>
               <div>
-                <div className="text-xs text-muted-foreground">Protective Device Rating</div>
+                <div className="text-xs text-white">Protective Device Rating</div>
                 <div className="font-medium text-sm sm:text-base">{result.protectiveDeviceRating}A</div>
               </div>
             </div>
             <div className="space-y-3">
               <div>
-                <div className="text-xs text-muted-foreground">Environmental Derating</div>
+                <div className="text-xs text-white">Environmental Derating</div>
                 <div className="font-medium text-sm sm:text-base">
                   {(result.environmentalFactors.overallDerating * 100).toFixed(0)}%
                 </div>
               </div>
               <div>
-                <div className="text-xs text-muted-foreground">Zs Calculation</div>
+                <div className="text-xs text-white">Zs Calculation</div>
                 <div className={`font-medium text-sm sm:text-base ${result.zsCalculation.compliant ? 'text-green-400' : 'text-red-400'}`}>
                   {result.zsCalculation.zs.toFixed(2)}Ω (Max: {result.zsCalculation.maxZs.toFixed(2)}Ω)
                 </div>
@@ -223,7 +223,7 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
         <CardContent>
           <div className="space-y-3">
             {result.complianceChecks.map((check, index) => (
-              <div key={index} className="flex items-start gap-3 p-3 bg-elec-gray-light/5 rounded-lg">
+              <div key={index} className="flex items-start gap-3 p-3 bg-white/5 rounded-lg">
                 <div className="mt-0.5">
                   {getStatusIcon(check.status)}
                 </div>
@@ -235,7 +235,7 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
                     </Badge>
                   </div>
                   {check.details && (
-                    <p className="text-xs sm:text-sm text-muted-foreground mt-1">{check.details}</p>
+                    <p className="text-xs sm:text-sm text-white mt-1">{check.details}</p>
                   )}
                 </div>
               </div>
@@ -255,14 +255,14 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
           <CardContent>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
               {result.alternativeCables.slice(0, 4).map((alt, index) => (
-                <div key={index} className="p-3 bg-elec-gray-light/5 rounded-lg border border-elec-yellow/10">
+                <div key={index} className="p-3 bg-white/5 rounded-lg border border-elec-yellow/10">
                   <div className="flex items-center justify-between mb-2">
                     <div className="font-medium text-sm sm:text-base">{alt.cable.size}</div>
                     <Badge variant="outline" className="text-xs">
                       {alt.suitabilityScore}% match
                     </Badge>
                   </div>
-                  <div className="text-xs text-muted-foreground">
+                  <div className="text-xs text-white">
                     {alt.cable.coreConfig} • Rating: {alt.cable.currentRating.pvc}A
                   </div>
                 </div>

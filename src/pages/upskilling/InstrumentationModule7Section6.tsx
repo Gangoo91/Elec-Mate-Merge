@@ -594,7 +594,7 @@ const InstrumentationModule7Section6 = () => {
                 ],
                 correctAnswer: 1,
                 explanation: "Signal simulation allows systematic testing of receivers and control systems with known, precise current values, enabling verification of accuracy, scaling, and alarm functions before connecting actual transmitters."
-              }
+            }
             ]}
             title="Section 6 Knowledge Check"
           />

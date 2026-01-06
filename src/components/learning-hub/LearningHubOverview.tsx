@@ -129,7 +129,7 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
           return (
             <Card
               key={module.id}
-              className={`relative overflow-hidden bg-elec-gray ${module.borderColor} rounded-xl sm:rounded-2xl hover:scale-[1.02] transition-all duration-300 group cursor-pointer touch-manipulation`}
+              className={`relative overflow-hidden bg-white/5 ${module.borderColor} rounded-xl sm:rounded-2xl hover:scale-[1.02] transition-all duration-300 group cursor-pointer touch-manipulation`}
               onClick={handleClick}
             >
               {/* Background Gradient */}
@@ -141,7 +141,7 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
                   <div className={`p-3 sm:p-4 ${module.iconBg} rounded-xl sm:rounded-2xl group-hover:scale-110 transition-transform duration-300`}>
                     <IconComponent className={`h-7 w-7 sm:h-8 sm:w-8 ${module.iconColor}`} />
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-white/60">
+                  <div className="flex items-center gap-2 text-xs text-white/70">
                     <Clock className="h-3.5 w-3.5" />
                     <span>{module.stats.duration}</span>
                   </div>
@@ -202,7 +202,7 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
 
       {/* Safety Section */}
       <div className="max-w-6xl mx-auto px-3 sm:px-4">
-        <Card className="bg-elec-gray/50 border-red-500/20 rounded-xl">
+        <Card className="bg-white/5 border-red-500/20 rounded-xl">
           <div className="p-4 sm:p-5">
             <div className="flex items-start gap-3">
               <div className="p-2 rounded-lg bg-red-500/20 flex-shrink-0">

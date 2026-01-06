@@ -44,7 +44,7 @@ const Subsection6_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       <RiskAssessment />
       
       {/* Planning Considerations Section */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <div className="p-4 md:p-6">
           <PlanningConsiderations />
         </div>

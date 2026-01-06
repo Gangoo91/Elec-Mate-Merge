@@ -98,7 +98,7 @@ const RevisionTechniquesTab = () => {
                     <IconComponent className="h-6 w-6 text-elec-yellow" />
                     <div className="flex-1">
                       <h3 className="text-lg font-semibold text-white">{technique.technique}</h3>
-                      <p className="text-sm text-muted-foreground">{technique.description}</p>
+                      <p className="text-sm text-white">{technique.description}</p>
                     </div>
                     <div className="text-right">
                       <div className="text-sm text-elec-yellow font-medium">{technique.effectiveness}% effective</div>
@@ -109,10 +109,10 @@ const RevisionTechniquesTab = () => {
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div>
                       <h4 className="font-medium text-white mb-2">How to do it</h4>
-                      <p className="text-sm text-muted-foreground mb-3">{technique.howTo}</p>
+                      <p className="text-sm text-white mb-3">{technique.howTo}</p>
                       <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
                         <h5 className="font-medium text-blue-400 mb-1">Example</h5>
-                        <p className="text-sm text-muted-foreground">{technique.example}</p>
+                        <p className="text-sm text-white">{technique.example}</p>
                       </div>
                     </div>
                     
@@ -120,7 +120,7 @@ const RevisionTechniquesTab = () => {
                       <h4 className="font-medium text-white mb-2">Benefits</h4>
                       <ul className="space-y-1">
                         {technique.benefits.map((benefit, benefitIndex) => (
-                          <li key={benefitIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                          <li key={benefitIndex} className="text-sm text-white flex items-start gap-2">
                             <div className="w-1 h-1 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
                             {benefit}
                           </li>
@@ -135,7 +135,7 @@ const RevisionTechniquesTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">Proven Study Methods</CardTitle>
         </CardHeader>
@@ -146,14 +146,14 @@ const RevisionTechniquesTab = () => {
                 <h3 className="font-semibold text-white mb-3">{method.method}</h3>
                 <ol className="space-y-2 mb-4">
                   {method.steps.map((step, stepIndex) => (
-                    <li key={stepIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                    <li key={stepIndex} className="text-sm text-white flex items-start gap-2">
                       <span className="text-elec-yellow font-medium text-xs">{stepIndex + 1}.</span>
                       {step}
                     </li>
                   ))}
                 </ol>
                 <div className="bg-elec-yellow/10 p-3 rounded-lg">
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-white">
                     <strong className="text-elec-yellow">Best for:</strong> {method.bestFor}
                   </p>
                 </div>

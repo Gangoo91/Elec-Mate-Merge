@@ -213,7 +213,7 @@ const RecommendedBrands = () => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
         key={i}
-        className={`h-4 w-4 ${i < rating ? 'text-yellow-400 fill-current' : 'text-gray-600'}`}
+        className={`h-4 w-4 ${i < rating ? 'text-yellow-400 fill-current' : 'text-white/40'}`}
       />
     ));
   };
@@ -263,7 +263,7 @@ const RecommendedBrands = () => {
         <TabsContent value="hand-tools">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {handToolBrands.map((brand, index) => (
-              <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+              <Card key={index} className="border-elec-yellow/20 bg-white/5">
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-elec-yellow">{brand.name}</CardTitle>
@@ -271,7 +271,7 @@ const RecommendedBrands = () => {
                       {getRatingStars(brand.rating)}
                     </div>
                   </div>
-                  <p className="text-sm text-muted-foreground">{brand.category}</p>
+                  <p className="text-sm text-white">{brand.category}</p>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div className="flex items-center justify-between">
@@ -296,7 +296,7 @@ const RecommendedBrands = () => {
 
                   <div>
                     <h4 className="text-sm font-medium text-white mb-1">Best for:</h4>
-                    <p className="text-sm text-muted-foreground">{brand.bestFor}</p>
+                    <p className="text-sm text-white">{brand.bestFor}</p>
                   </div>
 
                   <Alert className="border-elec-yellow/50 bg-elec-yellow/10">
@@ -314,7 +314,7 @@ const RecommendedBrands = () => {
         <TabsContent value="power-tools">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {powerToolBrands.map((brand, index) => (
-              <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+              <Card key={index} className="border-elec-yellow/20 bg-white/5">
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-elec-yellow">{brand.name}</CardTitle>
@@ -322,7 +322,7 @@ const RecommendedBrands = () => {
                       {getRatingStars(brand.rating)}
                     </div>
                   </div>
-                  <p className="text-sm text-muted-foreground">{brand.category}</p>
+                  <p className="text-sm text-white">{brand.category}</p>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div className="flex items-center justify-between">
@@ -347,7 +347,7 @@ const RecommendedBrands = () => {
 
                   <div>
                     <h4 className="text-sm font-medium text-white mb-1">Best for:</h4>
-                    <p className="text-sm text-muted-foreground">{brand.bestFor}</p>
+                    <p className="text-sm text-white">{brand.bestFor}</p>
                   </div>
 
                   <Alert className="border-elec-yellow/50 bg-elec-yellow/10">
@@ -365,7 +365,7 @@ const RecommendedBrands = () => {
         <TabsContent value="test-equipment">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {testEquipmentBrands.map((brand, index) => (
-              <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+              <Card key={index} className="border-elec-yellow/20 bg-white/5">
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-elec-yellow">{brand.name}</CardTitle>
@@ -373,7 +373,7 @@ const RecommendedBrands = () => {
                       {getRatingStars(brand.rating)}
                     </div>
                   </div>
-                  <p className="text-sm text-muted-foreground">{brand.category}</p>
+                  <p className="text-sm text-white">{brand.category}</p>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div className="flex items-center justify-between">
@@ -398,7 +398,7 @@ const RecommendedBrands = () => {
 
                   <div>
                     <h4 className="text-sm font-medium text-white mb-1">Best for:</h4>
-                    <p className="text-sm text-muted-foreground">{brand.bestFor}</p>
+                    <p className="text-sm text-white">{brand.bestFor}</p>
                   </div>
 
                   <Alert className="border-elec-yellow/50 bg-elec-yellow/10">
@@ -416,7 +416,7 @@ const RecommendedBrands = () => {
         <TabsContent value="ppe">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {ppeBrands.map((brand, index) => (
-              <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+              <Card key={index} className="border-elec-yellow/20 bg-white/5">
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-elec-yellow">{brand.name}</CardTitle>
@@ -424,7 +424,7 @@ const RecommendedBrands = () => {
                       {getRatingStars(brand.rating)}
                     </div>
                   </div>
-                  <p className="text-sm text-muted-foreground">{brand.category}</p>
+                  <p className="text-sm text-white">{brand.category}</p>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div className="flex items-center justify-between">
@@ -449,7 +449,7 @@ const RecommendedBrands = () => {
 
                   <div>
                     <h4 className="text-sm font-medium text-white mb-1">Best for:</h4>
-                    <p className="text-sm text-muted-foreground">{brand.bestFor}</p>
+                    <p className="text-sm text-white">{brand.bestFor}</p>
                   </div>
 
                   <Alert className="border-elec-yellow/50 bg-elec-yellow/10">
@@ -480,24 +480,24 @@ const RecommendedBrands = () => {
                     
                     <div className="space-y-3">
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">Premium:</span>
+                        <span className="text-sm text-white">Premium:</span>
                         <span className="text-sm text-red-400">{alt.premiumBrand}</span>
                       </div>
                       
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">Budget:</span>
+                        <span className="text-sm text-white">Budget:</span>
                         <span className="text-sm text-green-400">{alt.budgetAlternative}</span>
                       </div>
                       
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">Savings:</span>
+                        <span className="text-sm text-white">Savings:</span>
                         <Badge variant="outline" className="text-xs border-green-500/40 text-green-400">
                           {alt.savings}
                         </Badge>
                       </div>
                       
                       <div className="pt-2 border-t border-green-500/20">
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-xs text-white">
                           <strong>Trade-off:</strong> {alt.tradeOff}
                         </p>
                       </div>

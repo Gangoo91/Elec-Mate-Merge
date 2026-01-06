@@ -27,13 +27,15 @@ import {
   Calendar,
   Award,
   ArrowLeft,
-  X
+  X,
+  Headphones
 } from "lucide-react";
 import ResourcesLibraryTab from "@/components/mental-health/tabs/ResourcesLibraryTab";
 import InteractiveToolsTab from "@/components/mental-health/tabs/InteractiveToolsTab";
 import SupportNetworkTab from "@/components/mental-health/tabs/SupportNetworkTab";
 import CrisisResourcesTab from "@/components/mental-health/tabs/CrisisResourcesTab";
-import MentalHealthMate from "@/components/mental-health/MentalHealthMate";
+import PodcastsTab from "@/components/mental-health/podcasts/PodcastsTab";
+import { PeerSupportHub } from "@/components/mental-health/peer-support";
 import { MentalHealthProvider, useMentalHealth } from "@/contexts/MentalHealthContext";
 import QuickMoodCheck from "@/components/mental-health/QuickMoodCheck";
 import BreathingExercise from "@/components/mental-health/BreathingExercise";
@@ -252,6 +254,17 @@ const MentalHealthContent = () => {
       border: "border-green-500/30",
       iconBg: "bg-gradient-to-br from-green-500/30 to-emerald-500/20",
       iconColor: "text-green-400"
+    },
+    {
+      id: "podcasts",
+      title: "Podcasts",
+      description: "Mental health podcasts for tradespeople",
+      icon: Headphones,
+      gradient: "from-orange-500/20 via-amber-500/10 to-transparent",
+      border: "border-orange-500/30",
+      iconBg: "bg-gradient-to-br from-orange-500/30 to-amber-500/20",
+      iconColor: "text-orange-400",
+      badge: { text: "New", color: "bg-orange-500/20 text-orange-300" }
     }
   ];
 
@@ -259,7 +272,7 @@ const MentalHealthContent = () => {
     const BackBtn = () => (
       <button
         onClick={() => setActiveSection(null)}
-        className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-white
+        className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white
           transition-colors mb-4 py-2"
       >
         <ArrowLeft className="h-4 w-4" />
@@ -318,10 +331,7 @@ const MentalHealthContent = () => {
         );
       case "talk":
         return (
-          <div>
-            <BackBtn />
-            <MentalHealthMate />
-          </div>
+          <PeerSupportHub onClose={() => setActiveSection(null)} />
         );
       case "tools":
         return (
@@ -342,6 +352,13 @@ const MentalHealthContent = () => {
           <div>
             <BackBtn />
             <SupportNetworkTab />
+          </div>
+        );
+      case "podcasts":
+        return (
+          <div>
+            <BackBtn />
+            <PodcastsTab />
           </div>
         );
       case "crisis":
@@ -381,7 +398,7 @@ const MentalHealthContent = () => {
               <h1 className="text-2xl font-bold text-white mb-1">
                 {firstName}
               </h1>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white/70">
                 {todaysMood
                   ? "You've checked in today. How are you now?"
                   : "How are you feeling today?"}
@@ -394,14 +411,14 @@ const MentalHealthContent = () => {
                 <span className="text-3xl">
                   {moodEmojis.find(m => m.value === todaysMood.mood)?.emoji || "😐"}
                 </span>
-                <span className="text-[10px] text-muted-foreground mt-1">Today</span>
+                <span className="text-[10px] text-white/80 mt-1">Today</span>
               </div>
             )}
           </div>
 
           {/* Quick Mood Selector */}
           <div className="mt-4">
-            <p className="text-xs text-muted-foreground mb-2">Quick mood check:</p>
+            <p className="text-xs text-white/80 mb-2">Quick mood check:</p>
             <div className="flex gap-2">
               {moodEmojis.map((mood) => (
                 <button
@@ -435,7 +452,7 @@ const MentalHealthContent = () => {
                 <TrendingUp className="h-4 w-4" />
               </div>
               <div className="text-xl font-bold text-white">{streak}</div>
-              <div className="text-[10px] text-muted-foreground">Day Streak</div>
+              <div className="text-[10px] text-white/80">Day Streak</div>
             </CardContent>
           </Card>
           <Card className="border-white/10 bg-white/5 backdrop-blur">
@@ -444,7 +461,7 @@ const MentalHealthContent = () => {
                 <Heart className="h-4 w-4" />
               </div>
               <div className="text-xl font-bold text-white">{moodHistory.length}</div>
-              <div className="text-[10px] text-muted-foreground">Check-ins</div>
+              <div className="text-[10px] text-white/80">Check-ins</div>
             </CardContent>
           </Card>
           <Card className="border-white/10 bg-white/5 backdrop-blur">
@@ -453,7 +470,7 @@ const MentalHealthContent = () => {
                 <PenLine className="h-4 w-4" />
               </div>
               <div className="text-xl font-bold text-white">{journalCount}</div>
-              <div className="text-[10px] text-muted-foreground">Journal</div>
+              <div className="text-[10px] text-white/80">Journal</div>
             </CardContent>
           </Card>
         </div>
@@ -470,7 +487,7 @@ const MentalHealthContent = () => {
               <p className="text-sm font-medium text-amber-400">
                 {streak >= 7 ? "Amazing consistency!" : "You're building a habit!"}
               </p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white/80">
                 {streak} day streak - keep going!
               </p>
             </div>
@@ -484,7 +501,7 @@ const MentalHealthContent = () => {
 
       {/* Quick Actions */}
       <div>
-        <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-2">
+        <h2 className="text-sm font-semibold text-white/70 uppercase tracking-wider mb-3 flex items-center gap-2">
           <Sparkles className="h-4 w-4 text-amber-400" />
           Quick Actions
         </h2>
@@ -504,7 +521,7 @@ const MentalHealthContent = () => {
               )}
               <action.icon className={`h-7 w-7 ${action.iconColor} mx-auto mb-1`} />
               <h3 className="font-semibold text-xs text-white">{action.title}</h3>
-              <p className="text-[10px] text-muted-foreground mt-0.5 leading-tight">{action.description}</p>
+              <p className="text-[10px] text-white/80 mt-0.5 leading-tight">{action.description}</p>
             </button>
           ))}
         </div>
@@ -512,7 +529,7 @@ const MentalHealthContent = () => {
 
       {/* Main Sections */}
       <div>
-        <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-2">
+        <h2 className="text-sm font-semibold text-white/70 uppercase tracking-wider mb-3 flex items-center gap-2">
           <Brain className="h-4 w-4 text-purple-400" />
           Explore
         </h2>
@@ -538,9 +555,9 @@ const MentalHealthContent = () => {
                       </span>
                     )}
                   </div>
-                  <p className="text-xs text-muted-foreground truncate">{section.description}</p>
+                  <p className="text-xs text-white/80 truncate">{section.description}</p>
                 </div>
-                <ChevronRight className="h-5 w-5 text-muted-foreground/50 flex-shrink-0" />
+                <ChevronRight className="h-5 w-5 text-white/70 flex-shrink-0" />
               </div>
             </button>
           ))}
@@ -556,7 +573,7 @@ const MentalHealthContent = () => {
             </div>
             <div className="flex-1">
               <h3 className="font-semibold text-amber-400 text-sm mb-1">For Electrical Workers</h3>
-              <p className="text-xs text-muted-foreground mb-3">
+              <p className="text-xs text-white/80 mb-3">
                 Industry-specific support from the Electrical Industries Charity
               </p>
               <div className="flex flex-wrap gap-2">

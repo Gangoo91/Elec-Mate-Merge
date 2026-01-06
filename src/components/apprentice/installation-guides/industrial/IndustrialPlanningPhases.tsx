@@ -41,7 +41,7 @@ const IndustrialPlanningPhases = () => {
   ];
 
   return (
-    <Card className="border-blue-500/30 bg-elec-gray">
+    <Card className="border-blue-500/30 bg-white/5">
       <CardHeader>
         <div className="flex items-center gap-2">
           <ClipboardList className="h-6 w-6 text-blue-400" />

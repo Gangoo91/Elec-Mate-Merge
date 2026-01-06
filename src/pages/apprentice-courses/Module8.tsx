@@ -21,12 +21,12 @@ const sections = [
 
 const Module8 = () => {
   return (
-    <div className="min-h-screen bg-background p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-[#1a1a1a] p-4 sm:p-6 lg:p-8">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center gap-4 mb-8">
           <Link 
             to=".." 
-            className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors"
+            className="inline-flex items-center text-white/70 hover:text-white transition-colors"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Level 2 Overview
@@ -34,7 +34,7 @@ const Module8 = () => {
         </div>
         
         <div className="mb-8">
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
             Module 8: Mock Examinations & Assessment
           </h1>
         </div>

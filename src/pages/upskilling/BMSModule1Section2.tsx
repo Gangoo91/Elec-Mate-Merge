@@ -1,780 +1,501 @@
-import { ArrowLeft, ArrowRight, Building, Thermometer, Lightbulb, Shield, Wifi, CheckCircle, AlertTriangle, Settings, Zap, Users, Target, Book, HelpCircle, Network, Battery, Gauge, Wrench, FileText, Calculator } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
-import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { bmsModule1Section2QuizData } from '@/data/upskilling/bmsModule1Section2QuizData';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
+import { bmsModule1Section2QuizData } from "@/data/upskilling/bmsModule1Section2QuizData";
+import useSEO from "@/hooks/useSEO";
+
+const TITLE = "Common Systems Integrated with BMS - BMS Module 1 Section 2";
+const DESCRIPTION = "Learn about HVAC, lighting, and access control integration with Building Management Systems. Communication protocols, energy management, and installation best practices.";
+
+const quickCheckQuestions = [
+  {
+    id: "hvac-trigger",
+    question: "What type of sensor might trigger a BMS to adjust ventilation in a meeting room?",
+    options: [
+      "Light sensor",
+      "CO₂ sensor",
+      "Door sensor",
+      "Water sensor"
+    ],
+    correctIndex: 1,
+    explanation: "A CO₂ sensor monitors air quality and occupancy levels. When CO₂ rises in a meeting room, the BMS automatically increases ventilation to maintain healthy indoor air quality."
+  },
+  {
+    id: "lighting-savings",
+    question: "How does daylight harvesting reduce energy consumption?",
+    options: [
+      "By turning off all lights at night",
+      "By dimming or switching off lights when natural light is sufficient",
+      "By using only LED bulbs",
+      "By reducing building size"
+    ],
+    correctIndex: 1,
+    explanation: "Daylight harvesting automatically dims or switches off lights when natural daylight is sufficient, reducing energy consumption by up to 40% in perimeter areas."
+  },
+  {
+    id: "fire-safety",
+    question: "How can BMS integration improve safety during a fire alarm event?",
+    options: [
+      "By increasing HVAC output",
+      "By locking all doors",
+      "By shutting down HVAC to prevent smoke spread and unlocking doors",
+      "By turning on all lights"
+    ],
+    correctIndex: 2,
+    explanation: "BMS integration allows automatic shutdown of HVAC to prevent smoke spread and unlocks doors for safe evacuation during fire events."
+  },
+  {
+    id: "modern-integration",
+    question: "Give one example of a modern system (outside HVAC/lighting) that can be integrated with a BMS.",
+    options: [
+      "Manual switches only",
+      "Solar PV, battery storage, or EV charging",
+      "Pneumatic controls",
+      "Basic time clocks"
+    ],
+    correctIndex: 1,
+    explanation: "Modern BMS increasingly integrates with IoT devices, solar PV systems, battery storage, and EV charging to create future-proof, sustainable buildings."
+  }
+];
+
+const faqs = [
+  {
+    question: "What is the minimum cable separation between power and data cables?",
+    answer: "Power and data cables should be separated by a minimum of 300mm to prevent electromagnetic interference and ensure reliable BMS communication."
+  },
+  {
+    question: "Which protocol is the international standard for BMS (ISO 16484-5)?",
+    answer: "BACnet is the ISO 16484-5 compliant international standard for building automation and control networking, widely used in commercial buildings."
+  },
+  {
+    question: "What is the typical payback period for BMS investment in office buildings?",
+    answer: "Office buildings typically see a payback period of 3-5 years, with energy savings of 15-30% and maintenance cost reductions of 10-20%."
+  }
+];
 
 const BMSModule1Section2 = () => {
+  useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
-        <Link to="../bms-module-1">
-          <Button
-            variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 1
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            <Building className="h-8 w-8 text-yellow-400" />
-            <Badge 
-              variant="secondary" 
-              className="bg-yellow-400/10 text-yellow-400 hover:bg-yellow-400/10 font-semibold text-sm px-3 py-1 border-0"
-            >
-              Module 1 - Section 2
-            </Badge>
-          </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
-            Common Systems Integrated with BMS
-          </h1>
-          <p className="text-lg sm:text-xl text-white max-w-3xl">
-            HVAC, Lighting, and Access Control Integration for Modern Buildings
-          </p>
         </div>
-      </header>
+      </div>
 
       {/* Main Content */}
-      <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="space-y-4 sm:space-y-6">
-          
-          {/* Introduction Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Book className="h-6 w-6 text-yellow-400" />
-                Introduction
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <p className="text-base leading-relaxed">
-                A Building Management System (BMS) is only valuable when it integrates and coordinates different building services. The most common systems connected to a BMS include heating, ventilation, and air conditioning (HVAC), lighting, and access/security controls.
-              </p>
-              <p className="text-base leading-relaxed">
-                For electricians, understanding how these systems interact within a BMS is essential for installation, maintenance, and troubleshooting. This integration creates intelligent buildings that operate efficiently, safely, and economically.
-              </p>
-            </CardContent>
-          </Card>
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
 
-          {/* Learning Outcomes Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Target className="h-6 w-6 text-yellow-400" />
-                Learning Outcomes
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <p className="text-base leading-relaxed mb-4">
-                By the end of this section, you should be able to:
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-3">
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm">Identify the main systems typically integrated with a BMS</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm">Describe how HVAC, lighting, and access control operate under BMS supervision</span>
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm">Explain the benefits of integration for efficiency, comfort, and safety</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm">Recognise the electrician's role in wiring and connecting these systems</span>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+        {/* Centered Title */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 1.2</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Common Systems Integrated with BMS
+          </h1>
+          <p className="text-white/80">
+            HVAC, Lighting, and Access Control Integration
+          </p>
+        </header>
 
-          {/* HVAC Integration Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Thermometer className="h-6 w-6 text-yellow-400" />
-                HVAC Integration
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-yellow-400/10 p-4 rounded-lg">
-                <p className="text-base leading-relaxed">
-                  <strong className="text-white">HVAC is the largest energy user in most buildings.</strong> BMS connects to sensors (temperature, humidity, CO₂) and controls boilers, chillers, fans, and dampers for optimal performance and energy efficiency.
-                </p>
-              </div>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold text-lg">Key Control Points</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• <strong className="text-white">Temperature control:</strong> Maintaining comfort zones automatically</li>
-                    <li>• <strong className="text-white">Humidity management:</strong> Preventing condensation and ensuring comfort</li>
-                    <li>• <strong className="text-white">Air quality monitoring:</strong> CO₂ and indoor air quality sensors</li>
-                    <li>• <strong className="text-white">Equipment scheduling:</strong> Time-based and occupancy-based operation</li>
-                  </ul>
-                </div>
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold text-lg">Practical Example</h4>
-                  <div className="bg-green-600/10 p-3 rounded-lg">
-                    <p className="text-sm leading-relaxed">
-                      <strong>Meeting Room Scenario:</strong> If CO₂ levels rise in a meeting room, the BMS automatically increases ventilation to bring in fresh outside air, maintaining healthy indoor air quality without manual intervention.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-yellow-600/10 p-4 rounded-lg border border-yellow-400/30">
-                <div className="flex items-start gap-3">
-                  <HelpCircle className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-yellow-400">In-line Check:</p>
-                    <p className="text-sm mt-1">What type of sensor might trigger a BMS to adjust ventilation?</p>
-                    <p className="text-xs mt-2 text-gray-400">Answer: CO₂ sensor - monitors air quality and occupancy levels</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Lighting Systems Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Lightbulb className="h-6 w-6 text-yellow-400" />
-                Lighting Systems Integration
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-yellow-400/10 p-4 rounded-lg">
-                <p className="text-base leading-relaxed">
-                  <strong className="text-white">Lighting accounts for a significant share of building energy use.</strong> BMS can control lights via schedules, occupancy sensors, and daylight sensors to minimise waste whilst ensuring adequate illumination.
-                </p>
-              </div>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold text-lg">Control Methods</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• <strong className="text-white">Time scheduling:</strong> Automatic on/off based on occupancy patterns</li>
-                    <li>• <strong className="text-white">Occupancy detection:</strong> Motion sensors trigger lighting activation</li>
-                    <li>• <strong className="text-white">Daylight harvesting:</strong> Dimming based on natural light levels</li>
-                    <li>• <strong className="text-white">Emergency lighting:</strong> Monitoring and compliance management</li>
-                  </ul>
-                </div>
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold text-lg">Energy Benefits</h4>
-                  <div className="bg-green-600/10 p-3 rounded-lg">
-                    <p className="text-sm leading-relaxed">
-                      <strong>Daylight Integration:</strong> Automatically dimming or switching off lights when natural daylight is sufficient, reducing energy consumption by up to 40% in perimeter areas.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-yellow-600/10 p-4 rounded-lg border border-yellow-400/30">
-                <div className="flex items-start gap-3">
-                  <HelpCircle className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-yellow-400">In-line Check:</p>
-                    <p className="text-sm mt-1">Give one way a BMS helps reduce energy use through lighting control.</p>
-                    <p className="text-xs mt-2 text-gray-400">Answer: Automatic scheduling or daylight harvesting - dimming/switching lights based on occupancy or natural light</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Access and Security Systems Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Shield className="h-6 w-6 text-yellow-400" />
-                Access and Security Systems Integration
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-yellow-400/10 p-4 rounded-lg">
-                <p className="text-base leading-relaxed">
-                  <strong className="text-white">Integration with door access, CCTV, and alarms enhances safety.</strong> BMS coordination provides comprehensive security management and emergency response capabilities.
-                </p>
-              </div>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold text-lg">Security Features</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• <strong className="text-white">Access logging:</strong> Complete audit trail of entry/exit events</li>
-                    <li>• <strong className="text-white">Automated lighting:</strong> Lights activate with access card use</li>
-                    <li>• <strong className="text-white">CCTV integration:</strong> Camera activation triggered by access events</li>
-                    <li>• <strong className="text-white">Alarm coordination:</strong> Integrated response to security breaches</li>
-                  </ul>
-                </div>
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold text-lg">Fire Safety Integration</h4>
-                  <div className="bg-red-600/10 p-3 rounded-lg">
-                    <p className="text-sm leading-relaxed">
-                      <strong>Emergency Response:</strong> Fire alarm integration allows the BMS to shut down HVAC to prevent smoke spread and unlock doors automatically for safe evacuation.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-yellow-600/10 p-4 rounded-lg border border-yellow-400/30">
-                <div className="flex items-start gap-3">
-                  <HelpCircle className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-yellow-400">In-line Check:</p>
-                    <p className="text-sm mt-1">How can BMS integration improve safety during a fire alarm event?</p>
-                    <p className="text-xs mt-2 text-gray-400">Answer: Automatically shuts down HVAC and unlocks doors for safe evacuation whilst preventing smoke spread</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Expanding Integrations Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Wifi className="h-6 w-6 text-yellow-400" />
-                Expanding Integrations (IoT and Renewables)
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-yellow-400/10 p-4 rounded-lg">
-                <p className="text-base leading-relaxed">
-                  <strong className="text-white">Modern BMS increasingly integrates with IoT devices and renewable systems.</strong> This creates opportunities for future-proofing buildings and achieving sustainability goals.
-                </p>
-              </div>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold text-lg">IoT Integration</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• <strong className="text-white">Wireless sensors:</strong> Easy retrofit and expansion capabilities</li>
-                    <li>• <strong className="text-white">Smart meters:</strong> Real-time energy monitoring and analysis</li>
-                    <li>• <strong className="text-white">Cloud connectivity:</strong> Remote monitoring and predictive maintenance</li>
-                    <li>• <strong className="text-white">Mobile interfaces:</strong> Smartphone and tablet control applications</li>
-                  </ul>
-                </div>
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold text-lg">Renewable Integration</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• <strong className="text-white">Solar PV systems:</strong> Energy generation monitoring and optimisation</li>
-                    <li>• <strong className="text-white">Battery storage:</strong> Load balancing and peak shaving control</li>
-                    <li>• <strong className="text-white">EV charging:</strong> Smart charging based on energy availability</li>
-                    <li>• <strong className="text-white">Heat pumps:</strong> Efficient heating/cooling system integration</li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="bg-yellow-600/10 p-4 rounded-lg border border-yellow-400/30">
-                <div className="flex items-start gap-3">
-                  <HelpCircle className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-yellow-400">In-line Check:</p>
-                    <p className="text-sm mt-1">Give one example of a modern system (outside HVAC/lighting) that can be integrated with a BMS.</p>
-                    <p className="text-xs mt-2 text-gray-400">Answer: Solar PV, battery storage, EV charging, or IoT sensors</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Practical Guidance Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Zap className="h-6 w-6 text-yellow-400" />
-                Practical Guidance for Electricians
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-yellow-400/10 p-4 rounded-lg">
-                <p className="text-base leading-relaxed">
-                  <strong className="text-white">As an electrician working with BMS installations:</strong>
-                </p>
-              </div>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold text-lg">Installation Requirements</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• <strong className="text-white">Wiring diagrams:</strong> Always read and understand system interconnections</li>
-                    <li>• <strong className="text-white">Low-voltage wiring:</strong> Be mindful of control and communication cabling</li>
-                    <li>• <strong className="text-white">Sensor placement:</strong> Ensure correct installation for accurate feedback</li>
-                    <li>• <strong className="text-white">Cable separation:</strong> Keep data cables away from power cables</li>
-                  </ul>
-                </div>
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold text-lg">Quality Assurance</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• <strong className="text-white">Commissioning support:</strong> Work closely with commissioning engineers</li>
-                    <li>• <strong className="text-white">Documentation:</strong> Maintain accurate as-built drawings</li>
-                    <li>• <strong className="text-white">Testing procedures:</strong> Verify all connections before energising</li>
-                    <li>• <strong className="text-white">System integration:</strong> Your installation quality determines BMS performance</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Real World Example Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Users className="h-6 w-6 text-yellow-400" />
-                Real World Case Study
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-green-600/10 p-4 rounded-lg">
-                <h4 className="text-white font-semibold text-lg mb-3">London Hospital BMS Integration</h4>
-                <p className="text-base leading-relaxed">
-                  A hospital in London integrated HVAC, lighting, and access control through its BMS with remarkable outcomes:
-                </p>
-              </div>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <div className="bg-yellow-400/10 p-4 rounded-lg">
-                  <h5 className="text-white font-semibold mb-2">Patient Comfort</h5>
-                  <p className="text-sm">Patient rooms kept at stable, comfortable temperatures automatically adjusted based on occupancy and medical requirements.</p>
-                </div>
-                <div className="bg-purple-600/10 p-4 rounded-lg">
-                  <h5 className="text-white font-semibold mb-2">Energy Efficiency</h5>
-                  <p className="text-sm">Lighting automatically dimmed in corridors at night whilst maintaining safety levels, reducing energy waste significantly.</p>
-                </div>
-                <div className="bg-red-600/10 p-4 rounded-lg">
-                  <h5 className="text-white font-semibold mb-2">Security Enhancement</h5>
-                  <p className="text-sm">Security alerts linked to CCTV and access logs enabled rapid response to incidents and improved overall safety.</p>
-                </div>
-              </div>
-              
-              <div className="bg-yellow-600/10 p-4 rounded-lg border border-yellow-400/30">
-                <h5 className="text-white font-semibold mb-2">Financial Results</h5>
-                <p className="text-sm leading-relaxed">
-                  <strong className="text-yellow-400">Annual energy savings exceeded £250,000</strong>, alongside improved patient comfort and staff efficiency. The payback period was less than 3 years.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Important Notes Section */}
-          <Card className="bg-card border-transparent border-l-4 border-l-yellow-400">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-6 w-6 text-yellow-400" />
-                Important Notes
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <div className="bg-yellow-600/10 p-4 rounded-lg">
-                <p className="text-sm leading-relaxed">
-                  <strong className="text-white">System Integration:</strong> BMS integration requires careful planning of all electrical connections. Poor installation can lead to system failures and energy inefficiency.
-                </p>
-              </div>
-              <div className="bg-yellow-400/10 p-4 rounded-lg">
-                <p className="text-sm leading-relaxed">
-                  <strong className="text-white">Safety Compliance:</strong> All integrated systems must comply with BS 7671 and relevant building regulations. Emergency systems require independent backup power supplies.
-                </p>
-              </div>
-              <div className="bg-green-600/10 p-4 rounded-lg">
-                <p className="text-sm leading-relaxed">
-                  <strong className="text-white">Future Opportunities:</strong> Understanding BMS integration opens new career opportunities in smart buildings, renewable energy, and sustainable construction projects.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Summary Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Settings className="h-6 w-6 text-yellow-400" />
-                Section Summary
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <p className="text-sm">• BMS integrates HVAC, lighting, and access/security as core systems</p>
-                  <p className="text-sm">• HVAC integration manages air quality and comfort efficiently</p>
-                  <p className="text-sm">• Lighting integration reduces wasted energy and ensures compliance</p>
-                </div>
-                <div className="space-y-2">
-                  <p className="text-sm">• Access/security integration enhances safety and monitoring</p>
-                  <p className="text-sm">• Expanding integrations include IoT devices and renewable systems</p>
-                  <p className="text-sm">• Proper installation is critical for system performance and safety</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Protocol Integration Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Network className="h-6 w-6 text-yellow-400" />
-                Communication Protocols and Integration
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-yellow-400/10 p-4 rounded-lg">
-                <p className="text-base leading-relaxed">
-                  <strong className="text-white">BMS systems rely on standardised communication protocols</strong> to connect diverse building services. Understanding these protocols is essential for proper installation and troubleshooting.
-                </p>
-              </div>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold text-lg">BACnet Protocol</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• <strong className="text-white">Industry standard:</strong> ISO 16484-5 compliant protocol</li>
-                    <li>• <strong className="text-white">Open protocol:</strong> Vendor-independent communication</li>
-                    <li>• <strong className="text-white">Multiple networks:</strong> Ethernet, MS/TP, LonTalk support</li>
-                    <li>• <strong className="text-white">Object-oriented:</strong> Standardised data representation</li>
-                  </ul>
-                </div>
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold text-lg">Modbus Protocol</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• <strong className="text-white">Simple and robust:</strong> Easy to implement and troubleshoot</li>
-                    <li>• <strong className="text-white">Serial and Ethernet:</strong> RS-485 and TCP/IP variants</li>
-                    <li>• <strong className="text-white">Master-slave:</strong> Clear communication hierarchy</li>
-                    <li>• <strong className="text-white">Wide support:</strong> Compatible with many devices</li>
-                  </ul>
-                </div>
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold text-lg">LonWorks Protocol</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• <strong className="text-white">Peer-to-peer:</strong> Distributed intelligence architecture</li>
-                    <li>• <strong className="text-white">Self-healing:</strong> Automatic route discovery</li>
-                    <li>• <strong className="text-white">Variable topology:</strong> Star, bus, loop configurations</li>
-                    <li>• <strong className="text-white">Interoperability:</strong> LonMark certified devices</li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="bg-yellow-600/10 p-4 rounded-lg border border-yellow-400/30">
-                <div className="flex items-start gap-3">
-                  <HelpCircle className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-yellow-400">Installation Tip:</p>
-                    <p className="text-sm mt-1">Always verify protocol compatibility before connecting devices. Mixed protocols require gateways or bridges for communication.</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Energy Management Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Battery className="h-6 w-6 text-yellow-400" />
-                Advanced Energy Management Strategies
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-yellow-400/10 p-4 rounded-lg">
-                <p className="text-base leading-relaxed">
-                  <strong className="text-white">Modern BMS systems implement sophisticated energy management</strong> strategies that go beyond basic scheduling to actively optimise building performance and reduce operational costs.
-                </p>
-              </div>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold text-lg">Peak Demand Management</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• <strong className="text-white">Load shedding:</strong> Automatically reduce non-critical loads during peak periods</li>
-                    <li>• <strong className="text-white">Demand limiting:</strong> Keep maximum demand below contracted levels</li>
-                    <li>• <strong className="text-white">Load sequencing:</strong> Stagger equipment start-up to prevent demand spikes</li>
-                    <li>• <strong className="text-white">Priority control:</strong> Maintain critical systems whilst reducing others</li>
-                  </ul>
-                  <div className="bg-green-600/10 p-3 rounded-lg">
-                    <p className="text-sm leading-relaxed">
-                      <strong>Example:</strong> Office building reduces HVAC output by 20% and dims lighting by 30% during peak tariff periods, saving £15,000 annually.
-                    </p>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold text-lg">Energy Monitoring & Analytics</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• <strong className="text-white">Real-time monitoring:</strong> Continuous tracking of energy consumption</li>
-                    <li>• <strong className="text-white">Trend analysis:</strong> Identify patterns and anomalies in usage</li>
-                    <li>• <strong className="text-white">Benchmarking:</strong> Compare performance against targets and peers</li>
-                    <li>• <strong className="text-white">Fault detection:</strong> Early warning of equipment inefficiencies</li>
-                  </ul>
-                  <div className="bg-purple-600/10 p-3 rounded-lg">
-                    <p className="text-sm leading-relaxed">
-                      <strong>ROI Impact:</strong> Energy monitoring typically identifies 5-15% savings opportunities within the first year of implementation.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Maintenance and Troubleshooting Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Wrench className="h-6 w-6 text-yellow-400" />
-                Maintenance and Troubleshooting Guide
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-yellow-400/10 p-4 rounded-lg">
-                <p className="text-base leading-relaxed">
-                  <strong className="text-white">Effective maintenance and systematic troubleshooting</strong> ensure integrated BMS systems continue to operate efficiently and safely throughout their service life.
-                </p>
-              </div>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold text-lg">Preventive Maintenance</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• <strong className="text-white">Sensor calibration:</strong> Quarterly accuracy checks and adjustments</li>
-                    <li>• <strong className="text-white">Connection inspection:</strong> Check all electrical and data connections</li>
-                    <li>• <strong className="text-white">Software updates:</strong> Keep firmware and software current</li>
-                    <li>• <strong className="text-white">Backup verification:</strong> Test system backup and recovery procedures</li>
-                  </ul>
-                  <div className="bg-orange-600/10 p-3 rounded-lg">
-                    <p className="text-sm leading-relaxed">
-                      <strong>BS 7671 Compliance:</strong> Regular inspection and testing of all electrical connections is mandatory under Section 514.
-                    </p>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold text-lg">Common Issues & Solutions</h4>
-                  <div className="space-y-3">
-                    <div className="bg-card p-3 rounded-lg">
-                      <p className="text-sm font-semibold text-white mb-1">Communication Failures</p>
-                      <p className="text-xs text-gray-300">Check network cables, verify protocol settings, test with diagnostic tools</p>
-                    </div>
-                    <div className="bg-card p-3 rounded-lg">
-                      <p className="text-sm font-semibold text-white mb-1">Sensor Drift</p>
-                      <p className="text-xs text-gray-300">Recalibrate sensors, check environmental conditions, replace if necessary</p>
-                    </div>
-                    <div className="bg-card p-3 rounded-lg">
-                      <p className="text-sm font-semibold text-white mb-1">Control Loop Instability</p>
-                      <p className="text-xs text-gray-300">Review PID parameters, check actuator response, verify sensor placement</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Installation Best Practices Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Gauge className="h-6 w-6 text-yellow-400" />
-                Advanced Installation Best Practices
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-yellow-400/10 p-4 rounded-lg">
-                <p className="text-base leading-relaxed">
-                  <strong className="text-white">Professional installation techniques</strong> are critical for achieving optimal BMS performance and ensuring long-term reliability of integrated building systems.
-                </p>
-              </div>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold text-lg">Wiring Standards & Practices</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• <strong className="text-white">Cable segregation:</strong> Separate power and data cables by minimum 300mm</li>
-                    <li>• <strong className="text-white">Screening and earthing:</strong> Proper EMC protection for all data cables</li>
-                    <li>• <strong className="text-white">Fire-rated cables:</strong> Use appropriate fire-resistant cables in escape routes</li>
-                    <li>• <strong className="text-white">Termination quality:</strong> Clean, tight connections with proper strain relief</li>
-                  </ul>
-                </div>
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold text-lg">Commissioning Procedures</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• <strong className="text-white">Pre-commissioning:</strong> Verify all hardware before software configuration</li>
-                    <li>• <strong className="text-white">Point-to-point testing:</strong> Test every I/O point individually</li>
-                    <li>• <strong className="text-white">Integration testing:</strong> Verify system interactions and sequences</li>
-                    <li>• <strong className="text-white">Performance verification:</strong> Confirm system meets design specifications</li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="bg-yellow-600/10 p-4 rounded-lg border border-yellow-400/30">
-                <div className="flex items-start gap-3">
-                  <HelpCircle className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-yellow-400">Critical Installation Point:</p>
-                    <p className="text-sm mt-1">Temperature sensors must be located away from heat sources and in representative locations. Poor sensor placement can cause the entire HVAC system to operate inefficiently.</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Regulatory Compliance Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <FileText className="h-6 w-6 text-yellow-400" />
-                Regulatory Compliance and Standards
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-yellow-400/10 p-4 rounded-lg">
-                <p className="text-base leading-relaxed">
-                  <strong className="text-white">Compliance with UK building regulations and electrical standards</strong> is mandatory for all BMS installations. Understanding these requirements protects both installers and building occupants.
-                </p>
-              </div>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold text-lg">BS 7671 Requirements</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• <strong className="text-white">Section 444:</strong> Measures against electromagnetic influences</li>
-                    <li>• <strong className="text-white">Section 528:</strong> Selection and erection of wiring systems</li>
-                    <li>• <strong className="text-white">Section 710:</strong> Medical locations special requirements</li>
-                    <li>• <strong className="text-white">Section 528.1:</strong> Cables in escape routes - fire performance</li>
-                  </ul>
-                </div>
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold text-lg">Building Regulations</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• <strong className="text-white">Part L:</strong> Conservation of fuel and power requirements</li>
-                    <li>• <strong className="text-white">Part B:</strong> Fire safety provisions for controls and wiring</li>
-                    <li>• <strong className="text-white">Part M:</strong> Access to and use of buildings considerations</li>
-                    <li>• <strong className="text-white">Part P:</strong> Electrical safety in dwelling applications</li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="bg-red-600/10 p-4 rounded-lg border border-red-500/20">
-                <div className="flex items-start gap-3">
-                  <AlertTriangle className="h-5 w-5 text-red-500 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-red-500">Legal Requirement:</p>
-                    <p className="text-sm mt-1">All BMS electrical work must be certified by a competent person. Non-compliance can result in insurance claims being voided and legal liability for accidents.</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Cost-Benefit Analysis Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Calculator className="h-6 w-6 text-yellow-400" />
-                Cost-Benefit Analysis and ROI
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-yellow-400/10 p-4 rounded-lg">
-                <p className="text-base leading-relaxed">
-                  <strong className="text-white">Understanding the financial benefits of BMS integration</strong> helps justify investment costs and demonstrates the value of professional installation to clients.
-                </p>
-              </div>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold text-lg">Typical Investment Costs</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• <strong className="text-white">HVAC integration:</strong> £15-25 per m² floor area</li>
-                    <li>• <strong className="text-white">Lighting control:</strong> £8-15 per m² floor area</li>
-                    <li>• <strong className="text-white">Access control:</strong> £200-500 per door</li>
-                    <li>• <strong className="text-white">Installation labour:</strong> 30-40% of equipment cost</li>
-                  </ul>
-                </div>
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold text-lg">Annual Savings</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• <strong className="text-white">Energy costs:</strong> 15-30% reduction typical</li>
-                    <li>• <strong className="text-white">Maintenance:</strong> 10-20% reduction in costs</li>
-                    <li>• <strong className="text-white">Staff productivity:</strong> 2-5% improvement</li>
-                    <li>• <strong className="text-white">Insurance:</strong> Premium reductions possible</li>
-                  </ul>
-                </div>
-                <div className="space-y-4">
-                  <h4 className="text-white font-semibold text-lg">Payback Analysis</h4>
-                  <div className="space-y-3">
-                    <div className="bg-green-600/10 p-3 rounded-lg">
-                      <p className="text-sm font-semibold text-white mb-1">Office Buildings</p>
-                      <p className="text-xs text-gray-300">Typical payback: 3-5 years</p>
-                    </div>
-                    <div className="bg-yellow-400/10 p-3 rounded-lg">
-                      <p className="text-sm font-semibold text-white mb-1">Retail Premises</p>
-                      <p className="text-xs text-gray-300">Typical payback: 2-4 years</p>
-                    </div>
-                    <div className="bg-purple-600/10 p-3 rounded-lg">
-                      <p className="text-sm font-semibold text-white mb-1">Industrial Facilities</p>
-                      <p className="text-xs text-gray-300">Typical payback: 1-3 years</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-green-600/10 p-4 rounded-lg border border-green-500/20">
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-green-500">Business Case Example:</p>
-                    <p className="text-sm mt-1">10,000 m² office building: £200,000 investment, £65,000 annual savings, 3.1 year payback, 15-year NPV of £485,000</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Test Your Knowledge Section - Inline Quiz */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Target className="h-6 w-6 text-yellow-400" />
-                Test Your Knowledge
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <p className="text-base leading-relaxed mb-6">
-                Complete the quiz below to test your understanding of BMS system integration concepts. Answer each question to progress through the assessment.
-              </p>
-              <SingleQuestionQuiz 
-                questions={bmsModule1Section2QuizData}
-                title="Section 2 Assessment: Common Systems Integrated with BMS"
-              />
-            </CardContent>
-          </Card>
-
-          {/* Navigation */}
-          <div className="flex flex-col sm:flex-row justify-between gap-4">
-            <Link to="../bms-module-1-section-1" className="flex-1 sm:flex-initial">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card w-full sm:w-auto">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="../bms-module-1-section-3" className="flex-1 sm:flex-initial">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600 w-full sm:w-auto">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>HVAC:</strong> Temperature, humidity, CO₂, air quality control</li>
+              <li><strong>Lighting:</strong> Scheduling, occupancy, daylight harvesting</li>
+              <li><strong>Security:</strong> Access control, CCTV, fire alarm integration</li>
+              <li><strong>Protocols:</strong> BACnet, Modbus, LonWorks</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Sensors, control panels, data cables</li>
+              <li><strong>Use:</strong> Integration, troubleshooting, commissioning</li>
+              <li><strong>Apply:</strong> Energy savings 15-30%, 3-5 year payback</li>
+            </ul>
           </div>
         </div>
-      </main>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Identify main systems integrated with a BMS",
+              "Describe how HVAC, lighting, and access control operate under BMS",
+              "Explain benefits of integration for efficiency and safety",
+              "Recognise the electrician's role in wiring and connecting systems",
+              "Understand communication protocols (BACnet, Modbus, LonWorks)",
+              "Apply cost-benefit analysis and ROI calculations"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 01: HVAC Integration */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            HVAC Integration
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              <strong>HVAC is the largest energy user in most buildings.</strong> BMS connects to sensors
+              (temperature, humidity, CO₂) and controls boilers, chillers, fans, and dampers for optimal
+              performance and energy efficiency.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Control Points</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Temperature control:</strong> Maintaining comfort zones automatically</li>
+                  <li><strong>Humidity management:</strong> Preventing condensation and ensuring comfort</li>
+                  <li><strong>Air quality monitoring:</strong> CO₂ and indoor air quality sensors</li>
+                  <li><strong>Equipment scheduling:</strong> Time-based and occupancy-based operation</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Practical Example</p>
+                <p className="text-sm text-white/90">
+                  <strong>Meeting Room Scenario:</strong> If CO₂ levels rise in a meeting room, the BMS
+                  automatically increases ventilation to bring in fresh outside air, maintaining healthy
+                  indoor air quality without manual intervention.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 02: Lighting Systems */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Lighting Systems Integration
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              <strong>Lighting accounts for a significant share of building energy use.</strong> BMS can
+              control lights via schedules, occupancy sensors, and daylight sensors to minimise waste
+              whilst ensuring adequate illumination.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Control Methods</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Time scheduling:</strong> Automatic on/off based on occupancy patterns</li>
+                  <li><strong>Occupancy detection:</strong> Motion sensors trigger lighting activation</li>
+                  <li><strong>Daylight harvesting:</strong> Dimming based on natural light levels</li>
+                  <li><strong>Emergency lighting:</strong> Monitoring and compliance management</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Energy Benefits</p>
+                <p className="text-sm text-white/90">
+                  <strong>Daylight Integration:</strong> Automatically dimming or switching off lights
+                  when natural daylight is sufficient, reducing energy consumption by up to 40% in
+                  perimeter areas.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 03: Access and Security */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Access and Security Systems
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              <strong>Integration with door access, CCTV, and alarms enhances safety.</strong> BMS
+              coordination provides comprehensive security management and emergency response capabilities.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Security Features</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Access logging:</strong> Complete audit trail of entry/exit events</li>
+                  <li><strong>Automated lighting:</strong> Lights activate with access card use</li>
+                  <li><strong>CCTV integration:</strong> Camera activation triggered by access events</li>
+                  <li><strong>Alarm coordination:</strong> Integrated response to security breaches</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-red-400/80 mb-2">Fire Safety Integration</p>
+                <p className="text-sm text-white/90">
+                  <strong>Emergency Response:</strong> Fire alarm integration allows the BMS to shut down
+                  HVAC to prevent smoke spread and unlock doors automatically for safe evacuation.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Section 04: Expanding Integrations */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Expanding Integrations (IoT and Renewables)
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              <strong>Modern BMS increasingly integrates with IoT devices and renewable systems.</strong>
+              This creates opportunities for future-proofing buildings and achieving sustainability goals.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">IoT Integration</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Wireless sensors:</strong> Easy retrofit and expansion</li>
+                  <li><strong>Smart meters:</strong> Real-time energy monitoring</li>
+                  <li><strong>Cloud connectivity:</strong> Remote monitoring and predictive maintenance</li>
+                  <li><strong>Mobile interfaces:</strong> Smartphone and tablet control</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Renewable Integration</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Solar PV:</strong> Energy generation monitoring and optimisation</li>
+                  <li><strong>Battery storage:</strong> Load balancing and peak shaving</li>
+                  <li><strong>EV charging:</strong> Smart charging based on energy availability</li>
+                  <li><strong>Heat pumps:</strong> Efficient heating/cooling integration</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[3]} />
+
+        {/* Section 05: Communication Protocols */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Communication Protocols
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              BMS systems rely on standardised communication protocols to connect diverse building services.
+              Understanding these protocols is essential for proper installation and troubleshooting.
+            </p>
+
+            <div className="grid sm:grid-cols-3 gap-4 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">BACnet</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>ISO 16484-5 standard</li>
+                  <li>Vendor-independent</li>
+                  <li>Ethernet, MS/TP, LonTalk</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Modbus</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Simple and robust</li>
+                  <li>RS-485 or TCP/IP</li>
+                  <li>Master-slave hierarchy</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">LonWorks</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Peer-to-peer networking</li>
+                  <li>Self-healing topology</li>
+                  <li>Distributed intelligence</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 06: Cost-Benefit Analysis */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Cost-Benefit Analysis and ROI
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <div className="grid sm:grid-cols-3 gap-4 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Investment Costs</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>HVAC: £15-25/m²</li>
+                  <li>Lighting: £8-15/m²</li>
+                  <li>Access: £200-500/door</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Annual Savings</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Energy: 15-30% reduction</li>
+                  <li>Maintenance: 10-20% reduction</li>
+                  <li>Productivity: 2-5% improvement</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Payback Period</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Offices: 3-5 years</li>
+                  <li>Retail: 2-4 years</li>
+                  <li>Industrial: 1-3 years</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm text-white">
+                <strong>Business Case Example:</strong> 10,000 m² office building: £200,000 investment,
+                £65,000 annual savings, 3.1 year payback, 15-year NPV of £485,000.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <hr className="border-white/5 my-12" />
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Requirements</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Read and understand system wiring diagrams</li>
+                <li>Be mindful of low-voltage control and communication cabling</li>
+                <li>Ensure correct sensor placement for accurate feedback</li>
+                <li>Keep data cables away from power cables (min 300mm separation)</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Commissioning Procedures</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Verify all hardware before software configuration</li>
+                <li>Test every I/O point individually</li>
+                <li>Verify system interactions and sequences</li>
+                <li>Confirm system meets design specifications</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Poor cable segregation</strong> — causes EMI interference</li>
+                <li><strong>Wrong sensor placement</strong> — leads to inaccurate control</li>
+                <li><strong>Missing documentation</strong> — makes troubleshooting difficult</li>
+                <li><strong>Skipping point-to-point testing</strong> — hidden faults cause failures later</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Safety Warning */}
+        <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50 mb-10">
+          <p className="text-sm text-white">
+            <strong className="text-red-400">Legal Requirement:</strong> All BMS electrical work must be
+            certified by a competent person. Non-compliance can result in insurance claims being voided
+            and legal liability for accidents. BS 7671 compliance is mandatory.
+          </p>
+        </div>
+
+        {/* FAQs */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 my-12" />
+
+        {/* Quick Reference */}
+        <section className="mb-10">
+          <div className="p-5 rounded-lg bg-transparent">
+            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+              <div>
+                <p className="font-medium text-white mb-1">Core Systems</p>
+                <ul className="space-y-0.5">
+                  <li>HVAC - Temperature, humidity, air quality</li>
+                  <li>Lighting - Scheduling, occupancy, daylight</li>
+                  <li>Security - Access, CCTV, fire alarms</li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-medium text-white mb-1">Key Standards</p>
+                <ul className="space-y-0.5">
+                  <li>BS 7671 - Electrical safety</li>
+                  <li>ISO 16484-5 - BACnet protocol</li>
+                  <li>Part L - Energy conservation</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Quiz */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4">Test Your Knowledge</h2>
+          <p className="text-sm text-white/80 mb-6">
+            Complete this assessment to test your understanding of BMS system integration concepts.
+          </p>
+          <SingleQuestionQuiz
+            questions={bmsModule1Section2QuizData}
+            title="Section 2 Assessment"
+          />
+        </section>
+
+        {/* Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../bms-module-1-section-1">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../bms-module-1-section-3">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+
+      </article>
     </div>
   );
 };

@@ -446,7 +446,7 @@ const InstrumentationModule6Section3 = () => {
                 ],
                 correctAnswer: 1,
                 explanation: "Comprehensive documentation must include environmental data, reference standards, technician identification, timestamps, and all adjustments made for traceability and audit compliance."
-              }
+            }
             ]}
             title="Section 3 Knowledge Check"
           />

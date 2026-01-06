@@ -79,7 +79,7 @@ const ModernQuizCard = ({ assessment, onStart }: ModernQuizCardProps) => {
           <h3 className="text-lg sm:text-xl font-bold text-foreground group-hover:text-elec-yellow transition-colors line-clamp-2">
             {assessment.title}
           </h3>
-          <p className="text-sm text-muted-foreground line-clamp-2">
+          <p className="text-sm text-white/80 line-clamp-2">
             {assessment.description}
           </p>
         </div>
@@ -98,14 +98,14 @@ const ModernQuizCard = ({ assessment, onStart }: ModernQuizCardProps) => {
         <div className="grid grid-cols-3 gap-2 sm:gap-3">
           <div className="bg-background/50 backdrop-blur-sm rounded-lg p-2 sm:p-3 border border-border/50 text-center">
             <div className="text-lg sm:text-xl font-bold text-elec-yellow">{assessment.questions}</div>
-            <div className="text-xs text-muted-foreground">Questions</div>
+            <div className="text-xs text-white/80">Questions</div>
           </div>
           <div className="bg-background/50 backdrop-blur-sm rounded-lg p-2 sm:p-3 border border-border/50 text-center">
             <div className="flex items-center justify-center gap-1 text-lg sm:text-xl font-bold text-foreground">
               <Clock className="h-4 w-4" />
               {assessment.duration}
             </div>
-            <div className="text-xs text-muted-foreground">Minutes</div>
+            <div className="text-xs text-white/80">Minutes</div>
           </div>
           <div className="bg-background/50 backdrop-blur-sm rounded-lg p-2 sm:p-3 border border-border/50 text-center">
             {assessment.score !== null ? (
@@ -114,12 +114,12 @@ const ModernQuizCard = ({ assessment, onStart }: ModernQuizCardProps) => {
                   <Star className="h-4 w-4 fill-current" />
                   {assessment.score}%
                 </div>
-                <div className="text-xs text-muted-foreground">Best</div>
+                <div className="text-xs text-white/80">Best</div>
               </>
             ) : (
               <>
-                <div className="text-lg sm:text-xl font-bold text-muted-foreground">—</div>
-                <div className="text-xs text-muted-foreground">Not taken</div>
+                <div className="text-lg sm:text-xl font-bold text-white/80">—</div>
+                <div className="text-xs text-white/80">Not taken</div>
               </>
             )}
           </div>

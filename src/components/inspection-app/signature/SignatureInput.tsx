@@ -91,7 +91,7 @@ const SignatureInput = ({
                 value={textSignature}
                 onChange={(e) => handleTextChange(e.target.value)}
                 placeholder={placeholder}
-                className="bg-muted border-border text-foreground placeholder:text-gray-400 focus:border-elec-yellow focus:ring-elec-yellow h-8 text-sm"
+                className="bg-muted border-border text-foreground placeholder:text-white/70 focus:border-elec-yellow focus:ring-elec-yellow h-8 text-sm"
               />
             </MobileTabsContent>
 
@@ -140,7 +140,7 @@ const SignatureInput = ({
                     </Button>
                   }
                 />
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-white/70">
                   Manage your saved signatures and select one to use in this field.
                 </p>
               </div>

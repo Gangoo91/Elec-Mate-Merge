@@ -4,11 +4,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SectionHeader } from "@/components/employer/SectionHeader";
-import { 
-  PenTool, 
-  Search, 
-  Clock, 
-  CheckCircle, 
+import { QuickStats, QuickStat } from "@/components/employer/QuickStats";
+import {
+  PenTool,
+  Search,
+  Clock,
+  CheckCircle,
   AlertCircle,
   Send,
   Download,
@@ -72,35 +73,29 @@ export function SignaturesSection() {
       />
 
       {/* Stats */}
-      <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4 md:mx-0 md:px-0">
-        <Card className="bg-warning/10 border-warning/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <Clock className="h-4 w-4 text-warning" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{pendingCount}</p>
-              <p className="text-xs text-muted-foreground">Pending</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-success/10 border-success/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <CheckCircle className="h-4 w-4 text-success" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{signedCount}</p>
-              <p className="text-xs text-muted-foreground">Signed</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-elec-yellow/10 border-elec-yellow/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <PenTool className="h-4 w-4 text-elec-yellow" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{customerSignatures.length}</p>
-              <p className="text-xs text-muted-foreground">Total</p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <QuickStats
+        stats={[
+          {
+            icon: Clock,
+            value: pendingCount,
+            label: "Pending",
+            color: "yellow",
+            pulse: pendingCount > 0,
+          },
+          {
+            icon: CheckCircle,
+            value: signedCount,
+            label: "Signed",
+            color: "green",
+          },
+          {
+            icon: PenTool,
+            value: customerSignatures.length,
+            label: "Total",
+            color: "blue",
+          },
+        ]}
+      />
 
       {/* Tabs */}
       <div className="flex gap-2 overflow-x-auto hide-scrollbar -mx-4 px-4 md:mx-0 md:px-0">

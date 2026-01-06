@@ -139,7 +139,7 @@ const AssessmentPreparation = () => {
       case "high": return "bg-red-500/20 text-red-400 border-red-500/30";
       case "medium": return "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30";
       case "low": return "bg-green-500/20 text-green-400 border-green-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+      default: return "bg-white/10 text-white border-white/30";
     }
   };
 
@@ -154,7 +154,7 @@ const AssessmentPreparation = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Prepare thoroughly for your end-point assessment with this comprehensive guide covering portfolio review, 
             professional discussion, and practical assessment components.
           </p>
@@ -166,14 +166,14 @@ const AssessmentPreparation = () => {
         <h3 className="text-xl font-semibold text-white">Assessment Components</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {assessmentTypes.map((assessment, index) => (
-            <Card key={index} className="border-blue-500/20 bg-elec-gray">
+            <Card key={index} className="border-blue-500/20 bg-white/5">
               <CardHeader>
                 <CardTitle className="text-blue-400">{assessment.type}</CardTitle>
-                <p className="text-sm text-muted-foreground">{assessment.description}</p>
+                <p className="text-sm text-white">{assessment.description}</p>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-muted-foreground">Duration:</span>
+                  <span className="text-sm text-white">Duration:</span>
                   <Badge variant="outline" className="text-blue-400">
                     <Clock className="h-3 w-3 mr-1" />
                     {assessment.duration}
@@ -181,7 +181,7 @@ const AssessmentPreparation = () => {
                 </div>
                 
                 <div>
-                  <span className="text-sm text-muted-foreground">Format: {assessment.format}</span>
+                  <span className="text-sm text-white">Format: {assessment.format}</span>
                 </div>
 
                 <div>
@@ -190,7 +190,7 @@ const AssessmentPreparation = () => {
                     {assessment.preparation.map((item, itemIndex) => (
                       <li key={itemIndex} className="flex items-start gap-2">
                         <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
-                        <span className="text-xs text-muted-foreground">{item}</span>
+                        <span className="text-xs text-white">{item}</span>
                       </li>
                     ))}
                   </ul>
@@ -205,7 +205,7 @@ const AssessmentPreparation = () => {
       <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/10">
         <CardHeader>
           <CardTitle className="text-green-400">Assessment Criteria Breakdown</CardTitle>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Understanding how you'll be assessed across knowledge, skills, and behaviours
           </p>
         </CardHeader>
@@ -219,12 +219,12 @@ const AssessmentPreparation = () => {
                     {criteria.weight}
                   </Badge>
                 </div>
-                <p className="text-sm text-muted-foreground">{criteria.description}</p>
+                <p className="text-sm text-white">{criteria.description}</p>
                 <div>
                   <h5 className="text-sm font-medium text-white mb-1">Evidence Types:</h5>
                   <ul className="space-y-1">
                     {criteria.evidence.map((evidence, evidenceIndex) => (
-                      <li key={evidenceIndex} className="text-xs text-muted-foreground">
+                      <li key={evidenceIndex} className="text-xs text-white">
                         • {evidence}
                       </li>
                     ))}
@@ -255,7 +255,7 @@ const AssessmentPreparation = () => {
                     {period.tasks.map((task, taskIndex) => (
                       <li key={taskIndex} className="flex items-start gap-2">
                         <CheckCircle className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-sm text-muted-foreground">{task}</span>
+                        <span className="text-sm text-white">{task}</span>
                       </li>
                     ))}
                   </ul>
@@ -281,19 +281,19 @@ const AssessmentPreparation = () => {
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <TrendingUp className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-muted-foreground">Practice explaining your work to others</span>
+                  <span className="text-sm text-white">Practice explaining your work to others</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <TrendingUp className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-muted-foreground">Ensure all evidence is clearly labelled and dated</span>
+                  <span className="text-sm text-white">Ensure all evidence is clearly labelled and dated</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <TrendingUp className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-muted-foreground">Prepare specific examples for each competency</span>
+                  <span className="text-sm text-white">Prepare specific examples for each competency</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <TrendingUp className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-muted-foreground">Get feedback from supervisors and mentors</span>
+                  <span className="text-sm text-white">Get feedback from supervisors and mentors</span>
                 </li>
               </ul>
             </div>
@@ -302,19 +302,19 @@ const AssessmentPreparation = () => {
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <Award className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-muted-foreground">Be confident and speak clearly about your work</span>
+                  <span className="text-sm text-white">Be confident and speak clearly about your work</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Award className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-muted-foreground">Reference specific evidence when answering questions</span>
+                  <span className="text-sm text-white">Reference specific evidence when answering questions</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Award className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-muted-foreground">Admit when you don't know something - it's professional</span>
+                  <span className="text-sm text-white">Admit when you don't know something - it's professional</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Award className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-muted-foreground">Ask for clarification if you don't understand a question</span>
+                  <span className="text-sm text-white">Ask for clarification if you don't understand a question</span>
                 </li>
               </ul>
             </div>
@@ -334,7 +334,7 @@ const AssessmentPreparation = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <h4 className="font-medium text-white mb-2">Portfolio Issues:</h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>• Insufficient reflection in evidence commentary</li>
                 <li>• Poor organisation making evidence hard to find</li>
                 <li>• Missing evidence for key competencies</li>
@@ -343,7 +343,7 @@ const AssessmentPreparation = () => {
             </div>
             <div>
               <h4 className="font-medium text-white mb-2">Assessment Day Issues:</h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>• Not being able to explain your own work</li>
                 <li>• Failing to reference portfolio evidence</li>
                 <li>• Poor time management during assessment</li>

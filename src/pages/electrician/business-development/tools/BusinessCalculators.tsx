@@ -125,14 +125,14 @@ const BusinessCalculators = () => {
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 Business Calculators
               </h1>
-              <p className="text-sm text-white/60">Financial planning tools</p>
+              <p className="text-sm text-white">Financial planning tools</p>
             </div>
           </div>
           <SmartBackButton />
         </header>
 
         {/* Subtitle */}
-        <p className="text-white/60 text-center max-w-2xl mx-auto">
+        <p className="text-white text-center max-w-2xl mx-auto">
           Professional calculators and tools to help you make informed business decisions and plan for success.
         </p>
 
@@ -163,7 +163,7 @@ const BusinessCalculators = () => {
                     <div className="p-2 sm:p-2.5 rounded-xl bg-white/5 border border-white/10">
                       {calculator.icon}
                     </div>
-                    <CardTitle className="text-xs sm:text-sm font-semibold text-white/50 leading-tight">
+                    <CardTitle className="text-xs sm:text-sm font-semibold text-white leading-tight">
                       {calculator.title}
                     </CardTitle>
                   </CardHeader>

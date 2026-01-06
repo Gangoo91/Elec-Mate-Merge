@@ -150,7 +150,7 @@ const CompactCircuitAutoFillSection: React.FC<CompactCircuitAutoFillSectionProps
         
         {/* Circuit Selection - Remove orientation restrictions */}
         <div className="mb-4">
-          <label className="text-xs font-medium text-gray-300 block mb-2">Select Circuit to Auto-Fill:</label>
+          <label className="text-xs font-medium text-white/80 block mb-2">Select Circuit to Auto-Fill:</label>
           <select 
             value={selectedCircuit}
             onChange={(e) => setSelectedCircuit(e.target.value)}
@@ -179,8 +179,8 @@ const CompactCircuitAutoFillSection: React.FC<CompactCircuitAutoFillSectionProps
                     <span className="text-sm font-medium text-foreground">{category.category}</span>
                   </div>
                   {openCategories.includes(category.category) ? 
-                    <ChevronDown className="h-4 w-4 text-gray-300" /> : 
-                    <ChevronRight className="h-4 w-4 text-gray-300" />
+                    <ChevronDown className="h-4 w-4 text-white/80" /> :
+                    <ChevronRight className="h-4 w-4 text-white/80" />
                   }
                 </CollapsibleTrigger>
                 <CollapsibleContent className="pt-2">
@@ -204,7 +204,7 @@ const CompactCircuitAutoFillSection: React.FC<CompactCircuitAutoFillSectionProps
           </div>
         )}
         
-        <div className="text-xs text-gray-300 mt-3 p-2 bg-elec-gray rounded border-l-2 border-elec-yellow">
+        <div className="text-xs text-white/80 mt-3 p-2 bg-elec-gray rounded border-l-2 border-elec-yellow">
           💡 <strong>Auto-Reg Checker:</strong> Configurations are automatically checked against BS 7671 regulations. 
           Any issues will be highlighted for your review.
         </div>

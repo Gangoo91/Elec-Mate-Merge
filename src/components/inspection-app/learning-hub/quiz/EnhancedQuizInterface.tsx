@@ -121,7 +121,7 @@ const EnhancedQuizInterface = ({
       case 'Beginner': return 'text-bs7671-safe bg-bs7671-safe/10 border-bs7671-safe/30';
       case 'Intermediate': return 'text-bs7671-warning bg-bs7671-warning/10 border-bs7671-warning/30';
       case 'Advanced': return 'text-bs7671-danger bg-bs7671-danger/10 border-bs7671-danger/30';
-      default: return 'text-muted-foreground bg-muted/10 border-muted/30';
+      default: return 'text-white/80 bg-muted/10 border-muted/30';
     }
   };
 
@@ -152,7 +152,7 @@ const EnhancedQuizInterface = ({
           {/* Stats Row */}
           <div className="flex items-center justify-between text-sm mb-3">
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-1.5 text-muted-foreground">
+              <div className="flex items-center gap-1.5 text-white/80">
                 <Clock className="h-4 w-4" />
                 <span className="font-mono font-medium">{formatTime(totalElapsed)}</span>
               </div>
@@ -162,7 +162,7 @@ const EnhancedQuizInterface = ({
                 </span>
               </div>
             </div>
-            <div className="text-muted-foreground font-medium">
+            <div className="text-white/80 font-medium">
               <span className="text-elec-yellow">{progress.current}</span>
               <span className="mx-1">/</span>
               <span>{progress.total}</span>
@@ -172,7 +172,7 @@ const EnhancedQuizInterface = ({
           {/* Progress Bar */}
           <div className="space-y-1">
             <Progress value={progress.percentage} className="h-2" />
-            <div className="flex justify-between text-xs text-muted-foreground">
+            <div className="flex justify-between text-xs text-white/80">
               <span>{progress.percentage}% Complete</span>
               <span>{progress.total - progress.current} remaining</span>
             </div>
@@ -195,7 +195,7 @@ const EnhancedQuizInterface = ({
                   <h2 className="text-base sm:text-xl font-semibold text-foreground leading-relaxed">
                     {currentQuestion.question}
                   </h2>
-                  <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+                  <div className="flex flex-wrap items-center gap-2 text-sm text-white/80">
                     <span className="flex items-center gap-1">
                       <CategoryIcon category={currentQuestion.category} className="h-3.5 w-3.5" />
                       {currentQuestion.category}
@@ -250,7 +250,7 @@ const EnhancedQuizInterface = ({
                         <span className={`flex-shrink-0 w-9 h-9 rounded-lg flex items-center justify-center font-bold text-base ${
                           isSelected 
                             ? 'bg-elec-yellow text-black' 
-                            : 'bg-muted text-muted-foreground group-hover:bg-elec-yellow/20 group-hover:text-elec-yellow'
+                            : 'bg-muted text-white/80 group-hover:bg-elec-yellow/20 group-hover:text-elec-yellow'
                         }`}>
                           {optionLabels[index]}
                         </span>
@@ -270,7 +270,7 @@ const EnhancedQuizInterface = ({
             {selectedAnswer === null && (
               <div className="flex items-start gap-2 p-4 rounded-lg bg-muted/50 border border-border">
                 <AlertCircle className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/80">
                   Select an answer to continue to the next question
                 </p>
               </div>

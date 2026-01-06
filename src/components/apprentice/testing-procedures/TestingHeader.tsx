@@ -25,7 +25,7 @@ const TestingHeader = () => {
           <SmartBackButton />
         </div>
       </div>
-      <p className="text-muted-foreground text-sm max-w-3xl">
+      <p className="text-white text-sm max-w-3xl">
         Follow these step-by-step guides for essential electrical testing procedures required for installation 
         and verification. The interactive wizards will help you complete accurate tests every time.
       </p>

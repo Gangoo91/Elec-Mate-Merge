@@ -160,7 +160,7 @@ const PracticeTestForm = ({ currentTest, onUpdateTest, onAddTest }: PracticeTest
             placeholder="Auto-calculated"
             value={currentTest.correctedZs}
             readOnly
-            className="bg-gray-100"
+            className="bg-white/5"
           />
         </div>
 

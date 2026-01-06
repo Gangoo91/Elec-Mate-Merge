@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -12,12 +12,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
-import { communications as initialComms, employees, jobs } from "@/data/employerMockData";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { format } from "date-fns";
-import { 
-  MessageSquare, 
-  Search, 
+import { QuickStatsGrid, QuickStat } from "@/components/employer/QuickStats";
+import {
+  MessageSquare,
+  Search,
   Plus,
   AlertTriangle,
   Megaphone,
@@ -37,7 +37,6 @@ import {
   CheckCheck,
   Zap,
   Trash2,
-  Reply,
   MailOpen,
   Mail,
   X,
@@ -47,24 +46,35 @@ import {
   EyeOff,
   ChevronDown,
   ChevronUp,
-  RotateCw
+  RotateCw,
+  Loader2
 } from "lucide-react";
+import {
+  useCommunications,
+  useCommunicationStats,
+  useCommunicationRecipients,
+  useCreateCommunication,
+  usePinCommunication,
+  useMarkAsRead,
+  useAcknowledgeMessage,
+  useDeleteCommunication
+} from "@/hooks/useCommunications";
+import { useActiveEmployees } from "@/hooks/useEmployees";
+import { Communication, CommunicationType, CommunicationPriority, TargetAudience } from "@/services/communicationService";
 
-// Types
-interface Communication {
-  id: string;
-  type: string;
-  title: string;
-  message: string;
-  sender: string;
-  recipients: string[];
-  job: string | null;
-  date: string;
-  time: string;
-  read: string[];
-  priority: string;
-  signedOff?: string[];
-}
+// Type mapping from new backend types to UI
+const typeMapping: Record<CommunicationType, string> = {
+  'announcement': 'Team Broadcast',
+  'message': 'Job Message',
+  'alert': 'Safety Warning',
+};
+
+const reverseTypeMapping: Record<string, CommunicationType> = {
+  'Team Broadcast': 'announcement',
+  'Job Message': 'message',
+  'Safety Warning': 'alert',
+  'Mandatory Reading': 'announcement', // Special type handled by priority
+};
 
 const typeConfig = {
   "Job Message": { icon: Briefcase, color: "bg-info/20 text-info", borderColor: "border-l-info", label: "Job" },
@@ -74,8 +84,10 @@ const typeConfig = {
 };
 
 const priorityColors = {
-  "High": "bg-destructive text-destructive-foreground",
-  "Normal": "bg-muted text-muted-foreground",
+  "high": "bg-destructive text-destructive-foreground",
+  "urgent": "bg-destructive text-destructive-foreground",
+  "normal": "bg-muted text-muted-foreground",
+  "low": "bg-muted text-muted-foreground",
 };
 
 // Message templates
@@ -94,28 +106,43 @@ const emptyStates = {
   mandatory: { icon: FileCheck, title: "Nothing to sign", message: "No mandatory readings pending." },
 };
 
+// Helper to get display type from backend communication
+const getDisplayType = (comm: Communication): string => {
+  if (comm.priority === 'urgent' || comm.priority === 'high') {
+    if (comm.type === 'alert') return 'Safety Warning';
+    return 'Mandatory Reading';
+  }
+  return typeMapping[comm.type] || 'Team Broadcast';
+};
+
 export const CommunicationsSection = () => {
   const isMobile = useIsMobile();
-  const currentUserId = "1"; // Mock current user
-  
+
+  // Backend hooks
+  const { data: communications = [], isLoading, refetch, isRefetching } = useCommunications();
+  const { data: stats } = useCommunicationStats();
+  const { data: employees = [] } = useActiveEmployees();
+  const createCommunication = useCreateCommunication();
+  const pinCommunication = usePinCommunication();
+  const markAsReadMutation = useMarkAsRead();
+  const acknowledgeMutation = useAcknowledgeMessage();
+  const deleteCommunication = useDeleteCommunication();
+
+  // Local read/acknowledged state (would be per-user in real app with auth)
+  const [localReadIds, setLocalReadIds] = useState<Set<string>>(new Set());
+  const [localAcknowledgedIds, setLocalAcknowledgedIds] = useState<Set<string>>(new Set());
+
   // Core state
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState("inbox");
   const [filterUnread, setFilterUnread] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [pinnedCollapsed, setPinnedCollapsed] = useState(false);
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  
-  // Message state management
-  const [pinnedIds, setPinnedIds] = useState<Set<string>>(new Set(["COMM-001"]));
-  const [deletedIds, setDeletedIds] = useState<Set<string>>(new Set());
-  const [signedOffIds, setSignedOffIds] = useState<Set<string>>(new Set(["COMM-001"]));
-  const [readIds, setReadIds] = useState<Set<string>>(new Set(["COMM-001", "COMM-003"]));
-  
+
   // Detail sheet state
   const [selectedMessage, setSelectedMessage] = useState<Communication | null>(null);
   const [showDetail, setShowDetail] = useState(false);
-  
+
   // Compose state
   const [showCompose, setShowCompose] = useState(false);
   const [selectedRecipients, setSelectedRecipients] = useState<string[]>([]);
@@ -126,10 +153,9 @@ export const CommunicationsSection = () => {
   const [isScheduled, setIsScheduled] = useState(false);
   const [scheduleDate, setScheduleDate] = useState<Date | undefined>();
   const [scheduleTime, setScheduleTime] = useState("09:00");
-  const [priority, setPriority] = useState<"Normal" | "High">("Normal");
-  const [selectedJob, setSelectedJob] = useState<string>("");
-  const [recipientMode, setRecipientMode] = useState<"all" | "job" | "individual">("all");
-  
+  const [priority, setPriority] = useState<"normal" | "high">("normal");
+  const [recipientMode, setRecipientMode] = useState<"all" | "specific">("all");
+
   // Swipe state
   const [swipingId, setSwipingId] = useState<string | null>(null);
   const [swipeOffset, setSwipeOffset] = useState(0);
@@ -137,41 +163,32 @@ export const CommunicationsSection = () => {
   const touchStartY = useRef(0);
 
   // Pull to refresh
-  const handleRefresh = () => {
-    setIsRefreshing(true);
-    setTimeout(() => {
-      setIsRefreshing(false);
-      toast({ title: "Refreshed", description: "Messages updated" });
-    }, 1000);
+  const handleRefresh = async () => {
+    await refetch();
+    toast({ title: "Refreshed", description: "Messages updated" });
   };
 
-  // Get active messages (not deleted)
-  const activeMessages = useMemo(() => 
-    initialComms.filter(c => !deletedIds.has(c.id)) as Communication[],
-    [deletedIds]
-  );
-
   // Filter and group messages
-  const getFilteredComms = useCallback(() => {
-    let filtered = activeMessages.filter(comm => {
+  const filteredComms = useMemo(() => {
+    let filtered = communications.filter(comm => {
       const matchesSearch = comm.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            comm.message.toLowerCase().includes(searchQuery.toLowerCase());
-      
+                            comm.content.toLowerCase().includes(searchQuery.toLowerCase());
+
+      const displayType = getDisplayType(comm);
+
       if (activeTab === "inbox") return matchesSearch;
-      if (activeTab === "briefs") return matchesSearch && comm.type === "Team Broadcast";
-      if (activeTab === "safety") return matchesSearch && comm.type === "Safety Warning";
-      if (activeTab === "mandatory") return matchesSearch && comm.type === "Mandatory Reading";
+      if (activeTab === "briefs") return matchesSearch && displayType === "Team Broadcast";
+      if (activeTab === "safety") return matchesSearch && displayType === "Safety Warning";
+      if (activeTab === "mandatory") return matchesSearch && (displayType === "Mandatory Reading" || comm.priority === 'urgent');
       return matchesSearch;
     });
 
     if (filterUnread) {
-      filtered = filtered.filter(c => !readIds.has(c.id));
+      filtered = filtered.filter(c => !localReadIds.has(c.id));
     }
 
     return filtered;
-  }, [activeMessages, searchQuery, activeTab, filterUnread, readIds]);
-
-  const filteredComms = getFilteredComms();
+  }, [communications, searchQuery, activeTab, filterUnread, localReadIds]);
 
   // Time grouping
   const groupedMessages = useMemo(() => {
@@ -187,46 +204,44 @@ export const CommunicationsSection = () => {
     ];
 
     // Separate pinned for inbox
-    const pinnedMessages = activeTab === "inbox" 
-      ? filteredComms.filter(c => pinnedIds.has(c.id))
+    const pinnedMessages = activeTab === "inbox"
+      ? filteredComms.filter(c => c.is_pinned)
       : [];
-    const unpinnedMessages = filteredComms.filter(c => !pinnedIds.has(c.id) || activeTab !== "inbox");
+    const unpinnedMessages = filteredComms.filter(c => !c.is_pinned || activeTab !== "inbox");
 
     unpinnedMessages.forEach(comm => {
-      if (comm.date >= today) groups[0].messages.push(comm);
-      else if (comm.date >= yesterday) groups[1].messages.push(comm);
-      else if (comm.date >= weekAgo) groups[2].messages.push(comm);
+      const commDate = comm.created_at.split('T')[0];
+      if (commDate >= today) groups[0].messages.push(comm);
+      else if (commDate >= yesterday) groups[1].messages.push(comm);
+      else if (commDate >= weekAgo) groups[2].messages.push(comm);
       else groups[3].messages.push(comm);
     });
 
     return { pinned: pinnedMessages, groups: groups.filter(g => g.messages.length > 0) };
-  }, [filteredComms, pinnedIds, activeTab]);
+  }, [filteredComms, activeTab]);
 
-  // Stats
-  const stats = useMemo(() => ({
-    total: activeMessages.length,
-    unread: activeMessages.filter(c => !readIds.has(c.id)).length,
-    mandatoryPending: activeMessages.filter(c => c.type === "Mandatory Reading" && !signedOffIds.has(c.id)).length,
-    safetyWarnings: activeMessages.filter(c => c.type === "Safety Warning").length,
-  }), [activeMessages, readIds, signedOffIds]);
+  // Computed stats
+  const computedStats = useMemo(() => ({
+    total: communications.length,
+    unread: communications.filter(c => !localReadIds.has(c.id)).length,
+    mandatoryPending: communications.filter(c =>
+      (c.priority === 'urgent' || c.priority === 'high') && !localAcknowledgedIds.has(c.id)
+    ).length,
+    safetyWarnings: communications.filter(c => c.type === 'alert').length,
+  }), [communications, localReadIds, localAcknowledgedIds]);
 
   // Actions
-  const togglePin = useCallback((id: string) => {
-    setPinnedIds(prev => {
-      const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-        toast({ title: "Unpinned" });
-      } else {
-        next.add(id);
-        toast({ title: "Pinned" });
-      }
-      return next;
-    });
-  }, []);
+  const togglePin = useCallback(async (id: string, currentPinned: boolean) => {
+    try {
+      await pinCommunication.mutateAsync({ id, isPinned: !currentPinned });
+      toast({ title: currentPinned ? "Unpinned" : "Pinned" });
+    } catch {
+      toast({ title: "Error", description: "Failed to update pin status", variant: "destructive" });
+    }
+  }, [pinCommunication]);
 
   const toggleRead = useCallback((id: string) => {
-    setReadIds(prev => {
+    setLocalReadIds(prev => {
       const next = new Set(prev);
       if (next.has(id)) {
         next.delete(id);
@@ -239,25 +254,29 @@ export const CommunicationsSection = () => {
     });
   }, []);
 
-  const deleteMessage = useCallback((id: string) => {
-    setDeletedIds(prev => new Set([...prev, id]));
-    setShowDetail(false);
-    toast({ title: "Deleted" });
-  }, []);
+  const deleteMessage = useCallback(async (id: string) => {
+    try {
+      await deleteCommunication.mutateAsync(id);
+      setShowDetail(false);
+      toast({ title: "Deleted" });
+    } catch {
+      toast({ title: "Error", description: "Failed to delete message", variant: "destructive" });
+    }
+  }, [deleteCommunication]);
 
   const signOff = useCallback((id: string) => {
-    setSignedOffIds(prev => new Set([...prev, id]));
-    setReadIds(prev => new Set([...prev, id]));
+    setLocalAcknowledgedIds(prev => new Set([...prev, id]));
+    setLocalReadIds(prev => new Set([...prev, id]));
     toast({ title: "Signed Off", description: "Acknowledged" });
   }, []);
 
   const openMessage = useCallback((comm: Communication) => {
     setSelectedMessage(comm);
     setShowDetail(true);
-    setReadIds(prev => new Set([...prev, comm.id]));
+    setLocalReadIds(prev => new Set([...prev, comm.id]));
   }, []);
 
-  // Swipe handlers with improved UX
+  // Swipe handlers
   const handleTouchStart = (e: React.TouchEvent, id: string) => {
     touchStartX.current = e.touches[0].clientX;
     touchStartY.current = e.touches[0].clientY;
@@ -266,18 +285,16 @@ export const CommunicationsSection = () => {
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!swipingId) return;
-    
+
     const diffX = e.touches[0].clientX - touchStartX.current;
     const diffY = e.touches[0].clientY - touchStartY.current;
-    
-    // If scrolling vertically, cancel swipe
+
     if (Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > 10) {
       setSwipingId(null);
       setSwipeOffset(0);
       return;
     }
-    
-    // Elastic resistance at edges
+
     const resistance = Math.abs(diffX) > 80 ? 0.3 : 1;
     const newOffset = diffX * resistance;
     setSwipeOffset(Math.max(-120, Math.min(120, newOffset)));
@@ -285,40 +302,63 @@ export const CommunicationsSection = () => {
 
   const handleTouchEnd = () => {
     if (!swipingId) return;
-    
+
     if (swipeOffset > 70) {
       toggleRead(swipingId);
     } else if (swipeOffset < -70) {
       deleteMessage(swipingId);
     }
-    
+
     setSwipingId(null);
     setSwipeOffset(0);
   };
 
   // Compose handlers
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (!messageTitle.trim() || !messageContent.trim()) {
       toast({ title: "Missing info", description: "Add a title and message", variant: "destructive" });
       return;
     }
-    
+
     const recipientCount = recipientMode === "all" ? employees.length : selectedRecipients.length;
     if (recipientCount === 0) {
       toast({ title: "No recipients", description: "Select at least one", variant: "destructive" });
       return;
     }
 
-    const scheduleInfo = isScheduled && scheduleDate 
-      ? ` for ${format(scheduleDate, "dd MMM")} at ${scheduleTime}`
-      : "";
-    
-    toast({
-      title: isScheduled ? "Scheduled" : "Sent",
-      description: `${recipientCount} recipients${scheduleInfo}`,
-    });
-    setShowCompose(false);
-    resetCompose();
+    try {
+      const targetAudience: TargetAudience = recipientMode === "all" ? 'all' : 'specific';
+      const commType: CommunicationType = reverseTypeMapping[selectedType] || 'announcement';
+      const commPriority: CommunicationPriority = selectedType === "Mandatory Reading" ? 'urgent' :
+                                                   selectedType === "Safety Warning" ? 'high' :
+                                                   priority;
+
+      await createCommunication.mutateAsync({
+        type: commType,
+        title: messageTitle,
+        content: messageContent,
+        priority: commPriority,
+        target_audience: targetAudience,
+        target_employee_ids: recipientMode === "specific" ? selectedRecipients : null,
+        is_pinned: isPinned,
+        expires_at: isScheduled && scheduleDate ? scheduleDate.toISOString() : null,
+        sender_id: null,
+        attachments: null,
+      });
+
+      const scheduleInfo = isScheduled && scheduleDate
+        ? ` for ${format(scheduleDate, "dd MMM")} at ${scheduleTime}`
+        : "";
+
+      toast({
+        title: isScheduled ? "Scheduled" : "Sent",
+        description: `${recipientCount} recipients${scheduleInfo}`,
+      });
+      setShowCompose(false);
+      resetCompose();
+    } catch {
+      toast({ title: "Error", description: "Failed to send message", variant: "destructive" });
+    }
   };
 
   const resetCompose = () => {
@@ -330,8 +370,7 @@ export const CommunicationsSection = () => {
     setIsScheduled(false);
     setScheduleDate(undefined);
     setScheduleTime("09:00");
-    setPriority("Normal");
-    setSelectedJob("");
+    setPriority("normal");
     setRecipientMode("all");
   };
 
@@ -341,41 +380,39 @@ export const CommunicationsSection = () => {
     setMessageTitle(template.name);
   };
 
-  const formatTime = (date: string, time: string) => {
+  const formatTime = (dateStr: string) => {
+    const date = new Date(dateStr);
     const today = new Date().toISOString().split('T')[0];
     const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
-    
-    if (date === today) return time;
-    if (date === yesterday) return "Yesterday";
-    return new Date(date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+    const commDate = dateStr.split('T')[0];
+
+    if (commDate === today) return format(date, 'HH:mm');
+    if (commDate === yesterday) return "Yesterday";
+    return format(date, 'dd MMM');
   };
 
-  const getJobRecipients = (jobId: string) => {
-    const job = jobs.find(j => j.id === jobId);
-    if (!job) return [];
-    return employees.slice(0, job.assignedWorkers).map(e => e.id);
-  };
-
-  // Tab config for segmented control
+  // Tab config
   const tabs = [
     { id: "inbox", icon: Inbox, label: "Inbox", count: null },
     { id: "briefs", icon: Megaphone, label: "Briefs", count: null },
-    { id: "safety", icon: AlertTriangle, label: "Safety", count: stats.safetyWarnings > 0 ? stats.safetyWarnings : null },
-    { id: "mandatory", icon: FileCheck, label: "Sign", count: stats.mandatoryPending > 0 ? stats.mandatoryPending : null },
+    { id: "safety", icon: AlertTriangle, label: "Safety", count: computedStats.safetyWarnings > 0 ? computedStats.safetyWarnings : null },
+    { id: "mandatory", icon: FileCheck, label: "Sign", count: computedStats.mandatoryPending > 0 ? computedStats.mandatoryPending : null },
   ];
 
-  // Message Card Component - Enhanced Mobile Design
+  // Message Card Component
   const MessageCard = ({ comm }: { comm: Communication }) => {
-    const TypeIcon = typeConfig[comm.type as keyof typeof typeConfig]?.icon || MessageSquare;
-    const typeColor = typeConfig[comm.type as keyof typeof typeConfig]?.color || "bg-muted";
-    const borderColor = typeConfig[comm.type as keyof typeof typeConfig]?.borderColor || "border-l-muted";
-    const isRead = readIds.has(comm.id);
-    const isPinnedMsg = pinnedIds.has(comm.id);
-    const isSignedOff = signedOffIds.has(comm.id);
+    const displayType = getDisplayType(comm);
+    const TypeIcon = typeConfig[displayType as keyof typeof typeConfig]?.icon || MessageSquare;
+    const typeColor = typeConfig[displayType as keyof typeof typeConfig]?.color || "bg-muted";
+    const borderColor = typeConfig[displayType as keyof typeof typeConfig]?.borderColor || "border-l-muted";
+    const isRead = localReadIds.has(comm.id);
+    const isPinnedMsg = comm.is_pinned;
+    const isSignedOff = localAcknowledgedIds.has(comm.id);
     const isSwiping = swipingId === comm.id;
-    
+    const isHighPriority = comm.priority === 'high' || comm.priority === 'urgent';
+
     return (
-      <div 
+      <div
         className="relative overflow-hidden rounded-xl"
         onTouchStart={(e) => handleTouchStart(e, comm.id)}
         onTouchMove={handleTouchMove}
@@ -392,9 +429,9 @@ export const CommunicationsSection = () => {
             <Trash2 className="h-6 w-6 text-destructive-foreground" />
           </div>
         </div>
-        
+
         {/* Card */}
-        <div 
+        <div
           className={`relative bg-elec-gray border border-border rounded-xl transition-transform duration-200 ease-out ${!isRead ? `border-l-4 ${borderColor}` : ''}`}
           style={{ transform: `translateX(${swipeOffset}px)` }}
           onClick={() => openMessage(comm)}
@@ -409,7 +446,7 @@ export const CommunicationsSection = () => {
                 <div className="absolute -top-1 -right-1 w-3 h-3 bg-elec-yellow rounded-full border-2 border-card" />
               )}
             </div>
-            
+
             {/* Content */}
             <div className="flex-1 min-w-0">
               {/* Title row with pin icon */}
@@ -419,27 +456,22 @@ export const CommunicationsSection = () => {
                   {comm.title}
                 </h4>
               </div>
-              
+
               {/* Preview - two lines */}
               <p className={`text-sm mt-1 line-clamp-2 leading-relaxed ${!isRead ? 'text-foreground/70' : 'text-muted-foreground'}`}>
-                {comm.message}
+                {comm.content}
               </p>
-              
+
               {/* Footer row: badges + time */}
               <div className="flex items-center justify-between mt-2.5 gap-2">
                 <div className="flex items-center gap-1.5 flex-wrap min-w-0">
-                  {comm.priority === "High" && (
-                    <Badge className={`text-[10px] py-0 h-5 px-1.5 gap-0.5 ${priorityColors.High}`}>
+                  {isHighPriority && (
+                    <Badge className={`text-[10px] py-0 h-5 px-1.5 gap-0.5 ${priorityColors[comm.priority]}`}>
                       <Zap className="h-2.5 w-2.5" />
                       Urgent
                     </Badge>
                   )}
-                  {comm.job && (
-                    <Badge variant="outline" className="text-[10px] py-0 h-5 px-1.5 truncate max-w-[100px]">
-                      {comm.job.split(" ")[0]}
-                    </Badge>
-                  )}
-                  {comm.type === "Mandatory Reading" && isSignedOff && (
+                  {displayType === "Mandatory Reading" && isSignedOff && (
                     <Badge variant="outline" className="text-[10px] py-0 h-5 px-1.5 bg-success/10 text-success border-success/30 gap-0.5">
                       <Check className="h-2.5 w-2.5" />
                       Done
@@ -447,19 +479,17 @@ export const CommunicationsSection = () => {
                   )}
                 </div>
                 <div className="flex items-center gap-2 text-xs text-muted-foreground flex-shrink-0">
-                  <span>{comm.sender.split(" ")[0]}</span>
-                  <span className="text-muted-foreground/50">·</span>
-                  <span>{formatTime(comm.date, comm.time)}</span>
+                  <span>{formatTime(comm.created_at)}</span>
                 </div>
               </div>
             </div>
-            
+
             {/* Right: Sign button or chevron */}
             <div className="flex items-center flex-shrink-0">
-              {comm.type === "Mandatory Reading" && !isSignedOff ? (
-                <Button 
-                  size="sm" 
-                  onClick={(e) => { e.stopPropagation(); signOff(comm.id); }} 
+              {displayType === "Mandatory Reading" && !isSignedOff ? (
+                <Button
+                  size="sm"
+                  onClick={(e) => { e.stopPropagation(); signOff(comm.id); }}
                   className="h-9 px-3 text-xs gap-1.5 rounded-lg"
                 >
                   <FileCheck className="h-3.5 w-3.5" />
@@ -475,27 +505,18 @@ export const CommunicationsSection = () => {
     );
   };
 
-  // Message Detail Sheet - Enhanced
+  // Message Detail Sheet
   const MessageDetailSheet = () => {
     if (!selectedMessage) return null;
-    
-    const TypeIcon = typeConfig[selectedMessage.type as keyof typeof typeConfig]?.icon || MessageSquare;
-    const typeColor = typeConfig[selectedMessage.type as keyof typeof typeConfig]?.color || "bg-muted";
-    const isPinnedMsg = pinnedIds.has(selectedMessage.id);
-    const isRead = readIds.has(selectedMessage.id);
-    const isSignedOff = signedOffIds.has(selectedMessage.id);
-    
-    const recipientNames = selectedMessage.recipients.map(id => {
-      const emp = employees.find(e => e.id === id);
-      return emp?.name || "Unknown";
-    });
-    
-    const readStatus = selectedMessage.recipients.map(id => ({
-      id,
-      name: employees.find(e => e.id === id)?.name || "Unknown",
-      hasRead: selectedMessage.read.includes(id),
-    }));
-    
+
+    const displayType = getDisplayType(selectedMessage);
+    const TypeIcon = typeConfig[displayType as keyof typeof typeConfig]?.icon || MessageSquare;
+    const typeColor = typeConfig[displayType as keyof typeof typeConfig]?.color || "bg-muted";
+    const isPinnedMsg = selectedMessage.is_pinned;
+    const isRead = localReadIds.has(selectedMessage.id);
+    const isSignedOff = localAcknowledgedIds.has(selectedMessage.id);
+    const isHighPriority = selectedMessage.priority === 'high' || selectedMessage.priority === 'urgent';
+
     return (
       <Sheet open={showDetail} onOpenChange={setShowDetail}>
         <SheetContent side="bottom" className="h-[95vh] p-0 rounded-t-3xl">
@@ -503,7 +524,7 @@ export const CommunicationsSection = () => {
           <div className="flex justify-center pt-3 pb-2">
             <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
           </div>
-          
+
           {/* Hero header */}
           <div className="px-5 pb-4 border-b border-border">
             <div className="flex items-start gap-3">
@@ -512,8 +533,8 @@ export const CommunicationsSection = () => {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  {selectedMessage.priority === "High" && (
-                    <Badge className={`text-xs ${priorityColors.High}`}>Urgent</Badge>
+                  {isHighPriority && (
+                    <Badge className={`text-xs ${priorityColors[selectedMessage.priority]}`}>Urgent</Badge>
                   )}
                   {isPinnedMsg && (
                     <Badge variant="outline" className="text-xs gap-1">
@@ -523,33 +544,23 @@ export const CommunicationsSection = () => {
                 </div>
                 <h2 className="text-lg font-bold text-foreground mt-1 leading-tight">{selectedMessage.title}</h2>
                 <div className="flex items-center gap-2 mt-1.5 text-sm text-muted-foreground">
-                  <span className="font-medium text-foreground">{selectedMessage.sender}</span>
-                  <span>·</span>
-                  <span>{format(new Date(selectedMessage.date), "dd MMM")} at {selectedMessage.time}</span>
+                  <span>{format(new Date(selectedMessage.created_at), "dd MMM yyyy 'at' HH:mm")}</span>
                 </div>
               </div>
             </div>
           </div>
-          
+
           <ScrollArea className="h-[calc(95vh-200px)]">
             <div className="p-5 space-y-5">
-              {/* Job link */}
-              {selectedMessage.job && (
-                <div className="flex items-center gap-3 p-3.5 rounded-xl bg-muted/30 border border-border">
-                  <Briefcase className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-sm">Job: <span className="font-medium">{selectedMessage.job}</span></span>
-                </div>
-              )}
-              
               {/* Message content */}
               <div className="p-4 rounded-2xl bg-muted/20 border border-border">
                 <p className="text-sm text-foreground leading-relaxed whitespace-pre-wrap">
-                  {selectedMessage.message}
+                  {selectedMessage.content}
                 </p>
               </div>
-              
+
               {/* Mandatory sign-off */}
-              {selectedMessage.type === "Mandatory Reading" && !isSignedOff && (
+              {displayType === "Mandatory Reading" && !isSignedOff && (
                 <Card className="border-warning bg-warning/5 border-2">
                   <CardContent className="p-4">
                     <div className="flex items-start gap-3">
@@ -568,78 +579,71 @@ export const CommunicationsSection = () => {
                   </CardContent>
                 </Card>
               )}
-              
-              {isSignedOff && selectedMessage.type === "Mandatory Reading" && (
+
+              {isSignedOff && displayType === "Mandatory Reading" && (
                 <div className="flex items-center gap-3 p-3.5 rounded-xl bg-success/10 border border-success/30">
                   <CheckCircle2 className="h-5 w-5 text-success" />
                   <span className="text-sm font-medium text-success">You've signed off</span>
                 </div>
               )}
-              
-              {/* Recipients with read status */}
-              <div className="space-y-3">
-                <Label className="text-xs text-muted-foreground flex items-center gap-2">
-                  <Users className="h-3.5 w-3.5" />
-                  Recipients ({recipientNames.length})
-                </Label>
-                <div className="grid grid-cols-1 gap-2">
-                  {readStatus.map((recipient) => (
-                    <div key={recipient.id} className="flex items-center justify-between p-3 rounded-xl bg-muted/20">
-                      <span className="text-sm font-medium">{recipient.name}</span>
-                      {recipient.hasRead ? (
-                        <span className="flex items-center gap-1.5 text-xs text-success">
-                          <CheckCheck className="h-4 w-4" />
-                          Read
-                        </span>
-                      ) : (
-                        <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                          <Clock className="h-4 w-4" />
-                          Pending
-                        </span>
-                      )}
-                    </div>
-                  ))}
-                </div>
+
+              {/* Target info */}
+              <div className="flex items-center gap-3 p-3.5 rounded-xl bg-muted/30 border border-border">
+                <Users className="h-4 w-4 text-muted-foreground" />
+                <span className="text-sm">
+                  Sent to: <span className="font-medium">
+                    {selectedMessage.target_audience === 'all' ? 'All team members' :
+                     selectedMessage.target_audience === 'managers' ? 'Managers only' :
+                     `${selectedMessage.target_employee_ids?.length || 0} selected members`}
+                  </span>
+                </span>
               </div>
             </div>
           </ScrollArea>
-          
+
           {/* Sticky action bar */}
           <div className="absolute bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur-sm border-t border-border pb-safe">
             <div className="grid grid-cols-4 gap-3">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 size="lg"
-                className="flex-col h-auto py-3 gap-1.5 rounded-xl" 
-                onClick={() => togglePin(selectedMessage.id)}
+                className="flex-col h-auto py-3 gap-1.5 rounded-xl"
+                onClick={() => togglePin(selectedMessage.id, isPinnedMsg)}
+                disabled={pinCommunication.isPending}
               >
                 {isPinnedMsg ? <PinOff className="h-5 w-5" /> : <Pin className="h-5 w-5" />}
                 <span className="text-[11px]">{isPinnedMsg ? "Unpin" : "Pin"}</span>
               </Button>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 size="lg"
-                className="flex-col h-auto py-3 gap-1.5 rounded-xl" 
+                className="flex-col h-auto py-3 gap-1.5 rounded-xl"
                 onClick={() => toggleRead(selectedMessage.id)}
               >
                 {isRead ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 <span className="text-[11px]">{isRead ? "Unread" : "Read"}</span>
               </Button>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 size="lg"
                 className="flex-col h-auto py-3 gap-1.5 rounded-xl"
+                disabled
               >
-                <Reply className="h-5 w-5" />
+                <MessageSquare className="h-5 w-5" />
                 <span className="text-[11px]">Reply</span>
               </Button>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 size="lg"
-                className="flex-col h-auto py-3 gap-1.5 rounded-xl text-destructive hover:text-destructive hover:bg-destructive/10" 
+                className="flex-col h-auto py-3 gap-1.5 rounded-xl text-destructive hover:text-destructive hover:bg-destructive/10"
                 onClick={() => deleteMessage(selectedMessage.id)}
+                disabled={deleteCommunication.isPending}
               >
-                <Trash2 className="h-5 w-5" />
+                {deleteCommunication.isPending ? (
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                ) : (
+                  <Trash2 className="h-5 w-5" />
+                )}
                 <span className="text-[11px]">Delete</span>
               </Button>
             </div>
@@ -649,7 +653,7 @@ export const CommunicationsSection = () => {
     );
   };
 
-  // Compose Sheet - Full screen mobile
+  // Compose Sheet
   const ComposeSheet = () => (
     <Sheet open={showCompose} onOpenChange={setShowCompose}>
       <SheetContent side="bottom" className="h-[100vh] p-0">
@@ -659,12 +663,21 @@ export const CommunicationsSection = () => {
             Cancel
           </Button>
           <h3 className="font-semibold text-foreground">New Message</h3>
-          <Button size="sm" onClick={handleSendMessage} className="gap-1.5">
-            <Send className="h-4 w-4" />
+          <Button
+            size="sm"
+            onClick={handleSendMessage}
+            className="gap-1.5"
+            disabled={createCommunication.isPending}
+          >
+            {createCommunication.isPending ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Send className="h-4 w-4" />
+            )}
             Send
           </Button>
         </div>
-        
+
         <ScrollArea className="h-[calc(100vh-60px)]">
           <div className="p-4 space-y-5">
             {/* Template carousel */}
@@ -675,7 +688,7 @@ export const CommunicationsSection = () => {
                   const Icon = template.icon;
                   const isSelected = selectedType === template.type && messageTitle === template.name;
                   return (
-                    <button 
+                    <button
                       key={template.id}
                       className={`flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all ${isSelected ? 'border-elec-yellow bg-elec-yellow/10' : 'border-border bg-elec-gray hover:border-elec-yellow/50'}`}
                       onClick={() => handleUseTemplate(template)}
@@ -695,8 +708,8 @@ export const CommunicationsSection = () => {
                 {Object.entries(typeConfig).map(([type, config]) => {
                   const Icon = config.icon;
                   return (
-                    <Button 
-                      key={type} 
+                    <Button
+                      key={type}
                       variant={selectedType === type ? "default" : "outline"}
                       className="justify-start gap-2 h-12 rounded-xl"
                       onClick={() => setSelectedType(type)}
@@ -712,8 +725,8 @@ export const CommunicationsSection = () => {
             {/* Title */}
             <div className="space-y-2">
               <Label>Title</Label>
-              <Input 
-                placeholder="Message title..." 
+              <Input
+                placeholder="Message title..."
                 value={messageTitle}
                 onChange={(e) => setMessageTitle(e.target.value)}
                 className="h-12 rounded-xl"
@@ -726,8 +739,8 @@ export const CommunicationsSection = () => {
                 <Label>Message</Label>
                 <span className="text-xs text-muted-foreground">{messageContent.length}/500</span>
               </div>
-              <Textarea 
-                placeholder="Write your message..." 
+              <Textarea
+                placeholder="Write your message..."
                 className="min-h-[120px] rounded-xl resize-none"
                 value={messageContent}
                 onChange={(e) => setMessageContent(e.target.value.slice(0, 500))}
@@ -744,75 +757,50 @@ export const CommunicationsSection = () => {
                   </Badge>
                 )}
               </div>
-              <div className="grid grid-cols-3 gap-2">
-                <Button 
+              <div className="grid grid-cols-2 gap-2">
+                <Button
                   variant={recipientMode === "all" ? "default" : "outline"}
                   className="h-11 gap-1.5 rounded-xl"
                   onClick={() => {
                     setRecipientMode("all");
-                    setSelectedRecipients(employees.map(e => e.id));
+                    setSelectedRecipients([]);
                   }}
                 >
                   <Users className="h-4 w-4" />
-                  All
+                  All Team
                 </Button>
-                <Button 
-                  variant={recipientMode === "job" ? "default" : "outline"}
+                <Button
+                  variant={recipientMode === "specific" ? "default" : "outline"}
                   className="h-11 gap-1.5 rounded-xl"
-                  onClick={() => setRecipientMode("job")}
-                >
-                  <Briefcase className="h-4 w-4" />
-                  Job
-                </Button>
-                <Button 
-                  variant={recipientMode === "individual" ? "default" : "outline"}
-                  className="h-11 gap-1.5 rounded-xl"
-                  onClick={() => setRecipientMode("individual")}
+                  onClick={() => setRecipientMode("specific")}
                 >
                   <User className="h-4 w-4" />
                   Select
                 </Button>
               </div>
-              
-              {recipientMode === "job" && (
-                <Select 
-                  value={selectedJob} 
-                  onValueChange={(value) => {
-                    setSelectedJob(value);
-                    setSelectedRecipients(getJobRecipients(value));
-                  }}
-                >
-                  <SelectTrigger className="h-12 rounded-xl">
-                    <SelectValue placeholder="Select a job..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {jobs.filter(j => j.status === "Active").map((job) => (
-                      <SelectItem key={job.id} value={job.id}>
-                        {job.title} ({job.assignedWorkers} workers)
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              )}
-              
-              {recipientMode === "individual" && (
+
+              {recipientMode === "specific" && (
                 <div className="max-h-[140px] overflow-y-auto border border-border rounded-xl p-2 space-y-1">
-                  {employees.map((emp) => (
-                    <div key={emp.id} className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-muted/50">
-                      <Checkbox 
-                        id={`recipient-${emp.id}`}
-                        checked={selectedRecipients.includes(emp.id)}
-                        onCheckedChange={(checked) => {
-                          if (checked) {
-                            setSelectedRecipients([...selectedRecipients, emp.id]);
-                          } else {
-                            setSelectedRecipients(selectedRecipients.filter(id => id !== emp.id));
-                          }
-                        }}
-                      />
-                      <label htmlFor={`recipient-${emp.id}`} className="text-sm flex-1 cursor-pointer">{emp.name}</label>
-                    </div>
-                  ))}
+                  {employees.length === 0 ? (
+                    <p className="text-sm text-muted-foreground text-center py-4">No employees found</p>
+                  ) : (
+                    employees.map((emp) => (
+                      <div key={emp.id} className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-muted/50">
+                        <Checkbox
+                          id={`recipient-${emp.id}`}
+                          checked={selectedRecipients.includes(emp.id)}
+                          onCheckedChange={(checked) => {
+                            if (checked) {
+                              setSelectedRecipients([...selectedRecipients, emp.id]);
+                            } else {
+                              setSelectedRecipients(selectedRecipients.filter(id => id !== emp.id));
+                            }
+                          }}
+                        />
+                        <label htmlFor={`recipient-${emp.id}`} className="text-sm flex-1 cursor-pointer">{emp.name}</label>
+                      </div>
+                    ))
+                  )}
                 </div>
               )}
             </div>
@@ -820,7 +808,7 @@ export const CommunicationsSection = () => {
             {/* Options */}
             <div className="space-y-3">
               <Label className="text-xs text-muted-foreground">Options</Label>
-              
+
               <div className="flex items-center justify-between p-4 rounded-xl bg-muted/30 border border-border">
                 <div className="flex items-center gap-3">
                   <div className="p-2 rounded-lg bg-warning/20">
@@ -828,9 +816,9 @@ export const CommunicationsSection = () => {
                   </div>
                   <span className="text-sm font-medium">High Priority</span>
                 </div>
-                <Checkbox 
-                  checked={priority === "High"}
-                  onCheckedChange={(checked) => setPriority(checked ? "High" : "Normal")}
+                <Checkbox
+                  checked={priority === "high"}
+                  onCheckedChange={(checked) => setPriority(checked ? "high" : "normal")}
                 />
               </div>
 
@@ -841,7 +829,7 @@ export const CommunicationsSection = () => {
                   </div>
                   <span className="text-sm font-medium">Pin Message</span>
                 </div>
-                <Checkbox 
+                <Checkbox
                   checked={isPinned}
                   onCheckedChange={(checked) => setIsPinned(!!checked)}
                 />
@@ -855,12 +843,12 @@ export const CommunicationsSection = () => {
                     </div>
                     <span className="text-sm font-medium">Schedule</span>
                   </div>
-                  <Checkbox 
+                  <Checkbox
                     checked={isScheduled}
                     onCheckedChange={(checked) => setIsScheduled(!!checked)}
                   />
                 </div>
-                
+
                 {isScheduled && (
                   <div className="grid grid-cols-2 gap-2 p-4 rounded-xl bg-muted/20 border border-border">
                     <Popover>
@@ -894,7 +882,7 @@ export const CommunicationsSection = () => {
                 )}
               </div>
             </div>
-            
+
             {/* Bottom padding for safe area */}
             <div className="h-8" />
           </div>
@@ -903,11 +891,11 @@ export const CommunicationsSection = () => {
     </Sheet>
   );
 
-  // Empty State Component - Enhanced
+  // Empty State Component
   const EmptyState = () => {
     const state = emptyStates[activeTab as keyof typeof emptyStates] || emptyStates.inbox;
     const Icon = state.icon;
-    
+
     return (
       <div className="flex flex-col items-center justify-center py-16 px-4">
         <div className="relative">
@@ -930,6 +918,15 @@ export const CommunicationsSection = () => {
     );
   };
 
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-16">
+        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-4 animate-fade-in pb-24 md:pb-4">
       {/* Header - Compact Mobile */}
@@ -940,40 +937,40 @@ export const CommunicationsSection = () => {
           </div>
           <div>
             <h1 className="text-lg font-bold text-foreground">Messages</h1>
-            <p className="text-xs text-muted-foreground">{stats.unread} unread</p>
+            <p className="text-xs text-muted-foreground">{computedStats.unread} unread</p>
           </div>
         </div>
-        
+
         <div className="flex items-center gap-2">
           {/* Refresh button */}
-          <Button 
-            variant="ghost" 
-            size="icon" 
+          <Button
+            variant="ghost"
+            size="icon"
             className="h-10 w-10"
             onClick={handleRefresh}
-            disabled={isRefreshing}
+            disabled={isRefetching}
           >
-            <RotateCw className={`h-5 w-5 ${isRefreshing ? 'animate-spin' : ''}`} />
+            <RotateCw className={`h-5 w-5 ${isRefetching ? 'animate-spin' : ''}`} />
           </Button>
-          
+
           {/* Search toggle */}
-          <Button 
-            variant={showSearch ? "default" : "ghost"} 
-            size="icon" 
+          <Button
+            variant={showSearch ? "default" : "ghost"}
+            size="icon"
             className="h-10 w-10"
             onClick={() => setShowSearch(!showSearch)}
           >
             <Search className="h-5 w-5" />
           </Button>
-          
+
           {/* Notification bell with badge */}
           <div className="relative">
             <Button variant="ghost" size="icon" className="h-10 w-10">
               <Bell className="h-5 w-5" />
             </Button>
-            {stats.unread > 0 && (
+            {computedStats.unread > 0 && (
               <div className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] rounded-full bg-elec-yellow text-elec-yellow-foreground text-[10px] font-bold flex items-center justify-center px-1">
-                {stats.unread}
+                {computedStats.unread}
               </div>
             )}
           </div>
@@ -993,9 +990,9 @@ export const CommunicationsSection = () => {
               autoFocus
             />
             {searchQuery && (
-              <Button 
-                variant="ghost" 
-                size="icon" 
+              <Button
+                variant="ghost"
+                size="icon"
                 className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8"
                 onClick={() => setSearchQuery("")}
               >
@@ -1003,8 +1000,8 @@ export const CommunicationsSection = () => {
               </Button>
             )}
           </div>
-          <Button 
-            variant={filterUnread ? "default" : "outline"} 
+          <Button
+            variant={filterUnread ? "default" : "outline"}
             size="icon"
             className="h-11 w-11 rounded-xl flex-shrink-0"
             onClick={() => setFilterUnread(!filterUnread)}
@@ -1014,40 +1011,38 @@ export const CommunicationsSection = () => {
         </div>
       )}
 
-      {/* Stats Bar - Glanceable */}
-      <div className="grid grid-cols-4 gap-2">
-        {[
-          { icon: Inbox, value: stats.total, label: "All", active: false },
-          { icon: Bell, value: stats.unread, label: "Unread", active: stats.unread > 0, color: "primary" },
-          { icon: FileCheck, value: stats.mandatoryPending, label: "Sign", active: stats.mandatoryPending > 0, color: "warning" },
-          { icon: AlertTriangle, value: stats.safetyWarnings, label: "Safety", active: stats.safetyWarnings > 0, color: "destructive" },
-        ].map((stat, i) => {
-          const Icon = stat.icon;
-          return (
-            <div 
-              key={i} 
-              className={`p-3 rounded-xl border text-center transition-all ${
-                stat.active 
-                  ? stat.color === "primary" ? "bg-elec-yellow/10 border-elec-yellow/30" 
-                  : stat.color === "warning" ? "bg-warning/10 border-warning/30"
-                  : stat.color === "destructive" ? "bg-destructive/10 border-destructive/30"
-                  : "bg-elec-gray border-border"
-                  : "bg-elec-gray border-border"
-              }`}
-            >
-              <p className={`text-xl font-bold ${
-                stat.active 
-                  ? stat.color === "primary" ? "text-elec-yellow" 
-                  : stat.color === "warning" ? "text-warning"
-                  : stat.color === "destructive" ? "text-destructive"
-                  : "text-foreground"
-                  : "text-foreground"
-              }`}>{stat.value}</p>
-              <p className="text-[10px] text-muted-foreground mt-0.5">{stat.label}</p>
-            </div>
-          );
-        })}
-      </div>
+      {/* Stats Bar */}
+      <QuickStatsGrid
+        stats={[
+          {
+            icon: Inbox,
+            value: computedStats.total,
+            label: "All",
+            color: "blue",
+          },
+          {
+            icon: Bell,
+            value: computedStats.unread,
+            label: "Unread",
+            color: "yellow",
+            pulse: computedStats.unread > 0,
+          },
+          {
+            icon: FileCheck,
+            value: computedStats.mandatoryPending,
+            label: "Sign",
+            color: "orange",
+            pulse: computedStats.mandatoryPending > 0,
+          },
+          {
+            icon: AlertTriangle,
+            value: computedStats.safetyWarnings,
+            label: "Safety",
+            color: "red",
+            pulse: computedStats.safetyWarnings > 0,
+          },
+        ]}
+      />
 
       {/* Segmented Tab Control */}
       <div className="bg-muted/50 p-1 rounded-xl">
@@ -1060,8 +1055,8 @@ export const CommunicationsSection = () => {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`relative flex flex-col items-center justify-center py-2.5 px-2 rounded-lg transition-all ${
-                  isActive 
-                    ? 'bg-elec-gray shadow-sm' 
+                  isActive
+                    ? 'bg-elec-gray shadow-sm'
                     : 'hover:bg-muted/50'
                 }`}
               >
@@ -1089,7 +1084,7 @@ export const CommunicationsSection = () => {
             {/* Pinned Messages - Collapsible */}
             {groupedMessages.pinned.length > 0 && (
               <div className="space-y-2">
-                <button 
+                <button
                   onClick={() => setPinnedCollapsed(!pinnedCollapsed)}
                   className="flex items-center gap-2 text-xs text-muted-foreground px-1 w-full"
                 >
@@ -1108,7 +1103,7 @@ export const CommunicationsSection = () => {
               </div>
             )}
 
-            {/* Grouped Messages with sticky headers */}
+            {/* Grouped Messages */}
             {groupedMessages.groups.map((group) => (
               <div key={group.label} className="space-y-2">
                 <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm py-1.5 px-1 -mx-1">
@@ -1131,18 +1126,18 @@ export const CommunicationsSection = () => {
 
       {/* FAB */}
       {isMobile && (
-        <Button 
-          size="icon" 
+        <Button
+          size="icon"
           className="h-14 w-14 rounded-full shadow-lg fixed bottom-20 right-4 z-50"
           onClick={() => setShowCompose(true)}
         >
           <Plus className="h-6 w-6" />
         </Button>
       )}
-      
+
       {!isMobile && (
-        <Button 
-          className="fixed bottom-6 right-6 gap-2 shadow-lg" 
+        <Button
+          className="fixed bottom-6 right-6 gap-2 shadow-lg"
           onClick={() => setShowCompose(true)}
         >
           <Plus className="h-4 w-4" />

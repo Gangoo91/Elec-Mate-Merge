@@ -132,22 +132,22 @@ const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleSkip}>
-      <DialogContent className="max-w-md sm:max-w-lg p-0 gap-0 bg-neutral-900 border-white/10 overflow-hidden">
+      <DialogContent className="max-w-md sm:max-w-lg md:max-w-xl p-0 gap-0 bg-neutral-900 border-white/10 overflow-hidden">
         {/* Header with gradient */}
-        <div className={`relative px-6 pt-8 pb-6 ${content.bgColor}`}>
+        <div className={`relative px-6 md:px-8 pt-8 md:pt-10 pb-6 md:pb-8 ${content.bgColor}`}>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-neutral-900" />
           <div className="relative z-10 text-center">
-            <div className={`inline-flex p-4 rounded-2xl ${content.bgColor} ${content.borderColor} border mb-4`}>
-              <Icon className={`h-10 w-10 ${content.color}`} />
+            <div className={`inline-flex p-4 md:p-5 rounded-2xl ${content.bgColor} ${content.borderColor} border mb-4 md:mb-5`}>
+              <Icon className={`h-10 w-10 md:h-12 md:w-12 ${content.color}`} />
             </div>
-            <h2 className="text-2xl font-bold text-white mb-2">{content.title}</h2>
-            <p className="text-white/60">{content.subtitle}</p>
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">{content.title}</h2>
+            <p className="text-white/60 md:text-lg">{content.subtitle}</p>
           </div>
         </div>
 
         {/* Features */}
-        <div className="px-6 py-6 space-y-3">
-          <p className="text-xs font-medium text-white/40 uppercase tracking-wider mb-4">
+        <div className="px-6 md:px-8 py-6 md:py-8 space-y-3 md:space-y-4">
+          <p className="text-xs md:text-sm font-medium text-white/40 uppercase tracking-wider mb-4">
             What you get with your 7-day free trial
           </p>
           {content.features.map((feature, index) => {
@@ -155,50 +155,50 @@ const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
             return (
               <div
                 key={index}
-                className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/5 transition-colors hover:border-white/10"
+                className="flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-xl bg-white/[0.03] border border-white/5 transition-colors hover:border-white/10"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
-                <div className={`p-2 rounded-lg ${content.bgColor}`}>
-                  <FeatureIcon className={`h-4 w-4 ${content.color}`} />
+                <div className={`p-2 md:p-2.5 rounded-lg ${content.bgColor}`}>
+                  <FeatureIcon className={`h-4 w-4 md:h-5 md:w-5 ${content.color}`} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-white text-sm">{feature.text}</p>
-                  <p className="text-xs text-white/50">{feature.desc}</p>
+                  <p className="font-medium text-white text-sm md:text-base">{feature.text}</p>
+                  <p className="text-xs md:text-sm text-white/50">{feature.desc}</p>
                 </div>
-                <CheckCircle2 className="h-4 w-4 text-green-500 flex-shrink-0 mt-1" />
+                <CheckCircle2 className="h-4 w-4 md:h-5 md:w-5 text-green-500 flex-shrink-0 mt-1" />
               </div>
             );
           })}
         </div>
 
         {/* Trial info */}
-        <div className="px-6 py-3 bg-green-500/10 border-t border-b border-green-500/20">
-          <div className="flex items-center justify-center gap-2 text-sm text-green-400">
-            <Sparkles className="h-4 w-4" />
+        <div className="px-6 md:px-8 py-3 md:py-4 bg-green-500/10 border-t border-b border-green-500/20">
+          <div className="flex items-center justify-center gap-2 text-sm md:text-base text-green-400">
+            <Sparkles className="h-4 w-4 md:h-5 md:w-5" />
             <span>7-day free trial active - No credit card required</span>
           </div>
         </div>
 
         {/* Actions */}
-        <div className="px-6 py-6 space-y-3">
+        <div className="px-6 md:px-8 py-6 md:py-8 space-y-3">
           <Button
             onClick={handleGetStarted}
             disabled={isCompleting}
-            className="w-full h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-base"
+            className="w-full h-12 md:h-14 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-base md:text-lg"
           >
             {isCompleting ? (
               'Setting up...'
             ) : (
               <>
                 {content.cta}
-                <ChevronRight className="ml-2 h-5 w-5" />
+                <ChevronRight className="ml-2 h-5 w-5 md:h-6 md:w-6" />
               </>
             )}
           </Button>
           <Button
             variant="ghost"
             onClick={handleSkip}
-            className="w-full text-white/50 hover:text-white/70"
+            className="w-full h-10 md:h-11 text-white/50 hover:text-white/70 md:text-base"
           >
             I'll explore on my own
           </Button>

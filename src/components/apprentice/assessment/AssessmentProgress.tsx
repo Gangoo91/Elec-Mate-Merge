@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Award, Target, TrendingUp } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Award, Target, TrendingUp, CheckCircle, Sparkles } from "lucide-react";
 
 interface AssessmentTool {
   id: string;
@@ -16,17 +16,17 @@ interface AssessmentProgressProps {
 
 const AssessmentProgress = ({ tools, completedAssessments }: AssessmentProgressProps) => {
   const completionRate = (completedAssessments.length / tools.length) * 100;
-  const essentialCompleted = completedAssessments.filter(id => 
+  const essentialCompleted = completedAssessments.filter(id =>
     tools.find(t => t.id === id)?.difficulty === "Essential"
   ).length;
   const essentialTotal = tools.filter(t => t.difficulty === "Essential").length;
 
   const getProgressMessage = () => {
-    if (completionRate === 100) return "🎉 All assessments completed!";
-    if (completionRate >= 75) return "🚀 Almost there! Great progress!";
-    if (completionRate >= 50) return "👍 Halfway through! Keep going!";
-    if (completionRate >= 25) return "📚 Good start! Continue learning!";
-    return "🎯 Begin your assessment journey!";
+    if (completionRate === 100) return "All assessments completed!";
+    if (completionRate >= 75) return "Almost there! Great progress!";
+    if (completionRate >= 50) return "Halfway through! Keep going!";
+    if (completionRate >= 25) return "Good start! Continue learning!";
+    return "Begin your assessment journey!";
   };
 
   const getNextRecommendation = () => {
@@ -39,63 +39,106 @@ const AssessmentProgress = ({ tools, completedAssessments }: AssessmentProgressP
   const nextTool = getNextRecommendation();
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
-      <CardHeader>
-        <CardTitle className="text-elec-yellow flex items-center gap-2">
-          <Target className="h-5 w-5" />
+    <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10 overflow-hidden relative">
+      <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+      <CardHeader className="relative">
+        <CardTitle className="text-white flex items-center gap-3">
+          <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+            <Target className="h-5 w-5 text-elec-yellow" />
+          </div>
           Your Assessment Progress
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="text-center space-y-2">
-            <div className="text-2xl font-bold text-elec-yellow">{completedAssessments.length}</div>
-            <div className="text-sm text-muted-foreground">Completed</div>
-            <Progress value={completionRate} className="h-2" />
+      <CardContent className="space-y-6 relative">
+        {/* Stats Grid */}
+        <div className="grid grid-cols-3 gap-3 sm:gap-4">
+          <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
+            <div className="text-2xl sm:text-3xl font-bold text-elec-yellow mb-1">
+              {completedAssessments.length}
+            </div>
+            <div className="text-xs sm:text-sm text-white/60">Completed</div>
+            {/* Progress Bar */}
+            <div className="mt-3 h-1.5 bg-white/10 rounded-full overflow-hidden">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-elec-yellow to-elec-yellow/70 transition-all duration-500"
+                style={{ width: `${completionRate}%` }}
+              />
+            </div>
           </div>
-          
-          <div className="text-center space-y-2">
-            <div className="text-2xl font-bold text-green-400">{essentialCompleted}/{essentialTotal}</div>
-            <div className="text-sm text-muted-foreground">Essential Tools</div>
-            <Progress value={(essentialCompleted / essentialTotal) * 100} className="h-2" />
+
+          <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
+            <div className="text-2xl sm:text-3xl font-bold text-green-400 mb-1">
+              {essentialCompleted}/{essentialTotal}
+            </div>
+            <div className="text-xs sm:text-sm text-white/60">Essential</div>
+            {/* Progress Bar */}
+            <div className="mt-3 h-1.5 bg-white/10 rounded-full overflow-hidden">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-green-500 to-green-400 transition-all duration-500"
+                style={{ width: `${(essentialCompleted / essentialTotal) * 100}%` }}
+              />
+            </div>
           </div>
-          
-          <div className="text-center space-y-2">
-            <div className="text-2xl font-bold text-blue-400">{Math.round(completionRate)}%</div>
-            <div className="text-sm text-muted-foreground">Overall Progress</div>
-            <div className="flex items-center justify-center gap-1">
-              <TrendingUp className="h-4 w-4 text-green-400" />
+
+          <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
+            <div className="text-2xl sm:text-3xl font-bold text-blue-400 mb-1">
+              {Math.round(completionRate)}%
+            </div>
+            <div className="text-xs sm:text-sm text-white/60">Overall</div>
+            <div className="mt-2 flex items-center justify-center gap-1">
+              <TrendingUp className="h-3 w-3 text-green-400" />
               <span className="text-xs text-green-400">Trending up</span>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-elec-yellow/20 pt-4">
+        {/* Progress Message */}
+        <div className="p-4 rounded-xl bg-white/10 border border-white/10">
           <div className="flex items-center justify-between">
-            <div>
-              <h4 className="font-medium text-white">{getProgressMessage()}</h4>
-              {nextTool && (
-                <p className="text-sm text-muted-foreground mt-1">
-                  Next recommended: <span className="text-elec-yellow">{nextTool.title}</span>
-                </p>
+            <div className="flex items-center gap-3">
+              {completionRate === 100 ? (
+                <div className="p-2.5 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30">
+                  <Sparkles className="h-5 w-5 text-green-400" />
+                </div>
+              ) : (
+                <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
+                  <Target className="h-5 w-5 text-blue-400" />
+                </div>
               )}
+              <div>
+                <h4 className="font-medium text-white">{getProgressMessage()}</h4>
+                {nextTool && completionRate < 100 && (
+                  <p className="text-sm text-white/60 mt-1">
+                    Next recommended: <span className="text-elec-yellow">{nextTool.title}</span>
+                  </p>
+                )}
+              </div>
             </div>
             {completionRate === 100 && (
-              <Award className="h-8 w-8 text-elec-yellow" />
+              <div className="p-2 rounded-lg bg-elec-yellow/20">
+                <Award className="h-6 w-6 text-elec-yellow" />
+              </div>
             )}
           </div>
         </div>
 
+        {/* Recent Achievements */}
         {completedAssessments.length > 0 && (
-          <div className="bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-4">
-            <h4 className="font-medium text-white mb-2">Recent Achievements</h4>
+          <div className="p-4 rounded-xl bg-green-500/5 border border-green-500/20">
+            <h4 className="font-medium text-white mb-3 flex items-center gap-2">
+              <CheckCircle className="h-4 w-4 text-green-400" />
+              Recent Achievements
+            </h4>
             <div className="flex flex-wrap gap-2">
               {completedAssessments.slice(-3).map(id => {
                 const tool = tools.find(t => t.id === id);
                 return tool ? (
-                  <span key={id} className="text-xs px-2 py-1 bg-green-400/10 text-green-400 rounded">
-                    ✓ {tool.title}
-                  </span>
+                  <Badge
+                    key={id}
+                    className="bg-green-500/10 text-green-400 border-green-500/30"
+                  >
+                    {tool.title}
+                  </Badge>
                 ) : null;
               })}
             </div>

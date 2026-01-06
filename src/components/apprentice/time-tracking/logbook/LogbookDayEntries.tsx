@@ -25,11 +25,11 @@ const LogbookDayEntries = ({ date, entries, onSave, onDelete }: LogbookDayEntrie
   return (
     <div className="space-y-2">
       <h4 className="font-medium text-elec-yellow">{formatDate(date)}</h4>
-      <Card className="border-elec-yellow/10 bg-elec-dark">
+      <Card className="border-elec-yellow/10 bg-white/10">
         <CardContent className="p-0">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-elec-yellow/10 text-xs text-muted-foreground">
+              <tr className="border-b border-elec-yellow/10 text-xs text-white">
                 <th className="text-left p-3">Activity</th>
                 <th className="text-center p-3">Duration</th>
                 <th className="text-left hidden md:table-cell p-3">Notes</th>

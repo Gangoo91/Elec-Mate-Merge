@@ -56,14 +56,14 @@ const SupervisorKnowledge = () => {
         <SmartBackButton />
       </div>
       
-      <div className="bg-elec-gray p-4 sm:p-6 rounded-lg border border-elec-yellow/20">
+      <div className="bg-white/5 p-4 sm:p-6 rounded-lg border border-elec-yellow/20">
         <div className="flex flex-col md:flex-row gap-6 items-start">
           <div className="bg-elec-yellow/10 p-3 rounded-md">
             <HelpCircle size={36} className="text-elec-yellow" />
           </div>
           <div className="flex-1">
             <h2 className="text-xl font-semibold mb-2">Knowledge Bank</h2>
-            <p className="text-muted-foreground">
+            <p className="text-white/70">
               Access common questions and expert answers from site supervisors and qualified electricians. 
               Can't find what you're looking for? Submit your own question to be answered by verified mentors.
             </p>
@@ -71,10 +71,10 @@ const SupervisorKnowledge = () => {
         </div>
       </div>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray/50">
+      <Card className="border-elec-yellow/20 bg-white/5 border border-white/10">
         <CardHeader>
           <div className="flex items-center gap-2 mb-2">
-            <Search className="h-5 w-5 text-muted-foreground" />
+            <Search className="h-5 w-5 text-white/70" />
             <CardTitle>Search FAQs</CardTitle>
           </div>
           <CardDescription>
@@ -95,7 +95,7 @@ const SupervisorKnowledge = () => {
               {filteredFaqs.map((faq) => (
                 <AccordionItem key={faq.id} value={faq.id}>
                   <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
-                  <AccordionContent className="whitespace-pre-wrap text-muted-foreground">
+                  <AccordionContent className="whitespace-pre-wrap text-white/70">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -103,16 +103,16 @@ const SupervisorKnowledge = () => {
             </Accordion>
           ) : (
             <div className="text-center py-6">
-              <p className="text-muted-foreground">No matching questions found</p>
+              <p className="text-white/70">No matching questions found</p>
             </div>
           )}
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray/50">
+      <Card className="border-elec-yellow/20 bg-white/5 border border-white/10">
         <CardHeader>
           <div className="flex items-center gap-2 mb-2">
-            <MessageSquare className="h-5 w-5 text-muted-foreground" />
+            <MessageSquare className="h-5 w-5 text-white/70" />
             <CardTitle>Ask a Question</CardTitle>
           </div>
           <CardDescription>
@@ -123,7 +123,7 @@ const SupervisorKnowledge = () => {
           {questionSubmitted ? (
             <div className="text-center py-8 space-y-4">
               <p className="text-lg font-medium">Your question has been submitted!</p>
-              <p className="text-muted-foreground">
+              <p className="text-white/70">
                 Verified supervisors will review and answer your question. Check back soon.
               </p>
               <Button onClick={() => setQuestionSubmitted(false)}>Ask Another Question</Button>
@@ -145,7 +145,7 @@ const SupervisorKnowledge = () => {
               <div className="pt-2">
                 <Button type="submit" className="w-full">Submit Question</Button>
               </div>
-              <p className="text-xs text-muted-foreground text-center pt-2">
+              <p className="text-xs text-white/70 text-center pt-2">
                 Questions are reviewed by qualified electricians and site supervisors
               </p>
             </form>

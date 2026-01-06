@@ -55,7 +55,7 @@ const PortfolioIntroduction = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground text-lg leading-relaxed">
+          <p className="text-white text-lg leading-relaxed">
             Your apprenticeship portfolio is one of the most important documents you'll create during your training. 
             It's not just a collection of evidence - it's a comprehensive record of your professional development, 
             skills acquisition, and journey towards becoming a qualified electrician.
@@ -64,12 +64,12 @@ const PortfolioIntroduction = () => {
       </Card>
 
       {/* What is a Portfolio */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">What is an Apprenticeship Portfolio?</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-muted-foreground">
+          <p className="text-white">
             An apprenticeship portfolio is a structured collection of evidence that demonstrates your competency 
             against the standards required for your electrical qualification. It includes:
           </p>
@@ -78,7 +78,7 @@ const PortfolioIntroduction = () => {
             {portfolioPurpose.map((purpose, index) => (
               <div key={index} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-muted-foreground">{purpose}</p>
+                <p className="text-sm text-white">{purpose}</p>
               </div>
             ))}
           </div>
@@ -100,7 +100,7 @@ const PortfolioIntroduction = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">{benefit.description}</p>
+                <p className="text-sm text-white">{benefit.description}</p>
               </CardContent>
             </Card>
           );
@@ -117,7 +117,7 @@ const PortfolioIntroduction = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            <p className="text-muted-foreground">
+            <p className="text-white">
               The most successful apprentices start building their portfolio from day one and maintain it consistently 
               throughout their training. Don't wait until the end of your apprenticeship to begin collecting evidence.
             </p>
@@ -125,15 +125,15 @@ const PortfolioIntroduction = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
               <div className="flex items-center gap-2">
                 <Clock className="h-4 w-4 text-orange-400" />
-                <span className="text-sm text-muted-foreground">Start from week 1</span>
+                <span className="text-sm text-white">Start from week 1</span>
               </div>
               <div className="flex items-center gap-2">
                 <FileText className="h-4 w-4 text-orange-400" />
-                <span className="text-sm text-muted-foreground">Document everything</span>
+                <span className="text-sm text-white">Document everything</span>
               </div>
               <div className="flex items-center gap-2">
                 <Target className="h-4 w-4 text-orange-400" />
-                <span className="text-sm text-muted-foreground">Review regularly</span>
+                <span className="text-sm text-white">Review regularly</span>
               </div>
             </div>
           </div>

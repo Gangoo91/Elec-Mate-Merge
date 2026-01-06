@@ -111,6 +111,25 @@ const quizQuestions = [
     options: ["11 kV AC", "230 V AC only", "24 V DC", "400 Hz AC"],
     correctAnswer: 2,
     explanation: "24 V DC is common for control/automation I/O.",
+  },
+  {
+    id: 9,
+    question: "Which of the following uses DC at the output stage?",
+    options: ["Ring final circuit", "Three-phase motor starter", "Solar PV panel array", "Standard lighting circuit"],
+    correctAnswer: 2,
+    explanation: "Solar PV panels generate DC electricity which is then converted to AC by an inverter.",
+  },
+  {
+    id: 10,
+    question: "Why is AC preferred for long-distance power transmission?",
+    options: [
+      "AC cannot be transformed to different voltages",
+      "AC is easier to transform to higher/lower voltages using transformers",
+      "DC is always safer",
+      "AC has no losses"
+    ],
+    correctAnswer: 1,
+    explanation: "AC can be easily transformed to high voltages for efficient transmission over long distances, then stepped down for safe use.",
   }
 ];
 
@@ -577,20 +596,14 @@ const Module2Section4_5 = () => {
         />
 
         {/* Navigation */}
-        <div className="flex justify-between items-center mt-12 pt-8 border-t border-white/10">
-          <Button variant="outline" asChild>
-            <Link to="..">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5" asChild>
+            <Link to="../4-4"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
           </Button>
-          <Button asChild>
-            <Link to="..">
-              Next
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a]" asChild>
+            <Link to="../4-6">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
           </Button>
-        </div>
+        </nav>
       </div>
     </div>
   );

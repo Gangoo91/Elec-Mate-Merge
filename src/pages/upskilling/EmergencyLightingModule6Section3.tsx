@@ -14,12 +14,12 @@ const EmergencyLightingModule6Section3 = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       <div className="container mx-auto px-4 py-8">
         <Button 
           variant="outline" 
           onClick={() => navigate('/emergency-lighting-module-6')}
-          className="mb-6 border-yellow-400 text-white hover:bg-yellow-400 hover:text-black"
+          className="mb-6 border-elec-yellow text-white hover:bg-elec-yellow hover:text-black"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Module 6
@@ -33,10 +33,10 @@ const EmergencyLightingModule6Section3 = () => {
             Understanding how fire risk assessments drive emergency lighting design decisions
           </p>
           <div className="flex gap-2">
-            <span className="px-3 py-1 bg-yellow-400/10 text-yellow-400 rounded-full text-sm font-medium border border-yellow-400/30">
+            <span className="px-3 py-1 bg-elec-yellow/10 text-elec-yellow rounded-full text-sm font-medium border border-elec-yellow/30">
               Module 6
             </span>
-            <span className="px-3 py-1 bg-yellow-400/20 text-yellow-400 rounded-full text-sm font-medium border border-blue-600/30">
+            <span className="px-3 py-1 bg-elec-yellow/20 text-elec-yellow rounded-full text-sm font-medium border border-blue-600/30">
               30 minutes
             </span>
           </div>
@@ -65,7 +65,7 @@ const EmergencyLightingModule6Section3 = () => {
           
           <Button 
             onClick={() => navigate('/emergency-lighting-module-6-section-4')}
-            className="bg-yellow-400 text-black hover:bg-yellow-600"
+            className="bg-elec-yellow text-black hover:bg-yellow-600"
           >
             Next Section
             <ArrowRight className="ml-2 h-4 w-4" />

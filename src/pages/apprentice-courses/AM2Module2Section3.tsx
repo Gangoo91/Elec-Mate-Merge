@@ -223,18 +223,18 @@ const AM2Module2Section3 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
+      <div className="border-b border-white/10 bg-card/50">
         <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16 py-4">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-0 self-start" asChild>
+            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98] self-start" asChild>
               <Link to="..">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Module 2
               </Link>
             </Button>
-            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+            <div className="flex items-center gap-4 text-sm text-white">
               <div className="flex items-center gap-1">
                 <Clock className="w-4 h-4" />
                 <span>20 min read</span>
@@ -256,10 +256,10 @@ const AM2Module2Section3 = () => {
             <FileText className="w-4 h-4" />
             Module 2 – Section 3
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-6">
             Working with Drawings and Specifications
           </h1>
-          <p className="text-base text-muted-foreground mb-8 leading-relaxed">
+          <p className="text-base text-white mb-8 leading-relaxed">
             Complete guide to interpreting AM2 drawings and specifications - circuit diagrams, layout plans, and compliance requirements.
           </p>
         </div>
@@ -288,16 +288,16 @@ const AM2Module2Section3 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckSquare className="w-5 h-5" />
               Learning Outcomes
             </h2>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm text-white mb-4">
               By the end of this section, you should be able to:
             </p>
-            <ul className="space-y-2 text-xs sm:text-sm text-foreground">
+            <ul className="space-y-2 text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Interpret AM2 drawings and specifications correctly
@@ -323,7 +323,7 @@ const AM2Module2Section3 = () => {
         </Card>
 
         {/* Equipment and Documentation */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               Equipment & Documentation Requirements
@@ -331,7 +331,7 @@ const AM2Module2Section3 = () => {
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div>
                 <h3 className="font-semibold text-base mb-3">Essential Documentation</h3>
-                <ul className="space-y-2 text-xs sm:text-sm text-foreground">
+                <ul className="space-y-2 text-xs sm:text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Technical drawings and circuit diagrams
@@ -356,7 +356,7 @@ const AM2Module2Section3 = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-base mb-3">Essential Tools & References</h3>
-                <ul className="space-y-2 text-xs sm:text-sm text-foreground">
+                <ul className="space-y-2 text-xs sm:text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     BS 7671 symbol reference charts
@@ -384,19 +384,19 @@ const AM2Module2Section3 = () => {
         </Card>
 
         {/* Types of Drawings Section */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               1. Types of Drawings You'll See in AM2
             </h2>
-            <div className="space-y-6 text-xs sm:text-sm text-foreground">
+            <div className="space-y-6 text-xs sm:text-sm text-white">
               <div>
                 <h3 className="font-semibold text-base mb-2 flex items-center gap-2">
                   <Zap className="w-4 h-4 text-elec-yellow" />
                   Circuit Diagrams
                 </h3>
                 <p className="mb-2">Show electrical connections, conductor types, and protective devices.</p>
-                <ul className="space-y-1 text-muted-foreground ml-4">
+                <ul className="space-y-1 text-white ml-4">
                   <li>• Display circuit protection (MCBs, RCDs, fuses)</li>
                   <li>• Show conductor routes and connections</li>
                   <li>• Indicate cable types and sizes</li>
@@ -410,7 +410,7 @@ const AM2Module2Section3 = () => {
                   Layout Diagrams
                 </h3>
                 <p className="mb-2">Show physical positions including socket heights and trunking routes.</p>
-                <ul className="space-y-1 text-muted-foreground ml-4">
+                <ul className="space-y-1 text-white ml-4">
                   <li>• Exact measurements for accessory positioning</li>
                   <li>• Trunking and conduit routing paths</li>
                   <li>• Clearance distances from other services</li>
@@ -424,7 +424,7 @@ const AM2Module2Section3 = () => {
                   Written Specifications
                 </h3>
                 <p className="mb-2">Detailed written instructions covering all installation requirements.</p>
-                <ul className="space-y-1 text-muted-foreground ml-4">
+                <ul className="space-y-1 text-white ml-4">
                   <li>• Cable sizes, types, and colour requirements</li>
                   <li>• Installation methods and techniques</li>
                   <li>• Material specifications and standards</li>
@@ -438,16 +438,16 @@ const AM2Module2Section3 = () => {
         </Card>
 
         {/* Following Specifications Section */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               2. Following Specifications - Non-Negotiable
             </h2>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <h3 className="font-semibold text-base mb-2">Cable Requirements</h3>
-                  <ul className="space-y-1 text-muted-foreground">
+                  <ul className="space-y-1 text-white">
                     <li>• Sizes must match exactly (e.g., 2.5mm² for sockets, 4mm² for cooker)</li>
                     <li>• Cable types as specified (T&E, SWA, FP200, etc.)</li>
                     <li>• Core colours must comply with requirements</li>
@@ -456,7 +456,7 @@ const AM2Module2Section3 = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-base mb-2">Installation Requirements</h3>
-                  <ul className="space-y-1 text-muted-foreground">
+                  <ul className="space-y-1 text-white">
                     <li>• Accessories positioned exactly as per dimensions</li>
                     <li>• Conduit/trunking routes following specified runs</li>
                     <li>• Installation methods as detailed in specs</li>
@@ -477,12 +477,12 @@ const AM2Module2Section3 = () => {
         </Card>
 
         {/* Common Errors Section */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               3. Common Drawing Interpretation Errors (NET Guidance)
             </h2>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <h3 className="font-semibold text-base mb-3 text-elec-yellow">Critical Errors That Cause Failure</h3>
@@ -542,12 +542,12 @@ const AM2Module2Section3 = () => {
         </Card>
 
         {/* BS 7671 Symbol Recognition */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               4. BS 7671 Symbol Recognition Requirements
             </h2>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="p-4 bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg">
                 <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">Essential Symbol Categories</h4>
                 <div className="grid md:grid-cols-2 gap-4 text-sm text-blue-700 dark:text-elec-yellow">
@@ -576,7 +576,7 @@ const AM2Module2Section3 = () => {
               <div>
                 <h3 className="font-semibold text-base mb-2">Symbol Fluency Requirements</h3>
                 <p className="mb-2">You must be able to instantly recognise and interpret standard BS 7671 symbols without reference materials.</p>
-                <ul className="space-y-1 text-muted-foreground ml-4">
+                <ul className="space-y-1 text-white ml-4">
                   <li>• Immediate recognition of all common electrical symbols</li>
                   <li>• Understanding symbol variations and combinations</li>
                   <li>• Ability to trace circuit paths through schematic diagrams</li>
@@ -589,16 +589,16 @@ const AM2Module2Section3 = () => {
         </Card>
 
         {/* Strategies Section */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               5. Strategies to Avoid Mistakes
             </h2>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <h3 className="font-semibold text-base mb-3">Pre-Work Review Process</h3>
-                  <ol className="space-y-2 text-muted-foreground">
+                  <ol className="space-y-2 text-white">
                     <li className="flex gap-2">
                       <span className="bg-elec-yellow text-black px-2 py-0.5 rounded text-xs font-medium min-w-[20px] text-center">1</span>
                       <span>Read all drawings and specifications fully</span>
@@ -623,7 +623,7 @@ const AM2Module2Section3 = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-base mb-3">During Installation</h3>
-                  <ul className="space-y-2 text-muted-foreground">
+                  <ul className="space-y-2 text-white">
                     <li className="flex items-start gap-2">
                       <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                       Keep specifications on hand - don't trust memory
@@ -652,18 +652,18 @@ const AM2Module2Section3 = () => {
         </Card>
 
         {/* Measurement and Marking Section */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               6. Measurement and Marking Techniques
             </h2>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div>
                 <h3 className="font-semibold text-base mb-2">Professional Measuring Practices</h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <h4 className="font-medium mb-2 text-elec-yellow">Accurate Measurement</h4>
-                    <ul className="space-y-1 text-muted-foreground">
+                    <ul className="space-y-1 text-white">
                       <li>• Use appropriate measuring tools for task</li>
                       <li>• Measure from fixed reference points</li>
                       <li>• Account for wall/surface variations</li>
@@ -673,7 +673,7 @@ const AM2Module2Section3 = () => {
                   </div>
                   <div>
                     <h4 className="font-medium mb-2 text-elec-yellow">Marking Procedures</h4>
-                    <ul className="space-y-1 text-muted-foreground">
+                    <ul className="space-y-1 text-white">
                       <li>• Use appropriate marking tools (pencil, chalk)</li>
                       <li>• Mark centre points and corners clearly</li>
                       <li>• Use spirit level for accurate horizontal/vertical</li>
@@ -726,7 +726,7 @@ const AM2Module2Section3 = () => {
         </Card>
 
         {/* WHAT ASSESSORS LOOK FOR - NEW SECTION */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-yellow-700 dark:text-yellow-300 mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5" />
@@ -916,12 +916,12 @@ const AM2Module2Section3 = () => {
         />
 
         {/* Real-World Examples */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               8. Real-World Industry Examples
             </h2>
-            <div className="space-y-6 text-xs sm:text-sm text-foreground">
+            <div className="space-y-6 text-xs sm:text-sm text-white">
               <div>
                 <h3 className="font-semibold text-base mb-3 text-elec-yellow">AM2 Assessment Failures</h3>
                 <div className="space-y-3">
@@ -957,20 +957,20 @@ const AM2Module2Section3 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Eye className="w-5 h-5" />
               Summary
             </h2>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <p className="text-base font-medium">
                 Working with drawings and specifications is about precision and compliance, not interpretation or improvement.
               </p>
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <h3 className="font-semibold text-base mb-2">Key Points</h3>
-                  <ul className="space-y-1 text-muted-foreground">
+                  <ul className="space-y-1 text-white">
                     <li>• Drawings and specs must be followed exactly</li>
                     <li>• BS 7671 symbol fluency is essential</li>
                     <li>• Measurement accuracy prevents mark loss</li>
@@ -980,7 +980,7 @@ const AM2Module2Section3 = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-base mb-2">Mark-Losing Actions</h3>
-                  <ul className="space-y-1 text-muted-foreground">
+                  <ul className="space-y-1 text-white">
                     <li>• Wrong cable sizes or types</li>
                     <li>• Incorrect accessory positioning</li>
                     <li>• Mixed voltage systems in same containment</li>
@@ -991,7 +991,7 @@ const AM2Module2Section3 = () => {
               </div>
               <div className="mt-6 p-4 bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg">
                 <h4 className="font-semibold text-elec-yellow mb-2">Golden Rule</h4>
-                <p className="text-foreground">
+                <p className="text-white">
                   Follow drawings and specifications exactly. AM2 assesses compliance and competency, not personal interpretation or design improvement.
                 </p>
               </div>
@@ -1000,12 +1000,12 @@ const AM2Module2Section3 = () => {
         </Card>
 
         {/* Quiz Section */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
               Test Your Knowledge
             </h2>
-            <p className="text-sm text-muted-foreground mb-6">
+            <p className="text-sm text-white mb-6">
               Complete this 10-question quiz to test your understanding of working with drawings and specifications.
             </p>
             <Quiz 
@@ -1019,7 +1019,7 @@ const AM2Module2Section3 = () => {
         <div className="flex flex-col sm:flex-row gap-3 justify-between">
           <Link 
             to="../section2"
-            className="flex items-center gap-2 px-4 py-3 bg-card border border-elec-yellow/30 text-foreground rounded-lg hover:border-elec-yellow/50 transition-colors text-sm font-medium w-full sm:w-auto justify-center sm:justify-start"
+            className="flex items-center gap-2 px-4 py-3 border border-elec-yellow/30 text-white rounded-lg hover:border-elec-yellow/50 transition-colors text-sm font-medium w-full sm:w-auto justify-center sm:justify-start"
           >
             <ArrowLeft className="h-4 w-4" />
             Previous: Section 2

@@ -163,7 +163,7 @@ const ExportIntegrationHub = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-blue-600">23</div>
-            <p className="text-sm text-muted-foreground">Total Exports</p>
+            <p className="text-sm text-white">Total Exports</p>
           </div>
         </CardContent>
       </Card>
@@ -172,7 +172,7 @@ const ExportIntegrationHub = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-green-600">156 MB</div>
-            <p className="text-sm text-muted-foreground">Data Exported</p>
+            <p className="text-sm text-white">Data Exported</p>
           </div>
         </CardContent>
       </Card>
@@ -181,7 +181,7 @@ const ExportIntegrationHub = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-purple-600">5</div>
-            <p className="text-sm text-muted-foreground">Active Integrations</p>
+            <p className="text-sm text-white">Active Integrations</p>
           </div>
         </CardContent>
       </Card>
@@ -190,7 +190,7 @@ const ExportIntegrationHub = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-orange-600">Daily</div>
-            <p className="text-sm text-muted-foreground">Auto Backup</p>
+            <p className="text-sm text-white">Auto Backup</p>
           </div>
         </CardContent>
       </Card>
@@ -202,7 +202,7 @@ const ExportIntegrationHub = () => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">Export & Integration Hub</h2>
-          <p className="text-muted-foreground">Export your data and integrate with external systems</p>
+          <p className="text-white">Export your data and integrate with external systems</p>
         </div>
       </div>
 
@@ -272,7 +272,7 @@ const ExportIntegrationHub = () => {
                           >
                             {category.label}
                           </Label>
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-xs text-white">
                             {category.description}
                           </p>
                         </div>
@@ -326,7 +326,7 @@ const ExportIntegrationHub = () => {
           <Card>
             <CardHeader>
               <CardTitle>Export Templates</CardTitle>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Pre-configured export formats for different purposes
               </p>
             </CardHeader>
@@ -336,7 +336,7 @@ const ExportIntegrationHub = () => {
                   <Card key={template.id} className="relative">
                     <CardContent className="p-4">
                       <h3 className="font-semibold mb-2">{template.name}</h3>
-                      <p className="text-sm text-muted-foreground mb-3">{template.description}</p>
+                      <p className="text-sm text-white mb-3">{template.description}</p>
                       
                       <div className="space-y-2 mb-4">
                         <div className="flex items-center gap-2 text-sm">
@@ -369,7 +369,7 @@ const ExportIntegrationHub = () => {
           <Card>
             <CardHeader>
               <CardTitle>Available Integrations</CardTitle>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Connect with external systems and platforms
               </p>
             </CardHeader>
@@ -382,7 +382,7 @@ const ExportIntegrationHub = () => {
                         <div className="text-2xl">{integration.icon}</div>
                         <div>
                           <h3 className="font-semibold">{integration.name}</h3>
-                          <p className="text-sm text-muted-foreground">{integration.description}</p>
+                          <p className="text-sm text-white">{integration.description}</p>
                         </div>
                       </div>
                       
@@ -414,7 +414,7 @@ const ExportIntegrationHub = () => {
                       <FileText className="h-8 w-8 text-blue-600" />
                       <div>
                         <h3 className="font-medium">{exportItem.name}</h3>
-                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-4 text-sm text-white">
                           <span>{exportItem.format}</span>
                           <span>{exportItem.size}</span>
                           <span>{exportItem.date}</span>

@@ -99,14 +99,14 @@ const InsulationResistanceGuide = () => {
     {
       category: "Good", 
       range: "50MΩ - 200MΩ",
-      color: "text-yellow-400 bg-yellow-400/20",
+      color: "text-elec-yellow bg-elec-yellow/20",
       description: "Good condition, older installation",
       action: "Acceptable, monitor trends"
     },
     {
       category: "Investigate",
       range: "2MΩ - 50MΩ",
-      color: "text-yellow-400 bg-yellow-600/20", 
+      color: "text-elec-yellow bg-elec-yellow/20", 
       description: "Above minimum but requires investigation",
       action: "Find cause of lower reading - check for moisture, damage"
     },
@@ -127,13 +127,13 @@ const InsulationResistanceGuide = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="module-8/section-3">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Practical Tests
@@ -142,7 +142,7 @@ const InsulationResistanceGuide = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <Gauge className="h-8 w-8 text-yellow-400" />
+            <Gauge className="h-8 w-8 text-elec-yellow" />
             <Badge 
               variant="secondary" 
               className="bg-purple-600/40 text-purple-300 hover:bg-purple-600/50 font-semibold text-sm px-3 py-1 border-0"
@@ -164,10 +164,10 @@ const InsulationResistanceGuide = () => {
         <div className="max-w-6xl mx-auto space-y-8">
 
           {/* Why We Test Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <BookOpen className="h-6 w-6 text-yellow-400" />
+                <BookOpen className="h-6 w-6 text-elec-yellow" />
                 Why We Test Insulation Resistance
               </CardTitle>
             </CardHeader>
@@ -176,9 +176,9 @@ const InsulationResistanceGuide = () => {
                 {whyWeTest.map((reason, index) => {
                   const IconComponent = reason.icon;
                   return (
-                    <div key={index} className="bg-card/80 p-4 rounded-lg">
+                    <div key={index} className="bg-transparent/80 p-4 rounded-lg">
                       <div className="flex items-center gap-3 mb-2">
-                        <IconComponent className="h-5 w-5 text-yellow-400" />
+                        <IconComponent className="h-5 w-5 text-elec-yellow" />
                         <h3 className="text-white font-semibold">{reason.title}</h3>
                       </div>
                       <p className="text-white text-sm">{reason.description}</p>
@@ -190,28 +190,28 @@ const InsulationResistanceGuide = () => {
           </Card>
 
           {/* Test Voltages */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Zap className="h-6 w-6 text-yellow-400" />
+                <Zap className="h-6 w-6 text-elec-yellow" />
                 Test Voltages - Which One to Use?
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {testVoltages.map((voltage, index) => (
-                <div key={index} className="bg-card/80 p-4 rounded-lg">
+                <div key={index} className="bg-transparent/80 p-4 rounded-lg">
                   <div className="flex items-center gap-3 mb-2">
-                    <Badge className="bg-yellow-400/40 text-blue-300 border-0">{voltage.voltage}</Badge>
+                    <Badge className="bg-elec-yellow/40 text-blue-300 border-0">{voltage.voltage}</Badge>
                     <h3 className="text-white font-semibold">{voltage.circuits}</h3>
                   </div>
                   <p className="text-white text-sm">{voltage.application}</p>
                 </div>
               ))}
               
-              <div className="bg-yellow-400/20 p-4 rounded-lg border border-blue-600/30">
+              <div className="bg-elec-yellow/20 p-4 rounded-lg border border-blue-600/30">
                 <div className="flex items-center gap-2 mb-2">
-                  <Info className="h-5 w-5 text-yellow-400" />
-                  <h4 className="text-yellow-400 font-semibold">Most Common</h4>
+                  <Info className="h-5 w-5 text-elec-yellow" />
+                  <h4 className="text-elec-yellow font-semibold">Most Common</h4>
                 </div>
                 <p className="text-blue-200 text-sm">
                   For standard UK domestic and commercial installations (230V single phase), 
@@ -222,19 +222,19 @@ const InsulationResistanceGuide = () => {
           </Card>
 
           {/* Hands-On Testing Guide */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Settings className="h-6 w-6 text-yellow-400" />
+                <Settings className="h-6 w-6 text-elec-yellow" />
                 Step-by-Step: How to Test Insulation Resistance
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               
               {testProcedure.map((step) => (
-                <div key={step.step} className="bg-card/80 p-6 rounded-lg">
+                <div key={step.step} className="bg-transparent/80 p-6 rounded-lg">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="bg-yellow-400 text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">
+                    <div className="bg-elec-yellow text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">
                       {step.step}
                     </div>
                     <h3 className="text-white text-lg font-semibold">{step.title}</h3>
@@ -254,7 +254,7 @@ const InsulationResistanceGuide = () => {
               ))}
 
               {/* Detailed Testing Process */}
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
                   <span className="bg-purple-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">4</span>
                   Physical Testing Process
@@ -281,17 +281,17 @@ const InsulationResistanceGuide = () => {
                     
                     <div>
                       <h4 className="text-white font-medium mb-3">Test Sequence:</h4>
-                      <div className="bg-card p-3 rounded space-y-1">
-                        <p className="text-yellow-400 font-mono text-sm">1. Line to Neutral</p>
-                        <p className="text-yellow-400 font-mono text-sm">2. Line to Earth</p>
-                        <p className="text-yellow-400 font-mono text-sm">3. Neutral to Earth</p>
+                      <div className="bg-transparent p-3 rounded space-y-1">
+                        <p className="text-elec-yellow font-mono text-sm">1. Line to Neutral</p>
+                        <p className="text-elec-yellow font-mono text-sm">2. Line to Earth</p>
+                        <p className="text-elec-yellow font-mono text-sm">3. Neutral to Earth</p>
                       </div>
                     </div>
                   </div>
 
                   <div className="space-y-3">
                     <h4 className="text-white font-medium">How to Take Each Reading:</h4>
-                    <div className="bg-card p-4 rounded">
+                    <div className="bg-transparent p-4 rounded">
                       <ol className="text-white text-sm space-y-2">
                         <li>1. Connect test leads to appropriate terminals</li>
                         <li>2. Press and hold TEST button</li>
@@ -306,16 +306,16 @@ const InsulationResistanceGuide = () => {
               </div>
 
               {/* What You See on the Meter */}
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-lg font-semibold mb-4">What You See on Your Meter</h3>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <h4 className="text-yellow-400 font-medium mb-2">Digital Display Examples:</h4>
-                    <div className="bg-card p-3 rounded space-y-1">
+                    <h4 className="text-elec-yellow font-medium mb-2">Digital Display Examples:</h4>
+                    <div className="bg-transparent p-3 rounded space-y-1">
                       <p className="text-green-400 font-mono text-sm">"&gt;999MΩ" = Excellent</p>
                       <p className="text-green-400 font-mono text-sm">"150MΩ" = Very Good</p>
-                      <p className="text-yellow-400 font-mono text-sm">"15MΩ" = Acceptable</p>
+                      <p className="text-elec-yellow font-mono text-sm">"15MΩ" = Acceptable</p>
                       <p className="text-red-400 font-mono text-sm">"0.5MΩ" = Fail</p>
                     </div>
                   </div>
@@ -335,17 +335,17 @@ const InsulationResistanceGuide = () => {
           </Card>
 
           {/* Expected Results */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Activity className="h-6 w-6 text-yellow-400" />
+                <Activity className="h-6 w-6 text-elec-yellow" />
                 Expected Results & What They Mean
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {expectedResults.map((result, index) => (
-                  <div key={index} className="bg-card/80 p-4 rounded-lg">
+                  <div key={index} className="bg-transparent/80 p-4 rounded-lg">
                     <div className="flex items-center gap-2 mb-2">
                       <Badge className={`${result.color} border-0`}>
                         {result.category}
@@ -358,10 +358,10 @@ const InsulationResistanceGuide = () => {
                 ))}
               </div>
               
-              <div className="bg-yellow-400/20 p-4 rounded-lg border border-blue-600/30">
+              <div className="bg-elec-yellow/20 p-4 rounded-lg border border-blue-600/30">
                 <div className="flex items-center gap-2 mb-2">
-                  <Info className="h-5 w-5 text-yellow-400" />
-                  <h4 className="text-yellow-400 font-semibold">Critical Values to Remember</h4>
+                  <Info className="h-5 w-5 text-elec-yellow" />
+                  <h4 className="text-elec-yellow font-semibold">Critical Values to Remember</h4>
                 </div>
                 <ul className="text-blue-200 text-sm space-y-1">
                   <li>• <strong>1MΩ minimum</strong> - Below this is a failure</li>
@@ -372,16 +372,16 @@ const InsulationResistanceGuide = () => {
               </div>
 
           {/* Real-World Examples */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Target className="h-6 w-6 text-yellow-400" />
+                <Target className="h-6 w-6 text-elec-yellow" />
                 Real-World Testing Examples
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-green-400 font-semibold mb-4">Example 1: New Domestic Installation</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
@@ -395,7 +395,7 @@ const InsulationResistanceGuide = () => {
                   </div>
                   <div>
                     <h4 className="text-white font-medium mb-2">Test Results:</h4>
-                    <div className="bg-card p-3 rounded space-y-1">
+                    <div className="bg-transparent p-3 rounded space-y-1">
                       <p className="text-green-400 font-mono text-sm">Line to Neutral: &gt;999MΩ ✓</p>
                       <p className="text-green-400 font-mono text-sm">Line to Earth: &gt;999MΩ ✓</p>
                       <p className="text-green-400 font-mono text-sm">Neutral to Earth: &gt;999MΩ ✓</p>
@@ -407,8 +407,8 @@ const InsulationResistanceGuide = () => {
                 </p>
               </div>
 
-              <div className="bg-card/80 p-6 rounded-lg">
-                <h3 className="text-yellow-400 font-semibold mb-4">Example 2: Older Installation Requiring Investigation</h3>
+              <div className="bg-transparent/80 p-6 rounded-lg">
+                <h3 className="text-elec-yellow font-semibold mb-4">Example 2: Older Installation Requiring Investigation</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <h4 className="text-white font-medium mb-2">Installation Details:</h4>
@@ -421,10 +421,10 @@ const InsulationResistanceGuide = () => {
                   </div>
                   <div>
                     <h4 className="text-white font-medium mb-2">Test Results:</h4>
-                    <div className="bg-card p-3 rounded space-y-1">
+                    <div className="bg-transparent p-3 rounded space-y-1">
                       <p className="text-green-400 font-mono text-sm">Line to Neutral: 85MΩ ✓</p>
-                      <p className="text-yellow-400 font-mono text-sm">Line to Earth: 1.8MΩ ⚠</p>
-                      <p className="text-yellow-400 font-mono text-sm">Neutral to Earth: 1.5MΩ ⚠</p>
+                      <p className="text-elec-yellow font-mono text-sm">Line to Earth: 1.8MΩ ⚠</p>
+                      <p className="text-elec-yellow font-mono text-sm">Neutral to Earth: 1.5MΩ ⚠</p>
                     </div>
                   </div>
                 </div>
@@ -434,7 +434,7 @@ const InsulationResistanceGuide = () => {
                 </p>
               </div>
 
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-red-400 font-semibold mb-4">Example 3: Failed Test Requiring Immediate Action</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
@@ -448,7 +448,7 @@ const InsulationResistanceGuide = () => {
                   </div>
                   <div>
                     <h4 className="text-white font-medium mb-2">Test Results:</h4>
-                    <div className="bg-card p-3 rounded space-y-1">
+                    <div className="bg-transparent p-3 rounded space-y-1">
                       <p className="text-green-400 font-mono text-sm">Line to Neutral: 150MΩ ✓</p>
                       <p className="text-red-400 font-mono text-sm">Line to Earth: 0.3MΩ ✗</p>
                       <p className="text-red-400 font-mono text-sm">Neutral to Earth: 0.4MΩ ✗</p>
@@ -464,17 +464,17 @@ const InsulationResistanceGuide = () => {
           </Card>
 
           {/* Environmental Factors */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Gauge className="h-6 w-6 text-yellow-400" />
+                <Gauge className="h-6 w-6 text-elec-yellow" />
                 Environmental Factors Affecting Results
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h3 className="text-yellow-400 font-semibold mb-3">Temperature Effects</h3>
+                <div className="bg-transparent/80 p-4 rounded-lg">
+                  <h3 className="text-elec-yellow font-semibold mb-3">Temperature Effects</h3>
                   <ul className="text-white text-sm space-y-2">
                     <li>• Higher temperature = Lower resistance</li>
                     <li>• Cold conditions = Higher resistance</li>
@@ -484,7 +484,7 @@ const InsulationResistanceGuide = () => {
                   </ul>
                 </div>
 
-                <div className="bg-card/80 p-4 rounded-lg">
+                <div className="bg-transparent/80 p-4 rounded-lg">
                   <h3 className="text-green-400 font-semibold mb-3">Humidity Effects</h3>
                   <ul className="text-white text-sm space-y-2">
                     <li>• High humidity = Lower resistance</li>
@@ -496,10 +496,10 @@ const InsulationResistanceGuide = () => {
                 </div>
               </div>
 
-              <div className="bg-yellow-600/20 p-4 rounded-lg border border-yellow-600/30">
+              <div className="bg-elec-yellow/20 p-4 rounded-lg border border-elec-yellow/30">
                 <div className="flex items-center gap-2 mb-2">
-                  <AlertTriangle className="h-5 w-5 text-yellow-400" />
-                  <h4 className="text-yellow-400 font-semibold">Course Tip</h4>
+                  <AlertTriangle className="h-5 w-5 text-elec-yellow" />
+                  <h4 className="text-elec-yellow font-semibold">Course Tip</h4>
                 </div>
                 <p className="text-yellow-200 text-sm">
                   In your practical assessment, if readings are affected by environmental conditions, 
@@ -510,16 +510,16 @@ const InsulationResistanceGuide = () => {
           </Card>
 
           {/* Advanced Testing Techniques */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Settings className="h-6 w-6 text-yellow-400" />
+                <Settings className="h-6 w-6 text-elec-yellow" />
                 Advanced Testing Techniques
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-purple-400 font-semibold mb-4">Section Testing for Fault Location</h3>
                 <p className="text-white text-sm mb-3">
                   When overall circuit reading is low, test individual sections to locate the problem:
@@ -537,7 +537,7 @@ const InsulationResistanceGuide = () => {
                   </div>
                   <div>
                     <h4 className="text-white font-medium mb-2">Example Results:</h4>
-                    <div className="bg-card p-3 rounded space-y-1">
+                    <div className="bg-transparent p-3 rounded space-y-1">
                       <p className="text-green-400 font-mono text-sm">DB to Socket 1: 200MΩ ✓</p>
                       <p className="text-green-400 font-mono text-sm">Socket 1 to 2: 180MΩ ✓</p>
                       <p className="text-red-400 font-mono text-sm">Socket 2 to 3: 0.8MΩ ✗</p>
@@ -548,13 +548,13 @@ const InsulationResistanceGuide = () => {
                 </div>
               </div>
 
-              <div className="bg-card/80 p-6 rounded-lg">
-                <h3 className="text-yellow-400 font-semibold mb-4">PI (Polarisation Index) Testing</h3>
+              <div className="bg-transparent/80 p-6 rounded-lg">
+                <h3 className="text-elec-yellow font-semibold mb-4">PI (Polarisation Index) Testing</h3>
                 <p className="text-white text-sm mb-3">
                   Advanced technique for evaluating insulation condition over time:
                 </p>
                 <div className="space-y-3">
-                  <div className="bg-card p-4 rounded">
+                  <div className="bg-transparent p-4 rounded">
                     <h4 className="text-white font-medium mb-2">Procedure:</h4>
                     <ol className="text-white text-sm space-y-1">
                       <li>1. Take reading at 1 minute</li>
@@ -568,8 +568,8 @@ const InsulationResistanceGuide = () => {
                       <p className="text-green-400 font-semibold">PI ≥ 4.0</p>
                       <p className="text-green-300 text-sm">Excellent</p>
                     </div>
-                    <div className="bg-yellow-600/20 p-3 rounded text-center">
-                      <p className="text-yellow-400 font-semibold">PI 2.0-4.0</p>
+                    <div className="bg-elec-yellow/20 p-3 rounded text-center">
+                      <p className="text-elec-yellow font-semibold">PI 2.0-4.0</p>
                       <p className="text-yellow-300 text-sm">Good</p>
                     </div>
                     <div className="bg-red-600/20 p-3 rounded text-center">
@@ -583,16 +583,16 @@ const InsulationResistanceGuide = () => {
           </Card>
 
           {/* Equipment-Specific Guidance */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Zap className="h-6 w-6 text-yellow-400" />
+                <Zap className="h-6 w-6 text-elec-yellow" />
                 Equipment That Must Be Disconnected
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-card/80 p-4 rounded-lg">
+                <div className="bg-transparent/80 p-4 rounded-lg">
                   <h3 className="text-red-400 font-semibold mb-3">Always Disconnect</h3>
                   <ul className="text-white text-sm space-y-2">
                     <li className="flex items-start gap-2">
@@ -618,7 +618,7 @@ const InsulationResistanceGuide = () => {
                   </ul>
                 </div>
 
-                <div className="bg-card/80 p-4 rounded-lg">
+                <div className="bg-transparent/80 p-4 rounded-lg">
                   <h3 className="text-green-400 font-semibold mb-3">Can Usually Stay Connected</h3>
                   <ul className="text-white text-sm space-y-2">
                     <li className="flex items-start gap-2">
@@ -657,16 +657,16 @@ const InsulationResistanceGuide = () => {
           </Card>
 
           {/* Common Problems */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <AlertTriangle className="h-6 w-6 text-yellow-400" />
+                <AlertTriangle className="h-6 w-6 text-elec-yellow" />
                 Common Problems & Solutions
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-4">
-                <div className="bg-card/80 p-4 rounded-lg">
+                <div className="bg-transparent/80 p-4 rounded-lg">
                   <h3 className="text-red-400 font-semibold mb-3">Problem: Very Low Reading (&lt;1MΩ)</h3>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div>
@@ -692,7 +692,7 @@ const InsulationResistanceGuide = () => {
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-4 rounded-lg">
+                <div className="bg-transparent/80 p-4 rounded-lg">
                   <h3 className="text-red-400 font-semibold mb-3">Problem: Reading Won't Stabilise</h3>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div>
@@ -716,7 +716,7 @@ const InsulationResistanceGuide = () => {
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-4 rounded-lg">
+                <div className="bg-transparent/80 p-4 rounded-lg">
                   <h3 className="text-red-400 font-semibold mb-3">Problem: Different Readings on Similar Circuits</h3>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div>
@@ -744,17 +744,17 @@ const InsulationResistanceGuide = () => {
           </Card>
 
           {/* Practical Exam Tips */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Eye className="h-6 w-6 text-yellow-400" />
+                <Eye className="h-6 w-6 text-elec-yellow" />
                 Exam Tips & Best Practices
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h3 className="text-yellow-400 font-semibold mb-3">Before Testing</h3>
+                <div className="bg-transparent/80 p-4 rounded-lg">
+                  <h3 className="text-elec-yellow font-semibold mb-3">Before Testing</h3>
                   <ul className="text-white text-sm space-y-2">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
@@ -775,8 +775,8 @@ const InsulationResistanceGuide = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h3 className="text-yellow-400 font-semibold mb-3">During Testing</h3>
+                <div className="bg-transparent/80 p-4 rounded-lg">
+                  <h3 className="text-elec-yellow font-semibold mb-3">During Testing</h3>
                   <ul className="text-white text-sm space-y-2">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
@@ -815,16 +815,16 @@ const InsulationResistanceGuide = () => {
           </Card>
 
           {/* Advanced Testing Techniques */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Settings className="h-6 w-6 text-yellow-400" />
+                <Settings className="h-6 w-6 text-elec-yellow" />
                 Advanced Testing Techniques
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-purple-400 font-semibold mb-4">Sequential Testing for Large Installations</h3>
                 <div className="space-y-4">
                   <p className="text-white text-sm">
@@ -853,7 +853,7 @@ const InsulationResistanceGuide = () => {
                     </div>
                   </div>
                   
-                  <div className="bg-yellow-400/20 p-4 rounded">
+                  <div className="bg-elec-yellow/20 p-4 rounded">
                     <p className="text-blue-200 text-sm">
                       <strong>Pro Tip:</strong> Always test the worst-performing circuit first during detailed investigation. 
                       This often reveals the root cause affecting multiple circuits.
@@ -862,16 +862,16 @@ const InsulationResistanceGuide = () => {
                 </div>
               </div>
 
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-orange-400 font-semibold mb-4">Testing in Challenging Conditions</h3>
                 <div className="space-y-4">
                   
                   <div>
                     <h4 className="text-white font-semibold mb-3">Damp Environments</h4>
-                    <div className="bg-card p-4 rounded">
+                    <div className="bg-transparent p-4 rounded">
                       <div className="space-y-3">
                         <div>
-                          <p className="text-yellow-400 font-medium text-sm">Challenge:</p>
+                          <p className="text-elec-yellow font-medium text-sm">Challenge:</p>
                           <p className="text-white text-sm">Moisture on surfaces creates false current paths</p>
                         </div>
                         
@@ -891,10 +891,10 @@ const InsulationResistanceGuide = () => {
 
                   <div>
                     <h4 className="text-white font-semibold mb-3">High Capacitance Circuits</h4>
-                    <div className="bg-card p-4 rounded">
+                    <div className="bg-transparent p-4 rounded">
                       <div className="space-y-3">
                         <div>
-                          <p className="text-yellow-400 font-medium text-sm">Challenge:</p>
+                          <p className="text-elec-yellow font-medium text-sm">Challenge:</p>
                           <p className="text-white text-sm">Long cable runs and control circuits take time to charge</p>
                         </div>
                         
@@ -917,22 +917,22 @@ const InsulationResistanceGuide = () => {
           </Card>
 
           {/* Equipment Selection and Setup */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Gauge className="h-6 w-6 text-yellow-400" />
+                <Gauge className="h-6 w-6 text-elec-yellow" />
                 Equipment Selection & Setup Guide
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               
-              <div className="bg-card/80 p-6 rounded-lg">
-                <h3 className="text-yellow-400 font-semibold mb-4">Choosing the Right Insulation Tester</h3>
+              <div className="bg-transparent/80 p-6 rounded-lg">
+                <h3 className="text-elec-yellow font-semibold mb-4">Choosing the Right Insulation Tester</h3>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   
                   <div>
                     <h4 className="text-white font-medium mb-3">Basic Requirements (Training/Domestic)</h4>
-                    <div className="bg-card p-4 rounded">
+                    <div className="bg-transparent p-4 rounded">
                       <ul className="text-white text-sm space-y-2">
                         <li>• 250V and 500V test capabilities minimum</li>
                         <li>• Clear digital display with auto-ranging</li>
@@ -946,7 +946,7 @@ const InsulationResistanceGuide = () => {
 
                   <div>
                     <h4 className="text-white font-medium mb-3">Professional/Industrial Features</h4>
-                    <div className="bg-card p-4 rounded">
+                    <div className="bg-transparent p-4 rounded">
                       <ul className="text-white text-sm space-y-2">
                         <li>• Multiple test voltages: 250V, 500V, 1000V</li>
                         <li>• PI (Polarisation Index) calculation</li>
@@ -959,7 +959,7 @@ const InsulationResistanceGuide = () => {
                   </div>
                 </div>
 
-                <div className="mt-4 bg-yellow-600/20 p-4 rounded border-l-4 border-yellow-400">
+                <div className="mt-4 bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
                   <p className="text-yellow-200 text-sm">
                     <strong>Calibration Critical:</strong> BS 7671 requires test instruments to be calibrated. 
                     Never use an out-of-calibration tester for compliance testing.
@@ -967,15 +967,15 @@ const InsulationResistanceGuide = () => {
                 </div>
               </div>
 
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-green-400 font-semibold mb-4">Pre-Test Equipment Checks</h3>
                 <div className="space-y-4">
                   
-                  <div className="bg-card p-4 rounded">
+                  <div className="bg-transparent p-4 rounded">
                     <h4 className="text-white font-medium mb-3">Essential Checks Before Each Test Session</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <p className="text-yellow-400 font-medium text-sm mb-2">Tester Verification:</p>
+                        <p className="text-elec-yellow font-medium text-sm mb-2">Tester Verification:</p>
                         <ul className="text-white text-sm space-y-1">
                           <li>• Battery level sufficient for testing</li>
                           <li>• Display functioning correctly</li>
@@ -1008,28 +1008,28 @@ const InsulationResistanceGuide = () => {
           </Card>
 
           {/* Assessment and Exam Preparation */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <BookOpen className="h-6 w-6 text-yellow-400" />
+                <BookOpen className="h-6 w-6 text-elec-yellow" />
                 Assessment & Exam Preparation
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-purple-400 font-semibold mb-4">Practical Assessment Scenarios</h3>
                 <div className="space-y-4">
                   
-                  <div className="bg-card p-4 rounded">
-                    <h4 className="text-yellow-400 font-medium mb-3">Scenario 1: "The Circuit That Wouldn't Pass"</h4>
+                  <div className="bg-transparent p-4 rounded">
+                    <h4 className="text-elec-yellow font-medium mb-3">Scenario 1: "The Circuit That Wouldn't Pass"</h4>
                     <div className="space-y-3">
                       <p className="text-white text-sm">
                         <strong>Situation:</strong> Ring final circuit showing 0.8MΩ line to earth, other readings normal.
                       </p>
                       
                       <div>
-                        <p className="text-yellow-400 font-medium text-sm">Your systematic approach:</p>
+                        <p className="text-elec-yellow font-medium text-sm">Your systematic approach:</p>
                         <ol className="text-white text-sm space-y-1 ml-4">
                           <li>1. Re-check test voltage selection (should be 500V)</li>
                           <li>2. Verify all equipment disconnected from circuit</li>
@@ -1049,15 +1049,15 @@ const InsulationResistanceGuide = () => {
                     </div>
                   </div>
 
-                  <div className="bg-card p-4 rounded">
-                    <h4 className="text-yellow-400 font-medium mb-3">Scenario 2: "Mixed Results Interpretation"</h4>
+                  <div className="bg-transparent p-4 rounded">
+                    <h4 className="text-elec-yellow font-medium mb-3">Scenario 2: "Mixed Results Interpretation"</h4>
                     <div className="space-y-3">
                       <p className="text-white text-sm">
                         <strong>Results:</strong> L-N: 150MΩ, L-E: 2.5MΩ, N-E: 180MΩ
                       </p>
                       
                       <div>
-                        <p className="text-yellow-400 font-medium text-sm">Analysis required:</p>
+                        <p className="text-elec-yellow font-medium text-sm">Analysis required:</p>
                         <ul className="text-white text-sm space-y-1">
                           <li>• L-E reading is concerning (below 2MΩ investigation threshold)</li>
                           <li>• L-N and N-E readings excellent</li>
@@ -1071,11 +1071,11 @@ const InsulationResistanceGuide = () => {
                 </div>
               </div>
 
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-red-400 font-semibold mb-4">Common Exam Mistakes to Avoid</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   
-                  <div className="bg-card p-4 rounded">
+                  <div className="bg-transparent p-4 rounded">
                     <h4 className="text-red-400 font-medium mb-2">Technical Errors:</h4>
                     <ul className="text-white text-sm space-y-2">
                       <li className="flex items-start gap-2">
@@ -1097,7 +1097,7 @@ const InsulationResistanceGuide = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-card p-4 rounded">
+                  <div className="bg-transparent p-4 rounded">
                     <h4 className="text-red-400 font-medium mb-2">Documentation Errors:</h4>
                     <ul className="text-white text-sm space-y-2">
                       <li className="flex items-start gap-2">

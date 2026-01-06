@@ -144,7 +144,7 @@ const InteractiveToolsTab = () => {
           </div>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Master proven communication frameworks and get practical tips for real workplace scenarios. 
             These tools will help you communicate more effectively with colleagues, supervisors, and clients.
           </p>
@@ -159,7 +159,7 @@ const InteractiveToolsTab = () => {
             <Card key={index} className="border-blue-500/20 bg-blue-500/10">
               <CardHeader>
                 <CardTitle className="text-blue-300 text-lg">{framework.title}</CardTitle>
-                <p className="text-sm text-muted-foreground">{framework.description}</p>
+                <p className="text-sm text-white">{framework.description}</p>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
@@ -194,7 +194,7 @@ const InteractiveToolsTab = () => {
                   <MessageSquare className="h-5 w-5" />
                   {scenario.title}
                 </CardTitle>
-                <p className="text-sm text-muted-foreground">{scenario.situation}</p>
+                <p className="text-sm text-white">{scenario.situation}</p>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -202,7 +202,7 @@ const InteractiveToolsTab = () => {
                     <h4 className="font-medium text-white mb-2">Key Tips:</h4>
                     <ul className="space-y-1">
                       {scenario.tips.map((tip, tipIdx) => (
-                        <li key={tipIdx} className="text-sm text-muted-foreground flex items-start gap-2">
+                        <li key={tipIdx} className="text-sm text-white flex items-start gap-2">
                           <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
                           {tip}
                         </li>
@@ -226,7 +226,7 @@ const InteractiveToolsTab = () => {
           {communicationTips.map((category, index) => {
             const IconComponent = category.icon;
             return (
-              <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+              <Card key={index} className="border-elec-yellow/20 bg-white/5">
                 <CardHeader>
                   <CardTitle className="text-elec-yellow flex items-center gap-2">
                     <IconComponent className="h-5 w-5" />
@@ -236,7 +236,7 @@ const InteractiveToolsTab = () => {
                 <CardContent>
                   <ul className="space-y-2">
                     {category.tips.map((tip, tipIdx) => (
-                      <li key={tipIdx} className="text-sm text-muted-foreground flex items-start gap-2">
+                      <li key={tipIdx} className="text-sm text-white flex items-start gap-2">
                         <Zap className="h-3 w-3 text-elec-yellow mt-0.5 flex-shrink-0" />
                         {tip}
                       </li>
@@ -278,7 +278,7 @@ const InteractiveToolsTab = () => {
           <CardTitle className="text-green-400">Remember: Practice Makes Perfect</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Effective communication is a skill that improves with practice. Start by focusing on one framework or tip at a time. 
             Use these scenarios to practice with colleagues, friends, or even in front of a mirror. 
             The more you practice professional communication, the more natural it becomes in real situations.

@@ -33,23 +33,23 @@ const OJTRatioCard = () => {
   if (!isMobile) {
     // Original desktop version
     return (
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className="pt-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Clock className="h-5 w-5 text-elec-yellow" />
               <span className="text-xl font-bold">Portfolio & OJT Management</span>
             </div>
-            <div className="text-sm text-muted-foreground">20% requirement</div>
+            <div className="text-sm text-white">20% requirement</div>
           </div>
           <div className="mt-4 grid grid-cols-2 gap-4">
-            <div className="rounded-md bg-elec-dark p-2 text-center">
+            <div className="rounded-md bg-white/10 p-2 text-center">
               <div className="text-2xl font-bold text-elec-yellow">{totalOJTTime.toFixed(1)}</div>
-              <p className="text-xs text-muted-foreground">Hours logged</p>
+              <p className="text-xs text-white">Hours logged</p>
             </div>
-            <div className="rounded-md bg-elec-dark p-2 text-center">
+            <div className="rounded-md bg-white/10 p-2 text-center">
               <div className="text-2xl font-bold">{Math.round(requiredOJTTime)}</div>
-              <p className="text-xs text-muted-foreground">Hours required</p>
+              <p className="text-xs text-white">Hours required</p>
             </div>
           </div>
         </CardContent>

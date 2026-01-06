@@ -1,177 +1,154 @@
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Calendar, Eye, Star, Clock, ExternalLink } from "lucide-react";
+import { Calendar, Eye, Clock, ExternalLink } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import type { NewsArticle } from "@/hooks/useIndustryNews";
-import { isValidUrl } from "@/utils/urlUtils";
-
-// Placeholder image paths from public directory
+import { motion } from "framer-motion";
 
 interface NewsGridProps {
   articles: NewsArticle[];
   excludeId?: string;
 }
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.04 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 400, damping: 30 },
+  },
+};
+
 const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
-  const filteredArticles = excludeId 
+  const filteredArticles = excludeId
     ? articles.filter(article => article.id !== excludeId)
     : articles;
 
   const getCategoryColor = (category: string) => {
-    const colors = {
-      "Regulation": "bg-red-500/20 border-red-500/30 text-red-300",
-      "Safety": "bg-orange-500/20 border-orange-500/30 text-orange-300",
-      "Technology": "bg-blue-500/20 border-blue-500/30 text-blue-300",
-      "Industry": "bg-green-500/20 border-green-500/30 text-green-300",
-      "Standards": "bg-purple-500/20 border-purple-500/30 text-purple-300",
-      "News": "bg-cyan-500/20 border-cyan-500/30 text-cyan-300",
-      "Training": "bg-yellow-500/20 border-yellow-500/30 text-yellow-300",
+    const colors: Record<string, string> = {
+      "Regulation": "bg-rose-500/80 text-white",
+      "Safety": "bg-amber-500/80 text-white",
+      "Technology": "bg-sky-500/80 text-white",
+      "Industry": "bg-emerald-500/80 text-white",
+      "Standards": "bg-violet-500/80 text-white",
+      "News": "bg-cyan-500/80 text-white",
+      "Training": "bg-yellow-500/80 text-black",
+      "Technical": "bg-indigo-500/80 text-white",
+      "BS7671": "bg-purple-500/80 text-white",
     };
-    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
+    return colors[category] || "bg-white/20 text-white";
   };
 
   const getCategoryImage = (category: string) => {
-    switch (category?.toLowerCase()) {
-      case "bs7671":
-        return "/news-placeholders/bs7671.jpg";
-      case "hse":
-      case "fire safety":
-      case "construction safety":
-      case "safety technology":
-        return "/news-placeholders/hse.jpg";
-      case "niceic":
-        return "/news-placeholders/niceic.jpg";
-      default:
-        return "/news-placeholders/general.jpg";
-    }
+    const images: Record<string, string> = {
+      "Regulation": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&h=300&fit=crop&auto=format&q=80",
+      "Safety": "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=300&fit=crop&auto=format&q=80",
+      "Technology": "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&h=300&fit=crop&auto=format&q=80",
+      "Industry": "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=400&h=300&fit=crop&auto=format&q=80",
+      "Standards": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=400&h=300&fit=crop&auto=format&q=80",
+      "News": "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&h=300&fit=crop&auto=format&q=80",
+      "Training": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=300&fit=crop&auto=format&q=80",
+      "Technical": "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=400&h=300&fit=crop&auto=format&q=80",
+      "BS7671": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=400&h=300&fit=crop&auto=format&q=80",
+    };
+    return images[category] || images["Industry"];
   };
 
   const getReadTime = (content: string) => {
-    const wordsPerMinute = 200;
-    const wordCount = content.split(' ').length;
-    const readTime = Math.max(1, Math.ceil(wordCount / wordsPerMinute));
-    return readTime;
+    const words = content?.split(' ').length || 0;
+    return Math.max(1, Math.ceil(words / 200));
   };
-
-  const isPopular = (article: NewsArticle) => article.view_count && article.view_count > 100;
-  const isHighRated = (article: NewsArticle) => article.average_rating && article.average_rating >= 4.0;
 
   if (filteredArticles.length === 0) {
     return (
-      <div className="text-center py-16">
-        <div className="w-16 h-16 rounded-full bg-elec-yellow/10 flex items-center justify-center mx-auto mb-4">
-          <ExternalLink className="h-8 w-8 text-elec-yellow" />
-        </div>
-        <h3 className="text-lg font-semibold text-foreground mb-2">No Articles Found</h3>
-        <p className="text-foreground/90">Try adjusting your search or filter criteria.</p>
+      <div className="text-center py-12">
+        <p className="text-sm text-white/40">No articles to display</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-8">
-      {/* Main Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        {filteredArticles.map((article, index) => {
-          const formattedDate = format(new Date(article.date_published), 'MMM dd, yyyy');
-          const formattedTime = format(new Date(article.date_published), 'HH:mm');
-          const readTime = getReadTime(article.content);
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+    >
+      {filteredArticles.map((article) => (
+        <motion.article
+          key={article.id}
+          variants={itemVariants}
+          whileHover={{ y: -4 }}
+          whileTap={{ scale: 0.98 }}
+          onClick={() => window.open(article.external_url, '_blank', 'noopener,noreferrer')}
+          className="group cursor-pointer"
+        >
+          <div className="relative h-[220px] sm:h-[240px] rounded-xl overflow-hidden">
+            {/* Image */}
+            <img
+              src={article.image_url || getCategoryImage(article.category)}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+              onError={(e) => {
+                e.currentTarget.src = getCategoryImage(article.category);
+              }}
+            />
 
-          return (
-            <div 
-              key={article.id}
-              className="bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-xl border border-white/10 overflow-hidden group hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] h-full cursor-pointer"
-              onClick={() => window.open(article.external_url, '_blank', 'noopener,noreferrer')}
-            >
-              {/* Image */}
-              <div className="relative overflow-hidden h-40 sm:h-48">
-                <img
-                  src={article.image_url || getCategoryImage(article.category)}
-                  alt={article.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  loading="lazy"
-                  onError={(e) => {
-                    e.currentTarget.src = getCategoryImage(article.category);
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-                
-                {/* Category Badge */}
-                <div className="absolute top-3 left-3">
-                  <Badge className={cn("text-xs font-medium", getCategoryColor(article.category))}>
-                    {article.category}
-                  </Badge>
-                </div>
+            {/* Gradient */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/10" />
 
-                {/* Regulatory Body Badge */}
-                {article.regulatory_body && (
-                  <div className="absolute top-3 right-3">
-                    <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs">
-                      {article.regulatory_body}
-                    </Badge>
-                  </div>
-                )}
+            {/* Content */}
+            <div className="absolute inset-0 p-4 flex flex-col">
+              {/* Top: Category */}
+              <div className="flex items-start justify-between">
+                <Badge className={cn("text-[10px] font-semibold px-2 py-0.5 rounded-md", getCategoryColor(article.category))}>
+                  {article.category}
+                </Badge>
+                <span className="text-[10px] text-white/50 bg-black/30 backdrop-blur-sm rounded-full px-2 py-0.5">
+                  {getReadTime(article.content)} min
+                </span>
               </div>
 
-              {/* Content */}
-              <div className="p-4 sm:p-5 space-y-3 flex flex-col h-[calc(100%-10rem)] sm:h-[calc(100%-12rem)]">
-                {/* Meta Info */}
-                <div className="flex items-center justify-between text-xs text-foreground/80">
-                  <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-1">
-                      <Eye className="h-3 w-3" />
-                      <span>{article.view_count?.toLocaleString() || 0}</span>
-                    </div>
-                    {article.average_rating && (
-                      <div className="flex items-center gap-1">
-                        <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                        <span>{article.average_rating.toFixed(1)}</span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Clock className="h-3 w-3" />
-                    <span>{readTime} min read</span>
-                  </div>
-                </div>
+              {/* Spacer */}
+              <div className="flex-1" />
 
-                {/* Title */}
-                <h3 className="font-semibold text-foreground line-clamp-2 leading-tight flex-grow text-sm sm:text-base" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+              {/* Bottom: Title + Meta */}
+              <div className="space-y-2">
+                <h3 className="text-white font-medium text-sm leading-snug line-clamp-2 group-hover:text-elec-yellow transition-colors">
                   {article.title}
                 </h3>
 
-                {/* Summary */}
-                <p className="text-foreground/90 line-clamp-2 leading-relaxed flex-grow text-xs sm:text-sm" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>
-                  {article.summary}
-                </p>
-
-                {/* Footer */}
-                <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/10">
-                  <div className="flex items-center gap-2 text-xs text-foreground/80">
-                    <Calendar className="h-3 w-3" />
-                    <span>{format(new Date(article.date_published), 'dd MMM yyyy')}</span>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-[10px] text-white/40">
+                    <span>{format(new Date(article.date_published), 'MMM d')}</span>
+                    <span className="flex items-center gap-1">
+                      <Eye className="h-2.5 w-2.5" />
+                      {article.view_count || 0}
+                    </span>
                   </div>
-                  
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    className="h-8 px-3 text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow group/btn"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      window.open(article.external_url, '_blank', 'noopener,noreferrer');
-                    }}
-                  >
-                    <span className="text-xs">Read</span>
-                    <ExternalLink className="h-3 w-3 ml-1 transition-transform group-hover/btn:translate-x-0.5" />
-                  </Button>
+
+                  <span className="text-elec-yellow text-[10px] font-medium opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+                    Read <ExternalLink className="h-2.5 w-2.5" />
+                  </span>
                 </div>
               </div>
             </div>
-          );
-        })}
-      </div>
-    </div>
+
+            {/* Hover border */}
+            <div className="absolute inset-0 rounded-xl border border-transparent group-hover:border-elec-yellow/20 transition-colors pointer-events-none" />
+          </div>
+        </motion.article>
+      ))}
+    </motion.div>
   );
 };
 

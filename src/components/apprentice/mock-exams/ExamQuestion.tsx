@@ -29,7 +29,7 @@ const ExamQuestion: React.FC<ExamQuestionProps> = ({
   isLastQuestion
 }) => {
   return (
-    <Card className="border-elec-yellow/30 bg-elec-gray">
+    <Card className="border-elec-yellow/30 bg-white/5">
       <CardContent className="pt-6">
         <div className="space-y-6">
           <h2 className="text-xl font-medium">{question.text}</h2>
@@ -41,7 +41,7 @@ const ExamQuestion: React.FC<ExamQuestionProps> = ({
                 className={`p-3 rounded-md border cursor-pointer transition-colors ${
                   selectedAnswer === index
                     ? 'bg-elec-yellow/20 border-elec-yellow'
-                    : 'border-elec-gray-border hover:border-elec-yellow/50 bg-elec-dark/30'
+                    : 'border-elec-gray-border hover:border-elec-yellow/50 bg-white/10'
                 }`}
                 onClick={() => onSelectAnswer(question.id, index)}
               >

@@ -336,7 +336,7 @@ const SupplementaryTestCard = () => {
             <Badge variant="secondary" className="bg-purple-500/20 text-purple-400 border-purple-500/30">
               Additional Tests
             </Badge>
-            <Badge variant="outline" className="text-white border-gray-500">
+            <Badge variant="outline" className="text-white border-white/50">
               Varies by installation
             </Badge>
           </div>

@@ -203,7 +203,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
                 ? 'bg-elec-yellow text-elec-dark'
                 : idx < currentStep
                   ? 'bg-green-500 text-white'
-                  : 'bg-elec-gray/60 text-elec-light/60'
+                  : 'bg-white/5 text-elec-light/60'
               }
               ${isMobile
                 ? 'w-8 h-8 rounded-full text-xs font-bold'
@@ -225,7 +225,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
             )}
           </button>
           {idx < WIZARD_STEPS.length - 1 && (
-            <div className={`w-4 sm:w-8 h-0.5 mx-1 ${idx < currentStep ? 'bg-green-500' : 'bg-elec-gray/40'}`} />
+            <div className={`w-4 sm:w-8 h-0.5 mx-1 ${idx < currentStep ? 'bg-green-500' : 'bg-white/5'}`} />
           )}
         </div>
       ))}
@@ -483,7 +483,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
 
   // Navigation Buttons
   const NavigationButtons = () => (
-    <div className={`flex gap-3 pt-4 border-t border-elec-gray/20 ${isMobile ? 'sticky bottom-0 bg-elec-gray pb-safe' : ''}`}>
+    <div className={`flex gap-3 pt-4 border-t border-elec-gray/20 ${isMobile ? 'sticky bottom-0 bg-white/5 pb-safe' : ''}`}>
       {currentStep > 0 ? (
         <Button
           type="button"
@@ -499,7 +499,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
           type="button"
           variant="ghost"
           onClick={onCancel}
-          className="flex-1 text-elec-light/70 hover:text-elec-light hover:bg-elec-gray/20 font-medium py-3 h-12"
+          className="flex-1 text-elec-light/70 hover:text-elec-light hover:bg-white/5 font-medium py-3 h-12"
         >
           Cancel
         </Button>
@@ -532,7 +532,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
     <Dialog open={true} onOpenChange={onCancel}>
       <DialogContent
         className={`
-          bg-elec-gray border-elec-gray/40
+          bg-white/5 border-elec-gray/40
           ${isMobile
             ? 'max-w-full h-[100dvh] max-h-[100dvh] rounded-none p-0 flex flex-col'
             : 'max-w-2xl max-h-[95vh]'
@@ -541,7 +541,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
       >
         <div className={`${isMobile ? 'flex flex-col h-full' : ''}`}>
           {/* Header */}
-          <DialogHeader className={`pb-2 bg-elec-gray ${isMobile ? 'sticky top-0 z-10 px-4 pt-4 border-b border-elec-gray/20' : ''}`}>
+          <DialogHeader className={`pb-2 bg-white/5 ${isMobile ? 'sticky top-0 z-10 px-4 pt-4 border-b border-elec-gray/20' : ''}`}>
             <DialogTitle className="text-elec-light text-lg sm:text-xl font-semibold">
               {initialData ? "Edit Portfolio Entry" : "New Portfolio Entry"}
             </DialogTitle>
@@ -552,7 +552,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
           <form
             onSubmit={handleSubmit}
             className={`
-              bg-elec-gray
+              bg-white/5
               ${isMobile
                 ? 'flex-1 overflow-y-auto px-4 py-4'
                 : 'space-y-6 overflow-y-auto max-h-[calc(95vh-180px)] px-1'

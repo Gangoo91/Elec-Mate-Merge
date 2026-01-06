@@ -103,7 +103,7 @@ const AssessmentTrackingTab = () => {
       case 'completed': return 'bg-green-100 text-green-800 border-green-200';
       case 'in_progress': return 'bg-blue-100 text-blue-800 border-blue-200';
       case 'overdue': return 'bg-red-100 text-red-800 border-red-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      default: return 'bg-white/5 text-white/90 border-white/20';
     }
   };
 
@@ -122,8 +122,8 @@ const AssessmentTrackingTab = () => {
           {[1, 2, 3].map(i => (
             <Card key={i}>
               <CardContent className="p-6">
-                <div className="h-6 bg-gray-300 rounded mb-2"></div>
-                <div className="h-4 bg-gray-200 rounded"></div>
+                <div className="h-6 bg-white/30 rounded mb-2"></div>
+                <div className="h-4 bg-white/20 rounded"></div>
               </CardContent>
             </Card>
           ))}
@@ -137,7 +137,7 @@ const AssessmentTrackingTab = () => {
       <div className="flex justify-between items-center">
         <div>
           <h3 className="text-lg font-semibold">Assessment Tracking</h3>
-          <p className="text-muted-foreground">Monitor your assessment progress and deadlines</p>
+          <p className="text-white">Monitor your assessment progress and deadlines</p>
         </div>
         <Button onClick={() => setIsAddDialogOpen(true)}>
           <Plus className="h-4 w-4 mr-2" />
@@ -150,7 +150,7 @@ const AssessmentTrackingTab = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Assessments</CardTitle>
-            <Award className="h-4 w-4 text-muted-foreground" />
+            <Award className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{assessments.length}</div>
@@ -205,9 +205,9 @@ const AssessmentTrackingTab = () => {
         <CardContent>
           {assessments.length === 0 ? (
             <div className="text-center py-8">
-              <Award className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">No assessments scheduled yet</p>
-              <p className="text-sm text-muted-foreground mt-2">
+              <Award className="h-12 w-12 text-white mx-auto mb-4" />
+              <p className="text-white">No assessments scheduled yet</p>
+              <p className="text-sm text-white mt-2">
                 Add your first assessment to start tracking your progress
               </p>
             </div>
@@ -220,14 +220,14 @@ const AssessmentTrackingTab = () => {
                       <h4 className="font-medium">{assessment.title}</h4>
                       <Badge variant="outline">{assessment.type}</Badge>
                     </div>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-white">
                       Due: {new Date(assessment.due_date).toLocaleDateString('en-GB')}
                     </p>
                     {assessment.grade && (
                       <p className="text-sm font-medium mt-1">Grade: {assessment.grade}</p>
                     )}
                     {assessment.feedback && (
-                      <p className="text-sm text-muted-foreground mt-1">{assessment.feedback}</p>
+                      <p className="text-sm text-white mt-1">{assessment.feedback}</p>
                     )}
                   </div>
                   <div className="flex items-center gap-2">

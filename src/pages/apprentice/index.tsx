@@ -84,7 +84,7 @@ const ApprenticeIndex = () => {
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
           Welcome to Elec-Mate
         </h1>
-        <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-2">
+        <p className="text-base sm:text-lg md:text-xl text-white/70 max-w-2xl mx-auto px-2">
           Your comprehensive electrical apprenticeship companion - designed specifically for UK electrical apprentices
         </p>
       </div>
@@ -98,7 +98,7 @@ const ApprenticeIndex = () => {
                 <Brain className="h-7 w-7 sm:h-8 sm:w-8 text-elec-yellow shrink-0" />
                 <div>
                   <CardTitle className="text-base sm:text-lg text-elec-yellow">Advanced Help Box</CardTitle>
-                  <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+                  <p className="text-xs sm:text-sm text-white/70 mt-1">
                     AI-powered assistance and cutting-edge training tools
                   </p>
                 </div>
@@ -128,11 +128,11 @@ const ApprenticeIndex = () => {
               <div className="space-y-4">
                 {learningPaths.map((path, index) => (
                   <div key={index} className="flex items-center gap-4">
-                    <path.icon className="h-5 w-5 text-muted-foreground" />
+                    <path.icon className="h-5 w-5 text-white/70" />
                     <div className="flex-1">
                       <div className="flex justify-between text-sm mb-1">
                         <span>{path.title}</span>
-                        <span className="text-muted-foreground">{path.modules} modules</span>
+                        <span className="text-white/70">{path.modules} modules</span>
                       </div>
                       <div className="w-full bg-muted rounded-full h-2">
                         <div 
@@ -157,7 +157,7 @@ const ApprenticeIndex = () => {
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
           {quickAccessItems.map((item, index) => (
             <Link key={index} to={item.href}>
-              <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-colors cursor-pointer h-full">
+              <Card className="border-elec-yellow/20 bg-white/5 hover:bg-white/5/80 transition-colors cursor-pointer h-full">
                 <CardHeader className="flex flex-col items-center justify-center text-center p-4 sm:p-6">
                   <item.icon className="h-7 w-7 sm:h-8 sm:w-8 mb-2 text-elec-yellow" />
                   <CardTitle className="text-base sm:text-lg md:text-xl">{item.title}</CardTitle>
@@ -177,7 +177,7 @@ const ApprenticeIndex = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="p-4 sm:p-6 pt-2 sm:pt-2">
-          <p className="text-sm sm:text-base text-muted-foreground mb-4">
+          <p className="text-sm sm:text-base text-white/70 mb-4">
             New to Elec-Mate? Check out our getting started guide or explore the Advanced Help Box for AI-powered assistance.
           </p>
           <div className="flex flex-col sm:flex-row gap-2">

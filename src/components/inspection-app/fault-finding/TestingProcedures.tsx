@@ -227,11 +227,11 @@ const TestingProcedures = () => {
                         </div>
                       </CardHeader>
                       <CardContent className="space-y-4">
-                        <p className="text-gray-300">{test.description}</p>
+                        <p className="text-white/80">{test.description}</p>
                         
                         <div className="p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
                           <h4 className="font-semibold text-green-400 mb-2">Acceptable Limits</h4>
-                          <p className="text-sm text-gray-300">{test.acceptableLimits}</p>
+                          <p className="text-sm text-white/80">{test.acceptableLimits}</p>
                         </div>
                       </CardContent>
                     </Card>
@@ -247,7 +247,7 @@ const TestingProcedures = () => {
                       <CardContent>
                         <ul className="space-y-2">
                           {test.safetyNotes.map((note, idx) => (
-                            <li key={idx} className="text-sm text-gray-300 flex items-start gap-2">
+                            <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
                               <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                               {note}
                             </li>
@@ -264,7 +264,7 @@ const TestingProcedures = () => {
                       <CardContent>
                         <ul className="space-y-1">
                           {test.equipment.map((item, idx) => (
-                            <li key={idx} className="text-sm text-gray-300 flex items-center gap-2">
+                            <li key={idx} className="text-sm text-white/80 flex items-center gap-2">
                               <div className="w-1.5 h-1.5 bg-blue-400 rounded-full" />
                               {item}
                             </li>
@@ -298,8 +298,8 @@ const TestingProcedures = () => {
                                 htmlFor={`${test.id}-step-${idx}`}
                                 className={`cursor-pointer text-sm leading-relaxed ${
                                   checkedSteps[`${test.id}-${idx}`] 
-                                    ? 'text-green-400 line-through' 
-                                    : 'text-gray-300'
+                                    ? 'text-green-400 line-through'
+                                    : 'text-white/80'
                                 }`}
                               >
                                 <span className="font-semibold text-orange-400 mr-2">
@@ -317,7 +317,7 @@ const TestingProcedures = () => {
                               <CheckCircle className="h-4 w-4" />
                               <span className="font-semibold">Test Complete</span>
                             </div>
-                            <p className="text-sm text-gray-300 mt-1">
+                            <p className="text-sm text-white/80 mt-1">
                               All steps completed. Record results and move to next test.
                             </p>
                           </div>

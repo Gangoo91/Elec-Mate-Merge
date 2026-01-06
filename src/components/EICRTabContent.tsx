@@ -25,6 +25,7 @@ interface EICRTabContentProps {
   isCurrentTabComplete: () => boolean;
   currentTabHasRequiredFields: () => boolean;
   onToggleComplete: () => void;
+  onOpenBoardScan?: () => void;
 }
 
 const EICRTabContent = ({
@@ -42,7 +43,8 @@ const EICRTabContent = ({
   getProgressPercentage,
   isCurrentTabComplete,
   currentTabHasRequiredFields,
-  onToggleComplete
+  onToggleComplete,
+  onOpenBoardScan
 }: EICRTabContentProps) => {
   const [isInspectorSectionOpen, setIsInspectorSectionOpen] = useState(true);
 
@@ -71,7 +73,7 @@ const EICRTabContent = ({
       case 'inspection':
         return <EICRInspectionChecklist formData={formData} onUpdate={onUpdate} />;
       case 'testing':
-        return <EICRScheduleOfTests formData={formData} onUpdate={onUpdate} />;
+        return <EICRScheduleOfTests formData={formData} onUpdate={onUpdate} onOpenBoardScan={onOpenBoardScan} />;
       case 'inspector':
         return <EICRInspectorDetails 
           formData={formData} 

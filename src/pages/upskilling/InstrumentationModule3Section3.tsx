@@ -67,8 +67,7 @@ const InstrumentationModule3Section3 = () => {
       ],
       correct: 1,
       explanation: "Unfiltered signals can contain noise that causes false triggering of alarms, incorrect control actions, and unstable system behaviour, potentially leading to equipment damage or safety issues."
-    }
-  ];
+  }  ];
 
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">

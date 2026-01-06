@@ -27,7 +27,7 @@ const PoolResults = ({ result }: PoolResultsProps) => {
       case 'compliant': return <CheckCircle className="h-4 w-4 text-green-400" />;
       case 'warning': return <AlertTriangle className="h-4 w-4 text-yellow-400" />;
       case 'non-compliant': return <XCircle className="h-4 w-4 text-red-400" />;
-      default: return <Settings className="h-4 w-4 text-gray-400" />;
+      default: return <Settings className="h-4 w-4 text-white" />;
     }
   };
 
@@ -36,7 +36,7 @@ const PoolResults = ({ result }: PoolResultsProps) => {
       case 'compliant': return 'bg-green-500/10 border-green-500/30';
       case 'warning': return 'bg-yellow-500/10 border-yellow-500/30';
       case 'non-compliant': return 'bg-red-500/10 border-red-500/30';
-      default: return 'bg-gray-500/10 border-gray-500/30';
+      default: return 'bg-white/5 border-white/30';
     }
   };
 
@@ -59,7 +59,7 @@ const PoolResults = ({ result }: PoolResultsProps) => {
 
         {/* Key Metrics Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
-          <div className="text-center space-y-2 p-3 lg:p-4 rounded-lg border border-elec-yellow/20 bg-elec-gray/50">
+          <div className="text-center space-y-2 p-3 lg:p-4 rounded-lg border border-elec-yellow/20 bg-white/5">
             <div className="text-xs text-white/60 uppercase tracking-wide">Total Load</div>
             <div className="text-lg lg:text-2xl font-bold text-elec-yellow">
               {result.totalLoad.toLocaleString()}
@@ -67,7 +67,7 @@ const PoolResults = ({ result }: PoolResultsProps) => {
             </div>
           </div>
           
-          <div className="text-center space-y-2 p-3 lg:p-4 rounded-lg border border-elec-yellow/20 bg-elec-gray/50">
+          <div className="text-center space-y-2 p-3 lg:p-4 rounded-lg border border-elec-yellow/20 bg-white/5">
             <div className="text-xs text-white/60 uppercase tracking-wide">Total Current</div>
             <div className="text-lg lg:text-2xl font-bold text-elec-yellow">
               {result.totalCurrent}
@@ -75,14 +75,14 @@ const PoolResults = ({ result }: PoolResultsProps) => {
             </div>
           </div>
           
-          <div className="text-center space-y-2 p-3 lg:p-4 rounded-lg border border-elec-yellow/20 bg-elec-gray/50">
+          <div className="text-center space-y-2 p-3 lg:p-4 rounded-lg border border-elec-yellow/20 bg-white/5">
             <div className="text-xs text-white/60 uppercase tracking-wide">Diversity Factor</div>
             <div className="text-lg lg:text-2xl font-bold text-elec-yellow">
               {result.safetyFactors.diversityFactor}
             </div>
           </div>
           
-          <div className="text-center space-y-2 p-3 lg:p-4 rounded-lg border border-elec-yellow/20 bg-elec-gray/50">
+          <div className="text-center space-y-2 p-3 lg:p-4 rounded-lg border border-elec-yellow/20 bg-white/5">
             <div className="text-xs text-white/60 uppercase tracking-wide">Safety Margin</div>
             <div className="text-lg lg:text-2xl font-bold text-elec-yellow">
               {result.safetyFactors.safetyMargin}
@@ -124,7 +124,7 @@ const PoolResults = ({ result }: PoolResultsProps) => {
                   {getComplianceIcon(circuit.complianceStatus)}
                   {circuit.name}
                 </h4>
-                <Badge variant="outline" className="self-start sm:self-center border-gray-500 text-white/70 text-xs">
+                <Badge variant="outline" className="self-start sm:self-center border-white/50 text-white/70 text-xs">
                   {circuit.ipRating}
                 </Badge>
               </div>
@@ -204,7 +204,7 @@ const PoolResults = ({ result }: PoolResultsProps) => {
         
         <div className="space-y-4">
           {Object.entries(result.zonalCompliance).map(([zone, requirements]) => (
-            <div key={zone} className="border border-elec-yellow/20 bg-elec-gray/30 p-4 sm:p-6 rounded-lg">
+            <div key={zone} className="border border-elec-yellow/20 bg-white/5 p-4 sm:p-6 rounded-lg">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                 <h4 className="font-semibold text-elec-yellow text-base sm:text-lg">
                   Zone {zone.slice(-1)} Classification

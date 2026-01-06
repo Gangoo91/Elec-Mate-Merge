@@ -23,12 +23,12 @@ const JargonTermCard = ({ term }: JargonTermCardProps) => {
       case 'advanced':
         return 'bg-red-500/20 text-red-400 border-red-500/30';
       default:
-        return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+        return 'bg-white/10 text-white border-white/20';
     }
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-colors">
+    <Card className="border-elec-yellow/20 bg-white/5 hover:bg-white/5 transition-colors">
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="flex-1">

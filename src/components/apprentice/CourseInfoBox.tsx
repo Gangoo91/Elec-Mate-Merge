@@ -3,7 +3,7 @@ import { BookOpen } from "lucide-react";
 
 const CourseInfoBox = () => {
   return (
-    <div className="text-sm text-muted-foreground bg-elec-gray border border-elec-yellow/20 rounded-md p-4">
+    <div className="text-sm text-white bg-white/5 border border-elec-yellow/20 rounded-md p-4">
       <div className="flex items-center gap-2 mb-2">
         <BookOpen className="h-4 w-4 text-elec-yellow" />
         <p className="font-medium">Off-the-Job Training Info</p>

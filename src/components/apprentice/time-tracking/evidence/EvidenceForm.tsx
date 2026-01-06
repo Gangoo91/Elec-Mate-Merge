@@ -59,7 +59,7 @@ const EvidenceForm = ({ onAddEvidence, isUploading, setIsUploading }: EvidenceFo
           id="evidence-title" 
           placeholder="Brief title of your training activity" 
           required 
-          className="bg-elec-dark"
+          className="bg-white/10"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
@@ -69,7 +69,7 @@ const EvidenceForm = ({ onAddEvidence, isUploading, setIsUploading }: EvidenceFo
         <div className="space-y-2">
           <Label htmlFor="training-type">Training Type</Label>
           <Select value={type} onValueChange={setType}>
-            <SelectTrigger id="training-type" className="bg-elec-dark">
+            <SelectTrigger id="training-type" className="bg-white/10">
               <SelectValue placeholder="Select type" />
             </SelectTrigger>
             <SelectContent>
@@ -87,7 +87,7 @@ const EvidenceForm = ({ onAddEvidence, isUploading, setIsUploading }: EvidenceFo
             id="training-date" 
             type="date" 
             required 
-            className="bg-elec-dark"
+            className="bg-white/10"
             value={date}
             onChange={(e) => setDate(e.target.value)}
           />
@@ -100,7 +100,7 @@ const EvidenceForm = ({ onAddEvidence, isUploading, setIsUploading }: EvidenceFo
           id="training-description" 
           placeholder="Describe what you learned and how it relates to your apprenticeship" 
           required 
-          className="min-h-[100px] bg-elec-dark"
+          className="min-h-[100px] bg-white/10"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
@@ -128,11 +128,11 @@ const EvidenceForm = ({ onAddEvidence, isUploading, setIsUploading }: EvidenceFo
           step="0.5"
           placeholder="E.g., 3.5"  
           required 
-          className="bg-elec-dark"
+          className="bg-white/10"
           value={hours}
           onChange={(e) => setHours(e.target.value)}
         />
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-white">
           This will be added to your off-the-job training hours total
         </p>
       </div>

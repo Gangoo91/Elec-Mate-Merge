@@ -115,7 +115,7 @@ const InstrumentationModule5Section1 = () => {
       ],
       correctAnswer: 2,
       explanation: "Adding feedback can improve or decrease stability depending on the system design and tuning. Properly designed feedback improves stability, but poor design can cause oscillations."
-    }
+  }
   ];
 
   function handleAnswerSelect(answerIndex: number) {
@@ -123,58 +123,58 @@ const InstrumentationModule5Section1 = () => {
       ...prev,
       [currentQuestionIndex]: answerIndex
     }));
-  }
+};
 
   function handleNext() {
     if (currentQuestionIndex < quizQuestions.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1);
     } else {
       setShowResults(true);
-    }
-  }
+  };
+};
 
   function handlePrevious() {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(prev => prev - 1);
-    }
-  }
+  };
+};
 
   function calculateScore() {
     let correct = 0;
     quizQuestions.forEach((question, index) => {
       if (selectedAnswers[index] === question.correctAnswer) {
         correct++;
-      }
+    };
     });
     return correct;
-  }
+};
 
   function resetQuiz() {
     setCurrentQuestionIndex(0);
     setSelectedAnswers({});
     setShowResults(false);
     setQuizStarted(false);
-  }
+};
 
   function startQuiz() {
     setQuizStarted(true);
     setCurrentQuestionIndex(0);
     setSelectedAnswers({});
     setShowResults(false);
-  }
+};
 
   const currentQuestion = quizQuestions[currentQuestionIndex];
   const score = calculateScore();
   const percentage = Math.round((score / quizQuestions.length) * 100);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="../instrumentation-module-5">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 5
@@ -183,10 +183,10 @@ const InstrumentationModule5Section1 = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <FileText className="h-8 w-8 text-yellow-400" />
+            <FileText className="h-8 w-8 text-elec-yellow" />
             <Badge 
               variant="secondary" 
-              className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold text-sm px-3 py-1 border-0"
+              className="bg-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/50 font-semibold text-sm px-3 py-1 border-0"
             >
               Module 5 - Section 1
             </Badge>
@@ -205,7 +205,7 @@ const InstrumentationModule5Section1 = () => {
         <div className="space-y-4 sm:space-y-6">
           
           {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Learning Objectives</CardTitle>
             </CardHeader>
@@ -213,15 +213,15 @@ const InstrumentationModule5Section1 = () => {
               <p className="text-gray-300 mb-4">By the end of this section, you'll be able to:</p>
               <ul className="space-y-2 text-gray-300">
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Identify the characteristics of open and closed loop systems</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Recognize applications of each type in real-world scenarios</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Understand limitations and advantages of each system type</span>
                 </li>
               </ul>
@@ -229,21 +229,21 @@ const InstrumentationModule5Section1 = () => {
           </Card>
 
           {/* Open Loop Systems */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <Play className="h-5 w-5 text-yellow-400" />
+                <Play className="h-5 w-5 text-elec-yellow" />
                 Open Loop Systems
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Characteristics</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Characteristics</h4>
                   <p className="text-gray-300 mb-3">
                     Open loop systems operate without feedback. They execute predetermined actions based on input commands, regardless of the actual output or system conditions.
                   </p>
-                  <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-4">
+                  <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
                     <h5 className="text-blue-200 font-medium mb-2">Key Features</h5>
                     <ul className="text-gray-300 text-sm space-y-1">
                       <li>• No feedback mechanism</li>
@@ -255,7 +255,7 @@ const InstrumentationModule5Section1 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Common Examples</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Common Examples</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div className="bg-purple-600/10 border border-purple-600/20 rounded-lg p-4">
                       <h5 className="text-purple-200 font-medium mb-2">Basic Timer Switch</h5>
@@ -267,7 +267,7 @@ const InstrumentationModule5Section1 = () => {
                       <p className="text-gray-300 text-sm mb-2">Fixed position until manually adjusted</p>
                       <p className="text-gray-400 text-xs">Example: Gas cooker control</p>
                     </div>
-                    <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-4">
+                    <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
                       <h5 className="text-blue-200 font-medium mb-2">Washing Machine Timer</h5>
                       <p className="text-gray-300 text-sm mb-2">Follows predetermined cycle</p>
                       <p className="text-gray-400 text-xs">Example: Traditional wash cycles</p>
@@ -291,7 +291,7 @@ const InstrumentationModule5Section1 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Advantages & Limitations</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Advantages & Limitations</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
                       <h5 className="text-green-200 font-medium mb-2">Advantages</h5>
@@ -318,21 +318,21 @@ const InstrumentationModule5Section1 = () => {
           </Card>
 
           {/* Closed Loop Systems */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <RotateCcw className="h-5 w-5 text-yellow-400" />
+                <RotateCcw className="h-5 w-5 text-elec-yellow" />
                 Closed Loop Systems
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Characteristics</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Characteristics</h4>
                   <p className="text-gray-300 mb-3">
                     Closed loop systems use feedback to continuously monitor output and adjust control actions. They compare actual performance with desired performance and make corrections.
                   </p>
-                  <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-4">
+                  <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
                     <h5 className="text-blue-200 font-medium mb-2">Key Features</h5>
                     <ul className="text-gray-300 text-sm space-y-1">
                       <li>• Feedback mechanism present</li>
@@ -344,7 +344,7 @@ const InstrumentationModule5Section1 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Common Examples</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Common Examples</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div className="bg-purple-600/10 border border-purple-600/20 rounded-lg p-4">
                       <h5 className="text-purple-200 font-medium mb-2">Thermostat Control</h5>
@@ -356,7 +356,7 @@ const InstrumentationModule5Section1 = () => {
                       <p className="text-gray-300 text-sm mb-2">Monitors speed and adjusts power</p>
                       <p className="text-gray-400 text-xs">Maintains ±0.1% speed accuracy</p>
                     </div>
-                    <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-4">
+                    <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
                       <h5 className="text-blue-200 font-medium mb-2">Pressure Regulation</h5>
                       <p className="text-gray-300 text-sm mb-2">Controls valve based on pressure feedback</p>
                       <p className="text-gray-400 text-xs">Maintains ±2% pressure accuracy</p>
@@ -380,7 +380,7 @@ const InstrumentationModule5Section1 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Performance Comparison</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Performance Comparison</h4>
                   <div className="bg-gray-700/50 rounded-lg p-4">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
                       <div>
@@ -403,17 +403,17 @@ const InstrumentationModule5Section1 = () => {
           </Card>
 
           {/* Real-World Scenario */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <Users className="h-5 w-5 text-yellow-400" />
+                <Users className="h-5 w-5 text-elec-yellow" />
                 <CardTitle className="text-white">Real-World Scenario</CardTitle>
               </div>
             </CardHeader>
             <CardContent className="text-gray-300">
-              <div className="bg-blue-900/20 border border-yellow-400/30 rounded-lg p-4">
+              <div className="bg-blue-900/20 border border-elec-yellow/30 rounded-lg p-4">
                 <div className="flex items-start gap-3">
-                  <AlertTriangle className="h-5 w-5 text-yellow-400 mt-1 flex-shrink-0" />
+                  <AlertTriangle className="h-5 w-5 text-elec-yellow mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="font-medium text-white mb-2">Home Heating System Comparison</h4>
                     <div className="space-y-3">
@@ -433,10 +433,10 @@ const InstrumentationModule5Section1 = () => {
           </Card>
 
           {/* Summary */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <Lightbulb className="h-5 w-5 text-yellow-400" />
+                <Lightbulb className="h-5 w-5 text-elec-yellow" />
                 <CardTitle className="text-white">Summary</CardTitle>
               </div>
             </CardHeader>
@@ -448,10 +448,10 @@ const InstrumentationModule5Section1 = () => {
           </Card>
 
           {/* Interactive Quiz */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <Brain className="h-5 w-5 text-yellow-400" />
+                <Brain className="h-5 w-5 text-elec-yellow" />
                 Knowledge Check Quiz
               </CardTitle>
             </CardHeader>
@@ -463,7 +463,7 @@ const InstrumentationModule5Section1 = () => {
                   </p>
                   <Button 
                     onClick={startQuiz}
-                    className="bg-yellow-400 text-black hover:bg-yellow-600 font-semibold px-8 py-2"
+                    className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-2"
                   >
                     Start Quiz
                   </Button>
@@ -476,7 +476,7 @@ const InstrumentationModule5Section1 = () => {
                     </span>
                     <div className="w-32 bg-gray-700 rounded-full h-2">
                       <div 
-                        className="bg-yellow-400 h-2 rounded-full transition-all duration-300"
+                        className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
                         style={{ width: `${((currentQuestionIndex + 1) / quizQuestions.length) * 100}%` }}
                       ></div>
                     </div>
@@ -491,7 +491,7 @@ const InstrumentationModule5Section1 = () => {
                           onClick={() => handleAnswerSelect(index)}
                           className={`w-full text-left p-3 rounded border transition-colors ${
                             selectedAnswers[currentQuestionIndex] === index
-                              ? 'border-yellow-400 bg-yellow-600/20 text-yellow-400'
+                              ? 'border-elec-yellow bg-elec-yellow/20 text-elec-yellow'
                               : 'border-gray-600 bg-gray-800/50 text-gray-300 hover:border-gray-500'
                           }`}
                         >
@@ -506,14 +506,14 @@ const InstrumentationModule5Section1 = () => {
                       onClick={handlePrevious}
                       disabled={currentQuestionIndex === 0}
                       variant="outline"
-                      className="border-gray-600 text-gray-300 hover:bg-card disabled:opacity-50"
+                      className="border-gray-600 text-gray-300 hover:bg-transparent disabled:opacity-50"
                     >
                       Previous
                     </Button>
                     <Button
                       onClick={handleNext}
                       disabled={selectedAnswers[currentQuestionIndex] === undefined}
-                      className="bg-yellow-400 text-black hover:bg-yellow-600 disabled:opacity-50"
+                      className="bg-elec-yellow text-black hover:bg-elec-yellow disabled:opacity-50"
                     >
                       {currentQuestionIndex === quizQuestions.length - 1 ? 'Finish' : 'Next'}
                     </Button>
@@ -572,7 +572,7 @@ const InstrumentationModule5Section1 = () => {
                   <div className="text-center">
                     <Button 
                       onClick={resetQuiz}
-                      className="bg-yellow-400 text-black hover:bg-yellow-600 font-semibold px-8 py-2"
+                      className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-2"
                     >
                       Retake Quiz
                     </Button>

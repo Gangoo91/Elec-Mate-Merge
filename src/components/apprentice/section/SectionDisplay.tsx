@@ -70,7 +70,7 @@ const SectionDisplay = ({
   };
 
   return (
-    <div className="bg-gradient-to-b from-elec-dark to-elec-dark/90 border border-elec-yellow/20 rounded-lg shadow-lg overflow-hidden">
+    <div className="bg-gradient-to-b from-white/10 to-white/5 border border-elec-yellow/20 rounded-lg shadow-lg overflow-hidden">
       <div className="bg-elec-yellow/10 p-6 border-b border-elec-yellow/20">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
@@ -88,7 +88,7 @@ const SectionDisplay = ({
           )}
         </div>
         
-        <p className="text-muted-foreground ml-11">
+        <p className="text-white ml-11">
           {sectionData.description}
         </p>
       </div>
@@ -101,7 +101,7 @@ const SectionDisplay = ({
           <Card 
             key={subsection.id}
             className={`border border-elec-yellow/20 hover:border-elec-yellow/40 transition-all cursor-pointer group ${
-              isSubsectionCompleted(subsection.id) ? 'bg-gradient-to-br from-elec-dark to-green-950/30' : 'bg-elec-dark/50'
+              isSubsectionCompleted(subsection.id) ? 'bg-gradient-to-br from-elec-dark to-green-950/30' : 'bg-white/10'
             }`}
             onClick={() => navigateToSubsection(subsection)}
           >
@@ -118,18 +118,18 @@ const SectionDisplay = ({
                     <CheckCircle className="h-5 w-5 text-green-500 ml-2" />
                   )}
                 </div>
-                <CardDescription className="mt-1 line-clamp-2 text-muted-foreground">
+                <CardDescription className="mt-1 line-clamp-2 text-white">
                   {subsection.content}
                 </CardDescription>
               </div>
-              <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-elec-yellow transition-colors" />
+              <ChevronRight className="h-5 w-5 text-white group-hover:text-elec-yellow transition-colors" />
             </CardHeader>
           </Card>
         ))}
       </div>
       
       {/* Completion button */}
-      <div className="flex justify-between items-center p-6 pt-4 border-t border-elec-yellow/20 bg-elec-dark/40">
+      <div className="flex justify-between items-center p-6 pt-4 border-t border-elec-yellow/20 bg-white/10">
         <Button
           variant="outline"
           className="border-elec-yellow/30 hover:bg-elec-yellow/10 flex items-center gap-2"

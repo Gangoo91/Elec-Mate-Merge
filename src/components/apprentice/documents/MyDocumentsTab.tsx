@@ -93,7 +93,7 @@ const MyDocumentsTab = () => {
           <div className="border-2 border-dashed border-elec-yellow/30 rounded-lg p-8 text-center">
             <Upload className="h-12 w-12 text-elec-yellow mx-auto mb-4" />
             <h3 className="text-lg font-medium mb-2">Upload your documents</h3>
-            <p className="text-muted-foreground mb-4">
+            <p className="text-white mb-4">
               Drag and drop files here, or click to browse
             </p>
             <Input
@@ -124,17 +124,17 @@ const MyDocumentsTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center p-3 border border-blue-500/20 rounded-lg">
               <div className="text-2xl font-bold text-blue-400">{documents.length}</div>
-              <div className="text-sm text-muted-foreground">Total Documents</div>
+              <div className="text-sm text-white">Total Documents</div>
             </div>
             <div className="text-center p-3 border border-blue-500/20 rounded-lg">
               <div className="text-2xl font-bold text-blue-400">
                 {documents.reduce((acc, doc) => acc + parseFloat(doc.size), 0).toFixed(1)} MB
               </div>
-              <div className="text-sm text-muted-foreground">Total Size</div>
+              <div className="text-sm text-white">Total Size</div>
             </div>
             <div className="text-center p-3 border border-blue-500/20 rounded-lg">
               <div className="text-2xl font-bold text-blue-400">2.5 GB</div>
-              <div className="text-sm text-muted-foreground">Available Space</div>
+              <div className="text-sm text-white">Available Space</div>
             </div>
           </div>
         </CardContent>
@@ -146,7 +146,7 @@ const MyDocumentsTab = () => {
           placeholder="Search your documents..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="bg-elec-dark border-elec-yellow/20"
+          className="bg-white/10 border-elec-yellow/20"
         />
       </div>
 
@@ -154,7 +154,7 @@ const MyDocumentsTab = () => {
       {filteredDocuments.length > 0 ? (
         <div className="space-y-4">
           {filteredDocuments.map((doc) => (
-            <Card key={doc.id} className="border-elec-yellow/20 bg-elec-gray">
+            <Card key={doc.id} className="border-elec-yellow/20 bg-white/5">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -163,7 +163,7 @@ const MyDocumentsTab = () => {
                     </div>
                     <div>
                       <h4 className="font-medium text-white">{doc.name}</h4>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-white">
                         {doc.type} • {doc.size} • Uploaded {doc.uploadDate}
                       </p>
                     </div>
@@ -197,7 +197,7 @@ const MyDocumentsTab = () => {
             <FileText className="h-8 w-8 text-elec-yellow" />
           </div>
           <h3 className="text-xl font-medium mb-2">No documents found</h3>
-          <p className="text-muted-foreground mb-4">
+          <p className="text-white mb-4">
             Upload your first document to get started
           </p>
         </div>

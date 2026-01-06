@@ -15,7 +15,7 @@ export function FormSection({ icon: Icon, title, description, children }: FormSe
         <div className="flex-1">
           <h3 className="text-base sm:text-lg font-semibold text-foreground">{title}</h3>
           {description && (
-            <p className="text-sm text-gray-300 mt-1">{description}</p>
+            <p className="text-sm text-white/80 mt-1">{description}</p>
           )}
         </div>
       </div>

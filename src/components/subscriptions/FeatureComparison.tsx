@@ -63,7 +63,7 @@ const FeatureComparison = () => {
       {/* Section Header */}
       <div className="text-center">
         <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">Compare Plans</h2>
-        <p className="text-muted-foreground">See what each plan includes</p>
+        <p className="text-white/70">See what each plan includes</p>
       </div>
 
       {/* Comparison Table */}
@@ -71,7 +71,7 @@ const FeatureComparison = () => {
         <div className="min-w-[600px]">
           {/* Header Row */}
           <div className="grid grid-cols-4 gap-4 mb-4 sticky top-0 bg-elec-dark/95 backdrop-blur-sm py-3 border-b border-white/10">
-            <div className="font-medium text-muted-foreground">Feature</div>
+            <div className="font-medium text-white/70">Feature</div>
             <div className="text-center">
               <div className="font-bold text-foreground">Desktop Price</div>
               <div className="text-xs text-elec-yellow">From 6.99/mo</div>
@@ -107,7 +107,7 @@ const FeatureComparison = () => {
       </div>
 
       {/* Legend */}
-      <div className="flex flex-wrap justify-center gap-6 text-xs text-muted-foreground pt-4">
+      <div className="flex flex-wrap justify-center gap-6 text-xs text-white/70 pt-4">
         <div className="flex items-center gap-2">
           <div className="w-4 h-4 rounded-full bg-green-500/20 flex items-center justify-center">
             <Check className="h-2.5 w-2.5 text-green-400" />

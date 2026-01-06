@@ -10,7 +10,7 @@ const UKRegionalJobMarkets = () => {
       case "High": return "bg-green-500/20 text-green-400 border-green-500/30";
       case "Good": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
       case "Moderate": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+      default: return "bg-white/10 text-white border-white/30";
     }
   };
 
@@ -20,26 +20,29 @@ const UKRegionalJobMarkets = () => {
       case "High": return "text-orange-400";
       case "Medium": return "text-yellow-400";
       case "Low-Medium": return "text-green-400";
-      default: return "text-gray-400";
+      default: return "text-white";
     }
   };
 
   return (
-    <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-xl sm:text-2xl">
-            <MapPin className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+    <div className="space-y-6 animate-fade-in">
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="flex items-center gap-3 text-xl sm:text-2xl text-white">
+            <div className="p-2 rounded-lg bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+              <MapPin className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+            </div>
             UK Regional Job Markets for Electricians
           </CardTitle>
-          <p className="text-sm sm:text-base text-white">
+          <p className="text-sm sm:text-base text-white/80">
             Comprehensive 2025 regional analysis of job opportunities, pay rates, and growth sectors across the UK
           </p>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
             {regionalJobMarkets.map((region) => (
-              <Card key={region.region} className="border-elec-yellow/10 bg-elec-dark/50">
+              <Card key={region.region} className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 hover:border-elec-yellow/40 transition-all">
                 <CardHeader className="pb-4">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                     <CardTitle className="text-lg text-white text-center sm:text-left">{region.region}</CardTitle>
@@ -159,7 +162,7 @@ const UKRegionalJobMarkets = () => {
           </div>
           
           {/* Additional market insights */}
-          <Card className="mt-6 border-elec-yellow/10 bg-elec-dark/30">
+          <Card className="mt-6 border-elec-yellow/10 bg-white/10">
             <CardContent className="p-6">
               <h3 className="font-semibold text-elec-yellow mb-4">2025 UK Market Insights</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">

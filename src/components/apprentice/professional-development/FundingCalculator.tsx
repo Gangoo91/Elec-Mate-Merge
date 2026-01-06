@@ -53,7 +53,7 @@ const FundingCalculator = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Calculator className="h-5 w-5 text-elec-yellow" />
@@ -130,45 +130,45 @@ const FundingCalculator = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-muted-foreground">Total Course Cost:</span>
+                  <span className="text-sm text-white">Total Course Cost:</span>
                   <span className="font-semibold">£{calculation.totalCost.toLocaleString()}</span>
                 </div>
                 
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-muted-foreground">Employer Contribution:</span>
+                  <span className="text-sm text-white">Employer Contribution:</span>
                   <span className="font-semibold text-green-400">£{calculation.employerContribution.toLocaleString()}</span>
                 </div>
                 
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-muted-foreground">Advanced Learner Loan:</span>
+                  <span className="text-sm text-white">Advanced Learner Loan:</span>
                   <span className="font-semibold text-blue-400">£{calculation.advancedLearnerLoan.toLocaleString()}</span>
                 </div>
                 
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-muted-foreground">Personal Contribution:</span>
+                  <span className="text-sm text-white">Personal Contribution:</span>
                   <span className="font-semibold text-orange-400">£{calculation.personalContribution.toLocaleString()}</span>
                 </div>
               </div>
 
               <div className="space-y-3 border-l border-elec-yellow/20 pl-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-muted-foreground">Repayment Threshold:</span>
+                  <span className="text-sm text-white">Repayment Threshold:</span>
                   <span className="font-semibold">£{calculation.repaymentThreshold.toLocaleString()}</span>
                 </div>
                 
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-muted-foreground">Estimated Monthly Repayment:</span>
+                  <span className="text-sm text-white">Estimated Monthly Repayment:</span>
                   <span className="font-semibold">£{Math.round(calculation.monthlyPayment).toLocaleString()}</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-elec-dark/30 p-3 rounded-md">
+            <div className="bg-white/10 p-3 rounded-md">
               <div className="flex items-start gap-2">
                 <Info className="h-4 w-4 text-blue-400 mt-0.5" />
                 <div className="text-xs space-y-1">
                   <p className="text-blue-400 font-medium">Important Notes:</p>
-                  <ul className="text-muted-foreground space-y-1 list-disc list-inside">
+                  <ul className="text-white space-y-1 list-disc list-inside">
                     <li>Advanced Learner Loans are available for Level 3-6 qualifications</li>
                     <li>You only repay when earning over £25,000 per year</li>
                     <li>Repayments are 9% of income above the threshold</li>

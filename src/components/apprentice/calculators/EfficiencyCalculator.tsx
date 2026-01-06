@@ -212,7 +212,7 @@ export const EfficiencyCalculator: React.FC = () => {
 
             {/* Visual Bar */}
             <div className="pt-4 mt-4 border-t border-white/10">
-              <p className="text-xs text-white/50 mb-2">Power Distribution</p>
+              <p className="text-xs text-white/80 mb-2">Power Distribution</p>
               <div className="h-6 rounded-full overflow-hidden bg-white/10 flex">
                 <div
                   className="h-full transition-all duration-300"
@@ -226,7 +226,7 @@ export const EfficiencyCalculator: React.FC = () => {
                   style={{ width: `${100 - computed.efficiency}%` }}
                 />
               </div>
-              <div className="flex justify-between mt-1 text-xs text-white/50">
+              <div className="flex justify-between mt-1 text-xs text-white/80">
                 <span>Useful: {computed.efficiency.toFixed(0)}%</span>
                 <span>Lost: {(100 - computed.efficiency).toFixed(0)}%</span>
               </div>
@@ -242,7 +242,7 @@ export const EfficiencyCalculator: React.FC = () => {
                   <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
                 </div>
                 <ChevronDown className={cn(
-                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  "h-4 w-4 text-white/70 transition-transform duration-200",
                   showGuidance && "rotate-180"
                 )} />
               </CollapsibleTrigger>
@@ -276,7 +276,7 @@ export const EfficiencyCalculator: React.FC = () => {
               <span className="text-sm sm:text-base font-medium text-amber-300">Typical Efficiencies</span>
             </div>
             <ChevronDown className={cn(
-              "h-4 w-4 text-white/40 transition-transform duration-200",
+              "h-4 w-4 text-white/70 transition-transform duration-200",
               showReference && "rotate-180"
             )} />
           </CollapsibleTrigger>

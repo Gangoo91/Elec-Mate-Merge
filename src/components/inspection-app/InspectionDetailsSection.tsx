@@ -98,7 +98,7 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
           <div className="space-y-2">
             <Label htmlFor="purposeOfInspection">Purpose of Inspection *</Label>
             <Select value={formData.purposeOfInspection || ''} onValueChange={(value) => onUpdate('purposeOfInspection', value)}>
-              <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-blue-500 focus:ring-blue-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+              <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-blue-500 focus:ring-blue-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                 <SelectValue placeholder="Select purpose" />
               </SelectTrigger>
               <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
@@ -118,7 +118,7 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
                 value={formData.otherPurpose || ''}
                 onChange={(e) => onUpdate('otherPurpose', e.target.value)}
                 placeholder="Please specify the purpose"
-                className="h-11 text-base touch-manipulation border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                className="h-11 text-base touch-manipulation border-white/30 focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
           )}
@@ -140,7 +140,7 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
                   type="date"
                   value={formData.inspectionDate || ''}
                   onChange={(e) => onUpdate('inspectionDate', e.target.value)}
-                  className="h-11 text-base touch-manipulation flex-1 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                  className="h-11 text-base touch-manipulation flex-1 border-white/30 focus:border-blue-500 focus:ring-blue-500"
                 />
                 <Button
                   type="button"
@@ -148,7 +148,7 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
                   size="sm"
                   onClick={setTodaysDate}
                   title="Set today's date"
-                  className="px-3 border-gray-300 hover:border-blue-500 hover:bg-blue-50"
+                  className="px-3 border-white/30 hover:border-blue-500 hover:bg-blue-50"
                 >
                   <Calendar className="h-4 w-4" />
                 </Button>
@@ -157,7 +157,7 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
             <div className="space-y-2">
               <Label htmlFor="inspectionInterval">Inspection Interval (Years) *</Label>
               <Select value={formData.inspectionInterval || ''} onValueChange={(value) => onUpdate('inspectionInterval', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-blue-500 focus:ring-blue-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-blue-500 focus:ring-blue-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                   <SelectValue placeholder="Select interval" />
                 </SelectTrigger>
                 <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
@@ -183,7 +183,7 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
                   type="date"
                   value={formData.nextInspectionDate || ''}
                   onChange={(e) => onUpdate('nextInspectionDate', e.target.value)}
-                  className="h-11 text-base touch-manipulation flex-1 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                  className="h-11 text-base touch-manipulation flex-1 border-white/30 focus:border-blue-500 focus:ring-blue-500"
                 />
                 <Button
                   type="button"
@@ -192,7 +192,7 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
                   onClick={calculateNextInspectionDate}
                   title="Auto-calculate based on inspection date and interval"
                   disabled={!formData.inspectionDate || !formData.inspectionInterval}
-                  className="px-3 border-gray-300 hover:border-blue-500 hover:bg-blue-50 disabled:opacity-50"
+                  className="px-3 border-white/30 hover:border-blue-500 hover:bg-blue-50 disabled:opacity-50"
                 >
                   <Calculator className="h-4 w-4" />
                 </Button>
@@ -217,7 +217,7 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
                 onChange={(e) => onUpdate('extentOfInspection', e.target.value)}
                 placeholder="Describe what areas/circuits/systems were inspected"
                 rows={4}
-                className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-gray-300 focus:border-blue-500"
+                className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-blue-500"
               />
               <p className="text-xs text-muted-foreground mt-1">
                 Include specific areas, circuits, and systems inspected
@@ -231,7 +231,7 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
                 onChange={(e) => onUpdate('limitationsOfInspection', e.target.value)}
                 placeholder="Any areas not inspected or limitations encountered"
                 rows={4}
-                className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-gray-300 focus:border-blue-500"
+                className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-blue-500"
               />
               <p className="text-xs text-muted-foreground mt-1">
                 Note any areas that could not be accessed or inspected

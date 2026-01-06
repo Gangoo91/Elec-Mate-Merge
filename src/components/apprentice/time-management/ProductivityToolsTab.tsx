@@ -107,13 +107,13 @@ const ProductivityToolsTab = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
             <Smartphone className="h-6 w-6" />
             Recommended Mobile Apps
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Apps specifically useful for apprentices managing work and study
           </p>
         </CardHeader>
@@ -131,16 +131,16 @@ const ProductivityToolsTab = () => {
                       </Badge>
                     </div>
                   </div>
-                  <div className="text-xs text-muted-foreground">{app.price}</div>
+                  <div className="text-xs text-white">{app.price}</div>
                 </div>
                 
-                <p className="text-sm text-muted-foreground mb-3">{app.description}</p>
+                <p className="text-sm text-white mb-3">{app.description}</p>
                 
                 <div className="space-y-1">
                   <h5 className="text-xs font-medium text-white">Key Features:</h5>
                   <ul className="space-y-1">
                     {app.features.map((feature, idx) => (
-                      <li key={idx} className="text-xs text-muted-foreground flex items-center gap-2">
+                      <li key={idx} className="text-xs text-white flex items-center gap-2">
                         <div className="h-1 w-1 rounded-full bg-elec-yellow" />
                         {feature}
                       </li>
@@ -153,13 +153,13 @@ const ProductivityToolsTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
             <Target className="h-6 w-6" />
             Web-Based Tools
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Browser-based tools for planning and organisation
           </p>
         </CardHeader>
@@ -177,14 +177,14 @@ const ProductivityToolsTab = () => {
                   </div>
                 </div>
                 
-                <p className="text-sm text-muted-foreground mb-3">{tool.description}</p>
+                <p className="text-sm text-white mb-3">{tool.description}</p>
                 
                 <div className="space-y-3">
                   <div className="space-y-1">
                     <h5 className="text-xs font-medium text-white">Features:</h5>
                     <ul className="space-y-1">
                       {tool.features.map((feature, idx) => (
-                        <li key={idx} className="text-xs text-muted-foreground flex items-center gap-2">
+                        <li key={idx} className="text-xs text-white flex items-center gap-2">
                           <div className="h-1 w-1 rounded-full bg-elec-yellow" />
                           {feature}
                         </li>
@@ -208,13 +208,13 @@ const ProductivityToolsTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
             <Brain className="h-6 w-6" />
             Proven Productivity Techniques
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Time-tested methods for maximising efficiency
           </p>
         </CardHeader>
@@ -225,7 +225,7 @@ const ProductivityToolsTab = () => {
                 <div className="space-y-4">
                   <div>
                     <h3 className="text-lg font-semibold text-white mb-2">{technique.title}</h3>
-                    <p className="text-sm text-muted-foreground">{technique.description}</p>
+                    <p className="text-sm text-white">{technique.description}</p>
                   </div>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -233,7 +233,7 @@ const ProductivityToolsTab = () => {
                       <h4 className="font-medium text-white mb-2">Benefits:</h4>
                       <ul className="space-y-1">
                         {technique.benefits.map((benefit, idx) => (
-                          <li key={idx} className="text-sm text-muted-foreground flex items-center gap-2">
+                          <li key={idx} className="text-sm text-white flex items-center gap-2">
                             <div className="h-1.5 w-1.5 rounded-full bg-green-400" />
                             {benefit}
                           </li>
@@ -245,7 +245,7 @@ const ProductivityToolsTab = () => {
                       <h4 className="font-medium text-white mb-2">How to implement:</h4>
                       <ol className="space-y-1">
                         {technique.howTo.map((step, idx) => (
-                          <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                          <li key={idx} className="text-sm text-white flex items-start gap-2">
                             <span className="text-elec-yellow font-medium mt-0.5">{idx + 1}.</span>
                             {step}
                           </li>

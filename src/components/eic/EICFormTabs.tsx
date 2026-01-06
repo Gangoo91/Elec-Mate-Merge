@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
 import { EICTabValue } from '@/hooks/useEICTabs';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -63,7 +63,22 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
   canGenerateCertificate = true
 }) => {
   const isMobile = useIsMobile();
-  
+
+  // Build completion status map for tabs
+  const completedTabs = useMemo(() => {
+    const completedSections = formData.completedSections || {};
+    return {
+      installation: completedSections.installation ||
+        (formData.clientName && formData.installationAddress && formData.phases && formData.earthingArrangement),
+      inspections: completedSections.inspections ||
+        (formData.inspectionItems?.length > 0),
+      testing: completedSections.testing ||
+        (formData.scheduleOfTests?.length > 0),
+      declarations: completedSections.declarations ||
+        (formData.designerName && formData.constructorName && formData.inspectorName)
+    };
+  }, [formData]);
+
   const smartTabs: SmartTab[] = [
     {
       value: 'installation',
@@ -134,10 +149,12 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
     <div className="space-y-2 sm:space-y-4">
       <SmartTabs
         tabs={smartTabs}
-        value={currentTab} 
+        value={currentTab}
         onValueChange={onTabChange}
         className="space-y-4"
         breakpoint={3} // Use dropdown when more than 3 tabs
+        completedTabs={completedTabs}
+        showProgress={true}
       />
     </div>
   );

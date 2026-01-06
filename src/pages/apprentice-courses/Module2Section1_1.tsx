@@ -204,9 +204,9 @@ const Module2Section1_1 = () => {
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* Minimal Header */}
-      <div className="border-b border-white/5 sticky top-0 z-50 bg-[#1a1a1a] backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-3">
-          <Button variant="ghost" size="sm" className="text-white/70 hover:text-white -ml-2" asChild>
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -515,14 +515,14 @@ const Module2Section1_1 = () => {
         </section>
 
         {/* Navigation */}
-        <nav className="flex justify-between items-center pt-8 border-t border-white/5">
-          <Button variant="ghost" size="sm" asChild>
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
           </Button>
-          <Button size="sm" asChild>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
             <Link to="../1-2">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />

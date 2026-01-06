@@ -112,7 +112,7 @@ const RightsQuiz = () => {
             <div className={`text-4xl font-bold ${getScoreColor(score)} mb-2`}>
               {score}/{questions.length}
             </div>
-            <p className="text-muted-foreground">
+            <p className="text-white">
               {score >= 4 ? "Excellent! You know your rights well." :
                score >= 3 ? "Good knowledge, but room for improvement." :
                "Consider reviewing your rights and entitlements."}
@@ -134,7 +134,7 @@ const RightsQuiz = () => {
                     )}
                     <div>
                       <h4 className="font-medium text-white mb-1">{question.question}</h4>
-                      <p className="text-sm text-muted-foreground mb-2">
+                      <p className="text-sm text-white mb-2">
                         Your answer: {question.options[userAnswer]}
                       </p>
                       {!isCorrect && (
@@ -192,7 +192,7 @@ const RightsQuiz = () => {
           </div>
         </div>
         
-        <div className="w-full bg-elec-gray rounded-full h-2">
+        <div className="w-full bg-white/5 rounded-full h-2">
           <div 
             className="bg-blue-500 h-2 rounded-full transition-all duration-300"
             style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}

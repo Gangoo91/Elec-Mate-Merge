@@ -73,7 +73,7 @@ const SubsectionRenderer = ({
   };
   
   return (
-    <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-6 shadow-lg animate-fade-in">
+    <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-6 shadow-lg animate-fade-in">
       {renderContent()}
     </div>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 import {
   FileText,
   Shield,
@@ -14,6 +15,23 @@ import {
   Mail,
   ChevronRight,
 } from "lucide-react";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.05, delayChildren: 0.1 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 400, damping: 28 }
+  }
+};
 
 const LegalTab = () => {
   const legalDocuments = [
@@ -89,9 +107,14 @@ const LegalTab = () => {
   ];
 
   return (
-    <div className="space-y-6">
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-6"
+    >
       {/* Header */}
-      <div className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
         <div className="p-4 md:p-6">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-xl bg-elec-yellow/10 flex items-center justify-center">
@@ -105,10 +128,10 @@ const LegalTab = () => {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Legal Documents */}
-      <div className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
         <div className="px-4 md:px-6 py-4 border-b border-white/10">
           <h3 className="text-base font-semibold text-foreground">Legal Documents</h3>
         </div>
@@ -140,10 +163,10 @@ const LegalTab = () => {
             );
           })}
         </div>
-      </div>
+      </motion.div>
 
       {/* Compliance Badges */}
-      <div className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
         <div className="px-4 md:px-6 py-4 border-b border-white/10">
           <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
             <Shield className="h-4 w-4 text-elec-yellow" />
@@ -169,10 +192,10 @@ const LegalTab = () => {
             })}
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Data Storage Info */}
-      <div className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
         <div className="px-4 md:px-6 py-4 border-b border-white/10">
           <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
             <Globe className="h-4 w-4 text-elec-yellow" />
@@ -205,10 +228,10 @@ const LegalTab = () => {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Your Rights */}
-      <div className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
         <div className="px-4 md:px-6 py-4 border-b border-white/10">
           <h3 className="text-base font-semibold text-foreground">Your Data Rights</h3>
         </div>
@@ -243,10 +266,10 @@ const LegalTab = () => {
             </Button>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Legal Contact */}
-      <div className="rounded-xl bg-blue-500/10 border border-blue-500/20 overflow-hidden">
+      <motion.div variants={itemVariants} className="rounded-xl bg-blue-500/10 border border-blue-500/20 overflow-hidden">
         <div className="p-4 md:p-6">
           <div className="flex items-start gap-3">
             <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
@@ -263,10 +286,10 @@ const LegalTab = () => {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Company Info */}
-      <div className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
         <div className="p-4 md:p-6">
           <div className="flex items-start gap-3">
             <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
@@ -282,8 +305,8 @@ const LegalTab = () => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

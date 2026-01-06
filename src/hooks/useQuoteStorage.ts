@@ -298,19 +298,52 @@ export const useQuoteStorage = () => {
     }
   }, [convertDbRowToQuote]);
 
+  // Generate invoice number from quote number
+  const generateInvoiceNumber = (quoteNumber: string): string => {
+    if (quoteNumber.startsWith('Q')) {
+      return 'INV' + quoteNumber.slice(1);
+    }
+    if (quoteNumber.startsWith('QTE')) {
+      return quoteNumber.replace('QTE', 'INV');
+    }
+    return `INV-${Date.now().toString(36).toUpperCase()}`;
+  };
+
   const updateQuoteStatus = async (quoteId: string, status: Quote['status'], tags?: Quote['tags'], acceptanceStatus?: Quote['acceptance_status']): Promise<boolean> => {
     try {
       const updateData: any = {
         status,
         updated_at: new Date().toISOString(),
       };
-      
+
       if (tags !== undefined) {
         updateData.tags = tags;
-        
-        // If marking work as done, also set completion date
+
+        // If marking work as done, set completion date AND auto-create invoice
         if (tags.includes('work_done')) {
           updateData.work_completion_date = new Date().toISOString();
+
+          // Get the quote to generate invoice number
+          const quote = savedQuotes.find(q => q.id === quoteId);
+          if (quote && !quote.invoice_raised) {
+            const invoiceNumber = generateInvoiceNumber(quote.quoteNumber);
+            const invoiceDate = new Date();
+            const invoiceDueDate = new Date();
+            invoiceDueDate.setDate(invoiceDueDate.getDate() + 30);
+
+            updateData.invoice_raised = true;
+            updateData.invoice_number = invoiceNumber;
+            updateData.invoice_date = invoiceDate.toISOString();
+            updateData.invoice_due_date = invoiceDueDate.toISOString();
+            updateData.invoice_status = 'draft';
+
+            console.log('Auto-creating invoice for completed work:', {
+              quoteId,
+              invoiceNumber,
+              invoiceDate: invoiceDate.toISOString(),
+              invoiceDueDate: invoiceDueDate.toISOString()
+            });
+          }
         }
       }
 
@@ -330,16 +363,17 @@ export const useQuoteStorage = () => {
       }
 
       // Update local state
-      setSavedQuotes(prev => prev.map(quote => 
-        quote.id === quoteId 
-          ? { 
-              ...quote, 
-              status, 
-              tags: tags || quote.tags, 
+      setSavedQuotes(prev => prev.map(quote =>
+        quote.id === quoteId
+          ? {
+              ...quote,
+              status,
+              tags: tags || quote.tags,
               acceptance_status: acceptanceStatus || quote.acceptance_status,
               accepted_at: acceptanceStatus ? new Date() : quote.accepted_at,
               work_completion_date: tags?.includes('work_done') ? new Date() : quote.work_completion_date,
-              updatedAt: new Date() 
+              invoice_raised: tags?.includes('work_done') ? true : quote.invoice_raised,
+              updatedAt: new Date()
             }
           : quote
       ));

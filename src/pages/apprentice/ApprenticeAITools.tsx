@@ -51,7 +51,7 @@ const ApprenticeAITools = () => {
         <SmartBackButton />
       </div>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Bot className="h-5 w-5 text-elec-yellow" />
@@ -72,7 +72,7 @@ const ApprenticeAITools = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {aiTools.map((tool) => (
-          <Card key={tool.id} className="border-elec-yellow/20 bg-elec-gray hover:shadow-md transition-shadow">
+          <Card key={tool.id} className="border-elec-yellow/20 bg-white/5 hover:shadow-md transition-shadow">
             <CardHeader className="pb-2">
               <div className="flex justify-between items-start">
                 <CardTitle className="text-xl flex items-center gap-2">
@@ -93,7 +93,7 @@ const ApprenticeAITools = () => {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground mb-4">{tool.description}</p>
+              <p className="text-white/70 mb-4">{tool.description}</p>
               <Button className="w-full">Launch Tool</Button>
             </CardContent>
           </Card>

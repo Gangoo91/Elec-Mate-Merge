@@ -27,7 +27,7 @@ const WeeklyProgressCard = ({
   const progress = (weeklyHours / targetHours) * 100;
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray lg:col-span-1">
+    <Card className="border-elec-yellow/20 bg-white/5 lg:col-span-1">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Clock className="h-5 w-5 text-elec-yellow" />
@@ -52,7 +52,7 @@ const WeeklyProgressCard = ({
               </span>
               <span>{courseHours} hours</span>
             </div>
-            <div className="text-xs text-muted-foreground">
+            <div className="text-xs text-white">
               Time automatically tracked from online learning
             </div>
           </div>

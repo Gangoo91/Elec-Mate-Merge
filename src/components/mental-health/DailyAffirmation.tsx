@@ -185,7 +185,7 @@ const DailyAffirmation = () => {
             variant="ghost"
             size="sm"
             onClick={handleLike}
-            className={`h-8 w-8 p-0 ${isLiked ? 'text-pink-400' : 'text-muted-foreground'}`}
+            className={`h-8 w-8 p-0 ${isLiked ? 'text-pink-400' : 'text-white/80'}`}
           >
             <Heart className={`h-4 w-4 ${isLiked ? 'fill-current' : ''}`} />
           </Button>
@@ -193,7 +193,7 @@ const DailyAffirmation = () => {
             variant="ghost"
             size="sm"
             onClick={handleShare}
-            className="h-8 w-8 p-0 text-muted-foreground"
+            className="h-8 w-8 p-0 text-white/80"
           >
             <Share2 className="h-4 w-4" />
           </Button>
@@ -201,7 +201,7 @@ const DailyAffirmation = () => {
             variant="ghost"
             size="sm"
             onClick={handleRefresh}
-            className="h-8 w-8 p-0 text-muted-foreground"
+            className="h-8 w-8 p-0 text-white/80"
             disabled={isRefreshing}
           >
             <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />

@@ -89,14 +89,14 @@ const CareerCourses = () => {
   return (
     <div className="space-y-6">
       {/* Header Section */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-xl sm:text-2xl">
             <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
             UK Electrical Career Courses & Training
           </CardTitle>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <p className="text-sm sm:text-base text-muted-foreground">
+            <p className="text-sm sm:text-base text-white">
               Comprehensive professional development courses to advance your electrical career in the UK market
             </p>
             
@@ -130,7 +130,7 @@ const CareerCourses = () => {
 
       {/* Active Filters Display */}
       {(isLocationFiltered || selectedCategory !== "All Categories") && (
-        <Card className="border-elec-yellow/20 bg-elec-gray/50">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardContent className="p-4">
             <div className="flex items-center gap-2 flex-wrap">
               <Filter className="h-4 w-4 text-elec-yellow" />
@@ -167,7 +167,7 @@ const CareerCourses = () => {
       )}
 
       {/* Category Filter */}
-      <Card className="border-elec-yellow/20 bg-elec-gray/50">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className="p-4">
           <div className="flex items-center gap-3 mb-3">
             <TrendingUp className="h-4 w-4 text-elec-yellow" />

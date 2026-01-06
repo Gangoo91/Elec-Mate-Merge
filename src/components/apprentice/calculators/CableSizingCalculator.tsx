@@ -293,7 +293,7 @@ const CableSizingCalculator = () => {
                   >
                     {calculatedCurrent}A
                   </div>
-                  <p className="text-xs text-white/50 mt-1">
+                  <p className="text-xs text-white/80 mt-1">
                     {phases === 'single' ? 'I = P / (V × PF)' : 'I = P / (√3 × V × PF)'}
                   </p>
                 </div>

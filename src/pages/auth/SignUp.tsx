@@ -298,7 +298,7 @@ const SignUp = () => {
 
       {/* Main content */}
       <main className="relative flex-1 flex flex-col items-center justify-center px-4 pb-8">
-        <div className="w-full max-w-sm">
+        <div className="w-full max-w-sm md:max-w-md">
           {/* Step indicator */}
           <div className="flex items-center justify-center gap-1 mb-6 animate-fade-in">
             {['account', 'profile', 'elec-id', 'consent'].map((s, index) => {
@@ -346,23 +346,23 @@ const SignUp = () => {
           {/* Step 1: Account */}
           {step === 'account' && (
             <Card className="border-white/10 bg-neutral-900 shadow-xl transition-all duration-300 hover:border-yellow-400/20 animate-fade-in">
-              <CardContent className="pt-6">
-                <div className="text-center mb-6">
-                  <h1 className="text-xl sm:text-2xl font-bold mb-1 text-white">Create Account</h1>
-                  <p className="text-sm text-gray-400">Start your free trial</p>
+              <CardContent className="pt-6 md:pt-8 md:pb-2 md:px-8">
+                <div className="text-center mb-6 md:mb-8">
+                  <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-1 md:mb-2 text-white">Create Account</h1>
+                  <p className="text-sm md:text-base text-gray-400">Start your free trial</p>
                 </div>
 
-                <form onSubmit={handleAccountSubmit} className="space-y-4">
+                <form onSubmit={handleAccountSubmit} className="space-y-4 md:space-y-5">
                   <div className="space-y-2">
                     <Label htmlFor="fullName" className="text-sm text-gray-300">Full Name</Label>
                     <div className="relative group">
-                      <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 transition-colors group-focus-within:text-yellow-400" />
+                      <User className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 transition-colors group-focus-within:text-yellow-400 z-10 pointer-events-none" />
                       <Input
                         id="fullName"
                         placeholder="John Smith"
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
-                        className="pl-10 h-12 text-base bg-black border-white/10 text-white placeholder:text-gray-500 focus:border-yellow-400/50 transition-all duration-200"
+                        className="pl-11 h-12 text-base bg-black border-white/10 text-white placeholder:text-gray-500 focus:border-yellow-400/50 transition-all duration-200"
                         autoComplete="name"
                         required
                       />
@@ -372,14 +372,14 @@ const SignUp = () => {
                   <div className="space-y-2">
                     <Label htmlFor="email" className="text-sm text-gray-300">Email</Label>
                     <div className="relative group">
-                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 transition-colors group-focus-within:text-yellow-400" />
+                      <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 transition-colors group-focus-within:text-yellow-400 z-10 pointer-events-none" />
                       <Input
                         id="email"
                         type="email"
                         placeholder="you@example.com"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="pl-10 h-12 text-base bg-black border-white/10 text-white placeholder:text-gray-500 focus:border-yellow-400/50 transition-all duration-200"
+                        className="pl-11 h-12 text-base bg-black border-white/10 text-white placeholder:text-gray-500 focus:border-yellow-400/50 transition-all duration-200"
                         autoComplete="email"
                         required
                       />
@@ -389,21 +389,21 @@ const SignUp = () => {
                   <div className="space-y-2">
                     <Label htmlFor="password" className="text-sm text-gray-300">Password</Label>
                     <div className="relative group">
-                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 transition-colors group-focus-within:text-yellow-400" />
+                      <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 transition-colors group-focus-within:text-yellow-400 z-10 pointer-events-none" />
                       <Input
                         id="password"
                         type={showPassword ? 'text' : 'password'}
                         placeholder="Create a strong password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="pl-10 pr-10 h-12 text-base bg-black border-white/10 text-white placeholder:text-gray-500 focus:border-yellow-400/50 transition-all duration-200"
+                        className="pl-11 pr-12 h-12 text-base bg-black border-white/10 text-white placeholder:text-gray-500 focus:border-yellow-400/50 transition-all duration-200"
                         autoComplete="new-password"
                         required
                       />
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition-colors p-1"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition-colors p-1.5 rounded-md hover:bg-white/5 z-10"
                       >
                         {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                       </button>
@@ -464,7 +464,7 @@ const SignUp = () => {
                   <div className="space-y-2">
                     <Label htmlFor="confirmPassword" className="text-sm text-gray-300">Confirm Password</Label>
                     <div className="relative group">
-                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 transition-colors group-focus-within:text-yellow-400" />
+                      <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 transition-colors group-focus-within:text-yellow-400 z-10 pointer-events-none" />
                       <Input
                         id="confirmPassword"
                         type="password"
@@ -472,7 +472,7 @@ const SignUp = () => {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         className={cn(
-                          "pl-10 h-12 text-base bg-black border-white/10 text-white placeholder:text-gray-500 focus:border-yellow-400/50 transition-all duration-200",
+                          "pl-11 h-12 text-base bg-black border-white/10 text-white placeholder:text-gray-500 focus:border-yellow-400/50 transition-all duration-200",
                           confirmPassword && password !== confirmPassword && "border-red-500/50"
                         )}
                         autoComplete="new-password"
@@ -490,13 +490,13 @@ const SignUp = () => {
                     )}
                   </div>
 
-                  <Button type="submit" className="w-full h-12 text-base font-semibold bg-yellow-400 hover:bg-yellow-300 text-black transition-all duration-200 hover:scale-[1.02]">
+                  <Button type="submit" className="w-full h-12 md:h-14 text-base md:text-lg font-semibold bg-yellow-400 hover:bg-yellow-300 text-black transition-all duration-200 hover:scale-[1.02]">
                     Continue
-                    <ArrowRight className="ml-2 h-4 w-4" />
+                    <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5" />
                   </Button>
                 </form>
 
-                <div className="mt-5 text-center text-sm text-gray-400">
+                <div className="mt-5 md:mt-6 text-center text-sm md:text-base text-gray-400">
                   Already have an account?{' '}
                   <Link to="/auth/signin" className="text-yellow-400 hover:text-yellow-300 font-medium transition-colors">
                     Sign in
@@ -509,12 +509,12 @@ const SignUp = () => {
           {/* Step 2: Profile */}
           {step === 'profile' && (
             <div className="animate-fade-in">
-              <div className="text-center mb-6">
-                <h1 className="text-xl sm:text-2xl font-bold mb-1 text-white">What's your role?</h1>
-                <p className="text-sm text-gray-400">We'll personalise your experience</p>
+              <div className="text-center mb-6 md:mb-8">
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-1 md:mb-2 text-white">What's your role?</h1>
+                <p className="text-sm md:text-base text-gray-400">We'll personalise your experience</p>
               </div>
 
-              <div className="space-y-3 mb-6">
+              <div className="space-y-3 md:space-y-4 mb-6 md:mb-8">
                 {roleOptions.map((option) => (
                   <button
                     key={option.value}
@@ -551,16 +551,16 @@ const SignUp = () => {
               </div>
 
               <div className="flex gap-3">
-                <Button variant="outline" onClick={goBack} className="h-12 px-4 border-white/20 text-white hover:bg-white/5 transition-all duration-200">
-                  <ArrowLeft className="h-4 w-4" />
+                <Button variant="outline" onClick={goBack} className="h-12 md:h-14 px-4 md:px-5 border-white/20 text-white hover:bg-white/5 transition-all duration-200">
+                  <ArrowLeft className="h-4 w-4 md:h-5 md:w-5" />
                 </Button>
                 <Button
                   onClick={handleProfileSubmit}
-                  className="flex-1 h-12 text-base font-semibold bg-yellow-400 hover:bg-yellow-300 text-black transition-all duration-200 hover:scale-[1.02]"
+                  className="flex-1 h-12 md:h-14 text-base md:text-lg font-semibold bg-yellow-400 hover:bg-yellow-300 text-black transition-all duration-200 hover:scale-[1.02]"
                   disabled={!profile.role}
                 >
                   Continue
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5" />
                 </Button>
               </div>
             </div>
@@ -569,9 +569,9 @@ const SignUp = () => {
           {/* Step 3: Elec-ID */}
           {step === 'elec-id' && (
             <div className="animate-fade-in">
-              <div className="text-center mb-6">
-                <h1 className="text-xl sm:text-2xl font-bold mb-1 text-white">Get Your Elec-ID</h1>
-                <p className="text-sm text-gray-400">Your digital professional credential</p>
+              <div className="text-center mb-6 md:mb-8">
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-1 md:mb-2 text-white">Get Your Elec-ID</h1>
+                <p className="text-sm md:text-base text-gray-400">Your digital professional credential</p>
               </div>
 
               {/* Elec-ID card preview */}
@@ -634,15 +634,15 @@ const SignUp = () => {
               )}
 
               <div className="flex gap-3">
-                <Button variant="outline" onClick={goBack} className="h-12 px-4 border-white/20 text-white hover:bg-white/5 transition-all duration-200">
-                  <ArrowLeft className="h-4 w-4" />
+                <Button variant="outline" onClick={goBack} className="h-12 md:h-14 px-4 md:px-5 border-white/20 text-white hover:bg-white/5 transition-all duration-200">
+                  <ArrowLeft className="h-4 w-4 md:h-5 md:w-5" />
                 </Button>
                 <Button
                   onClick={handleElecIdSubmit}
-                  className="flex-1 h-12 text-base font-semibold bg-yellow-400 hover:bg-yellow-300 text-black transition-all duration-200 hover:scale-[1.02]"
+                  className="flex-1 h-12 md:h-14 text-base md:text-lg font-semibold bg-yellow-400 hover:bg-yellow-300 text-black transition-all duration-200 hover:scale-[1.02]"
                 >
                   Continue
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5" />
                 </Button>
               </div>
             </div>
@@ -651,12 +651,12 @@ const SignUp = () => {
           {/* Step 4: GDPR Consent */}
           {step === 'consent' && (
             <div className="animate-fade-in">
-              <div className="text-center mb-6">
-                <div className="w-12 h-12 rounded-xl bg-yellow-400/20 flex items-center justify-center mx-auto mb-3">
-                  <Shield className="h-6 w-6 text-yellow-400" />
+              <div className="text-center mb-6 md:mb-8">
+                <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-yellow-400/20 flex items-center justify-center mx-auto mb-3 md:mb-4">
+                  <Shield className="h-6 w-6 md:h-7 md:w-7 text-yellow-400" />
                 </div>
-                <h1 className="text-xl sm:text-2xl font-bold mb-1 text-white">Your Data, Your Control</h1>
-                <p className="text-sm text-gray-400">We take your privacy seriously</p>
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-1 md:mb-2 text-white">Your Data, Your Control</h1>
+                <p className="text-sm md:text-base text-gray-400">We take your privacy seriously</p>
               </div>
 
               {/* Data we collect info */}
@@ -788,13 +788,13 @@ const SignUp = () => {
               </p>
 
               <div className="flex gap-3">
-                <Button variant="outline" onClick={goBack} className="h-12 px-4 border-white/20 text-white hover:bg-white/5 transition-all duration-200">
-                  <ArrowLeft className="h-4 w-4" />
+                <Button variant="outline" onClick={goBack} className="h-12 md:h-14 px-4 md:px-5 border-white/20 text-white hover:bg-white/5 transition-all duration-200">
+                  <ArrowLeft className="h-4 w-4 md:h-5 md:w-5" />
                 </Button>
                 <Button
                   onClick={handleFinalSubmit}
                   disabled={isSubmitting || !consent.termsAccepted || !consent.privacyAccepted || !consent.dataProcessingAccepted}
-                  className="flex-1 h-12 text-base font-semibold bg-yellow-400 hover:bg-yellow-300 text-black disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:scale-[1.02]"
+                  className="flex-1 h-12 md:h-14 text-base md:text-lg font-semibold bg-yellow-400 hover:bg-yellow-300 text-black disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:scale-[1.02]"
                 >
                   {isSubmitting ? (
                     <>

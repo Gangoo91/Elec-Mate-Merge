@@ -19,12 +19,12 @@ export const ZsResultsDisplay: React.FC<ZsResultsDisplayProps> = ({
   const { zs, formula, breakdown, compliance } = result;
 
   const getComplianceColor = () => {
-    if (!compliance.maxAllowed) return 'text-gray-400';
+    if (!compliance.maxAllowed) return 'text-white/70';
     return compliance.isCompliant ? 'text-green-400' : 'text-red-400';
   };
 
   const getComplianceIcon = () => {
-    if (!compliance.maxAllowed) return <AlertTriangle className="h-5 w-5 text-gray-400" />;
+    if (!compliance.maxAllowed) return <AlertTriangle className="h-5 w-5 text-white/70" />;
     return compliance.isCompliant 
       ? <CheckCircle className="h-5 w-5 text-green-400" />
       : <XCircle className="h-5 w-5 text-red-400" />;
@@ -50,23 +50,23 @@ export const ZsResultsDisplay: React.FC<ZsResultsDisplayProps> = ({
             <div className="text-4xl font-bold text-foreground mb-2">
               Zs = {zs.toFixed(3)} Ω
             </div>
-            <p className="text-sm text-gray-400">{formula}</p>
+            <p className="text-sm text-white/70">{formula}</p>
           </div>
 
           {showBreakdown && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="text-center p-3 bg-muted rounded-lg">
                 <div className="text-lg font-semibold text-foreground">{breakdown.ze.toFixed(3)} Ω</div>
-                <div className="text-xs text-gray-400">Ze (External)</div>
+                <div className="text-xs text-white/70">Ze (External)</div>
               </div>
               <div className="text-center p-3 bg-muted rounded-lg">
                 <div className="text-lg font-semibold text-foreground">{breakdown.r1r2.toFixed(3)} Ω</div>
-                <div className="text-xs text-gray-400">R1 + R2</div>
+                <div className="text-xs text-white/70">R1 + R2</div>
               </div>
               {breakdown.additionalResistances && breakdown.additionalResistances > 0 && (
                 <div className="text-center p-3 bg-muted rounded-lg">
                   <div className="text-lg font-semibold text-foreground">{breakdown.additionalResistances.toFixed(3)} Ω</div>
-                  <div className="text-xs text-gray-400">Additional</div>
+                  <div className="text-xs text-white/70">Additional</div>
                 </div>
               )}
             </div>
@@ -85,21 +85,21 @@ export const ZsResultsDisplay: React.FC<ZsResultsDisplayProps> = ({
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-gray-300">Device:</span>
+              <span className="text-white/80">Device:</span>
               <Badge variant="outline" className="text-foreground">
                 {compliance.deviceType} {compliance.rating}
               </Badge>
             </div>
             
             <div className="flex items-center justify-between">
-              <span className="text-gray-300">Maximum Zs:</span>
+              <span className="text-white/80">Maximum Zs:</span>
               <span className="font-semibold text-elec-yellow">
                 {compliance.maxAllowed.toFixed(3)} Ω
               </span>
             </div>
             
             <div className="flex items-center justify-between">
-              <span className="text-gray-300">Measured Zs:</span>
+              <span className="text-white/80">Measured Zs:</span>
               <span className={`font-semibold ${getComplianceColor()}`}>
                 {zs.toFixed(3)} Ω
               </span>
@@ -107,13 +107,13 @@ export const ZsResultsDisplay: React.FC<ZsResultsDisplayProps> = ({
             
             {compliance.margin !== null && (
               <div className="flex items-center justify-between">
-                <span className="text-gray-300">Safety Margin:</span>
+                <span className="text-white/80">Safety Margin:</span>
                 <div className="text-right">
                   <span className={`font-semibold ${getComplianceColor()}`}>
                     {compliance.margin > 0 ? '+' : ''}{compliance.margin.toFixed(3)} Ω
                   </span>
                   {getMarginPercentage() && (
-                    <div className="text-xs text-gray-400">
+                    <div className="text-xs text-white/70">
                       ({getMarginPercentage()}% margin)
                     </div>
                   )}
@@ -132,7 +132,7 @@ export const ZsResultsDisplay: React.FC<ZsResultsDisplayProps> = ({
                   {compliance.isCompliant ? 'PASS' : 'FAIL'}
                 </span>
               </div>
-              <p className="text-sm text-gray-300">
+              <p className="text-sm text-white/80">
                 {compliance.isCompliant 
                   ? 'Circuit meets BS7671 requirements for automatic disconnection.'
                   : 'Circuit exceeds maximum Zs limit. Remedial action required.'}

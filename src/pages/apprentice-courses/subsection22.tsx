@@ -617,7 +617,7 @@ const Section5_5 = () => {
               
               <div className="mt-3 p-2 bg-elec-yellow bg-elec-yellow rounded text-sm">
                 <p className="text-white font-medium">Lessons learned:</p>
-                <p className="text-emerald-50">
+                <p className="text-white">
                   Circuit verification using proper testing methods is essential. Never trust labels alone. The company implemented a circuit verification policy requiring testing at both the distribution board and the work location before any isolation work begins.
                 </p>
               </div>
@@ -631,7 +631,7 @@ const Section5_5 = () => {
               
               <div className="mt-3 p-2 bg-elec-yellow bg-elec-yellow rounded text-sm">
                 <p className="text-white font-medium">Lessons learned:</p>
-                <p className="text-emerald-50">
+                <p className="text-white">
                   Individual accountability cannot be compromised. The site now requires personal locks for each worker and uses group lock boxes for multi-person jobs. Communication protocols were also strengthened with mandatory team briefings before energising any systems.
                 </p>
               </div>
@@ -645,7 +645,7 @@ const Section5_5 = () => {
               
               <div className="mt-3 p-2 bg-elec-yellow bg-elec-yellow rounded text-sm">
                 <p className="text-white font-medium">Lessons learned:</p>
-                <p className="text-emerald-50">
+                <p className="text-white">
                   The "test-lock-test" procedure exists for critical safety reasons. The company now requires annual tester calibration, monthly functionality checks, and mandatory proving unit testing before and after every use. They also implemented a buddy system for isolation procedures on high-risk work.
                 </p>
               </div>

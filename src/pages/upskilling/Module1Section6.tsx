@@ -8,13 +8,13 @@ import TestDocumentationQuiz from '@/components/upskilling/TestDocumentationQuiz
 
 const Module1Section6 = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
         <Link to="../module-1">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 1
@@ -22,7 +22,7 @@ const Module1Section6 = () => {
         </Link>
         
         <div className="space-y-3">
-          <Badge variant="secondary" className="bg-yellow-600/20 text-yellow-400 border-yellow-600/30">
+          <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
             Section 6
           </Badge>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
@@ -39,10 +39,10 @@ const Module1Section6 = () => {
         <div className="space-y-4 sm:space-y-6">
           
           {/* Quick Intro */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <BookOpen className="h-5 w-5 text-yellow-400" />
+                <BookOpen className="h-5 w-5 text-elec-yellow" />
                 <CardTitle className="text-white">Quick Intro</CardTitle>
               </div>
             </CardHeader>
@@ -60,10 +60,10 @@ const Module1Section6 = () => {
           </Card>
 
           {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-yellow-400" />
+                <CheckCircle className="h-5 w-5 text-elec-yellow" />
                 <CardTitle className="text-white">Learning Outcomes</CardTitle>
               </div>
             </CardHeader>
@@ -71,23 +71,23 @@ const Module1Section6 = () => {
               <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
               <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   Identify the main types of test certificates and reports and their specific applications
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   Understand when each form is used and the legal implications of each
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   Recognise the importance of accurate and honest documentation for safety and legal compliance
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   Understand the roles and responsibilities of different parties in the certification process
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   Know the essential information that must be included on all electrical certificates
                 </li>
               </ul>
@@ -95,10 +95,10 @@ const Module1Section6 = () => {
           </Card>
 
           {/* Main Content */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <FileText className="h-5 w-5 text-yellow-400" />
+                <FileText className="h-5 w-5 text-elec-yellow" />
                 <CardTitle className="text-white">Main Content</CardTitle>
               </div>
             </CardHeader>
@@ -107,10 +107,10 @@ const Module1Section6 = () => {
               {/* Why Documentation Matters */}
               <div>
                 <h3 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
-                  <span className="text-yellow-400">1.</span>
+                  <span className="text-elec-yellow">1.</span>
                   Why Documentation Matters
                 </h3>
-                <div className="bg-card/50 p-4 rounded-lg space-y-3">
+                <div className="bg-transparent/50 p-4 rounded-lg space-y-3">
                   <p className="text-white">Test certificates are legal records that serve multiple critical purposes:</p>
                   <p className="text-white font-medium">Legal Protection:</p>
                   <ul className="space-y-1 text-white ml-4">
@@ -139,10 +139,10 @@ const Module1Section6 = () => {
               {/* Electrical Installation Certificate */}
               <div>
                 <h3 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
-                  <span className="text-yellow-400">2.</span>
+                  <span className="text-elec-yellow">2.</span>
                   Electrical Installation Certificate (EIC)
                 </h3>
-                <div className="bg-card/50 p-4 rounded-lg space-y-4">
+                <div className="bg-transparent/50 p-4 rounded-lg space-y-4">
                   <p className="text-white font-medium">Used for new installations and major alterations:</p>
                   <ul className="space-y-1 text-white ml-4">
                     <li>• Complete new electrical installations</li>
@@ -154,7 +154,7 @@ const Module1Section6 = () => {
                   
                   <p className="text-white font-medium">Key sections include:</p>
                   <div className="grid md:grid-cols-2 gap-4">
-                    <div className="bg-card/50 p-3 rounded">
+                    <div className="bg-transparent/50 p-3 rounded">
                       <p className="text-white font-medium mb-2">Design Section:</p>
                       <ul className="text-sm text-white space-y-1">
                         <li>• Circuit design details</li>
@@ -163,7 +163,7 @@ const Module1Section6 = () => {
                         <li>• Special locations considerations</li>
                       </ul>
                     </div>
-                    <div className="bg-card/50 p-3 rounded">
+                    <div className="bg-transparent/50 p-3 rounded">
                       <p className="text-white font-medium mb-2">Test Results:</p>
                       <ul className="text-sm text-white space-y-1">
                         <li>• Continuity measurements</li>
@@ -174,7 +174,7 @@ const Module1Section6 = () => {
                     </div>
                   </div>
                   
-                  <div className="bg-blue-900/20 border border-yellow-400/30 p-3 rounded">
+                  <div className="bg-blue-900/20 border border-elec-yellow/30 p-3 rounded">
                     <p className="text-blue-200">
                       <strong>Note:</strong> An EIC requires three signatures: Designer, Installer, and Inspector & Tester (may be the same person).
                     </p>
@@ -187,10 +187,10 @@ const Module1Section6 = () => {
               {/* Minor Electrical Installation Works Certificate */}
               <div>
                 <h3 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
-                  <span className="text-yellow-400">3.</span>
+                  <span className="text-elec-yellow">3.</span>
                   Minor Electrical Installation Works Certificate (MEIWC)
                 </h3>
-                <div className="bg-card/50 p-4 rounded-lg space-y-4">
+                <div className="bg-transparent/50 p-4 rounded-lg space-y-4">
                   <p className="text-white font-medium">Used for small-scale electrical work:</p>
                   <ul className="space-y-1 text-white ml-4">
                     <li>• Adding sockets to existing ring final circuits</li>
@@ -221,10 +221,10 @@ const Module1Section6 = () => {
               {/* Electrical Installation Condition Report */}
               <div>
                 <h3 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
-                  <span className="text-yellow-400">4.</span>
+                  <span className="text-elec-yellow">4.</span>
                   Electrical Installation Condition Report (EICR)
                 </h3>
-                <div className="bg-card/50 p-4 rounded-lg space-y-4">
+                <div className="bg-transparent/50 p-4 rounded-lg space-y-4">
                   <p className="text-white font-medium">Used for periodic inspection of existing installations:</p>
                   <ul className="space-y-1 text-white ml-4">
                     <li>• Rental properties (required every 5 years by law)</li>
@@ -244,11 +244,11 @@ const Module1Section6 = () => {
                       <p className="text-orange-300 font-bold">C2 - Potentially Dangerous</p>
                       <p className="text-orange-200 text-sm">Urgent remedial action required to remove potential danger.</p>
                     </div>
-                    <div className="bg-yellow-900/20 border border-yellow-400/30 p-3 rounded">
+                    <div className="bg-yellow-900/20 border border-elec-yellow/30 p-3 rounded">
                       <p className="text-yellow-300 font-bold">C3 - Improvement Recommended</p>
                       <p className="text-yellow-200 text-sm">Improvement would enhance safety, though not immediately dangerous.</p>
                     </div>
-                    <div className="bg-blue-900/20 border border-yellow-400/30 p-3 rounded">
+                    <div className="bg-blue-900/20 border border-elec-yellow/30 p-3 rounded">
                       <p className="text-blue-300 font-bold">FI - Further Investigation</p>
                       <p className="text-blue-200 text-sm">Investigation required to determine if a code is necessary.</p>
                     </div>
@@ -261,12 +261,12 @@ const Module1Section6 = () => {
               {/* Key Document Features */}
               <div>
                 <h3 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
-                  <span className="text-yellow-400">5.</span>
+                  <span className="text-elec-yellow">5.</span>
                   Essential Information Required on All Certificates
                 </h3>
-                <div className="bg-card/50 p-4 rounded-lg space-y-4">
+                <div className="bg-transparent/50 p-4 rounded-lg space-y-4">
                   <div className="grid md:grid-cols-2 gap-4">
-                    <div className="bg-card/50 p-3 rounded">
+                    <div className="bg-transparent/50 p-3 rounded">
                       <p className="text-white font-medium mb-2">Installation Details:</p>
                       <ul className="text-sm text-white space-y-1">
                         <li>• Full installation address</li>
@@ -276,7 +276,7 @@ const Module1Section6 = () => {
                         <li>• Main switch/protective device details</li>
                       </ul>
                     </div>
-                    <div className="bg-card/50 p-3 rounded">
+                    <div className="bg-transparent/50 p-3 rounded">
                       <p className="text-white font-medium mb-2">Test Information:</p>
                       <ul className="text-sm text-white space-y-1">
                         <li>• Test results and values</li>
@@ -305,10 +305,10 @@ const Module1Section6 = () => {
               {/* Record Keeping and Retention */}
               <div>
                 <h3 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
-                  <span className="text-yellow-400">6.</span>
+                  <span className="text-elec-yellow">6.</span>
                   Record Keeping and Retention
                 </h3>
-                <div className="bg-card/50 p-4 rounded-lg space-y-3">
+                <div className="bg-transparent/50 p-4 rounded-lg space-y-3">
                   <p className="text-white font-medium">Who should keep copies?</p>
                   <ul className="space-y-1 text-white ml-4">
                     <li>• Person responsible for the installation (building owner/occupier)</li>
@@ -336,15 +336,15 @@ const Module1Section6 = () => {
           </Card>
 
           {/* Multiple Scenarios */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-yellow-400" />
+                <AlertTriangle className="h-5 w-5 text-elec-yellow" />
                 <CardTitle className="text-white">Practical Scenarios</CardTitle>
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="bg-blue-900/20 border border-yellow-400/30 p-4 rounded-lg">
+              <div className="bg-blue-900/20 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-white mb-3 font-medium">
                   Scenario 1: You extend a ring final circuit in a kitchen and test it thoroughly. Do you issue an EIC or MEIWC?
                 </p>
@@ -356,7 +356,7 @@ const Module1Section6 = () => {
                 </div>
               </div>
               
-              <div className="bg-blue-900/20 border border-yellow-400/30 p-4 rounded-lg">
+              <div className="bg-blue-900/20 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-white mb-3 font-medium">
                   Scenario 2: A landlord asks for an electrical certificate for a rental property that hasn't been inspected for 7 years.
                 </p>
@@ -368,7 +368,7 @@ const Module1Section6 = () => {
                 </div>
               </div>
               
-              <div className="bg-blue-900/20 border border-yellow-400/30 p-4 rounded-lg">
+              <div className="bg-blue-900/20 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-white mb-3 font-medium">
                   Scenario 3: You install a new consumer unit in a house built in 1960.
                 </p>
@@ -383,10 +383,10 @@ const Module1Section6 = () => {
           </Card>
 
           {/* Common Mistakes */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <XCircle className="h-5 w-5 text-yellow-400" />
+                <XCircle className="h-5 w-5 text-elec-yellow" />
                 <CardTitle className="text-white">Common Documentation Mistakes</CardTitle>
               </div>
             </CardHeader>
@@ -413,10 +413,10 @@ const Module1Section6 = () => {
           </Card>
 
           {/* Industry Standards */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <Shield className="h-5 w-5 text-yellow-400" />
+                <Shield className="h-5 w-5 text-elec-yellow" />
                 <CardTitle className="text-white">Industry Standards & Digital Solutions</CardTitle>
               </div>
             </CardHeader>
@@ -424,7 +424,7 @@ const Module1Section6 = () => {
               <p className="text-white">Modern electrical testing increasingly uses digital solutions:</p>
               
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="bg-card/50 p-3 rounded">
+                <div className="bg-transparent/50 p-3 rounded">
                   <p className="text-white font-medium mb-2">Digital Certificates:</p>
                   <ul className="text-sm text-white space-y-1">
                     <li>• Faster completion and distribution</li>
@@ -433,7 +433,7 @@ const Module1Section6 = () => {
                     <li>• Easier storage and retrieval</li>
                   </ul>
                 </div>
-                <div className="bg-card/50 p-3 rounded">
+                <div className="bg-transparent/50 p-3 rounded">
                   <p className="text-white font-medium mb-2">Cloud Storage Benefits:</p>
                   <ul className="text-sm text-white space-y-1">
                     <li>• Secure backup and access from anywhere</li>
@@ -453,37 +453,37 @@ const Module1Section6 = () => {
           </Card>
 
           {/* Key Takeaways */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-yellow-400" />
+                <CheckCircle className="h-5 w-5 text-elec-yellow" />
                 <CardTitle className="text-white">Key Takeaways</CardTitle>
               </div>
             </CardHeader>
             <CardContent>
               <ul className="space-y-3 text-white">
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   Test documentation is legally required and must be accurate—it's your primary protection against liability
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   Use EIC for major work, MEIWC for minor additions, and EICR for periodic inspections
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   All certificates must include actual test results, proper descriptions, and competent person signatures
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   Never sign a certificate unless you personally completed or verified the testing—this makes you legally responsible
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   Proper record keeping and distribution ensures compliance and protects all parties involved
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   Digital solutions can improve accuracy, efficiency, and long-term accessibility of test documentation
                 </li>
               </ul>
@@ -491,20 +491,20 @@ const Module1Section6 = () => {
           </Card>
 
           {/* Quick Knowledge Checks */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-6 w-6 text-yellow-400" />
+                <CheckCircle className="h-6 w-6 text-elec-yellow" />
                 Quick Knowledge Checks
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-yellow-400/10 p-4 rounded-lg">
+                <div className="bg-elec-yellow/10 p-4 rounded-lg">
                   <h4 className="text-white font-semibold mb-2">Check 1: EIC vs EICR</h4>
                   <p className="text-sm">When do you use an EIC vs an EICR?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">EIC: New installations/major work. EICR: Periodic inspection of existing installations</p>
                   </details>
                 </div>
@@ -512,7 +512,7 @@ const Module1Section6 = () => {
                   <h4 className="text-white font-semibold mb-2">Check 2: Observation Codes</h4>
                   <p className="text-sm">What does a C1 observation code indicate?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">Danger present - immediate remedial action required</p>
                   </details>
                 </div>
@@ -520,7 +520,7 @@ const Module1Section6 = () => {
                   <h4 className="text-white font-semibold mb-2">Check 3: MEIWC Usage</h4>
                   <p className="text-sm">Can a MEIWC be used for installing a new consumer unit?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">No - this is major work requiring an EIC</p>
                   </details>
                 </div>
@@ -528,7 +528,7 @@ const Module1Section6 = () => {
                   <h4 className="text-white font-semibold mb-2">Check 4: Record Retention</h4>
                   <p className="text-sm">How long should installation certificates be kept?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">Life of the installation</p>
                   </details>
                 </div>
@@ -537,10 +537,10 @@ const Module1Section6 = () => {
           </Card>
 
           {/* Frequently Asked Questions */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-6 w-6 text-yellow-400" />
+                <AlertTriangle className="h-6 w-6 text-elec-yellow" />
                 Frequently Asked Questions
               </CardTitle>
             </CardHeader>
@@ -575,7 +575,7 @@ const Module1Section6 = () => {
           </Card>
 
           {/* Common Certification Mistakes */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 <XCircle className="h-6 w-6 text-red-400" />
@@ -605,15 +605,15 @@ const Module1Section6 = () => {
           </Card>
 
           {/* Real-World Scenario */}
-          <Card className="bg-yellow-400/10 border-blue-600/30">
+          <Card className="bg-elec-yellow/10 border-blue-600/30">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <FileText className="h-6 w-6 text-yellow-400" />
+                <FileText className="h-6 w-6 text-elec-yellow" />
                 Real-World Scenario
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
-              <div className="bg-yellow-400/20 p-4 rounded-lg">
+              <div className="bg-elec-yellow/20 p-4 rounded-lg">
                 <h4 className="text-white font-semibold mb-2">Scenario: EICR Discovers Multiple Issues</h4>
                 <p className="text-sm mb-3">
                   During a rental property EICR, you discover: loose connections at the consumer unit (C2), missing RCD protection for bathroom circuits (C2), damaged cable in the garage (C1), and old rubber cable that should be replaced (C3). The landlord wants a "satisfactory" report to avoid tenant issues.
@@ -626,7 +626,7 @@ const Module1Section6 = () => {
                   <li>• Professional integrity requires honest reporting</li>
                   <li>• Tenant safety takes absolute priority over commercial considerations</li>
                 </ul>
-                <div className="mt-3 p-3 bg-yellow-600/20 rounded">
+                <div className="mt-3 p-3 bg-elec-yellow/20 rounded">
                   <p className="text-xs"><strong>Correct Action:</strong> Issue an "unsatisfactory" EICR with all defects properly coded. Explain legal obligations and liability risks. Provide clear guidance on immediate actions required for C1 items.</p>
                 </div>
               </div>
@@ -634,10 +634,10 @@ const Module1Section6 = () => {
           </Card>
 
           {/* Quiz Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <Users className="h-5 w-5 text-yellow-400" />
+                <Users className="h-5 w-5 text-elec-yellow" />
                 <CardTitle className="text-white">Test Your Knowledge - 10 Questions</CardTitle>
               </div>
             </CardHeader>

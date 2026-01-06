@@ -93,7 +93,7 @@ export function SignatureGenerator({ onSave, initialValue }: SignatureGeneratorP
                 htmlFor={font.id}
                 className="flex flex-col items-center justify-center rounded-lg border-2 border-elec-gray-light bg-elec-gray-dark p-4 min-h-[52px] hover:border-elec-yellow/50 peer-data-[state=checked]:border-elec-yellow cursor-pointer transition-colors"
               >
-                <span className="text-xs text-gray-400 mb-1">{font.name}</span>
+                <span className="text-xs text-white/70 mb-1">{font.name}</span>
                 <span 
                   style={{ fontFamily: font.font, fontSize: '22px' }}
                   className="text-foreground"

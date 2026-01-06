@@ -48,7 +48,7 @@ const ZsTestProcedureCard = () => {
         <CardTitle className="text-red-400 text-base sm:text-lg md:text-xl">
           Zs Test Procedure Overview
         </CardTitle>
-        <CardDescription className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+        <CardDescription className="text-xs sm:text-sm text-white/80 leading-relaxed">
           Step-by-step procedure for testing earth fault loop impedance in accordance with BS 7671
         </CardDescription>
       </CardHeader>
@@ -67,7 +67,7 @@ const ZsTestProcedureCard = () => {
                 <Icon className={`h-4 w-4 sm:h-5 sm:w-5 ${step.color} mt-1 shrink-0`} />
                 <div className="flex-1 min-w-0">
                   <h5 className="font-semibold text-foreground text-sm sm:text-base mb-1">{step.title}</h5>
-                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{step.description}</p>
+                  <p className="text-xs sm:text-sm text-white/80 leading-relaxed">{step.description}</p>
                 </div>
               </div>
             </div>

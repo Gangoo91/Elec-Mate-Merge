@@ -95,8 +95,8 @@ const SmartHomeMockExam = () => {
   const getGrade = (score: number) => {
     const percentage = (score / EXAM_QUESTION_COUNT) * 100;
     if (percentage >= 80) return { grade: 'Distinction', color: 'text-green-400' };
-    if (percentage >= 70) return { grade: 'Merit', color: 'text-yellow-400' };
-    if (percentage >= 60) return { grade: 'Pass', color: 'text-yellow-400' };
+    if (percentage >= 70) return { grade: 'Merit', color: 'text-elec-yellow' };
+    if (percentage >= 60) return { grade: 'Pass', color: 'text-elec-yellow' };
     return { grade: 'Fail', color: 'text-red-400' };
   };
 
@@ -108,7 +108,7 @@ const SmartHomeMockExam = () => {
           <Link to="../smart-home-course">
             <Button
               variant="ghost"
-              className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+              className="text-foreground hover:bg-transparent hover:text-elec-yellow transition-all duration-200 mb-8 px-4 py-2 rounded-md"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Smart Home Course
@@ -124,7 +124,7 @@ const SmartHomeMockExam = () => {
                 Test your knowledge with a comprehensive examination covering all aspects of smart home technology
               </p>
               <div className="flex flex-wrap justify-center gap-4">
-                <Badge variant="secondary" className="bg-yellow-400 text-black">
+                <Badge variant="secondary" className="bg-elec-yellow text-black">
                   30 Questions
                 </Badge>
                 <Badge variant="outline" className="border-gray-600 text-white">
@@ -137,10 +137,10 @@ const SmartHomeMockExam = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card className="bg-card border-transparent">
+              <Card className="bg-transparent border-transparent">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <Clock className="h-6 w-6 text-yellow-400" />
+                    <Clock className="h-6 w-6 text-elec-yellow" />
                     <h3 className="text-xl font-bold text-white">Exam Details</h3>
                   </div>
                   <div className="space-y-3 text-white">
@@ -153,10 +153,10 @@ const SmartHomeMockExam = () => {
                 </CardContent>
               </Card>
 
-              <Card className="bg-card border-transparent">
+              <Card className="bg-transparent border-transparent">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <CheckCircle className="h-6 w-6 text-yellow-400" />
+                    <CheckCircle className="h-6 w-6 text-elec-yellow" />
                     <h3 className="text-xl font-bold text-white">Topics Covered</h3>
                   </div>
                   <div className="space-y-3 text-white">
@@ -173,10 +173,10 @@ const SmartHomeMockExam = () => {
               </Card>
             </div>
 
-            <Card className="bg-yellow-400/10 border-yellow-400/30">
+            <Card className="bg-elec-yellow/10 border-elec-yellow/30">
               <CardContent className="p-6">
                 <div className="flex items-center gap-3 mb-4">
-                  <CheckCircle className="h-6 w-6 text-yellow-400" />
+                  <CheckCircle className="h-6 w-6 text-elec-yellow" />
                   <h3 className="text-xl font-bold text-white">Before You Begin</h3>
                 </div>
                 <div className="space-y-3 text-white">
@@ -192,7 +192,7 @@ const SmartHomeMockExam = () => {
             <div className="text-center">
               <Button 
                 onClick={startExam}
-                className="bg-yellow-400 text-black hover:bg-yellow-400 transition-all duration-200 px-8 py-3 text-lg font-semibold"
+                className="bg-elec-yellow text-black hover:bg-elec-yellow transition-all duration-200 px-8 py-3 text-lg font-semibold"
               >
                 <Clock className="mr-2 h-5 w-5" />
                 Start Mock Exam
@@ -218,7 +218,7 @@ const SmartHomeMockExam = () => {
           <Link to="../smart-home-course">
             <Button
               variant="ghost"
-              className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+              className="text-foreground hover:bg-transparent hover:text-elec-yellow transition-all duration-200 mb-8 px-4 py-2 rounded-md"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Smart Home Course
@@ -229,10 +229,10 @@ const SmartHomeMockExam = () => {
             <div className="text-center">
               <h1 className="text-4xl font-bold text-white mb-4">Exam Results</h1>
               
-              <Card className="bg-card border-transparent">
+              <Card className="bg-transparent border-transparent">
                 <CardContent className="p-8">
                   <div className="text-center space-y-4">
-                    <div className="text-6xl font-bold text-yellow-400">
+                    <div className="text-6xl font-bold text-elec-yellow">
                       {percentage}%
                     </div>
                     <div className={`text-2xl font-bold ${color}`}>
@@ -250,7 +250,7 @@ const SmartHomeMockExam = () => {
             </div>
 
             {/* Question Review */}
-            <Card className="bg-card border-transparent">
+            <Card className="bg-transparent border-transparent">
               <CardContent className="p-4 sm:p-6">
                 <h3 className="text-xl font-bold text-white mb-6">Question Review</h3>
                 <div className="space-y-4">
@@ -261,7 +261,7 @@ const SmartHomeMockExam = () => {
                     return (
                       <div
                         key={question.id}
-                        className="p-4 sm:p-5 border border-gray-600 rounded-lg bg-card hover:bg-card/80 transition-colors"
+                        className="p-4 sm:p-5 border border-gray-600 rounded-lg bg-transparent hover:bg-transparent/80 transition-colors"
                       >
                         <div className="flex items-start gap-4 mb-3">
                           {isCorrect ? (
@@ -275,7 +275,7 @@ const SmartHomeMockExam = () => {
                             </p>
                             
                             {wasAnswered && (
-                              <div className="mb-3 p-3 bg-card rounded-lg">
+                              <div className="mb-3 p-3 bg-transparent rounded-lg">
                                 <span className="text-white text-sm font-medium">Your answer: </span>
                                 <span className={`text-sm ${isCorrect ? 'text-green-400' : 'text-red-400'} font-medium`}>
                                   {question.options[selectedAnswers[index]]}
@@ -284,7 +284,7 @@ const SmartHomeMockExam = () => {
                             )}
                             
                             {!isCorrect && (
-                              <div className="mb-3 p-3 bg-card border border-green-500/20 rounded-lg">
+                              <div className="mb-3 p-3 bg-transparent border border-green-500/20 rounded-lg">
                                 <span className="text-white text-sm font-medium">Correct answer: </span>
                                 <span className="text-green-400 text-sm font-medium">
                                   {question.options[question.correctAnswer]}
@@ -292,8 +292,8 @@ const SmartHomeMockExam = () => {
                               </div>
                             )}
                             
-                            <div className="text-sm text-white bg-background p-4 rounded-lg">
-                              <strong className="text-yellow-400">Explanation:</strong> {question.explanation}
+                            <div className="text-sm text-white bg-[#1a1a1a] p-4 rounded-lg">
+                              <strong className="text-elec-yellow">Explanation:</strong> {question.explanation}
                             </div>
                           </div>
                         </div>
@@ -307,13 +307,13 @@ const SmartHomeMockExam = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 onClick={handleRestart}
-                className="bg-yellow-400 text-black hover:bg-yellow-400"
+                className="bg-elec-yellow text-black hover:bg-elec-yellow"
               >
                 <RotateCcw className="mr-2 h-4 w-4" />
                 Take Again
               </Button>
               <Link to="../smart-home-course">
-                <Button variant="outline" className="border-gray-600 text-white hover:bg-card w-full sm:w-auto">
+                <Button variant="outline" className="border-gray-600 text-white hover:bg-transparent w-full sm:w-auto">
                   Return to Course
                 </Button>
               </Link>
@@ -336,7 +336,7 @@ const SmartHomeMockExam = () => {
             <Link to="../smart-home-course">
               <Button
                 variant="ghost"
-                className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 px-4 py-2 rounded-md"
+                className="text-foreground hover:bg-transparent hover:text-elec-yellow transition-all duration-200 px-4 py-2 rounded-md"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 <span className="hidden sm:inline">Back to Smart Home Course</span>
@@ -344,14 +344,14 @@ const SmartHomeMockExam = () => {
               </Button>
             </Link>
             
-            <Badge variant="outline" className="border-yellow-400 text-yellow-400 px-3 py-1">
+            <Badge variant="outline" className="border-elec-yellow text-elec-yellow px-3 py-1">
               <Clock className="mr-1 h-4 w-4" />
               {formatTime(timeRemaining)}
             </Badge>
           </div>
           
           <div className="text-center">
-            <Badge variant="secondary" className="bg-yellow-400 text-black px-4 py-2 text-sm font-medium">
+            <Badge variant="secondary" className="bg-elec-yellow text-black px-4 py-2 text-sm font-medium">
               Smart Home Mock Exam
             </Badge>
           </div>

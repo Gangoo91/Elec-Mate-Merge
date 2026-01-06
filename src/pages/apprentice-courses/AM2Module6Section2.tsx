@@ -120,19 +120,19 @@ const AM2Module6Section2 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
+      <div className="border-b border-white/10 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between gap-2">
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-2 sm:p-0 text-sm sm:text-base" asChild>
+            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
               <Link to="..">
                 <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
                 <span className="hidden xs:inline">Back to Module 6</span>
                 <span className="xs:hidden">Back</span>
               </Link>
             </Button>
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-2 sm:p-0 text-sm sm:text-base" asChild>
+            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
               <Link to="../section3">
                 <span className="hidden xs:inline">Module 6 Section 3</span>
                 <span className="xs:hidden">Section 3</span>
@@ -151,13 +151,13 @@ const AM2Module6Section2 = () => {
             <BookOpen className="w-4 h-4" />
             Module 6 – Section 2
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4 sm:mb-6 leading-tight">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6 leading-tight">
             Core Topics Covered (Regs, Science, Safety)
           </h1>
-          <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
+          <p className="text-sm sm:text-base text-white mb-6 sm:mb-8 leading-relaxed">
             The AM2 online knowledge test checks whether you can apply electrical theory, regulations, and safety knowledge to real-world practice. It's not just memory — questions are designed to see if you understand principles and can use BS 7671, science, and safety rules in practical contexts.
           </p>
-          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+          <p className="text-sm sm:text-base text-white leading-relaxed">
             Knowing the core subject areas makes revision focused and efficient.
           </p>
         </div>
@@ -183,16 +183,16 @@ const AM2Module6Section2 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground mb-4">
+            <p className="text-xs sm:text-sm text-white mb-4">
               By the end of this section, you will be able to:
             </p>
-            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
+            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Identify the three main categories of knowledge assessed: regulations, science, and safety
@@ -385,7 +385,7 @@ const AM2Module6Section2 = () => {
         />
 
         {/* Question Style Examples */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <FileText className="w-5 h-5" />
@@ -421,7 +421,7 @@ const AM2Module6Section2 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Lightbulb className="w-5 h-5" />
@@ -472,7 +472,7 @@ const AM2Module6Section2 = () => {
         </Card>
 
         {/* Real-world Examples */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Eye className="w-5 h-5" />
@@ -505,7 +505,7 @@ const AM2Module6Section2 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <FileText className="w-5 h-5" />
@@ -514,42 +514,42 @@ const AM2Module6Section2 = () => {
             
             <div className="space-y-4">
               <div className="border-l-4 border-elec-yellow/50 pl-4">
-                <h4 className="font-medium text-foreground mb-1">Q1: Do I need to memorise all of BS 7671?</h4>
-                <p className="text-sm text-muted-foreground">A: No — focus on key requirements like Zs, RCDs, zones, earthing, and bonding.</p>
+                <h4 className="font-medium text-white mb-1">Q1: Do I need to memorise all of BS 7671?</h4>
+                <p className="text-sm text-white">A: No — focus on key requirements like Zs, RCDs, zones, earthing, and bonding.</p>
               </div>
               
               <div className="border-l-4 border-elec-yellow/50 pl-4">
-                <h4 className="font-medium text-foreground mb-1">Q2: Are science questions advanced maths?</h4>
-                <p className="text-sm text-muted-foreground">A: No — only core formulas and units (Ohm's law, power, resistance).</p>
+                <h4 className="font-medium text-white mb-1">Q2: Are science questions advanced maths?</h4>
+                <p className="text-sm text-white">A: No — only core formulas and units (Ohm's law, power, resistance).</p>
               </div>
               
               <div className="border-l-4 border-elec-yellow/50 pl-4">
-                <h4 className="font-medium text-foreground mb-1">Q3: How many questions are on safety?</h4>
-                <p className="text-sm text-muted-foreground">A: Roughly a third of the paper includes safety or regulations.</p>
+                <h4 className="font-medium text-white mb-1">Q3: How many questions are on safety?</h4>
+                <p className="text-sm text-white">A: Roughly a third of the paper includes safety or regulations.</p>
               </div>
               
               <div className="border-l-4 border-elec-yellow/50 pl-4">
-                <h4 className="font-medium text-foreground mb-1">Q4: Do I get to use BS 7671 book in the test?</h4>
-                <p className="text-sm text-muted-foreground">A: No — it's closed book.</p>
+                <h4 className="font-medium text-white mb-1">Q4: Do I get to use BS 7671 book in the test?</h4>
+                <p className="text-sm text-white">A: No — it's closed book.</p>
               </div>
               
               <div className="border-l-4 border-elec-yellow/50 pl-4">
-                <h4 className="font-medium text-foreground mb-1">Q5: Will there be trick questions?</h4>
-                <p className="text-sm text-muted-foreground">A: No — but some are worded to test understanding, not memory.</p>
+                <h4 className="font-medium text-white mb-1">Q5: Will there be trick questions?</h4>
+                <p className="text-sm text-white">A: No — but some are worded to test understanding, not memory.</p>
               </div>
             </div>
           </div>
         </Card>
 
         {/* Summary */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Summary
             </h2>
             
-            <div className="space-y-4 text-xs sm:text-sm text-foreground leading-relaxed">
+            <div className="space-y-4 text-xs sm:text-sm text-white leading-relaxed">
               <p>
                 The AM2 knowledge test focuses on three main areas:
               </p>
@@ -585,7 +585,7 @@ const AM2Module6Section2 = () => {
         </Card>
 
         {/* Quiz */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Zap className="w-5 h-5" />

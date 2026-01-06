@@ -122,12 +122,12 @@ const IndustrySpecificGuidance = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">Industry-Specific Portfolio Guidance</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Tailored guidance for building portfolios specific to different electrical industry sectors. 
             Each sector has unique requirements, regulations, and evidence types that must be 
             demonstrated for competency assessment.
@@ -138,7 +138,7 @@ const IndustrySpecificGuidance = () => {
       {/* Sector-Specific Guidance */}
       <div className="space-y-6">
         {sectors.map((sector) => (
-          <Card key={sector.name} className="border-elec-yellow/20 bg-elec-gray">
+          <Card key={sector.name} className="border-elec-yellow/20 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-3">
                 <div className="p-2 rounded-lg bg-elec-yellow/10">
@@ -146,7 +146,7 @@ const IndustrySpecificGuidance = () => {
                 </div>
                 <div>
                   <CardTitle className="text-white">{sector.name}</CardTitle>
-                  <p className="text-sm text-muted-foreground">{sector.description}</p>
+                  <p className="text-sm text-white">{sector.description}</p>
                 </div>
               </div>
             </CardHeader>
@@ -156,7 +156,7 @@ const IndustrySpecificGuidance = () => {
                   <h4 className="text-elec-yellow font-medium mb-3">Key Work Areas</h4>
                   <ul className="space-y-1">
                     {sector.keyAreas.map((area, index) => (
-                      <li key={index} className="text-sm text-muted-foreground flex items-start">
+                      <li key={index} className="text-sm text-white flex items-start">
                         <span className="w-1 h-1 bg-elec-yellow rounded-full mt-2 mr-2 flex-shrink-0"></span>
                         {area}
                       </li>

@@ -114,7 +114,7 @@ const AssessmentComplianceTracker = () => {
       case "In Progress":
         return <Badge className="bg-blue-500">In Progress</Badge>;
       case "Not Started":
-        return <Badge className="bg-gray-500">Not Started</Badge>;
+        return <Badge className="bg-white/15">Not Started</Badge>;
       case "Overdue":
         return <Badge className="bg-red-500">Overdue</Badge>;
       default:
@@ -160,7 +160,7 @@ const AssessmentComplianceTracker = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-green-600">8</div>
-            <p className="text-sm text-muted-foreground">Completed</p>
+            <p className="text-sm text-white">Completed</p>
           </div>
         </CardContent>
       </Card>
@@ -169,7 +169,7 @@ const AssessmentComplianceTracker = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-blue-600">3</div>
-            <p className="text-sm text-muted-foreground">In Progress</p>
+            <p className="text-sm text-white">In Progress</p>
           </div>
         </CardContent>
       </Card>
@@ -178,7 +178,7 @@ const AssessmentComplianceTracker = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-orange-600">4</div>
-            <p className="text-sm text-muted-foreground">Upcoming</p>
+            <p className="text-sm text-white">Upcoming</p>
           </div>
         </CardContent>
       </Card>
@@ -187,7 +187,7 @@ const AssessmentComplianceTracker = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-purple-600">75%</div>
-            <p className="text-sm text-muted-foreground">Overall Progress</p>
+            <p className="text-sm text-white">Overall Progress</p>
           </div>
         </CardContent>
       </Card>
@@ -199,7 +199,7 @@ const AssessmentComplianceTracker = () => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">Assessment & Compliance Tracker</h2>
-          <p className="text-muted-foreground">Monitor your progress and compliance requirements</p>
+          <p className="text-white">Monitor your progress and compliance requirements</p>
         </div>
       </div>
 
@@ -228,7 +228,7 @@ const AssessmentComplianceTracker = () => {
                     <div className="flex items-center justify-between mb-3">
                       <div>
                         <h3 className="font-semibold">{assessment.title}</h3>
-                        <p className="text-sm text-muted-foreground">{assessment.type}</p>
+                        <p className="text-sm text-white">{assessment.type}</p>
                       </div>
                       <div className="flex items-center gap-2">
                         {getStatusBadge(assessment.status)}
@@ -238,7 +238,7 @@ const AssessmentComplianceTracker = () => {
                       </div>
                     </div>
                     
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm text-muted-foreground">
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm text-white">
                       <div className="flex items-center gap-1">
                         <Calendar className="h-3 w-3" />
                         Due: {assessment.dueDate}
@@ -284,7 +284,7 @@ const AssessmentComplianceTracker = () => {
                     <div className="flex items-center justify-between mb-3">
                       <div>
                         <h3 className="font-semibold">{item.requirement}</h3>
-                        <p className="text-sm text-muted-foreground">{item.type}</p>
+                        <p className="text-sm text-white">{item.type}</p>
                       </div>
                       {getComplianceStatusBadge(item.status)}
                     </div>
@@ -298,7 +298,7 @@ const AssessmentComplianceTracker = () => {
                         <Progress value={calculateProgress(item.current, item.target)} />
                       </div>
                       
-                      <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                      <div className="flex items-center gap-1 text-sm text-white">
                         <Calendar className="h-3 w-3" />
                         Deadline: {item.deadline}
                       </div>
@@ -325,7 +325,7 @@ const AssessmentComplianceTracker = () => {
                     <div className="flex items-center justify-between mb-3">
                       <div>
                         <h3 className="font-semibold">{milestone.title}</h3>
-                        <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-1 text-sm text-white">
                           <Calendar className="h-3 w-3" />
                           {milestone.date}
                         </div>
@@ -338,7 +338,7 @@ const AssessmentComplianceTracker = () => {
                       <ul className="space-y-1">
                         {milestone.requirements.map((requirement, index) => (
                           <li key={index} className="flex items-start gap-2 text-sm">
-                            <span className="text-muted-foreground">•</span>
+                            <span className="text-white">•</span>
                             {requirement}
                           </li>
                         ))}

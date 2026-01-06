@@ -141,7 +141,7 @@ const BreakEvenCalculator: React.FC = () => {
             {/* Margin Health */}
             <div className={cn("p-3 rounded-xl border", marginHealth.bg)}>
               <div className="flex items-center justify-between mb-1">
-                <span className="text-xs text-white/60">Target Margin</span>
+                <span className="text-xs text-white">Target Margin</span>
                 <span className={cn("text-xs font-medium", marginHealth.color)}>
                   {marginHealth.label}
                 </span>
@@ -158,7 +158,7 @@ const BreakEvenCalculator: React.FC = () => {
             {/* Utilisation */}
             <div className={cn("p-3 rounded-xl border", utilisationHealth.bg)}>
               <div className="flex items-center justify-between mb-1">
-                <span className="text-xs text-white/60">Utilisation</span>
+                <span className="text-xs text-white">Utilisation</span>
                 <span className={cn("text-xs font-medium", utilisationHealth.color)}>
                   {utilisationHealth.label}
                 </span>
@@ -175,7 +175,7 @@ const BreakEvenCalculator: React.FC = () => {
             {/* Material Markup */}
             <div className={cn("p-3 rounded-xl border", markupHealth.bg)}>
               <div className="flex items-center justify-between mb-1">
-                <span className="text-xs text-white/60">Mat. Markup</span>
+                <span className="text-xs text-white">Mat. Markup</span>
                 <span className={cn("text-xs font-medium", markupHealth.color)}>
                   {markupHealth.label}
                 </span>
@@ -200,7 +200,7 @@ const BreakEvenCalculator: React.FC = () => {
           {/* Business Settings */}
           <div className="flex items-center gap-2 mb-3">
             <TrendingUp className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white/80">Business Settings</span>
+            <span className="text-sm font-medium text-white">Business Settings</span>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -230,7 +230,7 @@ const BreakEvenCalculator: React.FC = () => {
           <div className="pt-4 border-t border-white/10">
             <div className="flex items-center gap-2 mb-3">
               <Wrench className="h-4 w-4 text-blue-400" />
-              <span className="text-sm font-medium text-white/80">Labour & Materials</span>
+              <span className="text-sm font-medium text-white">Labour & Materials</span>
             </div>
 
             <div className="grid grid-cols-3 gap-3">
@@ -282,7 +282,7 @@ const BreakEvenCalculator: React.FC = () => {
           <div className="pt-4 border-t border-white/10">
             <div className="flex items-center gap-2 mb-3">
               <PoundSterling className="h-4 w-4 text-blue-400" />
-              <span className="text-sm font-medium text-white/80">Margin & VAT</span>
+              <span className="text-sm font-medium text-white">Margin & VAT</span>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
@@ -315,7 +315,7 @@ const BreakEvenCalculator: React.FC = () => {
                   "flex-1 h-12 rounded-xl font-medium text-sm transition-all",
                   vatRegistered
                     ? "text-black"
-                    : "bg-white/5 border border-white/10 text-white/70"
+                    : "bg-white/5 border border-white/10 text-white"
                 )}
                 style={
                   vatRegistered
@@ -333,7 +333,7 @@ const BreakEvenCalculator: React.FC = () => {
                   "flex-1 h-12 rounded-xl font-medium text-sm transition-all",
                   !vatRegistered
                     ? "text-black"
-                    : "bg-white/5 border border-white/10 text-white/70"
+                    : "bg-white/5 border border-white/10 text-white"
                 )}
                 style={
                   !vatRegistered
@@ -362,7 +362,7 @@ const BreakEvenCalculator: React.FC = () => {
           {/* Reset Button */}
           <button
             onClick={reset}
-            className="w-full h-12 rounded-xl bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 transition-colors flex items-center justify-center gap-2"
+            className="w-full h-12 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors flex items-center justify-center gap-2"
           >
             <RotateCcw className="h-4 w-4" />
             Reset to Defaults
@@ -386,7 +386,7 @@ const BreakEvenCalculator: React.FC = () => {
                   size="sm"
                 />
                 <div className="text-center">
-                  <p className="text-xs text-white/60 mb-1">Break-Even/Hour</p>
+                  <p className="text-xs text-white mb-1">Break-Even/Hour</p>
                   <div
                     className="text-2xl font-bold bg-clip-text text-transparent"
                     style={{
@@ -430,7 +430,7 @@ const BreakEvenCalculator: React.FC = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      "h-4 w-4 text-white/40 transition-transform duration-200",
+                      "h-4 w-4 text-white/80 transition-transform duration-200",
                       showAdvanced && "rotate-180"
                     )}
                   />
@@ -466,19 +466,19 @@ const BreakEvenCalculator: React.FC = () => {
                       <span className="text-sm font-medium text-white">Price Breakdown</span>
                     </div>
                     <div className="space-y-1 text-sm">
-                      <div className="flex justify-between text-white/60">
+                      <div className="flex justify-between text-white">
                         <span>Labour ({exHoursNum}h × {currency(breakEvenHr)})</span>
                         <span className="text-white">{currency(exLabourCost)}</span>
                       </div>
-                      <div className="flex justify-between text-white/60">
+                      <div className="flex justify-between text-white">
                         <span>Materials ({currency(exMatsNum)} + {markupNum}%)</span>
                         <span className="text-white">{currency(exMatsSell)}</span>
                       </div>
-                      <div className="flex justify-between text-white/60">
+                      <div className="flex justify-between text-white">
                         <span>Base price (before margin)</span>
                         <span className="text-white">{currency(basePrice)}</span>
                       </div>
-                      <div className="flex justify-between text-white/60 pt-2 border-t border-white/10">
+                      <div className="flex justify-between text-white pt-2 border-t border-white/10">
                         <span>Margin uplift ({marginNum}%)</span>
                         <span className="text-green-400">+{currency(targetUplift - basePrice)}</span>
                       </div>
@@ -497,7 +497,7 @@ const BreakEvenCalculator: React.FC = () => {
                       </p>
                     </div>
                     <div className="p-4 rounded-xl border text-center" style={{ borderColor: `${config.gradientFrom}30`, background: `linear-gradient(135deg, ${config.gradientFrom}10, ${config.gradientTo}10)` }}>
-                      <p className="text-xs text-white/60 mb-1">
+                      <p className="text-xs text-white mb-1">
                         Total {vatRegistered ? "(inc VAT)" : ""}
                       </p>
                       <div
@@ -509,7 +509,7 @@ const BreakEvenCalculator: React.FC = () => {
                         {currency(priceIncVat)}
                       </div>
                       {vatRegistered && (
-                        <p className="text-xs text-white/60 mt-1">
+                        <p className="text-xs text-white mt-1">
                           VAT: {currency(priceIncVat - priceExVat)}
                         </p>
                       )}
@@ -531,7 +531,7 @@ const BreakEvenCalculator: React.FC = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      "h-4 w-4 text-white/40 transition-transform duration-200",
+                      "h-4 w-4 text-white/80 transition-transform duration-200",
                       showGuidance && "rotate-180"
                     )}
                   />
@@ -586,7 +586,7 @@ const BreakEvenCalculator: React.FC = () => {
               </div>
               <ChevronDown
                 className={cn(
-                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  "h-4 w-4 text-white/80 transition-transform duration-200",
                   showReference && "rotate-180"
                 )}
               />

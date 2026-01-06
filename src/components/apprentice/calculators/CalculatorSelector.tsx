@@ -125,18 +125,18 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
           <Select value={calculatorType} onValueChange={setCalculatorType}>
             <SelectTrigger 
               id="calculator-select" 
-              className="w-full h-12 bg-elec-dark border-elec-yellow/20 text-elec-light focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow"
+              className="w-full h-12 bg-white/10 border-elec-yellow/20 text-elec-light focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow"
             >
               <SelectValue placeholder="Choose a calculator" />
             </SelectTrigger>
-            <SelectContent className="bg-elec-dark border-elec-yellow/20 max-h-80 w-full">
+            <SelectContent className="bg-white/10 border-elec-yellow/20 max-h-80 w-full">
               {categoryOrder.map((category) => {
                 const calcs = groupedCalculators[category];
                 if (!calcs) return null;
                 
                 return (
                   <div key={category}>
-                    <div className="px-3 py-2 text-xs font-semibold text-elec-yellow bg-elec-gray/70 sticky top-0 border-b border-elec-yellow/10">
+                    <div className="px-3 py-2 text-xs font-semibold text-elec-yellow bg-white/5 sticky top-0 border-b border-elec-yellow/10">
                       {category}
                     </div>
                     {calcs.map((calc) => (
@@ -162,7 +162,7 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
           <Button 
             variant="outline" 
             onClick={() => setShowStandards(!showStandards)}
-            className="w-full sm:w-auto h-11 flex items-center justify-center gap-2 border-blue-500/20 text-blue-400 hover:bg-blue-500/10 bg-elec-dark"
+            className="w-full sm:w-auto h-11 flex items-center justify-center gap-2 border-blue-500/20 text-blue-400 hover:bg-blue-500/10 bg-white/10"
           >
             <Book className="h-4 w-4" />
             <span>{showStandards ? 'Hide' : 'Show'} Standards Reference</span>

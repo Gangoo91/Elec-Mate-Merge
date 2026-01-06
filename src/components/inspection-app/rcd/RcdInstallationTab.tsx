@@ -35,7 +35,7 @@ const RcdInstallationTab = () => {
                 </Badge>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-gray-300">{guideline.detail}</p>
+                <p className="text-sm text-white/80">{guideline.detail}</p>
               </CardContent>
             </Card>
           ))}
@@ -52,7 +52,7 @@ const RcdInstallationTab = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <h4 className="font-semibold text-foreground">Nuisance Tripping</h4>
-                <ul className="text-sm text-gray-300 space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>• Excessive earth leakage current</li>
                   <li>• Inappropriate RCD type selection</li>
                   <li>• Poor installation practices</li>
@@ -61,7 +61,7 @@ const RcdInstallationTab = () => {
               </div>
               <div className="space-y-2">
                 <h4 className="font-semibold text-foreground">Discrimination Problems</h4>
-                <ul className="text-sm text-gray-300 space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>• Incorrect time grading</li>
                   <li>• Inappropriate sensitivity selection</li>
                   <li>• Lack of selectivity between devices</li>
@@ -83,7 +83,7 @@ const RcdInstallationTab = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <h4 className="font-semibold text-foreground">Before Installation</h4>
-                <ul className="text-sm text-gray-300 space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>✓ Verify circuit requirements</li>
                   <li>✓ Select appropriate RCD type</li>
                   <li>✓ Check discrimination requirements</li>
@@ -92,7 +92,7 @@ const RcdInstallationTab = () => {
               </div>
               <div className="space-y-2">
                 <h4 className="font-semibold text-foreground">After Installation</h4>
-                <ul className="text-sm text-gray-300 space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>✓ Perform all required tests</li>
                   <li>✓ Verify correct operation</li>
                   <li>✓ Label all protected circuits</li>

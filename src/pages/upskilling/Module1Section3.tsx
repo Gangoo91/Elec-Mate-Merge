@@ -8,13 +8,13 @@ import WhenIsInspectionRequiredQuiz from '@/components/upskilling/WhenIsInspecti
 
 const Module1Section3 = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="../module-1">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 1
@@ -23,10 +23,10 @@ const Module1Section3 = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <Clock className="h-8 w-8 text-yellow-400" />
+            <Clock className="h-8 w-8 text-elec-yellow" />
             <Badge 
               variant="secondary" 
-              className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold text-sm px-3 py-1 border-0"
+              className="bg-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/50 font-semibold text-sm px-3 py-1 border-0"
             >
               Module 1 - Section 3
             </Badge>
@@ -45,10 +45,10 @@ const Module1Section3 = () => {
         <div className="space-y-4 sm:space-y-6">
           
           {/* Overview Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Clock className="h-6 w-6 text-yellow-400" />
+                <Clock className="h-6 w-6 text-elec-yellow" />
                 When Inspection & Testing Is Required
               </CardTitle>
             </CardHeader>
@@ -63,18 +63,18 @@ const Module1Section3 = () => {
           </Card>
 
           {/* Types of Inspection Timing */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Calendar className="h-6 w-6 text-yellow-400" />
+                <Calendar className="h-6 w-6 text-elec-yellow" />
                 Types of Inspection & Testing Requirements
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-6">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <div className="bg-yellow-400/10 p-4 rounded-lg">
+                <div className="bg-elec-yellow/10 p-4 rounded-lg">
                   <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
-                    <Shield className="h-5 w-5 text-yellow-400" />
+                    <Shield className="h-5 w-5 text-elec-yellow" />
                     Initial Verification
                   </h4>
                   <ul className="space-y-2 text-sm">
@@ -113,10 +113,10 @@ const Module1Section3 = () => {
           </Card>
 
           {/* Recommended Intervals Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Calendar className="h-6 w-6 text-yellow-400" />
+                <Calendar className="h-6 w-6 text-elec-yellow" />
                 Recommended Inspection Intervals
               </CardTitle>
             </CardHeader>
@@ -133,7 +133,7 @@ const Module1Section3 = () => {
                   <tbody>
                     <tr className="border-b border-gray-700">
                       <td className="py-3 px-4 flex items-center gap-2">
-                        <Home className="h-4 w-4 text-yellow-400" />
+                        <Home className="h-4 w-4 text-elec-yellow" />
                         Domestic installations
                       </td>
                       <td className="py-3 px-4">10 years</td>
@@ -177,10 +177,10 @@ const Module1Section3 = () => {
           </Card>
 
           {/* Specific Circumstances Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-6 w-6 text-yellow-400" />
+                <AlertTriangle className="h-6 w-6 text-elec-yellow" />
                 Specific Circumstances Requiring Inspection
               </CardTitle>
             </CardHeader>
@@ -211,10 +211,10 @@ const Module1Section3 = () => {
           </Card>
 
           {/* Environmental Factors Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Shield className="h-6 w-6 text-yellow-400" />
+                <Shield className="h-6 w-6 text-elec-yellow" />
                 Environmental Factors Affecting Frequency
               </CardTitle>
             </CardHeader>
@@ -250,15 +250,15 @@ const Module1Section3 = () => {
           </Card>
 
           {/* Legal Timeline Requirements */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <FileText className="h-6 w-6 text-yellow-400" />
+                <FileText className="h-6 w-6 text-elec-yellow" />
                 Legal Timeline Requirements
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
-              <div className="bg-yellow-400/10 p-4 rounded-lg">
+              <div className="bg-elec-yellow/10 p-4 rounded-lg">
                 <h4 className="text-white font-semibold mb-2">Landlord Obligations (England)</h4>
                 <p className="text-sm leading-relaxed mb-2">
                   From 1st July 2020, landlords must ensure electrical installations in residential properties are inspected and tested at least every 5 years by a qualified person.
@@ -277,20 +277,20 @@ const Module1Section3 = () => {
           </Card>
 
           {/* Important Notes Section */}
-          <Card className="bg-card border-transparent border-l-4 border-l-yellow-400">
+          <Card className="bg-transparent border-transparent border-l-4 border-l-elec-yellow">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-6 w-6 text-yellow-400" />
+                <AlertTriangle className="h-6 w-6 text-elec-yellow" />
                 Important Considerations
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
-              <div className="bg-yellow-600/10 p-4 rounded-lg">
+              <div className="bg-elec-yellow/10 p-4 rounded-lg">
                 <p className="text-sm leading-relaxed">
                   <strong className="text-white">Risk-Based Approach:</strong> The intervals shown are maximum recommendations. A risk assessment should always be carried out to determine if more frequent inspection is required for specific installations.
                 </p>
               </div>
-              <div className="bg-yellow-400/10 p-4 rounded-lg">
+              <div className="bg-elec-yellow/10 p-4 rounded-lg">
                 <p className="text-sm leading-relaxed">
                   <strong className="text-white">Professional Judgement:</strong> Qualified electricians should use their professional judgement to recommend appropriate inspection intervals based on installation conditions and use.
                 </p>
@@ -304,20 +304,20 @@ const Module1Section3 = () => {
           </Card>
 
           {/* Quick Knowledge Checks */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Shield className="h-6 w-6 text-yellow-400" />
+                <Shield className="h-6 w-6 text-elec-yellow" />
                 Quick Knowledge Checks
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-yellow-400/10 p-4 rounded-lg">
+                <div className="bg-elec-yellow/10 p-4 rounded-lg">
                   <h4 className="text-white font-semibold mb-2">Check 1: Domestic Intervals</h4>
                   <p className="text-sm">What's the maximum inspection interval for domestic installations?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">10 years (but may be reduced for high-risk areas or based on environmental conditions)</p>
                   </details>
                 </div>
@@ -325,7 +325,7 @@ const Module1Section3 = () => {
                   <h4 className="text-white font-semibold mb-2">Check 2: Special Locations</h4>
                   <p className="text-sm">How often should swimming pool installations be inspected?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">Annually (1 year) due to the high-risk wet environment</p>
                   </details>
                 </div>
@@ -333,7 +333,7 @@ const Module1Section3 = () => {
                   <h4 className="text-white font-semibold mb-2">Check 3: Landlord Duties</h4>
                   <p className="text-sm">How often must landlords inspect rental properties in England?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">Every 5 years (since July 2020 regulation)</p>
                   </details>
                 </div>
@@ -341,7 +341,7 @@ const Module1Section3 = () => {
                   <h4 className="text-white font-semibold mb-2">Check 4: Initial Verification</h4>
                   <p className="text-sm">When must initial verification be completed?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">Before the installation is put into service</p>
                   </details>
                 </div>
@@ -350,10 +350,10 @@ const Module1Section3 = () => {
           </Card>
 
           {/* Frequently Asked Questions */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-6 w-6 text-yellow-400" />
+                <AlertTriangle className="h-6 w-6 text-elec-yellow" />
                 Frequently Asked Questions
               </CardTitle>
             </CardHeader>
@@ -388,15 +388,15 @@ const Module1Section3 = () => {
           </Card>
 
           {/* Real-World Scenario */}
-          <Card className="bg-yellow-400/10 border-blue-600/30">
+          <Card className="bg-elec-yellow/10 border-blue-600/30">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Lightbulb className="h-6 w-6 text-yellow-400" />
+                <Lightbulb className="h-6 w-6 text-elec-yellow" />
                 Real-World Scenario
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
-              <div className="bg-yellow-400/20 p-4 rounded-lg">
+              <div className="bg-elec-yellow/20 p-4 rounded-lg">
                 <h4 className="text-white font-semibold mb-2">Scenario: Factory Inspection Scheduling</h4>
                 <p className="text-sm mb-3">
                   You're managing electrical safety for a food processing factory with high humidity, frequent washdowns, and 24/7 operations. The last inspection was 2 years ago, and management wants to extend to the maximum 3-year interval to save costs.
@@ -409,7 +409,7 @@ const Module1Section3 = () => {
                   <li>• Potential for corrosion in aggressive environment</li>
                   <li>• Critical nature of electrical supply for refrigeration</li>
                 </ul>
-                <div className="mt-3 p-3 bg-yellow-600/20 rounded">
+                <div className="mt-3 p-3 bg-elec-yellow/20 rounded">
                   <p className="text-xs"><strong>Recommendation:</strong> Annual inspections would be more appropriate despite the 3-year maximum, due to the harsh environment and critical nature of the installation.</p>
                 </div>
               </div>
@@ -417,10 +417,10 @@ const Module1Section3 = () => {
           </Card>
 
           {/* Quiz Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Lightbulb className="h-6 w-6 text-yellow-400" />
+                <Lightbulb className="h-6 w-6 text-elec-yellow" />
                 Test Your Knowledge - 10 Questions
               </CardTitle>
             </CardHeader>

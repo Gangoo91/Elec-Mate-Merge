@@ -20,10 +20,10 @@ const MinorWorksObservationsList: React.FC<MinorWorksObservationsListProps> = ({
 }) => {
   if (observations.length === 0) {
     return (
-      <div className="text-center py-8 border-2 border-dashed border-gray-200 rounded-lg">
-        <FileX className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-        <p className="text-gray-500 mb-4">No observations recorded yet</p>
-        <p className="text-sm text-gray-400 mb-6">
+      <div className="text-center py-8 border-2 border-dashed border-white/10 rounded-lg">
+        <FileX className="h-12 w-12 text-white/70 mx-auto mb-4" />
+        <p className="text-white/60 mb-4">No observations recorded yet</p>
+        <p className="text-sm text-white/70 mb-6">
           Add observations for any defects, improvements, or investigations required
         </p>
         <div className="flex flex-col sm:flex-row gap-2 justify-center">

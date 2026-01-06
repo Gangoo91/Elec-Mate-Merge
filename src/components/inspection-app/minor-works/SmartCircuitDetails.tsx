@@ -146,7 +146,7 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
                     id="protectionRcd"
                     checked={formData.protectionRcd}
                     onCheckedChange={(checked) => handleUpdate('protectionRcd', checked)}
-                    className="border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+                    className="border-white/50 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
                   />
                   <Label htmlFor="protectionRcd" className="text-base md:text-sm font-medium cursor-pointer">RCD Protected</Label>
                 </div>
@@ -156,7 +156,7 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
                     id="protectionRcbo"
                     checked={formData.protectionRcbo}
                     onCheckedChange={(checked) => handleUpdate('protectionRcbo', checked)}
-                    className="border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+                    className="border-white/50 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
                   />
                   <Label htmlFor="protectionRcbo" className="text-base md:text-sm font-medium cursor-pointer">RCBO</Label>
                 </div>
@@ -166,7 +166,7 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
                     id="protectionAfdd"
                     checked={formData.protectionAfdd}
                     onCheckedChange={(checked) => handleUpdate('protectionAfdd', checked)}
-                    className="border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+                    className="border-white/50 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
                   />
                   <Label htmlFor="protectionAfdd" className="text-base md:text-sm font-medium cursor-pointer">AFDD</Label>
                 </div>
@@ -176,7 +176,7 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
                     id="protectionSpd"
                     checked={formData.protectionSpd}
                     onCheckedChange={(checked) => handleUpdate('protectionSpd', checked)}
-                    className="border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+                    className="border-white/50 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
                   />
                   <Label htmlFor="protectionSpd" className="text-base md:text-sm font-medium cursor-pointer">SPD</Label>
                 </div>

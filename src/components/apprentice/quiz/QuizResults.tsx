@@ -17,9 +17,9 @@ const QuizResults = ({
   
   return (
     <div className="space-y-6">
-      <div className="p-6 bg-elec-dark border border-elec-yellow/20 rounded-lg text-center">
+      <div className="p-6 bg-white/5 border border-elec-yellow/20 rounded-lg text-center">
         <h2 className="text-2xl font-bold mb-2">Quiz Results</h2>
-        <p className="text-muted-foreground mb-6">You have completed the Health & Safety unit assessment</p>
+        <p className="text-white mb-6">You have completed the Health & Safety unit assessment</p>
         
         <div className="mb-8">
           <div className="flex items-center justify-center mb-2">
@@ -48,7 +48,7 @@ const QuizResults = ({
             <div className="flex flex-col items-center">
               <CheckCircle className="h-12 w-12 text-green-500 mb-2" />
               <p className="font-medium text-green-500">Congratulations!</p>
-              <p className="text-muted-foreground">
+              <p className="text-white">
                 You've successfully passed the Health & Safety assessment.
               </p>
             </div>
@@ -56,7 +56,7 @@ const QuizResults = ({
             <div className="flex flex-col items-center">
               <XCircle className="h-12 w-12 text-amber-500 mb-2" />
               <p className="font-medium text-amber-500">Almost there!</p>
-              <p className="text-muted-foreground">
+              <p className="text-white">
                 You need 70% to pass. Keep studying and try again.
               </p>
             </div>
@@ -74,7 +74,7 @@ const QuizResults = ({
         </div>
       </div>
       
-      <div className="p-6 bg-elec-dark border border-elec-yellow/20 rounded-lg">
+      <div className="p-6 bg-white/5 border border-elec-yellow/20 rounded-lg">
         <h3 className="text-xl font-bold mb-4">Question Review</h3>
         <div className="space-y-6">
           {questions.map((question, index) => {

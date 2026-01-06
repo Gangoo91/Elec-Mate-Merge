@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { motion } from "framer-motion";
 import {
   CreditCard,
   Zap,
@@ -15,6 +16,23 @@ import {
   CheckCircle,
   Info,
 } from "lucide-react";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.05, delayChildren: 0.1 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 400, damping: 28 }
+  }
+};
 
 const BillingTab = () => {
   const { isSubscribed, subscriptionTier } = useAuth();
@@ -32,9 +50,14 @@ const BillingTab = () => {
   ];
 
   return (
-    <div className="space-y-6">
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-6"
+    >
       {/* Current Plan Overview */}
-      <div className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
         <div className="p-4 md:p-6">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
@@ -99,10 +122,10 @@ const BillingTab = () => {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Billing Actions */}
-      <div className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
         <div className="px-4 md:px-6 py-4 border-b border-white/10">
           <h3 className="text-base font-semibold text-foreground">Billing & Payments</h3>
         </div>
@@ -159,10 +182,10 @@ const BillingTab = () => {
             </>
           )}
         </div>
-      </div>
+      </motion.div>
 
       {/* Payment Security Notice */}
-      <div className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
         <div className="p-4 md:p-6">
           <div className="flex items-start gap-3">
             <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
@@ -176,10 +199,10 @@ const BillingTab = () => {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Help Notice */}
-      <div className="p-4 rounded-lg bg-white/5 border border-white/10 flex items-start gap-3">
+      <motion.div variants={itemVariants} className="p-4 rounded-lg bg-white/5 border border-white/10 flex items-start gap-3">
         <Info className="h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
         <p className="text-sm text-muted-foreground">
           Need help with billing? Contact our support team at{' '}
@@ -187,8 +210,8 @@ const BillingTab = () => {
             support@elec-mate.com
           </a>
         </p>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

@@ -39,8 +39,8 @@ const RcdTestingTab = () => {
               {testingProcedures.map((test, idx) => (
                 <TableRow key={idx} className="border-border hover:bg-muted/30">
                   <TableCell className="text-foreground font-semibold border-r border-border">{test.test}</TableCell>
-                  <TableCell className="text-gray-200 border-r border-border">{test.frequency}</TableCell>
-                  <TableCell className="text-gray-200 border-r border-border">{test.procedure}</TableCell>
+                  <TableCell className="text-white/90 border-r border-border">{test.frequency}</TableCell>
+                  <TableCell className="text-white/90 border-r border-border">{test.procedure}</TableCell>
                   <TableCell className="text-elec-yellow">{test.acceptance}</TableCell>
                 </TableRow>
               ))}
@@ -89,15 +89,15 @@ const RcdTestingTab = () => {
               <div className="space-y-2">
                 <div className="p-3 bg-amber-500/10 rounded border border-amber-500/30">
                   <h4 className="font-semibold text-amber-400 text-sm">Temperature Effects</h4>
-                  <p className="text-xs text-gray-300">RCD sensitivity may vary with temperature</p>
+                  <p className="text-xs text-white/80">RCD sensitivity may vary with temperature</p>
                 </div>
                 <div className="p-3 bg-blue-500/10 rounded border border-blue-500/30">
                   <h4 className="font-semibold text-blue-400 text-sm">Humidity Effects</h4>
-                  <p className="text-xs text-gray-300">High humidity can affect insulation resistance</p>
+                  <p className="text-xs text-white/80">High humidity can affect insulation resistance</p>
                 </div>
                 <div className="p-3 bg-red-500/10 rounded border border-red-500/30">
                   <h4 className="font-semibold text-red-400 text-sm">Harmonics</h4>
-                  <p className="text-xs text-gray-300">Electronic loads may cause nuisance tripping</p>
+                  <p className="text-xs text-white/80">Electronic loads may cause nuisance tripping</p>
                 </div>
               </div>
             </CardContent>

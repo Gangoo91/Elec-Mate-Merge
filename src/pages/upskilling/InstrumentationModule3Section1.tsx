@@ -67,8 +67,7 @@ const InstrumentationModule3Section1 = () => {
       ],
       correct: 1,
       explanation: "4-20mA current signals are best for noisy electrical environments because current loops are inherently less susceptible to electrical interference than voltage-based signals, providing more reliable measurements."
-    }
-  ];
+  }  ];
 
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">

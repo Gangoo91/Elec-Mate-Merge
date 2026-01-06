@@ -1,744 +1,479 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  ArrowLeft, 
-  ExternalLink, 
-  Clock, 
-  PoundSterling, 
+import {
+  ArrowLeft,
+  ExternalLink,
+  Clock,
+  PoundSterling,
   Award,
   CheckCircle,
-  AlertCircle,
   TrendingUp,
   MapPin,
-  RefreshCw,
-  Star
+  Star,
+  ChevronRight,
+  Briefcase,
+  BookOpen,
+  Shield,
+  Users,
 } from "lucide-react";
 import { AccreditationOption } from "../../../apprentice/career/accreditation/enhancedAccreditationData";
+import { getBrandInfo, getLogoUrl, getInitials } from "./accreditationBranding";
+import { cn } from "@/lib/utils";
 
 interface ElectricianAccreditationDetailViewProps {
   accreditation: AccreditationOption;
   onBack: () => void;
 }
 
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 300, damping: 24 },
+  },
+};
+
+type TabType = "overview" | "benefits" | "requirements" | "process";
+
 const ElectricianAccreditationDetailView = ({ accreditation, onBack }: ElectricianAccreditationDetailViewProps) => {
+  const [activeTab, setActiveTab] = useState<TabType>("overview");
+  const brandInfo = getBrandInfo(accreditation.accreditationBody);
+  const logoUrl = getLogoUrl(accreditation.accreditationBody, accreditation.website);
+
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case "Entry Level": return "bg-green-500/10 text-green-400 border-green-500/30";
-      case "Intermediate": return "bg-amber-500/10 text-amber-400 border-amber-500/30";
-      case "Advanced": return "bg-red-500/10 text-red-400 border-red-500/30";
-      case "Expert": return "bg-purple-500/10 text-purple-400 border-purple-500/30";
-      default: return "bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30";
+      case "Entry Level": return "bg-green-500/20 text-green-400 border-green-500/30";
+      case "Intermediate": return "bg-amber-500/20 text-amber-400 border-amber-500/30";
+      case "Advanced": return "bg-red-500/20 text-red-400 border-red-500/30";
+      case "Expert": return "bg-purple-500/20 text-purple-400 border-purple-500/30";
+      default: return "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30";
     }
   };
 
-  const getPopularityStars = (popularity: number) => {
-    const stars = Math.round(popularity / 20);
-    return Array.from({ length: 5 }, (_, i) => (
-      <Star 
-        key={i} 
-        className={`h-4 w-4 ${i < stars ? 'text-elec-yellow fill-current' : 'text-foreground/30'}`} 
-      />
-    ));
-  };
+  const tabs = [
+    { id: "overview" as TabType, label: "Overview", icon: Award },
+    { id: "benefits" as TabType, label: "Benefits", icon: Star },
+    { id: "requirements" as TabType, label: "Requirements", icon: BookOpen },
+    { id: "process" as TabType, label: "Get Started", icon: ChevronRight },
+  ];
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center gap-4">
-        <Button variant="outline" onClick={onBack} className="text-foreground border-white/20 hover:bg-white/10">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Accreditations
+    <div className="space-y-4 sm:space-y-6">
+      {/* Back Button */}
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+      >
+        <Button
+          variant="ghost"
+          onClick={onBack}
+          className="gap-2 text-white/60 hover:text-white hover:bg-white/10 -ml-2"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back
         </Button>
-      </div>
+      </motion.div>
 
-      {/* Main Details Card */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-            <div className="flex-1">
-              <CardTitle className="text-2xl font-bold text-foreground mb-2">
-                {accreditation.title}
-              </CardTitle>
-              <p className="text-lg text-elec-yellow mb-3">{accreditation.provider}</p>
-              <p className="text-foreground/90 leading-relaxed">
-                {accreditation.description}
-              </p>
-            </div>
-            <div className="flex flex-col gap-3">
-              <Badge variant="outline" className={getDifficultyColor(accreditation.difficulty)}>
-                {accreditation.level}
-              </Badge>
-              <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
-                {accreditation.category}
-              </Badge>
-              {accreditation.onlineAvailable && (
-                <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30">
-                  Online Available
-                </Badge>
+      {/* Hero Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="relative overflow-hidden bg-elec-gray/50 border rounded-2xl"
+        style={{ borderColor: brandInfo.brandColor + "40" }}
+      >
+        {/* Gradient accent line */}
+        <div
+          className="absolute inset-x-0 top-0 h-[2px]"
+          style={{ background: `linear-gradient(to right, ${brandInfo.brandColor}60, ${brandInfo.brandColor}, ${brandInfo.brandColor}60)` }}
+        />
+
+        <div className="p-4 sm:p-6">
+          <div className="flex flex-col sm:flex-row sm:items-start gap-4">
+            {/* Logo */}
+            <div
+              className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl flex items-center justify-center border-2 bg-white/5 flex-shrink-0"
+              style={{ borderColor: brandInfo.brandColor + "60" }}
+            >
+              {logoUrl ? (
+                <img
+                  src={logoUrl}
+                  alt={`${accreditation.accreditationBody} logo`}
+                  className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
+                  loading="lazy"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                  }}
+                />
+              ) : (
+                <span className="text-lg font-bold" style={{ color: brandInfo.brandColor }}>
+                  {getInitials(accreditation.accreditationBody)}
+                </span>
               )}
             </div>
-          </div>
-        </CardHeader>
-        <CardContent>
-          {/* Quick Info Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            <div className="flex items-center gap-3 p-3 bg-elec-dark/50 rounded-lg">
-              <Clock className="h-5 w-5 text-elec-yellow" />
-              <div>
-                <div className="text-sm font-medium text-foreground">{accreditation.duration}</div>
-                <div className="text-xs text-foreground/70">Duration</div>
+
+            {/* Title & Info */}
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-wrap gap-2 mb-2">
+                <Badge variant="outline" className={getDifficultyColor(accreditation.difficulty)}>
+                  {accreditation.level}
+                </Badge>
+                {accreditation.onlineAvailable && (
+                  <Badge variant="outline" className="bg-blue-500/20 text-blue-400 border-blue-500/30">
+                    Online Available
+                  </Badge>
+                )}
               </div>
-            </div>
-            <div className="flex items-center gap-3 p-3 bg-elec-dark/50 rounded-lg">
-              <PoundSterling className="h-5 w-5 text-elec-yellow" />
-              <div>
-                <div className="text-sm font-medium text-foreground">{accreditation.cost}</div>
-                <div className="text-xs text-foreground/70">Investment</div>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 p-3 bg-elec-dark/50 rounded-lg">
-              <MapPin className="h-5 w-5 text-elec-yellow" />
-              <div>
-                <div className="text-sm font-medium text-foreground">
-                  {accreditation.locations.length > 1 ? 'Multiple' : accreditation.locations[0]}
-                </div>
-                <div className="text-xs text-foreground/70">Locations</div>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 p-3 bg-elec-dark/50 rounded-lg">
-              <div className="flex">{getPopularityStars(accreditation.popularity)}</div>
-              <div>
-                <div className="text-sm font-medium text-foreground">{accreditation.popularity}%</div>
-                <div className="text-xs text-foreground/70">Popularity</div>
-              </div>
+
+              <h1 className="text-xl sm:text-2xl font-bold text-white mb-1">
+                {accreditation.title}
+              </h1>
+              <p className="text-sm sm:text-base" style={{ color: brandInfo.brandColor }}>
+                {accreditation.provider}
+              </p>
             </div>
           </div>
 
-          {/* Career Impact */}
-          <Card className="bg-elec-yellow/5 border-elec-yellow/20 mb-6">
-            <CardContent className="p-4">
-              <div className="flex items-start gap-3">
-                <TrendingUp className="h-5 w-5 text-elec-yellow mt-1" />
-                <div>
-                  <h4 className="font-medium text-amber-400 mb-1">Career Impact</h4>
-                  <p className="text-sm text-foreground/90">{accreditation.careerImpact}</p>
-                </div>
+          {/* Quick Stats */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5">
+            <div className="bg-white/5 rounded-xl p-3 text-center">
+              <Clock className="h-5 w-5 text-elec-yellow mx-auto mb-1" />
+              <div className="text-sm font-medium text-white truncate">{accreditation.duration}</div>
+              <div className="text-[10px] text-white/50">Duration</div>
+            </div>
+            <div className="bg-white/5 rounded-xl p-3 text-center">
+              <PoundSterling className="h-5 w-5 text-green-400 mx-auto mb-1" />
+              <div className="text-sm font-medium text-white truncate">{accreditation.cost}</div>
+              <div className="text-[10px] text-white/50">Investment</div>
+            </div>
+            <div className="bg-white/5 rounded-xl p-3 text-center">
+              <MapPin className="h-5 w-5 text-blue-400 mx-auto mb-1" />
+              <div className="text-sm font-medium text-white truncate">
+                {accreditation.locations.length > 1 ? 'UK-wide' : accreditation.locations[0]}
               </div>
-            </CardContent>
-          </Card>
-        </CardContent>
-      </Card>
+              <div className="text-[10px] text-white/50">Locations</div>
+            </div>
+            <div className="bg-white/5 rounded-xl p-3 text-center">
+              <TrendingUp className="h-5 w-5 text-purple-400 mx-auto mb-1" />
+              <div className="text-sm font-medium text-white">{accreditation.popularity}%</div>
+              <div className="text-[10px] text-white/50">Popularity</div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
 
-      {/* Detailed Information Tabs */}
-      <div className="space-y-6">
-        <Tabs defaultValue="benefits" className="space-y-0">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 gap-1 bg-elec-dark p-1 rounded-lg mb-10 md:mb-12">
-            <TabsTrigger 
-              value="benefits" 
-              className="text-xs md:text-sm px-2 py-3 rounded-md data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-foreground/70 hover:text-foreground transition-all"
-            >
-              Benefits
-            </TabsTrigger>
-            <TabsTrigger 
-              value="requirements" 
-              className="text-xs md:text-sm px-2 py-3 rounded-md data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-foreground/70 hover:text-foreground transition-all"
-            >
-              Requirements
-            </TabsTrigger>
-            <TabsTrigger 
-              value="process" 
-              className="text-xs md:text-sm px-2 py-3 rounded-md data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-foreground/70 hover:text-foreground transition-all"
-            >
-              Process
-            </TabsTrigger>
-            <TabsTrigger 
-              value="getting-started" 
-              className="text-xs md:text-sm px-2 py-3 rounded-md data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-foreground/70 hover:text-foreground transition-all"
-            >
-              Get Started
-            </TabsTrigger>
-            <TabsTrigger 
-              value="details" 
-              className="text-xs md:text-sm px-2 py-3 rounded-md data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-foreground/70 hover:text-foreground transition-all"
-            >
-              Details
-            </TabsTrigger>
-          </TabsList>
+      {/* Tab Navigation - Mobile-Friendly Horizontal Scroll */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0"
+      >
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={cn(
+              "flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all flex-shrink-0",
+              activeTab === tab.id
+                ? "bg-elec-yellow text-black"
+                : "bg-white/5 text-white/70 hover:bg-white/10 hover:text-white"
+            )}
+          >
+            <tab.icon className="h-4 w-4" />
+            {tab.label}
+          </button>
+        ))}
+      </motion.div>
 
-          <TabsContent value="benefits" className="mt-10 md:mt-0">
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-foreground">
-                  <Award className="h-5 w-5 text-elec-yellow" />
-                  Comprehensive Benefits Package
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Professional Recognition */}
-                <div className="space-y-3">
-                  <h4 className="text-lg font-semibold text-elec-yellow">Professional Recognition</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
-                      <h5 className="font-medium text-amber-400 mb-2">Industry Standing</h5>
-                      <p className="text-sm text-foreground/90">Gain instant credibility and recognition within the electrical industry, setting you apart from non-accredited professionals.</p>
-                    </div>
-                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
-                      <h5 className="font-medium text-amber-400 mb-2">Consumer Trust</h5>
-                      <p className="text-sm text-foreground/90">Customers actively seek accredited professionals, providing immediate confidence in your services and expertise.</p>
-                    </div>
+      {/* Tab Content */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeTab}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.2 }}
+        >
+          {activeTab === "overview" && (
+            <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-4">
+              {/* Description */}
+              <motion.div variants={itemVariants} className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5">
+                <p className="text-white/80 leading-relaxed">{accreditation.description}</p>
+              </motion.div>
+
+              {/* Career Impact */}
+              <motion.div variants={itemVariants} className="bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/20 rounded-xl p-4 sm:p-5">
+                <div className="flex items-start gap-3">
+                  <div className="p-2 rounded-lg bg-elec-yellow/20">
+                    <TrendingUp className="h-5 w-5 text-elec-yellow" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-elec-yellow mb-1">Career Impact</h3>
+                    <p className="text-sm text-white/80">{accreditation.careerImpact}</p>
                   </div>
                 </div>
+              </motion.div>
 
-                {/* Business Benefits */}
-                <div className="space-y-3">
-                  <h4 className="text-lg font-semibold text-elec-yellow">Business Advantages</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
-                      <h5 className="font-medium text-green-400 mb-2">Higher Rates</h5>
-                      <p className="text-sm text-foreground/90">Command premium pricing - accredited professionals typically charge 15-25% more than non-accredited competitors.</p>
+              {/* Key Benefits Preview */}
+              <motion.div variants={itemVariants} className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5">
+                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400" />
+                  Key Benefits
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {accreditation.benefits.slice(0, 4).map((benefit, idx) => (
+                    <div key={idx} className="flex items-start gap-2 text-sm">
+                      <div className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 flex-shrink-0" />
+                      <span className="text-white/70">{benefit}</span>
                     </div>
-                    <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                      <h5 className="font-medium text-blue-400 mb-2">Marketing Edge</h5>
-                      <p className="text-sm text-foreground/90">Use accreditation logos and marketing materials to win more contracts and build trust with potential clients.</p>
-                    </div>
-                    <div className="p-4 bg-purple-500/10 border border-purple-500/20 rounded-lg">
-                      <h5 className="font-medium text-purple-400 mb-2">Insurance Discounts</h5>
-                      <p className="text-sm text-foreground/90">Access reduced insurance premiums and preferred rates through accreditation body partnerships.</p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
-
-                {/* Technical Support */}
-                <div className="space-y-3">
-                  <h4 className="text-lg font-semibold text-elec-yellow">Professional Support</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {accreditation.benefits.map((benefit, idx) => (
-                      <div key={idx} className="flex items-start gap-3 p-3 bg-elec-dark/50 rounded-lg border border-elec-yellow/10">
-                        <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-sm text-foreground/90">{benefit}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Financial Benefits */}
-                <div className="p-4 bg-elec-yellow/5 border border-elec-yellow/20 rounded-lg">
-                  <h4 className="text-lg font-semibold text-elec-yellow mb-3">Return on Investment</h4>
-                  <p className="text-foreground/90 mb-3">Most professionals recoup their annual membership costs within the first 2-3 contracts through:</p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                        <span className="text-sm text-foreground/90">Premium rate justification</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                        <span className="text-sm text-foreground/90">Increased customer confidence</span>
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                        <span className="text-sm text-foreground/90">Access to larger contracts</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                        <span className="text-sm text-foreground/90">Insurance savings</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="requirements" className="mt-10 md:mt-0">
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-foreground">
-                  <AlertCircle className="h-5 w-5 text-elec-yellow" />
-                  Detailed Requirements & Eligibility
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Essential Qualifications */}
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-elec-yellow">Essential Qualifications</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-fr">
-                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-amber-500/20 h-full flex flex-col">
-                      <h5 className="font-medium text-amber-400 mb-3">Minimum Qualifications</h5>
-                      <div className="space-y-2 flex-1">
-                        {accreditation.requirements.map((requirement, idx) => (
-                          <div key={idx} className="flex items-start gap-3">
-                            <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                            <span className="text-sm text-foreground/90">{requirement}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-green-500/20 h-full flex flex-col">
-                      <h5 className="font-medium text-green-400 mb-3">Alternative Pathways</h5>
-                      <div className="space-y-2 text-sm text-foreground/90 flex-1">
-                        <p>• Equivalent overseas qualifications may be accepted</p>
-                        <p>• Apprenticeship completion with appropriate level</p>
-                        <p>• Combination of experience and portfolio assessment</p>
-                        <p>• Recognition of Prior Learning (RPL) available</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Experience Requirements */}
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-elec-yellow">Experience Requirements</h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-fr">
-                    <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg h-full flex flex-col">
-                      <h5 className="font-medium text-blue-400 mb-3">Years Required</h5>
-                      <p className="text-sm text-foreground/90 flex-1">Minimum 2-4 years post-qualification experience in electrical installation, testing, or design work.</p>
-                    </div>
-                    <div className="p-4 bg-purple-500/10 border border-purple-500/20 rounded-lg h-full flex flex-col">
-                      <h5 className="font-medium text-purple-400 mb-3">Type of Work</h5>
-                      <p className="text-sm text-foreground/90 flex-1">Domestic, commercial, or industrial electrical work with evidence of competence across multiple areas.</p>
-                    </div>
-                    <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-lg h-full flex flex-col">
-                      <h5 className="font-medium text-green-400 mb-3">Portfolio</h5>
-                      <p className="text-sm text-foreground/90 flex-1">Documented evidence of completed projects, installations, and ongoing professional development.</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Technical Competencies */}
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-elec-yellow">Technical Competencies</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-fr">
-                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20 h-full flex flex-col">
-                      <h5 className="font-medium text-amber-400 mb-3">Core Skills Required</h5>
-                      <div className="space-y-2 text-sm text-foreground/90 flex-1">
-                        <p>• Electrical installation to BS 7671 standards</p>
-                        <p>• Testing and inspection procedures</p>
-                        <p>• Fault diagnosis and remedial work</p>
-                        <p>• Understanding of Building Regulations</p>
-                        <p>• Health and safety compliance</p>
-                      </div>
-                    </div>
-                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20 h-full flex flex-col">
-                      <h5 className="font-medium text-amber-400 mb-3">Assessment Areas</h5>
-                      <div className="space-y-2 text-sm text-foreground/90 flex-1">
-                        <p>• Practical installation assessment</p>
-                        <p>• Testing and inspection competence</p>
-                        <p>• Knowledge of current regulations</p>
-                        <p>• Understanding of safety procedures</p>
-                        <p>• Business and customer service skills</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Business Requirements */}
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-elec-yellow">Business Requirements</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-fr">
-                    <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg h-full flex flex-col">
-                      <h5 className="font-medium text-red-400 mb-3">Insurance & Legal</h5>
-                      <div className="space-y-2 text-sm text-foreground/90 flex-1">
-                        <p>• Public liability insurance (minimum £2m)</p>
-                        <p>• Professional indemnity cover</p>
-                        <p>• Valid business registration</p>
-                        <p>• Compliance with relevant legislation</p>
-                      </div>
-                    </div>
-                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20 h-full flex flex-col">
-                      <h5 className="font-medium text-amber-400 mb-3">Documentation</h5>
-                      <div className="space-y-2 text-sm text-foreground/90 flex-1">
-                        <p>• Qualification certificates</p>
-                        <p>• Work portfolio and references</p>
-                        <p>• CPD records and training evidence</p>
-                        <p>• Character references</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {accreditation.prerequisites && accreditation.prerequisites.length > 0 && (
-                  <div className="space-y-4">
-                    <h4 className="text-lg font-semibold text-red-400">Critical Prerequisites</h4>
-                    <div className="p-4 bg-red-500/5 border border-red-500/20 rounded-lg">
-                      <p className="text-foreground/90 mb-3">The following are mandatory requirements before you can begin the application process:</p>
-                      <div className="space-y-2">
-                        {accreditation.prerequisites.map((prerequisite, idx) => (
-                          <div key={idx} className="flex items-start gap-3">
-                            <AlertCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                            <span className="text-sm text-foreground/90">{prerequisite}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+                {accreditation.benefits.length > 4 && (
+                  <button
+                    onClick={() => setActiveTab("benefits")}
+                    className="mt-3 text-sm text-elec-yellow hover:text-elec-yellow/80 flex items-center gap-1"
+                  >
+                    View all {accreditation.benefits.length} benefits
+                    <ChevronRight className="h-4 w-4" />
+                  </button>
                 )}
-              </CardContent>
-            </Card>
-          </TabsContent>
+              </motion.div>
+            </motion.div>
+          )}
 
-          <TabsContent value="process" className="mt-10 md:mt-0">
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-foreground">
-                  <RefreshCw className="h-5 w-5 text-elec-yellow" />
-                  Application Process & Timeline
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Process Steps */}
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-elec-yellow">Step-by-Step Process</h4>
-                  <div className="space-y-4">
-                    {accreditation.nextSteps.map((step, idx) => (
-                      <div key={idx} className="flex gap-4 p-4 bg-elec-dark/30 rounded-lg border border-elec-yellow/10">
-                        <div className="flex-shrink-0 w-8 h-8 bg-elec-yellow/20 rounded-full flex items-center justify-center">
-                          <span className="text-sm font-semibold text-elec-yellow">{idx + 1}</span>
-                        </div>
-                        <div className="flex-1">
-                          <h5 className="font-medium text-foreground mb-1">Step {idx + 1}</h5>
-                          <p className="text-sm text-foreground/90">{step}</p>
-                        </div>
-                      </div>
-                    ))}
+          {activeTab === "benefits" && (
+            <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-4">
+              {/* Professional Recognition */}
+              <motion.div variants={itemVariants} className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="p-2 rounded-lg bg-purple-500/20">
+                    <Award className="h-5 w-5 text-purple-400" />
+                  </div>
+                  <h3 className="font-semibold text-white">Professional Recognition</h3>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="bg-white/5 rounded-lg p-3">
+                    <h4 className="text-sm font-medium text-purple-300 mb-1">Industry Standing</h4>
+                    <p className="text-xs text-white/60">Instant credibility and recognition within the electrical industry</p>
+                  </div>
+                  <div className="bg-white/5 rounded-lg p-3">
+                    <h4 className="text-sm font-medium text-purple-300 mb-1">Consumer Trust</h4>
+                    <p className="text-xs text-white/60">Customers actively seek accredited professionals</p>
                   </div>
                 </div>
+              </motion.div>
 
-                {/* Timeline */}
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-elec-yellow">Typical Timeline</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                      <h5 className="font-medium text-blue-400 mb-2">Preparation Phase</h5>
-                      <p className="text-sm text-foreground/90">2-4 weeks to gather documents, complete applications, and prepare for assessments.</p>
-                    </div>
-                    <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                      <h5 className="font-medium text-amber-400 mb-2">Assessment Phase</h5>
-                      <p className="text-sm text-foreground/90">1-6 weeks for application review, competency assessment, and any required interviews.</p>
-                    </div>
-                    <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
-                      <h5 className="font-medium text-green-400 mb-2">Approval Phase</h5>
-                      <p className="text-sm text-foreground/90">1-2 weeks for final decision and certification processing.</p>
+              {/* Business Advantages */}
+              <motion.div variants={itemVariants} className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="p-2 rounded-lg bg-green-500/20">
+                    <Briefcase className="h-5 w-5 text-green-400" />
+                  </div>
+                  <h3 className="font-semibold text-white">Business Advantages</h3>
+                </div>
+                <div className="grid grid-cols-1 gap-3">
+                  <div className="flex items-start gap-3 bg-green-500/10 rounded-lg p-3">
+                    <PoundSterling className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <h4 className="text-sm font-medium text-green-300">Higher Rates</h4>
+                      <p className="text-xs text-white/60">Command 15-25% premium pricing over non-accredited competitors</p>
                     </div>
                   </div>
-                </div>
-
-                {/* Assessment Methods */}
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-elec-yellow">Assessment Methods</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
-                      <h5 className="font-medium text-amber-400 mb-2">Portfolio Assessment</h5>
-                      <p className="text-sm text-foreground/90 mb-2">Comprehensive review of:</p>
-                      <ul className="text-sm text-foreground/70 space-y-1">
-                        <li>• Work examples and certificates</li>
-                        <li>• Client testimonials</li>
-                        <li>• Continuing Professional Development records</li>
-                        <li>• Compliance documentation</li>
-                      </ul>
+                  <div className="flex items-start gap-3 bg-blue-500/10 rounded-lg p-3">
+                    <Users className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <h4 className="text-sm font-medium text-blue-300">Marketing Edge</h4>
+                      <p className="text-xs text-white/60">Use accreditation logos and materials to win more contracts</p>
                     </div>
-                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
-                      <h5 className="font-medium text-amber-400 mb-2">On-site Assessment</h5>
-                      <p className="text-sm text-foreground/90 mb-2">Practical evaluation including:</p>
-                      <ul className="text-sm text-foreground/70 space-y-1">
-                        <li>• Installation work quality</li>
-                        <li>• Testing and inspection competence</li>
-                        <li>• Safety compliance verification</li>
-                        <li>• Technical interview</li>
-                      </ul>
+                  </div>
+                  <div className="flex items-start gap-3 bg-purple-500/10 rounded-lg p-3">
+                    <Shield className="h-5 w-5 text-purple-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <h4 className="text-sm font-medium text-purple-300">Insurance Discounts</h4>
+                      <p className="text-xs text-white/60">Access reduced premiums through accreditation body partnerships</p>
                     </div>
                   </div>
                 </div>
+              </motion.div>
 
-                {/* Success Tips */}
-                <div className="p-4 bg-elec-yellow/5 border border-elec-yellow/20 rounded-lg">
-                  <h4 className="text-lg font-semibold text-elec-yellow mb-3">Success Tips</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <h5 className="font-medium text-foreground">Before You Apply</h5>
-                      <div className="space-y-1 text-sm text-foreground/90">
-                        <p>• Ensure all qualifications are current</p>
-                        <p>• Gather comprehensive work portfolio</p>
-                        <p>• Complete any required CPD hours</p>
-                        <p>• Verify insurance coverage</p>
-                      </div>
+              {/* All Benefits List */}
+              <motion.div variants={itemVariants} className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5">
+                <h3 className="font-semibold text-white mb-4">All Benefits</h3>
+                <div className="space-y-2">
+                  {accreditation.benefits.map((benefit, idx) => (
+                    <div key={idx} className="flex items-start gap-3 p-2 bg-white/5 rounded-lg">
+                      <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                      <span className="text-sm text-white/80">{benefit}</span>
                     </div>
-                    <div className="space-y-2">
-                      <h5 className="font-medium text-foreground">During Assessment</h5>
-                      <div className="space-y-1 text-sm text-foreground/90">
-                        <p>• Be prepared for technical questions</p>
-                        <p>• Demonstrate current regulation knowledge</p>
-                        <p>• Show evidence of safe working practices</p>
-                        <p>• Maintain professional communication</p>
+                  ))}
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+
+          {activeTab === "requirements" && (
+            <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-4">
+              {/* Essential Requirements */}
+              <motion.div variants={itemVariants} className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="p-2 rounded-lg bg-amber-500/20">
+                    <BookOpen className="h-5 w-5 text-amber-400" />
+                  </div>
+                  <h3 className="font-semibold text-white">Essential Requirements</h3>
+                </div>
+                <div className="space-y-2">
+                  {accreditation.requirements.map((req, idx) => (
+                    <div key={idx} className="flex items-start gap-3 p-3 bg-white/5 rounded-lg">
+                      <div className="w-6 h-6 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                        <span className="text-xs font-medium text-amber-400">{idx + 1}</span>
                       </div>
+                      <span className="text-sm text-white/80">{req}</span>
                     </div>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Experience */}
+              <motion.div variants={itemVariants} className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5">
+                <h3 className="font-semibold text-white mb-4">Experience Requirements</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="bg-blue-500/10 rounded-lg p-3 text-center">
+                    <div className="text-2xl font-bold text-blue-400">2-4</div>
+                    <div className="text-xs text-white/60">Years Experience</div>
+                  </div>
+                  <div className="bg-purple-500/10 rounded-lg p-3 text-center">
+                    <div className="text-2xl font-bold text-purple-400">BS 7671</div>
+                    <div className="text-xs text-white/60">Compliance</div>
+                  </div>
+                  <div className="bg-green-500/10 rounded-lg p-3 text-center">
+                    <div className="text-2xl font-bold text-green-400">£2m+</div>
+                    <div className="text-xs text-white/60">Insurance</div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
+              </motion.div>
 
-          <TabsContent value="getting-started" className="mt-10 md:mt-0">
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-foreground">
-                  <CheckCircle className="h-5 w-5 text-elec-yellow" />
-                  Getting Started - Action Plan
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Immediate Actions */}
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-elec-yellow">Immediate Actions (This Week)</h4>
-                  <div className="space-y-3">
-                    <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
-                      <h5 className="font-medium text-green-400 mb-2">1. Self-Assessment</h5>
-                      <p className="text-sm text-foreground/90 mb-2">Review your current situation against the requirements:</p>
-                      <ul className="text-sm text-foreground/70 space-y-1">
-                        <li>• Check qualification validity dates</li>
-                        <li>• Calculate years of relevant experience</li>
-                        <li>• Review current insurance coverage</li>
-                        <li>• Assess competency in required areas</li>
-                      </ul>
+              {/* Documentation */}
+              <motion.div variants={itemVariants} className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5">
+                <h3 className="font-semibold text-white mb-3">Documentation Needed</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {[
+                    "Qualification certificates",
+                    "Work portfolio & references",
+                    "CPD records",
+                    "Insurance documents",
+                    "Business registration",
+                    "Character references",
+                  ].map((doc, idx) => (
+                    <div key={idx} className="flex items-center gap-2 text-sm text-white/70">
+                      <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
+                      {doc}
                     </div>
-                    <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                      <h5 className="font-medium text-blue-400 mb-2">2. Visit Provider Website</h5>
-                      <p className="text-sm text-foreground/90">Access detailed application information and current requirements directly from the accreditation body.</p>
-                      {accreditation.website && (
-                        <div className="mt-3">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => window.open(accreditation.website, '_blank')}
-                            className="text-foreground border-white/20 hover:bg-white/10"
-                          >
-                            <ExternalLink className="mr-2 h-4 w-4" />
-                            Visit Provider Website
-                          </Button>
-                        </div>
-                      )}
+                  ))}
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+
+          {activeTab === "process" && (
+            <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-4">
+              {/* Steps */}
+              <motion.div variants={itemVariants} className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5">
+                <h3 className="font-semibold text-white mb-4">Application Steps</h3>
+                <div className="space-y-3">
+                  {accreditation.nextSteps.map((step, idx) => (
+                    <div key={idx} className="flex gap-3">
+                      <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+                        <span className="text-sm font-semibold text-elec-yellow">{idx + 1}</span>
+                      </div>
+                      <div className="flex-1 pt-1">
+                        <p className="text-sm text-white/80">{step}</p>
+                      </div>
                     </div>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Timeline */}
+              <motion.div variants={itemVariants} className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5">
+                <h3 className="font-semibold text-white mb-4">Typical Timeline</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
+                    <div className="text-sm font-medium text-blue-300 mb-1">Preparation</div>
+                    <div className="text-xs text-white/60">2-4 weeks to gather documents</div>
+                  </div>
+                  <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
+                    <div className="text-sm font-medium text-amber-300 mb-1">Assessment</div>
+                    <div className="text-xs text-white/60">1-6 weeks for review</div>
+                  </div>
+                  <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
+                    <div className="text-sm font-medium text-green-300 mb-1">Approval</div>
+                    <div className="text-xs text-white/60">1-2 weeks final decision</div>
                   </div>
                 </div>
+              </motion.div>
 
-                {/* Short-term Actions */}
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-elec-yellow">Short-term Actions (Next 2-4 Weeks)</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
-                      <h5 className="font-medium text-amber-400 mb-2">Document Preparation</h5>
-                      <ul className="text-sm text-foreground/90 space-y-1">
-                        <li>• Gather qualification certificates</li>
-                        <li>• Compile work portfolio</li>
-                        <li>• Obtain character references</li>
-                        <li>• Update CPD records</li>
-                        <li>• Prepare business documentation</li>
-                      </ul>
-                    </div>
-                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
-                      <h5 className="font-medium text-amber-400 mb-2">Skills Development</h5>
-                      <ul className="text-sm text-foreground/90 space-y-1">
-                        <li>• Review current regulations (BS 7671)</li>
-                        <li>• Update testing and inspection knowledge</li>
-                        <li>• Complete any required CPD</li>
-                        <li>• Practice technical assessment areas</li>
-                        <li>• Refresh safety procedures</li>
-                      </ul>
-                    </div>
+              {/* Investment */}
+              <motion.div variants={itemVariants} className="bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/20 rounded-xl p-4 sm:p-5">
+                <h3 className="font-semibold text-white mb-4">Investment</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <div className="text-2xl font-bold text-elec-yellow">{accreditation.cost}</div>
+                    <div className="text-xs text-white/60">Initial Cost</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-green-400">+15-25%</div>
+                    <div className="text-xs text-white/60">Premium Rates</div>
                   </div>
                 </div>
+                <p className="text-xs text-white/60 mt-3">
+                  Most professionals recoup costs within 2-3 contracts through premium pricing
+                </p>
+              </motion.div>
 
-                {/* Financial Planning */}
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-elec-yellow">Financial Planning</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                      <h5 className="font-medium text-amber-400 mb-2">Initial Investment</h5>
-                      <p className="text-lg font-semibold text-foreground mb-1">{accreditation.cost}</p>
-                      <p className="text-sm text-foreground/70">Application and assessment fees</p>
-                    </div>
-                    <div className="p-4 bg-purple-500/10 border border-purple-500/20 rounded-lg">
-                      <h5 className="font-medium text-purple-400 mb-2">Annual Costs</h5>
-                      <p className="text-sm text-foreground/90">Membership fees typically range from £200-£600 annually, depending on business size.</p>
-                    </div>
-                    <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
-                      <h5 className="font-medium text-green-400 mb-2">Return Potential</h5>
-                      <p className="text-sm text-foreground/90">15-25% premium rates typically recover investment within 2-3 contracts.</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Next Steps */}
-                <div className="p-4 bg-elec-yellow/5 border border-elec-yellow/20 rounded-lg">
-                  <h4 className="text-lg font-semibold text-elec-yellow mb-3">Your Next Steps</h4>
-                  <div className="space-y-3">
-                    <div className="flex items-start gap-3">
-                      <div className="w-6 h-6 bg-elec-yellow/20 rounded-full flex items-center justify-center mt-0.5">
-                        <span className="text-xs font-semibold text-elec-yellow">1</span>
-                      </div>
-                      <div>
-                        <p className="text-foreground font-medium">Review Requirements Thoroughly</p>
-                        <p className="text-sm text-foreground/70">Ensure you meet all prerequisites before applying</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <div className="w-6 h-6 bg-elec-yellow/20 rounded-full flex items-center justify-center mt-0.5">
-                        <span className="text-xs font-semibold text-elec-yellow">2</span>
-                      </div>
-                      <div>
-                        <p className="text-foreground font-medium">Contact the Provider</p>
-                        <p className="text-sm text-foreground/70">Speak directly with their team about your specific situation</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <div className="w-6 h-6 bg-elec-yellow/20 rounded-full flex items-center justify-center mt-0.5">
-                        <span className="text-xs font-semibold text-elec-yellow">3</span>
-                      </div>
-                      <div>
-                        <p className="text-foreground font-medium">Begin Document Preparation</p>
-                        <p className="text-sm text-foreground/70">Start gathering required documentation early</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="details" className="mt-10 md:mt-0">
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-foreground">
-                  <Award className="h-5 w-5 text-elec-yellow" />
-                  Detailed Information
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Provider Information */}
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-elec-yellow">Provider Information</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
-                      <h5 className="font-medium text-amber-400 mb-2">About {accreditation.provider}</h5>
-                      <p className="text-sm text-foreground/90">Leading professional body in the electrical industry, providing certification and support services to electrical professionals across the UK.</p>
-                    </div>
-                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
-                      <h5 className="font-medium text-amber-400 mb-2">Recognition & Standards</h5>
-                      <div className="space-y-2 text-sm text-foreground/90">
-                        <p>• Recognised by government bodies</p>
-                        <p>• Compliant with industry standards</p>
-                        <p>• Member of professional associations</p>
-                        <p>• Regular quality assessments</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Detailed Scope */}
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-elec-yellow">Scope of Accreditation</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
-                      <h5 className="font-medium text-amber-400 mb-2">Work Types Covered</h5>
-                      <div className="space-y-1 text-sm text-foreground/90">
-                        <p>• Domestic electrical installations</p>
-                        <p>• Commercial electrical work</p>
-                        <p>• Industrial electrical systems</p>
-                        <p>• Testing and inspection services</p>
-                        <p>• Electrical design and planning</p>
-                      </div>
-                    </div>
-                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
-                      <h5 className="font-medium text-amber-400 mb-2">Regulatory Coverage</h5>
-                      <div className="space-y-1 text-sm text-foreground/90">
-                        <p>• BS 7671 (IET Wiring Regulations)</p>
-                        <p>• Building Regulations Part P</p>
-                        <p>• Health and Safety regulations</p>
-                        <p>• Environmental standards</p>
-                        <p>• Consumer protection legislation</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Support and Training */}
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-elec-yellow">Ongoing Support</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                      <h5 className="font-medium text-blue-400 mb-2">Technical Support</h5>
-                      <p className="text-sm text-foreground/90">Access to technical helpline, regulation updates, and expert guidance on complex installations.</p>
-                    </div>
-                    <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
-                      <h5 className="font-medium text-green-400 mb-2">Training Resources</h5>
-                      <p className="text-sm text-foreground/90">Continuing Professional Development courses, webinars, and certification updates.</p>
-                    </div>
-                    <div className="p-4 bg-purple-500/10 border border-purple-500/20 rounded-lg">
-                      <h5 className="font-medium text-purple-400 mb-2">Business Support</h5>
-                      <p className="text-sm text-foreground/90">Marketing materials, business advice, and networking opportunities with other professionals.</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Location Information */}
-                {accreditation.locations && accreditation.locations.length > 0 && (
-                  <div className="space-y-4">
-                    <h4 className="text-lg font-semibold text-elec-yellow">Available Locations</h4>
-                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-                        {accreditation.locations.map((location, idx) => (
-                          <div key={idx} className="flex items-center gap-2">
-                            <MapPin className="h-4 w-4 text-elec-yellow" />
-                            <span className="text-sm text-foreground/90">{location}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+              {/* CTA */}
+              <motion.div variants={itemVariants}>
+                {accreditation.website && (
+                  <Button
+                    onClick={() => window.open(accreditation.website, '_blank')}
+                    className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 h-12 text-base font-medium"
+                  >
+                    <ExternalLink className="mr-2 h-5 w-5" />
+                    Apply on Provider Website
+                  </Button>
                 )}
+              </motion.div>
+            </motion.div>
+          )}
+        </motion.div>
+      </AnimatePresence>
 
-                {/* Validity and Renewal */}
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-elec-yellow">Validity & Renewal</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
-                      <h5 className="font-medium text-amber-400 mb-2">Certification Period</h5>
-                      <p className="text-sm text-foreground/90">Most accreditations are valid for 12 months, with annual renewal required to maintain certification status.</p>
-                    </div>
-                    <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
-                      <h5 className="font-medium text-amber-400 mb-2">Renewal Requirements</h5>
-                      <div className="space-y-1 text-sm text-foreground/90">
-                        <p>• Annual membership fee payment</p>
-                        <p>• Minimum CPD hours completion</p>
-                        <p>• Continued insurance coverage</p>
-                        <p>• Periodic competency assessments</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
-      </div>
-
-      {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row gap-4 pt-6 border-t border-elec-yellow/20">
-        {accreditation.website && (
+      {/* Fixed Bottom CTA for Mobile */}
+      {accreditation.website && (
+        <div className="fixed bottom-0 left-0 right-0 p-4 bg-elec-dark/95 backdrop-blur-lg border-t border-white/10 sm:hidden z-50">
           <Button
-            variant="default"
             onClick={() => window.open(accreditation.website, '_blank')}
-            className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex-1"
+            className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 h-12"
           >
             <ExternalLink className="mr-2 h-4 w-4" />
             Visit Provider Website
           </Button>
-        )}
-      </div>
+        </div>
+      )}
+
+      {/* Bottom padding for fixed button on mobile */}
+      <div className="h-20 sm:hidden" />
     </div>
   );
 };

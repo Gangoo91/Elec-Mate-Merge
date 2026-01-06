@@ -105,13 +105,13 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
   const isCriticalOutcome = ['C1', 'C2', 'C3'].includes(currentOutcome);
   
   return (
-    <TableRow 
+    <TableRow
       ref={rowRef}
       className={cn(
         'group transition-all duration-200 border-b border-border/30 hover:bg-muted/30 relative h-16',
         getOutcomeClass(currentOutcome),
-        isFocused && 'ring-2 ring-bs7671-earth/20',
-        isInspected && 'border-l-4 border-l-bs7671-earth'
+        isFocused && 'ring-2 ring-elec-yellow/20',
+        isInspected && 'border-l-4 border-l-elec-yellow'
       )}
       onFocus={() => setIsFocused(true)}
       onBlur={(e) => {
@@ -173,7 +173,7 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
             {sectionItem.clause}
           </Badge>
         ) : (
-          <Badge variant="secondary" className="text-[11px] font-normal font-mono w-fit py-0.5 bg-gray-500/10 border-gray-500/30 text-gray-400">
+          <Badge variant="secondary" className="text-[11px] font-normal font-mono w-fit py-0.5 bg-white/5 border-white/20 text-white/70">
             No Specific Reg
           </Badge>
         )}

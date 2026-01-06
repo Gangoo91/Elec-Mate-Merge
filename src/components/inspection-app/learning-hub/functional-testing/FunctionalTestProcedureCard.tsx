@@ -25,7 +25,7 @@ const FunctionalTestProcedureCard = () => {
           </div>
           <Badge className="bg-green-500/10 text-green-400 border-green-400/20 text-xs">Essential Test</Badge>
         </div>
-        <CardDescription className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+        <CardDescription className="text-xs sm:text-sm text-white/80 leading-relaxed">
           BS 7671 Regulation 612.13 - Testing operation and functionality of installed equipment
         </CardDescription>
       </CardHeader>
@@ -44,7 +44,7 @@ const FunctionalTestProcedureCard = () => {
                   <Icon className={`h-4 w-4 sm:h-5 sm:w-5 ${step.color} mt-1 shrink-0`} />
                   <div className="flex-1 min-w-0">
                     <h5 className="font-semibold text-foreground text-sm sm:text-base mb-1">{step.title}</h5>
-                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{step.description}</p>
+                    <p className="text-xs sm:text-sm text-white/80 leading-relaxed">{step.description}</p>
                   </div>
                 </div>
               </div>
@@ -58,7 +58,7 @@ const FunctionalTestProcedureCard = () => {
             <Shield className="h-4 w-4 sm:h-5 sm:w-5" />
             Critical Safety Requirements
           </h4>
-          <ul className="space-y-2 text-xs sm:text-sm text-muted-foreground">
+          <ul className="space-y-2 text-xs sm:text-sm text-white/80">
             <li className="flex items-start gap-2">
               <span className="text-amber-400 shrink-0">•</span>
               <span>Coordinate with site personnel before testing to avoid disruption</span>
@@ -81,7 +81,7 @@ const FunctionalTestProcedureCard = () => {
         {/* Regulation Compliance */}
         <div className="bg-blue-500/10 border border-blue-500/20 border-l-4 border-l-blue-500 rounded-lg p-4 sm:p-5">
           <h4 className="font-semibold text-blue-400 mb-2 text-sm sm:text-base">BS 7671 Regulation 612.13</h4>
-          <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+          <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
             Functional testing is required to verify that installed electrical equipment operates correctly and safely. 
             This includes testing of switchgear, protective devices, RCDs, control equipment, and all safety systems to 
             ensure they perform as intended under normal and emergency conditions.

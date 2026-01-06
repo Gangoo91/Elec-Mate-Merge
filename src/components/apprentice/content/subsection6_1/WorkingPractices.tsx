@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 const WorkingPractices = () => {
   return (
-    <Card className="bg-elec-gray border border-elec-yellow/20">
+    <Card className="bg-white/5 border border-elec-yellow/20">
       <CardHeader className="bg-gradient-to-r from-elec-yellow/10 to-transparent border-b border-elec-yellow/20 pb-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -97,7 +97,7 @@ const WorkingPractices = () => {
 
 // New reusable component for safety principle cards
 const SafetyPrincipleCard = ({ title, children }) => (
-  <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 hover:border-elec-yellow/40 transition-all duration-300">
+  <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 hover:border-elec-yellow/40 transition-all duration-300">
     <h5 className="font-medium text-elec-yellow text-base mb-2 flex items-center gap-2">
       <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow"></span>
       {title}

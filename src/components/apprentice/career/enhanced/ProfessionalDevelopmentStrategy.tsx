@@ -389,11 +389,11 @@ const ProfessionalDevelopmentStrategy = () => {
 
       <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-4'}`}>
         {developmentMetrics.map((metric, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
+          <Card key={index} className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 p-3">
             <div className="text-center space-y-2">
-              {metric.icon}
+              <div className="flex justify-center">{metric.icon}</div>
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white/80`}>{metric.data}</div>
             </div>
           </Card>
         ))}
@@ -404,7 +404,7 @@ const ProfessionalDevelopmentStrategy = () => {
           <MobileAccordionTrigger icon={<GraduationCap className="h-5 w-5 text-blue-400" />}>
             Continuing Education & Advanced Qualifications
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="space-y-4 p-4 bg-elec-gray">
+          <MobileAccordionContent className="space-y-4 p-4 bg-white/5">
             {continuingEducation.map((category, index) => (
                 <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex items-center justify-between">
@@ -413,7 +413,7 @@ const ProfessionalDevelopmentStrategy = () => {
                       {category.timeline}
                     </Badge>
                   </div>
-                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{category.description}</p>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{category.description}</p>
 
                   <div className="space-y-3">
                     {category.programmes.map((programme, progIndex) => (
@@ -457,7 +457,7 @@ const ProfessionalDevelopmentStrategy = () => {
           <MobileAccordionTrigger icon={<Network className="h-5 w-5 text-green-400" />}>
             Professional Networking & Industry Engagement
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="space-y-4 p-4 bg-elec-gray">
+          <MobileAccordionContent className="space-y-4 p-4 bg-white/5">
             {networkingStrategy.map((strategy, index) => (
                 <div key={index} className="border border-green-500/20 rounded-lg p-3 space-y-3">
                   <div className="flex items-center justify-between">
@@ -466,7 +466,7 @@ const ProfessionalDevelopmentStrategy = () => {
                       {strategy.timeCommitment}
                     </Badge>
                   </div>
-                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{strategy.description}</p>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{strategy.description}</p>
 
                   <div>
                     <h5 className={`font-medium text-green-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Key Activities</h5>
@@ -504,7 +504,7 @@ const ProfessionalDevelopmentStrategy = () => {
           <MobileAccordionTrigger icon={<Users className="h-5 w-5 text-purple-400" />}>
             Leadership & Management Development
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="space-y-4 p-4 bg-elec-gray">
+          <MobileAccordionContent className="space-y-4 p-4 bg-white/5">
             {leadershipDevelopment.map((category, index) => (
                 <div key={index} className="border border-purple-500/20 rounded-lg p-3 space-y-3">
                   <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-purple-500/20 pb-1`}>
@@ -515,7 +515,7 @@ const ProfessionalDevelopmentStrategy = () => {
                     {category.developmentAreas.map((area, areaIndex) => (
                       <div key={areaIndex} className="bg-purple-500/5 border border-purple-500/20 rounded p-3 space-y-2">
                         <h5 className={`font-medium text-purple-300 ${isMobile ? 'text-sm' : 'text-base'}`}>{area.skill}</h5>
-                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{area.description}</p>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{area.description}</p>
                         
                         <div>
                           <h6 className={`font-medium text-purple-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Development Path</h6>
@@ -539,7 +539,7 @@ const ProfessionalDevelopmentStrategy = () => {
             Personal Development Planning
           </MobileAccordionTrigger>
           <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+            <div className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="border border-orange-500/20 rounded-lg p-3 space-y-3">
                 <h4 className={`font-medium text-orange-300 ${isMobile ? 'text-sm' : 'text-base'}`}>Strategic Career Development Framework</h4>
                 
@@ -604,7 +604,7 @@ const ProfessionalDevelopmentStrategy = () => {
           <MobileAccordionTrigger icon={<Smartphone className="h-5 w-5 text-cyan-400" />}>
             Digital Professionalism & Technology
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="space-y-4 p-4 bg-elec-gray">
+          <MobileAccordionContent className="space-y-4 p-4 bg-white/5">
             {digitalProfessionalismSkills.map((category, index) => (
                 <div key={index} className="border border-cyan-500/20 rounded-lg p-3 space-y-3">
                   <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-cyan-500/20 pb-1`}>
@@ -615,7 +615,7 @@ const ProfessionalDevelopmentStrategy = () => {
                     {category.developmentAreas.map((area, areaIndex) => (
                       <div key={areaIndex} className="bg-cyan-500/5 border border-cyan-500/20 rounded p-3 space-y-2">
                         <h5 className={`font-medium text-cyan-300 ${isMobile ? 'text-sm' : 'text-base'}`}>{area.skill}</h5>
-                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{area.description}</p>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{area.description}</p>
                         
                         <div>
                           <h6 className={`font-medium text-cyan-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Development Path</h6>
@@ -638,7 +638,7 @@ const ProfessionalDevelopmentStrategy = () => {
           <MobileAccordionTrigger icon={<Rocket className="h-5 w-5 text-orange-400" />}>
             Innovation & Entrepreneurship
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="space-y-4 p-4 bg-elec-gray">
+          <MobileAccordionContent className="space-y-4 p-4 bg-white/5">
             {innovationEntrepreneurship.map((category, index) => (
                 <div key={index} className="border border-orange-500/20 rounded-lg p-3 space-y-3">
                   <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-orange-500/20 pb-1`}>
@@ -649,7 +649,7 @@ const ProfessionalDevelopmentStrategy = () => {
                     {category.developmentAreas.map((area, areaIndex) => (
                       <div key={areaIndex} className="bg-orange-500/5 border border-orange-500/20 rounded p-3 space-y-2">
                         <h5 className={`font-medium text-orange-300 ${isMobile ? 'text-sm' : 'text-base'}`}>{area.skill}</h5>
-                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{area.description}</p>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{area.description}</p>
                         
                         <div>
                           <h6 className={`font-medium text-orange-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Development Path</h6>
@@ -672,7 +672,7 @@ const ProfessionalDevelopmentStrategy = () => {
           <MobileAccordionTrigger icon={<Lightbulb className="h-5 w-5 text-green-400" />}>
             Sustainability & ESG Leadership
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="space-y-4 p-4 bg-elec-gray">
+          <MobileAccordionContent className="space-y-4 p-4 bg-white/5">
             {sustainabilityESG.map((category, index) => (
                 <div key={index} className="border border-green-500/20 rounded-lg p-3 space-y-3">
                   <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-green-500/20 pb-1`}>
@@ -683,7 +683,7 @@ const ProfessionalDevelopmentStrategy = () => {
                     {category.developmentAreas.map((area, areaIndex) => (
                       <div key={areaIndex} className="bg-green-500/5 border border-green-500/20 rounded p-3 space-y-2">
                         <h5 className={`font-medium text-green-300 ${isMobile ? 'text-sm' : 'text-base'}`}>{area.skill}</h5>
-                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{area.description}</p>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{area.description}</p>
                         
                         <div>
                           <h6 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Development Path</h6>
@@ -706,7 +706,7 @@ const ProfessionalDevelopmentStrategy = () => {
           <MobileAccordionTrigger icon={<Heart className="h-5 w-5 text-pink-400" />}>
             Wellbeing & Personal Resilience
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="space-y-4 p-4 bg-elec-gray">
+          <MobileAccordionContent className="space-y-4 p-4 bg-white/5">
             {wellbeingResilience.map((category, index) => (
                 <div key={index} className="border border-pink-500/20 rounded-lg p-3 space-y-3">
                   <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-pink-500/20 pb-1`}>
@@ -717,7 +717,7 @@ const ProfessionalDevelopmentStrategy = () => {
                     {category.developmentAreas.map((area, areaIndex) => (
                       <div key={areaIndex} className="space-y-2">
                         <h5 className={`font-medium text-pink-300 ${isMobile ? 'text-sm' : 'text-base'}`}>{area.skill}</h5>
-                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{area.description}</p>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{area.description}</p>
                         
                         <div>
                           <h6 className={`font-medium text-pink-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Development Path</h6>
@@ -740,7 +740,7 @@ const ProfessionalDevelopmentStrategy = () => {
           <MobileAccordionTrigger icon={<MessageSquare className="h-5 w-5 text-indigo-400" />}>
             Industry Leadership & Advocacy
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="space-y-4 p-4 bg-elec-gray">
+          <MobileAccordionContent className="space-y-4 p-4 bg-white/5">
             {industryAdvocacy.map((category, index) => (
                 <div key={index} className="border border-indigo-500/20 rounded-lg p-3 space-y-3">
                   <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-indigo-500/20 pb-1`}>
@@ -751,7 +751,7 @@ const ProfessionalDevelopmentStrategy = () => {
                     {category.developmentAreas.map((area, areaIndex) => (
                       <div key={areaIndex} className="bg-indigo-500/5 border border-indigo-500/20 rounded p-3 space-y-2">
                         <h5 className={`font-medium text-indigo-300 ${isMobile ? 'text-sm' : 'text-base'}`}>{area.skill}</h5>
-                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{area.description}</p>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{area.description}</p>
                         
                         <div>
                           <h6 className={`font-medium text-indigo-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Development Path</h6>
@@ -774,7 +774,7 @@ const ProfessionalDevelopmentStrategy = () => {
           <MobileAccordionTrigger icon={<Globe className="h-5 w-5 text-teal-400" />}>
             International & Global Development
           </MobileAccordionTrigger>
-          <MobileAccordionContent className="space-y-4 p-4 bg-elec-gray">
+          <MobileAccordionContent className="space-y-4 p-4 bg-white/5">
             {internationalOpportunities.map((category, index) => (
                 <div key={index} className="border border-teal-500/20 rounded-lg p-3 space-y-3">
                   <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'} border-b border-teal-500/20 pb-1`}>
@@ -785,7 +785,7 @@ const ProfessionalDevelopmentStrategy = () => {
                     {category.developmentAreas.map((area, areaIndex) => (
                       <div key={areaIndex} className="bg-teal-500/5 border border-teal-500/20 rounded p-3 space-y-2">
                         <h5 className={`font-medium text-teal-300 ${isMobile ? 'text-sm' : 'text-base'}`}>{area.skill}</h5>
-                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{area.description}</p>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{area.description}</p>
                         
                         <div>
                           <h6 className={`font-medium text-teal-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Development Path</h6>
@@ -809,7 +809,7 @@ const ProfessionalDevelopmentStrategy = () => {
             Career Planning Toolkit
           </MobileAccordionTrigger>
           <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+            <div className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Card className="border-violet-500/20 bg-violet-500/5">
                   <CardHeader className="pb-3">

@@ -61,7 +61,7 @@ const SwimmingPoolCalculator = () => {
             {result ? (
               <PoolResults result={result} />
             ) : (
-              <div className="flex items-center justify-center h-full text-muted-foreground min-h-[300px] lg:min-h-[400px] text-center px-4">
+              <div className="flex items-center justify-center h-full text-white min-h-[300px] lg:min-h-[400px] text-center px-4">
                 <div className="space-y-2">
                   <Calculator className="h-8 w-8 mx-auto text-elec-yellow/50" />
                   <p className="text-sm lg:text-base">Enter pool details to calculate electrical requirements</p>
@@ -83,7 +83,7 @@ const SwimmingPoolCalculator = () => {
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border-elec-yellow/20 bg-white/5">
       <CardHeader className="pb-4 px-4 lg:px-6">
         <div className="flex items-center gap-2">
           <Waves className="h-5 w-5 text-elec-yellow" />

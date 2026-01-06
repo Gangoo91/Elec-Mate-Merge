@@ -68,7 +68,7 @@ const LiveTrackingPanel = () => {
 
   if (isLoading) {
     return (
-      <Card className="bg-elec-gray border-elec-yellow/20">
+      <Card className="bg-white/5 border-elec-yellow/20">
         <CardContent className="p-4">
           <div className="flex items-center space-x-2">
             <div className="animate-pulse h-4 w-4 bg-elec-yellow/50 rounded-full" />
@@ -80,7 +80,7 @@ const LiveTrackingPanel = () => {
   }
 
   return (
-    <Card className="bg-elec-gray border-elec-yellow/20">
+    <Card className="bg-white/5 border-elec-yellow/20">
       <CardHeader className="pb-3">
         <CardTitle className="text-elec-light flex items-center gap-2">
           <Clock className="h-5 w-5 text-elec-yellow" />
@@ -135,7 +135,7 @@ const LiveTrackingPanel = () => {
                     Stop
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="bg-elec-gray border-elec-yellow/20">
+                <DialogContent className="bg-white/5 border-elec-yellow/20">
                   <DialogHeader>
                     <DialogTitle className="text-elec-light">End Session</DialogTitle>
                   </DialogHeader>
@@ -154,7 +154,7 @@ const LiveTrackingPanel = () => {
                         value={notes}
                         onChange={(e) => setNotes(e.target.value)}
                         placeholder="Add notes about this session..."
-                        className="bg-elec-dark border-elec-yellow/20 text-elec-light"
+                        className="bg-white/10 border-elec-yellow/20 text-elec-light"
                       />
                     </div>
                     <div className="flex gap-2">
@@ -191,7 +191,7 @@ const LiveTrackingPanel = () => {
                   Start Tracking
                 </Button>
               </DialogTrigger>
-              <DialogContent className="bg-elec-gray border-elec-yellow/20">
+              <DialogContent className="bg-white/5 border-elec-yellow/20">
                 <DialogHeader>
                   <DialogTitle className="text-elec-light">Start New Session</DialogTitle>
                 </DialogHeader>
@@ -216,7 +216,7 @@ const LiveTrackingPanel = () => {
                         placeholder="Specify activity..."
                         value={activityType === "Other" ? "" : activityType}
                         onChange={(e) => setActivityType(e.target.value)}
-                        className="bg-elec-dark border-elec-yellow/20 text-elec-light"
+                        className="bg-white/10 border-elec-yellow/20 text-elec-light"
                       />
                     )}
                   </div>
@@ -226,7 +226,7 @@ const LiveTrackingPanel = () => {
                       value={location}
                       onChange={(e) => setLocation(e.target.value)}
                       placeholder="e.g., Study Centre, Home, Library"
-                      className="bg-elec-dark border-elec-yellow/20 text-elec-light"
+                      className="bg-white/10 border-elec-yellow/20 text-elec-light"
                     />
                   </div>
                   <div className="flex gap-2">

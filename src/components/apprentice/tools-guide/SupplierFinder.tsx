@@ -123,7 +123,7 @@ const SupplierFinder = () => {
         <TabsContent value="major-suppliers">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {majorSuppliers.map((supplier, index) => (
-              <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+              <Card key={index} className="border-elec-yellow/20 bg-white/5">
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-elec-yellow flex items-center gap-2">
@@ -136,18 +136,18 @@ const SupplierFinder = () => {
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  <p className="text-sm text-muted-foreground">{supplier.speciality}</p>
+                  <p className="text-sm text-white">{supplier.speciality}</p>
                   
                   <div className="space-y-2">
                     <div className="flex items-center gap-2 text-sm">
                       <GraduationCap className="h-4 w-4 text-green-400" />
                       <span className="text-green-400">{supplier.apprenticeDiscount}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2 text-sm text-white">
                       <MapPin className="h-4 w-4" />
                       {supplier.locations}
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2 text-sm text-white">
                       <Truck className="h-4 w-4" />
                       {supplier.delivery}
                     </div>
@@ -155,7 +155,7 @@ const SupplierFinder = () => {
 
                   <div>
                     <h4 className="text-sm font-medium text-white mb-2">Key Strengths:</h4>
-                    <ul className="text-xs text-muted-foreground space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       {supplier.strengths.map((strength, i) => (
                         <li key={i} className="flex items-center gap-2">
                           <Star className="h-3 w-3 text-elec-yellow" />
@@ -166,11 +166,11 @@ const SupplierFinder = () => {
                   </div>
 
                   <div className="pt-2 border-t border-elec-yellow/20 space-y-1">
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <div className="flex items-center gap-2 text-xs text-white">
                       <Phone className="h-3 w-3" />
                       {supplier.contact}
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <div className="flex items-center gap-2 text-xs text-white">
                       <Globe className="h-3 w-3" />
                       {supplier.website}
                     </div>
@@ -184,18 +184,18 @@ const SupplierFinder = () => {
         <TabsContent value="local-suppliers">
           <div className="space-y-4">
             {localSuppliers.map((supplier, index) => (
-              <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+              <Card key={index} className="border-elec-yellow/20 bg-white/5">
                 <CardHeader>
                   <CardTitle className="text-elec-yellow text-lg">{supplier.type}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  <p className="text-muted-foreground leading-relaxed">{supplier.description}</p>
+                  <p className="text-white leading-relaxed">{supplier.description}</p>
                   
                   <div>
                     <h4 className="text-sm font-medium text-white mb-2">Benefits:</h4>
                     <ul className="grid grid-cols-1 md:grid-cols-2 gap-1">
                       {supplier.benefits.map((benefit, i) => (
-                        <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <li key={i} className="flex items-center gap-2 text-sm text-white">
                           <Badge variant="outline" className="h-2 w-2 rounded-full p-0 border-green-500/50 bg-green-500/20" />
                           {benefit}
                         </li>
@@ -226,7 +226,7 @@ const SupplierFinder = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {costBreakdown.map((category, index) => (
-                <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+                <Card key={index} className="border-elec-yellow/20 bg-white/5">
                   <CardHeader>
                     <CardTitle className="text-elec-yellow">{category.category}</CardTitle>
                   </CardHeader>
@@ -244,11 +244,11 @@ const SupplierFinder = () => {
                     
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Timeframe:</span>
+                        <span className="text-white">Timeframe:</span>
                         <span className="text-white">{category.timeframe}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Priority:</span>
+                        <span className="text-white">Priority:</span>
                         <Badge variant="outline" className={`text-xs ${
                           category.priority === 'Start immediately' || category.priority === 'Immediate' ? 
                           'border-red-500/40 text-red-400' :
@@ -282,7 +282,7 @@ const SupplierFinder = () => {
                     <Badge variant="outline" className="mt-0.5 h-6 w-6 rounded-full p-0 border-green-500/40 bg-green-500/20 flex items-center justify-center text-green-400">
                       {index + 1}
                     </Badge>
-                    <span className="text-sm text-muted-foreground leading-relaxed">{tip}</span>
+                    <span className="text-sm text-white leading-relaxed">{tip}</span>
                   </div>
                 ))}
               </div>

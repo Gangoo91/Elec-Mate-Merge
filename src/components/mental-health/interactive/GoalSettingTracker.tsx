@@ -109,25 +109,25 @@ const GoalSettingTracker = () => {
       <CardContent className="space-y-4">
         {goals.length === 0 && !showAddForm ? (
           <div className="text-center py-8">
-            <Target className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <p className="text-muted-foreground mb-4">
+            <Target className="h-12 w-12 text-white/80 mx-auto mb-4" />
+            <p className="text-white/80 mb-4">
               Set personal mental health goals and track your progress over time.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               <div className="text-center p-4 bg-purple-500/5 rounded-lg border border-purple-500/20">
                 <Target className="h-6 w-6 text-purple-400 mx-auto mb-2" />
                 <div className="text-sm font-medium text-foreground">Set Goals</div>
-                <div className="text-xs text-muted-foreground">Define your targets</div>
+                <div className="text-xs text-white/80">Define your targets</div>
               </div>
               <div className="text-center p-4 bg-purple-500/5 rounded-lg border border-purple-500/20">
                 <TrendingUp className="h-6 w-6 text-purple-400 mx-auto mb-2" />
                 <div className="text-sm font-medium text-foreground">Track Progress</div>
-                <div className="text-xs text-muted-foreground">Monitor improvements</div>
+                <div className="text-xs text-white/80">Monitor improvements</div>
               </div>
               <div className="text-center p-4 bg-purple-500/5 rounded-lg border border-purple-500/20">
                 <CheckCircle className="h-6 w-6 text-purple-400 mx-auto mb-2" />
                 <div className="text-sm font-medium text-foreground">Get Insights</div>
-                <div className="text-xs text-muted-foreground">Understand patterns</div>
+                <div className="text-xs text-white/80">Understand patterns</div>
               </div>
             </div>
             <Button onClick={() => setShowAddForm(true)} className="bg-purple-600 hover:bg-purple-700">
@@ -155,9 +155,9 @@ const GoalSettingTracker = () => {
                         )}
                       </div>
                       {goal.description && (
-                        <p className="text-sm text-muted-foreground mb-2">{goal.description}</p>
+                        <p className="text-sm text-white/80 mb-2">{goal.description}</p>
                       )}
-                      <div className="flex items-center gap-4 text-xs text-muted-foreground mb-3">
+                      <div className="flex items-center gap-4 text-xs text-white/80 mb-3">
                         <div className="flex items-center gap-1">
                           <Calendar className="h-3 w-3" />
                           <span>{new Date(goal.targetDate).toLocaleDateString()}</span>

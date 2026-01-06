@@ -13,7 +13,7 @@ const QuizControls = ({
   return (
     <div className="flex justify-between items-center">
       <div>
-        <span className="text-sm text-muted-foreground">
+        <span className="text-sm text-white">
           {answeredCount} of {totalQuestions} questions answered
         </span>
       </div>
@@ -23,7 +23,7 @@ const QuizControls = ({
             onClick={onNext}
             disabled={!isAnswered}
             className={`
-              ${isAnswered ? 'bg-elec-yellow hover:bg-elec-yellow/80 text-elec-dark' : 'bg-muted text-muted-foreground'}
+              ${isAnswered ? 'bg-elec-yellow hover:bg-elec-yellow/80 text-elec-dark' : 'bg-muted text-white'}
             `}
           >
             Next Question
@@ -33,7 +33,7 @@ const QuizControls = ({
             onClick={onNext}
             disabled={!isAnswered}
             className={`
-              ${isAnswered ? 'bg-elec-yellow hover:bg-elec-yellow/80 text-elec-dark' : 'bg-muted text-muted-foreground'}
+              ${isAnswered ? 'bg-elec-yellow hover:bg-elec-yellow/80 text-elec-dark' : 'bg-muted text-white'}
             `}
           >
             See Results

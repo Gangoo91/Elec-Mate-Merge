@@ -94,7 +94,7 @@ const SmartInputSuggestions: React.FC<SmartInputSuggestionsProps> = ({
         variant="ghost"
         size="sm"
         onClick={() => setShowSuggestions(!showSuggestions)}
-        className="h-6 px-2 text-xs text-muted-foreground hover:text-elec-yellow"
+        className="h-6 px-2 text-xs text-white hover:text-elec-yellow"
       >
         <Lightbulb className="mr-1 h-3 w-3" />
         {showSuggestions ? 'Hide' : 'Show'} common values
@@ -116,7 +116,7 @@ const SmartInputSuggestions: React.FC<SmartInputSuggestionsProps> = ({
             ))}
           </div>
           {filteredSuggestions.length > 6 && (
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white">
               And {filteredSuggestions.length - 6} more suggestions...
             </p>
           )}

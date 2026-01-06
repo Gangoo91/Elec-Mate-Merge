@@ -58,7 +58,7 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
     switch (formData.overallAssessment) {
       case 'satisfactory': return 'text-green-600';
       case 'unsatisfactory': return 'text-red-600';
-      default: return 'text-gray-600';
+      default: return 'text-white/70';
     }
   };
 

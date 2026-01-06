@@ -53,7 +53,7 @@ const QualificationChangeSelector = ({ onComplete, onCancel }: QualificationChan
   }
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border-elec-yellow/20 bg-white/5">
       <CardHeader>
         <CardTitle>Select New Qualification</CardTitle>
         <CardDescription>
@@ -75,7 +75,7 @@ const QualificationChangeSelector = ({ onComplete, onCancel }: QualificationChan
                   {qualifications.map((qualification) => (
                     <Card
                       key={qualification.id}
-                      className={`cursor-pointer transition-all hover:shadow-md border-elec-yellow/20 bg-elec-dark ${
+                      className={`cursor-pointer transition-all hover:shadow-md border-elec-yellow/20 bg-white/10 ${
                         selectedQualification?.id === qualification.id ? 'ring-2 ring-elec-yellow' : ''
                       }`}
                       onClick={() => setSelectedQualification(qualification)}
@@ -89,10 +89,10 @@ const QualificationChangeSelector = ({ onComplete, onCancel }: QualificationChan
                         </div>
                         <div className="space-y-2 text-center">
                           <h3 className="font-semibold text-lg leading-tight">{qualification.title}</h3>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-sm text-white">
                             {qualification.description}
                           </p>
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-xs text-white">
                             Code: {qualification.code}
                           </p>
                         </div>
@@ -116,7 +116,7 @@ const QualificationChangeSelector = ({ onComplete, onCancel }: QualificationChan
                 value={targetDate}
                 onChange={(e) => setTargetDate(e.target.value)}
                 min={new Date().toISOString().split('T')[0]}
-                className="bg-elec-dark border-elec-yellow/20"
+                className="bg-white/10 border-elec-yellow/20"
               />
             </div>
             <div className="flex gap-3">

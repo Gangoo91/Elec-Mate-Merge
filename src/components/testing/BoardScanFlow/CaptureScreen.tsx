@@ -65,9 +65,24 @@ export const CaptureScreen: React.FC<CaptureScreenProps> = ({
     setIsCapturing(false);
   }, []);
 
+  // Haptic feedback helper
+  const triggerHaptic = useCallback((type: 'light' | 'medium' | 'heavy' = 'medium') => {
+    if ('vibrate' in navigator) {
+      const patterns = {
+        light: [10],
+        medium: [20],
+        heavy: [30, 10, 30]
+      };
+      navigator.vibrate(patterns[type]);
+    }
+  }, []);
+
   // Capture photo from camera
   const capturePhoto = useCallback(() => {
     if (!videoRef.current) return;
+
+    // Haptic feedback on capture
+    triggerHaptic('medium');
 
     const canvas = document.createElement('canvas');
     canvas.width = videoRef.current.videoWidth;
@@ -78,7 +93,7 @@ export const CaptureScreen: React.FC<CaptureScreenProps> = ({
       const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
       setCapturedImages(prev => [...prev, dataUrl]);
     }
-  }, []);
+  }, [triggerHaptic]);
 
   // Handle file upload
   const handleFileUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -103,9 +118,10 @@ export const CaptureScreen: React.FC<CaptureScreenProps> = ({
 
   // Submit captured images
   const handleSubmit = useCallback(() => {
+    triggerHaptic('heavy'); // Strong feedback on submit
     stopCamera();
     onCapture(capturedImages);
-  }, [capturedImages, onCapture, stopCamera]);
+  }, [capturedImages, onCapture, stopCamera, triggerHaptic]);
 
   return (
     <div className="fixed inset-0 z-50 bg-black flex flex-col">
@@ -275,7 +291,7 @@ export const CaptureScreen: React.FC<CaptureScreenProps> = ({
           <Button
             size="icon"
             onClick={capturePhoto}
-            className="h-16 w-16 rounded-full bg-white hover:bg-white/90"
+            className="h-16 w-16 rounded-full bg-white hover:bg-white/90 active:scale-90 transition-transform"
           >
             <Camera className="h-7 w-7 text-black" />
           </Button>
@@ -297,7 +313,7 @@ export const CaptureScreen: React.FC<CaptureScreenProps> = ({
             size="lg"
             onClick={handleSubmit}
             className={cn(
-              'w-full gap-2',
+              'w-full gap-2 active:scale-[0.98] transition-transform',
               isMobile ? 'h-14 text-lg' : 'h-12'
             )}
           >

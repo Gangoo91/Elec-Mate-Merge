@@ -86,7 +86,7 @@ const LogbookHeader = ({
   return (
     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div className="flex items-center gap-2">
-        <CalendarIcon className="h-5 w-5 text-muted-foreground" />
+        <CalendarIcon className="h-5 w-5 text-white" />
         <h2 className="text-xl font-semibold">Training Logbook</h2>
       </div>
       

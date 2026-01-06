@@ -86,13 +86,13 @@ const TimeManagementFundamentalsTab = () => {
                     <IconComponent className="h-6 w-6 text-white" />
                     <div>
                       <h3 className="text-lg font-semibold text-white">{principle.title}</h3>
-                      <p className="text-sm text-muted-foreground">{principle.description}</p>
+                      <p className="text-sm text-white">{principle.description}</p>
                     </div>
                   </div>
                   
                   <ul className="space-y-2">
                     {principle.steps.map((step, stepIndex) => (
-                      <li key={stepIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                      <li key={stepIndex} className="text-sm text-white flex items-start gap-2">
                         <div className="w-1 h-1 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                         {step}
                       </li>
@@ -105,7 +105,7 @@ const TimeManagementFundamentalsTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <AlertCircle className="h-6 w-6 text-elec-yellow" />
@@ -117,7 +117,7 @@ const TimeManagementFundamentalsTab = () => {
             {commonChallenges.map((item, index) => (
               <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-2">{item.challenge}</h4>
-                <p className="text-sm text-muted-foreground mb-3">{item.solution}</p>
+                <p className="text-sm text-white mb-3">{item.solution}</p>
                 <Badge variant="outline" className="text-xs border-elec-yellow/30 text-elec-yellow">
                   💡 {item.tip}
                 </Badge>
@@ -127,7 +127,7 @@ const TimeManagementFundamentalsTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">Getting Started: Your First Week</CardTitle>
         </CardHeader>
@@ -135,7 +135,7 @@ const TimeManagementFundamentalsTab = () => {
           <div className="space-y-4">
             <div className="border border-elec-yellow/20 rounded-lg p-4">
               <h4 className="font-semibold text-white mb-2">Day 1-2: Assessment</h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>• Track your current time usage for 2 days</li>
                 <li>• Identify your peak energy hours</li>
                 <li>• Note major time wasters and distractions</li>
@@ -144,7 +144,7 @@ const TimeManagementFundamentalsTab = () => {
             
             <div className="border border-elec-yellow/20 rounded-lg p-4">
               <h4 className="font-semibold text-white mb-2">Day 3-4: Planning</h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>• Create your weekly template schedule</li>
                 <li>• Set up your priority matrix system</li>
                 <li>• Choose your planning tools and apps</li>
@@ -153,7 +153,7 @@ const TimeManagementFundamentalsTab = () => {
             
             <div className="border border-elec-yellow/20 rounded-lg p-4">
               <h4 className="font-semibold text-white mb-2">Day 5-7: Implementation</h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>• Start with one new habit (e.g., time blocking)</li>
                 <li>• Practice the 2-minute rule consistently</li>
                 <li>• Review and adjust your approach daily</li>

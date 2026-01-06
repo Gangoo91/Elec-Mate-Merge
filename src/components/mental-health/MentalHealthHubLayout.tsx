@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Heart, ArrowLeft, Shield, Users, BookOpen, Brain } from "lucide-react";
+import { Heart, ArrowLeft, Shield, Users, BookOpen, Brain, Headphones } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 interface MentalHealthHubLayoutProps {
@@ -41,11 +41,17 @@ const MentalHealthHubLayout = ({ children, showBackButton = true }: MentalHealth
       icon: <BookOpen className="h-5 w-5 text-green-400" />,
       description: "Guides, articles & tools",
       link: `${isElectricianPath ? '/electrician' : '/apprentice'}/mental-health/resources`
+    },
+    {
+      title: "Podcasts",
+      icon: <Headphones className="h-5 w-5 text-orange-400" />,
+      description: "Mental health podcasts",
+      link: `${isElectricianPath ? '/electrician' : '/apprentice'}/mental-health#podcasts`
     }
   ];
 
   return (
-    <div className="space-y-6 animate-fade-in pb-6">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 pb-8">
       {/* Enhanced Header */}
       <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
         <div className="space-y-2">
@@ -53,7 +59,7 @@ const MentalHealthHubLayout = ({ children, showBackButton = true }: MentalHealth
             <Heart className="h-8 w-8 text-elec-yellow" />
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Mental Health Hub</h1>
-              <p className="text-sm sm:text-base text-muted-foreground">
+              <p className="text-sm sm:text-base text-white/80">
                 Your wellbeing matters - find support, resources, and community here
               </p>
             </div>
@@ -106,7 +112,7 @@ const MentalHealthHubLayout = ({ children, showBackButton = true }: MentalHealth
                 </div>
               </CardHeader>
               <CardContent className="pt-0">
-                <p className="text-xs text-muted-foreground">{card.description}</p>
+                <p className="text-xs text-white/80">{card.description}</p>
               </CardContent>
             </Card>
           </Link>

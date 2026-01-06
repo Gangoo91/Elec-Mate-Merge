@@ -14,13 +14,13 @@ const Subsection10_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
           <FileText className="h-6 w-6 text-elec-yellow" />
           Testing and Commissioning Documentation
         </h2>
-        <p className="text-muted-foreground">
+        <p className="text-white">
           Understanding the essential documentation requirements for testing and commissioning electrical installations in the UK.
         </p>
       </div>
 
       {/* Section 1: Documentation Overview */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className="pt-6">
           <h3 className="text-xl font-semibold mb-4">Documentation Requirements Overview</h3>
           <div className="space-y-4">
@@ -30,7 +30,7 @@ const Subsection10_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
               and forms part of the handover package to clients.
             </p>
             
-            <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-md p-4">
+            <div className="bg-white/10 border border-elec-yellow/30 rounded-md p-4">
               <h4 className="text-lg font-medium text-elec-yellow mb-2">Key Documentation Categories:</h4>
               <ul className="list-disc pl-5 space-y-2">
                 <li>
@@ -60,7 +60,7 @@ const Subsection10_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
       </Card>
 
       {/* Section 2: Certification Documents */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className="pt-6">
           <h3 className="text-xl font-semibold mb-4">Electrical Certification Documents</h3>
           <div className="space-y-4">
@@ -70,7 +70,7 @@ const Subsection10_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-              <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-md p-4">
+              <div className="bg-white/10 border border-elec-yellow/30 rounded-md p-4">
                 <div className="flex items-center gap-2 mb-3">
                   <FileText className="h-5 w-5 text-elec-yellow" />
                   <h4 className="font-medium">Electrical Installation Certificate (EIC)</h4>
@@ -91,7 +91,7 @@ const Subsection10_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
                 </ul>
               </div>
               
-              <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-md p-4">
+              <div className="bg-white/10 border border-elec-yellow/30 rounded-md p-4">
                 <div className="flex items-center gap-2 mb-3">
                   <FileText className="h-5 w-5 text-elec-yellow" />
                   <h4 className="font-medium">Minor Electrical Installation Works Certificate (MEIWC)</h4>
@@ -112,7 +112,7 @@ const Subsection10_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
                 </ul>
               </div>
               
-              <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-md p-4">
+              <div className="bg-white/10 border border-elec-yellow/30 rounded-md p-4">
                 <div className="flex items-center gap-2 mb-3">
                   <FileText className="h-5 w-5 text-elec-yellow" />
                   <h4 className="font-medium">Electrical Installation Condition Report (EICR)</h4>
@@ -133,7 +133,7 @@ const Subsection10_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
                 </ul>
               </div>
               
-              <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-md p-4">
+              <div className="bg-white/10 border border-elec-yellow/30 rounded-md p-4">
                 <div className="flex items-center gap-2 mb-3">
                   <FileText className="h-5 w-5 text-elec-yellow" />
                   <h4 className="font-medium">Building Regulations Compliance Certificate</h4>
@@ -159,7 +159,7 @@ const Subsection10_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
       </Card>
 
       {/* Section 3: Test Results Documentation */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className="pt-6">
           <h3 className="text-xl font-semibold mb-4">Test Results Documentation</h3>
           <div className="space-y-4">
@@ -168,7 +168,7 @@ const Subsection10_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
               and confirm that the installation meets the safety parameters defined in BS 7671.
             </p>
             
-            <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-md p-4">
+            <div className="bg-white/10 border border-elec-yellow/30 rounded-md p-4">
               <h4 className="text-lg font-medium text-elec-yellow mb-2">Schedule of Test Results should include:</h4>
               <ul className="list-disc pl-5 space-y-1">
                 <li>Circuit details and descriptions</li>
@@ -183,7 +183,7 @@ const Subsection10_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-              <div className="bg-elec-dark/70 p-4 rounded-md">
+              <div className="bg-white/10 p-4 rounded-md">
                 <h5 className="font-medium mb-2 text-elec-yellow">Best Practices for Test Results:</h5>
                 <ul className="list-disc pl-5 text-sm space-y-1">
                   <li>Include all required data fields with no omissions</li>
@@ -194,7 +194,7 @@ const Subsection10_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
                 </ul>
               </div>
               
-              <div className="bg-elec-dark/70 p-4 rounded-md">
+              <div className="bg-white/10 p-4 rounded-md">
                 <h5 className="font-medium mb-2 text-elec-yellow">Modern Documentation Methods:</h5>
                 <ul className="list-disc pl-5 text-sm space-y-1">
                   <li>Digital test instruments with data logging</li>
@@ -212,7 +212,7 @@ const Subsection10_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
       <Separator className="bg-elec-yellow/30" />
       
       {/* Section 4: Handover Documentation */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className="pt-6">
           <h3 className="text-xl font-semibold mb-4">Handover Documentation</h3>
           <div className="space-y-4">
@@ -222,7 +222,7 @@ const Subsection10_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Card className="border border-green-500/20 bg-elec-dark/50">
+              <Card className="border border-green-500/20 bg-white/10">
                 <CardContent className="pt-4">
                   <div className="flex items-center gap-2 mb-2">
                     <FileText className="h-5 w-5 text-green-400" />
@@ -238,7 +238,7 @@ const Subsection10_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
                 </CardContent>
               </Card>
               
-              <Card className="border border-green-500/20 bg-elec-dark/50">
+              <Card className="border border-green-500/20 bg-white/10">
                 <CardContent className="pt-4">
                   <div className="flex items-center gap-2 mb-2">
                     <Clock className="h-5 w-5 text-green-400" />
@@ -254,7 +254,7 @@ const Subsection10_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
                 </CardContent>
               </Card>
               
-              <Card className="border border-green-500/20 bg-elec-dark/50">
+              <Card className="border border-green-500/20 bg-white/10">
                 <CardContent className="pt-4">
                   <div className="flex items-center gap-2 mb-2">
                     <PackageCheck className="h-5 w-5 text-green-400" />

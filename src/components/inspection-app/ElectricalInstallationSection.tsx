@@ -112,7 +112,7 @@ const ElectricalInstallationSection = ({ formData, onUpdate }: ElectricalInstall
             <div className="space-y-2">
               <Label htmlFor="cuLocation">Location *</Label>
               <Select value={formData.cuLocation || ''} onValueChange={(value) => onUpdate('cuLocation', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-emerald-500 focus:ring-emerald-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                   <SelectValue placeholder="Select location" />
                 </SelectTrigger>
                 <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
@@ -134,7 +134,7 @@ const ElectricalInstallationSection = ({ formData, onUpdate }: ElectricalInstall
             <div className="space-y-2">
               <Label htmlFor="cuManufacturer">Manufacturer *</Label>
               <Select value={formData.cuManufacturer || ''} onValueChange={(value) => onUpdate('cuManufacturer', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-emerald-500 focus:ring-emerald-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                   <SelectValue placeholder="Select manufacturer" />
                 </SelectTrigger>
                 <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
@@ -157,7 +157,7 @@ const ElectricalInstallationSection = ({ formData, onUpdate }: ElectricalInstall
             <div className="space-y-2">
               <Label htmlFor="cuType">Type *</Label>
               <Select value={formData.cuType || ''} onValueChange={(value) => onUpdate('cuType', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-emerald-500 focus:ring-emerald-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
@@ -170,7 +170,7 @@ const ElectricalInstallationSection = ({ formData, onUpdate }: ElectricalInstall
             <div className="space-y-2">
               <Label htmlFor="boardSize">Board Size / Number of Ways *</Label>
               <Select value={formData.boardSize || ''} onValueChange={(value) => onUpdate('boardSize', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-emerald-500 focus:ring-emerald-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                   <SelectValue placeholder="Select board size" />
                 </SelectTrigger>
                 <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
@@ -194,7 +194,7 @@ const ElectricalInstallationSection = ({ formData, onUpdate }: ElectricalInstall
             <div className="space-y-2">
               <Label htmlFor="intakeCableSize">Intake Cable Size *</Label>
               <Select value={formData.intakeCableSize || ''} onValueChange={(value) => onUpdate('intakeCableSize', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-emerald-500 focus:ring-emerald-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                   <SelectValue placeholder="Select cable size" />
                 </SelectTrigger>
                 <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
@@ -210,7 +210,7 @@ const ElectricalInstallationSection = ({ formData, onUpdate }: ElectricalInstall
             <div className="space-y-2">
               <Label htmlFor="intakeCableType">Intake Cable Type *</Label>
               <Select value={formData.intakeCableType || ''} onValueChange={(value) => onUpdate('intakeCableType', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-emerald-500 focus:ring-emerald-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                   <SelectValue placeholder="Select cable type" />
                 </SelectTrigger>
                 <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
@@ -235,7 +235,7 @@ const ElectricalInstallationSection = ({ formData, onUpdate }: ElectricalInstall
             <div className="space-y-2">
               <Label htmlFor="tailsSize">Tails Size *</Label>
               <Select value={formData.tailsSize || ''} onValueChange={(value) => onUpdate('tailsSize', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-emerald-500 focus:ring-emerald-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                   <SelectValue placeholder="Select tails size" />
                 </SelectTrigger>
                 <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
@@ -255,7 +255,7 @@ const ElectricalInstallationSection = ({ formData, onUpdate }: ElectricalInstall
                 type="number"
                 min="0"
                 step="0.1"
-                className="h-11 text-base touch-manipulation border-gray-300 focus:border-emerald-500 focus:ring-emerald-500"
+                className="h-11 text-base touch-manipulation border-white/30 focus:border-emerald-500 focus:ring-emerald-500"
               />
             </div>
           </div>

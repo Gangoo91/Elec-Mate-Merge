@@ -1,333 +1,391 @@
-import { ArrowLeft, ArrowRight, CheckCircle, BookOpen, Target, AlertTriangle, Zap, Eye, Settings } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import EVChargingModule6Section3Quiz from '@/components/upskilling/quiz/EVChargingModule6Section3Quiz';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
+import useSEO from "@/hooks/useSEO";
+
+const quickCheckQuestions = [
+  {
+    id: "evcharging-m6s3-check1",
+    question: "What test voltage is used for insulation resistance testing on circuits up to 500V?",
+    options: ["250V DC", "500V DC", "1000V DC", "1500V DC"],
+    correctIndex: 1,
+    explanation: "For circuits up to 500V, a 500V DC test voltage is used. The minimum acceptable insulation resistance is 1MΩ for new installations."
+  },
+  {
+    id: "evcharging-m6s3-check2",
+    question: "What is the maximum Zs value for a 32A Type B MCB protecting a single-phase EV charger?",
+    options: ["0.72Ω", "1.15Ω", "1.44Ω", "2.88Ω"],
+    correctIndex: 2,
+    explanation: "For a 32A Type B MCB, the maximum Zs is 1.44Ω. This ensures the protective device will disconnect within 0.4 seconds during a fault."
+  },
+  {
+    id: "evcharging-m6s3-check3",
+    question: "What is the minimum test current for continuity testing of protective conductors?",
+    options: ["50mA", "100mA", "200mA", "500mA"],
+    correctIndex: 2,
+    explanation: "A minimum 200mA test current is required for continuity testing to ensure accurate resistance measurements and detect high-resistance connections."
+  }
+];
+
+const faqs = [
+  {
+    question: "Can I test earth fault loop impedance with RCDs in circuit?",
+    answer: "Use the no-trip method (calculate Zs = Ze + R1+R2) or temporarily isolate the RCD. Some modern testers have no-trip test modes specifically for RCD-protected circuits."
+  },
+  {
+    question: "What if insulation resistance is below 1MΩ?",
+    answer: "Investigate the cause - check for moisture ingress, damaged insulation, or faulty equipment. Disconnect loads to isolate the issue. The circuit cannot be energised until the fault is resolved."
+  },
+  {
+    question: "How do I verify polarity on three-phase EV chargers?",
+    answer: "Use a phase rotation meter to confirm correct L1-L2-L3 sequence. Incorrect rotation can damage motors and may cause charger malfunction."
+  },
+  {
+    question: "What documentation is required after testing?",
+    answer: "Complete an Electrical Installation Certificate (EIC) for new installations, including Schedule of Test Results. Minor Works Certificate is not suitable for EV charging installations."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+  question: "An EV charging circuit has measured Zs of 1.2Ω with a 32A Type B MCB. What is the correct assessment?",
+  options: [
+    "Fail - Zs exceeds maximum permitted value",
+    "Pass - Zs is within maximum permitted value",
+    "Cannot determine - need more information",
+    "Marginal - recommend cable upgrade"
+  ],
+  correctAnswer: 1,
+  explanation: "The maximum Zs for a 32A Type B MCB is 1.44Ω. The measured value of 1.2Ω is within this limit, so the circuit passes. However, applying the 0.8 multiplier for conductor temperature (1.2 ÷ 0.8 = 1.5Ω) may exceed the limit at elevated temperatures."
+  }
+];
 
 const EVChargingModule6Section3 = () => {
-  useEffect(() => {
-    document.title = 'BS 7671 Part 722 Testing Procedures - EV Charging Module 6 Section 3';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Master BS 7671 Part 722 testing procedures for EV charging installations. Learn testing requirements, verification methods, and compliance standards.');
-    }
-  }, []);
+  useSEO({
+    title: "BS 7671 Part 722 Testing Procedures | EV Charging Module 6.3",
+    description: "Master BS 7671 Part 722 testing procedures for EV charging installations, including verification methods and compliance standards."
+  });
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
-        <Link to="../ev-charging-module-6">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 6
+            <Link to="../ev-charging-module-6">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 6
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            <CheckCircle className="h-8 w-8 text-yellow-400" />
-            <Badge 
-              variant="secondary" 
-              className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold text-sm px-3 py-1 border-0"
-            >
-              Module 6 - Section 3
-            </Badge>
+        </div>
+      </div>
+
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Page Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 6.3</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             BS 7671 Part 722 Testing Procedures
           </h1>
-          <p className="text-lg sm:text-xl text-gray-400 max-w-3xl">
-            Comprehensive testing and verification procedures for EV charging installations
+          <p className="text-white/80">
+            Comprehensive testing and verification for EV installations
           </p>
-        </div>
-      </header>
+        </header>
 
-      {/* Main Content */}
-      <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="space-y-4 sm:space-y-6">
-
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <BookOpen className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Introduction</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                BS 7671 Part 722 provides specific requirements for electric vehicle charging installations, 
-                including comprehensive testing procedures to ensure safety, compliance, and optimal performance. 
-                This section covers the mandatory testing procedures that must be performed during installation, 
-                commissioning, and periodic inspection of EV charging equipment.
-              </p>
-              
-              <div className="bg-card/80 p-4 rounded-lg">
-                <h4 className="font-semibold text-white mb-2">Testing Fundamentals</h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Initial verification and commissioning tests</li>
-                  <li>• Continuity and insulation resistance testing</li>
-                  <li>• Earth fault loop impedance verification</li>
-                  <li>• RCD testing for all protection types</li>
-                  <li>• Functional testing of safety systems</li>
-                  <li>• Documentation and certification requirements</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Target className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Learning Outcomes</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <div className="space-y-3">
-                {[
-                  "Understand BS 7671 Part 722 testing requirements and procedures",
-                  "Perform initial verification and commissioning testing",
-                  "Execute continuity and insulation resistance testing",
-                  "Conduct earth fault loop impedance verification",
-                  "Test protective device operation and RCD functionality", 
-                  "Verify communication and control system operation",
-                  "Complete certification documentation and test records",
-                  "Understand periodic inspection and re-testing requirements"
-                ].map((outcome, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span>{outcome}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Content/Learning */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <CheckCircle className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">BS 7671 Part 722 Testing Procedures</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              
-              {/* Initial Verification Testing */}
-              <div>
-                <h3 className="text-xl font-semibold text-white mb-4">Initial Verification Testing</h3>
-                <div className="space-y-4">
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-white mb-3">Pre-Testing Requirements</h4>
-                    <ul className="text-sm space-y-1">
-                      <li>• Verify all electrical connections are secure and properly terminated</li>
-                      <li>• Ensure all protective devices are correctly rated and installed</li>
-                      <li>• Confirm installation complies with manufacturer's specifications</li>
-                      <li>• Check all equipment is correctly labelled and identified</li>
-                      <li>• Complete visual inspection of all components</li>
-                      <li>• Verify correct polarity of all connections</li>
-                    </ul>
-                  </div>
-
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-white mb-3">Continuity Testing Procedure</h4>
-                    <ol className="text-sm space-y-1">
-                      <li>1. Isolate the circuit completely from the supply</li>
-                      <li>2. Connect test instrument between main earthing terminal and exposed conductive parts</li>
-                      <li>3. Apply test current (typically 200mA) and measure resistance</li>
-                      <li>4. Record readings for all protective conductor paths</li>
-                      <li>5. Verify readings comply with BS 7671 requirements (typically ≤ 0.05Ω for socket outlets)</li>
-                    </ol>
-                  </div>
-
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-white mb-3">Insulation Resistance Testing</h4>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <h5 className="font-medium text-yellow-400 mb-2">Test Requirements</h5>
-                        <ul className="text-sm space-y-1">
-                          <li>• Test voltage: 500V DC for circuits up to 500V</li>
-                          <li>• Test voltage: 1000V DC for circuits 500V-1000V</li>
-                          <li>• Minimum acceptable resistance: 1MΩ for new installations</li>
-                          <li>• Apply test voltage for minimum 60 seconds</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="font-medium text-yellow-400 mb-2">Test Sequence</h5>
-                        <ul className="text-sm space-y-1">
-                          <li>• Disconnect sensitive equipment before testing</li>
-                          <li>• Test between live conductors and earth</li>
-                          <li>• Test between live conductors (with neutrals connected)</li>
-                          <li>• Record all readings on test certificate</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Earth Fault Loop Impedance */}
-              <div>
-                <h3 className="text-xl font-semibold text-white mb-4">Earth Fault Loop Impedance Testing</h3>
-                <div className="space-y-4">
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-white mb-3">Maximum Zs Values for EV Charging</h4>
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-sm">
-                        <thead>
-                          <tr className="border-b border-gray-600">
-                            <th className="text-left py-2 text-yellow-400">Circuit Protection</th>
-                            <th className="text-left py-2 text-yellow-400">Rating (A)</th>
-                            <th className="text-left py-2 text-yellow-400">Max Zs (Ω)</th>
-                            <th className="text-left py-2 text-yellow-400">Application</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr className="border-b border-gray-700">
-                            <td className="py-2">Type B MCB</td>
-                            <td className="py-2">32A</td>
-                            <td className="py-2">1.44</td>
-                            <td className="py-2">Single phase charging</td>
-                          </tr>
-                          <tr className="border-b border-gray-700">
-                            <td className="py-2">Type B MCB</td>
-                            <td className="py-2">40A</td>
-                            <td className="py-2">1.15</td>
-                            <td className="py-2">Three phase charging</td>
-                          </tr>
-                          <tr className="border-b border-gray-700">
-                            <td className="py-2">Type C MCB</td>
-                            <td className="py-2">32A</td>
-                            <td className="py-2">0.72</td>
-                            <td className="py-2">High inrush current</td>
-                          </tr>
-                          <tr>
-                            <td className="py-2">RCBO Type A</td>
-                            <td className="py-2">32A</td>
-                            <td className="py-2">1.44</td>
-                            <td className="py-2">Combined protection</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-white mb-3">Test Method Selection</h4>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <h5 className="font-medium text-yellow-400 mb-2">No-Trip Method</h5>
-                        <ul className="text-sm space-y-1">
-                          <li>• Used when RCD protection is present</li>
-                          <li>• Prevents nuisance tripping during testing</li>
-                          <li>• Calculate Zs = Ze + (R1 + R2)</li>
-                          <li>• Suitable for most EV charging circuits</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="font-medium text-yellow-400 mb-2">Direct Method</h5>
-                        <ul className="text-sm space-y-1">
-                          <li>• Direct measurement of fault loop</li>
-                          <li>• May cause RCD to trip during test</li>
-                          <li>• More accurate measurement method</li>
-                          <li>• Requires temporary RCD isolation</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Advanced Testing Procedures */}
-              <div>
-                <h3 className="text-xl font-semibold text-white mb-4">Advanced Testing Procedures</h3>
-                <div className="space-y-4">
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-white mb-3">Smart Charging System Testing</h4>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <h5 className="font-medium text-yellow-400 mb-2">Communication Testing</h5>
-                        <ul className="text-sm space-y-1">
-                          <li>• OCPP protocol verification</li>
-                          <li>• Network connectivity testing</li>
-                          <li>• Load balancing functionality</li>
-                          <li>• Remote monitoring capabilities</li>
-                          <li>• Firmware update procedures</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="font-medium text-yellow-400 mb-2">Environmental Testing</h5>
-                        <ul className="text-sm space-y-1">
-                          <li>• IP rating verification (outdoor units)</li>
-                          <li>• Temperature cycling tests</li>
-                          <li>• Vibration and shock testing</li>
-                          <li>• EMC compliance verification</li>
-                          <li>• Lightning protection testing</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-white mb-3">Safety System Verification</h4>
-                    <div className="space-y-3">
-                      <div>
-                        <h5 className="font-medium text-yellow-400 mb-2">Control Pilot (CP) Testing</h5>
-                        <ul className="text-sm space-y-1">
-                          <li>• 12V state verification (standby mode)</li>
-                          <li>• 9V state test (vehicle connected)</li>
-                          <li>• 6V state confirmation (ready to charge)</li>
-                          <li>• PWM duty cycle measurement for current limiting</li>
-                          <li>• Error state testing (-12V, 0V conditions)</li>
-                        </ul>
-                      </div>
-
-                      <div>
-                        <h5 className="font-medium text-yellow-400 mb-2">Emergency Safety Systems</h5>
-                        <ul className="text-sm space-y-1">
-                          <li>• Emergency stop button functionality</li>
-                          <li>• Automatic isolation on fault detection</li>
-                          <li>• Ground fault monitoring systems</li>
-                          <li>• Arc fault detection testing</li>
-                          <li>• Door lock and interlock mechanisms</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Section */}
-          <EVChargingModule6Section3Quiz />
-
-          {/* Navigation */}
-          <div className="flex justify-between">
-            <Link to="../ev-charging-module-6-section-2">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="../ev-charging-module-6-section-4">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>IR test:</strong> 500V DC, minimum 1MΩ</li>
+              <li><strong>Continuity:</strong> 200mA test current</li>
+              <li><strong>Zs (32A Type B):</strong> Maximum 1.44Ω</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Test records, EIC certificates</li>
+              <li><strong>Use:</strong> Multifunction tester, calibration cert</li>
+            </ul>
           </div>
         </div>
-      </main>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Understand BS 7671 Part 722 requirements",
+              "Perform initial verification testing",
+              "Execute continuity and IR testing",
+              "Conduct earth fault loop impedance tests",
+              "Verify protective device operation",
+              "Complete certification documentation"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Initial Verification Testing
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Initial verification confirms the installation is safe before energisation
+              and complies with BS 7671 requirements for EV charging circuits.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Pre-Test Checks</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>All connections secure and correct</li>
+                  <li>Protective devices correctly rated</li>
+                  <li>Correct polarity verified</li>
+                  <li>Equipment properly labelled</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Test Sequence</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>1.</strong> Continuity of conductors</li>
+                  <li><strong>2.</strong> Insulation resistance</li>
+                  <li><strong>3.</strong> Polarity verification</li>
+                  <li><strong>4.</strong> Earth fault loop impedance</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Continuity Testing Requirements:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Test current:</strong> Minimum 200mA</li>
+                <li><strong>Socket outlet circuits:</strong> R1+R2 method</li>
+                <li><strong>Protective conductors:</strong> Direct measurement to MET</li>
+                <li><strong>Main bonding:</strong> Verify integrity of connections</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Earth Fault Loop Impedance
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Earth fault loop impedance (Zs) must be low enough to ensure protective
+              devices disconnect within required times during fault conditions.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Maximum Zs Values</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>32A Type B:</strong> 1.44Ω</li>
+                  <li><strong>40A Type B:</strong> 1.15Ω</li>
+                  <li><strong>32A Type C:</strong> 0.72Ω</li>
+                  <li><strong>40A Type C:</strong> 0.58Ω</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Test Methods</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Direct:</strong> Live measurement at circuit end</li>
+                  <li><strong>No-trip:</strong> Calculate Zs = Ze + (R1+R2)</li>
+                  <li><strong>0.8 factor:</strong> Temperature correction</li>
+                  <li><strong>Record:</strong> All values on test schedule</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">0.4s</p>
+                <p className="text-white/90 text-xs">Max disconnect time</p>
+              </div>
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">0.8</p>
+                <p className="text-white/90 text-xs">Temperature factor</p>
+              </div>
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">5×In</p>
+                <p className="text-white/90 text-xs">Type B trip current</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 3 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Insulation Resistance Testing
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Insulation resistance testing verifies the integrity of cable and equipment
+              insulation, detecting deterioration or damage before it becomes dangerous.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Test Requirements</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Voltage:</strong> 500V DC (up to 500V circuits)</li>
+                  <li><strong>Duration:</strong> Minimum 60 seconds</li>
+                  <li><strong>Minimum:</strong> 1MΩ for new installations</li>
+                  <li><strong>Acceptable:</strong> ≥0.5MΩ for periodic</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Test Sequence</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Disconnect sensitive equipment</li>
+                  <li>Test L-E, N-E, L-N</li>
+                  <li>Connect neutrals together if testing L-E</li>
+                  <li>Record all readings</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Important Precautions:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Isolate circuit completely before testing</li>
+                <li>Disconnect EV charger before IR testing (damage risk)</li>
+                <li>Allow capacitive discharge after testing</li>
+                <li>Test charger supply cable separately</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Testing Checklist</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Calibrated test equipment with valid certificate</li>
+                <li>Correct test leads (GS38 compliant)</li>
+                <li>Isolation verified before dead tests</li>
+                <li>All results recorded on test schedule</li>
+                <li>EIC completed with all required information</li>
+                <li>Customer provided with all certificates</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Testing Errors</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>No temperature correction:</strong> — Zs may exceed limits at operating temperature</li>
+                <li><strong>Testing with loads connected:</strong> — IR test may damage equipment</li>
+                <li><strong>Wrong test voltage:</strong> — invalid IR results</li>
+                <li><strong>Incomplete documentation:</strong> — certificate invalid</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quick Reference */}
+        <div className="mt-6 p-5 rounded-lg bg-transparent">
+          <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+            <div>
+              <p className="font-medium text-white mb-1">Test Values</p>
+              <ul className="space-y-0.5">
+                <li>IR: 500V DC, ≥1MΩ</li>
+                <li>Continuity: 200mA, low Ω</li>
+                <li>Disconnect: ≤0.4s</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-medium text-white mb-1">Documentation</p>
+              <ul className="space-y-0.5">
+                <li>EIC for new installations</li>
+                <li>Schedule of test results</li>
+                <li>Circuit diagram/schedule</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Quiz Section */}
+        <section className="mb-10 mt-12">
+          <SingleQuestionQuiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-6-section-2">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-6-section-4">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

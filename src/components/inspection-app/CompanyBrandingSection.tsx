@@ -199,7 +199,7 @@ const CompanyBrandingSection = ({ formData, onUpdate }: CompanyBrandingSectionPr
         </div>
 
         {/* Branding Details */}
-        <div className="space-y-3 p-3 rounded-lg bg-gradient-to-r from-gray-50/30 to-transparent border border-gray-200/50">
+        <div className="space-y-3 p-3 rounded-lg bg-gradient-to-r from-gray-50/30 to-transparent border border-white/20">
           <h3 className="text-sm font-bold text-foreground uppercase tracking-wide flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-gradient-to-r from-gray-400 to-gray-500"></div>
             Branding Details
@@ -213,7 +213,7 @@ const CompanyBrandingSection = ({ formData, onUpdate }: CompanyBrandingSectionPr
                 value={formData.brandingCompanyName || ''}
                 onChange={(e) => onUpdate('brandingCompanyName', e.target.value)}
                 placeholder="Company name as it appears on reports"
-                className="border-gray-300/50 focus:border-yellow-400 focus:ring-yellow-400 transition-colors duration-200"
+                className="border-white/30 focus:border-yellow-400 focus:ring-yellow-400 transition-colors duration-200"
               />
             </div>
             
@@ -224,7 +224,7 @@ const CompanyBrandingSection = ({ formData, onUpdate }: CompanyBrandingSectionPr
                 value={formData.brandingTagline || ''}
                 onChange={(e) => onUpdate('brandingTagline', e.target.value)}
                 placeholder="Professional tagline or services description"
-                className="border-gray-300/50 focus:border-yellow-400 focus:ring-yellow-400 transition-colors duration-200"
+                className="border-white/30 focus:border-yellow-400 focus:ring-yellow-400 transition-colors duration-200"
               />
             </div>
             
@@ -237,13 +237,13 @@ const CompanyBrandingSection = ({ formData, onUpdate }: CompanyBrandingSectionPr
                     type="color"
                     value={formData.brandingAccentColor || '#FCD34D'}
                     onChange={(e) => onUpdate('brandingAccentColor', e.target.value)}
-                    className="w-12 h-9 p-1 rounded-md cursor-pointer border-2 border-gray-300/50 hover:border-yellow-400/50 transition-colors duration-200"
+                    className="w-12 h-9 p-1 rounded-md cursor-pointer border-2 border-white/30 hover:border-yellow-400/50 transition-colors duration-200"
                   />
                   <Input
                     value={formData.brandingAccentColor || '#FCD34D'}
                     onChange={(e) => onUpdate('brandingAccentColor', e.target.value)}
                     placeholder="#FCD34D"
-                    className="flex-1 border-gray-300/50 focus:border-yellow-400 focus:ring-yellow-400 font-mono text-sm transition-colors duration-200"
+                    className="flex-1 border-white/30 focus:border-yellow-400 focus:ring-yellow-400 font-mono text-sm transition-colors duration-200"
                   />
                 </div>
                 <p className="text-xs text-muted-foreground flex items-center gap-1">
@@ -260,7 +260,7 @@ const CompanyBrandingSection = ({ formData, onUpdate }: CompanyBrandingSectionPr
                   value={formData.brandingWebsite || ''}
                   onChange={(e) => onUpdate('brandingWebsite', e.target.value)}
                   placeholder="https://yourcompany.co.uk"
-                  className="border-gray-300/50 focus:border-yellow-400 focus:ring-yellow-400 transition-colors duration-200"
+                  className="border-white/30 focus:border-yellow-400 focus:ring-yellow-400 transition-colors duration-200"
                 />
               </div>
             </div>

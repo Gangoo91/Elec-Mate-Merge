@@ -8,13 +8,13 @@ import InspectionTestingQuiz from '@/components/upskilling/InspectionTestingQuiz
 
 const Module1Section1 = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="../module-1">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 1
@@ -23,10 +23,10 @@ const Module1Section1 = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <BookOpen className="h-8 w-8 text-yellow-400" />
+            <BookOpen className="h-8 w-8 text-elec-yellow" />
             <Badge 
               variant="secondary" 
-              className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold text-sm px-3 py-1 border-0"
+              className="bg-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/50 font-semibold text-sm px-3 py-1 border-0"
             >
               Module 1 - Section 1
             </Badge>
@@ -45,10 +45,10 @@ const Module1Section1 = () => {
         <div className="space-y-4 sm:space-y-6">
           
           {/* Definition Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <BookOpen className="h-6 w-6 text-yellow-400" />
+                <BookOpen className="h-6 w-6 text-elec-yellow" />
                 Definition of Inspection & Testing
               </CardTitle>
             </CardHeader>
@@ -63,10 +63,10 @@ const Module1Section1 = () => {
           </Card>
 
           {/* Purpose Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Shield className="h-6 w-6 text-yellow-400" />
+                <Shield className="h-6 w-6 text-elec-yellow" />
                 Purpose of Inspection & Testing
               </CardTitle>
             </CardHeader>
@@ -101,10 +101,10 @@ const Module1Section1 = () => {
           </Card>
 
           {/* Legal Framework Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Scale className="h-6 w-6 text-yellow-400" />
+                <Scale className="h-6 w-6 text-elec-yellow" />
                 Legal Framework
               </CardTitle>
             </CardHeader>
@@ -133,16 +133,16 @@ const Module1Section1 = () => {
           </Card>
 
           {/* Types of Inspections Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Eye className="h-6 w-6 text-yellow-400" />
+                <Eye className="h-6 w-6 text-elec-yellow" />
                 Types of Inspections
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-6">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <div className="bg-yellow-400/10 p-4 rounded-lg">
+                <div className="bg-elec-yellow/10 p-4 rounded-lg">
                   <h4 className="text-white font-semibold mb-2">Initial Verification</h4>
                   <p className="text-sm">Carried out on new installations before first use to ensure compliance with BS 7671</p>
                 </div>
@@ -159,10 +159,10 @@ const Module1Section1 = () => {
           </Card>
 
           {/* Key Components Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <FileText className="h-6 w-6 text-yellow-400" />
+                <FileText className="h-6 w-6 text-elec-yellow" />
                 Key Components of Inspection & Testing
               </CardTitle>
             </CardHeader>
@@ -200,10 +200,10 @@ const Module1Section1 = () => {
           </Card>
 
           {/* Competency Requirements Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Users className="h-6 w-6 text-yellow-400" />
+                <Users className="h-6 w-6 text-elec-yellow" />
                 Competency Requirements
               </CardTitle>
             </CardHeader>
@@ -235,20 +235,20 @@ const Module1Section1 = () => {
           </Card>
 
           {/* Important Notes Section */}
-          <Card className="bg-card border-transparent border-l-4 border-l-yellow-400">
+          <Card className="bg-transparent border-transparent border-l-4 border-l-elec-yellow">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-6 w-6 text-yellow-400" />
+                <AlertTriangle className="h-6 w-6 text-elec-yellow" />
                 Important Notes
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
-              <div className="bg-yellow-600/10 p-4 rounded-lg">
+              <div className="bg-elec-yellow/10 p-4 rounded-lg">
                 <p className="text-sm leading-relaxed">
                   <strong className="text-white">Competency Requirement:</strong> Inspection and testing must only be carried out by competent persons who possess the necessary knowledge, training, and experience to perform these activities safely and accurately.
                 </p>
               </div>
-              <div className="bg-yellow-400/10 p-4 rounded-lg">
+              <div className="bg-elec-yellow/10 p-4 rounded-lg">
                 <p className="text-sm leading-relaxed">
                   <strong className="text-white">Legal Obligation:</strong> Regular inspection and testing is not just good practice—it's a legal requirement under various regulations including the Electricity at Work Regulations 1989.
                 </p>
@@ -262,20 +262,20 @@ const Module1Section1 = () => {
           </Card>
 
           {/* Quick Knowledge Checks */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-6 w-6 text-yellow-400" />
+                <CheckCircle className="h-6 w-6 text-elec-yellow" />
                 Quick Knowledge Checks
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-yellow-400/10 p-4 rounded-lg">
+                <div className="bg-elec-yellow/10 p-4 rounded-lg">
                   <h4 className="text-white font-semibold mb-2">Check 1: Legal Requirements</h4>
                   <p className="text-sm">Can you name the three main pieces of legislation that govern electrical safety in the workplace?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">1. Electricity at Work Regulations 1989, 2. Health and Safety at Work Act 1974, 3. Building Regulations Part P (for dwellings)</p>
                   </details>
                 </div>
@@ -283,7 +283,7 @@ const Module1Section1 = () => {
                   <h4 className="text-white font-semibold mb-2">Check 2: Standards Knowledge</h4>
                   <p className="text-sm">What is the current edition of BS 7671 and when was it published?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">18th Edition, published in 2018 with Amendment 2 in 2022</p>
                   </details>
                 </div>
@@ -291,7 +291,7 @@ const Module1Section1 = () => {
                   <h4 className="text-white font-semibold mb-2">Check 3: Inspection Types</h4>
                   <p className="text-sm">What's the difference between Initial Verification and Periodic Inspection?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">Initial Verification: New installations before first use. Periodic Inspection: Regular checks on existing installations for continued safety.</p>
                   </details>
                 </div>
@@ -299,7 +299,7 @@ const Module1Section1 = () => {
                   <h4 className="text-white font-semibold mb-2">Check 4: Competency</h4>
                   <p className="text-sm">What three elements define competency for electrical work?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">Knowledge, Training, and Experience (plus appropriate supervision where needed)</p>
                   </details>
                 </div>
@@ -308,10 +308,10 @@ const Module1Section1 = () => {
           </Card>
 
           {/* Frequently Asked Questions */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-6 w-6 text-yellow-400" />
+                <AlertTriangle className="h-6 w-6 text-elec-yellow" />
                 Frequently Asked Questions
               </CardTitle>
             </CardHeader>
@@ -346,15 +346,15 @@ const Module1Section1 = () => {
           </Card>
 
           {/* Real-World Scenario */}
-          <Card className="bg-yellow-400/10 border-blue-600/30">
+          <Card className="bg-elec-yellow/10 border-blue-600/30">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Lightbulb className="h-6 w-6 text-yellow-400" />
+                <Lightbulb className="h-6 w-6 text-elec-yellow" />
                 Real-World Scenario
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
-              <div className="bg-yellow-400/20 p-4 rounded-lg">
+              <div className="bg-elec-yellow/20 p-4 rounded-lg">
                 <h4 className="text-white font-semibold mb-2">Scenario: Commercial Kitchen Inspection</h4>
                 <p className="text-sm mb-3">
                   You've been asked to carry out a periodic inspection on a busy commercial kitchen that hasn't been inspected for 7 years. The kitchen operates 16 hours daily and has high humidity and temperature conditions.
@@ -367,7 +367,7 @@ const Module1Section1 = () => {
                   <li>• Emergency lighting and fire alarm integration</li>
                   <li>• Coordination with business operations for minimal disruption</li>
                 </ul>
-                <div className="mt-3 p-3 bg-yellow-600/20 rounded">
+                <div className="mt-3 p-3 bg-elec-yellow/20 rounded">
                   <p className="text-xs"><strong>Learning Point:</strong> This scenario demonstrates why different environments require different inspection frequencies and approaches. The 7-year gap is too long for this high-risk environment.</p>
                 </div>
               </div>
@@ -375,10 +375,10 @@ const Module1Section1 = () => {
           </Card>
 
           {/* Quiz Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Lightbulb className="h-6 w-6 text-yellow-400" />
+                <Lightbulb className="h-6 w-6 text-elec-yellow" />
                 Test Your Knowledge - 10 Questions
               </CardTitle>
             </CardHeader>

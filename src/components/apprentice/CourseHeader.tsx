@@ -14,7 +14,7 @@ const CourseHeader = ({ courseTitle }: CourseHeaderProps) => {
         <h1 className="text-3xl font-bold tracking-tight mb-1">
           <span className="gradient-text">{courseTitle}</span>
         </h1>
-        <p className="text-muted-foreground">
+        <p className="text-white">
           EAL Level 2 course materials and learning resources
         </p>
       </div>

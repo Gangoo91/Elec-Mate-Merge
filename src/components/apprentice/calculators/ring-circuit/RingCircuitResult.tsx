@@ -63,7 +63,7 @@ const RingCircuitResult: React.FC<RingCircuitResultProps> = ({ result }) => {
       case 'fail':
         return 'bg-red-500/10 border-red-500/30';
       default:
-        return 'bg-elec-dark/30';
+        return 'bg-white/10';
     }
   };
 
@@ -114,33 +114,33 @@ const RingCircuitResult: React.FC<RingCircuitResultProps> = ({ result }) => {
 
           {/* Calculated Values */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-            <div className="p-4 rounded-lg bg-elec-dark/30 border border-elec-yellow/20">
-              <div className="text-xs text-muted-foreground mb-1">R1 (Live)</div>
+            <div className="p-4 rounded-lg bg-white/10 border border-elec-yellow/20">
+              <div className="text-xs text-white mb-1">R1 (Live)</div>
               <div className="text-lg font-bold text-elec-yellow">{result.r1.toFixed(3)} Ω</div>
               {result.expectedValues && (
-                <div className="text-xs text-muted-foreground mt-2">
+                <div className="text-xs text-white mt-2">
                   Expected: {result.expectedValues.r1Expected.toFixed(3)} Ω
                 </div>
               )}
             </div>
             
-            <div className="p-4 rounded-lg bg-elec-dark/30 border border-elec-yellow/20">
-              <div className="text-xs text-muted-foreground mb-1">R2 (CPC)</div>
+            <div className="p-4 rounded-lg bg-white/10 border border-elec-yellow/20">
+              <div className="text-xs text-white mb-1">R2 (CPC)</div>
               <div className="text-lg font-bold text-elec-yellow">{result.r2.toFixed(3)} Ω</div>
               {result.expectedValues && (
-                <div className="text-xs text-muted-foreground mt-2">
+                <div className="text-xs text-white mt-2">
                   Expected: {result.expectedValues.r2Expected.toFixed(3)} Ω
                 </div>
               )}
             </div>
             
-            <div className="p-4 rounded-lg bg-elec-dark/30 border border-elec-yellow/20">
-              <div className="text-xs text-muted-foreground mb-1">Rn (Neutral)</div>
+            <div className="p-4 rounded-lg bg-white/10 border border-elec-yellow/20">
+              <div className="text-xs text-white mb-1">Rn (Neutral)</div>
               <div className="text-lg font-bold text-elec-yellow">{result.rn.toFixed(3)} Ω</div>
             </div>
             
-            <div className="p-4 rounded-lg bg-elec-dark/30 border border-elec-yellow/20">
-              <div className="text-xs text-muted-foreground mb-1">R1 + R2</div>
+            <div className="p-4 rounded-lg bg-white/10 border border-elec-yellow/20">
+              <div className="text-xs text-white mb-1">R1 + R2</div>
               <div className="text-lg font-bold text-elec-yellow">{result.r1PlusR2.toFixed(3)} Ω</div>
             </div>
           </div>
@@ -160,7 +160,7 @@ const RingCircuitResult: React.FC<RingCircuitResultProps> = ({ result }) => {
             if (checks.length === 0) return null;
             
             return (
-              <div key={category} className="bg-elec-dark/30 rounded-lg p-4">
+              <div key={category} className="bg-white/10 rounded-lg p-4">
                 <h5 className="font-medium text-elec-light mb-3 text-sm capitalize">
                   {category.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
                 </h5>
@@ -170,7 +170,7 @@ const RingCircuitResult: React.FC<RingCircuitResultProps> = ({ result }) => {
                       {getStatusIcon(check.status)}
                       <div className="flex-1 min-w-0">
                         <div className="font-medium text-elec-light">{check.description}</div>
-                        <div className="text-muted-foreground mt-1">{check.message}</div>
+                        <div className="text-white mt-1">{check.message}</div>
                         {check.actualValue !== undefined && (
                           <div className="mt-2 flex flex-wrap gap-4 text-xs">
                             <span>Actual: {check.actualValue.toFixed(3)}Ω</span>
@@ -244,7 +244,7 @@ const RingCircuitResult: React.FC<RingCircuitResultProps> = ({ result }) => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="bg-elec-dark/30 rounded-lg p-4">
+          <div className="bg-white/10 rounded-lg p-4">
             <h4 className="font-medium text-elec-light mb-3">Ring Circuit Test Calculation:</h4>
             <div className="space-y-2 text-sm text-elec-light/80 font-mono">
               <div>End-to-End Live: 0.74Ω → R1 = 0.74 ÷ 4 = 0.185Ω</div>

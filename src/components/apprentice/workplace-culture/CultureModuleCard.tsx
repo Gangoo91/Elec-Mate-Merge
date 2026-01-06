@@ -10,27 +10,33 @@ interface CultureModuleCardProps {
 
 const CultureModuleCard = ({ module, onSelect }: CultureModuleCardProps) => {
   const ModuleIcon = module.icon;
-  
+
   return (
-    <Card 
-      className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 cursor-pointer transition-colors"
+    <Card
+      className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 hover:border-elec-yellow/40 cursor-pointer transition-all overflow-hidden relative group"
       onClick={() => onSelect(module)}
     >
-      <CardHeader className="pb-2">
+      <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
+      <CardHeader className="pb-3 relative">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-full bg-elec-yellow/10">
+          <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
             <ModuleIcon className="h-5 w-5 text-elec-yellow" />
           </div>
-          <CardTitle className="text-lg">{module.title}</CardTitle>
+          <CardTitle className="text-lg text-white">{module.title}</CardTitle>
         </div>
       </CardHeader>
-      <CardContent>
-        <CardDescription className="text-elec-light/80">
+      <CardContent className="relative">
+        <CardDescription className="text-white/70">
           {module.description}
         </CardDescription>
       </CardContent>
-      <CardFooter>
-        <Button variant="outline" className="w-full">View Module</Button>
+      <CardFooter className="relative">
+        <Button
+          variant="outline"
+          className="w-full h-11 border-elec-yellow/30 hover:border-elec-yellow hover:bg-elec-yellow/10 text-elec-yellow touch-manipulation active:scale-95 transition-all"
+        >
+          View Module
+        </Button>
       </CardFooter>
     </Card>
   );

@@ -140,7 +140,7 @@ const SiteSafety = () => {
   if (activeView) {
     return (
       <RAMSProvider>
-        <div className="min-h-screen bg-background animate-fade-in">
+        <div className="min-h-screen bg-elec-dark animate-fade-in">
           <div className="max-w-7xl mx-auto px-4 py-4 sm:py-6">
             <div className="mb-4 sm:mb-6">
               <Button
@@ -161,7 +161,7 @@ const SiteSafety = () => {
 
   return (
     <RAMSProvider>
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-elec-dark">
         {/* Hero Section */}
         <div className="border-b border-white/5">
           <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8">
@@ -173,7 +173,7 @@ const SiteSafety = () => {
                 <h1 className="text-2xl sm:text-3xl font-bold text-white mb-1">
                   Site Safety & RAMS
                 </h1>
-                <p className="text-sm sm:text-base text-white/50">
+                <p className="text-sm sm:text-base text-white/70">
                   Generate RAMS documents, assess risks, and maintain safety compliance
                 </p>
               </div>
@@ -216,7 +216,7 @@ const SiteSafety = () => {
                               </Badge>
                             )}
                           </div>
-                          <p className="text-sm text-white/50 line-clamp-2">
+                          <p className="text-sm text-white/70 line-clamp-2">
                             {tool.description}
                           </p>
                         </div>
@@ -254,10 +254,10 @@ const SiteSafety = () => {
                       <CardTitle className="text-sm sm:text-base font-medium text-white group-hover:text-elec-yellow transition-colors mb-1">
                         {tool.title}
                       </CardTitle>
-                      <p className="text-xs text-white/40 line-clamp-2 hidden sm:block">
+                      <p className="text-xs text-white/70 line-clamp-2 hidden sm:block">
                         {tool.description}
                       </p>
-                      <Badge className="mt-2 bg-white/5 text-white/40 border-white/10 text-[10px]">
+                      <Badge className="mt-2 bg-white/5 text-white/70 border-white/10 text-[10px]">
                         {tool.category}
                       </Badge>
                     </CardHeader>
@@ -292,7 +292,7 @@ const SiteSafety = () => {
                           <CardTitle className="text-sm sm:text-base font-medium text-white group-hover:text-elec-yellow transition-colors">
                             {tool.title}
                           </CardTitle>
-                          <p className="text-xs sm:text-sm text-white/40">
+                          <p className="text-xs sm:text-sm text-white/70">
                             {tool.description}
                           </p>
                         </div>
@@ -318,7 +318,7 @@ const SiteSafety = () => {
                     <CardTitle className="text-lg sm:text-xl font-semibold text-white">
                       Safety Best Practices
                     </CardTitle>
-                    <p className="text-sm text-white/50">
+                    <p className="text-sm text-white/70">
                       BS 7671 compliant electrical work guidelines
                     </p>
                   </div>
@@ -343,7 +343,7 @@ const SiteSafety = () => {
                           <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                           <div>
                             <span className="text-sm text-white/80 block">{item.title}</span>
-                            <span className="text-xs text-white/40">{item.detail}</span>
+                            <span className="text-xs text-white/70">{item.detail}</span>
                           </div>
                         </div>
                       ))}
@@ -366,7 +366,7 @@ const SiteSafety = () => {
                           <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                           <div>
                             <span className="text-sm text-white/80 block">{item.title}</span>
-                            <span className="text-xs text-white/40">{item.detail}</span>
+                            <span className="text-xs text-white/70">{item.detail}</span>
                           </div>
                         </div>
                       ))}

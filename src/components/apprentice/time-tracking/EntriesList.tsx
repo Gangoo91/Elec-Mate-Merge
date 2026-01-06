@@ -15,7 +15,7 @@ const EntriesList = ({ entries, isLoading = false }: EntriesListProps) => {
     return (
       <div className="space-y-2">
         {Array.from({ length: 3 }).map((_, i) => (
-          <Card key={i} className="bg-elec-gray/50 overflow-hidden">
+          <Card key={i} className="bg-white/5 overflow-hidden">
             <CardContent className="p-4">
               <div className="flex justify-between">
                 <Skeleton className="h-6 w-24" />
@@ -31,9 +31,9 @@ const EntriesList = ({ entries, isLoading = false }: EntriesListProps) => {
 
   if (entries.length === 0) {
     return (
-      <Card className="bg-elec-gray/50 overflow-hidden">
+      <Card className="bg-white/5 overflow-hidden">
         <CardContent className="p-4 text-center">
-          <p className="text-muted-foreground">No entries found</p>
+          <p className="text-white">No entries found</p>
         </CardContent>
       </Card>
     );

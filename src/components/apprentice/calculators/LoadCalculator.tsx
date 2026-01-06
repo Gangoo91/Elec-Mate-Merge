@@ -228,7 +228,7 @@ export const LoadCalculator = () => {
               "w-full h-12 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all touch-manipulation active:scale-[0.98]",
               newAppliance.name && newAppliance.power
                 ? "bg-gradient-to-r text-white shadow-lg"
-                : "bg-white/10 text-white/40 cursor-not-allowed"
+                : "bg-white/10 text-white/70 cursor-not-allowed"
             )}
             style={newAppliance.name && newAppliance.power ? {
               backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`
@@ -277,7 +277,7 @@ export const LoadCalculator = () => {
                   </div>
                   <button
                     onClick={() => removeAppliance(appliance.id)}
-                    className="p-2 rounded-lg hover:bg-white/10 text-white/40 hover:text-red-400 transition-colors touch-manipulation"
+                    className="p-2 rounded-lg hover:bg-white/10 text-white/70 hover:text-red-400 transition-colors touch-manipulation"
                   >
                     <X className="h-4 w-4" />
                   </button>
@@ -309,7 +309,7 @@ export const LoadCalculator = () => {
               >
                 {results.totalMaximumDemand.toFixed(2)} kW
               </div>
-              <p className="text-sm text-white/50 mt-1">
+              <p className="text-sm text-white/80 mt-1">
                 {results.diversityApplied.toFixed(0)}% diversity applied
               </p>
             </div>
@@ -356,12 +356,12 @@ export const LoadCalculator = () => {
               <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-center">
                 <p className="text-xs text-white/60 mb-1">Cable Size</p>
                 <p className="text-2xl font-bold text-emerald-400">{results.recommendedCable.size}</p>
-                <p className="text-xs text-white/40">Capacity: {results.recommendedCable.current}A</p>
+                <p className="text-xs text-white/70">Capacity: {results.recommendedCable.current}A</p>
               </div>
               <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-center">
                 <p className="text-xs text-white/60 mb-1">MCB Rating</p>
                 <p className="text-2xl font-bold text-emerald-400">{results.recommendedMCB}A</p>
-                <p className="text-xs text-white/40">Type B/C</p>
+                <p className="text-xs text-white/70">Type B/C</p>
               </div>
             </ResultsGrid>
 
@@ -392,7 +392,7 @@ export const LoadCalculator = () => {
                         <span>After Diversity:</span>
                         <span style={{ color: config.gradientFrom }}>{(data.demand / 1000).toFixed(2)} kW</span>
                       </div>
-                      <div className="flex justify-between text-white/50">
+                      <div className="flex justify-between text-white/80">
                         <span>Diversity Factor:</span>
                         <span>{(diversityFactors[type as keyof typeof diversityFactors] * 100)}%</span>
                       </div>
@@ -412,7 +412,7 @@ export const LoadCalculator = () => {
                   <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
                 </div>
                 <ChevronDown className={cn(
-                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  "h-4 w-4 text-white/70 transition-transform duration-200",
                   showGuidance && "rotate-180"
                 )} />
               </CollapsibleTrigger>
@@ -440,7 +440,7 @@ export const LoadCalculator = () => {
                   <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 Regs at a Glance</span>
                 </div>
                 <ChevronDown className={cn(
-                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  "h-4 w-4 text-white/70 transition-transform duration-200",
                   showBsRegs && "rotate-180"
                 )} />
               </CollapsibleTrigger>

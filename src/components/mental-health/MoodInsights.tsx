@@ -141,7 +141,7 @@ const MoodInsights = () => {
             <BarChart3 className="h-6 w-6 text-blue-400" />
           </div>
           <h2 className="text-xl font-bold text-foreground mb-1">Mood Insights</h2>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white/80">
             Track patterns in how you feel
           </p>
         </div>
@@ -150,7 +150,7 @@ const MoodInsights = () => {
           <CardContent className="text-center py-8">
             <Lightbulb className="h-10 w-10 text-blue-400 mx-auto mb-3 opacity-50" />
             <h3 className="font-medium text-foreground mb-2">Not enough data yet</h3>
-            <p className="text-sm text-muted-foreground max-w-xs mx-auto">
+            <p className="text-sm text-white/80 max-w-xs mx-auto">
               Log your mood a few more times to start seeing patterns and insights.
               Check in regularly to understand yourself better.
             </p>
@@ -168,7 +168,7 @@ const MoodInsights = () => {
           <BarChart3 className="h-6 w-6 text-blue-400" />
         </div>
         <h2 className="text-xl font-bold text-foreground mb-1">Mood Insights</h2>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-white/80">
           Understanding your patterns
         </p>
       </div>
@@ -203,7 +203,7 @@ const MoodInsights = () => {
                   {moodEmojis.find(m => m.value === Math.round(stats.average))?.emoji || "😐"}
                 </div>
                 <div className="text-lg sm:text-xl font-bold text-blue-400">{stats.average.toFixed(1)}</div>
-                <div className="text-[11px] sm:text-xs text-muted-foreground">Average</div>
+                <div className="text-[11px] sm:text-xs text-white/80">Average</div>
               </CardContent>
             </Card>
             <Card className="border-purple-500/20 bg-purple-500/5">
@@ -222,14 +222,14 @@ const MoodInsights = () => {
                 }`}>
                   {stats.trend > 0 ? '+' : ''}{stats.trend.toFixed(1)}
                 </div>
-                <div className="text-[11px] sm:text-xs text-muted-foreground">Trend</div>
+                <div className="text-[11px] sm:text-xs text-white/80">Trend</div>
               </CardContent>
             </Card>
             <Card className="border-green-500/20 bg-green-500/5">
               <CardContent className="p-2 sm:p-3 text-center">
                 <Calendar className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 mx-auto mb-1" />
                 <div className="text-lg sm:text-xl font-bold text-green-400">{stats.totalEntries}</div>
-                <div className="text-[11px] sm:text-xs text-muted-foreground">Check-ins</div>
+                <div className="text-[11px] sm:text-xs text-white/80">Check-ins</div>
               </CardContent>
             </Card>
           </div>
@@ -249,7 +249,7 @@ const MoodInsights = () => {
                   return (
                     <div key={i} className="flex-1 flex flex-col items-center gap-1">
                       <div className="w-full flex flex-col items-center">
-                        <span className="text-xs text-muted-foreground mb-1">{count}</span>
+                        <span className="text-xs text-white/80 mb-1">{count}</span>
                         <div
                           className={`w-full rounded-t ${mood.color}/60 transition-all`}
                           style={{ height: `${Math.max(height, 4)}%`, minHeight: '4px' }}
@@ -288,7 +288,7 @@ const MoodInsights = () => {
                       <span className="text-base sm:text-lg block mb-0.5 sm:mb-1">
                         {mood ? mood.emoji : "—"}
                       </span>
-                      <span className="text-[9px] sm:text-[10px] text-muted-foreground block">{day}</span>
+                      <span className="text-[9px] sm:text-[10px] text-white/80 block">{day}</span>
                       {avg > 0 && (
                         <span className="text-[9px] sm:text-[10px] text-foreground/50 hidden sm:block">{avg.toFixed(1)}</span>
                       )}

@@ -22,7 +22,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
 
   return (
     <div className="flex flex-col sm:flex-row items-center justify-between bg-card/50 border border-border rounded-lg p-3 sm:p-4 gap-3 sm:gap-0">
-      <div className="text-xs sm:text-sm text-gray-400 order-2 sm:order-1">
+      <div className="text-xs sm:text-sm text-white/70 order-2 sm:order-1">
         Showing {startItem}-{endItem} of {totalResults} regulations
       </div>
       
@@ -32,7 +32,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
           size="sm"
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className="border-border text-gray-300 hover:bg-neutral-600 disabled:opacity-50 text-xs sm:text-sm"
+          className="border-border text-white/80 hover:bg-neutral-600 disabled:opacity-50 text-xs sm:text-sm"
         >
           <ChevronLeft className="h-3 w-3 sm:h-4 sm:w-4" />
           <span className="hidden sm:inline">Previous</span>
@@ -60,7 +60,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
                 className={
                   currentPage === pageNum
                     ? "bg-elec-yellow text-black hover:bg-elec-yellow/90 text-xs sm:text-sm"
-                    : "border-border text-gray-300 hover:bg-neutral-600 text-xs sm:text-sm"
+                    : "border-border text-white/80 hover:bg-neutral-600 text-xs sm:text-sm"
                 }
               >
                 {pageNum}
@@ -70,7 +70,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
         </div>
         
         {/* Mobile: Just show current page info */}
-        <div className="sm:hidden flex items-center gap-2 text-xs text-gray-400">
+        <div className="sm:hidden flex items-center gap-2 text-xs text-white/70">
           Page {currentPage} of {totalPages}
         </div>
         
@@ -79,7 +79,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
           size="sm"
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="border-border text-gray-300 hover:bg-neutral-600 disabled:opacity-50 text-xs sm:text-sm"
+          className="border-border text-white/80 hover:bg-neutral-600 disabled:opacity-50 text-xs sm:text-sm"
         >
           <span className="hidden sm:inline">Next</span>
           <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4" />

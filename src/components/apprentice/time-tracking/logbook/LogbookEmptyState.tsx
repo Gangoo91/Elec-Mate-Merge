@@ -11,10 +11,10 @@ interface LogbookEmptyStateProps {
 
 const LogbookEmptyState = ({ onAddEntry }: LogbookEmptyStateProps) => {
   return (
-    <Card className="border-dashed border-2 border-elec-yellow/20 bg-elec-dark">
+    <Card className="border-dashed border-2 border-elec-yellow/20 bg-white/10">
       <CardContent className="flex flex-col items-center justify-center py-10">
         <h3 className="text-xl font-medium mb-2">No entries found</h3>
-        <p className="text-muted-foreground text-center max-w-md mb-4">
+        <p className="text-white text-center max-w-md mb-4">
           No training entries found for the selected period. Start by adding your first training activity.
         </p>
         <Dialog>

@@ -215,7 +215,7 @@ const CommonFaultsList = () => {
       case 'high': return 'border-l-orange-500';
       case 'medium': return 'border-l-yellow-500';
       case 'low': return 'border-l-green-500';
-      default: return 'border-l-gray-500';
+      default: return 'border-l-white/60';
     }
   };
 
@@ -226,7 +226,7 @@ const CommonFaultsList = () => {
       medium: 'bg-yellow-500',
       low: 'bg-green-500'
     };
-    return colors[urgency as keyof typeof colors] || 'bg-gray-500';
+    return colors[urgency as keyof typeof colors] || 'bg-white/60';
   };
 
   return (
@@ -234,13 +234,13 @@ const CommonFaultsList = () => {
       {/* Search */}
       <div className="max-w-md mx-auto mb-6 sm:mb-8">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/70" />
           <Input
             type="text"
             placeholder="Search symptoms or faults..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 bg-muted border-border text-foreground placeholder-gray-400 min-h-[44px]"
+            className="pl-10 bg-muted border-border text-foreground placeholder-white/70 min-h-[44px]"
           />
         </div>
       </div>
@@ -266,7 +266,7 @@ const CommonFaultsList = () => {
                   <Shield className="h-4 w-4 sm:h-5 sm:w-5 shrink-0" />
                   <span className="font-semibold text-sm sm:text-base">Safety Notes</span>
                 </div>
-                <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">{fault.safetyNotes}</p>
+                <p className="text-xs sm:text-sm text-white/80 leading-relaxed">{fault.safetyNotes}</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
@@ -277,7 +277,7 @@ const CommonFaultsList = () => {
                   </h4>
                   <ul className="space-y-2">
                     {fault.possibleCauses.map((cause, idx) => (
-                      <li key={idx} className="text-xs sm:text-sm text-gray-300 flex items-start gap-2 leading-relaxed">
+                      <li key={idx} className="text-xs sm:text-sm text-white/80 flex items-start gap-2 leading-relaxed">
                         <div className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-2 shrink-0" />
                         <span className="flex-1">{cause}</span>
                       </li>
@@ -292,7 +292,7 @@ const CommonFaultsList = () => {
                   </h4>
                   <ol className="space-y-2">
                     {fault.diagnosticSteps.map((step, idx) => (
-                      <li key={idx} className="text-xs sm:text-sm text-gray-300 flex items-start gap-2 leading-relaxed">
+                      <li key={idx} className="text-xs sm:text-sm text-white/80 flex items-start gap-2 leading-relaxed">
                         <span className="text-blue-400 font-semibold min-w-[20px] shrink-0">{idx + 1}.</span>
                         <span className="flex-1">{step}</span>
                       </li>

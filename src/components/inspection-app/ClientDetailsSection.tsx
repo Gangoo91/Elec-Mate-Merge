@@ -66,7 +66,7 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                 value={formData.clientName || ''}
                 onChange={(e) => onUpdate('clientName', e.target.value)}
                 placeholder="Full name of person ordering work"
-                className="h-11 text-base touch-manipulation border-gray-300 focus:border-yellow-500 focus:ring-yellow-500"
+                className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
               />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -78,7 +78,7 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                   value={formData.clientPhone || ''}
                   onChange={(e) => onUpdate('clientPhone', e.target.value)}
                   placeholder="Contact telephone number"
-                  className="h-11 text-base touch-manipulation border-gray-300 focus:border-yellow-500 focus:ring-yellow-500"
+                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                 />
               </div>
               <div className="space-y-2">
@@ -89,7 +89,7 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                   value={formData.clientEmail || ''}
                   onChange={(e) => onUpdate('clientEmail', e.target.value)}
                   placeholder="Email address for correspondence"
-                  className="h-11 text-base touch-manipulation border-gray-300 focus:border-yellow-500 focus:ring-yellow-500"
+                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                 />
               </div>
             </div>
@@ -101,7 +101,7 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                 onChange={(e) => onUpdate('clientAddress', e.target.value)}
                 placeholder="Client's full postal address"
                 rows={3}
-                className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-gray-300 focus:border-yellow-500"
+                className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
               />
             </div>
           </div>
@@ -123,7 +123,7 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                 id="sameAsClientAddress"
                 checked={formData.sameAsClientAddress === 'true'}
                 onCheckedChange={handleSameAddressToggle}
-                className="border-gray-400 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black mt-0.5"
+                className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black mt-0.5"
               />
               <Label 
                 htmlFor="sameAsClientAddress" 
@@ -141,7 +141,7 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                 placeholder="Full address of the installation being inspected"
                 rows={3}
                 disabled={formData.sameAsClientAddress === 'true'}
-                className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-gray-300 focus:border-yellow-500 disabled:bg-muted/30 disabled:text-foreground disabled:opacity-100 disabled:cursor-not-allowed"
+                className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 disabled:bg-muted/30 disabled:text-foreground disabled:opacity-100 disabled:cursor-not-allowed"
               />
             </div>
           </div>
@@ -197,10 +197,10 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                     value={formData.estimatedAge || ''}
                     onChange={(e) => onUpdate('estimatedAge', e.target.value)}
                     placeholder="0"
-                    className="h-11 text-base touch-manipulation flex-1 border-gray-300 focus:border-yellow-500 focus:ring-yellow-500"
+                    className="h-11 text-base touch-manipulation flex-1 border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                   />
                   <Select value={formData.ageUnit || 'years'} onValueChange={(value) => onUpdate('ageUnit', value)}>
-                    <SelectTrigger className="h-11 touch-manipulation w-20 sm:w-24 bg-elec-gray border-gray-300 focus:border-yellow-500 focus:ring-yellow-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                    <SelectTrigger className="h-11 touch-manipulation w-20 sm:w-24 bg-elec-gray border-white/30 focus:border-yellow-500 focus:ring-yellow-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
@@ -220,15 +220,15 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                   className="space-y-3"
                 >
                   <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-card/50 transition-colors">
-                    <RadioGroupItem value="known" id="known-date" className="border-gray-300" />
+                    <RadioGroupItem value="known" id="known-date" className="border-white/30" />
                     <Label htmlFor="known-date" className="cursor-pointer">Known Date</Label>
                   </div>
                   <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-card/50 transition-colors">
-                    <RadioGroupItem value="unknown" id="unknown-date" className="border-gray-300" />
+                    <RadioGroupItem value="unknown" id="unknown-date" className="border-white/30" />
                     <Label htmlFor="unknown-date" className="cursor-pointer">Unknown</Label>
                   </div>
                   <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-card/50 transition-colors">
-                    <RadioGroupItem value="not-applicable" id="not-applicable" className="border-gray-300" />
+                    <RadioGroupItem value="not-applicable" id="not-applicable" className="border-white/30" />
                     <Label htmlFor="not-applicable" className="cursor-pointer">Not Applicable (First Inspection)</Label>
                   </div>
                 </RadioGroup>
@@ -237,7 +237,7 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                     type="date"
                     value={formData.dateOfLastInspection || ''}
                     onChange={(e) => onUpdate('dateOfLastInspection', e.target.value)}
-                    className="h-11 text-base touch-manipulation mt-3 border-gray-300 focus:border-yellow-500 focus:ring-yellow-500"
+                    className="h-11 text-base touch-manipulation mt-3 border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                   />
                 )}
               </div>
@@ -251,11 +251,11 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                 className="space-y-3"
               >
                 <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-card/50 transition-colors">
-                  <RadioGroupItem value="yes" id="alterations-yes" className="border-gray-300" />
+                  <RadioGroupItem value="yes" id="alterations-yes" className="border-white/30" />
                   <Label htmlFor="alterations-yes" className="cursor-pointer">Yes</Label>
                 </div>
                 <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-card/50 transition-colors">
-                  <RadioGroupItem value="no" id="alterations-no" className="border-gray-300" />
+                  <RadioGroupItem value="no" id="alterations-no" className="border-white/30" />
                   <Label htmlFor="alterations-no" className="cursor-pointer">No</Label>
                 </div>
               </RadioGroup>
@@ -265,7 +265,7 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                   onChange={(e) => onUpdate('alterationsDetails', e.target.value)}
                   placeholder="Describe the alterations or additions observed..."
                   rows={3}
-                  className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 mt-3 border-gray-300 focus:border-yellow-500"
+                  className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 mt-3 border-white/30 focus:border-yellow-500"
                 />
               )}
               <p className="text-xs text-muted-foreground">

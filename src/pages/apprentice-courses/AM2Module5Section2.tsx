@@ -155,12 +155,12 @@ const AM2Module5Section2 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
+      <div className="border-b border-white/10 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between gap-2">
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-2 sm:p-0 text-sm sm:text-base" asChild>
+            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
               <Link to="..">
                 <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
                 <span className="hidden xs:inline">Back to Module 5</span>
@@ -179,13 +179,13 @@ const AM2Module5Section2 = () => {
             <Search className="w-4 h-4" />
             Module 5 – Section 2
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4 sm:mb-6 leading-tight">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6 leading-tight">
             Logical Fault-Finding Process
           </h1>
-          <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
+          <p className="text-sm sm:text-base text-white mb-6 sm:mb-8 leading-relaxed">
             Fault diagnosis is about working systematically. In the AM2, you are being tested not only on your knowledge of electrical faults but also on your ability to think like a competent electrician.
           </p>
-          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+          <p className="text-sm sm:text-base text-white leading-relaxed">
             NET assessors are looking for method, not magic. They want to see that you can work safely, approach faults in a structured way, use test instruments properly, and state your diagnosis clearly.
           </p>
         </div>
@@ -211,16 +211,16 @@ const AM2Module5Section2 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground mb-4">
+            <p className="text-xs sm:text-sm text-white mb-4">
               By the end of this section, you will be able to:
             </p>
-            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
+            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Follow a step-by-step diagnostic method for fault-finding in AM2
@@ -246,7 +246,7 @@ const AM2Module5Section2 = () => {
         </Card>
 
         {/* The 7-Step Process */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Target className="w-5 h-5" />
@@ -271,15 +271,15 @@ const AM2Module5Section2 = () => {
                 </ul>
               </div>
 
-              <div className="border border-border/20 rounded-lg p-4">
-                <h4 className="font-medium text-foreground mb-3 flex items-center gap-2">
+              <div className="border border-white/10 rounded-lg p-4">
+                <h4 className="font-medium text-white mb-3 flex items-center gap-2">
                   <Eye className="w-4 h-4" />
                   Step 2: Gather Information (Symptoms)
                 </h4>
-                <p className="text-sm text-muted-foreground mb-3">
+                <p className="text-sm text-white mb-3">
                   Look at what the circuit is doing. These symptoms are clues to the type of fault:
                 </p>
-                <ul className="text-sm text-muted-foreground space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Is a socket completely dead? (Open circuit likely)</li>
                   <li>• Does an MCB trip immediately? (Short circuit/earth fault)</li>
                   <li>• Do lights behave oddly? (High resistance connection)</li>
@@ -287,35 +287,35 @@ const AM2Module5Section2 = () => {
                 </ul>
               </div>
 
-              <div className="border border-border/20 rounded-lg p-4">
-                <h4 className="font-medium text-foreground mb-3 flex items-center gap-2">
+              <div className="border border-white/10 rounded-lg p-4">
+                <h4 className="font-medium text-white mb-3 flex items-center gap-2">
                   <Settings className="w-4 h-4" />
                   Step 3: Plan the Test Sequence
                 </h4>
-                <p className="text-sm text-muted-foreground mb-3">
+                <p className="text-sm text-white mb-3">
                   Once you know the symptom, decide which test will prove or disprove the suspected fault:
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div className="border border-border/10 p-3 rounded">
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-white">
                       <strong>Suspected open circuit</strong><br />
                       → Continuity test
                     </p>
                   </div>
                   <div className="border border-border/10 p-3 rounded">
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-white">
                       <strong>Suspected short circuit</strong><br />
                       → Insulation resistance test
                     </p>
                   </div>
                   <div className="border border-border/10 p-3 rounded">
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-white">
                       <strong>Suspected polarity error</strong><br />
                       → Polarity test at accessory
                     </p>
                   </div>
                   <div className="border border-border/10 p-3 rounded">
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-white">
                       <strong>Suspected high resistance</strong><br />
                       → Measure Zs or check terminations
                     </p>
@@ -335,7 +335,7 @@ const AM2Module5Section2 = () => {
         />
 
         {/* Steps 4-7 */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Zap className="w-5 h-5" />
@@ -377,20 +377,20 @@ const AM2Module5Section2 = () => {
                   When you find the fault, you must state clearly:
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <div className="bg-white dark:bg-card p-3 rounded border text-center">
+                  <div className="bg-white dark:bg-transparent p-3 rounded border text-center">
                     <p className="text-sm font-medium text-blue-700 dark:text-elec-yellow">What the fault is</p>
                     <p className="text-xs text-elec-yellow dark:text-elec-yellow">(Type)</p>
                   </div>
-                  <div className="bg-white dark:bg-card p-3 rounded border text-center">
+                  <div className="bg-white dark:bg-transparent p-3 rounded border text-center">
                     <p className="text-sm font-medium text-blue-700 dark:text-elec-yellow">Where it is located</p>
                     <p className="text-xs text-elec-yellow dark:text-elec-yellow">(Location)</p>
                   </div>
-                  <div className="bg-white dark:bg-card p-3 rounded border text-center">
+                  <div className="bg-white dark:bg-transparent p-3 rounded border text-center">
                     <p className="text-sm font-medium text-blue-700 dark:text-elec-yellow">How you would rectify it</p>
                     <p className="text-xs text-elec-yellow dark:text-elec-yellow">(Rectification)</p>
                   </div>
                 </div>
-                <div className="mt-3 p-3 bg-white dark:bg-card rounded border">
+                <div className="mt-3 p-3 bg-white dark:bg-transparent rounded border">
                   <p className="text-sm text-blue-700 dark:text-elec-yellow">
                     <strong>Example:</strong> "Open CPC between CU and socket 2. Rectify by reconnecting CPC at CU terminal."
                   </p>
@@ -416,7 +416,7 @@ const AM2Module5Section2 = () => {
         />
 
         {/* Practical Guidance */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Wrench className="w-5 h-5" />
@@ -494,7 +494,7 @@ const AM2Module5Section2 = () => {
         />
 
         {/* Real-World Examples */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
@@ -558,7 +558,7 @@ const AM2Module5Section2 = () => {
         </Card>
 
         {/* FAQ Section */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Lightbulb className="w-5 h-5" />
@@ -567,11 +567,11 @@ const AM2Module5Section2 = () => {
             
             <div className="space-y-4">
               {faqs.map((faq, index) => (
-                <div key={index} className="border border-border/20 rounded-lg p-3 sm:p-4 bg-card">
-                  <h4 className="font-medium text-foreground mb-2 text-sm sm:text-base">
+                <div key={index} className="border border-white/10 rounded-lg p-3 sm:p-4 ">
+                  <h4 className="font-medium text-white mb-2 text-sm sm:text-base">
                     Q{index + 1}: {faq.question}
                   </h4>
-                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-xs sm:text-sm text-white leading-relaxed">
                     {faq.answer}
                   </p>
                 </div>
@@ -581,7 +581,7 @@ const AM2Module5Section2 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
@@ -611,7 +611,7 @@ const AM2Module5Section2 = () => {
         </Card>
 
         {/* Quiz Section */}
-        <div className="border-t border-border/20 pt-8">
+        <div className="border-t border-white/10 pt-8">
           <Quiz 
             title="Test Your Knowledge: Logical Fault-Finding Process"
             questions={quizQuestions}
@@ -619,7 +619,7 @@ const AM2Module5Section2 = () => {
         </div>
 
         {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 border-t border-border/20">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 border-t border-white/10">
           <Button variant="outline" className="w-full sm:w-auto" asChild>
             <Link to="../section1">
               <ChevronLeft className="w-4 h-4 mr-2" />

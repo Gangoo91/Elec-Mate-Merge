@@ -450,7 +450,7 @@ const InstrumentationModule6Section1 = () => {
                 ],
                 correctAnswer: 1,
                 explanation: "Calibration is a critical component of preventive maintenance strategies, ensuring instruments maintain accuracy and reliability throughout their operational life."
-              }
+            }
             ]}
             title="Section 1 Knowledge Check"
           />

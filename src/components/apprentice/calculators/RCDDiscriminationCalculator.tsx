@@ -304,7 +304,7 @@ const RCDDiscriminationCalculator = () => {
       case 'medium': return 'text-yellow-400';
       case 'high': return 'text-orange-400';
       case 'critical': return 'text-red-400';
-      default: return 'text-gray-400';
+      default: return 'text-white';
     }
   };
 
@@ -571,7 +571,7 @@ const RCDDiscriminationCalculator = () => {
                   <span className="text-sm sm:text-base font-medium text-green-300">Practical Installation Guidance</span>
                 </div>
                 <ChevronDown className={cn(
-                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  "h-4 w-4 text-white/70 transition-transform duration-200",
                   showGuidance && "rotate-180"
                 )} />
               </CollapsibleTrigger>
@@ -599,7 +599,7 @@ const RCDDiscriminationCalculator = () => {
               <span className="text-sm sm:text-base font-medium text-amber-300">Understanding RCD Discrimination</span>
             </div>
             <ChevronDown className={cn(
-              "h-4 w-4 text-white/40 transition-transform duration-200",
+              "h-4 w-4 text-white/70 transition-transform duration-200",
               showRegs && "rotate-180"
             )} />
           </CollapsibleTrigger>
@@ -637,7 +637,7 @@ const RCDDiscriminationCalculator = () => {
               <span className="text-sm sm:text-base font-medium text-purple-300">Common Installation Scenarios</span>
             </div>
             <ChevronDown className={cn(
-              "h-4 w-4 text-white/40 transition-transform duration-200",
+              "h-4 w-4 text-white/70 transition-transform duration-200",
               showScenarios && "rotate-180"
             )} />
           </CollapsibleTrigger>

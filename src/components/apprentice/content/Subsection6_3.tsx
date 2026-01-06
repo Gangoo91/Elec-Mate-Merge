@@ -10,7 +10,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
   return (
     <div className="space-y-8 animate-fade-in pb-8">
       {/* Main Heading */}
-      <div className="bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-6">
+      <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-6">
         <h2 className="text-2xl font-bold text-elec-yellow mb-3">Manual Handling Techniques for Electrical Work</h2>
         <p className="text-elec-light/80">
           Manual handling activities are common in electrical work and pose significant risks if not performed correctly. The Manual Handling Operations Regulations 1992 (as amended) provide the legal framework that protects workers from injury.
@@ -27,7 +27,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       </div>
       
       {/* Key Principles Section */}
-      <Card className="bg-elec-gray border border-elec-yellow/20">
+      <Card className="bg-white/5 border border-elec-yellow/20">
         <CardHeader className="bg-gradient-to-r from-elec-yellow/10 to-transparent border-b border-elec-yellow/20 pb-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -56,7 +56,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </div>
               
               <div className="space-y-4">
-                <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 hover:border-elec-yellow/40 transition-all duration-300">
+                <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 hover:border-elec-yellow/40 transition-all duration-300">
                   <h5 className="font-medium text-elec-yellow text-base mb-2">Task Factors</h5>
                   <ul className="space-y-2 pl-1">
                     {[
@@ -73,7 +73,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   </ul>
                 </div>
                 
-                <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 hover:border-elec-yellow/40 transition-all duration-300">
+                <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 hover:border-elec-yellow/40 transition-all duration-300">
                   <h5 className="font-medium text-elec-yellow text-base mb-2">Individual Capability</h5>
                   <ul className="space-y-2 pl-1">
                     {[
@@ -101,7 +101,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </div>
               
               <div className="space-y-4">
-                <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 hover:border-elec-yellow/40 transition-all duration-300">
+                <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 hover:border-elec-yellow/40 transition-all duration-300">
                   <h5 className="font-medium text-elec-yellow text-base mb-2">Load Characteristics</h5>
                   <ul className="space-y-2 pl-1">
                     {[
@@ -118,7 +118,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   </ul>
                 </div>
                 
-                <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 hover:border-elec-yellow/40 transition-all duration-300">
+                <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 hover:border-elec-yellow/40 transition-all duration-300">
                   <h5 className="font-medium text-elec-yellow text-base mb-2">Environmental Factors</h5>
                   <ul className="space-y-2 pl-1">
                     {[
@@ -188,7 +188,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           />
         </div>
         
-        <div className="mt-8 p-4 bg-elec-dark/50 border border-elec-yellow/20 rounded-lg">
+        <div className="mt-8 p-4 bg-white/10 border border-elec-yellow/20 rounded-lg">
           <div className="flex items-center gap-2 mb-4">
             <AlertTriangle className="h-5 w-5 text-elec-yellow" />
             <h4 className="text-lg font-medium text-elec-yellow">Weight Guidelines</h4>
@@ -207,7 +207,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       </div>
       
       {/* Electrical-Specific Considerations */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <div className="p-4 md:p-6">
           <h3 className="text-xl font-bold text-elec-yellow mb-4">Electrical-Specific Handling Considerations</h3>
           
@@ -230,7 +230,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                     content: "Long lengths can be unwieldy and cause balance issues. Carry with a partner for lengths over 3 metres. Be aware of overhead obstacles when carrying. Use pipe carriers or shoulder pads for metallic conduit to prevent injury."
                   }
                 ].map((item, index) => (
-                  <li key={index} className="bg-elec-dark/30 p-3 rounded-lg border border-elec-yellow/10">
+                  <li key={index} className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                     <span className="font-medium block">{item.title}</span>
                     <p className="text-sm mt-1">{item.content}</p>
                   </li>
@@ -256,7 +256,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                     content: "Plan installation carefully to avoid manual handling where possible. Use skates or rollers for final positioning. Consider access routes during planning stages. Components may need to be installed separately and assembled in-situ to reduce handling risks."
                   }
                 ].map((item, index) => (
-                  <li key={index} className="bg-elec-dark/30 p-3 rounded-lg border border-elec-yellow/10">
+                  <li key={index} className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                     <span className="font-medium block">{item.title}</span>
                     <p className="text-sm mt-1">{item.content}</p>
                   </li>
@@ -265,7 +265,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </div>
           </div>
           
-          <div className="mt-6 p-4 bg-elec-dark/70 border border-elec-yellow/20 rounded-lg">
+          <div className="mt-6 p-4 bg-white/10 border border-elec-yellow/20 rounded-lg">
             <h4 className="font-medium text-elec-yellow mb-3">Team Handling Techniques</h4>
             <p className="text-sm mb-3">When items are too heavy for one person, team lifting may be appropriate if mechanical aids aren't available:</p>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 text-sm">
@@ -299,7 +299,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       </Card>
       
       {/* Mechanical Aids Section */}
-      <div className="bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-4 md:p-6">
+      <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-4 md:p-6">
         <h3 className="text-xl font-bold text-elec-yellow mb-4 flex items-center">
           <HandHelping className="h-5 w-5 mr-2" />
           Mechanical Handling Aids
@@ -309,7 +309,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           <p className="mb-4">Using appropriate mechanical aids can significantly reduce the risk of manual handling injuries:</p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-            <div className="bg-elec-dark/50 border border-elec-yellow/10 rounded-lg p-4">
+            <div className="bg-white/10 border border-elec-yellow/10 rounded-lg p-4">
               <h4 className="font-semibold text-white mb-3">Lifting Equipment</h4>
               <ul className="space-y-3">
                 {[
@@ -338,7 +338,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </ul>
             </div>
             
-            <div className="bg-elec-dark/50 border border-elec-yellow/10 rounded-lg p-4">
+            <div className="bg-white/10 border border-elec-yellow/10 rounded-lg p-4">
               <h4 className="font-semibold text-white mb-3">Specialised Electrical Aids</h4>
               <ul className="space-y-3">
                 {[
@@ -367,7 +367,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </ul>
             </div>
             
-            <div className="bg-elec-dark/50 border border-elec-yellow/10 rounded-lg p-4">
+            <div className="bg-white/10 border border-elec-yellow/10 rounded-lg p-4">
               <h4 className="font-semibold text-white mb-3">Legal Requirements</h4>
               <ul className="space-y-3">
                 {[
@@ -397,7 +397,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </div>
           </div>
           
-          <div className="mt-4 p-4 bg-elec-dark/70 rounded-lg text-sm">
+          <div className="mt-4 p-4 bg-white/10 rounded-lg text-sm">
             <p className="font-medium mb-1 text-elec-yellow">Selection of Aids:</p>
             <p>When selecting mechanical aids, consider the specific requirements of the task, the working environment, and the capabilities of the users. Always inspect aids before use for any damage or defects. Ensure equipment is suitable for the load characteristics and environment where it will be used.</p>
           </div>
@@ -417,7 +417,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             <p className="text-sm mb-3">
               Employers must ensure workers receive appropriate training on manual handling. This should include:
             </p>
-            <ul className="bg-elec-dark/50 p-4 rounded-lg space-y-2 text-sm border border-elec-yellow/20">
+            <ul className="bg-white/10 p-4 rounded-lg space-y-2 text-sm border border-elec-yellow/20">
               {[
                 "Recognition of hazardous manual handling tasks",
                 "How to use mechanical aids safely and effectively",
@@ -433,7 +433,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               ))}
             </ul>
             
-            <div className="mt-4 p-4 bg-elec-dark/30 rounded-lg border border-elec-yellow/10">
+            <div className="mt-4 p-4 bg-white/10 rounded-lg border border-elec-yellow/10">
               <h5 className="font-medium text-white mb-2">Refresher Training</h5>
               <p className="text-sm">
                 Manual handling training should be refreshed regularly, typically every 1-3 years or when:
@@ -469,7 +469,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </p>
             
             <div className="space-y-4">
-              <div className="bg-elec-dark/50 p-4 rounded-lg border border-elec-yellow/20">
+              <div className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
                 <h5 className="font-medium text-elec-yellow mb-2">RIDDOR Reporting</h5>
                 <p className="text-sm mb-2">
                   The Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (RIDDOR) requires reporting of:
@@ -484,7 +484,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </p>
               </div>
               
-              <div className="bg-elec-dark/50 p-4 rounded-lg border border-elec-yellow/20">
+              <div className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
                 <h5 className="font-medium text-elec-yellow mb-2">Internal Reporting</h5>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -498,7 +498,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                       <li>Shared as lessons learned</li>
                     </ul>
                   </div>
-                  <div className="bg-elec-dark/30 p-3 rounded-lg border border-elec-yellow/10">
+                  <div className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                     <h6 className="font-medium text-white mb-2">Early Reporting of Symptoms</h6>
                     <p className="text-sm mb-2">
                       Report early signs of:
@@ -547,7 +547,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
 
 // Reusable component for Lifting Technique Cards
 const LiftingTechniqueCard = ({ title, steps }) => (
-  <div className="bg-elec-dark/50 rounded-lg p-4 border border-elec-yellow/20 hover:border-elec-yellow/40 transition-all duration-300 h-full">
+  <div className="bg-white/10 rounded-lg p-4 border border-elec-yellow/20 hover:border-elec-yellow/40 transition-all duration-300 h-full">
     <h4 className="font-medium text-elec-yellow text-lg mb-3">{title}</h4>
     <ul className="space-y-2">
       {steps.map((step, index) => (
@@ -564,14 +564,14 @@ const LiftingTechniqueCard = ({ title, steps }) => (
 
 // Weight Guideline Card
 const WeightGuidelineCard = ({ position, menKg, womenKg }) => (
-  <div className="bg-elec-dark/70 rounded-lg p-3 border border-elec-yellow/10">
+  <div className="bg-white/10 rounded-lg p-3 border border-elec-yellow/10">
     <div className="mb-2 text-sm font-medium">{position}</div>
     <div className="grid grid-cols-2 gap-2">
-      <div className="bg-elec-dark p-2 rounded text-center">
+      <div className="bg-white/10 p-2 rounded text-center">
         <div className="text-xs text-elec-yellow/80">Men</div>
         <div className="font-bold">{menKg} kg</div>
       </div>
-      <div className="bg-elec-dark p-2 rounded text-center">
+      <div className="bg-white/10 p-2 rounded text-center">
         <div className="text-xs text-elec-yellow/80">Women</div>
         <div className="font-bold">{womenKg} kg</div>
       </div>

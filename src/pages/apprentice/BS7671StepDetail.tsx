@@ -105,8 +105,8 @@ const BS7671StepDetail = () => {
               {adaptedStepData.category}
             </div>
           </div>
-          <p className="text-muted-foreground">{adaptedStepData.description}</p>
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <p className="text-white/70">{adaptedStepData.description}</p>
+          <div className="flex items-center gap-2 text-sm text-white/70">
             <Timer className="h-4 w-4" />
             <span>Estimated time: 10-20 minutes</span>
           </div>
@@ -120,7 +120,7 @@ const BS7671StepDetail = () => {
       )}
 
       {/* Progress */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-lg">Step Progress</CardTitle>
         </CardHeader>
@@ -190,7 +190,7 @@ const BS7671StepDetail = () => {
       )}
 
       {/* Checklist */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <ClipboardCheck className="h-5 w-5 text-elec-yellow" />
@@ -245,7 +245,7 @@ const BS7671StepDetail = () => {
       </Card>
 
       {/* Related Tools */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Calculator className="h-5 w-5 text-elec-yellow" />

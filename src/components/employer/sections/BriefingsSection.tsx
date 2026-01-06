@@ -2,9 +2,10 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { FeatureTile } from "@/components/employer/FeatureTile";
 import { SectionHeader } from "@/components/employer/SectionHeader";
+import { QuickStats, QuickStat } from "@/components/employer/QuickStats";
 import { Input } from "@/components/ui/input";
-import { 
-  Users, 
+import {
+  Users,
   Plus,
   Calendar,
   ClipboardCheck,
@@ -12,7 +13,6 @@ import {
   FileText,
   Search,
   CheckCircle2,
-  Clock,
   UserCheck
 } from "lucide-react";
 
@@ -65,35 +65,30 @@ export function BriefingsSection() {
       </div>
 
       {/* Quick Stats */}
-      <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4 md:mx-0 md:px-0">
-        <Card className="bg-success/10 border-success/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-success" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{completedBriefings}</p>
-              <p className="text-xs text-muted-foreground">Completed</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-elec-yellow/10 border-elec-yellow/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <Calendar className="h-4 w-4 text-elec-yellow" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{scheduledBriefings}</p>
-              <p className="text-xs text-muted-foreground">Scheduled</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-info/10 border-info/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <UserCheck className="h-4 w-4 text-info" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{avgAttendance}%</p>
-              <p className="text-xs text-muted-foreground">Attendance</p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <QuickStats
+        stats={[
+          {
+            icon: CheckCircle2,
+            value: completedBriefings,
+            label: "Completed",
+            color: "green",
+          },
+          {
+            icon: Calendar,
+            value: scheduledBriefings,
+            label: "Scheduled",
+            color: "yellow",
+            pulse: scheduledBriefings > 0,
+          },
+          {
+            icon: UserCheck,
+            value: avgAttendance,
+            label: "Attendance",
+            color: "blue",
+            suffix: "%",
+          },
+        ]}
+      />
 
       {/* Quick Actions */}
       <div>

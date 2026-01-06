@@ -25,7 +25,7 @@ const PortfolioAnalyticsDashboard = ({ analytics, categories }: PortfolioAnalyti
           <div className="text-center">
             <BarChart3 className="h-12 w-12 text-elec-yellow/40 mx-auto mb-4" />
             <h3 className="text-xl font-medium mb-2">No Analytics Available</h3>
-            <p className="text-muted-foreground">
+            <p className="text-white">
               Add some portfolio entries to see your analytics and progress insights.
             </p>
           </div>
@@ -51,7 +51,7 @@ const PortfolioAnalyticsDashboard = ({ analytics, categories }: PortfolioAnalyti
               <Target className="h-5 w-5 text-blue-400" />
               <div>
                 <p className="text-2xl font-bold">{completionRate.toFixed(1)}%</p>
-                <p className="text-xs text-muted-foreground">Completion Rate</p>
+                <p className="text-xs text-white">Completion Rate</p>
               </div>
             </div>
           </CardContent>
@@ -63,7 +63,7 @@ const PortfolioAnalyticsDashboard = ({ analytics, categories }: PortfolioAnalyti
               <CheckCircle className="h-5 w-5 text-green-400" />
               <div>
                 <p className="text-2xl font-bold">{analytics.completedEntries}</p>
-                <p className="text-xs text-muted-foreground">Completed Entries</p>
+                <p className="text-xs text-white">Completed Entries</p>
               </div>
             </div>
           </CardContent>
@@ -75,7 +75,7 @@ const PortfolioAnalyticsDashboard = ({ analytics, categories }: PortfolioAnalyti
               <Clock className="h-5 w-5 text-purple-400" />
               <div>
                 <p className="text-2xl font-bold">{totalHours}h {totalMinutes}m</p>
-                <p className="text-xs text-muted-foreground">Time Invested</p>
+                <p className="text-xs text-white">Time Invested</p>
               </div>
             </div>
           </CardContent>
@@ -87,7 +87,7 @@ const PortfolioAnalyticsDashboard = ({ analytics, categories }: PortfolioAnalyti
               <Star className="h-5 w-5 text-yellow-400" />
               <div>
                 <p className="text-2xl font-bold">{analytics.averageRating.toFixed(1)}</p>
-                <p className="text-xs text-muted-foreground">Average Rating</p>
+                <p className="text-xs text-white">Average Rating</p>
               </div>
             </div>
           </CardContent>
@@ -116,7 +116,7 @@ const PortfolioAnalyticsDashboard = ({ analytics, categories }: PortfolioAnalyti
                         {Math.round(progress)}%
                       </Badge>
                     </div>
-                    <div className="text-sm text-muted-foreground">
+                    <div className="text-sm text-white">
                       {Math.round((progress / 100) * category.requiredEntries)}/{category.requiredEntries} required
                     </div>
                   </div>
@@ -135,7 +135,7 @@ const PortfolioAnalyticsDashboard = ({ analytics, categories }: PortfolioAnalyti
         </CardHeader>
         <CardContent>
           {analytics.skillsDemo.length === 0 ? (
-            <p className="text-muted-foreground text-center py-4">
+            <p className="text-white text-center py-4">
               No skills recorded yet. Add portfolio entries to track your skill development.
             </p>
           ) : (
@@ -152,7 +152,7 @@ const PortfolioAnalyticsDashboard = ({ analytics, categories }: PortfolioAnalyti
                   </Badge>
                 )}
               </div>
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 You've demonstrated {analytics.skillsDemo.length} unique skills across your portfolio entries.
               </div>
             </div>
@@ -167,7 +167,7 @@ const PortfolioAnalyticsDashboard = ({ analytics, categories }: PortfolioAnalyti
         </CardHeader>
         <CardContent>
           {analytics.recentActivity.length === 0 ? (
-            <p className="text-muted-foreground text-center py-4">
+            <p className="text-white text-center py-4">
               No recent activity to display.
             </p>
           ) : (
@@ -176,13 +176,13 @@ const PortfolioAnalyticsDashboard = ({ analytics, categories }: PortfolioAnalyti
                 <div key={activity.id} className="flex items-center justify-between p-3 border rounded-lg">
                   <div>
                     <p className="font-medium">{activity.entryTitle}</p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-white">
                       {activity.type === 'created' ? 'Created' : 
                        activity.type === 'updated' ? 'Updated' : 
                        activity.type === 'completed' ? 'Completed' : 'Reviewed'}
                     </p>
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-sm text-white">
                     {new Date(activity.date).toLocaleDateString()}
                   </div>
                 </div>
@@ -202,7 +202,7 @@ const PortfolioAnalyticsDashboard = ({ analytics, categories }: PortfolioAnalyti
             {completionRate < 50 && (
               <div className="p-3 border rounded-lg">
                 <p className="font-medium">Increase Your Completion Rate</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white">
                   Consider marking some of your in-progress entries as completed once they're finished.
                 </p>
               </div>
@@ -211,7 +211,7 @@ const PortfolioAnalyticsDashboard = ({ analytics, categories }: PortfolioAnalyti
             {analytics.averageRating < 3.5 && (
               <div className="p-3 border rounded-lg">
                 <p className="font-medium">Improve Self-Assessment Ratings</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white">
                   Your average self-assessment rating is below 3.5. Consider reflecting more on your achievements.
                 </p>
               </div>
@@ -220,7 +220,7 @@ const PortfolioAnalyticsDashboard = ({ analytics, categories }: PortfolioAnalyti
             {Object.values(analytics.categoriesProgress).some(progress => progress < 30) && (
               <div className="p-3 border rounded-lg">
                 <p className="font-medium">Focus on Underdeveloped Categories</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white">
                   Some categories need more attention. Try to add entries to balance your portfolio.
                 </p>
               </div>
@@ -229,7 +229,7 @@ const PortfolioAnalyticsDashboard = ({ analytics, categories }: PortfolioAnalyti
             {analytics.skillsDemo.length < 10 && (
               <div className="p-3 border rounded-lg">
                 <p className="font-medium">Expand Skill Documentation</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white">
                   Document more skills in your portfolio entries to show your diverse capabilities.
                 </p>
               </div>

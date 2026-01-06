@@ -56,7 +56,7 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
 
   if (studyMode === 'flashcards' && currentTerm) {
     return (
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="text-elec-yellow">Flashcard Study Mode</CardTitle>
@@ -68,7 +68,7 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="text-center space-y-4">
-            <div className="p-6 border border-elec-yellow/30 rounded-lg bg-elec-dark/30">
+            <div className="p-6 border border-elec-yellow/30 rounded-lg bg-white/10">
               <h3 className="text-2xl font-bold text-elec-yellow mb-4">
                 {currentTerm.term}
               </h3>
@@ -113,7 +113,7 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
             </div>
           </div>
           
-          <div className="flex justify-between text-sm text-muted-foreground">
+          <div className="flex justify-between text-sm text-white">
             <Button variant="ghost" size="sm" onClick={() => setStudyMode(null)}>
               Exit Study Mode
             </Button>
@@ -125,7 +125,7 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
   }
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border-elec-yellow/20 bg-white/5">
       <CardHeader>
         <CardTitle className="text-elec-yellow flex items-center gap-2">
           <BookOpen className="h-5 w-5" />
@@ -150,7 +150,7 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-muted-foreground mb-4">
+                  <p className="text-sm text-white mb-4">
                     Study terms with interactive flashcards. Perfect for memorisation.
                   </p>
                   <Button onClick={startFlashcards} className="w-full">
@@ -167,7 +167,7 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-muted-foreground mb-4">
+                  <p className="text-sm text-white mb-4">
                     Test your knowledge with randomised quiz questions.
                   </p>
                   <Button className="w-full" disabled>
@@ -184,7 +184,7 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-muted-foreground mb-4">
+                  <p className="text-sm text-white mb-4">
                     Learn 5 new terms every day with spaced repetition.
                   </p>
                   <Button className="w-full" disabled>
@@ -201,7 +201,7 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-muted-foreground mb-4">
+                  <p className="text-sm text-white mb-4">
                     Practice with randomly selected terms from all categories.
                   </p>
                   <Button className="w-full" disabled>
@@ -219,7 +219,7 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
                   <TrendingUp className="h-5 w-5 text-elec-yellow" />
                   <div>
                     <h4 className="font-medium">Terms Studied</h4>
-                    <p className="text-sm text-muted-foreground">Track your learning progress</p>
+                    <p className="text-sm text-white">Track your learning progress</p>
                   </div>
                 </div>
                 <Badge variant="outline">0 / {terms.length}</Badge>
@@ -230,7 +230,7 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
                   <CheckCircle className="h-5 w-5 text-green-400" />
                   <div>
                     <h4 className="font-medium">Mastered Terms</h4>
-                    <p className="text-sm text-muted-foreground">Terms you know well</p>
+                    <p className="text-sm text-white">Terms you know well</p>
                   </div>
                 </div>
                 <Badge variant="outline">0</Badge>
@@ -241,7 +241,7 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
                   <Clock className="h-5 w-5 text-blue-400" />
                   <div>
                     <h4 className="font-medium">Study Streak</h4>
-                    <p className="text-sm text-muted-foreground">Consecutive days studied</p>
+                    <p className="text-sm text-white">Consecutive days studied</p>
                   </div>
                 </div>
                 <Badge variant="outline">0 days</Badge>
@@ -255,7 +255,7 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
                 <Trophy className="h-6 w-6 text-yellow-400" />
                 <div>
                   <h4 className="font-medium">First Steps</h4>
-                  <p className="text-xs text-muted-foreground">Study your first 10 terms</p>
+                  <p className="text-xs text-white">Study your first 10 terms</p>
                 </div>
               </div>
               
@@ -263,7 +263,7 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
                 <Star className="h-6 w-6 text-purple-400" />
                 <div>
                   <h4 className="font-medium">Category Expert</h4>
-                  <p className="text-xs text-muted-foreground">Master all terms in a category</p>
+                  <p className="text-xs text-white">Master all terms in a category</p>
                 </div>
               </div>
               
@@ -271,7 +271,7 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
                 <Target className="h-6 w-6 text-green-400" />
                 <div>
                   <h4 className="font-medium">Perfect Score</h4>
-                  <p className="text-xs text-muted-foreground">Get 100% on a practice quiz</p>
+                  <p className="text-xs text-white">Get 100% on a practice quiz</p>
                 </div>
               </div>
             </div>

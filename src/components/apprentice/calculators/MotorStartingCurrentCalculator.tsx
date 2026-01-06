@@ -389,7 +389,7 @@ const MotorStartingCurrentCalculator = () => {
             </div>
             <ChevronDown
               className={cn(
-                "h-4 w-4 text-white/40 transition-transform duration-200",
+                "h-4 w-4 text-white/70 transition-transform duration-200",
                 showInstallation && "rotate-180"
               )}
             />
@@ -607,7 +607,7 @@ const MotorStartingCurrentCalculator = () => {
               >
                 {result.recommendedCableSize}
               </div>
-              <p className="text-sm text-white/50 mt-1">Recommended Cable Size</p>
+              <p className="text-sm text-white/80 mt-1">Recommended Cable Size</p>
             </div>
             <p className="text-sm text-white/60 text-center">{result.cableAnalysis}</p>
           </div>
@@ -670,7 +670,7 @@ const MotorStartingCurrentCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/40 transition-transform duration-200",
+                    "h-4 w-4 text-white/70 transition-transform duration-200",
                     showGuidance && "rotate-180"
                   )}
                 />
@@ -725,16 +725,16 @@ const MotorStartingCurrentCalculator = () => {
           </div>
 
           {/* Calculation Notes */}
-          <div className="text-xs text-white/40 pt-2 space-y-1">
+          <div className="text-xs text-white/70 pt-2 space-y-1">
             <p>
-              <strong className="text-white/50">Calculation:</strong> I = P / (
+              <strong className="text-white/80">Calculation:</strong> I = P / (
               {phases === "3" ? "√3 × " : ""}V × η × cos φ)
             </p>
             <p>
-              <strong className="text-white/50">Voltage Drop:</strong> VD = I × Z × 100 / V
+              <strong className="text-white/80">Voltage Drop:</strong> VD = I × Z × 100 / V
             </p>
             <p>
-              <strong className="text-white/50">I²t:</strong> Thermal stress = I² × t
+              <strong className="text-white/80">I²t:</strong> Thermal stress = I² × t
             </p>
           </div>
         </div>
@@ -755,7 +755,7 @@ const MotorStartingCurrentCalculator = () => {
             </div>
             <ChevronDown
               className={cn(
-                "h-4 w-4 text-white/40 transition-transform duration-200",
+                "h-4 w-4 text-white/70 transition-transform duration-200",
                 showReference && "rotate-180"
               )}
             />

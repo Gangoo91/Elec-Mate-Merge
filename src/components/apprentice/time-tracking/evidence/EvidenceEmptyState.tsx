@@ -15,11 +15,11 @@ interface EvidenceEmptyStateProps {
 
 const EvidenceEmptyState = ({ onAddEvidence, isUploading, setIsUploading }: EvidenceEmptyStateProps) => {
   return (
-    <Card className="border-dashed border-2 border-elec-yellow/20 bg-elec-dark">
+    <Card className="border-dashed border-2 border-elec-yellow/20 bg-white/10">
       <CardContent className="flex flex-col items-center justify-center py-10">
         <FileText className="h-12 w-12 text-elec-yellow/40 mb-4" />
         <h3 className="text-xl font-medium mb-2">No evidence found</h3>
-        <p className="text-muted-foreground text-center max-w-md mb-4">
+        <p className="text-white text-center max-w-md mb-4">
           Add evidence of your training activities to build a comprehensive record of your learning.
         </p>
         <Dialog>

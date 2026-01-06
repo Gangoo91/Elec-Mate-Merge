@@ -31,7 +31,7 @@ const FundingCalculator = () => {
           <Calculator className="h-5 w-5 text-primary" />
           Education Funding Calculator
         </CardTitle>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-white">
           Quick funding estimates for professional development courses
         </p>
       </CardHeader>
@@ -48,15 +48,15 @@ const FundingCalculator = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
           <div className="p-3 bg-muted rounded-lg">
             <h4 className="font-semibold mb-1">Student Finance (Level 6)</h4>
-            <p className="text-muted-foreground">Up to £9,250 tuition + maintenance loan</p>
+            <p className="text-white">Up to £9,250 tuition + maintenance loan</p>
           </div>
           <div className="p-3 bg-muted rounded-lg">
             <h4 className="font-semibold mb-1">Postgraduate Loan (Level 7)</h4>
-            <p className="text-muted-foreground">Up to £12,858 for master's courses</p>
+            <p className="text-white">Up to £12,858 for master's courses</p>
           </div>
           <div className="p-3 bg-muted rounded-lg">
             <h4 className="font-semibold mb-1">Advanced Learner Loan</h4>
-            <p className="text-muted-foreground">Levels 3-6, repay when earning £27,295+</p>
+            <p className="text-white">Levels 3-6, repay when earning £27,295+</p>
           </div>
         </div>
 
@@ -72,7 +72,7 @@ const FundingCalculator = () => {
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
           
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Get comprehensive funding analysis including professional qualifications, 
             regional variations, employer support, and updated 2025 rates
           </p>
@@ -86,7 +86,7 @@ const FundingCalculator = () => {
             rel="noopener noreferrer"
             className="flex items-center gap-2 p-3 border rounded-lg hover:bg-muted transition-colors"
           >
-            <ExternalLink className="h-4 w-4 text-muted-foreground" />
+            <ExternalLink className="h-4 w-4 text-white" />
             <span>Apply for Student Finance</span>
           </a>
           <a 
@@ -95,7 +95,7 @@ const FundingCalculator = () => {
             rel="noopener noreferrer"
             className="flex items-center gap-2 p-3 border rounded-lg hover:bg-muted transition-colors"
           >
-            <ExternalLink className="h-4 w-4 text-muted-foreground" />
+            <ExternalLink className="h-4 w-4 text-white" />
             <span>Advanced Learner Loan Info</span>
           </a>
           <a 
@@ -104,7 +104,7 @@ const FundingCalculator = () => {
             rel="noopener noreferrer"
             className="flex items-center gap-2 p-3 border rounded-lg hover:bg-muted transition-colors"
           >
-            <ExternalLink className="h-4 w-4 text-muted-foreground" />
+            <ExternalLink className="h-4 w-4 text-white" />
             <span>Skills Bank Funding</span>
           </a>
           <a 
@@ -113,7 +113,7 @@ const FundingCalculator = () => {
             rel="noopener noreferrer"
             className="flex items-center gap-2 p-3 border rounded-lg hover:bg-muted transition-colors"
           >
-            <ExternalLink className="h-4 w-4 text-muted-foreground" />
+            <ExternalLink className="h-4 w-4 text-white" />
             <span>IET Professional Funding</span>
           </a>
         </div>

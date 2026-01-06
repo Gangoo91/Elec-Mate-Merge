@@ -132,18 +132,18 @@ const AM2Module3Section4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
+      <div className="border-b border-white/10 bg-card/50">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+            <Button variant="ghost" className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
               <Link to="..">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Module 3
               </Link>
             </Button>
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+            <Button variant="ghost" className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
               <Link to="../section5">
                 Section 5
                 <ArrowRight className="w-4 h-4 ml-2" />
@@ -161,10 +161,10 @@ const AM2Module3Section4 = () => {
             <Terminal className="w-4 h-4" />
             Module 3 – Section 4
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-6">
             Termination, Connections, and Circuit Labelling
           </h1>
-          <p className="text-base text-muted-foreground mb-8 leading-relaxed">
+          <p className="text-base text-white mb-8 leading-relaxed">
             Professional workmanship standards and NET compliance requirements for AM2 assessment - master terminations, connections and labelling for assessment success.
           </p>
         </div>
@@ -190,16 +190,16 @@ const AM2Module3Section4 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm text-white mb-4">
               By the end of this section, you should be able to:
             </p>
-            <ul className="space-y-2 text-xs sm:text-sm text-foreground">
+            <ul className="space-y-2 text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Execute professional terminations meeting BS7671 Section 526 requirements
@@ -229,7 +229,7 @@ const AM2Module3Section4 = () => {
         </Card>
 
         {/* NET Assessment Criteria */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Target className="w-5 h-5" />
@@ -237,9 +237,9 @@ const AM2Module3Section4 = () => {
             </h2>
             
             <div className="space-y-4">
-              <div className="border border-border/20 rounded-lg p-4">
+              <div className="border border-white/10 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Primary Assessment Areas (Pass/Fail)</h4>
-                <ul className="space-y-2 text-sm text-muted-foreground">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">❌</span>
                     <div>
@@ -271,9 +271,9 @@ const AM2Module3Section4 = () => {
                 </ul>
               </div>
 
-              <div className="border border-border/20 rounded-lg p-4">
+              <div className="border border-white/10 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Secondary Assessment (Marks Deduction)</h4>
-                <ul className="space-y-2 text-sm text-muted-foreground">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">⚠️</span>
                     <div>
@@ -309,7 +309,7 @@ const AM2Module3Section4 = () => {
         </Card>
 
         {/* General Termination Standards */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Terminal className="w-5 h-5" />
@@ -317,9 +317,9 @@ const AM2Module3Section4 = () => {
             </h2>
             
             <div className="space-y-4">
-              <div className="border border-border/20 rounded-lg p-4">
+              <div className="border border-white/10 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Core Requirements - Non-Negotiable</h4>
-                <ul className="space-y-2 text-sm text-muted-foreground">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex gap-2">
                     <span className="font-medium text-green-400 min-w-[20px]">✓</span>
                     <div>
@@ -358,9 +358,9 @@ const AM2Module3Section4 = () => {
                 </ul>
               </div>
 
-              <div className="bg-card border border-elec-yellow/20 rounded-lg p-4">
+              <div className="bg-transparent border border-elec-yellow/20 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Professional Tips</h4>
-                <ul className="space-y-1 text-sm text-muted-foreground">
+                <ul className="space-y-1 text-sm text-white">
                   <li>• Strip cables using proper strippers - avoid damaging conductor insulation</li>
                   <li>• Cut conductors to exact length - no bunching or excessive length in terminals</li>
                   <li>• Use torque screwdrivers for DB connections - demonstrates professional standards</li>
@@ -380,7 +380,7 @@ const AM2Module3Section4 = () => {
         />
 
         {/* Accessory Terminations */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Zap className="w-5 h-5" />
@@ -388,9 +388,9 @@ const AM2Module3Section4 = () => {
             </h2>
             
             <div className="space-y-4">
-              <div className="border border-border/20 rounded-lg p-4">
+              <div className="border border-white/10 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Step-by-Step Accessory Termination</h4>
-                <ol className="space-y-2 text-sm text-muted-foreground">
+                <ol className="space-y-2 text-sm text-white">
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
                     <div>
@@ -437,7 +437,7 @@ const AM2Module3Section4 = () => {
         </Card>
 
         {/* Distribution Board Terminations */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Wrench className="w-5 h-5" />
@@ -445,9 +445,9 @@ const AM2Module3Section4 = () => {
             </h2>
             
             <div className="space-y-4">
-              <div className="border border-border/20 rounded-lg p-4">
+              <div className="border border-white/10 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">DB Termination Sequence</h4>
-                <ol className="space-y-2 text-sm text-muted-foreground">
+                <ol className="space-y-2 text-sm text-white">
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
                     <div>
@@ -528,7 +528,7 @@ const AM2Module3Section4 = () => {
         />
 
         {/* SWA Terminations */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Cable className="w-5 h-5" />
@@ -536,9 +536,9 @@ const AM2Module3Section4 = () => {
             </h2>
             
             <div className="space-y-4">
-              <div className="border border-border/20 rounded-lg p-4">
+              <div className="border border-white/10 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">SWA Termination Process</h4>
-                <ol className="space-y-2 text-sm text-muted-foreground">
+                <ol className="space-y-2 text-sm text-white">
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
                     <div>
@@ -600,7 +600,7 @@ const AM2Module3Section4 = () => {
         />
 
         {/* Circuit Labelling */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Badge className="w-5 h-5" />
@@ -608,9 +608,9 @@ const AM2Module3Section4 = () => {
             </h2>
             
             <div className="space-y-4">
-              <div className="border border-border/20 rounded-lg p-4">
+              <div className="border border-white/10 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Systematic Labelling Strategy</h4>
-                <ol className="space-y-2 text-sm text-muted-foreground">
+                <ol className="space-y-2 text-sm text-white">
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
                     <div>
@@ -676,7 +676,7 @@ const AM2Module3Section4 = () => {
         </Card>
 
         {/* Common Assessment Failures */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" />
@@ -684,9 +684,9 @@ const AM2Module3Section4 = () => {
             </h2>
             
             <div className="space-y-4">
-              <div className="border border-border/20 rounded-lg p-4">
+              <div className="border border-white/10 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Top 10 Termination Failures (NET Statistics)</h4>
-                <ol className="space-y-2 text-sm text-muted-foreground">
+                <ol className="space-y-2 text-sm text-white">
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[30px]">1.</span>
                     <div>
@@ -760,10 +760,10 @@ const AM2Module3Section4 = () => {
                 </ol>
               </div>
 
-              <div className="bg-card border border-elec-yellow/20 rounded-lg p-4">
+              <div className="bg-transparent border border-elec-yellow/20 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Assessment Recovery Strategy</h4>
-                <p className="text-sm text-muted-foreground mb-3">If you make a termination error during assessment:</p>
-                <ul className="space-y-1 text-sm text-muted-foreground">
+                <p className="text-sm text-white mb-3">If you make a termination error during assessment:</p>
+                <ul className="space-y-1 text-sm text-white">
                   <li>• <strong>Acknowledge immediately</strong> - Don't try to hide mistakes</li>
                   <li>• <strong>Rectify systematically</strong> - Fix the root cause, not just symptoms</li>
                   <li>• <strong>Check similar connections</strong> - Prevent recurring errors</li>
@@ -776,7 +776,7 @@ const AM2Module3Section4 = () => {
         </Card>
 
         {/* Professional Standards */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Wrench className="w-5 h-5" />
@@ -784,9 +784,9 @@ const AM2Module3Section4 = () => {
             </h2>
             
             <div className="space-y-4">
-              <div className="border border-border/20 rounded-lg p-4">
+              <div className="border border-white/10 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Tools and Equipment</h4>
-                <ul className="space-y-2 text-sm text-muted-foreground">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex gap-2">
                     <span className="font-medium text-green-400 min-w-[20px]">✓</span>
                     <div>
@@ -818,9 +818,9 @@ const AM2Module3Section4 = () => {
                 </ul>
               </div>
 
-              <div className="border border-border/20 rounded-lg p-4">
+              <div className="border border-white/10 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Quality Assurance Process</h4>
-                <ol className="space-y-2 text-sm text-muted-foreground">
+                <ol className="space-y-2 text-sm text-white">
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
                     <div>
@@ -858,7 +858,7 @@ const AM2Module3Section4 = () => {
         </Card>
 
         {/* Summary and Key Takeaways */}
-        <Card className="bg-card border-elec-yellow/30">
+        <Card className="bg-transparent border-elec-yellow/30">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
@@ -877,9 +877,9 @@ const AM2Module3Section4 = () => {
                 </ul>
               </div>
               
-              <div className="bg-card border border-elec-yellow/20 rounded-lg p-4">
+              <div className="bg-transparent border border-elec-yellow/20 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Remember for Assessment Day</h4>
-                <ul className="space-y-1 text-sm text-muted-foreground">
+                <ul className="space-y-1 text-sm text-white">
                   <li>• The assessor will inspect every connection you make</li>
                   <li>• Poor terminations can fail you even if circuits work correctly</li>
                   <li>• Label circuits as you install them - saves time and prevents errors</li>
@@ -899,13 +899,13 @@ const AM2Module3Section4 = () => {
         </Card>
 
         {/* Knowledge Check Quiz */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               Knowledge Check - Termination Standards
             </h2>
-            <p className="text-sm text-muted-foreground mb-6">
+            <p className="text-sm text-white mb-6">
               Test your understanding of termination requirements and NET assessment criteria. This quiz simulates the type of questions you might face and helps identify knowledge gaps.
             </p>
             
@@ -917,7 +917,7 @@ const AM2Module3Section4 = () => {
         </Card>
 
         {/* Navigation */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-border/20">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-white/10">
           <Button variant="outline" className="w-full sm:w-auto" asChild>
             <Link to="../section3" className="flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" />
@@ -926,7 +926,7 @@ const AM2Module3Section4 = () => {
             </Link>
           </Button>
           
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2 text-sm text-white">
             <span className="hidden sm:inline">Section 4 of 6</span>
             <div className="flex gap-1">
               <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>

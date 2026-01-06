@@ -2,7 +2,7 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { AlertTriangle, RefreshCcw } from 'lucide-react';
+import { AlertTriangle, RefreshCcw, FileWarning } from 'lucide-react';
 
 interface Props {
   children: ReactNode;
@@ -52,44 +52,57 @@ class SafetyCasesErrorBoundary extends Component<Props, State> {
   public render(): ReactNode {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-elec-dark p-6 flex items-center justify-center">
-          <Card className="border-red-500/20 bg-red-900/10 max-w-2xl w-full">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <AlertTriangle className="h-6 w-6 text-red-500" />
-                <CardTitle className="text-red-400">
-                  Safety Cases Error ({this.props.pageName || 'Unknown Page'})
-                </CardTitle>
-              </div>
+        <div className="min-h-screen bg-white/10 p-6 flex items-center justify-center">
+          <Card className="bg-gradient-to-br from-white/5 to-elec-card border-red-500/30 max-w-2xl w-full overflow-hidden relative animate-fade-in">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+
+            <CardHeader className="relative">
+              <CardTitle className="text-white flex items-center gap-3">
+                <div className="p-2.5 rounded-xl bg-gradient-to-br from-red-500/20 to-red-500/5 border border-red-500/30">
+                  <AlertTriangle className="h-5 w-5 text-red-400" />
+                </div>
+                Safety Cases Error
+                {this.props.pageName && (
+                  <span className="text-sm font-normal text-white/80">({this.props.pageName})</span>
+                )}
+              </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-elec-light/80">
-                An error occurred while loading the safety cases content. This helps us debug the issue.
-              </p>
-              
+
+            <CardContent className="space-y-4 relative">
+              <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30">
+                <div className="flex items-start gap-3">
+                  <div className="p-2 rounded-lg bg-red-500/20 flex-shrink-0">
+                    <FileWarning className="h-4 w-4 text-red-400" />
+                  </div>
+                  <p className="text-sm text-white/70">
+                    An error occurred while loading the safety cases content. This helps us debug the issue.
+                  </p>
+                </div>
+              </div>
+
               {this.state.error && (
-                <div className="bg-elec-dark/50 p-4 rounded border border-elec-yellow/20">
+                <div className="p-4 rounded-xl bg-white/10 border border-white/10">
                   <p className="text-sm font-mono text-red-400 mb-2">
                     Error: {this.state.error.message}
                   </p>
                   {process.env.NODE_ENV === 'development' && (
                     <details className="text-xs">
-                      <summary className="cursor-pointer text-elec-yellow">
+                      <summary className="cursor-pointer text-elec-yellow hover:text-elec-yellow/80 transition-colors">
                         Show Stack Trace
                       </summary>
-                      <pre className="mt-2 whitespace-pre-wrap text-gray-400">
+                      <pre className="mt-3 p-3 rounded-lg bg-white/10 whitespace-pre-wrap text-white/80 overflow-x-auto">
                         {this.state.error.stack}
                       </pre>
                     </details>
                   )}
                 </div>
               )}
-              
-              <Button 
+
+              <Button
                 onClick={this.handleRetry}
-                className="flex items-center gap-2"
+                className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-95 transition-all"
               >
-                <RefreshCcw className="h-4 w-4" />
+                <RefreshCcw className="h-4 w-4 mr-2" />
                 Try Again
               </Button>
             </CardContent>

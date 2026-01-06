@@ -22,7 +22,7 @@ const CityGuildsCourses = () => {
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-2">
               <span className="gradient-text">City & Guilds Courses</span>
             </h1>
-            <p className="text-muted-foreground text-sm sm:text-base md:text-lg">
+            <p className="text-white/70 text-sm sm:text-base md:text-lg">
               Industry-standard vocational qualifications for electrical professionals
             </p>
           </div>
@@ -32,7 +32,7 @@ const CityGuildsCourses = () => {
         {loading ? (
           <div className="flex justify-center items-center py-8 sm:py-12">
             <Loader2 className="h-6 w-6 sm:h-8 sm:w-8 animate-spin text-primary" />
-            <span className="ml-2 text-muted-foreground text-sm sm:text-base">Loading City & Guilds courses...</span>
+            <span className="ml-2 text-white/70 text-sm sm:text-base">Loading City & Guilds courses...</span>
           </div>
         ) : error ? (
           <div className="text-center py-8 sm:py-12">
@@ -43,7 +43,7 @@ const CityGuildsCourses = () => {
           </div>
         ) : cityGuildsCourses.length === 0 ? (
           <div className="text-center py-8 sm:py-12">
-            <p className="text-muted-foreground text-sm sm:text-base">No City & Guilds courses available at the moment.</p>
+            <p className="text-white/70 text-sm sm:text-base">No City & Guilds courses available at the moment.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 auto-rows-fr">
@@ -63,7 +63,7 @@ const CityGuildsCourses = () => {
                     <h3 className="text-sm sm:text-base lg:text-lg font-bold text-foreground leading-tight group-hover:text-primary transition-colors duration-300">
                       {course.title}
                     </h3>
-                    <p className="text-muted-foreground text-[10px] sm:text-xs leading-relaxed">
+                    <p className="text-white/70 text-[10px] sm:text-xs leading-relaxed">
                       {course.description || 'Professional electrical qualification'}
                     </p>
                   </CardContent>

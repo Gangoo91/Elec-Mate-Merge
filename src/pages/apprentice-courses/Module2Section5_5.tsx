@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import VoltageDropCalculator from "@/components/apprentice-courses/VoltageDropCalculator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import React from "react";
@@ -369,6 +370,14 @@ const Module2Section5_5: React.FC = () => {
           </ul>
         </Card>
 
+        {/* Quick Knowledge Check */}
+        <InlineCheck
+          question="A 40m lighting circuit with 1.5mm² T&E carries 6A. Using mV/A/m = 29, what's the voltage drop?"
+          options={["6.96V", "13.92V", "27.84V", "3.48V"]}
+          correctAnswer={1}
+          explanation="For voltage drop calculations, always use the TOTAL path length (out and back). Total length = 40m × 2 = 80m. Vd = (29 × 6 × 80) ÷ 1000 = 13.92V = 6.1% which exceeds the 3% lighting limit."
+        />
+
         {/* Enhanced Voltage Drop Calculator */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <VoltageDropCalculator />
@@ -654,15 +663,23 @@ const Module2Section5_5: React.FC = () => {
           <Quiz questions={quizQuestions} />
         </Card>
 
+        {/* Another InlineCheck */}
+        <InlineCheck
+          question="Which circuit type has the STRICTER voltage drop limit according to BS 7671 guidance?"
+          options={["Socket circuits (5%)", "Lighting circuits (3%)", "Motor circuits (10%)", "All the same"]}
+          correctAnswer={1}
+          explanation="Lighting circuits have a stricter 3% limit because lighting is more sensitive to voltage variations affecting lamp life and light output."
+        />
+
         {/* Bottom nav */}
-        <div className="flex items-center justify-start mt-6">
-          <Button variant="outline" asChild>
-            <Link to="..">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 2.5
-            </Link>
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5" asChild>
+            <Link to="../5-4"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
           </Button>
-        </div>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a]" asChild>
+            <Link to="../5-6">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
+          </Button>
+        </nav>
       </div>
     </div>
   );

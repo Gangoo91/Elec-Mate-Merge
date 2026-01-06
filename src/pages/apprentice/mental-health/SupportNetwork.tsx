@@ -111,48 +111,48 @@ const SupportNetwork = () => {
       color="purple"
     >
       <div className="space-y-6">
-        <Card className="border-purple-500/20 bg-elec-gray">
+        <Card className="border-purple-500/20 bg-white/5">
           <CardHeader className="pb-3">
-            <CardTitle className="text-lg">Support Network Newsletter</CardTitle>
+            <CardTitle className="text-lg text-purple-400">Support Network Newsletter</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm text-white/70 mb-4">
               Stay informed about upcoming events, support groups, and mental health resources specific to electrical apprentices.
             </p>
             {!isSubscribed ? (
               <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2">
-                <Input 
-                  type="email" 
-                  placeholder="Enter your email address" 
-                  className="flex-grow" 
+                <Input
+                  type="email"
+                  placeholder="Enter your email address"
+                  className="flex-grow bg-white/5 border-white/20 text-white placeholder:text-white/50"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   className="bg-purple-500 hover:bg-purple-600 text-white"
                 >
                   Subscribe
                 </Button>
               </form>
             ) : (
-              <div className="text-center py-2 px-4 bg-purple-500/10 rounded-md">
+              <div className="text-center py-2 px-4 bg-purple-500/10 rounded-md border border-purple-500/20">
                 <p className="text-purple-400">You're subscribed! We'll send updates to your email.</p>
               </div>
             )}
           </CardContent>
         </Card>
-        
+
         <EventsList events={upcomingEvents} />
-        
+
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="col-span-1 sm:col-span-2">
             <SupportGroups groups={supportGroups} />
           </div>
-          
+
           <TalkToSomeone />
         </div>
-        
+
         <CommunityResourcesList resources={communityResources} />
       </div>
     </MentalHealthPageLayout>

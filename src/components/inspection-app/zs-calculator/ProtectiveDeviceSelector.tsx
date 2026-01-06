@@ -103,7 +103,7 @@ export const ProtectiveDeviceSelector: React.FC<ProtectiveDeviceSelectorProps> =
               <SelectValue placeholder="Choose protective device..." />
             </SelectTrigger>
             <SelectContent className="bg-elec-gray border-elec-gray text-foreground">
-              <div className="text-xs text-gray-400 px-2 py-1 font-semibold">MCB Type B</div>
+              <div className="text-xs text-white/70 px-2 py-1 font-semibold">MCB Type B</div>
               {DEVICE_OPTIONS.filter(d => d.type === 'mcb' && d.curve === 'typeB').map((device) => (
                 <SelectItem 
                   key={getDeviceValue(device)} 
@@ -114,7 +114,7 @@ export const ProtectiveDeviceSelector: React.FC<ProtectiveDeviceSelectorProps> =
                 </SelectItem>
               ))}
               
-              <div className="text-xs text-gray-400 px-2 py-1 font-semibold border-t border-border mt-1 pt-2">MCB Type C</div>
+              <div className="text-xs text-white/70 px-2 py-1 font-semibold border-t border-border mt-1 pt-2">MCB Type C</div>
               {DEVICE_OPTIONS.filter(d => d.type === 'mcb' && d.curve === 'typeC').map((device) => (
                 <SelectItem 
                   key={getDeviceValue(device)} 
@@ -125,7 +125,7 @@ export const ProtectiveDeviceSelector: React.FC<ProtectiveDeviceSelectorProps> =
                 </SelectItem>
               ))}
               
-              <div className="text-xs text-gray-400 px-2 py-1 font-semibold border-t border-border mt-1 pt-2">BS 88-2 HRC Fuses</div>
+              <div className="text-xs text-white/70 px-2 py-1 font-semibold border-t border-border mt-1 pt-2">BS 88-2 HRC Fuses</div>
               {DEVICE_OPTIONS.filter(d => d.type === 'bs88_2').map((device) => (
                 <SelectItem 
                   key={getDeviceValue(device)} 
@@ -136,7 +136,7 @@ export const ProtectiveDeviceSelector: React.FC<ProtectiveDeviceSelectorProps> =
                 </SelectItem>
               ))}
               
-              <div className="text-xs text-gray-400 px-2 py-1 font-semibold border-t border-border mt-1 pt-2">BS 88-3 Fuses</div>
+              <div className="text-xs text-white/70 px-2 py-1 font-semibold border-t border-border mt-1 pt-2">BS 88-3 Fuses</div>
               {DEVICE_OPTIONS.filter(d => d.type === 'bs88_3').map((device) => (
                 <SelectItem 
                   key={getDeviceValue(device)} 
@@ -147,7 +147,7 @@ export const ProtectiveDeviceSelector: React.FC<ProtectiveDeviceSelectorProps> =
                 </SelectItem>
               ))}
               
-              <div className="text-xs text-gray-400 px-2 py-1 font-semibold border-t border-border mt-1 pt-2">BS 3036 Rewirable Fuses</div>
+              <div className="text-xs text-white/70 px-2 py-1 font-semibold border-t border-border mt-1 pt-2">BS 3036 Rewirable Fuses</div>
               {DEVICE_OPTIONS.filter(d => d.type === 'bs3036').map((device) => (
                 <SelectItem 
                   key={getDeviceValue(device)} 
@@ -158,7 +158,7 @@ export const ProtectiveDeviceSelector: React.FC<ProtectiveDeviceSelectorProps> =
                 </SelectItem>
               ))}
               
-              <div className="text-xs text-gray-400 px-2 py-1 font-semibold border-t border-border mt-1 pt-2">BS 1362 Plug-Top Fuses</div>
+              <div className="text-xs text-white/70 px-2 py-1 font-semibold border-t border-border mt-1 pt-2">BS 1362 Plug-Top Fuses</div>
               {DEVICE_OPTIONS.filter(d => d.type === 'bs1362').map((device) => (
                 <SelectItem 
                   key={getDeviceValue(device)} 

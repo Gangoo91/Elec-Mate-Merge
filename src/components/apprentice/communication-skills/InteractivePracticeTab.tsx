@@ -134,7 +134,7 @@ const InteractivePracticeTab = () => {
                   </Button>
                 </div>
 
-                <p className="text-sm text-muted-foreground mb-3">{scenario.situation}</p>
+                <p className="text-sm text-white mb-3">{scenario.situation}</p>
 
                 {selectedScenario === scenario.id && (
                   <div className="space-y-4 mt-4 pt-4 border-t border-elec-yellow/20">
@@ -142,7 +142,7 @@ const InteractivePracticeTab = () => {
                       <h4 className="font-medium text-white mb-2">Your Objectives:</h4>
                       <ul className="space-y-1">
                         {scenario.objectives.map((objective, index) => (
-                          <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                          <li key={index} className="text-sm text-white flex items-start gap-2">
                             <div className="w-1 h-1 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                             {objective}
                           </li>
@@ -154,7 +154,7 @@ const InteractivePracticeTab = () => {
                       <h4 className="font-medium text-white mb-2">Communication Tips:</h4>
                       <ul className="space-y-1">
                         {scenario.tips.map((tip, index) => (
-                          <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                          <li key={index} className="text-sm text-white flex items-start gap-2">
                             <div className="w-1 h-1 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
                             {tip}
                           </li>
@@ -181,7 +181,7 @@ const InteractivePracticeTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <MessageSquare className="h-6 w-6 text-elec-yellow" />
@@ -193,19 +193,19 @@ const InteractivePracticeTab = () => {
             {communicationExercises.map((exercise, index) => (
               <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
                 <h3 className="font-semibold text-white mb-2">{exercise.exercise}</h3>
-                <p className="text-sm text-muted-foreground mb-3">{exercise.description}</p>
+                <p className="text-sm text-white mb-3">{exercise.description}</p>
                 
                 <div className="space-y-2 mb-4">
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-elec-yellow font-medium">Time:</span>
-                    <span className="text-xs text-muted-foreground">{exercise.timeRequired}</span>
+                    <span className="text-xs text-white">{exercise.timeRequired}</span>
                   </div>
                   
                   <div>
                     <span className="text-xs text-elec-yellow font-medium">Materials needed:</span>
                     <ul className="mt-1 space-y-1">
                       {exercise.materials.map((material, materialIndex) => (
-                        <li key={materialIndex} className="text-xs text-muted-foreground flex items-start gap-2">
+                        <li key={materialIndex} className="text-xs text-white flex items-start gap-2">
                           <div className="w-1 h-1 bg-elec-yellow rounded-full mt-1.5 flex-shrink-0"></div>
                           {material}
                         </li>
@@ -229,7 +229,7 @@ const InteractivePracticeTab = () => {
           <CardTitle className="text-blue-300">Practice Tips</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-muted-foreground">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white">
             <div>
               <h4 className="font-medium text-white mb-2">Regular Practice</h4>
               <p>Set aside 15-20 minutes daily to practice communication scenarios. Consistency builds confidence and natural responses.</p>

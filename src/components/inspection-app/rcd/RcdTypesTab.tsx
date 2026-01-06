@@ -39,9 +39,9 @@ const RcdTypesTab = () => {
               {rcdTypes.map((type, idx) => (
                 <TableRow key={idx} className="border-border hover:bg-muted/30">
                   <TableCell className="text-foreground font-semibold border-r border-border">{type.type}</TableCell>
-                  <TableCell className="text-gray-200 border-r border-border">{type.sensitivity}</TableCell>
-                  <TableCell className="text-gray-200 border-r border-border">{type.application}</TableCell>
-                  <TableCell className="text-gray-200">{type.characteristics}</TableCell>
+                  <TableCell className="text-white/90 border-r border-border">{type.sensitivity}</TableCell>
+                  <TableCell className="text-white/90 border-r border-border">{type.application}</TableCell>
+                  <TableCell className="text-white/90">{type.characteristics}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -54,7 +54,7 @@ const RcdTypesTab = () => {
               <CardTitle className="text-blue-400 text-lg">30mA RCD</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-gray-300">Additional protection against direct contact and fire protection</p>
+              <p className="text-sm text-white/80">Additional protection against direct contact and fire protection</p>
             </CardContent>
           </Card>
 
@@ -63,7 +63,7 @@ const RcdTypesTab = () => {
               <CardTitle className="text-orange-400 text-lg">100mA RCD</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-gray-300">Fire protection and discrimination in larger installations</p>
+              <p className="text-sm text-white/80">Fire protection and discrimination in larger installations</p>
             </CardContent>
           </Card>
 
@@ -72,7 +72,7 @@ const RcdTypesTab = () => {
               <CardTitle className="text-purple-400 text-lg">300mA RCD</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-gray-300">Large commercial installations and fire protection</p>
+              <p className="text-sm text-white/80">Large commercial installations and fire protection</p>
             </CardContent>
           </Card>
         </div>

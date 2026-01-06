@@ -10,9 +10,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import CourseEnquiryForm from "./CourseEnquiryForm";
-import { 
-  X, MapPin, Clock, Users, BookOpen, TrendingUp, 
-  PoundSterling, Award, Target, CheckCircle, 
+import {
+  X, MapPin, Clock, Users, BookOpen, TrendingUp,
+  PoundSterling, Award, Target, CheckCircle,
   Calendar, Mail, Star, Briefcase, GraduationCap,
   ExternalLink, Wifi, Database, Shield, Phone, Building
 } from "lucide-react";
@@ -43,13 +43,13 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
 
   const fetchContactDetails = async () => {
     if (!course.external_url || loadingContact) return;
-    
+
     setLoadingContact(true);
     try {
       const { data, error } = await supabase.functions.invoke('extract-contact-details', {
-        body: { 
+        body: {
           courseUrl: course.external_url,
-          providerId: course.provider 
+          providerId: course.provider
         }
       });
 
@@ -90,7 +90,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
       });
       return;
     }
-    
+
     try {
       window.open(course.external_url, '_blank');
     } catch (error) {
@@ -106,7 +106,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
     switch (demand) {
       case "High": return "bg-green-500/20 text-green-400 border-green-500/30";
       case "Medium": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+      default: return "bg-white/10 text-white border-white/20";
     }
   };
 
@@ -117,14 +117,14 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
       case "Safety & Compliance": return "bg-orange-500/20 text-orange-400 border-orange-500/30";
       case "Specialized Skills": return "bg-purple-500/20 text-purple-400 border-purple-500/30";
       case "Business & Management": return "bg-indigo-500/20 text-indigo-400 border-indigo-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+      default: return "bg-white/10 text-white border-white/20";
     }
   };
 
   // Enhanced data for live courses with fallbacks
   const hasValidData = (data: any[] | undefined) => data && data.length > 0;
   const getDisplayValue = (value: string | undefined, fallback: string) => value || fallback;
-  
+
   // Generate smart content for missing data
   const generateCourseOutline = (title: string) => [
     "Course fundamentals and overview",
@@ -148,147 +148,165 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
   ];
 
   // Use fallback content for live courses with missing data
-  const displayCourseOutline = hasValidData(course.courseOutline) 
-    ? course.courseOutline 
+  const displayCourseOutline = hasValidData(course.courseOutline)
+    ? course.courseOutline
     : generateCourseOutline(course.title);
-    
-  const displayCareerOutcomes = hasValidData(course.careerOutcomes) 
-    ? course.careerOutcomes 
+
+  const displayCareerOutcomes = hasValidData(course.careerOutcomes)
+    ? course.careerOutcomes
     : generateCareerOutcomes(course.title);
-    
-  const displayPrerequisites = hasValidData(course.prerequisites) 
-    ? course.prerequisites 
+
+  const displayPrerequisites = hasValidData(course.prerequisites)
+    ? course.prerequisites
     : generatePrerequisites();
 
-  const displayAccreditations = hasValidData(course.accreditation) 
-    ? course.accreditation 
+  const displayAccreditations = hasValidData(course.accreditation)
+    ? course.accreditation
     : ["Industry recognised certification"];
 
-  const displayLocations = hasValidData(course.locations) 
-    ? course.locations 
+  const displayLocations = hasValidData(course.locations)
+    ? course.locations
     : ["Multiple UK locations", "Online delivery available"];
 
-  const displayNextDates = hasValidData(course.nextDates) 
-    ? course.nextDates 
+  const displayNextDates = hasValidData(course.nextDates)
+    ? course.nextDates
     : ["Contact provider for available dates"];
 
   const isLiveCourse = course.isLive || course.source;
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-      <div className="bg-elec-grey border border-elec-yellow/20 rounded-lg w-full max-w-5xl max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-gradient-to-br from-elec-gray to-elec-card border border-elec-yellow/20 rounded-xl w-full max-w-5xl max-h-[90vh] overflow-y-auto">
         <div className="p-6 space-y-6">
           {/* Header */}
           <div className="flex justify-between items-start">
             <div className="flex-1">
-              <div className="flex items-center gap-3 mb-2">
-                <Badge className={`${getCategoryColor(course.category)} text-xs`}>
+              <div className="flex flex-wrap items-center gap-3 mb-3">
+                <Badge className={`${getCategoryColor(course.category)} text-xs border`}>
                   {course.category}
                 </Badge>
                 {isLiveCourse && (
-                  <Badge variant="outline" className="text-xs bg-blue-500/10 text-blue-300 border-blue-500/30 flex items-center gap-1">
+                  <Badge variant="outline" className="text-xs bg-blue-500/10 text-blue-400 border-blue-500/30 flex items-center gap-1">
                     <Wifi className="h-3 w-3" />
                     Live Data
                   </Badge>
                 )}
-                <div className="flex items-center gap-1 bg-amber-400/20 text-amber-400 px-2 py-1 rounded text-xs">
+                <div className="flex items-center gap-1 bg-amber-500/20 text-amber-400 px-2.5 py-1 rounded-lg text-xs border border-amber-500/30">
                   <Star className="h-3 w-3 fill-amber-400" />
-                  <span>{course.rating}</span>
+                  <span className="font-medium">{course.rating}</span>
                 </div>
               </div>
-              <h3 className="text-2xl font-semibold mb-1">{course.title}</h3>
-              <div className="flex items-center gap-3">
-                <p className="text-elec-yellow text-lg text-center mx-auto">{getDisplayValue(course.provider, "Provider TBC")}</p>
+              <h3 className="text-2xl font-semibold text-white mb-2">{course.title}</h3>
+              <p className="text-elec-yellow text-lg mb-3">{getDisplayValue(course.provider, "Provider TBC")}</p>
+
+              <div className="flex flex-wrap items-center gap-2 mb-4">
                 {course.external_url && (
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     size="sm"
-                    className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                    className="h-10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation active:scale-95 transition-all"
                     onClick={handleOpenCourseUrl}
                   >
-                    <ExternalLink className="h-3 w-3 mr-1" />
+                    <ExternalLink className="h-3.5 w-3.5 mr-1.5" />
                     View Provider Site
                   </Button>
                 )}
-                
-                <Button 
-                  variant="outline" 
+
+                <Button
+                  variant="outline"
                   size="sm"
-                  className="border-blue-500/30 text-blue-400 hover:bg-blue-500/10"
+                  className="h-10 border-blue-500/30 text-blue-400 hover:bg-blue-500/10 touch-manipulation active:scale-95 transition-all"
                   onClick={fetchContactDetails}
                   disabled={loadingContact || !course.external_url}
                 >
-                  <Phone className="h-3 w-3 mr-1" />
+                  <Phone className="h-3.5 w-3.5 mr-1.5" />
                   {loadingContact ? "Getting Contact..." : "Get Contact Details"}
                 </Button>
               </div>
-              <p className="text-white mt-2 text-justify">{course.description}</p>
+
+              <p className="text-white/80 text-justify">{course.description}</p>
               {isLiveCourse && course.source && (
-                <p className="text-xs text-white mt-1 flex items-center gap-1">
+                <p className="text-xs text-white/60 mt-2 flex items-center gap-1.5">
                   <Database className="h-3 w-3" />
                   Source: {course.source}
                 </p>
               )}
             </div>
-            <Button variant="ghost" size="sm" onClick={onClose}>
-              <X className="h-4 w-4" />
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onClose}
+              className="text-white/60 hover:text-white hover:bg-white/10"
+            >
+              <X className="h-5 w-5" />
             </Button>
           </div>
 
           {/* Key Information Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Card className="bg-elec-grey border-elec-yellow/10">
+            <Card className="bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border-elec-yellow/20">
               <CardContent className="p-4 text-center">
-                <Clock className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
-                <div className="font-medium">{course.duration}</div>
-                <div className="text-xs text-white">Duration</div>
+                <div className="p-2 rounded-lg bg-elec-yellow/20 w-fit mx-auto mb-2">
+                  <Clock className="h-5 w-5 text-elec-yellow" />
+                </div>
+                <div className="font-medium text-white">{course.duration}</div>
+                <div className="text-xs text-white/70">Duration</div>
               </CardContent>
             </Card>
-            <Card className="bg-elec-grey border-elec-yellow/10">
+            <Card className="bg-gradient-to-br from-blue-500/10 to-blue-500/5 border-blue-500/20">
               <CardContent className="p-4 text-center">
-                <Users className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
-                <div className="font-medium">{course.level}</div>
-                <div className="text-xs text-white">Level</div>
+                <div className="p-2 rounded-lg bg-blue-500/20 w-fit mx-auto mb-2">
+                  <Users className="h-5 w-5 text-blue-400" />
+                </div>
+                <div className="font-medium text-white">{course.level}</div>
+                <div className="text-xs text-white/70">Level</div>
               </CardContent>
             </Card>
-            <Card className="bg-elec-grey border-elec-yellow/10">
+            <Card className="bg-gradient-to-br from-green-500/10 to-green-500/5 border-green-500/20">
               <CardContent className="p-4 text-center">
-                <PoundSterling className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
-                <div className="font-medium text-sm">{course.price}</div>
-                <div className="text-xs text-white">Price Range</div>
+                <div className="p-2 rounded-lg bg-green-500/20 w-fit mx-auto mb-2">
+                  <PoundSterling className="h-5 w-5 text-green-400" />
+                </div>
+                <div className="font-medium text-white text-sm">{course.price}</div>
+                <div className="text-xs text-white/70">Price Range</div>
               </CardContent>
             </Card>
-            <Card className="bg-elec-grey border-elec-yellow/10">
+            <Card className="bg-gradient-to-br from-purple-500/10 to-purple-500/5 border-purple-500/20">
               <CardContent className="p-4 text-center">
-                <TrendingUp className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
-                <div className="font-medium">{course.futureProofing}/5</div>
-                <div className="text-xs text-white">Future-Proof</div>
+                <div className="p-2 rounded-lg bg-purple-500/20 w-fit mx-auto mb-2">
+                  <TrendingUp className="h-5 w-5 text-purple-400" />
+                </div>
+                <div className="font-medium text-white">{course.futureProofing}/5</div>
+                <div className="text-xs text-white/70">Future-Proof</div>
               </CardContent>
             </Card>
           </div>
 
           {/* Industry Information */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="border-elec-yellow/10 bg-elec-grey">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <TrendingUp className="h-4 w-4 text-elec-yellow" />
+            <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-green-500/20 overflow-hidden relative">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-green-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+              <CardHeader className="pb-3 relative">
+                <CardTitle className="text-lg flex items-center gap-3 text-white">
+                  <div className="p-2 rounded-lg bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30">
+                    <TrendingUp className="h-4 w-4 text-green-400" />
+                  </div>
                   Industry Outlook
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">Industry Demand:</span>
-                  <Badge className={`${getDemandColor(course.industryDemand)} text-xs`}>
+              <CardContent className="space-y-3 relative">
+                <div className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10">
+                  <span className="text-sm text-white/70">Industry Demand:</span>
+                  <Badge className={`${getDemandColor(course.industryDemand)} text-xs border`}>
                     {course.industryDemand}
                   </Badge>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">Salary Impact:</span>
+                <div className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10">
+                  <span className="text-sm text-white/70">Salary Impact:</span>
                   <span className="text-sm text-green-400 font-medium">{course.salaryImpact}</span>
                 </div>
                 {course.employerSupport && (
-                  <div className="flex items-center gap-2 text-sm text-green-400">
+                  <div className="flex items-center gap-2 text-sm text-emerald-400 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
                     <Briefcase className="h-4 w-4" />
                     <span>Employer Support Available</span>
                   </div>
@@ -296,17 +314,20 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
               </CardContent>
             </Card>
 
-            <Card className="border-elec-yellow/10 bg-elec-grey">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <Award className="h-4 w-4 text-elec-yellow" />
+            <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-amber-500/20 overflow-hidden relative">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+              <CardHeader className="pb-3 relative">
+                <CardTitle className="text-lg flex items-center gap-3 text-white">
+                  <div className="p-2 rounded-lg bg-gradient-to-br from-amber-500/20 to-amber-500/5 border border-amber-500/30">
+                    <Award className="h-4 w-4 text-amber-400" />
+                  </div>
                   Accreditations
                 </CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="relative">
                 <div className="flex flex-wrap gap-2">
                   {displayAccreditations.map((acc, idx) => (
-                    <Badge key={idx} variant="outline" className="text-xs bg-blue-500/10 text-blue-300 border-blue-500/30">
+                    <Badge key={idx} variant="outline" className="text-xs bg-amber-500/10 text-amber-400 border-amber-500/30">
                       {acc}
                     </Badge>
                   ))}
@@ -317,38 +338,44 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
 
           {/* Course Content */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card className="border-elec-yellow/10 bg-elec-grey">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <BookOpen className="h-4 w-4 text-elec-yellow" />
+            <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-blue-500/20 overflow-hidden relative">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+              <CardHeader className="pb-3 relative">
+                <CardTitle className="text-lg flex items-center gap-3 text-white">
+                  <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
+                    <BookOpen className="h-4 w-4 text-blue-400" />
+                  </div>
                   Course Outline
                 </CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="relative">
                 <div className="space-y-2">
                   {displayCourseOutline.map((item, idx) => (
-                    <div key={idx} className="flex items-start gap-2 text-sm">
-                      <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-white">{item}</span>
+                    <div key={idx} className="flex items-start gap-2 text-sm p-2 rounded-lg bg-white/5">
+                      <CheckCircle className="h-3.5 w-3.5 text-green-400 flex-shrink-0 mt-0.5" />
+                      <span className="text-white/80">{item}</span>
                     </div>
                   ))}
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="border-elec-yellow/10 bg-elec-grey">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <Target className="h-4 w-4 text-elec-yellow" />
+            <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-purple-500/20 overflow-hidden relative">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+              <CardHeader className="pb-3 relative">
+                <CardTitle className="text-lg flex items-center gap-3 text-white">
+                  <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/30">
+                    <Target className="h-4 w-4 text-purple-400" />
+                  </div>
                   Career Outcomes
                 </CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="relative">
                 <div className="space-y-2">
                   {displayCareerOutcomes.map((outcome, idx) => (
-                    <div key={idx} className="flex items-start gap-2 text-sm">
-                      <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-white">{outcome}</span>
+                    <div key={idx} className="flex items-start gap-2 text-sm p-2 rounded-lg bg-white/5">
+                      <CheckCircle className="h-3.5 w-3.5 text-green-400 flex-shrink-0 mt-0.5" />
+                      <span className="text-white/80">{outcome}</span>
                     </div>
                   ))}
                 </div>
@@ -358,37 +385,46 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
 
           {/* Assessment & Prerequisites */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="border-elec-yellow/10 bg-elec-grey">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <GraduationCap className="h-4 w-4 text-elec-yellow" />
+            <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-cyan-500/20 overflow-hidden relative">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+              <CardHeader className="pb-3 relative">
+                <CardTitle className="text-lg flex items-center gap-3 text-white">
+                  <div className="p-2 rounded-lg bg-gradient-to-br from-cyan-500/20 to-cyan-500/5 border border-cyan-500/30">
+                    <GraduationCap className="h-4 w-4 text-cyan-400" />
+                  </div>
                   Assessment
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-2">
-                <div className="text-sm">
-                  <span className="font-medium">Method: </span>
-                  <span className="text-white">{course.assessmentMethod}</span>
+              <CardContent className="space-y-3 relative">
+                <div className="p-3 rounded-lg bg-white/5 border border-white/10">
+                  <span className="text-xs text-white/60">Method</span>
+                  <p className="text-sm text-white">{course.assessmentMethod}</p>
                 </div>
-                <div className="text-sm">
-                  <span className="font-medium">Continuous Assessment: </span>
-                  <span className="text-white">
+                <div className="p-3 rounded-lg bg-white/5 border border-white/10">
+                  <span className="text-xs text-white/60">Continuous Assessment</span>
+                  <p className="text-sm text-white">
                     {course.continuousAssessment ? "Yes" : "Final exam only"}
-                  </span>
+                  </p>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="border-elec-yellow/10 bg-elec-grey">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg">Prerequisites</CardTitle>
+            <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-orange-500/20 overflow-hidden relative">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+              <CardHeader className="pb-3 relative">
+                <CardTitle className="text-lg flex items-center gap-3 text-white">
+                  <div className="p-2 rounded-lg bg-gradient-to-br from-orange-500/20 to-orange-500/5 border border-orange-500/30">
+                    <Shield className="h-4 w-4 text-orange-400" />
+                  </div>
+                  Prerequisites
+                </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-1">
+              <CardContent className="relative">
+                <div className="space-y-2">
                   {displayPrerequisites.map((prereq, idx) => (
-                    <div key={idx} className="flex items-center gap-2 text-sm">
-                      <div className="w-1 h-1 rounded-full bg-elec-yellow" />
-                      <span className="text-white">{prereq}</span>
+                    <div key={idx} className="flex items-center gap-2 text-sm p-2 rounded-lg bg-white/5">
+                      <div className="w-1.5 h-1.5 rounded-full bg-orange-400 flex-shrink-0" />
+                      <span className="text-white/80">{prereq}</span>
                     </div>
                   ))}
                 </div>
@@ -397,21 +433,24 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
           </div>
 
           {/* Locations */}
-          <Card className="border-elec-yellow/10 bg-elec-grey">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-elec-yellow" />
+          <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+            <CardHeader className="pb-3 relative">
+              <CardTitle className="text-lg flex items-center gap-3 text-white">
+                <div className="p-2 rounded-lg bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+                  <MapPin className="h-4 w-4 text-elec-yellow" />
+                </div>
                 Available Locations
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="relative">
               <div className="flex flex-wrap gap-2">
                 {displayLocations.map((location, idx) => (
-                  <span 
-                    key={idx} 
-                    className="text-sm bg-elec-grey/60 px-3 py-1 rounded-md flex items-center gap-1"
+                  <span
+                    key={idx}
+                    className="text-sm bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg flex items-center gap-1.5 text-white/80"
                   >
-                    <MapPin className="h-3 w-3" />
+                    <MapPin className="h-3.5 w-3.5 text-elec-yellow" />
                     {location}
                   </span>
                 ))}
@@ -420,72 +459,84 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
           </Card>
 
           {/* Course Dates */}
-          <Card className="border-elec-yellow/10 bg-elec-grey">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-elec-yellow" />
+          <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+            <CardHeader className="pb-3 relative">
+              <CardTitle className="text-lg flex items-center gap-3 text-white">
+                <div className="p-2 rounded-lg bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+                  <Calendar className="h-4 w-4 text-elec-yellow" />
+                </div>
                 Upcoming Course Dates
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Start Date</TableHead>
-                    <TableHead>Location</TableHead>
-                    <TableHead>Format</TableHead>
-                    <TableHead>Availability</TableHead>
-                    <TableHead className="text-right">Action</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {displayNextDates.map((date, idx) => (
-                    <TableRow key={idx}>
-                      <TableCell>{date}</TableCell>
-                      <TableCell>{displayLocations[idx % displayLocations.length]}</TableCell>
-                      <TableCell>{getDisplayValue(course.format?.split(',')[0], "To be confirmed")}</TableCell>
-                      <TableCell>
-                        <span className={`px-2 py-0.5 rounded text-xs ${
-                          idx % 3 === 0 ? "bg-red-500/20 text-red-300" : "bg-green-500/20 text-green-300"
-                        }`}>
-                          {idx % 3 === 0 ? "Limited spaces" : "Available"}
-                        </span>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <Button 
-                          size="sm" 
-                          variant="outline" 
-                          className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                          onClick={handleOpenCourseUrl}
-                          disabled={!course.external_url}
-                        >
-                          <ExternalLink className="h-3 w-3 mr-1" />
-                          {course.external_url ? "Book Now" : "Contact Provider"}
-                        </Button>
-                      </TableCell>
+            <CardContent className="relative">
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="border-white/10">
+                      <TableHead className="text-white/70">Start Date</TableHead>
+                      <TableHead className="text-white/70">Location</TableHead>
+                      <TableHead className="text-white/70">Format</TableHead>
+                      <TableHead className="text-white/70">Availability</TableHead>
+                      <TableHead className="text-right text-white/70">Action</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {displayNextDates.map((date, idx) => (
+                      <TableRow key={idx} className="border-white/10">
+                        <TableCell className="text-white">{date}</TableCell>
+                        <TableCell className="text-white/80">{displayLocations[idx % displayLocations.length]}</TableCell>
+                        <TableCell className="text-white/80">{getDisplayValue(course.format?.split(',')[0], "To be confirmed")}</TableCell>
+                        <TableCell>
+                          <Badge className={`text-xs ${
+                            idx % 3 === 0
+                              ? "bg-red-500/20 text-red-400 border-red-500/30"
+                              : "bg-green-500/20 text-green-400 border-green-500/30"
+                          }`}>
+                            {idx % 3 === 0 ? "Limited spaces" : "Available"}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="h-9 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation active:scale-95 transition-all"
+                            onClick={handleOpenCourseUrl}
+                            disabled={!course.external_url}
+                          >
+                            <ExternalLink className="h-3 w-3 mr-1" />
+                            {course.external_url ? "Book Now" : "Contact Provider"}
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
             </CardContent>
           </Card>
-          
+
           {/* Contact Information Card */}
           {contactInfo && (
-            <Card className="bg-gradient-to-br from-slate-900/90 to-slate-800/90 border-slate-700/50">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
-                  <Building className="h-5 w-5 text-blue-400" />
+            <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-blue-500/20 overflow-hidden relative">
+              <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+              <CardHeader className="relative">
+                <CardTitle className="text-white flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
+                    <Building className="h-5 w-5 text-blue-400" />
+                  </div>
                   Provider Contact Details
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-3 relative">
                 {contactInfo.phone && (
-                  <div className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg">
-                    <Phone className="h-4 w-4 text-green-400" />
+                  <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
+                    <div className="p-2 rounded-lg bg-green-500/20">
+                      <Phone className="h-4 w-4 text-green-400" />
+                    </div>
                     <div>
-                      <p className="text-sm text-slate-400">Phone</p>
-                      <a 
+                      <p className="text-xs text-white/60">Phone</p>
+                      <a
                         href={`tel:${contactInfo.phone}`}
                         className="text-white hover:text-green-400 transition-colors"
                       >
@@ -494,13 +545,15 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                     </div>
                   </div>
                 )}
-                
+
                 {contactInfo.email && (
-                  <div className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg">
-                    <Mail className="h-4 w-4 text-blue-400" />
+                  <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
+                    <div className="p-2 rounded-lg bg-blue-500/20">
+                      <Mail className="h-4 w-4 text-blue-400" />
+                    </div>
                     <div>
-                      <p className="text-sm text-slate-400">Email</p>
-                      <a 
+                      <p className="text-xs text-white/60">Email</p>
+                      <a
                         href={`mailto:${contactInfo.email}`}
                         className="text-white hover:text-blue-400 transition-colors"
                       >
@@ -509,32 +562,38 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                     </div>
                   </div>
                 )}
-                
+
                 {contactInfo.address && (
-                  <div className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg">
-                    <MapPin className="h-4 w-4 text-orange-400" />
+                  <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
+                    <div className="p-2 rounded-lg bg-orange-500/20">
+                      <MapPin className="h-4 w-4 text-orange-400" />
+                    </div>
                     <div>
-                      <p className="text-sm text-slate-400">Address</p>
+                      <p className="text-xs text-white/60">Address</p>
                       <p className="text-white">{contactInfo.address}</p>
                     </div>
                   </div>
                 )}
-                
+
                 {contactInfo.contactPerson && (
-                  <div className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg">
-                    <Users className="h-4 w-4 text-purple-400" />
+                  <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
+                    <div className="p-2 rounded-lg bg-purple-500/20">
+                      <Users className="h-4 w-4 text-purple-400" />
+                    </div>
                     <div>
-                      <p className="text-sm text-slate-400">Contact Person</p>
+                      <p className="text-xs text-white/60">Contact Person</p>
                       <p className="text-white">{contactInfo.contactPerson}</p>
                     </div>
                   </div>
                 )}
-                
+
                 {contactInfo.officeHours && (
-                  <div className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg">
-                    <Clock className="h-4 w-4 text-yellow-400" />
+                  <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
+                    <div className="p-2 rounded-lg bg-yellow-500/20">
+                      <Clock className="h-4 w-4 text-yellow-400" />
+                    </div>
                     <div>
-                      <p className="text-sm text-slate-400">Office Hours</p>
+                      <p className="text-xs text-white/60">Office Hours</p>
                       <p className="text-white">{contactInfo.officeHours}</p>
                     </div>
                   </div>
@@ -544,15 +603,15 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
           )}
 
           {/* Contact Form - Hidden */}
-          <Card className="border-elec-yellow/20 bg-elec-grey/50 hidden">
+          <Card className="border-elec-yellow/20 bg-white/5 hidden">
             <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center gap-2">
+              <CardTitle className="text-lg flex items-center gap-2 text-white">
                 <Mail className="h-4 w-4 text-elec-yellow" />
                 Course Enquiry
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <CourseEnquiryForm 
+              <CourseEnquiryForm
                 course={course}
                 onSuccess={() => {
                   // Modal could be closed here if desired

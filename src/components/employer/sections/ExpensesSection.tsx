@@ -4,13 +4,14 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SectionHeader } from "@/components/employer/SectionHeader";
+import { QuickStats, QuickStat } from "@/components/employer/QuickStats";
 import { Skeleton } from "@/components/ui/skeleton";
 import { FloatingActionButton } from "@/components/ui/floating-action-button";
-import { 
-  Receipt, 
-  Clock, 
-  CheckCircle, 
-  XCircle, 
+import {
+  Receipt,
+  Clock,
+  CheckCircle,
+  XCircle,
   PoundSterling,
   ChevronDown,
   ChevronUp,
@@ -266,35 +267,29 @@ export function ExpensesSection() {
       />
 
       {/* Stats */}
-      <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4 md:mx-0 md:px-0">
-        <Card className="bg-warning/10 border-warning/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <Clock className="h-4 w-4 text-warning" />
-            <div>
-              <p className="text-lg font-bold text-foreground">£{totalPending.toFixed(2)}</p>
-              <p className="text-xs text-muted-foreground">{pendingClaims.length} Pending</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-success/10 border-success/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <CheckCircle className="h-4 w-4 text-success" />
-            <div>
-              <p className="text-lg font-bold text-foreground">£{totalApproved.toFixed(2)}</p>
-              <p className="text-xs text-muted-foreground">{approvedClaims.length} Approved</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-destructive/10 border-destructive/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <XCircle className="h-4 w-4 text-destructive" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{rejectedClaims.length}</p>
-              <p className="text-xs text-muted-foreground">Rejected</p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <QuickStats
+        stats={[
+          {
+            icon: Clock,
+            value: `£${totalPending.toFixed(2)}`,
+            label: `${pendingClaims.length} Pending`,
+            color: "orange",
+            pulse: pendingClaims.length > 0,
+          },
+          {
+            icon: CheckCircle,
+            value: `£${totalApproved.toFixed(2)}`,
+            label: `${approvedClaims.length} Approved`,
+            color: "green",
+          },
+          {
+            icon: XCircle,
+            value: rejectedClaims.length,
+            label: "Rejected",
+            color: "red",
+          },
+        ]}
+      />
 
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">

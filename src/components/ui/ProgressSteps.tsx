@@ -90,7 +90,7 @@ const HorizontalSteps: React.FC<Omit<ProgressStepsProps, 'orientation' | 'compac
       <div className="absolute top-4 left-0 right-0 h-0.5 bg-muted" />
       {/* Active line */}
       <div
-        className="absolute top-4 left-0 h-0.5 bg-primary transition-all duration-300"
+        className="absolute top-4 left-0 h-0.5 bg-elec-yellow transition-all duration-300"
         style={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
       />
 
@@ -114,8 +114,8 @@ const HorizontalSteps: React.FC<Omit<ProgressStepsProps, 'orientation' | 'compac
               <div
                 className={cn(
                   'w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all duration-200 z-10',
-                  isCompleted && 'bg-primary text-primary-foreground',
-                  isCurrent && !isCompleted && 'bg-primary text-primary-foreground ring-4 ring-primary/20',
+                  isCompleted && 'bg-elec-yellow text-black',
+                  isCurrent && !isCompleted && 'bg-elec-yellow text-black ring-4 ring-elec-yellow/20',
                   !isCompleted && !isCurrent && 'bg-muted text-muted-foreground'
                 )}
               >
@@ -176,8 +176,8 @@ const VerticalSteps: React.FC<Omit<ProgressStepsProps, 'orientation' | 'compact'
             <div
               className={cn(
                 'w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all duration-200',
-                isCompleted && 'bg-primary text-primary-foreground',
-                isCurrent && !isCompleted && 'bg-primary text-primary-foreground ring-4 ring-primary/20',
+                isCompleted && 'bg-elec-yellow text-black',
+                isCurrent && !isCompleted && 'bg-elec-yellow text-black ring-4 ring-elec-yellow/20',
                 !isCompleted && !isCurrent && 'bg-muted text-muted-foreground'
               )}
             >
@@ -193,7 +193,7 @@ const VerticalSteps: React.FC<Omit<ProgressStepsProps, 'orientation' | 'compact'
               <div
                 className={cn(
                   'w-0.5 flex-1 my-1 transition-colors duration-200',
-                  index < currentStep ? 'bg-primary' : 'bg-muted'
+                  index < currentStep ? 'bg-elec-yellow' : 'bg-muted'
                 )}
               />
             )}
@@ -246,7 +246,7 @@ const CompactProgressSteps: React.FC<{
       </div>
       <div className="h-1.5 bg-muted rounded-full overflow-hidden">
         <div
-          className="h-full bg-primary transition-all duration-300 rounded-full"
+          className="h-full bg-elec-yellow transition-all duration-300 rounded-full"
           style={{ width: `${progress}%` }}
         />
       </div>
@@ -272,7 +272,7 @@ export const StepDots: React.FC<{
         className={cn(
           'w-2 h-2 rounded-full transition-all duration-200',
           i === currentStep
-            ? 'bg-primary w-6'
+            ? 'bg-elec-yellow w-6'
             : 'bg-muted hover:bg-muted-foreground/50',
           !onStepClick && 'cursor-default'
         )}

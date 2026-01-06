@@ -534,7 +534,7 @@ const CaseStudiesTab = () => {
       case "Fatal": return "bg-red-500/20 text-red-400 border-red-500/30";
       case "Serious": return "bg-orange-500/20 text-orange-400 border-orange-500/30";
       case "Near Miss": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+      default: return "bg-white/10 text-white border-white/20";
     }
   };
 
@@ -543,7 +543,7 @@ const CaseStudiesTab = () => {
       case "Beginner": return "bg-green-500/20 text-green-400 border-green-500/30";
       case "Intermediate": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
       case "Advanced": return "bg-red-500/20 text-red-400 border-red-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+      default: return "bg-white/10 text-white border-white/20";
     }
   };
 
@@ -561,7 +561,7 @@ const CaseStudiesTab = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
+      <Card className="border-elec-yellow/20 bg-gradient-to-r from-white/5 to-white/10/50">
         <CardHeader>
           <div className="flex items-center gap-2">
             <BookOpen className="h-6 w-6 text-elec-yellow" />
@@ -569,7 +569,7 @@ const CaseStudiesTab = () => {
           </div>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground mb-4">
+          <p className="text-white mb-4">
             Learn from real incidents and near-misses in the electrical industry. Each case study includes detailed 
             analysis, interactive elements, downloadable reports, and practical learning outcomes.
           </p>
@@ -612,7 +612,7 @@ const CaseStudiesTab = () => {
 
       <div className="space-y-6">
         {filteredCaseStudies.map((study, index) => (
-          <Card key={study.id} className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-colors">
+          <Card key={study.id} className="border-elec-yellow/20 bg-white/5 hover:bg-white/5 transition-colors">
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div className="flex-1">
@@ -622,7 +622,7 @@ const CaseStudiesTab = () => {
                       <AlertTriangle className="h-3 w-3 mr-1" />
                       {study.severity}
                     </Badge>
-                    <Badge variant="outline" className="text-muted-foreground">
+                    <Badge variant="outline" className="text-white">
                       {study.category}
                     </Badge>
                     <Badge className={getDifficultyColor(study.difficulty)}>
@@ -636,7 +636,7 @@ const CaseStudiesTab = () => {
                       {study.industry}
                     </Badge>
                   </div>
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground mb-2">
+                  <div className="flex items-center gap-4 text-sm text-white mb-2">
                     <span className="flex items-center gap-1">
                       <MapPin className="h-3 w-3" />
                       {study.location}
@@ -654,7 +654,7 @@ const CaseStudiesTab = () => {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground mb-4 text-sm">
+              <p className="text-white mb-4 text-sm">
                 {study.detailedDescription}
               </p>
               
@@ -666,7 +666,7 @@ const CaseStudiesTab = () => {
                   </h4>
                   <ul className="space-y-1">
                     {study.rootCauses.slice(0, 3).map((cause, causeIndex) => (
-                      <li key={causeIndex} className="text-xs text-muted-foreground flex items-center gap-2">
+                      <li key={causeIndex} className="text-xs text-white flex items-center gap-2">
                         <span className="w-1 h-1 bg-red-400 rounded-full"></span>
                         {cause}
                       </li>
@@ -684,7 +684,7 @@ const CaseStudiesTab = () => {
                   </h4>
                   <ul className="space-y-1">
                     {study.preventiveMeasures.slice(0, 3).map((measure, measureIndex) => (
-                      <li key={measureIndex} className="text-xs text-muted-foreground flex items-center gap-2">
+                      <li key={measureIndex} className="text-xs text-white flex items-center gap-2">
                         <span className="w-1 h-1 bg-green-400 rounded-full"></span>
                         {measure}
                       </li>
@@ -698,7 +698,7 @@ const CaseStudiesTab = () => {
 
               <div className="mb-4">
                 <h4 className="text-sm font-medium text-white mb-2">Key Learning Outcome:</h4>
-                <p className="text-xs text-muted-foreground italic bg-elec-dark/40 p-3 rounded">
+                <p className="text-xs text-white italic bg-white/10 p-3 rounded">
                   "{study.lessonsLearned}"
                 </p>
               </div>
@@ -711,7 +711,7 @@ const CaseStudiesTab = () => {
                     </Badge>
                   ))}
                   {study.regulations.length > 2 && (
-                    <Badge variant="outline" className="text-muted-foreground text-xs">
+                    <Badge variant="outline" className="text-white text-xs">
                       +{study.regulations.length - 2} more
                     </Badge>
                   )}
@@ -744,30 +744,30 @@ const CaseStudiesTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground mb-4">
+          <p className="text-white mb-4">
             These case studies are based on real incidents reported to the HSE and other safety organisations. 
             They represent valuable learning opportunities that have shaped current safety practices and regulations.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             <div className="text-center">
               <div className="text-2xl font-bold text-orange-400 mb-1">{caseStudies.length}</div>
-              <div className="text-sm text-muted-foreground">Case Studies</div>
+              <div className="text-sm text-white">Case Studies</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-red-400 mb-1">{caseStudies.filter(c => c.severity === 'Fatal').length}</div>
-              <div className="text-sm text-muted-foreground">Fatal Incidents</div>
+              <div className="text-sm text-white">Fatal Incidents</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-yellow-400 mb-1">100%</div>
-              <div className="text-sm text-muted-foreground">Preventable</div>
+              <div className="text-sm text-white">Preventable</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-blue-400 mb-1">{caseStudies.reduce((acc, c) => acc + c.views, 0)}</div>
-              <div className="text-sm text-muted-foreground">Total Views</div>
+              <div className="text-sm text-white">Total Views</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-green-400 mb-1">{caseStudies.filter(c => c.difficulty === 'Advanced').length}</div>
-              <div className="text-sm text-muted-foreground">Advanced Cases</div>
+              <div className="text-sm text-white">Advanced Cases</div>
             </div>
           </div>
         </CardContent>

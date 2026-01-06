@@ -3,9 +3,16 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Award, Clock, CheckCircle, Star, ExternalLink } from "lucide-react";
+import { Award, Clock, CheckCircle, Star, ExternalLink, Zap, Shield } from "lucide-react";
 
 const Certifications = () => {
+  const quickStats = [
+    { label: "Essential Certs", value: "3", icon: CheckCircle, color: "text-red-400", bg: "from-red-500/10 to-red-500/5", border: "border-red-500/30" },
+    { label: "Specialist Areas", value: "4", icon: Star, color: "text-blue-400", bg: "from-blue-500/10 to-blue-500/5", border: "border-blue-500/30" },
+    { label: "Advanced Quals", value: "2", icon: Award, color: "text-purple-400", bg: "from-purple-500/10 to-purple-500/5", border: "border-purple-500/30" },
+    { label: "Career Focus", value: "100%", icon: Zap, color: "text-elec-yellow", bg: "from-elec-yellow/10 to-elec-yellow/5", border: "border-elec-yellow/30" }
+  ];
+
   const essentialCertifications = [
     {
       title: "18th Edition IET Wiring Regulations (BS 7671)",
@@ -98,10 +105,10 @@ const Certifications = () => {
 
   const getLevelBadge = (level: string) => {
     const levelConfig = {
-      Essential: { color: 'bg-red-500/20 text-red-400', label: 'Essential' },
-      Specialist: { color: 'bg-blue-500/20 text-blue-400', label: 'Specialist' },
-      Advanced: { color: 'bg-purple-500/20 text-purple-400', label: 'Advanced' },
-      Professional: { color: 'bg-green-500/20 text-green-400', label: 'Professional' }
+      Essential: { color: 'bg-red-500/20 text-red-400 border-red-500/30', label: 'Essential' },
+      Specialist: { color: 'bg-blue-500/20 text-blue-400 border-blue-500/30', label: 'Specialist' },
+      Advanced: { color: 'bg-purple-500/20 text-purple-400 border-purple-500/30', label: 'Advanced' },
+      Professional: { color: 'bg-green-500/20 text-green-400 border-green-500/30', label: 'Professional' }
     };
 
     const config = levelConfig[level as keyof typeof levelConfig] || levelConfig.Essential;
@@ -109,54 +116,73 @@ const Certifications = () => {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Professional Certifications</h1>
-          <p className="text-muted-foreground">Industry certifications and qualifications for electrical professionals</p>
+    <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8 animate-fade-in px-4 sm:px-6 lg:px-8 pb-20">
+      {/* Hero Header */}
+      <div className="flex flex-col items-center justify-center mb-6 text-center">
+        <div className="p-3 bg-elec-yellow/20 rounded-2xl mb-4">
+          <Award className="h-8 w-8 sm:h-10 sm:w-10 text-elec-yellow" />
         </div>
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
+          Professional Certifications
+        </h1>
+        <p className="text-white/80 max-w-2xl mb-4 text-sm sm:text-base">
+          Industry certifications and qualifications for electrical professionals. Plan your certification journey for career success.
+        </p>
         <SmartBackButton />
       </div>
 
+      {/* Quick Stats */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+        {quickStats.map((stat, index) => (
+          <Card key={index} className={`${stat.border} bg-gradient-to-br ${stat.bg}`}>
+            <CardContent className="p-4 text-center">
+              <stat.icon className={`h-8 w-8 ${stat.color} mx-auto mb-2`} />
+              <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
+              <p className="text-xs text-white/70">{stat.label}</p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
       {/* Essential Certifications */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-red-500/20 bg-gradient-to-br from-red-500/10 to-red-500/5">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <CheckCircle className="h-5 w-5 text-red-400" />
+          <CardTitle className="flex items-center gap-2 text-red-400">
+            <CheckCircle className="h-5 w-5" />
             Essential Certifications
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white/70">
             These certifications are required for most electrical work in the UK
           </p>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             {essentialCertifications.map((cert, index) => (
-              <Card key={index} className="border-elec-yellow/10 bg-elec-dark/50">
+              <Card key={index} className="border-white/10 bg-white/5">
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between mb-3">
                     <div>
                       <h3 className="font-semibold text-white mb-1">{cert.title}</h3>
-                      <p className="text-sm text-muted-foreground">{cert.provider}</p>
+                      <p className="text-sm text-white/60">{cert.provider}</p>
                     </div>
                     {getLevelBadge(cert.level)}
                   </div>
-                  <p className="text-sm text-elec-light/80 mb-3">{cert.description}</p>
+                  <p className="text-sm text-white/80 mb-3">{cert.description}</p>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
                     <div>
-                      <span className="text-muted-foreground">Duration:</span>
+                      <span className="text-white/60">Duration:</span>
                       <div className="font-medium text-white">{cert.duration}</div>
                     </div>
                     <div>
-                      <span className="text-muted-foreground">Validity:</span>
+                      <span className="text-white/60">Validity:</span>
                       <div className="font-medium text-white">{cert.validity}</div>
                     </div>
                     <div>
-                      <span className="text-muted-foreground">Cost:</span>
+                      <span className="text-white/60">Cost:</span>
                       <div className="font-medium text-elec-yellow">{cert.cost}</div>
                     </div>
                     <div className="flex items-center">
-                      <Button size="sm" variant="outline" className="text-xs">
+                      <Button size="sm" variant="outline" className="text-xs border-white/20 text-white hover:bg-white/10">
                         Find Providers
                         <ExternalLink className="ml-1 h-3 w-3" />
                       </Button>
@@ -170,36 +196,36 @@ const Certifications = () => {
       </Card>
 
       {/* Specialist Certifications */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/10 to-blue-500/5">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Star className="h-5 w-5 text-blue-400" />
+          <CardTitle className="flex items-center gap-2 text-blue-400">
+            <Star className="h-5 w-5" />
             Specialist Certifications
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white/70">
             Expand your expertise into high-demand specialist areas
           </p>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {specialistCertifications.map((cert, index) => (
-              <Card key={index} className="border-elec-yellow/10 bg-elec-dark/50">
+              <Card key={index} className="border-white/10 bg-white/5">
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between mb-3">
                     <div>
                       <h3 className="font-semibold text-white mb-1">{cert.title}</h3>
-                      <p className="text-sm text-muted-foreground">{cert.provider}</p>
+                      <p className="text-sm text-white/60">{cert.provider}</p>
                     </div>
                     {getLevelBadge(cert.level)}
                   </div>
-                  <p className="text-sm text-elec-light/80 mb-3">{cert.description}</p>
+                  <p className="text-sm text-white/80 mb-3">{cert.description}</p>
                   <div className="space-y-2 text-xs">
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Duration:</span>
+                      <span className="text-white/60">Duration:</span>
                       <span className="font-medium text-white">{cert.duration}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Cost:</span>
+                      <span className="text-white/60">Cost:</span>
                       <span className="font-medium text-elec-yellow">{cert.cost}</span>
                     </div>
                   </div>
@@ -211,40 +237,40 @@ const Certifications = () => {
       </Card>
 
       {/* Advanced Qualifications */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-purple-500/20 bg-gradient-to-br from-purple-500/10 to-purple-500/5">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Award className="h-5 w-5 text-purple-400" />
+          <CardTitle className="flex items-center gap-2 text-purple-400">
+            <Award className="h-5 w-5" />
             Advanced Qualifications
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white/70">
             Higher level qualifications for career advancement and professional recognition
           </p>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             {advancedCertifications.map((cert, index) => (
-              <Card key={index} className="border-elec-yellow/10 bg-elec-dark/50">
+              <Card key={index} className="border-white/10 bg-white/5">
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between mb-3">
                     <div>
                       <h3 className="font-semibold text-white mb-1">{cert.title}</h3>
-                      <p className="text-sm text-muted-foreground">{cert.provider}</p>
+                      <p className="text-sm text-white/60">{cert.provider}</p>
                     </div>
                     {getLevelBadge(cert.level)}
                   </div>
-                  <p className="text-sm text-elec-light/80 mb-3">{cert.description}</p>
+                  <p className="text-sm text-white/80 mb-3">{cert.description}</p>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-xs">
                     <div>
-                      <span className="text-muted-foreground">Duration:</span>
+                      <span className="text-white/60">Duration:</span>
                       <div className="font-medium text-white">{cert.duration}</div>
                     </div>
                     <div>
-                      <span className="text-muted-foreground">Cost:</span>
+                      <span className="text-white/60">Cost:</span>
                       <div className="font-medium text-elec-yellow">{cert.cost}</div>
                     </div>
                     <div className="flex items-center">
-                      <Button size="sm" variant="outline" className="text-xs">
+                      <Button size="sm" variant="outline" className="text-xs border-white/20 text-white hover:bg-white/10">
                         Learn More
                         <ExternalLink className="ml-1 h-3 w-3" />
                       </Button>
@@ -258,30 +284,30 @@ const Certifications = () => {
       </Card>
 
       {/* Certification Tips */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Clock className="h-5 w-5 text-elec-yellow" />
+          <CardTitle className="flex items-center gap-2 text-elec-yellow">
+            <Clock className="h-5 w-5" />
             Certification Planning Tips
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
+            <div className="bg-white/5 border border-white/10 rounded-lg p-4">
               <h3 className="font-semibold mb-2 text-elec-yellow">Plan Ahead</h3>
-              <p className="text-sm text-elec-light/80">
+              <p className="text-sm text-white/80">
                 Many courses book up months in advance. Plan your certification journey early.
               </p>
             </div>
-            <div>
+            <div className="bg-white/5 border border-white/10 rounded-lg p-4">
               <h3 className="font-semibold mb-2 text-elec-yellow">Check Employer Support</h3>
-              <p className="text-sm text-elec-light/80">
+              <p className="text-sm text-white/80">
                 Many employers will fund training. Check what support is available before booking.
               </p>
             </div>
-            <div>
+            <div className="bg-white/5 border border-white/10 rounded-lg p-4">
               <h3 className="font-semibold mb-2 text-elec-yellow">Stay Current</h3>
-              <p className="text-sm text-elec-light/80">
+              <p className="text-sm text-white/80">
                 Regulations change regularly. Keep track of when your certifications need renewal.
               </p>
             </div>

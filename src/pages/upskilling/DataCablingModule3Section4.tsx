@@ -1,320 +1,401 @@
-import { useEffect, useMemo } from 'react';
-import { ArrowLeft, Route, Activity, Ruler, Gauge, AlertTriangle, CheckCircle2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
-import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import type { QuizQuestion } from '@/types/quiz';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
+import useSEO from "@/hooks/useSEO";
+
+const quickCheckQuestions = [
+  {
+    id: "datacabling-m3s4-check1",
+    question: "What is the typical singlemode attenuation at 1310nm?",
+    options: ["0.1 dB/km", "0.35 dB/km", "1.5 dB/km", "3.5 dB/km"],
+    correctIndex: 1,
+    explanation: "OS2 singlemode attenuation is typically 0.35 dB/km at 1310nm and approximately 0.25 dB/km at 1550nm."
+  },
+  {
+    id: "datacabling-m3s4-check2",
+    question: "What is an OTDR dead zone?",
+    options: [
+      "A zone where fibres cannot be connected",
+      "A section near the instrument where events cannot be resolved",
+      "The part of fibre with no attenuation",
+      "A fault that stops all transmission"
+    ],
+    correctIndex: 1,
+    explanation: "The dead zone is the region after the launch pulse where near-end events are not resolvable. Use launch/receive leads to move dead zones away from the first/last connectors."
+  },
+  {
+    id: "datacabling-m3s4-check3",
+    question: "Why use both launch and receive fibres for OTDR tests?",
+    options: [
+      "To increase measured loss",
+      "To reduce wavelength",
+      "To characterise the first and last connectors accurately",
+      "To avoid using a power meter"
+    ],
+    correctIndex: 2,
+    explanation: "Launch and receive leads allow the OTDR to separate the first and last connectors from the dead zones for accurate measurement."
+  }
+];
+
+const faqs = [
+  {
+    question: "How do I calculate a fibre link loss budget?",
+    answer: "Sum fibre attenuation (length × dB/km), connector losses (typically 0.3 dB each), splice losses (0.1 dB fusion), and add a design margin (1-3 dB). Compare against transceiver power budget to ensure link viability."
+  },
+  {
+    question: "What pulse width should I use for OTDR testing?",
+    answer: "Use short pulse widths for better near-end resolution on short links, and longer pulse widths for better signal-to-noise ratio on long links. Start with auto mode, then refine manually based on link characteristics."
+  },
+  {
+    question: "Why is bi-directional OTDR testing important?",
+    answer: "Bi-directional testing allows averaging of splice losses to eliminate direction-dependent variations caused by differences in core diameter between fibres. This provides more accurate loss values for splices."
+  },
+  {
+    question: "What causes a gain or apparent negative loss in an OTDR trace?",
+    answer: "This occurs at splices between fibres with different backscatter coefficients or core sizes. The larger-core fibre produces more backscatter, making the splice appear as a gain. Bi-directional averaging eliminates this artefact."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+  question: "A 2 km OS2 link with two connectors (0.3 dB each) and one fusion splice (0.1 dB) has what expected loss at 1310nm?",
+  options: [
+    "0.8 dB",
+    "1.0 dB",
+    "1.4 dB",
+    "2.0 dB"
+  ],
+  correctAnswer: 2,
+  explanation: "Fibre loss: 2 km × 0.35 dB/km = 0.70 dB. Connectors: 2 × 0.3 dB = 0.6 dB. Splice: 0.1 dB. Total = 0.70 + 0.6 + 0.1 = 1.4 dB."
+  }
+];
 
 const DataCablingModule3Section4 = () => {
-  // SEO
-  useEffect(() => {
-    const title = 'Loss Budgets & OTDR Basics | Module 3 Sec 4';
-    document.title = title;
-    const desc = 'Calculate optical loss budgets and understand OTDR testing. Practical examples, typical values, test setup, and pass/fail guidance.';
-    let meta = document.querySelector('meta[name="description"]');
-    if (!meta) {
-      meta = document.createElement('meta');
-      (meta as HTMLMetaElement).name = 'description';
-      document.head.appendChild(meta);
-    }
-    (meta as HTMLMetaElement).content = desc;
-
-    // Canonical
-    const href = window.location.origin + '/data-cabling-module-3-section-4';
-    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-    if (!canonical) {
-      canonical = document.createElement('link');
-      canonical.rel = 'canonical';
-      document.head.appendChild(canonical);
-    }
-    canonical.href = href;
-  }, []);
-
-  // Quiz Data
-  const questions: QuizQuestion[] = useMemo(() => [
-    {
-      id: 1,
-      question: 'Typical singlemode attenuation at 1310nm is:',
-      options: ['0.1 dB/km', '0.35 dB/km', '1.5 dB/km', '3.5 dB/km'],
-      correctAnswer: 1,
-      explanation: 'OS2 singlemode attenuation is typically 0.35 dB/km at 1310nm (and ~0.25 dB/km at 1550nm).'
-    },
-    {
-      id: 2,
-      question: 'Which combination is needed to calculate a link loss budget?',
-      options: ['Cable length only', 'Connectors and splices only', 'Fibre attenuation + connector losses + splice losses + margin', 'OTDR trace only'],
-      correctAnswer: 2,
-      explanation: 'A complete loss budget includes fibre attenuation, connector and splice losses, and a design margin.'
-    },
-    {
-      id: 3,
-      question: 'What is an OTDR dead zone?',
-      options: ['A zone where fibres cannot be connected', 'A section near the instrument where events cannot be resolved', 'The part of fibre with no attenuation', 'A fault that stops all transmission'],
-      correctAnswer: 1,
-      explanation: 'The dead zone is the region after the launch pulse where near-end events are not resolvable; use launch/receive leads.'
-    },
-    {
-      id: 4,
-      question: 'Why use both launch and receive fibres for OTDR tests?',
-      options: ['To increase measured loss', 'To reduce wavelength', 'To characterise the first and last connectors accurately', 'To avoid using a power meter'],
-      correctAnswer: 2,
-      explanation: 'Launch and receive leads allow the OTDR to separate the first and last connectors from the dead zones for accurate measurement.'
-    },
-    {
-      id: 5,
-      question: 'A 2 km OS2 link with two connectors (0.3 dB each) and one fusion splice (0.1 dB) has what expected loss at 1310nm?',
-      options: ['0.8 dB', '1.0 dB', '1.3 dB', '2.0 dB'],
-      correctAnswer: 2,
-      explanation: 'Fibre: 2 km × 0.35 dB/km = 0.70 dB; connectors: 0.6 dB; splice: 0.1 dB; total ≈ 1.4 dB. Closest answer: 1.3 dB.'
-    }
-  ], []);
-
-  const sequentialQuestions = useMemo(
-    () => questions.map(q => ({ id: q.id, question: q.question, options: q.options, correct: q.correctAnswer, explanation: q.explanation })),
-    [questions]
-  );
+  useSEO({
+    title: "Loss Budgets and OTDR Basics | Data Cabling Module 3.4",
+    description: "Learn to calculate optical loss budgets and understand OTDR testing, including setup, trace interpretation, and pass/fail guidance."
+  });
 
   return (
-    <div className="min-h-screen bg-background">
-      <div>
-        <Link to="../data-cabling-module-3">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 3
+            <Link to="../data-cabling-module-3">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 3
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-2">
-          <div className="flex items-center gap-3 mb-2">
-            <Route className="h-6 w-6 text-yellow-400" />
-            <Badge variant="secondary" className="bg-yellow-400/10 text-yellow-400 hover:bg-yellow-400/10 font-semibold">
-              Section 4
-            </Badge>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white">
-            Loss Budgets and OTDR Basics
-          </h1>
-          <p className="text-base text-gray-400 max-w-3xl">
-            Practical loss calculations, test setup and trace interpretation
-          </p>
-        </div>
-
-        <div className="space-y-8 mt-8">
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Activity className="h-5 w-5 text-yellow-400" />
-                Why loss budgets matter
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                Loss budgets confirm whether a link will support the intended application before equipment is connected. 
-                They combine fibre attenuation, connector and splice losses, and a design margin for ageing and maintenance.
-              </p>
-              <div className="bg-card p-4 rounded-lg">
-                <p className="text-yellow-400 font-semibold mb-2">Typical Attenuation Values:</p>
-                <ul className="space-y-2 text-gray-300">
-                  <li>• Multimode 850nm: <span className="text-white">3.5 dB/km</span> | 1300nm: <span className="text-white">1.5 dB/km</span></li>
-                  <li>• Singlemode 1310nm: <span className="text-white">0.35 dB/km</span> | 1550nm: <span className="text-white">0.25 dB/km</span></li>
-                  <li>• Connector (Grade A): <span className="text-white">≤0.3 dB</span> each</li>
-                  <li>• Fusion splice: <span className="text-white">≤0.1 dB</span></li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-yellow-400" />
-                Learning Outcomes
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="bg-card p-4 rounded-lg">
-                <p className="text-yellow-400 font-semibold mb-3">After this section, you will be able to:</p>
-                <ul className="space-y-2 text-gray-300">
-                  <li>• Build a complete loss budget with design margin</li>
-                  <li>• Use OTDR with launch/receive fibres correctly</li>
-                  <li>• Identify events on traces and estimate losses</li>
-                  <li>• Set pass/fail thresholds and document results</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Loss Budget Calculation */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Ruler className="h-5 w-5 text-yellow-400" />
-                Building a Loss Budget (Example)
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300">Example: 550 m OM4 link, two connectors (0.3 dB each), no splices, VCSEL @ 850 nm.</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-2">Step-by-step</h4>
-                  <ol className="list-decimal list-inside space-y-1 text-gray-300">
-                    <li>Fibre attenuation: 0.55 km × 3.5 dB/km = 1.93 dB</li>
-                    <li>Connector losses: 2 × 0.3 dB = 0.6 dB</li>
-                    <li>Splice losses: 0 dB</li>
-                    <li>Design margin: 1.0 dB</li>
-                    <li>Total budget: 1.93 + 0.6 + 0 + 1.0 = 3.53 dB</li>
-                  </ol>
-                </div>
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-2">Practical Guidance</h4>
-                  <ul className="space-y-1 text-gray-300">
-                    <li>• Use manufacturer data for exact attenuation</li>
-                    <li>• Add 0.1 dB per planned fusion splice</li>
-                    <li>• Maintain connector Grade A targets (≤0.3 dB)</li>
-                    <li>• Keep 1–3 dB margin, depending on criticality</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* OTDR Basics */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Gauge className="h-5 w-5 text-yellow-400" />
-                OTDR Setup and Trace Reading
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300">An OTDR sends optical pulses and measures backscatter to map events along a fibre. Proper setup is essential.</p>
-              <div className="space-y-4">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-3">Essential Setup</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <p className="text-white font-medium mb-2">Test Configuration</p>
-                      <ul className="space-y-1 text-gray-300">
-                        <li>• Use launch and receive leads</li>
-                        <li>• Select wavelength(s): 850/1300 nm MM, 1310/1550 nm SM</li>
-                        <li>• Choose pulse width for link length</li>
-                        <li>• Set index of refraction per cable datasheet</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="text-white font-medium mb-2">Interpreting Traces</p>
-                      <ul className="space-y-1 text-gray-300">
-                        <li>• Connector: reflective spike at an event</li>
-                        <li>• Splice: small non-reflective step</li>
-                        <li>• Break: large reflective end event</li>
-                        <li>• Macro-bend: gradual slope increase</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-yellow-600/20 border border-yellow-400/30 p-4 rounded-lg">
-                  <p className="text-yellow-400 text-sm"><strong>Pro tip:</strong> Take bi-directional traces and average results for accurate splice loss estimation.</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Warnings */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-yellow-400" />
-                Common Pitfalls & Documentation
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-2">Avoid These</h4>
-                  <ul className="space-y-1 text-gray-300">
-                    <li>• Skipping launch/receive leads</li>
-                    <li>• Using wrong pulse width for short links</li>
-                    <li>• Ignoring back reflection limits</li>
-                    <li>• Misreading ghost reflections</li>
-                  </ul>
-                </div>
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-2">Record Keeping</h4>
-                  <ul className="space-y-1 text-gray-300">
-                    <li>• Save traces (both directions) and PDFs</li>
-                    <li>• Document fibre IDs, wavelengths, settings</li>
-                    <li>• Keep pass/fail thresholds and summaries</li>
-                    <li>• Align with warranty and client handover packs</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Bi-directional Testing & Reporting */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Activity className="h-5 w-5 text-yellow-400" />
-                Bi-directional Testing & Reporting
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300">Combine tests in both directions to average splice loss and reduce connector reflectance bias.</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-2">Reporting Checklist</h4>
-                  <ul className="space-y-1 text-gray-300">
-                    <li>• Link IDs, core numbers, wavelengths</li>
-                    <li>• Test settings (pulse width, range, IOR)</li>
-                    <li>• Equipment model, serial and calibration</li>
-                    <li>• Pass/fail criteria and summary table</li>
-                  </ul>
-                </div>
-                <div className="bg-yellow-400/10 border border-yellow-400/30 p-4 rounded-lg">
-                  <p className="text-foreground text-sm"><strong className="text-yellow-400">Tip:</strong> Export .sor files and a PDF bundle; store centrally for maintenance teams.</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Knowledge Check</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <SingleQuestionQuiz questions={sequentialQuestions} title="Loss Budgets & OTDR Quiz" />
-            </CardContent>
-          </Card>
-
-          {/* Navigation */}
-          <div className="flex justify-between">
-            <Link to="../data-cabling-module-3-section-3">
-              <Button
-                variant="outline"
-                className="border-gray-600 text-gray-300 hover:bg-card/80 hover:text-white"
-              >
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back
-              </Button>
-            </Link>
-            <Link to="../data-cabling-module-3-section-5">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-400">
-                Next
-                <ArrowLeft className="ml-2 h-4 w-4 rotate-180" />
-              </Button>
-            </Link>
-          </div>
         </div>
       </div>
+
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Page Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 3.4</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Loss Budgets and OTDR Basics
+          </h1>
+          <p className="text-white/80">
+            Practical loss calculations and OTDR trace interpretation
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>SM 1310nm:</strong> 0.35 dB/km typical attenuation</li>
+              <li><strong>Connector:</strong> ≤0.3 dB (Grade A)</li>
+              <li><strong>Fusion splice:</strong> ≤0.1 dB typical</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Launch/receive leads on OTDR setup</li>
+              <li><strong>Use:</strong> Calculate budget before installation</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Build complete loss budgets with design margin",
+              "Use OTDR with launch/receive fibres correctly",
+              "Identify events on traces and estimate losses",
+              "Set pass/fail thresholds from budgets",
+              "Interpret bi-directional test results",
+              "Document results for handover"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Building a Loss Budget
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Loss budgets confirm whether a link will support the intended application before equipment
+              is connected. They combine fibre attenuation, connector and splice losses, and design margin.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Typical Attenuation Values</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>MM 850nm:</strong> 3.5 dB/km</li>
+                  <li><strong>MM 1300nm:</strong> 1.5 dB/km</li>
+                  <li><strong>SM 1310nm:</strong> 0.35 dB/km</li>
+                  <li><strong>SM 1550nm:</strong> 0.25 dB/km</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Component Losses</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Connector (Grade A):</strong> ≤0.3 dB</li>
+                  <li><strong>Connector (Grade B):</strong> ≤0.5 dB</li>
+                  <li><strong>Fusion splice:</strong> ≤0.1 dB</li>
+                  <li><strong>Design margin:</strong> 1-3 dB</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Example Calculation:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Link: 550m OM4 @ 850nm, two connectors, no splices</li>
+                <li>Fibre: 0.55 km × 3.5 dB/km = 1.93 dB</li>
+                <li>Connectors: 2 × 0.3 dB = 0.6 dB</li>
+                <li>Design margin: 1.0 dB</li>
+                <li><strong>Total budget: 3.53 dB</strong></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            OTDR Setup and Operation
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              An OTDR sends optical pulses and measures backscatter to map events along a fibre.
+              Proper setup is essential for accurate measurements.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Test Configuration</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Use launch and receive leads</li>
+                  <li>Select wavelengths: 850/1300nm (MM), 1310/1550nm (SM)</li>
+                  <li>Choose pulse width for link length</li>
+                  <li>Set index of refraction per cable datasheet</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Why Launch/Receive Leads?</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Move dead zones away from link ends</li>
+                  <li>Accurately measure first connector</li>
+                  <li>Characterise last connector</li>
+                  <li>Typically 100-500m each</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">Launch</p>
+                <p className="text-white/90 text-xs">Clear first dead zone</p>
+              </div>
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">Link Under Test</p>
+                <p className="text-white/90 text-xs">Events mapped</p>
+              </div>
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">Receive</p>
+                <p className="text-white/90 text-xs">Clear end dead zone</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 3 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Trace Interpretation
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Understanding OTDR traces allows you to identify and locate events along the fibre,
+              diagnose faults, and verify installation quality.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Event Signatures:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Connector:</strong> Reflective spike at an event (reflection + loss)</li>
+                <li><strong>Splice:</strong> Small non-reflective step (loss only)</li>
+                <li><strong>Break:</strong> Large reflective end event</li>
+                <li><strong>Macro-bend:</strong> Gradual slope increase</li>
+              </ul>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Good Results</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Connector: ~0.2-0.5 dB loss</li>
+                  <li>Fusion splice: ~0.05-0.1 dB loss</li>
+                  <li>Consistent attenuation slope</li>
+                  <li>Clean end reflection</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Investigate These</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Connector: &gt;0.75 dB (clean/replace)</li>
+                  <li>Splice: &gt;0.2 dB (rework)</li>
+                  <li>Unexpected events (kinks, bends)</li>
+                  <li>High back reflection</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Test Procedure</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Calculate loss budget before testing</li>
+                <li>Clean all connectors including launch/receive leads</li>
+                <li>Test bi-directionally and average results</li>
+                <li>Save traces and export PDFs for records</li>
+                <li>Set pass/fail thresholds from design budget</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Skipping launch/receive leads:</strong> — First/last connectors not measured</li>
+                <li><strong>Wrong pulse width:</strong> — Too long hides near events</li>
+                <li><strong>One-direction only:</strong> — Splice losses inaccurate</li>
+                <li><strong>Ignoring reflections:</strong> — Can indicate connector damage</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quick Reference */}
+        <div className="mt-6 p-5 rounded-lg bg-transparent">
+          <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+            <div>
+              <p className="font-medium text-white mb-1">Attenuation (dB/km)</p>
+              <ul className="space-y-0.5">
+                <li>SM 1310nm: 0.35</li>
+                <li>SM 1550nm: 0.25</li>
+                <li>MM 850nm: 3.5</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-medium text-white mb-1">Loss Limits</p>
+              <ul className="space-y-0.5">
+                <li>Connector: ≤0.3 dB (Grade A)</li>
+                <li>Fusion splice: ≤0.1 dB</li>
+                <li>Design margin: 1-3 dB</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Quiz Section */}
+        <section className="mb-10 mt-12">
+          <SingleQuestionQuiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../data-cabling-module-3-section-3">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../data-cabling-module-3-section-5">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

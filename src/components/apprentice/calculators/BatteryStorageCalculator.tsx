@@ -387,14 +387,14 @@ const BatteryStorageCalculator = () => {
                 <div className="text-3xl font-bold bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}>
                   {result.batteriesInSeries}S{result.batteriesInParallel}P
                 </div>
-                <p className="text-xs text-white/50">{result.numberOfBatteries} batteries</p>
+                <p className="text-xs text-white/80">{result.numberOfBatteries} batteries</p>
               </div>
               <div className="text-center">
                 <p className="text-sm text-white/60 mb-1">Usable Capacity</p>
                 <div className="text-3xl font-bold bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}>
                   {result.usableCapacityKwh.toFixed(1)}
                 </div>
-                <p className="text-xs text-white/50">kWh</p>
+                <p className="text-xs text-white/80">kWh</p>
               </div>
             </div>
 
@@ -451,7 +451,7 @@ const BatteryStorageCalculator = () => {
                     <Info className="h-4 w-4 text-blue-400" />
                     <span className="text-sm sm:text-base font-medium text-blue-300">Recommendations</span>
                   </div>
-                  <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showGuidance && "rotate-180")} />
+                  <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showGuidance && "rotate-180")} />
                 </CollapsibleTrigger>
                 <CollapsibleContent className="p-4 pt-0">
                   <ul className="space-y-2 text-sm text-blue-200/80">
@@ -472,7 +472,7 @@ const BatteryStorageCalculator = () => {
                   <BookOpen className="h-4 w-4 text-amber-400" />
                   <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 Compliance</span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showRegs && "rotate-180")} />
+                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showRegs && "rotate-180")} />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0">
                 <ul className="space-y-2 text-sm text-amber-200/80">

@@ -24,7 +24,7 @@ const SafetyModuleCard = ({ module, onModuleClick }: SafetyModuleCardProps) => {
       case 'Critical': return 'text-red-400 bg-red-400/10 border-red-400/20';
       case 'Essential': return 'text-orange-400 bg-orange-400/10 border-orange-400/20';
       case 'Required': return 'text-blue-400 bg-blue-400/10 border-blue-400/20';
-      default: return 'text-white/80 bg-gray-400/10 border-gray-400/20';
+      default: return 'text-white/80 bg-white/5 border-white/20';
     }
   };
 

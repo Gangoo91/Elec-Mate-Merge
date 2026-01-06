@@ -3,8 +3,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { FeatureTile } from "@/components/employer/FeatureTile";
 import { SectionHeader } from "@/components/employer/SectionHeader";
 import { Input } from "@/components/ui/input";
-import { 
-  Award, 
+import { QuickStats, QuickStat } from "@/components/employer/QuickStats";
+import {
+  Award,
   GraduationCap,
   ClipboardList,
   BookOpen,
@@ -62,37 +63,29 @@ export function TrainingRecordsSection() {
       </div>
 
       {/* Quick Stats */}
-      <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4 md:mx-0 md:px-0">
-        <Card className="bg-success/10 border-success/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-success" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{completedTraining}</p>
-              <p className="text-xs text-muted-foreground">Completed</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-elec-yellow/10 border-elec-yellow/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <Clock className="h-4 w-4 text-elec-yellow" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{inProgressTraining}</p>
-              <p className="text-xs text-muted-foreground">In Progress</p>
-            </div>
-          </CardContent>
-        </Card>
-        {pendingTraining > 0 && (
-          <Card className="bg-warning/10 border-warning/20 shrink-0">
-            <CardContent className="p-3 flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4 text-warning" />
-              <div>
-                <p className="text-lg font-bold text-foreground">{pendingTraining}</p>
-                <p className="text-xs text-muted-foreground">Pending</p>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-      </div>
+      <QuickStats
+        stats={[
+          {
+            icon: CheckCircle2,
+            value: completedTraining,
+            label: "Completed",
+            color: "green",
+          },
+          {
+            icon: Clock,
+            value: inProgressTraining,
+            label: "In Progress",
+            color: "yellow",
+          },
+          ...(pendingTraining > 0 ? [{
+            icon: AlertTriangle,
+            value: pendingTraining,
+            label: "Pending",
+            color: "orange" as const,
+            pulse: true,
+          }] : []),
+        ]}
+      />
 
       {/* Training Documents */}
       <div>

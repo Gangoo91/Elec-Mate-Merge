@@ -1,7 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AlertTriangle, CheckCircle, Zap, FileText, Clock, TrendingUp } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export interface Template {
   id: string;
@@ -74,76 +73,79 @@ interface TemplateSelectorProps {
   onSelectTemplate: (template: Template) => void;
 }
 
+const urgencyConfig = {
+  high: { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/30', label: 'Urgent' },
+  medium: { bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'border-amber-500/30', label: 'Important' },
+  low: { bg: 'bg-green-500/10', text: 'text-green-400', border: 'border-green-500/30', label: 'Routine' },
+};
+
+const categoryConfig = {
+  eicr: { bg: 'bg-blue-500/10', text: 'text-blue-400' },
+  fault: { bg: 'bg-red-500/10', text: 'text-red-400' },
+  upgrade: { bg: 'bg-purple-500/10', text: 'text-purple-400' },
+  maintenance: { bg: 'bg-green-500/10', text: 'text-green-400' },
+  quote: { bg: 'bg-orange-500/10', text: 'text-orange-400' },
+  general: { bg: 'bg-slate-500/10', text: 'text-slate-400' },
+};
+
 const TemplateSelector = ({ onSelectTemplate }: TemplateSelectorProps) => {
-  const getUrgencyColor = (urgency: string) => {
-    switch (urgency) {
-      case "high": return "bg-red-500/10 text-red-400 border-red-500/30";
-      case "medium": return "bg-orange-500/10 text-orange-400 border-orange-500/30";
-      case "low": return "bg-green-500/10 text-green-400 border-green-500/30";
-      default: return "bg-muted";
-    }
-  };
-
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case "eicr": return "bg-blue-500/10 text-blue-400";
-      case "fault": return "bg-red-500/10 text-red-400";
-      case "upgrade": return "bg-purple-500/10 text-purple-400";
-      case "maintenance": return "bg-green-500/10 text-green-400";
-      case "quote": return "bg-orange-500/10 text-orange-400";
-      default: return "bg-muted";
-    }
-  };
-
   return (
-    <div className="space-y-4">
-      <h3 className="text-sm font-medium text-foreground mb-3">Common Scenarios</h3>
-      <div className="grid gap-3 max-h-64 overflow-y-auto pr-2">
-        {templates.map((template) => {
-          const Icon = template.icon;
-          return (
-            <Card 
-              key={template.id} 
-              className="cursor-pointer hover:bg-card/80 border-border/50 transition-all duration-200 mobile-card touch-target"
-              onClick={() => onSelectTemplate(template)}
-            >
-              <CardHeader className="pb-2 mobile-padding">
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
-                  <div className="flex items-start space-x-2 flex-1 min-w-0">
-                    <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center flex-shrink-0">
-                      <Icon className="h-4 w-4 text-elec-yellow" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <CardTitle className="text-sm text-foreground truncate">{template.title}</CardTitle>
-                      <p className="text-xs text-foreground/70 line-clamp-2 sm:line-clamp-1">{template.description}</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-1 flex-shrink-0 self-start">
-                    <Badge variant="outline" className={`${getCategoryColor(template.category)} text-xs px-1.5 py-0.5`}>
+    <div className="space-y-3 max-h-[320px] overflow-y-auto pr-1 -mr-1 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
+      {templates.map((template) => {
+        const Icon = template.icon;
+        const urgency = urgencyConfig[template.urgency];
+        const category = categoryConfig[template.category];
+
+        return (
+          <button
+            key={template.id}
+            onClick={() => onSelectTemplate(template)}
+            className={cn(
+              "w-full p-4 rounded-xl border text-left",
+              "min-h-[80px] touch-manipulation transition-all",
+              "bg-background/50 border-border/30",
+              "hover:bg-accent/30 hover:border-border/50",
+              "active:scale-[0.98]"
+            )}
+          >
+            <div className="flex items-start gap-3">
+              {/* Icon */}
+              <div className={cn(
+                "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0",
+                urgency.bg
+              )}>
+                <Icon className={cn("h-5 w-5", urgency.text)} />
+              </div>
+
+              {/* Content */}
+              <div className="flex-1 min-w-0 space-y-2">
+                <div className="flex items-start justify-between gap-2">
+                  <h4 className="font-semibold text-foreground text-sm leading-tight">
+                    {template.title}
+                  </h4>
+                  <div className="flex gap-1 flex-shrink-0">
+                    <Badge
+                      variant="outline"
+                      className={cn("text-[10px] px-1.5 py-0", category.bg, category.text, "border-transparent")}
+                    >
                       {template.category.toUpperCase()}
-                    </Badge>
-                    <Badge variant="outline" className={`${getUrgencyColor(template.urgency)} text-xs px-1.5 py-0.5`}>
-                      {template.urgency}
                     </Badge>
                   </div>
                 </div>
-              </CardHeader>
-              <CardContent className="pt-0 mobile-padding">
-                <p className="text-xs text-foreground/70 line-clamp-2 mb-3">
-                  {template.sample}
+
+                <p className="text-xs text-muted-foreground line-clamp-2">
+                  {template.description}
                 </p>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="text-elec-yellow hover:bg-elec-yellow/10 w-full touch-target mobile-tap-highlight"
-                >
-                  Use Template
-                </Button>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
+
+                {/* Sample preview */}
+                <p className="text-xs text-foreground/50 line-clamp-1 italic">
+                  "{template.sample.substring(0, 60)}..."
+                </p>
+              </div>
+            </div>
+          </button>
+        );
+      })}
     </div>
   );
 };

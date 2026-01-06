@@ -84,7 +84,7 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
                 <MobileSelectTrigger label="Cable Type">
                   <MobileSelectValue placeholder="Select cable type" />
                 </MobileSelectTrigger>
-                <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                <MobileSelectContent className="bg-white/10 border-elec-yellow/20">
                   <MobileSelectItem value="2.5mm-twin">2.5mm² Twin & Earth</MobileSelectItem>
                   <MobileSelectItem value="4mm-twin">4.0mm² Twin & Earth</MobileSelectItem>
                   <MobileSelectItem value="6mm-twin">6.0mm² Twin & Earth</MobileSelectItem>
@@ -102,7 +102,7 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
                   value={cableLength}
                   onChange={(e) => onCableLengthChange(e.target.value)}
                   error={errors.cableLength}
-                  className="mt-1 bg-elec-dark border-elec-yellow/20"
+                  className="mt-1 bg-white/10 border-elec-yellow/20"
                 />
               </div>
               
@@ -115,7 +115,7 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
                   value={temperature}
                   onChange={(e) => onTemperatureChange(e.target.value)}
                   error={errors.temperature}
-                  className="mt-1 bg-elec-dark border-elec-yellow/20"
+                  className="mt-1 bg-white/10 border-elec-yellow/20"
                 />
               </div>
             </div>
@@ -147,7 +147,7 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
                   value={readings.endToEndLive}
                   onChange={(e) => onInputChange("endToEndLive", e.target.value)}
                   error={errors.endToEndLive}
-                  className="mt-1 bg-elec-dark border-elec-yellow/20"
+                  className="mt-1 bg-white/10 border-elec-yellow/20"
                 />
               </div>
               
@@ -161,7 +161,7 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
                   value={readings.endToEndNeutral}
                   onChange={(e) => onInputChange("endToEndNeutral", e.target.value)}
                   error={errors.endToEndNeutral}
-                  className="mt-1 bg-elec-dark border-elec-yellow/20"
+                  className="mt-1 bg-white/10 border-elec-yellow/20"
                 />
               </div>
               
@@ -175,7 +175,7 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
                   value={readings.endToEndCpc}
                   onChange={(e) => onInputChange("endToEndCpc", e.target.value)}
                   error={errors.endToEndCpc}
-                  className="mt-1 bg-elec-dark border-elec-yellow/20"
+                  className="mt-1 bg-white/10 border-elec-yellow/20"
                 />
               </div>
             </div>
@@ -198,7 +198,7 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
                   value={readings.liveToNeutral}
                   onChange={(e) => onInputChange("liveToNeutral", e.target.value)}
                   error={errors.liveToNeutral}
-                  className="mt-1 bg-elec-dark border-elec-yellow/20"
+                  className="mt-1 bg-white/10 border-elec-yellow/20"
                 />
               </div>
               
@@ -212,7 +212,7 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
                   value={readings.liveToCpc}
                   onChange={(e) => onInputChange("liveToCpc", e.target.value)}
                   error={errors.liveToCpc}
-                  className="mt-1 bg-elec-dark border-elec-yellow/20"
+                  className="mt-1 bg-white/10 border-elec-yellow/20"
                 />
               </div>
               
@@ -226,7 +226,7 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
                   value={readings.neutralToCpc}
                   onChange={(e) => onInputChange("neutralToCpc", e.target.value)}
                   error={errors.neutralToCpc}
-                  className="mt-1 bg-elec-dark border-elec-yellow/20"
+                  className="mt-1 bg-white/10 border-elec-yellow/20"
                 />
               </div>
             </div>

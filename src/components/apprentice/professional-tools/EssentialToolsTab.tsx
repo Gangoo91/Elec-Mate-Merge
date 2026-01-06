@@ -110,77 +110,90 @@ const EssentialToolsTab = () => {
   ];
 
   return (
-    <div className="space-y-6">
-      <Alert className="border-elec-yellow/50 bg-elec-yellow/10">
-        <Info className="h-4 w-4 text-elec-yellow" />
-        <AlertDescription className="text-elec-yellow/90">
-          Essential tools form the foundation of your professional toolkit. This comprehensive guide covers specifications, maintenance, and strategic purchasing advice.
-        </AlertDescription>
-      </Alert>
+    <div className="space-y-6 animate-fade-in">
+      {/* Hero Alert */}
+      <div className="p-4 rounded-xl bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/30">
+        <div className="flex items-start gap-3">
+          <div className="p-2 rounded-lg bg-elec-yellow/20">
+            <Info className="h-5 w-5 text-elec-yellow" />
+          </div>
+          <div>
+            <p className="font-medium text-elec-yellow mb-1">Essential Tools Guide</p>
+            <p className="text-sm text-white/70">
+              Essential tools form the foundation of your professional toolkit. This comprehensive guide covers specifications, maintenance, and strategic purchasing advice.
+            </p>
+          </div>
+        </div>
+      </div>
 
       {/* Detailed Tool Category Tabs */}
       <Tabs defaultValue="hand-tools" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="hand-tools">Hand Tools</TabsTrigger>
-          <TabsTrigger value="power-tools">Power Tools</TabsTrigger>
-          <TabsTrigger value="test-equipment">Test Equipment</TabsTrigger>
-          <TabsTrigger value="ppe">PPE & Safety</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 bg-white/5 p-1 rounded-xl h-auto">
+          <TabsTrigger value="hand-tools" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black rounded-lg h-10 touch-manipulation">Hand Tools</TabsTrigger>
+          <TabsTrigger value="power-tools" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black rounded-lg h-10 touch-manipulation">Power Tools</TabsTrigger>
+          <TabsTrigger value="test-equipment" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black rounded-lg h-10 touch-manipulation">Test Equipment</TabsTrigger>
+          <TabsTrigger value="ppe" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black rounded-lg h-10 touch-manipulation">PPE & Safety</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="hand-tools">
+        <TabsContent value="hand-tools" className="mt-4">
           <HandToolsTab />
         </TabsContent>
 
-        <TabsContent value="power-tools">
+        <TabsContent value="power-tools" className="mt-4">
           <PowerToolsTab />
         </TabsContent>
 
-        <TabsContent value="test-equipment">
+        <TabsContent value="test-equipment" className="mt-4">
           <TestEquipmentTab />
         </TabsContent>
 
-        <TabsContent value="ppe">
+        <TabsContent value="ppe" className="mt-4">
           <PPETab />
         </TabsContent>
       </Tabs>
 
       {/* Apprentice Progression Timeline */}
-      <Card className="border-blue-500/20 bg-blue-500/10">
-        <CardHeader>
-          <CardTitle className="text-blue-300 flex items-center gap-2">
-            <BookOpen className="h-5 w-5" />
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-blue-500/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
+              <BookOpen className="h-5 w-5 text-blue-400" />
+            </div>
             Apprentice Tool Progression Timeline
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white/60">
             Strategic toolkit development aligned with your learning journey
           </p>
         </CardHeader>
-        <CardContent>
+        <CardContent className="relative">
           <div className="space-y-4">
             {progressionMilestones.map((milestone, index) => (
-              <div key={index} className="border border-blue-500/30 rounded-lg p-4">
-                <div className="flex items-start justify-between mb-3">
+              <div key={index} className="p-5 rounded-xl bg-blue-500/5 border border-blue-500/20 hover:border-blue-500/40 transition-all">
+                <div className="flex items-start justify-between flex-wrap gap-2 mb-3">
                   <div>
-                    <h3 className="font-medium text-blue-200">{milestone.milestone}</h3>
-                    <p className="text-sm text-muted-foreground">{milestone.competency}</p>
+                    <h3 className="font-semibold text-white">{milestone.milestone}</h3>
+                    <p className="text-sm text-white/60">{milestone.competency}</p>
                   </div>
-                  <Badge variant="outline" className="border-blue-500/40 text-blue-400">
+                  <Badge variant="outline" className="bg-blue-500/10 border-blue-500/30 text-blue-400">
                     {milestone.cost}
                   </Badge>
                 </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
-                  <div>
-                    <h4 className="text-sm font-medium text-blue-300 mb-1">Key Items:</h4>
-                    <ul className="text-xs text-muted-foreground space-y-0.5">
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="p-3 rounded-lg bg-white/10 border border-white/10">
+                    <h4 className="text-sm font-medium text-blue-400 mb-2">Key Items:</h4>
+                    <ul className="text-sm text-white/60 space-y-1">
                       {milestone.items.map((item, idx) => (
-                        <li key={idx}>• {item}</li>
+                        <li key={idx} className="flex items-start gap-2">
+                          <span className="text-blue-400">•</span> {item}
+                        </li>
                       ))}
                     </ul>
                   </div>
-                  <div>
-                    <h4 className="text-sm font-medium text-blue-300 mb-1">Next Focus:</h4>
-                    <p className="text-xs text-muted-foreground">{milestone.nextStep}</p>
+                  <div className="p-3 rounded-lg bg-white/10 border border-white/10">
+                    <h4 className="text-sm font-medium text-blue-400 mb-2">Next Focus:</h4>
+                    <p className="text-sm text-white/60">{milestone.nextStep}</p>
                   </div>
                 </div>
               </div>
@@ -190,28 +203,31 @@ const EssentialToolsTab = () => {
       </Card>
 
       {/* Enhanced Maintenance Schedule */}
-      <Card className="border-green-500/20 bg-green-500/10">
-        <CardHeader>
-          <CardTitle className="text-green-300 flex items-center gap-2">
-            <BookOpen className="h-5 w-5" />
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-green-500/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30">
+              <Wrench className="h-5 w-5 text-green-400" />
+            </div>
             Comprehensive Tool Maintenance Schedule
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white/60">
             Proper maintenance extends tool life and ensures safety compliance
           </p>
         </CardHeader>
-        <CardContent>
+        <CardContent className="relative">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {maintenanceSchedule.map((item, index) => (
-              <div key={index} className="border border-green-500/30 rounded-lg p-3">
+              <div key={index} className="p-4 rounded-xl bg-green-500/5 border border-green-500/20 hover:border-green-500/40 transition-all">
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-medium text-white">{item.item}</h4>
-                  <Badge variant="outline" className="border-green-500/40 text-green-400">
+                  <h4 className="font-semibold text-white">{item.item}</h4>
+                  <Badge variant="outline" className="bg-green-500/10 border-green-500/30 text-green-400">
                     {item.frequency}
                   </Badge>
                 </div>
-                <p className="text-sm text-muted-foreground mb-2">{item.task}</p>
-                <div className="text-xs text-green-300">
+                <p className="text-sm text-white/60 mb-2">{item.task}</p>
+                <div className="text-sm text-green-400">
                   <span className="font-medium">Annual Cost:</span> {item.cost}
                 </div>
               </div>
@@ -221,30 +237,33 @@ const EssentialToolsTab = () => {
       </Card>
 
       {/* Enhanced Certification Requirements */}
-      <Card className="border-purple-500/20 bg-purple-500/10">
-        <CardHeader>
-          <CardTitle className="text-purple-300 flex items-center gap-2">
-            <Shield className="h-5 w-5" />
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-purple-500/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/30">
+              <Shield className="h-5 w-5 text-purple-400" />
+            </div>
             UK Certification Requirements & Consequences
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white/60">
             Understanding compliance requirements and the risks of non-compliance
           </p>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
+        <CardContent className="relative">
+          <div className="space-y-4">
             {certificationRequirements.map((cert, index) => (
-              <div key={index} className="border border-purple-500/30 rounded-lg p-3">
-                <div className="flex items-center gap-2 mb-2">
-                  <Badge variant="outline" className="border-purple-500/40 text-purple-400">
+              <div key={index} className="p-4 rounded-xl bg-purple-500/5 border border-purple-500/20 hover:border-purple-500/40 transition-all">
+                <div className="flex items-center flex-wrap gap-2 mb-2">
+                  <Badge variant="outline" className="bg-purple-500/10 border-purple-500/30 text-purple-400">
                     {cert.standard}
                   </Badge>
-                  <span className="font-medium text-white text-sm">{cert.applies}</span>
+                  <span className="font-semibold text-white text-sm">{cert.applies}</span>
                 </div>
-                <p className="text-sm text-purple-200 mb-2">{cert.requirement}</p>
-                <div className="bg-red-500/10 border border-red-500/30 rounded p-2">
-                  <span className="text-xs font-medium text-red-300">Risk of Non-Compliance:</span>
-                  <p className="text-xs text-red-200">{cert.penalty}</p>
+                <p className="text-sm text-white/70 mb-3">{cert.requirement}</p>
+                <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30">
+                  <span className="text-xs font-medium text-red-400">Risk of Non-Compliance:</span>
+                  <p className="text-sm text-red-200 mt-1">{cert.penalty}</p>
                 </div>
               </div>
             ))}
@@ -252,12 +271,20 @@ const EssentialToolsTab = () => {
         </CardContent>
       </Card>
 
-      <Alert className="border-orange-500/50 bg-orange-500/10">
-        <AlertTriangle className="h-4 w-4 text-orange-400" />
-        <AlertDescription className="text-orange-200">
-          <strong>Investment Strategy:</strong> Total essential toolkit cost: £1050-2700. Focus on quality over quantity, spread purchases strategically, and prioritise safety-critical items first. Your tools are an investment in your professional future.
-        </AlertDescription>
-      </Alert>
+      {/* Investment Strategy Alert */}
+      <div className="p-4 rounded-xl bg-gradient-to-br from-orange-500/10 to-orange-500/5 border border-orange-500/30">
+        <div className="flex items-start gap-3">
+          <div className="p-2 rounded-lg bg-orange-500/20">
+            <AlertTriangle className="h-5 w-5 text-orange-400" />
+          </div>
+          <div>
+            <p className="font-medium text-orange-400 mb-1">Investment Strategy</p>
+            <p className="text-sm text-white/70">
+              Total essential toolkit cost: £1050-2700. Focus on quality over quantity, spread purchases strategically, and prioritise safety-critical items first. Your tools are an investment in your professional future.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

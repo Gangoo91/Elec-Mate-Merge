@@ -114,44 +114,52 @@ const ResourcesTab = () => {
       case "Diversity & Inclusion": return "bg-purple-500/20 text-purple-400 border-purple-500/30";
       case "Podcasts": return "bg-orange-500/20 text-orange-400 border-orange-500/30";
       case "Video Learning": return "bg-red-500/20 text-red-400 border-red-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+      default: return "bg-white/10 text-white border-white/20";
     }
   };
 
   return (
-    <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <HelpCircle className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Additional Resources & Support</CardTitle>
-          </div>
+    <div className="space-y-6 animate-fade-in">
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+              <HelpCircle className="h-5 w-5 text-elec-yellow" />
+            </div>
+            Additional Resources & Support
+          </CardTitle>
         </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">
-            Comprehensive collection of resources, guides, and support contacts to help you navigate 
+        <CardContent className="relative">
+          <p className="text-white/70">
+            Comprehensive collection of resources, guides, and support contacts to help you navigate
             workplace culture challenges and continue developing your communication skills.
           </p>
         </CardContent>
       </Card>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-elec-yellow" />
+        <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-green-500/20 overflow-hidden relative">
+          <div className="absolute top-0 right-0 w-48 h-48 bg-green-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <CardHeader className="relative">
+            <CardTitle className="text-white flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30">
+                <BookOpen className="h-4 w-4 text-green-400" />
+              </div>
               Learning Resources
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
+          <CardContent className="relative">
+            <div className="space-y-3">
               {resources.map((resource, index) => {
                 const IconComponent = getResourceIcon(resource.type);
                 return (
-                  <div key={index} className="border border-elec-yellow/20 rounded-lg p-3">
+                  <div key={index} className="p-4 rounded-xl bg-white/10 border border-white/10 hover:border-green-500/30 transition-all">
                     <div className="flex items-start justify-between mb-2">
                       <div className="flex items-center gap-2">
-                        <IconComponent className="h-4 w-4 text-elec-yellow" />
+                        <div className="p-1.5 rounded-lg bg-green-500/20">
+                          <IconComponent className="h-3.5 w-3.5 text-green-400" />
+                        </div>
                         <h4 className="font-medium text-white text-sm">{resource.title}</h4>
                       </div>
                       {resource.isUKResource && (
@@ -160,20 +168,20 @@ const ResourcesTab = () => {
                         </Badge>
                       )}
                     </div>
-                    <p className="text-xs text-muted-foreground mb-3">{resource.description}</p>
+                    <p className="text-xs text-white/60 mb-3">{resource.description}</p>
                     <div className="flex items-center justify-between">
                       <Badge className={getCategoryColor(resource.category)} variant="outline">
                         {resource.category}
                       </Badge>
-                      <Button size="sm" variant="outline" className="h-7 text-xs">
+                      <Button size="sm" variant="outline" className="h-8 text-xs border-white/20 hover:border-green-500/50 hover:bg-green-500/10">
                         {resource.url ? (
                           <>
-                            <ExternalLink className="mr-1 h-3 w-3" />
+                            <ExternalLink className="mr-1.5 h-3 w-3" />
                             View
                           </>
                         ) : (
                           <>
-                            <Download className="mr-1 h-3 w-3" />
+                            <Download className="mr-1.5 h-3 w-3" />
                             Download
                           </>
                         )}
@@ -186,27 +194,30 @@ const ResourcesTab = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
-              <FileText className="h-5 w-5 text-elec-yellow" />
+        <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-purple-500/20 overflow-hidden relative">
+          <div className="absolute top-0 right-0 w-48 h-48 bg-purple-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <CardHeader className="relative">
+            <CardTitle className="text-white flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/30">
+                <FileText className="h-4 w-4 text-purple-400" />
+              </div>
               Quick Reference Guides
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="relative">
             <div className="space-y-4">
               {quickReferenceGuides.map((guide, index) => (
-                <div key={index} className="border border-elec-yellow/20 rounded-lg p-3">
-                  <h4 className="font-medium text-white mb-3 text-sm">{guide.title}</h4>
+                <div key={index} className="p-4 rounded-xl bg-white/10 border border-white/10">
+                  <h4 className="font-medium text-purple-400 mb-3 text-sm">{guide.title}</h4>
                   <div className="space-y-2">
                     {guide.content.map((item, idx) => (
-                      <div key={idx} className="bg-elec-dark/40 rounded p-2">
-                        <p className="text-xs text-muted-foreground font-mono">"{item}"</p>
+                      <div key={idx} className="p-2.5 rounded-lg bg-purple-500/10 border border-purple-500/20">
+                        <p className="text-xs text-white/70 font-mono">"{item}"</p>
                       </div>
                     ))}
                   </div>
-                  <Button size="sm" variant="outline" className="w-full mt-3 h-7 text-xs">
-                    <Download className="mr-1 h-3 w-3" />
+                  <Button size="sm" variant="outline" className="w-full mt-3 h-9 text-xs border-purple-500/30 hover:border-purple-500/50 hover:bg-purple-500/10 text-purple-400">
+                    <Download className="mr-1.5 h-3 w-3" />
                     Download Full Guide
                   </Button>
                 </div>
@@ -216,32 +227,35 @@ const ResourcesTab = () => {
         </Card>
       </div>
 
-      <Card className="border-blue-500/20 bg-blue-500/10">
-        <CardHeader>
-          <CardTitle className="text-blue-300 flex items-center gap-2">
-            <Users className="h-5 w-5" />
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-blue-500/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
+              <Users className="h-5 w-5 text-blue-400" />
+            </div>
             Support & Advice Contacts
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="relative">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {supportContacts.map((contact, index) => (
-              <div key={index} className="border border-blue-500/30 rounded-lg p-4">
-                <h4 className="font-medium text-white mb-2 text-sm">{contact.organisation}</h4>
-                <p className="text-xs text-muted-foreground mb-3">{contact.purpose}</p>
-                
+              <div key={index} className="p-4 rounded-xl bg-white/10 border border-white/10 hover:border-blue-500/30 transition-all">
+                <h4 className="font-medium text-blue-400 mb-2 text-sm">{contact.organisation}</h4>
+                <p className="text-xs text-white/60 mb-4">{contact.purpose}</p>
+
                 <div className="space-y-2 text-xs">
-                  <div className="flex items-center gap-2">
-                    <span className="text-blue-400">Phone:</span>
-                    <span className="text-muted-foreground">{contact.contact}</span>
+                  <div className="flex items-center gap-2 p-2 rounded-lg bg-blue-500/10">
+                    <span className="text-blue-400 font-medium">Phone:</span>
+                    <span className="text-white/70">{contact.contact}</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-blue-400">Website:</span>
-                    <span className="text-muted-foreground">{contact.website}</span>
+                  <div className="flex items-center gap-2 p-2 rounded-lg bg-blue-500/10">
+                    <span className="text-blue-400 font-medium">Website:</span>
+                    <span className="text-white/70">{contact.website}</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-blue-400">Hours:</span>
-                    <span className="text-muted-foreground">{contact.availability}</span>
+                  <div className="flex items-center gap-2 p-2 rounded-lg bg-blue-500/10">
+                    <span className="text-blue-400 font-medium">Hours:</span>
+                    <span className="text-white/70">{contact.availability}</span>
                   </div>
                 </div>
               </div>

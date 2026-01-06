@@ -28,7 +28,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, className }) =>
             className={cn(
               'flex items-center gap-1 hover:text-elec-yellow transition-colors min-h-[44px] px-2 touch-manipulation',
               responsiveBody.small,
-              items[0]?.current ? 'text-elec-yellow' : 'text-muted-foreground'
+              items[0]?.current ? 'text-elec-yellow' : 'text-white/80'
             )}
             aria-current={items[0]?.current ? 'page' : undefined}
           >
@@ -39,7 +39,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, className }) =>
         
         {items.slice(1).map((item, index) => (
           <li key={index} className="flex items-center gap-1 sm:gap-2">
-            <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground flex-shrink-0" />
+            <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4 text-white/80 flex-shrink-0" />
             {item.current ? (
               <span
                 className={cn(
@@ -55,7 +55,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, className }) =>
               <button
                 onClick={item.onClick}
                 className={cn(
-                  'text-muted-foreground hover:text-elec-yellow transition-colors min-h-[44px] px-2 touch-manipulation',
+                  'text-white/80 hover:text-elec-yellow transition-colors min-h-[44px] px-2 touch-manipulation',
                   responsiveBody.small
                 )}
               >

@@ -11,14 +11,14 @@ interface CertificateCardProps {
 
 const CertificateCard = ({ certificate, onDelete }: CertificateCardProps) => {
   return (
-    <Card className="border-elec-yellow/20 bg-elec-dark">
+    <Card className="border-elec-yellow/20 bg-white/10">
       <CardContent className="p-4">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
             <Award className="h-8 w-8 text-elec-yellow" />
             <div>
               <h4 className="font-medium">{certificate.name}</h4>
-              <p className="text-sm text-muted-foreground">{certificate.issuedBy}</p>
+              <p className="text-sm text-white">{certificate.issuedBy}</p>
             </div>
           </div>
           <div className="flex gap-2">
@@ -38,14 +38,14 @@ const CertificateCard = ({ certificate, onDelete }: CertificateCardProps) => {
         
         <div className="grid grid-cols-2 gap-2 mt-4 text-sm">
           <div>
-            <p className="text-muted-foreground">Issue Date</p>
+            <p className="text-white">Issue Date</p>
             <div className="flex items-center gap-1.5">
               <Calendar className="h-3.5 w-3.5" />
               {certificate.issueDate}
             </div>
           </div>
           <div>
-            <p className="text-muted-foreground">Expiry Date</p>
+            <p className="text-white">Expiry Date</p>
             <div className="flex items-center gap-1.5">
               <Calendar className="h-3.5 w-3.5" />
               {certificate.expiryDate}

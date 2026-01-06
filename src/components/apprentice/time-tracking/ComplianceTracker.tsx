@@ -10,7 +10,7 @@ const ComplianceTracker = () => {
 
   if (isLoading) {
     return (
-      <Card className="bg-elec-gray border-elec-yellow/20">
+      <Card className="bg-white/5 border-elec-yellow/20">
         <CardContent className="p-4">
           <div className="animate-pulse space-y-2">
             <div className="h-4 bg-elec-yellow/20 rounded w-3/4" />
@@ -23,7 +23,7 @@ const ComplianceTracker = () => {
 
   if (!otjGoal) {
     return (
-      <Card className="bg-elec-gray border-elec-yellow/20">
+      <Card className="bg-white/5 border-elec-yellow/20">
         <CardHeader className="pb-3">
           <CardTitle className="text-elec-light flex items-center gap-2">
             <Target className="h-5 w-5 text-elec-yellow" />
@@ -76,7 +76,7 @@ const ComplianceTracker = () => {
   };
 
   return (
-    <Card className="bg-elec-gray border-elec-yellow/20">
+    <Card className="bg-white/5 border-elec-yellow/20">
       <CardHeader className="pb-3">
         <CardTitle className="text-elec-light flex items-center gap-2">
           <Target className="h-5 w-5 text-elec-yellow" />
@@ -110,7 +110,7 @@ const ComplianceTracker = () => {
 
         {/* Key Metrics */}
         <div className="grid grid-cols-2 gap-3">
-          <div className="bg-elec-dark/50 rounded-lg p-3">
+          <div className="bg-white/10 rounded-lg p-3">
             <div className="text-lg font-bold text-elec-yellow">
               {remainingHours}h
             </div>
@@ -119,7 +119,7 @@ const ComplianceTracker = () => {
             </div>
           </div>
           {daysRemaining !== null && (
-            <div className="bg-elec-dark/50 rounded-lg p-3">
+            <div className="bg-white/10 rounded-lg p-3">
               <div className="text-lg font-bold text-elec-yellow">
                 {daysRemaining > 0 ? daysRemaining : 0}
               </div>
@@ -132,7 +132,7 @@ const ComplianceTracker = () => {
 
         {/* Recommendations */}
         {complianceStatus.status !== 'compliant' && (
-          <div className="bg-elec-dark/30 rounded-lg p-3 border border-elec-yellow/10">
+          <div className="bg-white/10 rounded-lg p-3 border border-elec-yellow/10">
             <p className="text-xs text-elec-light/70 mb-2">Recommendation:</p>
             {complianceStatus.status === 'behind' && remainingHours > 0 && daysRemaining && (
               <p className="text-sm text-elec-light">

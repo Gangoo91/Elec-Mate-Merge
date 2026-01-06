@@ -57,11 +57,11 @@ const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: Portfol
 
   if (entries.length === 0) {
     return (
-      <Card className="border-dashed border-2 border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-dashed border-2 border-elec-yellow/20 bg-white/5">
         <CardContent className="flex flex-col items-center justify-center py-8">
           <FileText className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow/40 mb-4" />
           <h3 className="text-lg sm:text-xl font-medium mb-2 text-center">No portfolio entries found</h3>
-          <p className="text-muted-foreground text-center text-sm max-w-md">
+          <p className="text-white text-center text-sm max-w-md">
             Start building your portfolio by adding your first entry. Document your learning journey and professional development.
           </p>
         </CardContent>
@@ -72,12 +72,12 @@ const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: Portfol
   return (
     <div className="space-y-3">
       {entries.map((entry) => (
-        <Card key={entry.id} className="border-elec-yellow/20 bg-elec-gray">
+        <Card key={entry.id} className="border-elec-yellow/20 bg-white/5">
           <CardHeader className="pb-3">
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
               <div className="flex-1 min-w-0">
                 <CardTitle className="text-base sm:text-lg mb-2 leading-tight">{entry.title}</CardTitle>
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-white">
                   <div className="flex items-center gap-1">
                     <Calendar className="h-3 w-3 sm:h-4 sm:w-4" />
                     {formatDate(entry.dateCreated)}
@@ -104,7 +104,7 @@ const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: Portfol
           </CardHeader>
           
           <CardContent className="pt-0 space-y-3">
-            <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">
+            <p className="text-xs sm:text-sm text-white line-clamp-2">
               {entry.description}
             </p>
             
@@ -129,7 +129,7 @@ const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: Portfol
             {/* Evidence Files */}
             {entry.evidenceFiles.length > 0 && (
               <div>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-white">
                   {entry.evidenceFiles.length} evidence file{entry.evidenceFiles.length !== 1 ? 's' : ''} attached
                 </p>
               </div>

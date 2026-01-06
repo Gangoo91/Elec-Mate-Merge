@@ -26,7 +26,7 @@ const ZsRegulationRequirementsCard = () => {
         {requirements.map((req, index) => {
           const Icon = req.icon;
           return (
-            <div key={index} className="flex items-start gap-2 sm:gap-3 text-xs sm:text-sm text-muted-foreground leading-relaxed">
+            <div key={index} className="flex items-start gap-2 sm:gap-3 text-xs sm:text-sm text-white/80 leading-relaxed">
               <Icon className={`h-4 w-4 ${req.color} mt-0.5 shrink-0`} />
               <div>
                 <span className="font-medium text-foreground">{req.title}:</span> {req.description}

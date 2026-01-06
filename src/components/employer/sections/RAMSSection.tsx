@@ -2,15 +2,15 @@ import { Card, CardContent } from "@/components/ui/card";
 import { FeatureTile } from "@/components/employer/FeatureTile";
 import { SectionHeader } from "@/components/employer/SectionHeader";
 import { Button } from "@/components/ui/button";
-import { 
-  FileText, 
-  Sparkles, 
-  FolderOpen, 
+import { QuickStats, QuickStat } from "@/components/employer/QuickStats";
+import {
+  FileText,
+  Sparkles,
+  FolderOpen,
   Archive,
   Plus,
   Clock,
-  CheckCircle2,
-  AlertTriangle
+  CheckCircle2
 } from "lucide-react";
 import { rams } from "@/data/employerMockData";
 
@@ -27,37 +27,29 @@ export function RAMSSection() {
       />
 
       {/* Quick Stats */}
-      <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4 md:mx-0 md:px-0">
-        <Card className="bg-success/10 border-success/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-success" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{activeRAMS}</p>
-              <p className="text-xs text-muted-foreground">Approved</p>
-            </div>
-          </CardContent>
-        </Card>
-        {pendingReview > 0 && (
-          <Card className="bg-warning/10 border-warning/20 shrink-0">
-            <CardContent className="p-3 flex items-center gap-2">
-              <Clock className="h-4 w-4 text-warning" />
-              <div>
-                <p className="text-lg font-bold text-foreground">{pendingReview}</p>
-                <p className="text-xs text-muted-foreground">Pending</p>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-        <Card className="bg-elec-yellow/10 border-elec-yellow/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <FileText className="h-4 w-4 text-elec-yellow" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{totalRAMS}</p>
-              <p className="text-xs text-muted-foreground">Total RAMS</p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <QuickStats
+        stats={[
+          {
+            icon: CheckCircle2,
+            value: activeRAMS,
+            label: "Approved",
+            color: "green",
+          },
+          ...(pendingReview > 0 ? [{
+            icon: Clock,
+            value: pendingReview,
+            label: "Pending",
+            color: "yellow" as const,
+            pulse: true,
+          }] : []),
+          {
+            icon: FileText,
+            value: totalRAMS,
+            label: "Total RAMS",
+            color: "blue",
+          },
+        ]}
+      />
 
       {/* AI RAMS - Prominent Card */}
       <div>

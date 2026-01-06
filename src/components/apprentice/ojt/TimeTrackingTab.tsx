@@ -148,8 +148,8 @@ const TimeTrackingTab = () => {
           {[1, 2, 3].map(i => (
             <Card key={i} className="animate-pulse">
               <CardContent className="p-6">
-                <div className="h-8 bg-gray-300 rounded mb-2"></div>
-                <div className="h-6 bg-gray-200 rounded"></div>
+                <div className="h-8 bg-white/30 rounded mb-2"></div>
+                <div className="h-6 bg-white/20 rounded"></div>
               </CardContent>
             </Card>
           ))}
@@ -162,20 +162,20 @@ const TimeTrackingTab = () => {
     <div className="space-y-6">
       {/* Weekly Progress Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="bg-elec-gray border-elec-yellow/20">
+        <Card className="bg-white/5 border-elec-yellow/20">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">This Week's Hours</CardTitle>
             <Clock className="h-4 w-4 text-blue-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-blue-700">{totalHours.toFixed(1)}h</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white">
               Target: {weeklyTarget}h per week
             </p>
           </CardContent>
         </Card>
 
-        <Card className="bg-elec-gray border-elec-yellow/20">
+        <Card className="bg-white/5 border-elec-yellow/20">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Weekly Progress</CardTitle>
             <TrendingUp className="h-4 w-4 text-green-600" />
@@ -186,14 +186,14 @@ const TimeTrackingTab = () => {
           </CardContent>
         </Card>
 
-        <Card className="bg-elec-gray border-elec-yellow/20">
+        <Card className="bg-white/5 border-elec-yellow/20">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Remaining Hours</CardTitle>
             <Target className="h-4 w-4 text-orange-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-orange-700">{remainingHours.toFixed(1)}h</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white">
               To reach weekly target
             </p>
           </CardContent>
@@ -201,7 +201,7 @@ const TimeTrackingTab = () => {
       </div>
 
       {/* Recent Time Entries */}
-      <Card className="bg-elec-gray border-elec-yellow/20">
+      <Card className="bg-white/5 border-elec-yellow/20">
         <CardHeader>
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <CardTitle className="flex items-center gap-2">
@@ -220,16 +220,16 @@ const TimeTrackingTab = () => {
         <CardContent>
           {timeEntries.length === 0 ? (
             <div className="text-center py-8">
-              <Clock className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">No time entries yet</p>
-              <p className="text-sm text-muted-foreground mt-2">
+              <Clock className="h-12 w-12 text-white mx-auto mb-4" />
+              <p className="text-white">No time entries yet</p>
+              <p className="text-sm text-white mt-2">
                 Start logging your off-the-job training hours to track your progress
               </p>
             </div>
           ) : (
             <div className="space-y-4">
               {timeEntries.map((entry) => (
-                <div key={entry.id} className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-4">
+                <div key={entry.id} className="bg-white/5 border border-elec-yellow/20 rounded-lg p-4">
                   <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                     <div className="flex-1">
                       <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-2 mb-1">
@@ -241,11 +241,11 @@ const TimeTrackingTab = () => {
                           </Badge>
                         )}
                       </div>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-white">
                         {new Date(entry.date).toLocaleDateString('en-GB')} • {(entry.duration / 60).toFixed(1)} hours
                       </p>
                       {entry.notes && (
-                        <p className="text-sm text-muted-foreground mt-1">{entry.notes}</p>
+                        <p className="text-sm text-white mt-1">{entry.notes}</p>
                       )}
                     </div>
                     <div className="text-left md:text-right">
@@ -260,7 +260,7 @@ const TimeTrackingTab = () => {
       </Card>
 
       {/* Training Guidelines */}
-      <Card className="bg-elec-gray border-elec-yellow/20">
+      <Card className="bg-white/5 border-elec-yellow/20">
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
             <Target className="h-5 w-5" />
@@ -271,7 +271,7 @@ const TimeTrackingTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <h4 className="font-medium mb-2">What Counts as Off-the-Job Training?</h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>• College/training provider sessions</li>
                 <li>• Online learning modules</li>
                 <li>• Mentoring and coaching</li>
@@ -281,7 +281,7 @@ const TimeTrackingTab = () => {
             </div>
             <div>
               <h4 className="font-medium mb-2">Weekly Target Breakdown</h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>• Full-time (37.5h): 7.5h per week</li>
                 <li>• Part-time (30h): 6h per week</li>
                 <li>• Document all training activities</li>

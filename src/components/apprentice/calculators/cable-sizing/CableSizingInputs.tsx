@@ -204,14 +204,14 @@ const CableSizingForm = ({
       )}
 
       {/* Installation Method Selection - Mobile Friendly Two-Step */}
-      <div className="space-y-4 p-6 border border-elec-yellow/40 rounded-lg bg-elec-dark/30">
+      <div className="space-y-4 p-6 border border-elec-yellow/40 rounded-lg bg-white/10">
         <h4 className="font-medium text-white flex items-center gap-2">
           Installation Method (BS 7671)
         </h4>
         
         {/* Current Selection Display */}
-        <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
-          <div className="text-sm text-muted-foreground mb-1">Selected Method</div>
+        <div className="p-4 bg-white/10 rounded-lg border border-elec-yellow/20">
+          <div className="text-sm text-white mb-1">Selected Method</div>
           <div className="text-white font-medium">
             {getMethodLabel(uiSelections.installationMethodUI)}
           </div>
@@ -229,7 +229,7 @@ const CableSizingForm = ({
                 <div className="flex items-center justify-between">
                   <div>
                     <div className="font-medium text-white text-sm">{label}</div>
-                    <div className="text-xs text-muted-foreground mt-1">{description}</div>
+                    <div className="text-xs text-white mt-1">{description}</div>
                   </div>
                   <ChevronRight className="h-4 w-4 text-elec-yellow/50" />
                 </div>
@@ -245,7 +245,7 @@ const CableSizingForm = ({
             >
               ← Back to categories
             </button>
-            <div className="text-sm text-muted-foreground mb-2">
+            <div className="text-sm text-white mb-2">
               {installationCategories[selectedCategory as keyof typeof installationCategories]?.label}
             </div>
             <div className="space-y-2">
@@ -268,7 +268,7 @@ const CableSizingForm = ({
       </div>
 
       {/* Cable Type Selection */}
-      <div className="space-y-6 p-6 border border-elec-yellow/40 rounded-lg bg-elec-dark/30">
+      <div className="space-y-6 p-6 border border-elec-yellow/40 rounded-lg bg-white/10">
         <h4 className="font-medium text-white">Cable Type</h4>
         <MobileSelectWrapper
           label="Insulation Type"
@@ -335,7 +335,7 @@ const CableSizingForm = ({
       )}
 
       {/* Environmental Conditions */}
-      <div className="space-y-6 p-6 border border-elec-yellow/40 rounded-lg bg-elec-dark/30">
+      <div className="space-y-6 p-6 border border-elec-yellow/40 rounded-lg bg-white/10">
         <h4 className="font-medium text-white">Environmental Conditions</h4>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <MobileInput
@@ -373,7 +373,7 @@ const CableSizingForm = ({
       </div>
 
       {/* Load Characteristics */}
-      <div className="space-y-6 p-6 border border-elec-yellow/40 rounded-lg bg-elec-dark/30">
+      <div className="space-y-6 p-6 border border-elec-yellow/40 rounded-lg bg-white/10">
         <h4 className="font-medium text-white">Load Characteristics</h4>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <MobileSelectWrapper
@@ -401,7 +401,7 @@ const CableSizingForm = ({
 
       {/* System Parameters - Only show when NOT in load mode (already entered for load calc) */}
       {inputMode !== 'load' && (
-        <div className="space-y-6 p-6 border border-elec-yellow/40 rounded-lg bg-elec-dark/30">
+        <div className="space-y-6 p-6 border border-elec-yellow/40 rounded-lg bg-white/10">
           <h4 className="font-medium text-white">System Parameters</h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <MobileSelectWrapper

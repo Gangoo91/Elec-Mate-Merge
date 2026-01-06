@@ -1,179 +1,108 @@
-import { useEffect, useState, useRef } from "react";
-import { useAuth } from "@/contexts/AuthContext";
-import { Zap, Shield, CreditCard, Clock, Star, Users } from "lucide-react";
+import { Zap, Shield, Clock, Sparkles, CheckCircle2 } from "lucide-react";
 import SubscriptionStatus from "@/components/subscriptions/SubscriptionStatus";
 import PlanSelection from "@/components/subscriptions/PlanSelection";
 import SubscriptionFAQ from "@/components/subscriptions/SubscriptionFAQ";
 import SupportSection from "@/components/subscriptions/SupportSection";
 import FeatureComparison from "@/components/subscriptions/FeatureComparison";
 
-// Count-up animation hook
-const useCountUp = (target: number, duration = 800) => {
-  const [count, setCount] = useState(0);
-  const [hasAnimated, setHasAnimated] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+// Value propositions for hero
+const valueProps = [
+  { icon: Zap, text: "AI-Powered Tools", color: "from-yellow-500 to-amber-500" },
+  { icon: Shield, text: "BS7671 Compliant", color: "from-green-500 to-emerald-500" },
+  { icon: Clock, text: "Save 10+ Hours/Week", color: "from-blue-500 to-cyan-500" },
+];
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !hasAnimated) {
-          setHasAnimated(true);
-          const steps = 20;
-          const increment = target / steps;
-          let current = 0;
-          const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-              setCount(target);
-              clearInterval(timer);
-            } else {
-              setCount(Math.floor(current));
-            }
-          }, duration / steps);
-        }
-      },
-      { threshold: 0.5 }
-    );
-
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [target, duration, hasAnimated]);
-
-  return { count, ref };
-};
-
-// Animated stat component
-const AnimatedStat = ({
-  target,
-  suffix = "",
-  label,
-  icon,
-  delay = 0
-}: {
-  target: number;
-  suffix?: string;
-  label: string;
-  icon?: React.ReactNode;
-  delay?: number;
-}) => {
-  const { count, ref } = useCountUp(target, 800);
-
-  return (
-    <div
-      ref={ref}
-      className="text-center p-5 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-sm transition-all duration-300 hover:bg-white/[0.04] hover:border-elec-yellow/20"
-      style={{ animationDelay: `${delay}ms` }}
-    >
-      <div className="text-3xl md:text-4xl font-bold text-elec-yellow mb-2 tracking-tight">
-        {count.toLocaleString()}{suffix}
-      </div>
-      <div className="text-sm text-muted-foreground flex items-center justify-center gap-1.5">
-        {icon}
-        {label}
-      </div>
-    </div>
-  );
-};
-
-// Social proof section component
-const SocialProofSection = () => {
-  return (
-    <section className="py-8">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-        <AnimatedStat target={5000} suffix="+" label="Active Users" delay={0} />
-        <div
-          className="text-center p-5 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-sm transition-all duration-300 hover:bg-white/[0.04] hover:border-elec-yellow/20"
-        >
-          <div className="text-3xl md:text-4xl font-bold text-elec-yellow mb-2 tracking-tight">
-            4.9
-          </div>
-          <div className="text-sm text-muted-foreground flex items-center justify-center gap-1.5">
-            <Star className="h-3.5 w-3.5 fill-elec-yellow text-elec-yellow" />
-            Rating
-          </div>
-        </div>
-        <AnimatedStat
-          target={500}
-          suffix="+"
-          label="Companies"
-          icon={<Users className="h-3.5 w-3.5" />}
-          delay={200}
-        />
-        <AnimatedStat target={24} suffix="/7" label="Support" delay={300} />
-      </div>
-    </section>
-  );
-};
+// Note: Subscription status is automatically checked by useSubscriptionStatus hook when profile loads
+// No need to call checkSubscriptionStatus here - it would cause duplicate API calls and re-renders
 
 const Subscriptions = () => {
-  const { checkSubscriptionStatus, isSubscribed } = useAuth();
-
-  useEffect(() => {
-    checkSubscriptionStatus();
-  }, []);
 
   return (
-    <div className="min-h-screen animate-fade-in">
-      {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        {/* Background Effects */}
-        <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/5 via-transparent to-elec-dark/50" />
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-elec-yellow/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl" />
+    <div className="min-h-screen animate-fade-in relative overflow-hidden">
+      {/* Background Effects */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-b from-elec-yellow/[0.05] via-transparent to-transparent" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-elec-yellow/10 rounded-full blur-[120px]" />
+      </div>
 
-        <div className="relative z-10 text-center pt-8 md:pt-12 pb-8 px-4">
+      {/* Hero Section */}
+      <div className="relative z-10">
+        <div className="text-center pt-8 sm:pt-12 md:pt-16 pb-6 sm:pb-8 px-4">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-6">
-            <Zap className="h-4 w-4 text-elec-yellow" />
-            <span className="text-sm text-elec-yellow font-medium">Power Up Your Career</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full
+            bg-gradient-to-r from-elec-yellow/20 to-elec-yellow/10
+            border border-elec-yellow/40 mb-4 sm:mb-6
+            backdrop-blur-xl shadow-lg shadow-elec-yellow/10"
+          >
+            <Sparkles className="h-4 w-4 text-elec-yellow" />
+            <span className="text-sm font-semibold bg-gradient-to-r from-elec-yellow to-amber-400 bg-clip-text text-transparent">
+              Simple, Transparent Pricing
+            </span>
           </div>
 
           {/* Headline */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 text-white">
-            Simple, Transparent
-            <span className="block text-elec-yellow">Pricing</span>
+          <h1 className="text-[2rem] sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-3 sm:mb-4 leading-[1.1]">
+            <span className="text-white">Power Up Your</span>
+            <br />
+            <span className="bg-gradient-to-r from-elec-yellow via-yellow-400 to-amber-400 bg-clip-text text-transparent">
+              Electrical Career
+            </span>
           </h1>
 
           {/* Subheadline */}
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-            Everything you need to succeed in your electrical career.
-            No hidden fees, cancel anytime.
+          <p className="text-base sm:text-lg md:text-xl text-white/70 max-w-xl mx-auto mb-5 sm:mb-6 leading-relaxed">
+            Everything you need to succeed. No hidden fees.
+            <span className="hidden sm:inline"> Cancel anytime.</span>
           </p>
 
-          {/* Trust Badges */}
-          <div className="flex flex-wrap justify-center gap-3 sm:gap-6 md:gap-8">
-            <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 border border-white/10">
-              <Shield className="h-4 w-4 text-green-400" />
-              <span className="text-sm text-white/80">Secure Payment</span>
-            </div>
-            <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 border border-white/10">
-              <CreditCard className="h-4 w-4 text-elec-yellow" />
-              <span className="text-sm text-white/80">Cancel Anytime</span>
-            </div>
-            <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 border border-white/10">
-              <Clock className="h-4 w-4 text-blue-400" />
-              <span className="text-sm text-white/80">Instant Access</span>
-            </div>
+          {/* Value Props */}
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-5 sm:mb-6">
+            {valueProps.map((prop, i) => (
+              <div
+                key={i}
+                className="group inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full
+                  bg-gradient-to-br from-white/[0.08] to-white/[0.02]
+                  border border-white/10 backdrop-blur-sm
+                  hover:border-white/20 hover:bg-white/[0.1]
+                  transition-all duration-300"
+              >
+                <div className={`p-1 rounded-full bg-gradient-to-br ${prop.color}`}>
+                  <prop.icon className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-white" />
+                </div>
+                <span className="text-xs sm:text-sm font-medium text-white/80 group-hover:text-white transition-colors">
+                  {prop.text}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* Subscription Status Badge */}
+          <div className="flex justify-center mb-6 sm:mb-8">
+            <SubscriptionStatus />
+          </div>
+
+          {/* Trust Indicators */}
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8">
+            {[
+              { text: "Secure Payment" },
+              { text: "Cancel Anytime" },
+              { text: "Instant Access" },
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-2 text-white/60">
+                <CheckCircle2 className="h-4 w-4 text-green-400" />
+                <span className="text-xs sm:text-sm">{item.text}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="px-4 max-w-7xl mx-auto pb-16 space-y-16">
-        {/* Current Subscription Status */}
-        {isSubscribed && (
-          <section>
-            <SubscriptionStatus />
-          </section>
-        )}
-
+      <div className="relative z-10 px-4 max-w-6xl mx-auto pb-16 space-y-12 sm:space-y-16">
         {/* Plan Selection */}
         <section>
           <PlanSelection />
         </section>
-
-        {/* Social Proof */}
-        <SocialProofSection />
 
         {/* Feature Comparison */}
         <section>
@@ -191,14 +120,20 @@ const Subscriptions = () => {
         </section>
 
         {/* Money Back Guarantee */}
-        <section className="text-center py-8">
-          <div className="inline-flex flex-col items-center gap-3 p-6 rounded-2xl bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/20">
-            <div className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center">
-              <Shield className="h-8 w-8 text-green-400" />
+        <section className="text-center py-6 sm:py-8">
+          <div className="group inline-flex flex-col items-center gap-4 p-6 sm:p-8 rounded-3xl
+            bg-gradient-to-br from-green-500/15 via-green-500/5 to-transparent
+            border border-green-500/20 backdrop-blur-xl max-w-md mx-auto
+            hover:border-green-500/30 hover:shadow-xl hover:shadow-green-500/10
+            transition-all duration-500"
+          >
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-green-500/30 to-green-500/10 flex items-center justify-center
+              group-hover:scale-110 transition-transform duration-500">
+              <Shield className="h-8 w-8 sm:h-10 sm:w-10 text-green-400" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-white mb-1">30-Day Money Back Guarantee</h3>
-              <p className="text-sm text-muted-foreground max-w-md">
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-2">30-Day Money Back Guarantee</h3>
+              <p className="text-sm text-white/70 leading-relaxed">
                 Not satisfied? Get a full refund within 30 days, no questions asked.
               </p>
             </div>

@@ -103,7 +103,7 @@ const NotificationsPanel = () => {
       case 'high': return 'text-red-600';
       case 'medium': return 'text-yellow-600';
       case 'low': return 'text-green-600';
-      default: return 'text-gray-600';
+      default: return 'text-white/70';
     }
   };
 
@@ -125,10 +125,10 @@ const NotificationsPanel = () => {
           <div className="animate-pulse space-y-4">
             {[1, 2, 3].map((i) => (
               <div key={i} className="flex items-center space-x-4">
-                <div className="rounded-full bg-gray-300 h-10 w-10"></div>
+                <div className="rounded-full bg-white/30 h-10 w-10"></div>
                 <div className="flex-1 space-y-2">
-                  <div className="h-4 bg-gray-300 rounded w-3/4"></div>
-                  <div className="h-3 bg-gray-300 rounded w-1/2"></div>
+                  <div className="h-4 bg-white/30 rounded w-3/4"></div>
+                  <div className="h-3 bg-white/30 rounded w-1/2"></div>
                 </div>
               </div>
             ))}
@@ -154,8 +154,8 @@ const NotificationsPanel = () => {
       <CardContent>
         {notifications.length === 0 ? (
           <div className="text-center py-6">
-            <Bell className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <p className="text-muted-foreground">No notifications yet</p>
+            <Bell className="h-12 w-12 text-white mx-auto mb-4" />
+            <p className="text-white">No notifications yet</p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -164,7 +164,7 @@ const NotificationsPanel = () => {
                 key={notification.id} 
                 className={`p-4 border rounded-lg transition-colors ${
                   notification.is_read 
-                    ? 'border-gray-200 bg-gray-50' 
+                    ? 'border-white/20 bg-white/5' 
                     : 'border-elec-yellow/40 bg-white'
                 }`}
               >
@@ -190,12 +190,12 @@ const NotificationsPanel = () => {
                       </div>
                     </div>
                     
-                    <p className="text-sm text-muted-foreground mb-2">
+                    <p className="text-sm text-white mb-2">
                       {notification.message}
                     </p>
                     
                     <div className="flex justify-between items-center">
-                      <span className="text-xs text-muted-foreground">
+                      <span className="text-xs text-white">
                         {new Date(notification.created_at).toLocaleDateString()}
                       </span>
                       {!notification.is_read && (

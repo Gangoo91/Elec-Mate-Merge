@@ -16,7 +16,7 @@ const IncidentGuidelines = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* When to Report */}
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Clock className="h-5 w-5 text-elec-yellow" />
@@ -29,7 +29,7 @@ const IncidentGuidelines = () => {
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <h4 className="font-medium text-green-400">Immediately Report:</h4>
-                  <ul className="text-sm text-muted-foreground mt-1 space-y-1">
+                  <ul className="text-sm text-white mt-1 space-y-1">
                     <li>• Any injuries requiring first aid or medical treatment</li>
                     <li>• Dangerous occurrences or near misses</li>
                     <li>• Equipment failures that could cause harm</li>
@@ -42,7 +42,7 @@ const IncidentGuidelines = () => {
                 <CheckCircle className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <h4 className="font-medium text-yellow-400">Report Within 24 Hours:</h4>
-                  <ul className="text-sm text-muted-foreground mt-1 space-y-1">
+                  <ul className="text-sm text-white mt-1 space-y-1">
                     <li>• Minor equipment malfunctions</li>
                     <li>• Unsafe working conditions</li>
                     <li>• Property damage incidents</li>
@@ -55,7 +55,7 @@ const IncidentGuidelines = () => {
         </Card>
 
         {/* Legal Requirements */}
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Shield className="h-5 w-5 text-elec-yellow" />
@@ -66,17 +66,17 @@ const IncidentGuidelines = () => {
             <div className="space-y-3">
               <div>
                 <h4 className="font-medium text-elec-yellow mb-2">Health and Safety at Work Act 1974</h4>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white">
                   Employees have a duty to report incidents that could affect health and safety.
                 </p>
               </div>
 
               <div>
                 <h4 className="font-medium text-elec-yellow mb-2">RIDDOR Regulations</h4>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white">
                   Certain incidents must be reported to the HSE within specific timeframes:
                 </p>
-                <ul className="text-sm text-muted-foreground mt-1 space-y-1">
+                <ul className="text-sm text-white mt-1 space-y-1">
                   <li>• Deaths and major injuries: immediately</li>
                   <li>• Over-7-day injuries: within 15 days</li>
                   <li>• Dangerous occurrences: immediately</li>
@@ -85,7 +85,7 @@ const IncidentGuidelines = () => {
 
               <div>
                 <h4 className="font-medium text-elec-yellow mb-2">Data Protection</h4>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white">
                   Personal information in incident reports is protected under UK GDPR.
                 </p>
               </div>
@@ -94,7 +94,7 @@ const IncidentGuidelines = () => {
         </Card>
 
         {/* How to Report Effectively */}
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <FileText className="h-5 w-5 text-elec-yellow" />
@@ -105,7 +105,7 @@ const IncidentGuidelines = () => {
             <div className="space-y-3">
               <div>
                 <h4 className="font-medium text-blue-400 mb-2">Be Factual and Objective</h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Stick to facts, avoid opinions or blame</li>
                   <li>• Use clear, simple language</li>
                   <li>• Include specific times, locations, and conditions</li>
@@ -114,7 +114,7 @@ const IncidentGuidelines = () => {
 
               <div>
                 <h4 className="font-medium text-blue-400 mb-2">Include All Relevant Details</h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Weather conditions (for outdoor incidents)</li>
                   <li>• Equipment involved (model numbers, condition)</li>
                   <li>• People involved (witnesses, supervisors)</li>
@@ -124,7 +124,7 @@ const IncidentGuidelines = () => {
 
               <div>
                 <h4 className="font-medium text-blue-400 mb-2">Supporting Evidence</h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Take photos if safe to do so</li>
                   <li>• Preserve physical evidence where possible</li>
                   <li>• Get witness statements</li>
@@ -136,7 +136,7 @@ const IncidentGuidelines = () => {
         </Card>
 
         {/* Emergency Contacts */}
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Phone className="h-5 w-5 text-elec-yellow" />
@@ -148,18 +148,18 @@ const IncidentGuidelines = () => {
               <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
                 <h4 className="font-medium text-red-400 mb-2">Emergency Services</h4>
                 <p className="text-2xl font-bold text-red-400">999</p>
-                <p className="text-sm text-muted-foreground">For immediate medical assistance or fire/police response</p>
+                <p className="text-sm text-white">For immediate medical assistance or fire/police response</p>
               </div>
 
               <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
                 <h4 className="font-medium text-blue-400 mb-2">HSE Incident Contact Centre</h4>
                 <p className="text-lg font-bold text-blue-400">0345 300 9923</p>
-                <p className="text-sm text-muted-foreground">For reporting RIDDOR incidents</p>
+                <p className="text-sm text-white">For reporting RIDDOR incidents</p>
               </div>
 
               <div className="p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
                 <h4 className="font-medium text-green-400 mb-2">Site Safety Officer</h4>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white">
                   Contact your site safety officer or supervisor for non-emergency incidents
                 </p>
               </div>
@@ -169,50 +169,50 @@ const IncidentGuidelines = () => {
       </div>
 
       {/* Common Incident Types */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle>Common Electrical Industry Incidents</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div className="p-4 bg-elec-dark/50 rounded-lg">
+            <div className="p-4 bg-white/10 rounded-lg">
               <h4 className="font-medium text-red-400 mb-2">Electrical Shock/Burns</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Contact with live electrical parts, arc flash incidents, electrical burns
               </p>
             </div>
 
-            <div className="p-4 bg-elec-dark/50 rounded-lg">
+            <div className="p-4 bg-white/10 rounded-lg">
               <h4 className="font-medium text-orange-400 mb-2">Falls from Height</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Falls from ladders, scaffolding, or elevated work platforms
               </p>
             </div>
 
-            <div className="p-4 bg-elec-dark/50 rounded-lg">
+            <div className="p-4 bg-white/10 rounded-lg">
               <h4 className="font-medium text-yellow-400 mb-2">Equipment Failures</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Tool malfunctions, PPE failures, testing equipment issues
               </p>
             </div>
 
-            <div className="p-4 bg-elec-dark/50 rounded-lg">
+            <div className="p-4 bg-white/10 rounded-lg">
               <h4 className="font-medium text-green-400 mb-2">Manual Handling</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Back injuries, muscle strains from lifting heavy equipment or materials
               </p>
             </div>
 
-            <div className="p-4 bg-elec-dark/50 rounded-lg">
+            <div className="p-4 bg-white/10 rounded-lg">
               <h4 className="font-medium text-blue-400 mb-2">Environmental</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Chemical spills, improper waste disposal, environmental contamination
               </p>
             </div>
 
-            <div className="p-4 bg-elec-dark/50 rounded-lg">
+            <div className="p-4 bg-white/10 rounded-lg">
               <h4 className="font-medium text-purple-400 mb-2">Near Misses</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Incidents that could have resulted in injury but didn't
               </p>
             </div>
@@ -221,7 +221,7 @@ const IncidentGuidelines = () => {
       </Card>
 
       {/* Additional Information */}
-      <Card className="border-blue-500/20 bg-elec-gray">
+      <Card className="border-blue-500/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-blue-400">Additional Resources</CardTitle>
         </CardHeader>
@@ -229,19 +229,19 @@ const IncidentGuidelines = () => {
           <div className="space-y-3">
             <div>
               <h4 className="font-medium mb-1">HSE Website</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Visit hse.gov.uk for comprehensive guidance on workplace health and safety reporting
               </p>
             </div>
             <div>
               <h4 className="font-medium mb-1">Training Requirements</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Regular safety training helps identify and prevent incidents. Ensure you're up to date with current requirements.
               </p>
             </div>
             <div>
               <h4 className="font-medium mb-1">Anonymous Reporting</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 If you have concerns about reporting openly, speak to your safety representative about anonymous reporting options.
               </p>
             </div>

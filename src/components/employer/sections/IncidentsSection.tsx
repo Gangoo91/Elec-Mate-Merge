@@ -1,15 +1,14 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { FeatureTile } from "@/components/employer/FeatureTile";
 import { SectionHeader } from "@/components/employer/SectionHeader";
-import { Button } from "@/components/ui/button";
-import { 
-  AlertTriangle, 
+import { QuickStats, QuickStat } from "@/components/employer/QuickStats";
+import {
+  AlertTriangle,
   Plus,
   FileWarning,
   ClipboardCheck,
   Search,
   CheckCircle2,
-  Clock,
   Shield
 } from "lucide-react";
 import { safetyIncidents } from "@/data/employerMockData";
@@ -28,46 +27,39 @@ export function IncidentsSection() {
       />
 
       {/* Quick Stats */}
-      <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4 md:mx-0 md:px-0">
-        {openIncidents > 0 && (
-          <Card className="bg-warning/10 border-warning/20 shrink-0">
-            <CardContent className="p-3 flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4 text-warning" />
-              <div>
-                <p className="text-lg font-bold text-foreground">{openIncidents}</p>
-                <p className="text-xs text-muted-foreground">Open</p>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-        <Card className="bg-success/10 border-success/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <Shield className="h-4 w-4 text-success" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{daysSinceLastIncident}</p>
-              <p className="text-xs text-muted-foreground">Days Safe</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-info/10 border-info/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <FileWarning className="h-4 w-4 text-info" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{nearMisses}</p>
-              <p className="text-xs text-muted-foreground">Near Misses</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-muted shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-muted-foreground" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{resolvedIncidents}</p>
-              <p className="text-xs text-muted-foreground">Resolved</p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <QuickStats
+        stats={[
+          ...(openIncidents > 0
+            ? [
+                {
+                  icon: AlertTriangle,
+                  value: openIncidents,
+                  label: "Open",
+                  color: "orange" as const,
+                  pulse: true,
+                },
+              ]
+            : []),
+          {
+            icon: Shield,
+            value: daysSinceLastIncident,
+            label: "Days Safe",
+            color: "green",
+          },
+          {
+            icon: FileWarning,
+            value: nearMisses,
+            label: "Near Misses",
+            color: "blue",
+          },
+          {
+            icon: CheckCircle2,
+            value: resolvedIncidents,
+            label: "Resolved",
+            color: "purple",
+          },
+        ]}
+      />
 
       {/* Quick Actions */}
       <div>

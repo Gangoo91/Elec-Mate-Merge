@@ -24,7 +24,7 @@ const Module1Section5 = () => {
       title: "Knowledge",
       description: "Understanding of electrical principles, regulations, and safety requirements",
       icon: BookOpen,
-      color: "text-yellow-400",
+      color: "text-elec-yellow",
       examples: [
         "BS7671 requirements",
         "Electrical theory",
@@ -48,7 +48,7 @@ const Module1Section5 = () => {
       title: "Understanding",
       description: "Ability to interpret results, recognise problems, and make informed decisions",
       icon: Eye,
-      color: "text-yellow-400",
+      color: "text-elec-yellow",
       examples: [
         "Result interpretation",
         "Risk assessment",
@@ -212,13 +212,13 @@ const Module1Section5 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
         <Link to="../module-1">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 1
@@ -227,7 +227,7 @@ const Module1Section5 = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <Badge variant="secondary" className="bg-yellow-600/40 text-yellow-400 border-0">
+            <Badge variant="secondary" className="bg-elec-yellow/40 text-elec-yellow border-0">
               Section 5
             </Badge>
             <Badge variant="secondary" className="bg-red-600/40 text-red-200 border-0">
@@ -248,10 +248,10 @@ const Module1Section5 = () => {
         <div className="max-w-6xl mx-auto space-y-8">
           
           {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Target className="h-6 w-6 text-yellow-400" />
+                <Target className="h-6 w-6 text-elec-yellow" />
                 Learning Outcomes
               </CardTitle>
             </CardHeader>
@@ -260,7 +260,7 @@ const Module1Section5 = () => {
               <ul className="space-y-2">
                 {learningOutcomes.map((outcome, index) => (
                   <li key={index} className="text-white flex items-start gap-2">
-                    <span className="text-yellow-400 mt-1">•</span>
+                    <span className="text-elec-yellow mt-1">•</span>
                     {outcome}
                   </li>
                 ))}
@@ -269,10 +269,10 @@ const Module1Section5 = () => {
           </Card>
 
           {/* What Is Competency */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <UserCheck className="h-6 w-6 text-yellow-400" />
+                <UserCheck className="h-6 w-6 text-elec-yellow" />
                 What Is Competency?
               </CardTitle>
             </CardHeader>
@@ -285,7 +285,7 @@ const Module1Section5 = () => {
                 {competencyComponents.map((component, index) => {
                   const IconComponent = component.icon;
                   return (
-                    <div key={index} className="bg-card/80 p-6 rounded-lg border border-gray-700">
+                    <div key={index} className="bg-transparent/80 p-6 rounded-lg border border-gray-700">
                       <div className="flex items-center gap-3 mb-4">
                         <IconComponent className={`h-6 w-6 ${component.color}`} />
                         <h3 className="text-white font-semibold text-lg">{component.title}</h3>
@@ -296,7 +296,7 @@ const Module1Section5 = () => {
                         <ul className="space-y-1">
                           {component.examples.map((example, exIndex) => (
                             <li key={exIndex} className="text-white text-sm flex items-start gap-2">
-                              <span className="text-yellow-400 mt-1 text-xs">•</span>
+                              <span className="text-elec-yellow mt-1 text-xs">•</span>
                               {example}
                             </li>
                           ))}
@@ -316,7 +316,7 @@ const Module1Section5 = () => {
           </Card>
 
           {/* Legal Requirements */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 <Scale className="h-6 w-6 text-red-400" />
@@ -330,7 +330,7 @@ const Module1Section5 = () => {
               
               <div className="space-y-6">
                 {legalRequirements.map((req, index) => (
-                  <div key={index} className="bg-card/80 p-6 rounded-lg border border-red-700/30">
+                  <div key={index} className="bg-transparent/80 p-6 rounded-lg border border-red-700/30">
                     <h3 className="text-white font-semibold text-lg mb-3">{req.regulation}</h3>
                     <p className="text-white mb-4">{req.requirement}</p>
                     
@@ -358,7 +358,7 @@ const Module1Section5 = () => {
           </Card>
 
           {/* Demonstrating Competency */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 <GraduationCap className="h-6 w-6 text-purple-400" />
@@ -372,13 +372,13 @@ const Module1Section5 = () => {
               
               <div className="space-y-6">
                 {competencyDemonstration.map((method, index) => (
-                  <div key={index} className="bg-card/80 p-6 rounded-lg border border-gray-700">
+                  <div key={index} className="bg-transparent/80 p-6 rounded-lg border border-gray-700">
                     <h3 className="text-white font-semibold text-lg mb-3">{method.method}</h3>
                     <p className="text-purple-200 text-sm mb-4 italic">{method.importance}</p>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {method.examples.map((example, exIndex) => (
-                        <div key={exIndex} className="bg-card p-3 rounded">
+                        <div key={exIndex} className="bg-transparent p-3 rounded">
                           <p className="text-white text-sm flex items-start gap-2">
                             <span className="text-purple-400 mt-1">•</span>
                             {example}
@@ -393,7 +393,7 @@ const Module1Section5 = () => {
           </Card>
 
           {/* Professional Responsibilities */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 <Shield className="h-6 w-6 text-green-400" />
@@ -407,7 +407,7 @@ const Module1Section5 = () => {
               
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {responsibilities.map((resp, index) => (
-                  <div key={index} className="bg-card/80 p-6 rounded-lg border border-gray-700">
+                  <div key={index} className="bg-transparent/80 p-6 rounded-lg border border-gray-700">
                     <h3 className="text-white font-semibold text-lg mb-3">{resp.area}</h3>
                     <p className="text-white text-sm mb-4">{resp.description}</p>
                     
@@ -429,7 +429,7 @@ const Module1Section5 = () => {
           </Card>
 
           {/* Working Within Competency Limits */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 <AlertTriangle className="h-6 w-6 text-orange-400" />
@@ -443,7 +443,7 @@ const Module1Section5 = () => {
               
               <div className="space-y-6">
                 {competencyLimitations.map((limitation, index) => (
-                  <div key={index} className="bg-card/80 p-6 rounded-lg border border-orange-700/30">
+                  <div key={index} className="bg-transparent/80 p-6 rounded-lg border border-orange-700/30">
                     <h3 className="text-white font-semibold text-lg mb-3">{limitation.scenario}</h3>
                     <p className="text-white mb-4">{limitation.description}</p>
                     
@@ -477,7 +477,7 @@ const Module1Section5 = () => {
           </Card>
 
           {/* Real-World Scenario */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 <FileText className="h-6 w-6 text-cyan-400" />
@@ -485,7 +485,7 @@ const Module1Section5 = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-card/80 p-6 rounded-lg border border-gray-700">
+              <div className="bg-transparent/80 p-6 rounded-lg border border-gray-700">
                 <h4 className="text-white font-semibold mb-3">Scenario: EICR Sign-off Responsibility</h4>
                 <p className="text-white mb-4">
                   A junior electrician with basic qualifications is asked to complete an EICR (Electrical Installation Condition Report) independently. 
@@ -515,10 +515,10 @@ const Module1Section5 = () => {
           </Card>
 
           {/* Key Takeaways */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Info className="h-6 w-6 text-yellow-400" />
+                <Info className="h-6 w-6 text-elec-yellow" />
                 Key Takeaways
               </CardTitle>
             </CardHeader>
@@ -526,7 +526,7 @@ const Module1Section5 = () => {
               <ul className="space-y-3">
                 {keyTakeaways.map((takeaway, index) => (
                   <li key={index} className="text-white flex items-start gap-3">
-                    <span className="text-yellow-400 mt-1">•</span>
+                    <span className="text-elec-yellow mt-1">•</span>
                     <span className="leading-relaxed">{takeaway}</span>
                   </li>
                 ))}
@@ -535,20 +535,20 @@ const Module1Section5 = () => {
           </Card>
 
           {/* Quick Knowledge Checks */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-6 w-6 text-yellow-400" />
+                <CheckCircle className="h-6 w-6 text-elec-yellow" />
                 Quick Knowledge Checks
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-yellow-400/10 p-4 rounded-lg">
+                <div className="bg-elec-yellow/10 p-4 rounded-lg">
                   <h4 className="text-white font-semibold mb-2">Check 1: EAWR Competency</h4>
                   <p className="text-sm">Which regulation in EAWR 1989 requires competent persons?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">Regulation 16 - requires technical knowledge and experience</p>
                   </details>
                 </div>
@@ -556,7 +556,7 @@ const Module1Section5 = () => {
                   <h4 className="text-white font-semibold mb-2">Check 2: Four Elements</h4>
                   <p className="text-sm">What are the four elements of competency?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">Skills, Knowledge, Experience, and Understanding</p>
                   </details>
                 </div>
@@ -564,7 +564,7 @@ const Module1Section5 = () => {
                   <h4 className="text-white font-semibold mb-2">Check 3: Legal Responsibility</h4>
                   <p className="text-sm">Who is legally responsible when you sign a certificate?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">You are - the person who signs takes full legal responsibility</p>
                   </details>
                 </div>
@@ -572,7 +572,7 @@ const Module1Section5 = () => {
                   <h4 className="text-white font-semibold mb-2">Check 4: Professional Bodies</h4>
                   <p className="text-sm">Name two competent person scheme operators.</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">NICEIC, NAPIT, Stroma, BSI, Benchmark (any two)</p>
                   </details>
                 </div>
@@ -581,10 +581,10 @@ const Module1Section5 = () => {
           </Card>
 
           {/* Frequently Asked Questions */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-6 w-6 text-yellow-400" />
+                <AlertTriangle className="h-6 w-6 text-elec-yellow" />
                 Frequently Asked Questions
               </CardTitle>
             </CardHeader>
@@ -619,15 +619,15 @@ const Module1Section5 = () => {
           </Card>
 
           {/* Real-World Scenario */}
-          <Card className="bg-yellow-400/10 border-blue-600/30">
+          <Card className="bg-elec-yellow/10 border-blue-600/30">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Eye className="h-6 w-6 text-yellow-400" />
+                <Eye className="h-6 w-6 text-elec-yellow" />
                 Real-World Scenario
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
-              <div className="bg-yellow-400/20 p-4 rounded-lg">
+              <div className="bg-elec-yellow/20 p-4 rounded-lg">
                 <h4 className="text-white font-semibold mb-2">Scenario: Pressure to Cut Corners</h4>
                 <p className="text-sm mb-3">
                   You're asked to certify an installation where the contractor claims "everything was tested properly" but you haven't personally verified the work. The client is pushing for quick completion, and the contractor says "just sign it - I'll take responsibility."
@@ -640,7 +640,7 @@ const Module1Section5 = () => {
                   <li>• Contractor's assurances have no legal standing on your certificate</li>
                   <li>• Insurance may not cover work you haven't personally verified</li>
                 </ul>
-                <div className="mt-3 p-3 bg-yellow-600/20 rounded">
+                <div className="mt-3 p-3 bg-elec-yellow/20 rounded">
                   <p className="text-xs"><strong>Correct Action:</strong> Refuse to sign without personal verification. Explain your legal obligations and offer to carry out proper inspection and testing. Professional integrity is non-negotiable.</p>
                 </div>
               </div>
@@ -648,7 +648,7 @@ const Module1Section5 = () => {
           </Card>
 
           {/* Quiz Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 <Users className="h-6 w-6 text-cyan-400" />

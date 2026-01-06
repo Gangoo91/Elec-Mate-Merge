@@ -59,14 +59,14 @@ const DeliveryMethodsCard = () => {
     <Card className="border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-cyan-500/10">
       <CardHeader>
         <CardTitle className="text-blue-400">Training Delivery Methods</CardTitle>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-white">
           Understanding different ways off-the-job training can be delivered
         </p>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {deliveryMethods.map((method, index) => (
-            <div key={index} className="p-4 bg-elec-gray/50 rounded-lg border border-blue-500/20">
+            <div key={index} className="p-4 bg-white/5 rounded-lg border border-blue-500/20">
               <div className="flex items-center gap-3 mb-3">
                 {method.icon}
                 <h4 className="font-medium text-white">{method.method}</h4>
@@ -74,12 +74,12 @@ const DeliveryMethodsCard = () => {
                   {method.timeAllocation}
                 </Badge>
               </div>
-              <p className="text-sm text-muted-foreground mb-3">{method.description}</p>
+              <p className="text-sm text-white mb-3">{method.description}</p>
               
               <div className="space-y-2">
                 <div>
                   <span className="text-xs font-medium text-blue-400">Examples:</span>
-                  <ul className="text-xs text-muted-foreground mt-1">
+                  <ul className="text-xs text-white mt-1">
                     {method.examples.map((example, idx) => (
                       <li key={idx} className="flex items-start gap-1">
                         <span className="text-blue-400">•</span>
@@ -91,7 +91,7 @@ const DeliveryMethodsCard = () => {
                 
                 <div>
                   <span className="text-xs font-medium text-green-400">Benefits:</span>
-                  <ul className="text-xs text-muted-foreground mt-1">
+                  <ul className="text-xs text-white mt-1">
                     {method.pros.map((pro, idx) => (
                       <li key={idx} className="flex items-start gap-1">
                         <span className="text-green-400">✓</span>

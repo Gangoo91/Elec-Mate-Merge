@@ -138,124 +138,165 @@ const ScenarioBasedTool = () => {
 
   if (selectedScenario && currentScenario) {
     return (
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Target className="h-5 w-5 text-elec-yellow" />
-              <CardTitle className="text-elec-yellow">{currentScenario.title}</CardTitle>
-            </div>
-            <Button variant="outline" size="sm" onClick={handleBackToScenarios}>
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Scenarios
-            </Button>
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-            <h4 className="font-medium text-blue-300 mb-2">Situation:</h4>
-            <p className="text-sm text-muted-foreground">{currentScenario.situation}</p>
-          </div>
-          
-          <div className="space-y-3">
-            <h4 className="font-medium text-white">What would you do?</h4>
-            {currentScenario.options.map((option, index) => (
-              <Button
-                key={index}
-                variant="outline"
-                className={`w-full text-left h-auto p-4 justify-start relative ${
-                  selectedAnswer === index
-                    ? option.isCorrect
-                      ? 'border-green-500 bg-green-500/10'
-                      : 'border-red-500 bg-red-500/10'
-                    : ''
-                }`}
-                onClick={() => handleAnswerSelect(index)}
-                disabled={showFeedback}
-              >
-                <div className="flex items-start gap-3 w-full">
-                  <span className="text-sm font-medium">
-                    {String.fromCharCode(65 + index)}.
-                  </span>
-                  <span className="text-sm flex-1">{option.text}</span>
-                  {showFeedback && selectedAnswer === index && (
-                    <div className="flex-shrink-0">
-                      {option.isCorrect ? (
-                        <CheckCircle className="h-5 w-5 text-green-500" />
-                      ) : (
-                        <XCircle className="h-5 w-5 text-red-500" />
-                      )}
-                    </div>
-                  )}
+      <div className="space-y-6 animate-fade-in">
+        <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+          <div className="absolute top-0 right-0 w-48 h-48 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <CardHeader className="relative">
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+                  <Target className="h-5 w-5 text-elec-yellow" />
                 </div>
+                <CardTitle className="text-white">{currentScenario.title}</CardTitle>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleBackToScenarios}
+                className="h-10 border-white/20 hover:border-elec-yellow/50 hover:bg-elec-yellow/10 touch-manipulation active:scale-95 transition-all"
+              >
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back to Scenarios
               </Button>
-            ))}
-          </div>
-          
-          {showFeedback && selectedAnswer !== null && (
-            <div className="space-y-4">
-              <div className={`p-4 rounded-lg border ${
-                currentScenario.options[selectedAnswer].isCorrect
-                  ? 'bg-green-500/10 border-green-500/30'
-                  : 'bg-red-500/10 border-red-500/30'
-              }`}>
-                <h4 className={`font-medium mb-2 ${
-                  currentScenario.options[selectedAnswer].isCorrect
-                    ? 'text-green-300'
-                    : 'text-red-300'
-                }`}>
-                  {currentScenario.options[selectedAnswer].isCorrect ? 'Correct!' : 'Not the best approach'}
-                </h4>
-                <p className="text-sm text-muted-foreground">
-                  {currentScenario.options[selectedAnswer].feedback}
-                </p>
-              </div>
-              
-              <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
-                <h4 className="font-medium text-green-300 mb-2">Best Practice:</h4>
-                <p className="text-sm text-muted-foreground">{currentScenario.explanation}</p>
-              </div>
             </div>
-          )}
-        </CardContent>
-      </Card>
+          </CardHeader>
+          <CardContent className="space-y-6 relative">
+            <div className="p-5 rounded-xl bg-blue-500/5 border border-blue-500/20">
+              <h4 className="font-medium text-blue-400 mb-2">Situation:</h4>
+              <p className="text-sm text-white/70">{currentScenario.situation}</p>
+            </div>
+
+            <div className="space-y-3">
+              <h4 className="font-semibold text-white">What would you do?</h4>
+              {currentScenario.options.map((option, index) => (
+                <Button
+                  key={index}
+                  variant="outline"
+                  className={`w-full text-left h-auto p-4 justify-start relative border-white/10 hover:border-elec-yellow/50 hover:bg-elec-yellow/10 transition-all ${
+                    selectedAnswer === index
+                      ? option.isCorrect
+                        ? 'border-green-500/50 bg-green-500/10'
+                        : 'border-red-500/50 bg-red-500/10'
+                      : ''
+                  }`}
+                  onClick={() => handleAnswerSelect(index)}
+                  disabled={showFeedback}
+                >
+                  <div className="flex items-start gap-3 w-full">
+                    <span className="text-sm font-semibold text-elec-yellow">
+                      {String.fromCharCode(65 + index)}.
+                    </span>
+                    <span className="text-sm flex-1 text-white/80">{option.text}</span>
+                    {showFeedback && selectedAnswer === index && (
+                      <div className="flex-shrink-0">
+                        {option.isCorrect ? (
+                          <div className="p-1 rounded-lg bg-green-500/20">
+                            <CheckCircle className="h-4 w-4 text-green-400" />
+                          </div>
+                        ) : (
+                          <div className="p-1 rounded-lg bg-red-500/20">
+                            <XCircle className="h-4 w-4 text-red-400" />
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </Button>
+              ))}
+            </div>
+
+            {showFeedback && selectedAnswer !== null && (
+              <div className="space-y-4 pt-4 border-t border-white/10">
+                <div className={`p-5 rounded-xl border ${
+                  currentScenario.options[selectedAnswer].isCorrect
+                    ? 'bg-green-500/10 border-green-500/30'
+                    : 'bg-red-500/10 border-red-500/30'
+                }`}>
+                  <h4 className={`font-semibold mb-2 ${
+                    currentScenario.options[selectedAnswer].isCorrect
+                      ? 'text-green-400'
+                      : 'text-red-400'
+                  }`}>
+                    {currentScenario.options[selectedAnswer].isCorrect ? 'Correct!' : 'Not the best approach'}
+                  </h4>
+                  <p className="text-sm text-white/70">
+                    {currentScenario.options[selectedAnswer].feedback}
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-xl bg-green-500/5 border border-green-500/20">
+                  <h4 className="font-semibold text-green-400 mb-2">Best Practice:</h4>
+                  <p className="text-sm text-white/70">{currentScenario.explanation}</p>
+                </div>
+
+                <Button
+                  onClick={handleBackToScenarios}
+                  className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation active:scale-95 transition-all"
+                >
+                  Try Another Scenario
+                </Button>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
     );
   }
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-medium text-white">Choose a Scenario to Practice</h3>
-        <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30">
-          {completedScenarios.size} / {scenarios.length} completed
-        </Badge>
+    <div className="space-y-6 animate-fade-in">
+      <div className="p-4 rounded-xl bg-gradient-to-br from-elec-gray to-elec-card border border-white/10 flex items-center justify-between flex-wrap gap-4">
+        <div>
+          <h3 className="text-lg font-semibold text-white mb-1">Choose a Scenario to Practice</h3>
+          <p className="text-sm text-white/60">Test your decision-making in realistic workplace situations</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="h-2 w-24 bg-white/5 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-green-500 transition-all"
+              style={{ width: `${(completedScenarios.size / scenarios.length) * 100}%` }}
+            />
+          </div>
+          <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
+            {completedScenarios.size} / {scenarios.length}
+          </Badge>
+        </div>
       </div>
-      
+
       <div className="grid grid-cols-1 gap-4">
-        {scenarios.map((scenario) => (
-          <Card 
-            key={scenario.id}
-            className={`border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 cursor-pointer transition-colors ${
-              completedScenarios.has(scenario.id) ? 'border-green-500/50' : ''
-            }`}
-            onClick={() => handleScenarioSelect(scenario.id)}
-          >
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div className="flex-1">
-                  <h4 className="font-medium text-white mb-1">{scenario.title}</h4>
-                  <p className="text-sm text-muted-foreground">{scenario.situation}</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  {completedScenarios.has(scenario.id) && (
-                    <CheckCircle className="h-5 w-5 text-green-500" />
+        {scenarios.map((scenario, index) => {
+          const colors = ['orange', 'blue', 'purple'][index % 3];
+          const isCompleted = completedScenarios.has(scenario.id);
+          return (
+            <Card
+              key={scenario.id}
+              className={`bg-gradient-to-br from-elec-gray to-elec-card ${isCompleted ? 'border-green-500/30' : `border-${colors}-500/20`} hover:border-${colors}-500/40 cursor-pointer transition-all overflow-hidden relative group`}
+              onClick={() => handleScenarioSelect(scenario.id)}
+            >
+              <div className={`absolute top-0 right-0 w-32 h-32 ${isCompleted ? 'bg-green-500/5' : `bg-${colors}-500/5`} rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity`} />
+              <CardContent className="p-5 relative">
+                <div className="flex items-center gap-4">
+                  <div className={`p-2.5 rounded-xl bg-gradient-to-br ${isCompleted ? 'from-green-500/20 to-green-500/5 border-green-500/30' : `from-${colors}-500/20 to-${colors}-500/5 border-${colors}-500/30`} border`}>
+                    {isCompleted ? (
+                      <CheckCircle className="h-5 w-5 text-green-400" />
+                    ) : (
+                      <Target className={`h-5 w-5 text-${colors}-400`} />
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-white mb-1">{scenario.title}</h4>
+                    <p className="text-sm text-white/60">{scenario.situation}</p>
+                  </div>
+                  {isCompleted && (
+                    <Badge variant="outline" className="bg-green-500/10 border-green-500/30 text-green-400">
+                      Completed
+                    </Badge>
                   )}
-                  <Target className="h-4 w-4 text-elec-yellow" />
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
     </div>
   );

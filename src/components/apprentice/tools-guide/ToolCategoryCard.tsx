@@ -14,7 +14,7 @@ interface ToolCategoryCardProps {
 
 const ToolCategoryCard = ({ title, icon, description, link, itemCount }: ToolCategoryCardProps) => {
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray/50 backdrop-blur hover:border-elec-yellow/50 transition-all duration-300 hover:shadow-lg group h-full">
+    <Card className="border-elec-yellow/20 bg-white/5 backdrop-blur hover:border-elec-yellow/50 transition-all duration-300 hover:shadow-lg group h-full">
       <CardHeader className="pb-3">
         <CardTitle className="text-lg flex items-center gap-3 text-elec-yellow group-hover:text-elec-yellow/90 transition-colors">
           {icon}
@@ -22,7 +22,7 @@ const ToolCategoryCard = ({ title, icon, description, link, itemCount }: ToolCat
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4 flex flex-col h-full">
-        <p className="text-sm text-muted-foreground leading-relaxed flex-1">
+        <p className="text-sm text-white leading-relaxed flex-1">
           {description}
         </p>
         

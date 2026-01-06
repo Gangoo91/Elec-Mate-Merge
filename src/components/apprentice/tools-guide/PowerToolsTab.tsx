@@ -110,8 +110,8 @@ const PowerToolsTab = () => {
     <div className="p-6 space-y-6">
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-semibold text-elec-yellow">Power Tools</h2>
-        <p className="text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-          Whilst your employer often provides larger power tools, having some basics of your own gives you flexibility 
+        <p className="text-white/80 max-w-3xl mx-auto leading-relaxed">
+          Whilst your employer often provides larger power tools, having some basics of your own gives you flexibility
           and ensures you're never without essential equipment.
         </p>
       </div>
@@ -150,21 +150,21 @@ const PowerToolsTab = () => {
           <CircuitBoard className="h-5 w-5" />
           Power Tool Safety & Maintenance
         </h3>
-        <div className="space-y-2 text-sm text-muted-foreground leading-relaxed">
+        <div className="space-y-2 text-sm text-white/80 leading-relaxed">
           <p>
-            <strong>PAT Testing:</strong> All portable electrical tools must be PAT tested annually (or as per company policy). 
+            <strong className="text-red-300">PAT Testing:</strong> All portable electrical tools must be PAT tested annually (or as per company policy).
             Keep records and labels up to date.
           </p>
           <p>
-            <strong>Daily Checks:</strong> Inspect tools before use - check casings, cables, and switches. 
+            <strong className="text-red-300">Daily Checks:</strong> Inspect tools before use - check casings, cables, and switches.
             Damaged tools must be immediately taken out of service.
           </p>
           <p>
-            <strong>110V on Sites:</strong> Many construction sites require 110V tools for safety. 
+            <strong className="text-red-300">110V on Sites:</strong> Many construction sites require 110V tools for safety.
             Check site requirements and use appropriate transformers if needed.
           </p>
           <p>
-            <strong>Battery Care:</strong> Store batteries at room temperature, charge regularly, and replace when capacity drops significantly. 
+            <strong className="text-red-300">Battery Care:</strong> Store batteries at room temperature, charge regularly, and replace when capacity drops significantly.
             Quality batteries last 3-5 years with proper care.
           </p>
         </div>
@@ -175,7 +175,7 @@ const PowerToolsTab = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
           <div>
             <h4 className="font-medium text-green-200 mb-2">Year 1-2: Basics (£150-250)</h4>
-            <ul className="space-y-1 text-muted-foreground">
+            <ul className="space-y-1 text-white/80">
               <li>• Cordless drill with 2 batteries</li>
               <li>• LED torch</li>
               <li>• Basic drill bits and screwdriver bits</li>
@@ -184,7 +184,7 @@ const PowerToolsTab = () => {
           </div>
           <div>
             <h4 className="font-medium text-green-200 mb-2">Year 3-4: Expansion (£200-400)</h4>
-            <ul className="space-y-1 text-muted-foreground">
+            <ul className="space-y-1 text-white/80">
               <li>• Additional batteries and faster charger</li>
               <li>• More comprehensive bit sets</li>
               <li>• Advanced inspection equipment</li>

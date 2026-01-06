@@ -7,13 +7,13 @@ import Module3Section1Quiz from '@/components/upskilling/Module3Section1Quiz';
 
 const Module3Section1 = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
         <Link to="../module-3">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 3
@@ -22,8 +22,8 @@ const Module3Section1 = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3 mb-2">
-            <Eye className="h-8 w-8 text-yellow-400" />
-            <Badge variant="secondary" className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold">
+            <Eye className="h-8 w-8 text-elec-yellow" />
+            <Badge variant="secondary" className="bg-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/50 font-semibold">
               Section 1
             </Badge>
           </div>
@@ -41,10 +41,10 @@ const Module3Section1 = () => {
         <div className="space-y-4 sm:space-y-6">
           
           {/* Introduction */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <BookOpen className="h-5 w-5 text-yellow-400" />
+                <BookOpen className="h-5 w-5 text-elec-yellow" />
                 Introduction to Visual Inspection
               </CardTitle>
             </CardHeader>
@@ -59,8 +59,8 @@ const Module3Section1 = () => {
                 the most cost-effective safety procedures available. Understanding what to look for and how to 
                 document findings professionally is essential for all electrical work.
               </p>
-              <div className="bg-card/80 p-4 rounded-lg">
-                <p className="text-sm font-medium text-yellow-400 mb-2">Key Fact:</p>
+              <div className="bg-transparent/80 p-4 rounded-lg">
+                <p className="text-sm font-medium text-elec-yellow mb-2">Key Fact:</p>
                 <p className="text-sm">
                   BS 7671 requires visual inspection to be carried out before any testing is undertaken, 
                   and it must be performed with the installation isolated from the supply.
@@ -70,38 +70,38 @@ const Module3Section1 = () => {
           </Card>
 
           {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Target className="h-5 w-5 text-yellow-400" />
+                <Target className="h-5 w-5 text-elec-yellow" />
                 Learning Outcomes
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-3">
-              <p className="text-sm font-medium text-yellow-400">By the end of this section, you'll be able to:</p>
+              <p className="text-sm font-medium text-elec-yellow">By the end of this section, you'll be able to:</p>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Understand the legal requirements and standards governing visual inspection</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Identify when visual inspection is required and its sequence in the testing process</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Recognise the limitations and scope of visual inspection procedures</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Apply systematic approaches to ensure comprehensive coverage</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Document findings appropriately and determine appropriate actions</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Understand the relationship between visual inspection and subsequent testing</span>
                 </li>
               </ul>
@@ -109,10 +109,10 @@ const Module3Section1 = () => {
           </Card>
 
           {/* Main Content - Purpose and Legal Requirements */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <BookOpen className="h-5 w-5 text-yellow-400" />
+                <BookOpen className="h-5 w-5 text-elec-yellow" />
                 Purpose and Legal Framework
               </CardTitle>
             </CardHeader>
@@ -121,29 +121,29 @@ const Module3Section1 = () => {
               <div className="space-y-4">
                 <h3 className="text-xl font-semibold text-white">Primary Purposes of Visual Inspection</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="text-yellow-400 font-medium mb-2">Safety Verification</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="text-elec-yellow font-medium mb-2">Safety Verification</h4>
                     <p className="text-sm">
                       Identify immediate dangers that could cause electric shock, fire, or injury. 
                       This includes exposed live parts, damaged insulation, and inadequate earthing connections.
                     </p>
                   </div>
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="text-yellow-400 font-medium mb-2">Compliance Assessment</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="text-elec-yellow font-medium mb-2">Compliance Assessment</h4>
                     <p className="text-sm">
                       Verify that installations meet current standards and regulations, identifying 
                       non-compliant work that may require remedial action.
                     </p>
                   </div>
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="text-yellow-400 font-medium mb-2">Defect Identification</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="text-elec-yellow font-medium mb-2">Defect Identification</h4>
                     <p className="text-sm">
                       Discover deterioration, damage, or incorrect installation that could affect 
                       the safety or performance of the electrical system.
                     </p>
                   </div>
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="text-yellow-400 font-medium mb-2">Test Planning</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="text-elec-yellow font-medium mb-2">Test Planning</h4>
                     <p className="text-sm">
                       Inform the extent and type of subsequent testing required, ensuring efficient 
                       use of time and resources during the inspection process.
@@ -160,8 +160,8 @@ const Module3Section1 = () => {
                 </p>
                 
                 <div className="space-y-4">
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="text-yellow-400 font-medium mb-2">BS 7671 Requirements</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="text-elec-yellow font-medium mb-2">BS 7671 Requirements</h4>
                     <ul className="space-y-1 text-sm">
                       <li>• Must be performed before any testing (Section 612)</li>
                       <li>• Installation must be isolated from supply during inspection</li>
@@ -171,8 +171,8 @@ const Module3Section1 = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="text-yellow-400 font-medium mb-2">Electricity at Work Regulations 1989</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="text-elec-yellow font-medium mb-2">Electricity at Work Regulations 1989</h4>
                     <ul className="space-y-1 text-sm">
                       <li>• Regulation 4: Systems must be maintained to prevent danger</li>
                       <li>• Regulation 16: Work on live systems only in exceptional circumstances</li>
@@ -181,8 +181,8 @@ const Module3Section1 = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="text-yellow-400 font-medium mb-2">IET Guidance Notes</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="text-elec-yellow font-medium mb-2">IET Guidance Notes</h4>
                     <ul className="space-y-1 text-sm">
                       <li>• GN3 provides detailed inspection and testing procedures</li>
                       <li>• Specifies minimum requirements for visual examination</li>
@@ -196,8 +196,8 @@ const Module3Section1 = () => {
               <div className="space-y-4">
                 <h3 className="text-xl font-semibold text-white">When Visual Inspection is Required</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="text-yellow-400 font-medium mb-2">Initial Verification</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="text-elec-yellow font-medium mb-2">Initial Verification</h4>
                     <ul className="space-y-1 text-sm">
                       <li>• New installations before first energisation</li>
                       <li>• Additions and alterations to existing installations</li>
@@ -205,8 +205,8 @@ const Module3Section1 = () => {
                       <li>• Following remedial work on existing systems</li>
                     </ul>
                   </div>
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="text-yellow-400 font-medium mb-2">Periodic Inspection</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="text-elec-yellow font-medium mb-2">Periodic Inspection</h4>
                     <ul className="space-y-1 text-sm">
                       <li>• At recommended intervals (typically 5-10 years)</li>
                       <li>• Before change of occupancy or use</li>
@@ -220,10 +220,10 @@ const Module3Section1 = () => {
           </Card>
 
           {/* Inspection Process and Methodology */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Settings className="h-5 w-5 text-yellow-400" />
+                <Settings className="h-5 w-5 text-elec-yellow" />
                 Systematic Inspection Methodology
               </CardTitle>
             </CardHeader>
@@ -231,27 +231,27 @@ const Module3Section1 = () => {
               
               <div className="space-y-4">
                 <h3 className="text-xl font-semibold text-white">Pre-Inspection Preparation</h3>
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-medium mb-3">Essential Preparation Steps</h4>
+                <div className="bg-transparent/80 p-4 rounded-lg">
+                  <h4 className="text-elec-yellow font-medium mb-3">Essential Preparation Steps</h4>
                   <ol className="space-y-2 text-sm">
                     <li className="flex items-start gap-2">
-                      <span className="text-yellow-400 font-medium">1.</span>
+                      <span className="text-elec-yellow font-medium">1.</span>
                       <span>Obtain and review installation documentation (drawings, previous certificates, manuals)</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-yellow-400 font-medium">2.</span>
+                      <span className="text-elec-yellow font-medium">2.</span>
                       <span>Confirm scope of inspection with client and identify any access limitations</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-yellow-400 font-medium">3.</span>
+                      <span className="text-elec-yellow font-medium">3.</span>
                       <span>Assess safety requirements and prepare appropriate PPE and tools</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-yellow-400 font-medium">4.</span>
+                      <span className="text-elec-yellow font-medium">4.</span>
                       <span>Plan isolation procedures and coordinate with building occupants</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-yellow-400 font-medium">5.</span>
+                      <span className="text-elec-yellow font-medium">5.</span>
                       <span>Prepare inspection forms and documentation materials</span>
                     </li>
                   </ol>
@@ -261,8 +261,8 @@ const Module3Section1 = () => {
               <div className="space-y-4">
                 <h3 className="text-xl font-semibold text-white">Systematic Inspection Sequence</h3>
                 <div className="space-y-4">
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="text-yellow-400 font-medium mb-2">1. Origin of Installation</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="text-elec-yellow font-medium mb-2">1. Origin of Installation</h4>
                     <ul className="space-y-1 text-sm">
                       <li>• Service head and earthing arrangements</li>
                       <li>• Main protective bonding conductors</li>
@@ -271,8 +271,8 @@ const Module3Section1 = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="text-yellow-400 font-medium mb-2">2. Distribution Systems</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="text-elec-yellow font-medium mb-2">2. Distribution Systems</h4>
                     <ul className="space-y-1 text-sm">
                       <li>• Sub-main cables and their protection</li>
                       <li>• Distribution board installations and accessibility</li>
@@ -281,8 +281,8 @@ const Module3Section1 = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="text-yellow-400 font-medium mb-2">3. Final Circuits</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="text-elec-yellow font-medium mb-2">3. Final Circuits</h4>
                     <ul className="space-y-1 text-sm">
                       <li>• Cable routes, support, and protection</li>
                       <li>• Accessories and their mounting</li>
@@ -291,8 +291,8 @@ const Module3Section1 = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="text-yellow-400 font-medium mb-2">4. Special Installations</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="text-elec-yellow font-medium mb-2">4. Special Installations</h4>
                     <ul className="space-y-1 text-sm">
                       <li>• Bathroom and special location requirements</li>
                       <li>• Swimming pool installations</li>
@@ -308,8 +308,8 @@ const Module3Section1 = () => {
                 <p className="text-sm leading-relaxed">
                   Proper documentation is crucial for legal compliance and provides valuable information for future inspections.
                 </p>
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-medium mb-3">Recording Requirements</h4>
+                <div className="bg-transparent/80 p-4 rounded-lg">
+                  <h4 className="text-elec-yellow font-medium mb-3">Recording Requirements</h4>
                   <ul className="space-y-2 text-sm">
                     <li>• Clear description of defects found</li>
                     <li>• Location and circuit identification</li>
@@ -324,17 +324,17 @@ const Module3Section1 = () => {
           </Card>
 
           {/* Practical Exercises */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Settings className="h-5 w-5 text-yellow-400" />
+                <Settings className="h-5 w-5 text-elec-yellow" />
                 Practical Learning Exercises
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
               <div className="space-y-6">
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-medium mb-3">Exercise 1: Consumer Unit Assessment</h4>
+                <div className="bg-transparent/80 p-4 rounded-lg">
+                  <h4 className="text-elec-yellow font-medium mb-3">Exercise 1: Consumer Unit Assessment</h4>
                   <p className="text-sm mb-3">
                     Practice systematic visual inspection of a consumer unit, identifying compliance issues, 
                     labelling adequacy, and potential safety defects.
@@ -350,8 +350,8 @@ const Module3Section1 = () => {
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-medium mb-3">Exercise 2: Socket Outlet Survey</h4>
+                <div className="bg-transparent/80 p-4 rounded-lg">
+                  <h4 className="text-elec-yellow font-medium mb-3">Exercise 2: Socket Outlet Survey</h4>
                   <p className="text-sm mb-3">
                     Conduct a comprehensive socket outlet inspection covering different room types, 
                     environmental conditions, and special locations.
@@ -367,8 +367,8 @@ const Module3Section1 = () => {
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-medium mb-3">Exercise 3: Cable Installation Review</h4>
+                <div className="bg-transparent/80 p-4 rounded-lg">
+                  <h4 className="text-elec-yellow font-medium mb-3">Exercise 3: Cable Installation Review</h4>
                   <p className="text-sm mb-3">
                     Examine cable installation methods, support systems, and protection measures 
                     across different environments and building types.
@@ -384,8 +384,8 @@ const Module3Section1 = () => {
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-medium mb-3">Exercise 4: Earthing System Inspection</h4>
+                <div className="bg-transparent/80 p-4 rounded-lg">
+                  <h4 className="text-elec-yellow font-medium mb-3">Exercise 4: Earthing System Inspection</h4>
                   <p className="text-sm mb-3">
                     Trace and verify earthing arrangements from origin through to final circuits, 
                     including main and supplementary bonding.
@@ -405,16 +405,16 @@ const Module3Section1 = () => {
           </Card>
 
           {/* FAQ Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Eye className="h-5 w-5 text-yellow-400" />
+                <Eye className="h-5 w-5 text-elec-yellow" />
                 Frequently Asked Questions
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
               <div className="space-y-6">
-                <div className="border-l-4 border-yellow-400 pl-4">
+                <div className="border-l-4 border-elec-yellow pl-4">
                   <h4 className="text-white font-medium mb-2">Q: Can I perform visual inspection on a live installation?</h4>
                   <p className="text-sm text-white">
                     A: No. BS 7671 requires the installation to be isolated from the supply during visual inspection. 
@@ -422,7 +422,7 @@ const Module3Section1 = () => {
                   </p>
                 </div>
 
-                <div className="border-l-4 border-yellow-400 pl-4">
+                <div className="border-l-4 border-elec-yellow pl-4">
                   <h4 className="text-white font-medium mb-2">Q: What should I do if I find a C1 defect during visual inspection?</h4>
                   <p className="text-sm text-white">
                     A: Stop the inspection immediately and make the defect safe. C1 defects present immediate danger 
@@ -430,7 +430,7 @@ const Module3Section1 = () => {
                   </p>
                 </div>
 
-                <div className="border-l-4 border-yellow-400 pl-4">
+                <div className="border-l-4 border-elec-yellow pl-4">
                   <h4 className="text-white font-medium mb-2">Q: How detailed should my visual inspection documentation be?</h4>
                   <p className="text-sm text-white">
                     A: Document all defects clearly with location, description, and classification. Include photographs 
@@ -438,7 +438,7 @@ const Module3Section1 = () => {
                   </p>
                 </div>
 
-                <div className="border-l-4 border-yellow-400 pl-4">
+                <div className="border-l-4 border-elec-yellow pl-4">
                   <h4 className="text-white font-medium mb-2">Q: Should I open all electrical accessories during inspection?</h4>
                   <p className="text-sm text-white">
                     A: Only open accessories where necessary for proper inspection and where you have permission. 
@@ -446,7 +446,7 @@ const Module3Section1 = () => {
                   </p>
                 </div>
 
-                <div className="border-l-4 border-yellow-400 pl-4">
+                <div className="border-l-4 border-elec-yellow pl-4">
                   <h4 className="text-white font-medium mb-2">Q: What if the client restricts access to certain areas?</h4>
                   <p className="text-sm text-white">
                     A: Document any limitations clearly on your certificate. Note which areas couldn't be inspected 
@@ -454,7 +454,7 @@ const Module3Section1 = () => {
                   </p>
                 </div>
 
-                <div className="border-l-4 border-yellow-400 pl-4">
+                <div className="border-l-4 border-elec-yellow pl-4">
                   <h4 className="text-white font-medium mb-2">Q: How long should a visual inspection take?</h4>
                   <p className="text-sm text-white">
                     A: Time varies with installation size and complexity. Allow adequate time for thorough inspection - 
@@ -462,7 +462,7 @@ const Module3Section1 = () => {
                   </p>
                 </div>
 
-                <div className="border-l-4 border-yellow-400 pl-4">
+                <div className="border-l-4 border-elec-yellow pl-4">
                   <h4 className="text-white font-medium mb-2">Q: Can visual inspection identify all electrical defects?</h4>
                   <p className="text-sm text-white">
                     A: No. Visual inspection identifies obvious defects but testing is required to detect insulation 
@@ -474,16 +474,16 @@ const Module3Section1 = () => {
           </Card>
 
           {/* Real-World Scenario */}
-          <Card className="bg-card border-l-4 border-l-yellow-400">
+          <Card className="bg-transparent border-l-4 border-l-elec-yellow">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Brain className="h-5 w-5 text-yellow-400" />
+                <Brain className="h-5 w-5 text-elec-yellow" />
                 Real-World Scenario
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
-              <div className="bg-card p-4 rounded-md">
-                <h4 className="text-yellow-400 font-medium mb-2">Scenario:</h4>
+              <div className="bg-transparent p-4 rounded-md">
+                <h4 className="text-elec-yellow font-medium mb-2">Scenario:</h4>
                 <p className="text-sm">
                   You're conducting a periodic inspection of a 20-year-old office building. During visual inspection 
                   of the main distribution board, you notice several circuits have had their labels removed or 
@@ -491,7 +491,7 @@ const Module3Section1 = () => {
                   and you can see some copper conductors have turned green at termination points.
                 </p>
               </div>
-              <div className="bg-card p-4 rounded-md">
+              <div className="bg-transparent p-4 rounded-md">
                 <h4 className="text-green-400 font-medium mb-2">Professional Response:</h4>
                 <ol className="space-y-2 text-sm">
                   <li>1. Document the poor labelling as a C3 defect (improvement recommended)</li>
@@ -507,37 +507,37 @@ const Module3Section1 = () => {
           </Card>
 
           {/* Summary */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-yellow-400" />
+                <CheckCircle2 className="h-5 w-5 text-elec-yellow" />
                 Key Summary Points
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-3">
               <ul className="space-y-3 text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Visual inspection is legally required and must be performed before any testing</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Installations must be isolated from supply during visual inspection for safety</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Systematic approach ensures comprehensive coverage and consistent results</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Up to 80% of electrical defects can be identified through visual inspection alone</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Proper documentation protects both inspector and client legally</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Defect classification (C1, C2, C3, FI) guides appropriate remedial actions</span>
                 </li>
               </ul>
@@ -545,10 +545,10 @@ const Module3Section1 = () => {
           </Card>
 
           {/* Interactive Quiz */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-yellow-400" />
+                <CheckCircle2 className="h-5 w-5 text-elec-yellow" />
                 Test Your Knowledge
               </CardTitle>
             </CardHeader>

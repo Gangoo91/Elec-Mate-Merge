@@ -20,16 +20,16 @@ const RiskAssessment = () => {
         control measures to prevent accidents during electrical installation and maintenance activities.
       </p>
       
-      <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg overflow-hidden">
+      <div className="bg-white/10 border border-elec-yellow/20 rounded-lg overflow-hidden">
         <div className="bg-gradient-to-r from-elec-yellow/10 to-transparent p-4 border-b border-elec-yellow/20">
           <h4 className="font-semibold text-lg text-elec-yellow">Risk Assessment Process</h4>
-          <p className="text-sm mt-1 text-gray-300">A systematic approach to identifying hazards and implementing controls</p>
+          <p className="text-sm mt-1 text-white/80">A systematic approach to identifying hazards and implementing controls</p>
         </div>
         
         <div className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {/* Step 1 */}
-            <div className="bg-elec-gray border border-elec-yellow/10 rounded-lg overflow-hidden hover:border-elec-yellow/30 transition-colors duration-300">
+            <div className="bg-white/5 border border-elec-yellow/10 rounded-lg overflow-hidden hover:border-elec-yellow/30 transition-colors duration-300">
               <div className="bg-elec-yellow/5 p-3 border-b border-elec-yellow/10 flex items-center gap-2">
                 <div className="bg-elec-yellow/10 rounded-full h-7 w-7 flex items-center justify-center text-elec-yellow font-medium">1</div>
                 <h5 className="font-medium text-elec-yellow">Identify Hazards</h5>
@@ -61,7 +61,7 @@ const RiskAssessment = () => {
             </div>
             
             {/* Step 2 */}
-            <div className="bg-elec-gray border border-elec-yellow/10 rounded-lg overflow-hidden hover:border-elec-yellow/30 transition-colors duration-300">
+            <div className="bg-white/5 border border-elec-yellow/10 rounded-lg overflow-hidden hover:border-elec-yellow/30 transition-colors duration-300">
               <div className="bg-elec-yellow/5 p-3 border-b border-elec-yellow/10 flex items-center gap-2">
                 <div className="bg-elec-yellow/10 rounded-full h-7 w-7 flex items-center justify-center text-elec-yellow font-medium">2</div>
                 <h5 className="font-medium text-elec-yellow">Evaluate Risks</h5>
@@ -93,7 +93,7 @@ const RiskAssessment = () => {
             </div>
             
             {/* Step 3 */}
-            <div className="bg-elec-gray border border-elec-yellow/10 rounded-lg overflow-hidden hover:border-elec-yellow/30 transition-colors duration-300">
+            <div className="bg-white/5 border border-elec-yellow/10 rounded-lg overflow-hidden hover:border-elec-yellow/30 transition-colors duration-300">
               <div className="bg-elec-yellow/5 p-3 border-b border-elec-yellow/10 flex items-center gap-2">
                 <div className="bg-elec-yellow/10 rounded-full h-7 w-7 flex items-center justify-center text-elec-yellow font-medium">3</div>
                 <h5 className="font-medium text-elec-yellow">Control Measures</h5>
@@ -125,7 +125,7 @@ const RiskAssessment = () => {
             </div>
             
             {/* Step 4 */}
-            <div className="bg-elec-gray border border-elec-yellow/10 rounded-lg overflow-hidden hover:border-elec-yellow/30 transition-colors duration-300">
+            <div className="bg-white/5 border border-elec-yellow/10 rounded-lg overflow-hidden hover:border-elec-yellow/30 transition-colors duration-300">
               <div className="bg-elec-yellow/5 p-3 border-b border-elec-yellow/10 flex items-center gap-2">
                 <div className="bg-elec-yellow/10 rounded-full h-7 w-7 flex items-center justify-center text-elec-yellow font-medium">4</div>
                 <h5 className="font-medium text-elec-yellow">Review & Update</h5>
@@ -159,7 +159,7 @@ const RiskAssessment = () => {
           
           {/* Improved Hierarchy of Controls Diagram */}
           <div className="mt-8">
-            <Card className="bg-elec-gray border border-elec-yellow/20">
+            <Card className="bg-white/5 border border-elec-yellow/20">
               <CardHeader className="pb-2 border-b border-elec-yellow/20">
                 <h5 className="font-medium text-elec-yellow">Hierarchy of Controls</h5>
               </CardHeader>
@@ -170,7 +170,7 @@ const RiskAssessment = () => {
                       <span className="bg-green-800/50 h-6 w-6 rounded-full flex items-center justify-center text-sm">1</span>
                       Elimination
                     </div>
-                    <p className="text-sm text-gray-300">Remove the hazard completely (e.g., redesign the job)</p>
+                    <p className="text-sm text-white/80">Remove the hazard completely (e.g., redesign the job)</p>
                   </div>
                   
                   <div className="bg-green-800/30 border border-green-500/30 p-3 rounded-lg">
@@ -178,7 +178,7 @@ const RiskAssessment = () => {
                       <span className="bg-green-800/50 h-6 w-6 rounded-full flex items-center justify-center text-sm">2</span>
                       Substitution
                     </div>
-                    <p className="text-sm text-gray-300">Replace the hazard with something less hazardous</p>
+                    <p className="text-sm text-white/80">Replace the hazard with something less hazardous</p>
                   </div>
                   
                   <div className="bg-yellow-900/30 border border-yellow-500/30 p-3 rounded-lg">
@@ -186,7 +186,7 @@ const RiskAssessment = () => {
                       <span className="bg-yellow-800/50 h-6 w-6 rounded-full flex items-center justify-center text-sm">3</span>
                       Engineering Controls
                     </div>
-                    <p className="text-sm text-gray-300">Isolate people from the hazard (e.g., machine guards)</p>
+                    <p className="text-sm text-white/80">Isolate people from the hazard (e.g., machine guards)</p>
                   </div>
                   
                   <div className="bg-yellow-800/30 border border-yellow-500/30 p-3 rounded-lg">
@@ -194,7 +194,7 @@ const RiskAssessment = () => {
                       <span className="bg-yellow-800/50 h-6 w-6 rounded-full flex items-center justify-center text-sm">4</span>
                       Administrative Controls
                     </div>
-                    <p className="text-sm text-gray-300">Change the way people work (e.g., procedures, training)</p>
+                    <p className="text-sm text-white/80">Change the way people work (e.g., procedures, training)</p>
                   </div>
                   
                   <div className="bg-red-900/30 border border-red-500/30 p-3 rounded-lg">
@@ -202,14 +202,14 @@ const RiskAssessment = () => {
                       <span className="bg-red-800/50 h-6 w-6 rounded-full flex items-center justify-center text-sm">5</span>
                       Personal Protective Equipment
                     </div>
-                    <p className="text-sm text-gray-300">Protect the worker with personal protective equipment</p>
+                    <p className="text-sm text-white/80">Protect the worker with personal protective equipment</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
           </div>
           
-          <div className="mt-6 p-4 bg-elec-dark/70 border border-elec-yellow/20 rounded-lg">
+          <div className="mt-6 p-4 bg-white/10 border border-elec-yellow/20 rounded-lg">
             <p className="font-medium mb-1 text-elec-yellow">Legal Requirements:</p>
             <p className="text-sm">The Management of Health and Safety at Work Regulations 1999 require employers to conduct suitable and sufficient 
             risk assessments for activities that may pose risks to employees or others. For electrical work, specific risk 

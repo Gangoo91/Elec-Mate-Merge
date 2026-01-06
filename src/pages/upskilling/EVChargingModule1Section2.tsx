@@ -1,580 +1,412 @@
-import { ArrowLeft, ArrowRight, Home, Building2, Zap } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
-import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { evModule1Section1Questions } from '@/data/upskilling/evChargingQuizzes';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
+import useSEO from "@/hooks/useSEO";
+
+const quickCheckQuestions = [
+  {
+    id: "evcharging-m1s2-check1",
+    question: "What is the typical power rating for a domestic EV charger?",
+    options: ["3.7kW", "7kW", "22kW", "50kW"],
+    correctIndex: 1,
+    explanation: "7kW is the most common domestic charger rating in the UK, providing a good balance between charging speed (4-6 hours for a typical EV) and installation cost on a single-phase supply."
+  },
+  {
+    id: "evcharging-m1s2-check2",
+    question: "Which of these is NOT typically required for commercial EV charging installations?",
+    options: ["Load management systems", "Payment processing", "User authentication", "Battery replacement facilities"],
+    correctIndex: 3,
+    explanation: "Battery replacement facilities are separate from charging infrastructure. Commercial installations typically require load management, payment systems, and user authentication for public access."
+  },
+  {
+    id: "evcharging-m1s2-check3",
+    question: "What is the typical payback period for commercial EV charging installations?",
+    options: ["6-12 months", "1-2 years", "3-7 years", "10-15 years"],
+    correctIndex: 2,
+    explanation: "Commercial EV charging typically has a payback period of 3-7 years depending on utilisation rates, tariffs, and installation costs. Higher utilisation locations may achieve faster payback."
+  }
+];
+
+const faqs = [
+  {
+    question: "What's the main difference between domestic and commercial charging?",
+    answer: "Domestic charging focuses on overnight use for a single household, typically 7kW single-phase. Commercial installations handle multiple users, require payment systems, load management, and higher power infrastructure (often three-phase up to 22kW per point or DC rapid charging)."
+  },
+  {
+    question: "Do I need DNO notification for a domestic charger?",
+    answer: "For loads ≤32A per phase, you can install under G98 with simple notification. For higher loads (>16A per phase in some cases), G99 applies requiring formal application. Always check current DNO requirements as these may vary."
+  },
+  {
+    question: "What additional requirements apply to public charging installations?",
+    answer: "Public installations require accessibility compliance (DDA), payment systems meeting OZEV regulations, adequate lighting, signage, GDPR compliance for user data, and often planning permission depending on location and scale."
+  },
+  {
+    question: "Can a domestic installation be upgraded to commercial later?",
+    answer: "It depends on the supply capacity and infrastructure. If designed with future expansion in mind (adequate supply, suitable cable routes), upgrading may be straightforward. Otherwise, significant infrastructure changes may be needed."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+  question: "A workplace wants to install 10 × 7kW charging points. Using a diversity factor of 0.5, what maximum demand should be calculated?",
+  options: [
+    "35kW",
+    "50kW",
+    "70kW",
+    "140kW"
+  ],
+  correctAnswer: 0,
+  explanation: "Maximum demand = 10 × 7kW × 0.5 diversity = 35kW. A diversity factor accounts for the fact that not all chargers operate at full power simultaneously. The IET Code of Practice provides guidance on appropriate diversity factors."
+  }
+];
 
 const EVChargingModule1Section2 = () => {
-  const quizQuestions = evModule1Section1Questions?.slice(0, 3)?.map(q => ({
-    id: q.id,
-    question: q.question,
-    options: q.options,
-    correct: q.correctAnswer,
-    explanation: q.explanation
-  })) || [];
+  useSEO({
+    title: "Domestic vs Commercial EV Charging | EV Charging Module 1.2",
+    description: "Understand the key differences between domestic and commercial EV charging installations including power requirements, costs, and compliance."
+  });
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-8 sm:pb-12">
-        <Link to="../ev-charging-module-1">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
           <Button
             variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 1
+            <Link to="../ev-charging-module-1">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 1
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-6">
-          <div>
-            <div className="flex items-center gap-3 sm:gap-4 mb-4">
-              <div className="flex items-center gap-2">
-                <Home className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                <Building2 className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-              </div>
-              <div>
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
-                  Domestic vs Commercial EV Charging
-                </h1>
-                <p className="text-lg sm:text-xl text-white">
-                  Understanding the key differences and requirements
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-2 sm:gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">
-                Module 1
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-white">
-                Section 2
-              </Badge>
-            </div>
-          </div>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Introduction</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <p>
-                EV charging installations fall into two main categories: domestic (residential) and commercial. Each has distinct requirements, regulations, and installation considerations that electrical professionals must understand.
-              </p>
-              <div className="bg-blue-900/30 p-4 rounded-lg border-l-4 border-yellow-400">
-                <p className="text-blue-200">
-                  <strong className="text-blue-300">Key Insight:</strong> The choice between domestic and commercial charging isn't just about location – it's about power requirements, usage patterns, safety considerations, and regulatory compliance.
-                </p>
-              </div>
-              <p>
-                This section explores the fundamental differences between domestic and commercial EV charging installations, helping you determine the appropriate solution for each application.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Learning Outcomes</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-3">
-              <p className="text-sm text-white mb-4">By the end of this section, you should be able to:</p>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                  <span>Distinguish between domestic and commercial EV charging requirements</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                  <span>Identify appropriate charging solutions for different property types</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                  <span>Understand power capacity and infrastructure requirements for each</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                  <span>Recognise cost implications and business considerations</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                  <span>Apply relevant regulations and safety standards to each installation type</span>
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Domestic EV Charging - The Home Solution</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-card p-4 rounded-lg mb-4 border-l-4 border-yellow-400">
-                <h4 className="text-yellow-400 font-semibold mb-3">What Makes Domestic Charging Different</h4>
-              </div>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="bg-card p-4 rounded-lg border border-green-500">
-                  <h5 className="text-green-300 font-bold mb-3 text-lg">Typical Specifications</h5>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-white">Power Rating:</span>
-                      <span className="text-white">3.7kW - 22kW</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-white">Supply:</span>
-                      <span className="text-white">230V single / 400V three phase</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-white">Current:</span>
-                      <span className="text-white">16A - 32A</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-white">Connector:</span>
-                      <span className="text-white">Type 2 (universal)</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-white">Installation:</span>
-                      <span className="text-white">Wall-mounted or post</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg border border-yellow-400">
-                  <h5 className="text-blue-300 font-bold mb-3 text-lg">Key Characteristics</h5>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 rounded-full bg-blue-400 mt-2"></div>
-                      <span>Private use by household members</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 rounded-full bg-blue-400 mt-2"></div>
-                      <span>Overnight charging typically 6-8 hours</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 rounded-full bg-blue-400 mt-2"></div>
-                      <span>Lower duty cycle (intermittent use)</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 rounded-full bg-blue-400 mt-2"></div>
-                      <span>Smart features for load management</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 rounded-full bg-blue-400 mt-2"></div>
-                      <span>Integration with home energy systems</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="bg-card p-4 rounded-lg border border-gray-600">
-                <h5 className="text-yellow-400 font-semibold mb-3">Domestic Installation Requirements</h5>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <h6 className="text-white font-medium mb-2">Electrical Requirements:</h6>
-                    <ul className="space-y-1 text-sm">
-                      <li>• Dedicated circuit from consumer unit</li>
-                      <li>• RCD protection (Type A or Type B)</li>
-                      <li>• MCB rating appropriate to load</li>
-                      <li>• Earthing and bonding compliance</li>
-                      <li>• Cable sizing for voltage drop</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h6 className="text-white font-medium mb-2">Physical Requirements:</h6>
-                    <ul className="space-y-1 text-sm">
-                      <li>• Weather protection (IP rating)</li>
-                      <li>• Suitable mounting surface</li>
-                      <li>• Vehicle access considerations</li>
-                      <li>• Cable management solutions</li>
-                      <li>• Security and theft prevention</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Commercial EV Charging - Business Solutions</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-card p-4 rounded-lg mb-4 border-l-4 border-yellow-400">
-                <h4 className="text-yellow-400 font-semibold mb-3">Commercial Charging Considerations</h4>
-              </div>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="bg-card p-4 rounded-lg border border-orange-500">
-                  <h5 className="text-orange-300 font-bold mb-3 text-lg">Workplace Charging</h5>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-white">Power:</span>
-                      <span className="text-white">7kW - 22kW</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-white">Users:</span>
-                      <span className="text-white">Employees & visitors</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-white">Duration:</span>
-                      <span className="text-white">8+ hours (working day)</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-white">Payment:</span>
-                      <span className="text-white">Free/subsidised</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg border border-purple-500">
-                  <h5 className="text-purple-300 font-bold mb-3 text-lg">Public/Destination</h5>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-white">Power:</span>
-                      <span className="text-white">7kW - 350kW</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-white">Users:</span>
-                      <span className="text-white">General public</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-white">Duration:</span>
-                      <span className="text-white">30min - 4 hours</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-white">Payment:</span>
-                      <span className="text-white">Pay-per-use</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-card p-4 rounded-lg border border-gray-600">
-                <h5 className="text-yellow-400 font-semibold mb-3">Commercial Installation Challenges</h5>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div>
-                    <h6 className="text-red-300 font-medium mb-2">Power Infrastructure:</h6>
-                    <ul className="space-y-1 text-sm">
-                      <li>• Higher power demands</li>
-                      <li>• Multiple charging points</li>
-                      <li>• Load balancing systems</li>
-                      <li>• Grid connection upgrades</li>
-                      <li>• Power factor correction</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h6 className="text-yellow-300 font-medium mb-2">Management Systems:</h6>
-                    <ul className="space-y-1 text-sm">
-                      <li>• Payment processing</li>
-                      <li>• User authentication</li>
-                      <li>• Remote monitoring</li>
-                      <li>• Usage reporting</li>
-                      <li>• Maintenance scheduling</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h6 className="text-green-300 font-medium mb-2">Compliance:</h6>
-                    <ul className="space-y-1 text-sm">
-                      <li>• Accessibility requirements</li>
-                      <li>• Safety regulations</li>
-                      <li>• Planning permissions</li>
-                      <li>• Environmental standards</li>
-                      <li>• Data protection (GDPR)</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Side-by-Side Comparison</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white">
-              <div className="overflow-x-auto">
-                <table className="w-full border-collapse border border-gray-600">
-                  <thead>
-                    <tr className="bg-yellow-400 text-black">
-                      <th className="border border-gray-600 p-3 text-left font-bold">Aspect</th>
-                      <th className="border border-gray-600 p-3 text-left font-bold">Domestic</th>
-                      <th className="border border-gray-600 p-3 text-left font-bold">Commercial</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-gray-600 p-3 font-semibold text-yellow-400">Power Rating</td>
-                      <td className="border border-gray-600 p-3">3.7kW - 22kW (typically 7kW)</td>
-                      <td className="border border-gray-600 p-3">7kW - 350kW+ (multiple units)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-600 p-3 font-semibold text-yellow-400">Installation Cost</td>
-                      <td className="border border-gray-600 p-3">£800 - £2,500 per unit</td>
-                      <td className="border border-gray-600 p-3">£3,000 - £50,000+ per unit</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-600 p-3 font-semibold text-yellow-400">Usage Pattern</td>
-                      <td className="border border-gray-600 p-3">Overnight, predictable</td>
-                      <td className="border border-gray-600 p-3">Throughout day, variable</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-600 p-3 font-semibold text-yellow-400">User Authentication</td>
-                      <td className="border border-gray-600 p-3">Simple or none required</td>
-                      <td className="border border-gray-600 p-3">RFID, app, or payment card</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-600 p-3 font-semibold text-yellow-400">Maintenance</td>
-                      <td className="border border-gray-600 p-3">Minimal, user responsibility</td>
-                      <td className="border border-gray-600 p-3">Regular, professional service</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-600 p-3 font-semibold text-yellow-400">Revenue Model</td>
-                      <td className="border border-gray-600 p-3">Personal use (electricity bill)</td>
-                      <td className="border border-gray-600 p-3">Pay-per-use or subscription</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-600 p-3 font-semibold text-yellow-400">Regulatory Compliance</td>
-                      <td className="border border-gray-600 p-3">Building Regs, BS 7671</td>
-                      <td className="border border-gray-600 p-3">Additional H&S, accessibility laws</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Installation Procedures and Considerations</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-card p-4 rounded-lg border border-yellow-400">
-                  <h5 className="text-blue-300 font-bold mb-4 text-lg">Domestic Installation Process</h5>
-                  <div className="space-y-3">
-                    <div className="bg-card p-3 rounded border-l-4 border-yellow-400">
-                      <h6 className="text-blue-200 font-semibold mb-2">1. Site Survey & Assessment</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Electrical supply capacity assessment</li>
-                        <li>• Consumer unit inspection and available ways</li>
-                        <li>• Cable route planning (shortest practical route)</li>
-                        <li>• Mounting location suitability check</li>
-                        <li>• Vehicle access and parking considerations</li>
-                      </ul>
-                    </div>
-                    <div className="bg-card p-3 rounded border-l-4 border-yellow-400">
-                      <h6 className="text-blue-200 font-semibold mb-2">2. Pre-Installation Requirements</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Building control notification (if required)</li>
-                        <li>• DNO notification for loads &gt;32A</li>
-                        <li>• Materials procurement and delivery</li>
-                        <li>• Customer briefing on installation process</li>
-                        <li>• Isolation and safety procedures</li>
-                      </ul>
-                    </div>
-                    <div className="bg-card p-3 rounded border-l-4 border-yellow-400">
-                      <h6 className="text-blue-200 font-semibold mb-2">3. Installation Steps</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Install dedicated MCB and RCD protection</li>
-                        <li>• Run supply cable to mounting location</li>
-                        <li>• Mount charging unit securely</li>
-                        <li>• Complete all electrical connections</li>
-                        <li>• Configure smart features and connectivity</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg border border-orange-500">
-                  <h5 className="text-orange-300 font-bold mb-4 text-lg">Commercial Installation Process</h5>
-                  <div className="space-y-3">
-                    <div className="bg-card p-3 rounded border-l-4 border-orange-400">
-                      <h6 className="text-orange-200 font-semibold mb-2">1. Design & Planning Phase</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Load analysis and power demand calculations</li>
-                        <li>• Grid connection capacity assessment</li>
-                        <li>• Planning permission applications</li>
-                        <li>• Traffic management and access planning</li>
-                        <li>• Multi-disciplinary design coordination</li>
-                      </ul>
-                    </div>
-                    <div className="bg-card p-3 rounded border-l-4 border-orange-400">
-                      <h6 className="text-orange-200 font-semibold mb-2">2. Infrastructure Development</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Electrical supply upgrades (often 3-phase)</li>
-                        <li>• Civil works (foundations, ducting, trenching)</li>
-                        <li>• Data communication infrastructure</li>
-                        <li>• Load management system installation</li>
-                        <li>• Payment and access control systems</li>
-                      </ul>
-                    </div>
-                    <div className="bg-card p-3 rounded border-l-4 border-orange-400">
-                      <h6 className="text-orange-200 font-semibold mb-2">3. Commissioning & Testing</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Individual unit testing and calibration</li>
-                        <li>• Network connectivity and communications</li>
-                        <li>• Load balancing system verification</li>
-                        <li>• Payment system integration testing</li>
-                        <li>• Staff training and handover procedures</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Cost Analysis and Business Considerations</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-card p-4 rounded-lg border border-green-500">
-                  <h5 className="text-green-300 font-bold mb-4">Domestic Investment Analysis</h5>
-                  <div className="space-y-4">
-                    <div className="bg-green-900/20 p-3 rounded">
-                      <h6 className="text-green-200 font-semibold mb-2">Initial Costs:</h6>
-                      <div className="text-sm space-y-1">
-                        <div className="flex justify-between">
-                          <span>Basic 7kW unit:</span>
-                          <span className="text-white">£500-£800</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Installation labour:</span>
-                          <span className="text-white">£300-£600</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Materials & cable:</span>
-                          <span className="text-white">£100-£300</span>
-                        </div>
-                        <div className="flex justify-between border-t border-green-600 pt-1">
-                          <span className="font-semibold">Total Investment:</span>
-                          <span className="text-green-200 font-semibold">£900-£1,700</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-green-900/20 p-3 rounded">
-                      <h6 className="text-green-200 font-semibold mb-2">Running Costs:</h6>
-                      <div className="text-sm space-y-1">
-                        <div className="flex justify-between">
-                          <span>Home electricity rate:</span>
-                          <span className="text-white">14-35p/kWh</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Annual maintenance:</span>
-                          <span className="text-white">£50-£100</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Smart tariff savings:</span>
-                          <span className="text-green-200">£200-£500/year</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg border border-orange-500">
-                  <h5 className="text-orange-300 font-bold mb-4">Commercial Business Case</h5>
-                  <div className="space-y-4">
-                    <div className="bg-orange-900/20 p-3 rounded">
-                      <h6 className="text-orange-200 font-semibold mb-2">Capital Investment:</h6>
-                      <div className="text-sm space-y-1">
-                        <div className="flex justify-between">
-                          <span>22kW charging unit:</span>
-                          <span className="text-white">£2,000-£4,000</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Installation per unit:</span>
-                          <span className="text-white">£1,500-£3,000</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Infrastructure (10 units):</span>
-                          <span className="text-white">£15,000-£30,000</span>
-                        </div>
-                        <div className="flex justify-between border-t border-orange-600 pt-1">
-                          <span className="font-semibold">Total per Unit:</span>
-                          <span className="text-orange-200 font-semibold">£5,000-£10,000</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-orange-900/20 p-3 rounded">
-                      <h6 className="text-orange-200 font-semibold mb-2">Revenue Potential:</h6>
-                      <div className="text-sm space-y-1">
-                        <div className="flex justify-between">
-                          <span>Charging tariff:</span>
-                          <span className="text-white">25-45p/kWh</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Utilisation rate:</span>
-                          <span className="text-white">20-60%</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Payback period:</span>
-                          <span className="text-orange-200">3-7 years</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white">
-              <div className="space-y-4">
-                <p>
-                  The distinction between domestic and commercial EV charging encompasses far more than just location and power requirements. It represents fundamentally different approaches to design, installation, operation, and business models.
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-blue-900/30 p-4 rounded-lg border border-yellow-400">
-                    <h5 className="text-blue-300 font-semibold mb-2">Domestic Success Factors:</h5>
-                    <p className="text-blue-200 text-sm">
-                      Focus on simplicity, reliability, and cost-effectiveness. Integration with home energy systems and smart tariffs provides additional value. Future-proofing through adequate power provision is essential.
-                    </p>
-                  </div>
-                  <div className="bg-orange-900/30 p-4 rounded-lg border border-orange-500">
-                    <h5 className="text-orange-300 font-semibold mb-2">Commercial Success Factors:</h5>
-                    <p className="text-orange-200 text-sm">
-                      Emphasise scalability, monitoring, and revenue generation. User experience, reliability, and comprehensive service support are critical for public-facing installations.
-                    </p>
-                  </div>
-                </div>
-                <p>
-                  Both sectors offer significant opportunities for electrical professionals. Understanding the specific requirements, challenges, and business drivers of each enables informed decision-making and successful project delivery. The rapidly evolving EV market demands continuous learning and adaptation to emerging technologies and standards.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {quizQuestions.length > 0 && (
-            <SingleQuestionQuiz 
-              questions={quizQuestions}
-              title="Section 2 Knowledge Check"
-            />
-          )}
-
-          <div className="flex justify-between items-center pt-6">
-            <Link to="../ev-charging-module-1-section-1">
-              <Button variant="outline" className="border-gray-600 text-white hover:bg-card">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="../ev-charging-module-1-section-3">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-400/10">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
         </div>
       </div>
+
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Page Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 1.2</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Domestic vs Commercial EV Charging
+          </h1>
+          <p className="text-white/80">
+            Understanding the key differences and requirements
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Domestic:</strong> 7kW typical, overnight charging, £800-£2,500</li>
+              <li><strong>Commercial:</strong> 7-350kW, payment systems, £3k-£50k+</li>
+              <li><strong>Key difference:</strong> Scale, management, and compliance</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Wallboxes (domestic), pedestals with RFID (commercial)</li>
+              <li><strong>Use:</strong> IET Code of Practice for design and sizing</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Distinguish domestic from commercial requirements",
+              "Identify appropriate charging solutions",
+              "Understand power and infrastructure needs",
+              "Recognise cost and business considerations",
+              "Apply regulations to each installation type",
+              "Plan for future expansion"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Domestic EV Charging
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Domestic charging focuses on overnight charging for private use. Most installations
+              use 7kW single-phase chargers which provide adequate charging overnight for daily use.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Typical Specifications</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Power:</strong> 3.7kW - 22kW (typically 7kW)</li>
+                  <li><strong>Supply:</strong> 230V single / 400V three-phase</li>
+                  <li><strong>Current:</strong> 16A - 32A</li>
+                  <li><strong>Connector:</strong> Type 2 (universal)</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Characteristics</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Use pattern:</strong> Overnight, predictable</li>
+                  <li><strong>Users:</strong> Household members only</li>
+                  <li><strong>Authentication:</strong> Simple or none</li>
+                  <li><strong>Maintenance:</strong> Minimal, user responsibility</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Costs (Typical):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>7kW unit:</strong> £500-£800</li>
+                <li><strong>Installation:</strong> £300-£600</li>
+                <li><strong>Materials/cable:</strong> £100-£300</li>
+                <li><strong>Total:</strong> £900-£1,700 (before any grants)</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Commercial EV Charging
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Commercial installations serve multiple users with higher power requirements,
+              payment systems, and load management. They range from workplace charging to
+              public rapid charging hubs.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Workplace Charging</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Power:</strong> 7kW - 22kW</li>
+                  <li><strong>Users:</strong> Employees and visitors</li>
+                  <li><strong>Duration:</strong> 8+ hours (working day)</li>
+                  <li><strong>Payment:</strong> Free/subsidised typically</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Public/Destination</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Power:</strong> 7kW - 350kW</li>
+                  <li><strong>Users:</strong> General public</li>
+                  <li><strong>Duration:</strong> 30min - 4 hours</li>
+                  <li><strong>Payment:</strong> Pay-per-use</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Additional Commercial Requirements:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Load management:</strong> Static or dynamic power allocation</li>
+                <li><strong>Payment systems:</strong> RFID, app, contactless</li>
+                <li><strong>User authentication:</strong> Access control and billing</li>
+                <li><strong>Monitoring:</strong> Remote diagnostics and maintenance</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 3 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Installation Process Comparison
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              The installation process differs significantly between domestic and commercial
+              projects in terms of planning, infrastructure, and commissioning requirements.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Domestic Process</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>1. Site survey and supply assessment</li>
+                  <li>2. DNO notification (if required)</li>
+                  <li>3. Install dedicated circuit and charger</li>
+                  <li>4. Test, commission, and certify</li>
+                  <li>5. Customer handover with documentation</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Commercial Process</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>1. Load analysis and grid assessment</li>
+                  <li>2. Planning permission (if needed)</li>
+                  <li>3. Supply upgrade/infrastructure works</li>
+                  <li>4. Install chargers and management systems</li>
+                  <li>5. Commission, integrate, and train staff</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Section 4 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Cost and Business Considerations
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Understanding the financial aspects helps select appropriate solutions and
+              set realistic expectations for both installers and clients.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Domestic Economics</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Running cost:</strong> 14-35p/kWh (home tariff)</li>
+                  <li><strong>Smart tariff savings:</strong> £200-£500/year</li>
+                  <li><strong>vs petrol:</strong> Typically 3-4x cheaper per mile</li>
+                  <li><strong>Maintenance:</strong> £50-£100/year</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Commercial Economics</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Capital per point:</strong> £5,000-£10,000 (22kW)</li>
+                  <li><strong>Charging tariff:</strong> 25-45p/kWh</li>
+                  <li><strong>Utilisation rate:</strong> 20-60%</li>
+                  <li><strong>Payback:</strong> 3-7 years typical</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Design Considerations</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Always assess supply capacity before specifying equipment</li>
+                <li>Consider future expansion - specify adequate infrastructure now</li>
+                <li>For commercial, calculate diversity factors per IET CoP</li>
+                <li>Include load management for multiple charging points</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Underestimating load:</strong> — Account for 100% capacity simultaneously possible</li>
+                <li><strong>No expansion planning:</strong> — Second EV common within 2-3 years</li>
+                <li><strong>Ignoring accessibility:</strong> — DDA applies to public installations</li>
+                <li><strong>Missing payment requirements:</strong> — OZEV mandates for public chargers</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quick Reference */}
+        <div className="mt-6 p-5 rounded-lg bg-transparent">
+          <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+            <div>
+              <p className="font-medium text-white mb-1">Domestic</p>
+              <ul className="space-y-0.5">
+                <li>7kW typical, £900-£1,700</li>
+                <li>Single-phase, overnight use</li>
+                <li>Simple authentication</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-medium text-white mb-1">Commercial</p>
+              <ul className="space-y-0.5">
+                <li>7-350kW, £3k-£50k+ per point</li>
+                <li>Load management required</li>
+                <li>Payment and RFID systems</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Quiz Section */}
+        <section className="mb-10 mt-12">
+          <SingleQuestionQuiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-1-section-1">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-1-section-3">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

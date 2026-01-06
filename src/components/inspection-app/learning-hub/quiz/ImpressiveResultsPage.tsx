@@ -132,7 +132,7 @@ const ImpressiveResultsPage = ({
             <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-elec-yellow to-yellow-300 bg-clip-text text-transparent">
               {scoreMessage.title}
             </h1>
-            <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-white/80 max-w-2xl mx-auto">
               {scoreMessage.message}
             </p>
           </div>
@@ -142,7 +142,7 @@ const ImpressiveResultsPage = ({
             <div className={`text-7xl sm:text-8xl font-black ${getScoreColor(result.percentage)} drop-shadow-lg`}>
               {animatedScore}%
             </div>
-            <div className="text-sm sm:text-base text-muted-foreground font-medium mt-2">
+            <div className="text-sm sm:text-base text-white/80 font-medium mt-2">
               {assessment.title}
             </div>
           </div>
@@ -163,7 +163,7 @@ const ImpressiveResultsPage = ({
               <div className={`text-4xl sm:text-5xl font-black ${getScoreColor(result.percentage)}`}>
                 {result.percentage}%
               </div>
-              <div className="text-sm text-muted-foreground font-medium">Final Score</div>
+              <div className="text-sm text-white/80 font-medium">Final Score</div>
             </CardContent>
           </Card>
 
@@ -175,7 +175,7 @@ const ImpressiveResultsPage = ({
                   {result.correctAnswers}
                 </span>
               </div>
-              <div className="text-sm text-muted-foreground font-medium">
+              <div className="text-sm text-white/80 font-medium">
                 Correct / {result.totalQuestions}
               </div>
             </CardContent>
@@ -187,7 +187,7 @@ const ImpressiveResultsPage = ({
                 <Clock className="h-6 w-6" />
                 <span>{Math.floor(result.timeSpent / 60)}</span>
               </div>
-              <div className="text-sm text-muted-foreground font-medium">
+              <div className="text-sm text-white/80 font-medium">
                 Minutes Taken
               </div>
             </CardContent>
@@ -199,7 +199,7 @@ const ImpressiveResultsPage = ({
                 <Zap className="h-6 w-6" />
                 <span>{Math.round(result.timeSpent / result.totalQuestions)}</span>
               </div>
-              <div className="text-sm text-muted-foreground font-medium">
+              <div className="text-sm text-white/80 font-medium">
                 Seconds/Question
               </div>
             </CardContent>
@@ -259,7 +259,7 @@ const ImpressiveResultsPage = ({
                   </div>
                 ))
               ) : (
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/80">
                   Keep practicing to identify your strengths
                 </p>
               )}
@@ -283,7 +283,7 @@ const ImpressiveResultsPage = ({
                   </div>
                 ))
               ) : (
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/80">
                   Excellent! No weak areas identified
                 </p>
               )}

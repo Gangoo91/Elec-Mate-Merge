@@ -67,8 +67,7 @@ const InstrumentationModule3Section5 = () => {
       ],
       correct: 1,
       explanation: "Signal noise diagnosis requires oscilloscopes to visualise noise patterns in time domain, spectrum analysers to identify frequency content of interference, and systematic isolation techniques to locate noise sources."
-    }
-  ];
+  }  ];
 
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">

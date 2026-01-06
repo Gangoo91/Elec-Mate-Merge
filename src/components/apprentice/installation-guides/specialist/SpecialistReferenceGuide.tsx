@@ -381,7 +381,7 @@ const SpecialistReferenceGuide = () => {
   return (
     <div className="space-y-6">
       {/* BS 7671 Part 7 Quick Reference */}
-      <Card className="border-blue-500/30 bg-elec-gray">
+      <Card className="border-blue-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Book className="h-6 w-6 text-blue-400" />
@@ -416,8 +416,8 @@ const SpecialistReferenceGuide = () => {
                       </Badge>
                     </td>
                     <td className="py-2 text-white font-medium">{section.title}</td>
-                    <td className="py-2 text-gray-300">{section.applicability}</td>
-                    <td className="py-2 text-gray-400 text-xs">{section.keyRegulation}</td>
+                    <td className="py-2 text-white/80">{section.applicability}</td>
+                    <td className="py-2 text-white text-xs">{section.keyRegulation}</td>
                   </tr>
                 ))}
               </tbody>
@@ -427,7 +427,7 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* IET Guidance Note 7 Overview */}
-      <Card className="border-teal-500/30 bg-elec-gray">
+      <Card className="border-teal-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <BookOpen className="h-6 w-6 text-teal-400" />
@@ -440,7 +440,7 @@ const SpecialistReferenceGuide = () => {
               <span className="text-teal-200 font-medium">{gn7Contents.edition}</span>
               <Badge variant="outline" className="border-teal-400 text-teal-300">Essential Reference</Badge>
             </div>
-            <p className="text-sm text-gray-300">{gn7Contents.description}</p>
+            <p className="text-sm text-white/80">{gn7Contents.description}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
@@ -452,7 +452,7 @@ const SpecialistReferenceGuide = () => {
                   </Badge>
                   <span className="text-white text-sm font-medium">{chapter.title}</span>
                 </div>
-                <p className="text-xs text-gray-400">{chapter.content}</p>
+                <p className="text-xs text-white">{chapter.content}</p>
               </div>
             ))}
           </div>
@@ -460,7 +460,7 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* Certification Requirements */}
-      <Card className="border-purple-500/30 bg-elec-gray">
+      <Card className="border-purple-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <ClipboardList className="h-6 w-6 text-purple-400" />
@@ -478,13 +478,13 @@ const SpecialistReferenceGuide = () => {
                     <div className="flex items-center gap-2">
                       <FileText className="h-4 w-4 text-purple-400" />
                       <span className="text-white">{doc.type}</span>
-                      <span className="text-gray-400">- {doc.description}</span>
+                      <span className="text-white">- {doc.description}</span>
                     </div>
                     <Badge
                       variant="outline"
                       className={doc.required
                         ? "border-green-400 text-green-300"
-                        : "border-gray-500 text-gray-400"}
+                        : "border-white/50 text-white"}
                     >
                       {doc.required ? "Required" : "Optional"}
                     </Badge>
@@ -492,14 +492,14 @@ const SpecialistReferenceGuide = () => {
                 ))}
               </div>
 
-              <p className="text-xs text-gray-400 italic">{cert.additionalNotes}</p>
+              <p className="text-xs text-white italic">{cert.additionalNotes}</p>
             </div>
           ))}
         </CardContent>
       </Card>
 
       {/* Industry Bodies and Schemes */}
-      <Card className="border-amber-500/30 bg-elec-gray">
+      <Card className="border-amber-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Building className="h-6 w-6 text-amber-400" />
@@ -518,7 +518,7 @@ const SpecialistReferenceGuide = () => {
                   </Badge>
                 </div>
                 <p className="text-sm text-white mb-2">{scheme.fullName}</p>
-                <p className="text-xs text-gray-400 mb-3">{scheme.purpose}</p>
+                <p className="text-xs text-white mb-3">{scheme.purpose}</p>
 
                 <div className="flex flex-wrap gap-1 mb-3">
                   {scheme.applicableTo.map((app, appIdx) => (
@@ -530,7 +530,7 @@ const SpecialistReferenceGuide = () => {
 
                 <div className="text-xs">
                   <div className="text-amber-300 mb-1">Key Benefits:</div>
-                  <ul className="space-y-0.5 text-gray-300">
+                  <ul className="space-y-0.5 text-white/80">
                     {scheme.benefits.slice(0, 3).map((benefit, bIdx) => (
                       <li key={bIdx} className="flex items-start gap-1">
                         <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
@@ -546,7 +546,7 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* Further Training and Qualifications */}
-      <Card className="border-green-500/30 bg-elec-gray">
+      <Card className="border-green-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <GraduationCap className="h-6 w-6 text-green-400" />
@@ -571,7 +571,7 @@ const SpecialistReferenceGuide = () => {
                   <div key={qIdx} className="flex items-center justify-between bg-green-600/10 p-2 rounded">
                     <div>
                       <span className="text-white text-sm font-medium">{qual.name}</span>
-                      <p className="text-xs text-gray-400">{qual.description}</p>
+                      <p className="text-xs text-white">{qual.description}</p>
                     </div>
                     <Badge variant="outline" className="border-green-400 text-green-300 text-xs">
                       {qual.level}
@@ -580,11 +580,11 @@ const SpecialistReferenceGuide = () => {
                 ))}
               </div>
 
-              <div className="text-xs text-gray-300">
+              <div className="text-xs text-white/80">
                 <span className="text-green-300">Prerequisites: </span>
                 {pathway.prerequisites.join(", ")}
               </div>
-              <div className="text-xs text-gray-400 mt-1 flex items-center gap-1">
+              <div className="text-xs text-white mt-1 flex items-center gap-1">
                 <TrendingUp className="h-3 w-3" />
                 <span>{pathway.careerPath}</span>
               </div>
@@ -594,7 +594,7 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* IP Ratings Quick Reference */}
-      <Card className="border-cyan-500/30 bg-elec-gray">
+      <Card className="border-cyan-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Shield className="h-6 w-6 text-cyan-400" />
@@ -628,9 +628,9 @@ const SpecialistReferenceGuide = () => {
                         {ip.rating}
                       </Badge>
                     </td>
-                    <td className="py-2 text-gray-300">{ip.firstDigit}</td>
-                    <td className="py-2 text-gray-300">{ip.secondDigit}</td>
-                    <td className="py-2 text-gray-400">{ip.typical}</td>
+                    <td className="py-2 text-white/80">{ip.firstDigit}</td>
+                    <td className="py-2 text-white/80">{ip.secondDigit}</td>
+                    <td className="py-2 text-white">{ip.typical}</td>
                   </tr>
                 ))}
               </tbody>
@@ -640,7 +640,7 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* RCD Types Reference */}
-      <Card className="border-rose-500/30 bg-elec-gray">
+      <Card className="border-rose-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Zap className="h-6 w-6 text-rose-400" />
@@ -666,9 +666,9 @@ const SpecialistReferenceGuide = () => {
                         {rcd.type}
                       </Badge>
                     </td>
-                    <td className="py-2 text-gray-300">{rcd.detects}</td>
-                    <td className="py-2 text-gray-300">{rcd.applications}</td>
-                    <td className="py-2 text-gray-400 text-xs">{rcd.notes}</td>
+                    <td className="py-2 text-white/80">{rcd.detects}</td>
+                    <td className="py-2 text-white/80">{rcd.applications}</td>
+                    <td className="py-2 text-white text-xs">{rcd.notes}</td>
                   </tr>
                 ))}
               </tbody>
@@ -678,7 +678,7 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* Useful Resources */}
-      <Card className="border-indigo-500/30 bg-elec-gray">
+      <Card className="border-indigo-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <ExternalLink className="h-6 w-6 text-indigo-400" />
@@ -695,8 +695,8 @@ const SpecialistReferenceGuide = () => {
                     <Lightbulb className="h-4 w-4 text-indigo-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <span className="text-indigo-200 font-medium">{resource.name}</span>
-                      <p className="text-xs text-gray-400">{resource.description}</p>
-                      <span className="text-xs text-gray-500">Source: {resource.source}</span>
+                      <p className="text-xs text-white">{resource.description}</p>
+                      <span className="text-xs text-white">Source: {resource.source}</span>
                     </div>
                   </div>
                 ))}
@@ -707,7 +707,7 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* Career Progression */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Award className="h-6 w-6 text-elec-yellow" />
@@ -719,22 +719,22 @@ const SpecialistReferenceGuide = () => {
             <div className="bg-elec-yellow/10 p-4 rounded-lg border border-elec-yellow/20 text-center">
               <div className="text-2xl font-bold text-elec-yellow mb-2">1</div>
               <h4 className="font-medium text-white mb-2">Qualified Electrician</h4>
-              <p className="text-xs text-gray-400">NVQ L3 + AM2 + 18th Edition + 2391</p>
+              <p className="text-xs text-white">NVQ L3 + AM2 + 18th Edition + 2391</p>
             </div>
             <div className="bg-elec-yellow/10 p-4 rounded-lg border border-elec-yellow/20 text-center">
               <div className="text-2xl font-bold text-elec-yellow mb-2">2</div>
               <h4 className="font-medium text-white mb-2">Specialist Training</h4>
-              <p className="text-xs text-gray-400">Solar PV / EV / Medical locations courses</p>
+              <p className="text-xs text-white">Solar PV / EV / Medical locations courses</p>
             </div>
             <div className="bg-elec-yellow/10 p-4 rounded-lg border border-elec-yellow/20 text-center">
               <div className="text-2xl font-bold text-elec-yellow mb-2">3</div>
               <h4 className="font-medium text-white mb-2">Scheme Registration</h4>
-              <p className="text-xs text-gray-400">MCS / OZEV / Competent Person scheme</p>
+              <p className="text-xs text-white">MCS / OZEV / Competent Person scheme</p>
             </div>
             <div className="bg-elec-yellow/10 p-4 rounded-lg border border-elec-yellow/20 text-center">
               <div className="text-2xl font-bold text-elec-yellow mb-2">4</div>
               <h4 className="font-medium text-white mb-2">Specialist Installer</h4>
-              <p className="text-xs text-gray-400">Certified specialist with scheme membership</p>
+              <p className="text-xs text-white">Certified specialist with scheme membership</p>
             </div>
           </div>
 
@@ -749,39 +749,39 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* Contact Information */}
-      <Card className="border-gray-500/30 bg-elec-gray">
+      <Card className="border-white/50/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Users className="h-6 w-6 text-gray-400" />
-            <CardTitle className="text-gray-300">Key Industry Contacts</CardTitle>
+            <Users className="h-6 w-6 text-white" />
+            <CardTitle className="text-white/80">Key Industry Contacts</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-            <div className="bg-gray-500/10 p-4 rounded-lg border border-gray-500/20">
+            <div className="bg-white/5 p-4 rounded-lg border border-white/20">
               <h4 className="font-medium text-white mb-2">IET</h4>
-              <p className="text-gray-400 flex items-center gap-2 mb-1">
+              <p className="text-white flex items-center gap-2 mb-1">
                 <Globe className="h-3 w-3" /> theiet.org
               </p>
-              <p className="text-gray-400 flex items-center gap-2">
+              <p className="text-white flex items-center gap-2">
                 <Phone className="h-3 w-3" /> 01438 313311
               </p>
             </div>
-            <div className="bg-gray-500/10 p-4 rounded-lg border border-gray-500/20">
+            <div className="bg-white/5 p-4 rounded-lg border border-white/20">
               <h4 className="font-medium text-white mb-2">NICEIC</h4>
-              <p className="text-gray-400 flex items-center gap-2 mb-1">
+              <p className="text-white flex items-center gap-2 mb-1">
                 <Globe className="h-3 w-3" /> niceic.com
               </p>
-              <p className="text-gray-400 flex items-center gap-2">
+              <p className="text-white flex items-center gap-2">
                 <Phone className="h-3 w-3" /> 0333 015 6625
               </p>
             </div>
-            <div className="bg-gray-500/10 p-4 rounded-lg border border-gray-500/20">
+            <div className="bg-white/5 p-4 rounded-lg border border-white/20">
               <h4 className="font-medium text-white mb-2">MCS</h4>
-              <p className="text-gray-400 flex items-center gap-2 mb-1">
+              <p className="text-white flex items-center gap-2 mb-1">
                 <Globe className="h-3 w-3" /> mcscertified.com
               </p>
-              <p className="text-gray-400 flex items-center gap-2">
+              <p className="text-white flex items-center gap-2">
                 <Mail className="h-3 w-3" /> info@mcscertified.com
               </p>
             </div>

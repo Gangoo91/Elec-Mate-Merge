@@ -13,22 +13,22 @@ const BMSModule6Section6 = () => {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
         <Link to="../bms-module-6">
-          <Button variant="ghost" className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md">
+          <Button variant="ghost" className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 6
           </Button>
         </Link>
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <Smartphone className="h-8 w-8 text-yellow-400" />
+            <Smartphone className="h-8 w-8 text-elec-yellow" />
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">Remote Monitoring and Fault Alerts</h1>
           </div>
           <p className="text-base sm:text-lg lg:text-xl text-white max-w-3xl leading-relaxed">Remote access and notification systems for modern BMS installations</p>
           <div className="flex flex-wrap gap-3 sm:gap-4">
-            <Badge variant="secondary" className="bg-yellow-400 text-black text-sm sm:text-base">Module 6.6</Badge>
+            <Badge variant="secondary" className="bg-elec-yellow text-black text-sm sm:text-base">Module 6.6</Badge>
             <Badge variant="outline" className="border-gray-600 text-white text-sm sm:text-base">45 minutes</Badge>
           </div>
         </div>
@@ -38,10 +38,10 @@ const BMSModule6Section6 = () => {
         <div className="space-y-4 sm:space-y-6">
           
           {/* Introduction */}
-          <Card className="bg-card border-gray-700">
+          <Card className="bg-transparent border-gray-700">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Smartphone className="h-5 w-5 text-yellow-400" />
+                <Smartphone className="h-5 w-5 text-elec-yellow" />
                 Introduction
               </CardTitle>
             </CardHeader>
@@ -59,10 +59,10 @@ const BMSModule6Section6 = () => {
           </Card>
 
           {/* Learning Outcomes */}
-          <Card className="bg-card border-gray-700">
+          <Card className="bg-transparent border-gray-700">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Target className="h-5 w-5 text-yellow-400" />
+                <Target className="h-5 w-5 text-elec-yellow" />
                 Learning Outcomes
               </CardTitle>
             </CardHeader>
@@ -81,7 +81,7 @@ const BMSModule6Section6 = () => {
                   <div key={index} className="flex items-start gap-3">
                     <Badge 
                       variant="secondary" 
-                      className="bg-yellow-400 text-black hover:bg-yellow-400 font-bold text-xs px-2 py-1 mt-1 flex-shrink-0"
+                      className="bg-elec-yellow text-black hover:bg-elec-yellow font-bold text-xs px-2 py-1 mt-1 flex-shrink-0"
                     >
                       {index + 1}
                     </Badge>
@@ -96,7 +96,7 @@ const BMSModule6Section6 = () => {
           </Card>
 
           {/* What is Remote Monitoring */}
-          <Card className="bg-card border-gray-700">
+          <Card className="bg-transparent border-gray-700">
             <CardHeader>
               <CardTitle className="text-white">What is Remote Monitoring?</CardTitle>
             </CardHeader>
@@ -106,7 +106,7 @@ const BMSModule6Section6 = () => {
               </p>
 
               <div className="space-y-4">
-                <h4 className="font-semibold text-yellow-400 mb-3">Remote Access Methods:</h4>
+                <h4 className="font-semibold text-elec-yellow mb-3">Remote Access Methods:</h4>
                 
                 <div className="p-4 bg-blue-900/10 border border-blue-600/20 rounded-lg">
                   <h4 className="font-semibold text-blue-200 mb-2">Web portals</h4>
@@ -143,7 +143,7 @@ const BMSModule6Section6 = () => {
               </div>
 
               <div className="space-y-3">
-                <h4 className="font-semibold text-yellow-400 mb-3">Technical Infrastructure Requirements:</h4>
+                <h4 className="font-semibold text-elec-yellow mb-3">Technical Infrastructure Requirements:</h4>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="p-3 bg-gray-800/50 border border-gray-600/30 rounded-lg">
@@ -168,19 +168,19 @@ const BMSModule6Section6 = () => {
                 </div>
               </div>
 
-              <div className="bg-card p-4 rounded-lg border border-gray-600">
-                <p className="text-yellow-400 font-semibold">Example:</p>
+              <div className="bg-transparent p-4 rounded-lg border border-gray-600">
+                <p className="text-elec-yellow font-semibold">Example:</p>
                 <p>A maintenance manager receives a push notification at 2am about a chiller fault. Using the mobile app, they remotely switch to a standby unit, adjust temperature setpoints, and schedule an engineer visit for the next morning - all while preventing a complete system failure and maintaining building comfort.</p>
               </div>
 
               <div className="bg-blue-900/20 border border-blue-600 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
-                  <CheckCircle className="h-5 w-5 text-yellow-400" />
-                  <span className="text-yellow-400 font-semibold">Inline Check</span>
+                  <CheckCircle className="h-5 w-5 text-elec-yellow" />
+                  <span className="text-elec-yellow font-semibold">Inline Check</span>
                 </div>
                 <button 
                   onClick={() => setShowInlineCheck1(!showInlineCheck1)}
-                  className="text-white hover:text-yellow-400 transition-colors"
+                  className="text-white hover:text-elec-yellow transition-colors"
                 >
                   👉 Why does remote monitoring improve response times?
                 </button>
@@ -194,7 +194,7 @@ const BMSModule6Section6 = () => {
           </Card>
 
           {/* Fault Alerts */}
-          <Card className="bg-card border-gray-700">
+          <Card className="bg-transparent border-gray-700">
             <CardHeader>
               <CardTitle className="text-white">Fault Alerts</CardTitle>
             </CardHeader>
@@ -204,7 +204,7 @@ const BMSModule6Section6 = () => {
               </p>
               
               <div className="space-y-4">
-                <h4 className="font-semibold text-yellow-400 mb-3">Alert Delivery Methods:</h4>
+                <h4 className="font-semibold text-elec-yellow mb-3">Alert Delivery Methods:</h4>
                 
                 <div className="space-y-3">
                   <div className="p-4 bg-red-900/10 border border-red-600/20 rounded-lg">
@@ -242,14 +242,14 @@ const BMSModule6Section6 = () => {
                 </div>
 
                 <div className="space-y-3">
-                  <h4 className="font-semibold text-yellow-400 mb-3">Escalation Protocols:</h4>
+                  <h4 className="font-semibold text-elec-yellow mb-3">Escalation Protocols:</h4>
                   
                   <div className="p-4 bg-gradient-to-r from-purple-900/20 to-blue-900/20 border border-purple-600/30 rounded-lg">
                     <p className="text-white mb-3">Alerts can be routed to different staff levels depending on urgency and response requirements:</p>
                     
                     <div className="space-y-2">
                       <div className="flex items-center gap-3">
-                        <span className="bg-yellow-400 text-black px-2 py-1 rounded text-xs font-bold">Level 1</span>
+                        <span className="bg-elec-yellow text-black px-2 py-1 rounded text-xs font-bold">Level 1</span>
                         <span className="text-sm">On-site technicians (0-5 minutes)</span>
                       </div>
                       <div className="flex items-center gap-3">
@@ -269,19 +269,19 @@ const BMSModule6Section6 = () => {
                 </div>
               </div>
 
-              <div className="bg-card p-4 rounded-lg border border-gray-600">
-                <p className="text-yellow-400 font-semibold">Extended Example:</p>
+              <div className="bg-transparent p-4 rounded-lg border border-gray-600">
+                <p className="text-elec-yellow font-semibold">Extended Example:</p>
                 <p>A critical AHU bearing temperature rises above 75°C. The system immediately sends an SMS to the maintenance technician and displays a Level 2 alarm on the BMS. If not acknowledged within 10 minutes, it escalates to the facilities manager via email and push notification. After 20 minutes without response, it triggers an automated shutdown sequence and alerts the emergency response team, preventing potential equipment fire and building evacuation.</p>
               </div>
 
               <div className="bg-blue-900/20 border border-blue-600 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
-                  <CheckCircle className="h-5 w-5 text-yellow-400" />
-                  <span className="text-yellow-400 font-semibold">Inline Check</span>
+                  <CheckCircle className="h-5 w-5 text-elec-yellow" />
+                  <span className="text-elec-yellow font-semibold">Inline Check</span>
                 </div>
                 <button 
                   onClick={() => setShowInlineCheck2(!showInlineCheck2)}
-                  className="text-white hover:text-yellow-400 transition-colors"
+                  className="text-white hover:text-elec-yellow transition-colors"
                 >
                   👉 What is one benefit of escalation in remote fault alerts?
                 </button>
@@ -295,7 +295,7 @@ const BMSModule6Section6 = () => {
           </Card>
 
           {/* Risks of Remote Access */}
-          <Card className="bg-card border-gray-700">
+          <Card className="bg-transparent border-gray-700">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5 text-red-400" />
@@ -328,12 +328,12 @@ const BMSModule6Section6 = () => {
 
               <div className="bg-blue-900/20 border border-blue-600 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
-                  <CheckCircle className="h-5 w-5 text-yellow-400" />
-                  <span className="text-yellow-400 font-semibold">Inline Check</span>
+                  <CheckCircle className="h-5 w-5 text-elec-yellow" />
+                  <span className="text-elec-yellow font-semibold">Inline Check</span>
                 </div>
                 <button 
                   onClick={() => setShowInlineCheck3(!showInlineCheck3)}
-                  className="text-white hover:text-yellow-400 transition-colors"
+                  className="text-white hover:text-elec-yellow transition-colors"
                 >
                   👉 What is one risk of relying solely on remote monitoring?
                 </button>
@@ -347,16 +347,16 @@ const BMSModule6Section6 = () => {
           </Card>
 
           {/* Practical Guidance */}
-          <Card className="bg-card border-gray-700">
+          <Card className="bg-transparent border-gray-700">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Zap className="h-5 w-5 text-yellow-400" />
+                <Zap className="h-5 w-5 text-elec-yellow" />
                 Practical Guidance
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-6">
               <div>
-                <h3 className="text-xl font-semibold text-yellow-400 mb-4">Setting Up Remote Monitoring</h3>
+                <h3 className="text-xl font-semibold text-elec-yellow mb-4">Setting Up Remote Monitoring</h3>
                 <div className="space-y-4">
                   {[
                     {
@@ -380,15 +380,15 @@ const BMSModule6Section6 = () => {
                       content: "For VPN or cloud systems, confirm correct firewall and security settings."
                     }
                   ].map((item, index) => (
-                    <div key={index} className="border-l-4 border-yellow-400 pl-4">
-                      <span className="font-semibold text-yellow-400">{item.title}</span> {item.content}
+                    <div key={index} className="border-l-4 border-elec-yellow pl-4">
+                      <span className="font-semibold text-elec-yellow">{item.title}</span> {item.content}
                     </div>
                   ))}
                 </div>
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-yellow-400 mb-4">Supporting Ongoing Reliability</h3>
+                <h3 className="text-xl font-semibold text-elec-yellow mb-4">Supporting Ongoing Reliability</h3>
                 <div className="space-y-4">
                   {[
                     "Train staff to acknowledge alerts promptly and not ignore repeated notifications.",
@@ -396,7 +396,7 @@ const BMSModule6Section6 = () => {
                     "Document escalation paths so everyone knows who is notified and when.",
                     "Establish maintenance schedules for communication hardware."
                   ].map((item, index) => (
-                    <div key={index} className="border-l-4 border-yellow-400 pl-4">
+                    <div key={index} className="border-l-4 border-elec-yellow pl-4">
                       {item}
                     </div>
                   ))}
@@ -421,7 +421,7 @@ const BMSModule6Section6 = () => {
                 </div>
 
                 <div className="bg-yellow-900/30 border border-yellow-600 p-4 rounded-lg">
-                  <h4 className="font-semibold text-yellow-400 mb-2">Investigation:</h4>
+                  <h4 className="font-semibold text-elec-yellow mb-2">Investigation:</h4>
                   <p>By the time staff discovered the fault the next morning, thousands of pounds of stock had spoiled. The investigation revealed that staff had become reliant on email notifications without checking if the system was actually working.</p>
                 </div>
 
@@ -431,7 +431,7 @@ const BMSModule6Section6 = () => {
                 </div>
 
                 <div className="bg-blue-900/30 border border-blue-600 p-4 rounded-lg">
-                  <h4 className="font-semibold text-yellow-400 mb-2">Lessons Learned:</h4>
+                  <h4 className="font-semibold text-elec-yellow mb-2">Lessons Learned:</h4>
                   <p>Never rely on a single alert method. Always implement redundancy and test notification systems regularly. Staff training on acknowledging and escalating alerts is crucial.</p>
                 </div>
               </div>
@@ -439,10 +439,10 @@ const BMSModule6Section6 = () => {
           </Card>
 
           {/* FAQ Section */}
-          <Card className="bg-card border-gray-700">
+          <Card className="bg-transparent border-gray-700">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <HelpCircle className="h-5 w-5 text-yellow-400" />
+                <HelpCircle className="h-5 w-5 text-elec-yellow" />
                 Frequently Asked Questions
               </CardTitle>
             </CardHeader>
@@ -476,13 +476,13 @@ const BMSModule6Section6 = () => {
                 <div key={index} className="border border-gray-600 rounded-lg">
                   <button
                     onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
-                    className="w-full flex items-center justify-between p-4 text-left hover:bg-card transition-colors"
+                    className="w-full flex items-center justify-between p-4 text-left hover:bg-transparent transition-colors"
                   >
                     <span className="text-white font-medium">{faq.question}</span>
                     {openFAQ === index ? (
-                      <ChevronDown className="h-5 w-5 text-yellow-400" />
+                      <ChevronDown className="h-5 w-5 text-elec-yellow" />
                     ) : (
-                      <ChevronRight className="h-5 w-5 text-yellow-400" />
+                      <ChevronRight className="h-5 w-5 text-elec-yellow" />
                     )}
                   </button>
                   {openFAQ === index && (
@@ -496,26 +496,26 @@ const BMSModule6Section6 = () => {
           </Card>
 
           {/* Summary */}
-          <Card className="bg-card border-gray-700">
+          <Card className="bg-transparent border-gray-700">
             <CardHeader>
               <CardTitle className="text-white">Summary</CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-3">
               <div className="space-y-2">
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span>Remote monitoring allows access to BMS dashboards and controls from off-site.</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span>Fault alerts notify staff instantly via SMS, email, or app notifications.</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span>Benefits include faster responses and reduced downtime, but risks include missed alerts and cybersecurity vulnerabilities.</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span>Electricians support reliability by wiring communication hardware correctly, labelling clearly, and testing alert delivery.</span>
                 </div>
               </div>
@@ -523,10 +523,10 @@ const BMSModule6Section6 = () => {
           </Card>
 
           {/* Extended UK Regulatory & Technical Content */}
-          <Card className="bg-card border-gray-700">
+          <Card className="bg-transparent border-gray-700">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Shield className="h-5 w-5 text-yellow-400" />
+                <Shield className="h-5 w-5 text-elec-yellow" />
                 UK Regulatory Standards and Compliance
               </CardTitle>
             </CardHeader>
@@ -535,7 +535,7 @@ const BMSModule6Section6 = () => {
               
               <div className="space-y-4">
                 <div className="bg-blue-900/20 border border-blue-600 p-4 rounded-lg">
-                  <h4 className="font-semibold text-yellow-400 mb-2">BS EN 16001 (Energy Management)</h4>
+                  <h4 className="font-semibold text-elec-yellow mb-2">BS EN 16001 (Energy Management)</h4>
                   <p>Remote monitoring systems should support energy management compliance by providing accurate, timestamped data for energy reporting and demonstrating continuous monitoring capabilities.</p>
                 </div>
 
@@ -553,17 +553,17 @@ const BMSModule6Section6 = () => {
           </Card>
 
           {/* Technical Implementation and Wiring Standards */}
-          <Card className="bg-card border-gray-700">
+          <Card className="bg-transparent border-gray-700">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Zap className="h-5 w-5 text-yellow-400" />
+                <Zap className="h-5 w-5 text-elec-yellow" />
                 Technical Implementation and Wiring Standards
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-4">
-                  <h4 className="font-semibold text-yellow-400">GSM Module Installation</h4>
+                  <h4 className="font-semibold text-elec-yellow">GSM Module Installation</h4>
                   <div className="space-y-2 text-sm">
                     <p>• Install external antenna with minimum 3dB gain</p>
                     <p>• Use shielded cables for RF connections</p>
@@ -574,7 +574,7 @@ const BMSModule6Section6 = () => {
                 </div>
                 
                 <div className="space-y-4">
-                  <h4 className="font-semibold text-yellow-400">Network Infrastructure</h4>
+                  <h4 className="font-semibold text-elec-yellow">Network Infrastructure</h4>
                   <div className="space-y-2 text-sm">
                     <p>• Use Cat6A cables for Ethernet connections</p>
                     <p>• Install managed switches with VLAN capability</p>
@@ -586,7 +586,7 @@ const BMSModule6Section6 = () => {
               </div>
 
               <div className="bg-yellow-900/20 border border-yellow-600 p-4 rounded-lg">
-                <h4 className="font-semibold text-yellow-400 mb-2">Commissioning Checklist</h4>
+                <h4 className="font-semibold text-elec-yellow mb-2">Commissioning Checklist</h4>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div>
                     <p>✓ Signal strength testing (-70dBm minimum)</p>
@@ -606,17 +606,17 @@ const BMSModule6Section6 = () => {
           </Card>
 
           {/* Real-World Applications */}
-          <Card className="bg-card border-gray-700">
+          <Card className="bg-transparent border-gray-700">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Users className="h-5 w-5 text-yellow-400" />
+                <Users className="h-5 w-5 text-elec-yellow" />
                 Real-World Applications
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-6">
               <div className="grid md:grid-cols-3 gap-6">
                 <div className="bg-blue-900/20 border border-blue-600 p-4 rounded-lg">
-                  <h4 className="font-semibold text-yellow-400 mb-2">Hospitals</h4>
+                  <h4 className="font-semibold text-elec-yellow mb-2">Hospitals</h4>
                   <p className="text-sm">Critical systems require 24/7 monitoring with immediate escalation to on-call engineers for life safety systems.</p>
                 </div>
                 
@@ -652,7 +652,7 @@ const BMSModule6Section6 = () => {
             <Link to="../bms-module-6-section-5" className="flex-1 sm:flex-initial">
               <Button 
                 variant="outline" 
-                className="w-full sm:w-auto bg-transparent border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black transition-all duration-200 min-h-[48px] px-4 py-3 text-sm sm:text-base"
+                className="w-full sm:w-auto bg-transparent border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black transition-all duration-200 min-h-[48px] px-4 py-3 text-sm sm:text-base"
               >
                 <ArrowLeft className="mr-2 h-4 w-4 flex-shrink-0" />
                 <span className="truncate">Previous: Energy Monitoring & Control</span>
@@ -660,7 +660,7 @@ const BMSModule6Section6 = () => {
             </Link>
             <Link to="../bms-module-7" className="flex-1 sm:flex-initial">
               <Button 
-                className="w-full sm:w-auto bg-yellow-400 text-black hover:bg-yellow-400 transition-all duration-200 min-h-[48px] px-4 py-3 text-sm sm:text-base"
+                className="w-full sm:w-auto bg-elec-yellow text-black hover:bg-elec-yellow transition-all duration-200 min-h-[48px] px-4 py-3 text-sm sm:text-base"
               >
                 <span className="truncate">Next Module: Advanced BMS Applications</span>
                 <ArrowLeft className="ml-2 h-4 w-4 rotate-180 flex-shrink-0" />

@@ -6,9 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Calculator, PoundSterling, Info, TrendingUp } from "lucide-react";
+import { Calculator, PoundSterling, Info, TrendingUp, RotateCcw, CheckCircle } from "lucide-react";
 import { useState } from "react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const FundingCalculator = () => {
   const [courseType, setCourseType] = useState<string>("");
@@ -35,7 +34,7 @@ const FundingCalculator = () => {
   const calculateFunding = () => {
     const cost = parseFloat(courseCost) || 0;
     const income = parseFloat(currentIncome) || 0;
-    
+
     const funding = [];
     let totalFundingAvailable = 0;
 
@@ -85,10 +84,10 @@ const FundingCalculator = () => {
     const monthlyRepayment = income > 25000 ? (cost * 0.09 * (income - 25000)) / (12 * 100) : 0;
 
     // ROI Calculation
-    const salaryIncrease = courseType === "hnc" ? 4000 : 
-                          courseType === "hnd" ? 6500 : 
+    const salaryIncrease = courseType === "hnc" ? 4000 :
+                          courseType === "hnd" ? 6500 :
                           courseType === "degree" ? 9500 : 3000;
-    
+
     const paybackPeriod = cost > 0 ? (cost / salaryIncrease).toFixed(1) : "0";
 
     setResult({
@@ -113,31 +112,43 @@ const FundingCalculator = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="text-center space-y-2">
-        <h3 className="text-xl font-semibold">Education Funding Calculator</h3>
-        <p className="text-muted-foreground">
-          Calculate your funding options and understand the financial commitment of further education
-        </p>
+    <div className="space-y-6 animate-fade-in">
+      {/* Hero Section */}
+      <div className="p-4 rounded-xl bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/30 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-green-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="relative flex items-start gap-3">
+          <div className="p-2.5 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30">
+            <Calculator className="h-5 w-5 text-green-400" />
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-white mb-1">Education Funding Calculator</h3>
+            <p className="text-sm text-white/70">
+              Calculate your funding options and understand the financial commitment of further education
+            </p>
+          </div>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Input Section */}
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Calculator className="h-5 w-5 text-elec-yellow" />
+        <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+          <div className="absolute top-0 right-0 w-48 h-48 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <CardHeader className="relative">
+            <CardTitle className="text-white flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+                <Calculator className="h-5 w-5 text-elec-yellow" />
+              </div>
               Course & Personal Details
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 relative">
             <div>
-              <Label htmlFor="course-type">Course Type</Label>
+              <Label htmlFor="course-type" className="text-white/80">Course Type</Label>
               <Select value={courseType} onValueChange={setCourseType}>
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                <SelectTrigger className="bg-white/5 border-white/20 text-white h-11 mt-1.5">
                   <SelectValue placeholder="Select course type" />
                 </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                <SelectContent className="bg-elec-gray border-white/20">
                   <SelectItem value="hnc">HNC Electrical Engineering</SelectItem>
                   <SelectItem value="hnd">HND Electrical Engineering</SelectItem>
                   <SelectItem value="degree">Degree Top-Up</SelectItem>
@@ -149,36 +160,36 @@ const FundingCalculator = () => {
             </div>
 
             <div>
-              <Label htmlFor="course-cost">Course Cost (£)</Label>
+              <Label htmlFor="course-cost" className="text-white/80">Course Cost (£)</Label>
               <Input
                 id="course-cost"
                 type="number"
                 value={courseCost}
                 onChange={(e) => setCourseCost(e.target.value)}
                 placeholder="e.g., 6000"
-                className="bg-elec-dark border-elec-yellow/20"
+                className="bg-white/5 border-white/20 text-white h-11 mt-1.5 placeholder:text-white/40"
               />
             </div>
 
             <div>
-              <Label htmlFor="current-income">Current Annual Income (£)</Label>
+              <Label htmlFor="current-income" className="text-white/80">Current Annual Income (£)</Label>
               <Input
                 id="current-income"
                 type="number"
                 value={currentIncome}
                 onChange={(e) => setCurrentIncome(e.target.value)}
                 placeholder="e.g., 32000"
-                className="bg-elec-dark border-elec-yellow/20"
+                className="bg-white/5 border-white/20 text-white h-11 mt-1.5 placeholder:text-white/40"
               />
             </div>
 
             <div>
-              <Label htmlFor="employment-status">Employment Status</Label>
+              <Label htmlFor="employment-status" className="text-white/80">Employment Status</Label>
               <Select value={employmentStatus} onValueChange={setEmploymentStatus}>
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                <SelectTrigger className="bg-white/5 border-white/20 text-white h-11 mt-1.5">
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                <SelectContent className="bg-elec-gray border-white/20">
                   <SelectItem value="employed">Employed</SelectItem>
                   <SelectItem value="self-employed">Self-Employed</SelectItem>
                   <SelectItem value="unemployed">Unemployed</SelectItem>
@@ -187,12 +198,12 @@ const FundingCalculator = () => {
             </div>
 
             <div>
-              <Label htmlFor="study-mode">Preferred Study Mode</Label>
+              <Label htmlFor="study-mode" className="text-white/80">Preferred Study Mode</Label>
               <Select value={studyMode} onValueChange={setStudyMode}>
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                <SelectTrigger className="bg-white/5 border-white/20 text-white h-11 mt-1.5">
                   <SelectValue placeholder="Select study mode" />
                 </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                <SelectContent className="bg-elec-gray border-white/20">
                   <SelectItem value="part-time">Part-time</SelectItem>
                   <SelectItem value="full-time">Full-time</SelectItem>
                   <SelectItem value="evening">Evening</SelectItem>
@@ -201,49 +212,62 @@ const FundingCalculator = () => {
               </Select>
             </div>
 
-            <div className="flex gap-2">
-              <Button onClick={calculateFunding} className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
+            <div className="flex gap-2 pt-2">
+              <Button
+                onClick={calculateFunding}
+                className="flex-1 h-11 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 touch-manipulation active:scale-95 transition-all"
+              >
                 <Calculator className="h-4 w-4 mr-2" />
                 Calculate Funding
               </Button>
-              <Button variant="outline" onClick={reset}>
-                Reset
+              <Button
+                variant="outline"
+                onClick={reset}
+                className="h-11 border-white/20 hover:border-white/40 touch-manipulation active:scale-95 transition-all"
+              >
+                <RotateCcw className="h-4 w-4" />
               </Button>
             </div>
           </CardContent>
         </Card>
 
         {/* Results Section */}
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <PoundSterling className="h-5 w-5 text-elec-yellow" />
+        <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-green-500/20 overflow-hidden relative">
+          <div className="absolute top-0 right-0 w-48 h-48 bg-green-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <CardHeader className="relative">
+            <CardTitle className="text-white flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30">
+                <PoundSterling className="h-5 w-5 text-green-400" />
+              </div>
               Funding Breakdown
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="relative">
             {result ? (
               <div className="space-y-4">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-elec-yellow">
+                <div className="text-center p-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+                  <div className="text-3xl font-bold text-elec-yellow">
                     £{result.totalCost.toLocaleString()}
                   </div>
-                  <div className="text-sm text-muted-foreground">Total Course Cost</div>
+                  <div className="text-sm text-white/70">Total Course Cost</div>
                 </div>
 
-                <Separator />
+                <Separator className="bg-white/10" />
 
                 <div className="space-y-3">
-                  <h4 className="font-semibold text-elec-yellow">Available Funding Options:</h4>
+                  <h4 className="font-semibold text-green-400 flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4" />
+                    Available Funding Options
+                  </h4>
                   {result.availableFunding.map((funding, idx) => (
-                    <div key={idx} className="bg-elec-dark/50 p-3 rounded-md">
+                    <div key={idx} className="p-3 rounded-xl bg-white/5 border border-white/10">
                       <div className="flex justify-between items-start mb-2">
-                        <div className="font-medium">{funding.name}</div>
-                        <Badge variant="default">
+                        <div className="font-medium text-white">{funding.name}</div>
+                        <Badge className="bg-green-500/10 text-green-400 border border-green-500/30">
                           {typeof funding.amount === 'number' ? `£${funding.amount.toLocaleString()}` : funding.amount}
                         </Badge>
                       </div>
-                      <div className="text-xs text-muted-foreground mb-1">
+                      <div className="text-xs text-white/60 mb-1">
                         {funding.description}
                       </div>
                       <div className="text-xs text-elec-yellow">
@@ -253,50 +277,67 @@ const FundingCalculator = () => {
                   ))}
                 </div>
 
-                <Separator />
+                <Separator className="bg-white/10" />
 
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <div className="text-muted-foreground">Out of pocket:</div>
-                    <div className="font-bold text-lg">£{result.outOfPocketCost.toLocaleString()}</div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-center">
+                    <div className="text-xs text-white/60 mb-1">Out of pocket</div>
+                    <div className="font-bold text-xl text-blue-400">£{result.outOfPocketCost.toLocaleString()}</div>
                   </div>
-                  {result.monthlyRepayment > 0 && (
-                    <div>
-                      <div className="text-muted-foreground">Monthly repayment:</div>
-                      <div className="font-bold text-lg">£{result.monthlyRepayment.toFixed(0)}</div>
+                  {result.monthlyRepayment !== undefined && result.monthlyRepayment > 0 && (
+                    <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 text-center">
+                      <div className="text-xs text-white/60 mb-1">Monthly repayment</div>
+                      <div className="font-bold text-xl text-purple-400">£{result.monthlyRepayment.toFixed(0)}</div>
                     </div>
                   )}
                 </div>
 
-                <Separator />
-
-                <div className="bg-green-900/20 p-3 rounded-md">
-                  <div className="flex items-center gap-2 mb-2">
+                <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/20">
+                  <div className="flex items-center gap-2 mb-3">
                     <TrendingUp className="h-4 w-4 text-green-400" />
                     <span className="font-semibold text-green-400">Return on Investment</span>
                   </div>
-                  <div className="text-sm space-y-1">
-                    <div>Expected salary increase: <span className="font-bold">£{result.roi.salaryIncrease.toLocaleString()}/year</span></div>
-                    <div>Payback period: <span className="font-bold">{result.roi.paybackPeriod}</span></div>
+                  <div className="grid grid-cols-2 gap-3 text-sm">
+                    <div>
+                      <div className="text-white/60 text-xs">Expected salary increase</div>
+                      <div className="font-bold text-white">£{result.roi.salaryIncrease.toLocaleString()}/year</div>
+                    </div>
+                    <div>
+                      <div className="text-white/60 text-xs">Payback period</div>
+                      <div className="font-bold text-white">{result.roi.paybackPeriod}</div>
+                    </div>
                   </div>
                 </div>
               </div>
             ) : (
-              <div className="flex items-center justify-center h-64 text-muted-foreground">
-                Enter your details to see funding options
+              <div className="flex flex-col items-center justify-center h-64 text-center">
+                <div className="p-4 rounded-full bg-white/5 mb-4">
+                  <Calculator className="h-8 w-8 text-white/30" />
+                </div>
+                <p className="text-white/50 text-sm">
+                  Enter your details to see<br />funding options and ROI
+                </p>
               </div>
             )}
           </CardContent>
         </Card>
       </div>
 
-      <Alert className="border-blue-500/20 bg-blue-500/10">
-        <Info className="h-4 w-4 text-blue-500" />
-        <AlertDescription className="text-blue-200">
-          <strong>Important:</strong> Funding eligibility varies by individual circumstances. Always check with official sources 
-          and course providers for the most current information. This calculator provides estimates based on typical scenarios.
-        </AlertDescription>
-      </Alert>
+      {/* Important Note */}
+      <div className="p-4 rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/30">
+        <div className="flex items-start gap-3">
+          <div className="p-2 rounded-lg bg-blue-500/20">
+            <Info className="h-5 w-5 text-blue-400" />
+          </div>
+          <div>
+            <p className="font-medium text-blue-400 mb-1">Important</p>
+            <p className="text-sm text-white/70">
+              Funding eligibility varies by individual circumstances. Always check with official sources
+              and course providers for the most current information. This calculator provides estimates based on typical scenarios.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

@@ -31,17 +31,17 @@ const ToolSpecificationCard = ({ tool }: ToolSpecificationCardProps) => {
       case "essential": return "bg-red-500/20 text-red-400 border-red-500/30";
       case "recommended": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
       case "optional": return "bg-green-500/20 text-green-400 border-green-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+      default: return "bg-white/10 text-white border-white/20";
     }
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border-elec-yellow/20 bg-white/5">
       <CardHeader className="pb-4">
         <div className="flex items-start justify-between">
           <div>
             <CardTitle className="text-elec-yellow text-lg">{tool.name}</CardTitle>
-            <p className="text-sm text-muted-foreground mt-1">{tool.description}</p>
+            <p className="text-sm text-white mt-1">{tool.description}</p>
           </div>
           <Badge className={getPriorityColor(tool.priority)} variant="outline">
             {tool.priority}
@@ -57,13 +57,13 @@ const ToolSpecificationCard = ({ tool }: ToolSpecificationCardProps) => {
             {Object.entries(tool.specifications).map(([key, value]) => (
               value && (
                 <div key={key} className="flex justify-between">
-                  <span className="text-muted-foreground capitalize">{key}:</span>
+                  <span className="text-white capitalize">{key}:</span>
                   <span className="text-white">{value}</span>
                 </div>
               )
             ))}
             <div className="flex justify-between col-span-2 pt-2 border-t border-elec-yellow/20">
-              <span className="text-muted-foreground">Price Range:</span>
+              <span className="text-white">Price Range:</span>
               <span className="text-elec-yellow font-medium">{tool.priceRange}</span>
             </div>
           </div>
@@ -78,7 +78,7 @@ const ToolSpecificationCard = ({ tool }: ToolSpecificationCardProps) => {
             </h4>
             <ul className="space-y-1">
               {tool.pros.map((pro, index) => (
-                <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                <li key={index} className="text-sm text-white flex items-start gap-2">
                   <Check className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
                   {pro}
                 </li>
@@ -93,7 +93,7 @@ const ToolSpecificationCard = ({ tool }: ToolSpecificationCardProps) => {
             </h4>
             <ul className="space-y-1">
               {tool.cons.map((con, index) => (
-                <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                <li key={index} className="text-sm text-white flex items-start gap-2">
                   <X className="h-3 w-3 text-red-400 mt-0.5 flex-shrink-0" />
                   {con}
                 </li>
@@ -110,7 +110,7 @@ const ToolSpecificationCard = ({ tool }: ToolSpecificationCardProps) => {
           </h4>
           <ul className="space-y-1">
             {tool.buyingTips.map((tip, index) => (
-              <li key={index} className="text-sm text-muted-foreground">
+              <li key={index} className="text-sm text-white">
                 • {tip}
               </li>
             ))}
@@ -120,7 +120,7 @@ const ToolSpecificationCard = ({ tool }: ToolSpecificationCardProps) => {
         {tool.maintenanceNotes && (
           <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-3">
             <h4 className="font-medium text-elec-yellow mb-1">Maintenance Notes</h4>
-            <p className="text-sm text-muted-foreground">{tool.maintenanceNotes}</p>
+            <p className="text-sm text-white">{tool.maintenanceNotes}</p>
           </div>
         )}
       </CardContent>

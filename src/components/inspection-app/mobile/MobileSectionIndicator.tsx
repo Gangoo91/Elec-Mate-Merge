@@ -48,7 +48,7 @@ export const MobileSectionIndicator: React.FC<MobileSectionIndicatorProps> = ({
       case 'other':
         return 'bg-purple-500/90';
       default:
-        return 'bg-gray-500/90';
+        return 'bg-white/60';
     }
   };
 

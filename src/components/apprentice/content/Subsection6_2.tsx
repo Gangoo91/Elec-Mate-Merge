@@ -32,7 +32,7 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       </div>
       
       {/* PPE Categories Section */}
-      <Card className="bg-elec-gray border border-elec-yellow/20">
+      <Card className="bg-white/5 border border-elec-yellow/20">
         <CardHeader className="bg-gradient-to-r from-elec-yellow/10 to-transparent border-b border-elec-yellow/20 pb-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -145,15 +145,15 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               Head and Eye Protection
             </h4>
             <ul className="space-y-4">
-              <li className="bg-elec-dark/50 p-4 rounded-lg border border-elec-yellow/20">
+              <li className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
                 <span className="font-medium text-elec-yellow">Safety Helmets</span>
                 <p className="mt-1 text-sm">BS EN 397 compliant with electrical insulation properties. Must be regularly inspected for damage and replaced after significant impact or every 2-5 years depending on manufacturer's guidance.</p>
               </li>
-              <li className="bg-elec-dark/50 p-4 rounded-lg border border-elec-yellow/20">
+              <li className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
                 <span className="font-medium text-elec-yellow">Safety Glasses/Goggles</span>
                 <p className="mt-1 text-sm">BS EN 166 rated with appropriate impact protection. Side shields are essential for electrical work. Anti-fog coatings improve usability. Must be comfortable enough to wear for extended periods.</p>
               </li>
-              <li className="bg-elec-dark/50 p-4 rounded-lg border border-elec-yellow/20">
+              <li className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
                 <span className="font-medium text-elec-yellow">Face Shields</span>
                 <p className="mt-1 text-sm">For protection against electrical flash and flying particles. Can be integrated with helmet for complete protection. Must provide clear vision and be suitable for wearing with prescription glasses if needed.</p>
               </li>
@@ -167,15 +167,15 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               Body and Extremity Protection
             </h4>
             <ul className="space-y-4">
-              <li className="bg-elec-dark/50 p-4 rounded-lg border border-elec-yellow/20">
+              <li className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
                 <span className="font-medium text-elec-yellow">Safety Footwear</span>
                 <p className="mt-1 text-sm">BS EN ISO 20345 compliant with electrical resistance properties. Additional protection may include metatarsal guards, puncture-resistant soles, and ankle support. Should be comfortable for all-day wear.</p>
               </li>
-              <li className="bg-elec-dark/50 p-4 rounded-lg border border-elec-yellow/20">
+              <li className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
                 <span className="font-medium text-elec-yellow">Flame-Resistant Clothing</span>
                 <p className="mt-1 text-sm">BS EN ISO 11612 compliant for thermal hazards. Non-melting fabrics that self-extinguish when removed from ignition source. Must fit correctly and be suitable for seasonal conditions.</p>
               </li>
-              <li className="bg-elec-dark/50 p-4 rounded-lg border border-elec-yellow/20">
+              <li className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
                 <span className="font-medium text-elec-yellow">Hi-Visibility Clothing</span>
                 <p className="mt-1 text-sm">BS EN ISO 20471 for work near roadways or in low light conditions. Class 2 or 3 depending on risk assessment. Must be compatible with other PPE items and should not interfere with movement.</p>
               </li>
@@ -185,7 +185,7 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       </div>
       
       {/* Inspection and Limitations */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <div className="p-4 md:p-6">
           <h3 className="text-xl font-bold text-elec-yellow mb-4">Inspection, Maintenance and Limitations</h3>
           
@@ -194,15 +194,15 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             <div className="space-y-3">
               <h4 className="font-semibold text-elec-yellow">Testing and Inspection</h4>
               <ul className="space-y-3">
-                <li className="bg-elec-dark/30 p-3 rounded-lg border border-elec-yellow/10">
+                <li className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <span className="font-medium block">Insulating Gloves</span>
                   <p className="text-sm mt-1">Visual inspection before each use, air test to check for leaks, formal electrical test every 6 months. Check for cuts, punctures, abrasions, and chemical contamination.</p>
                 </li>
-                <li className="bg-elec-dark/30 p-3 rounded-lg border border-elec-yellow/10">
+                <li className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <span className="font-medium block">Insulating Mats</span>
                   <p className="text-sm mt-1">Visual inspection before use, periodic electrical testing according to manufacturer's recommendations. Examine for tears, cuts, and contamination that could compromise insulation.</p>
                 </li>
-                <li className="bg-elec-dark/30 p-3 rounded-lg border border-elec-yellow/10">
+                <li className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <span className="font-medium block">Insulated Tools</span>
                   <p className="text-sm mt-1">Regular inspection for cracks, cuts or damage to insulation. Tools with damaged insulation must be removed from service immediately. Annual testing recommended for tools used regularly.</p>
                 </li>
@@ -224,21 +224,21 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             <div className="space-y-3">
               <h4 className="font-semibold text-elec-yellow">Limitations of PPE</h4>
               <ul className="space-y-3">
-                <li className="bg-elec-dark/30 p-3 rounded-lg border border-elec-yellow/10">
+                <li className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <span className="font-medium block">Last Line of Defence</span>
                   <p className="text-sm mt-1">PPE should be used alongside, not instead of, other safety measures in the hierarchy of control. Always prioritise elimination, substitution, and engineering controls.</p>
                 </li>
-                <li className="bg-elec-dark/30 p-3 rounded-lg border border-elec-yellow/10">
+                <li className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <span className="font-medium block">Voltage Limits</span>
                   <p className="text-sm mt-1">Each item of PPE has specific voltage limitations that must not be exceeded. Exceeding these limits can result in catastrophic failure of the protection and serious injury.</p>
                 </li>
-                <li className="bg-elec-dark/30 p-3 rounded-lg border border-elec-yellow/10">
+                <li className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <span className="font-medium block">Environmental Factors</span>
                   <p className="text-sm mt-1">Moisture, contaminants, temperature extremes, and UV exposure can significantly degrade PPE performance. Storage conditions must protect PPE from these factors.</p>
                 </li>
               </ul>
               
-              <div className="p-4 bg-elec-dark/50 border border-elec-yellow/20 rounded-lg mt-4">
+              <div className="p-4 bg-white/10 border border-elec-yellow/20 rounded-lg mt-4">
                 <p className="font-medium text-elec-yellow mb-2">Safety First Reminder:</p>
                 <p className="text-sm">Live working should always be avoided where possible. PPE does not eliminate risk entirely and should never be used as justification for working live when isolation is a viable alternative. Only appropriate training and risk assessment can determine when PPE use is suitable.</p>
               </div>
@@ -248,7 +248,7 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       </Card>
       
       {/* PPE Selection Guidance */}
-      <div className="bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-6">
+      <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-6">
         <h3 className="text-xl font-bold text-elec-yellow mb-4 flex items-center">
           <ShieldAlert className="h-5 w-5 mr-2" />
           PPE Selection Process
@@ -325,7 +325,7 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </div>
           </div>
           
-          <div className="mt-4 p-4 bg-elec-dark/70 rounded-lg text-sm">
+          <div className="mt-4 p-4 bg-white/10 rounded-lg text-sm">
             <p className="font-medium mb-1 text-elec-yellow">Employer Responsibilities:</p>
             <p>Under the Personal Protective Equipment at Work Regulations, employers must ensure that PPE is properly assessed before use, appropriate for the risk and the user, maintained and stored properly, provided with instructions on safe use, and used correctly by employees. PPE must be provided free of charge where it is needed for work activities.</p>
           </div>
@@ -350,7 +350,7 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
 
 // Reusable component for PPE cards
 const PPECard = ({ title, children }) => (
-  <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 hover:border-elec-yellow/40 transition-all duration-300">
+  <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 hover:border-elec-yellow/40 transition-all duration-300">
     <h5 className="font-medium text-elec-yellow text-base mb-2 flex items-center gap-2">
       <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow"></span>
       {title}

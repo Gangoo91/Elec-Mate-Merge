@@ -177,7 +177,7 @@ const AdvancedPortfolioBuilder = () => {
               <CardContent className="p-4 text-center">
                 <div className="text-4xl mb-2">{template.icon}</div>
                 <h3 className="font-semibold mb-2">{template.name}</h3>
-                <p className="text-sm text-muted-foreground mb-3">{template.description}</p>
+                <p className="text-sm text-white mb-3">{template.description}</p>
                 <div className="text-xs">
                   {template.sections.length} sections included
                 </div>
@@ -359,7 +359,7 @@ const AdvancedPortfolioBuilder = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-blue-600">{portfolioStats.totalItems}</div>
-            <p className="text-sm text-muted-foreground">Total Items</p>
+            <p className="text-sm text-white">Total Items</p>
           </div>
         </CardContent>
       </Card>
@@ -368,7 +368,7 @@ const AdvancedPortfolioBuilder = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-green-600">{portfolioStats.approved}</div>
-            <p className="text-sm text-muted-foreground">Approved</p>
+            <p className="text-sm text-white">Approved</p>
           </div>
         </CardContent>
       </Card>
@@ -377,7 +377,7 @@ const AdvancedPortfolioBuilder = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-orange-600">{portfolioStats.underReview}</div>
-            <p className="text-sm text-muted-foreground">Under Review</p>
+            <p className="text-sm text-white">Under Review</p>
           </div>
         </CardContent>
       </Card>
@@ -386,7 +386,7 @@ const AdvancedPortfolioBuilder = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-purple-600">{portfolioStats.averageRating}</div>
-            <p className="text-sm text-muted-foreground">Avg. Rating</p>
+            <p className="text-sm text-white">Avg. Rating</p>
           </div>
         </CardContent>
       </Card>
@@ -398,7 +398,7 @@ const AdvancedPortfolioBuilder = () => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">Advanced Portfolio Builder</h2>
-          <p className="text-muted-foreground">Build comprehensive portfolio entries with guided templates</p>
+          <p className="text-white">Build comprehensive portfolio entries with guided templates</p>
         </div>
         <Button variant="outline">
           <Download className="h-4 w-4 mr-2" />
@@ -442,7 +442,7 @@ const AdvancedPortfolioBuilder = () => {
                       </div>
                     </div>
                     
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-muted-foreground">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-white">
                       <div>Category: {item.category}</div>
                       <div>Unit: {item.unit}</div>
                       <div>Date: {item.date}</div>
@@ -474,7 +474,7 @@ const AdvancedPortfolioBuilder = () => {
           <Card>
             <CardHeader>
               <CardTitle>Portfolio Templates</CardTitle>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Choose from pre-built templates to ensure your portfolio meets qualification standards
               </p>
             </CardHeader>
@@ -486,7 +486,7 @@ const AdvancedPortfolioBuilder = () => {
                       <div className="text-center mb-4">
                         <div className="text-4xl mb-2">{template.icon}</div>
                         <h3 className="font-semibold">{template.name}</h3>
-                        <p className="text-sm text-muted-foreground">{template.description}</p>
+                        <p className="text-sm text-white">{template.description}</p>
                       </div>
                       
                       <div className="space-y-2 mb-4">

@@ -1,5 +1,8 @@
 import { LucideIcon, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 interface CourseCardProps {
   title: string;
@@ -11,50 +14,97 @@ interface CourseCardProps {
 }
 
 export function CourseCard({ title, description, icon: Icon, href, number, comingSoon }: CourseCardProps) {
-  const CardContent = (
-    <div className="p-3 sm:p-4 h-full flex flex-col items-center text-center justify-start relative">
-      {comingSoon && (
-        <div className="absolute top-2 right-2 z-10">
-          <span className="bg-primary text-primary-foreground text-[9px] sm:text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full">
-            Soon
-          </span>
-        </div>
-      )}
-      <div className={`mb-2 sm:mb-3 flex-shrink-0 ${comingSoon ? 'opacity-50' : ''}`}>
-        <div className="p-2 sm:p-2.5 rounded-lg bg-primary/10">
-          <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-primary" strokeWidth={2} />
-        </div>
-      </div>
-      {number && (
-        <h4 className={`text-primary font-semibold text-xs sm:text-sm mb-1 flex-shrink-0 ${comingSoon ? 'opacity-50' : ''}`}>
-          {number}
-        </h4>
-      )}
-      <h3 className={`text-foreground font-semibold text-sm sm:text-base mb-1.5 sm:mb-2 leading-tight flex-shrink-0 line-clamp-2 ${comingSoon ? 'opacity-50' : ''}`}>
-        {title}
-      </h3>
-      <p className={`text-muted-foreground leading-relaxed text-[10px] sm:text-xs line-clamp-2 ${comingSoon ? 'opacity-50' : ''}`}>
-        {description}
-      </p>
-      {!comingSoon && href && (
-        <ChevronRight className="absolute bottom-2 right-2 w-4 h-4 text-primary/50" />
-      )}
-    </div>
-  );
-
-  if (href && !comingSoon) {
-    return (
-      <Link to={href} className="block h-full">
-        <div className="group relative overflow-hidden bg-card/50 rounded-lg active:scale-[0.98] active:bg-card/70 transition-all duration-200 cursor-pointer min-h-[140px] sm:min-h-[160px] flex flex-col touch-manipulation">
-          {CardContent}
-        </div>
-      </Link>
-    );
-  }
+  const CardWrapper = ({ children }: { children: React.ReactNode }) => {
+    if (href && !comingSoon) {
+      return (
+        <Link to={href} className="block h-full">
+          {children}
+        </Link>
+      );
+    }
+    return <>{children}</>;
+  };
 
   return (
-    <div className={`group relative overflow-hidden bg-card/30 rounded-lg transition-all duration-200 min-h-[140px] sm:min-h-[160px] flex flex-col ${comingSoon ? 'cursor-not-allowed' : 'cursor-pointer touch-manipulation'}`}>
-      {CardContent}
-    </div>
+    <CardWrapper>
+      <Card
+        className={cn(
+          "group relative overflow-hidden transition-all duration-300 h-full min-h-[180px]",
+          "bg-white/5 border-white/10",
+          comingSoon
+            ? "opacity-60 cursor-not-allowed"
+            : "hover:bg-white/10 hover:border-white/20 active:scale-[0.98] cursor-pointer hover:shadow-lg hover:shadow-black/20"
+        )}
+      >
+        {/* Accent line at top */}
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-elec-yellow/50 to-transparent" />
+
+        {/* Hover glow effect */}
+        {!comingSoon && (
+          <div className="absolute top-0 right-0 w-24 h-24 rounded-full blur-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 bg-gradient-to-br from-elec-yellow to-amber-500" />
+        )}
+
+        {/* Coming Soon badge */}
+        {comingSoon && (
+          <div className="absolute top-2 right-2 z-10">
+            <Badge className="bg-white/10 text-white/60 border-white/20 text-[10px] px-1.5 py-0 h-4">
+              Coming Soon
+            </Badge>
+          </div>
+        )}
+
+        <CardContent className="relative p-4 h-full flex flex-col">
+          {/* Icon container */}
+          <div className={cn(
+            "p-2.5 rounded-xl mb-3 w-fit transition-colors bg-gradient-to-br border border-white/10",
+            comingSoon
+              ? "from-elec-yellow/5 to-amber-500/5"
+              : "from-elec-yellow/20 to-amber-500/20 group-hover:from-elec-yellow/30 group-hover:to-amber-500/30"
+          )}>
+            <Icon className={cn(
+              "h-5 w-5",
+              comingSoon ? "text-elec-yellow/50" : "text-elec-yellow"
+            )} />
+          </div>
+
+          {/* Module number */}
+          {number && (
+            <span className={cn(
+              "text-xs font-semibold mb-1",
+              comingSoon ? "text-elec-yellow/50" : "text-elec-yellow"
+            )}>
+              {number}
+            </span>
+          )}
+
+          {/* Title */}
+          <h3 className={cn(
+            "font-semibold text-sm mb-2 leading-tight line-clamp-2 transition-colors",
+            comingSoon
+              ? "text-white/50"
+              : "text-white group-hover:text-elec-yellow/90"
+          )}>
+            {title}
+          </h3>
+
+          {/* Description */}
+          <p className={cn(
+            "text-xs leading-relaxed line-clamp-2 flex-grow",
+            comingSoon ? "text-white/30" : "text-white/50"
+          )}>
+            {description}
+          </p>
+
+          {/* Arrow indicator */}
+          {!comingSoon && href && (
+            <div className="mt-3 flex justify-end">
+              <div className="p-1 rounded-full bg-white/5 group-hover:bg-white/10 transition-colors">
+                <ChevronRight className="h-4 w-4 text-white/40 group-hover:text-elec-yellow transition-colors" />
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </CardWrapper>
   );
 }

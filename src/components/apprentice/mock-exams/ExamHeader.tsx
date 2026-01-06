@@ -33,7 +33,7 @@ const ExamHeader: React.FC<ExamHeaderProps> = ({
     <>
       <div className="flex justify-between items-center">
         <div>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Question {currentQuestionIndex + 1} of {totalQuestions}
           </p>
         </div>

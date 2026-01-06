@@ -128,7 +128,7 @@ const EarthingBondingSection = ({ formData, onUpdate, isOpen = true, onToggle }:
                     type="number"
                     step="0.01"
                     min="0"
-                    className="h-11 text-base touch-manipulation border-gray-300 focus:border-amber-500 focus:ring-amber-500"
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500"
                   />
                   <p className="text-xs text-muted-foreground mt-1">
                     Measured in Ohms (Ω). Typical values: TT systems &lt;200Ω
@@ -154,7 +154,7 @@ const EarthingBondingSection = ({ formData, onUpdate, isOpen = true, onToggle }:
                     value={formData.mainBondingSize || ''} 
                     onValueChange={(value) => onUpdate('mainBondingSize', value)}
                   >
-                    <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-amber-500 focus:ring-amber-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                    <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                       <SelectValue placeholder="Select conductor size" />
                     </SelectTrigger>
                     <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
@@ -180,7 +180,7 @@ const EarthingBondingSection = ({ formData, onUpdate, isOpen = true, onToggle }:
                       value={formData.mainBondingSizeCustom || ''}
                       onChange={(e) => onUpdate('mainBondingSizeCustom', e.target.value)}
                       placeholder="e.g., 35mm²"
-                      className="h-11 text-base touch-manipulation border-gray-300 focus:border-amber-500 focus:ring-amber-500"
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500"
                     />
                   </div>
                 )}
@@ -193,7 +193,7 @@ const EarthingBondingSection = ({ formData, onUpdate, isOpen = true, onToggle }:
                     value={formData.bondingCompliance || ''} 
                     onValueChange={(value) => onUpdate('bondingCompliance', value)}
                   >
-                    <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-amber-500 focus:ring-amber-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                    <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                       <SelectValue placeholder="Select compliance status" />
                     </SelectTrigger>
                     <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
@@ -284,7 +284,7 @@ const EarthingBondingSection = ({ formData, onUpdate, isOpen = true, onToggle }:
                       value={otherBonding}
                       onChange={(e) => handleOtherBondingChange(e.target.value)}
                       placeholder="e.g., Lightning protection, Metal pipework"
-                      className="h-11 text-base touch-manipulation border-gray-300 focus:border-amber-500 focus:ring-amber-500"
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500"
                     />
                   </div>
                   <p className="text-xs text-muted-foreground mt-2">
@@ -311,7 +311,7 @@ const EarthingBondingSection = ({ formData, onUpdate, isOpen = true, onToggle }:
                     value={formData.supplementaryBondingSize || ''} 
                     onValueChange={(value) => onUpdate('supplementaryBondingSize', value)}
                   >
-                    <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-amber-500 focus:ring-amber-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                    <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                       <SelectValue placeholder="Select conductor size" />
                     </SelectTrigger>
                     <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
@@ -338,7 +338,7 @@ const EarthingBondingSection = ({ formData, onUpdate, isOpen = true, onToggle }:
                       value={formData.supplementaryBondingSizeCustom || ''}
                       onChange={(e) => onUpdate('supplementaryBondingSizeCustom', e.target.value)}
                       placeholder="e.g., 16mm²"
-                      className="h-11 text-base touch-manipulation border-gray-300 focus:border-amber-500 focus:ring-amber-500"
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500"
                     />
                   </div>
                 )}
@@ -351,7 +351,7 @@ const EarthingBondingSection = ({ formData, onUpdate, isOpen = true, onToggle }:
                     value={formData.equipotentialBonding || ''} 
                     onValueChange={(value) => onUpdate('equipotentialBonding', value)}
                   >
-                    <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-amber-500 focus:ring-amber-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                    <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                       <SelectValue placeholder="Select status" />
                     </SelectTrigger>
                     <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">

@@ -114,7 +114,7 @@ const SchedulePlanningTab = () => {
                     <IconComponent className="h-6 w-6 text-white" />
                     <div>
                       <h3 className="text-lg font-semibold text-white">{template.title}</h3>
-                      <p className="text-sm text-muted-foreground">{template.description}</p>
+                      <p className="text-sm text-white">{template.description}</p>
                     </div>
                   </div>
                   
@@ -135,7 +135,7 @@ const SchedulePlanningTab = () => {
           </div>
 
           {selectedTemplate && (
-            <div className="mt-6 border border-elec-yellow/20 rounded-lg p-6 bg-elec-gray">
+            <div className="mt-6 border border-elec-yellow/20 rounded-lg p-6 bg-white/5">
               <h4 className="font-semibold text-elec-yellow mb-4">
                 {scheduleTemplates.find(t => t.id === selectedTemplate)?.title} - Sample Day
               </h4>
@@ -145,7 +145,7 @@ const SchedulePlanningTab = () => {
                     <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30">
                       {time}
                     </Badge>
-                    <span className="text-sm text-muted-foreground">{activity}</span>
+                    <span className="text-sm text-white">{activity}</span>
                   </div>
                 ))}
               </div>
@@ -154,7 +154,7 @@ const SchedulePlanningTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <CheckSquare className="h-6 w-6 text-elec-yellow" />
@@ -171,11 +171,11 @@ const SchedulePlanningTab = () => {
                     {tool.time}
                   </Badge>
                 </div>
-                <p className="text-sm text-muted-foreground mb-4">{tool.description}</p>
+                <p className="text-sm text-white mb-4">{tool.description}</p>
                 
                 <ul className="space-y-2">
                   {tool.steps.map((step, stepIndex) => (
-                    <li key={stepIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                    <li key={stepIndex} className="text-sm text-white flex items-start gap-2">
                       <div className="w-1 h-1 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                       {step}
                     </li>
@@ -187,7 +187,7 @@ const SchedulePlanningTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">Site-Specific Planning</CardTitle>
         </CardHeader>
@@ -195,7 +195,7 @@ const SchedulePlanningTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="border border-elec-yellow/20 rounded-lg p-4">
               <h4 className="font-semibold text-white mb-3">🏠 Domestic Sites</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
+              <ul className="space-y-2 text-sm text-white">
                 <li>• Usually 8:00-16:30 working hours</li>
                 <li>• More predictable schedule</li>
                 <li>• Plan study time for 17:30-19:30</li>
@@ -205,7 +205,7 @@ const SchedulePlanningTab = () => {
             
             <div className="border border-elec-yellow/20 rounded-lg p-4">
               <h4 className="font-semibold text-white mb-3">🏢 Commercial Sites</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
+              <ul className="space-y-2 text-sm text-white">
                 <li>• May require early starts (6:00-7:00)</li>
                 <li>• Longer days possible</li>
                 <li>• Plan study for evenings or early mornings</li>

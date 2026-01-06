@@ -151,7 +151,7 @@ const SupportNetworkTab = () => {
           </div>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground mb-4">
+          <p className="text-white/80 mb-4">
             Building a strong support network is crucial for mental wellbeing. You don't have to face 
             challenges alone - there are people, services, and communities ready to help.
           </p>
@@ -175,7 +175,7 @@ const SupportNetworkTab = () => {
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                   <div className="flex-1">
                     <h4 className="font-semibold text-foreground text-sm">{service.name}</h4>
-                    <p className="text-xs text-muted-foreground mb-2">{service.description}</p>
+                    <p className="text-xs text-white/80 mb-2">{service.description}</p>
                     <div className="flex flex-wrap gap-4 text-xs">
                       <span className="flex items-center gap-1">
                         <Phone className="h-3 w-3" />
@@ -183,7 +183,7 @@ const SupportNetworkTab = () => {
                       </span>
                       <span className="flex items-center gap-1">
                         <Clock className="h-3 w-3" />
-                        <span className="text-muted-foreground">{service.availability}</span>
+                        <span className="text-white/80">{service.availability}</span>
                       </span>
                     </div>
                   </div>
@@ -211,7 +211,7 @@ const SupportNetworkTab = () => {
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                   <div className="flex-1">
                     <h4 className="font-semibold text-foreground text-sm">{service.name}</h4>
-                    <p className="text-xs text-muted-foreground mb-2">{service.description}</p>
+                    <p className="text-xs text-white/80 mb-2">{service.description}</p>
                     <div className="flex items-center gap-1 text-xs">
                       <Phone className="h-3 w-3" />
                       <span className="font-medium text-blue-300">{service.contact}</span>
@@ -241,14 +241,14 @@ const SupportNetworkTab = () => {
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                   <div className="flex-1">
                     <h4 className="font-semibold text-foreground text-sm">{service.name}</h4>
-                    <p className="text-xs text-muted-foreground mb-2">{service.description}</p>
+                    <p className="text-xs text-white/80 mb-2">{service.description}</p>
                     <div className="space-y-1 text-xs">
                       <div className="flex items-center gap-1">
                         <Phone className="h-3 w-3" />
                         <span className="font-medium text-purple-300">{service.contact}</span>
                       </div>
                       {service.services && (
-                        <p className="text-muted-foreground">Services: {service.services}</p>
+                        <p className="text-white/80">Services: {service.services}</p>
                       )}
                     </div>
                   </div>
@@ -276,7 +276,7 @@ const SupportNetworkTab = () => {
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                   <div className="flex-1">
                     <h4 className="font-semibold text-foreground text-sm">{service.name}</h4>
-                    <p className="text-xs text-muted-foreground mb-2">{service.description}</p>
+                    <p className="text-xs text-white/80 mb-2">{service.description}</p>
                     <div className="space-y-1 text-xs">
                       <div className="flex items-center gap-1">
                         <Phone className="h-3 w-3" />
@@ -285,11 +285,11 @@ const SupportNetworkTab = () => {
                       {service.waitTime && (
                         <div className="flex items-center gap-1">
                           <Clock className="h-3 w-3" />
-                          <span className="text-muted-foreground">{service.waitTime}</span>
+                          <span className="text-white/80">{service.waitTime}</span>
                         </div>
                       )}
                       {service.services && (
-                        <p className="text-muted-foreground">Services: {service.services}</p>
+                        <p className="text-white/80">Services: {service.services}</p>
                       )}
                     </div>
                   </div>
@@ -317,7 +317,7 @@ const SupportNetworkTab = () => {
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                   <div className="flex-1">
                     <h4 className="font-semibold text-foreground text-sm">{service.name}</h4>
-                    <p className="text-xs text-muted-foreground mb-2">{service.description}</p>
+                    <p className="text-xs text-white/80 mb-2">{service.description}</p>
                     <div className="space-y-1 text-xs">
                       {service.contact && (
                         <div className="flex items-center gap-1">
@@ -328,23 +328,23 @@ const SupportNetworkTab = () => {
                       {service.meetingTime && (
                         <div className="flex items-center gap-1">
                           <Clock className="h-3 w-3" />
-                          <span className="text-muted-foreground">{service.meetingTime}</span>
+                          <span className="text-white/80">{service.meetingTime}</span>
                         </div>
                       )}
                       {service.availability && (
                         <div className="flex items-center gap-1">
                           <Clock className="h-3 w-3" />
-                          <span className="text-muted-foreground">{service.availability}</span>
+                          <span className="text-white/80">{service.availability}</span>
                         </div>
                       )}
                       {service.locations && (
                         <div className="flex items-center gap-1">
                           <MapPin className="h-3 w-3" />
-                          <span className="text-muted-foreground">{service.locations}</span>
+                          <span className="text-white/80">{service.locations}</span>
                         </div>
                       )}
                       {service.description2 && (
-                        <p className="text-muted-foreground">{service.description2}</p>
+                        <p className="text-white/80">{service.description2}</p>
                       )}
                     </div>
                   </div>
@@ -373,17 +373,17 @@ const SupportNetworkTab = () => {
             <div className="text-center p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
               <Phone className="h-6 w-6 text-blue-400 mx-auto mb-2" />
               <div className="text-sm font-medium text-foreground mb-1">NHS 111 Option 2</div>
-              <div className="text-xs text-muted-foreground">24/7 mental health helpline</div>
+              <div className="text-xs text-white/80">24/7 mental health helpline</div>
             </div>
             <div className="text-center p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
               <MapPin className="h-6 w-6 text-blue-400 mx-auto mb-2" />
               <div className="text-sm font-medium text-foreground mb-1">Hub of Hope</div>
-              <div className="text-xs text-muted-foreground">Find local mental health services</div>
+              <div className="text-xs text-white/80">Find local mental health services</div>
             </div>
             <div className="text-center p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
               <Users className="h-6 w-6 text-blue-400 mx-auto mb-2" />
               <div className="text-sm font-medium text-foreground mb-1">Andy's Man Club</div>
-              <div className="text-xs text-muted-foreground">120+ local support groups</div>
+              <div className="text-xs text-white/80">120+ local support groups</div>
             </div>
           </div>
         </CardContent>

@@ -683,7 +683,7 @@ const CommercialOverviewCards = () => {
       {/* Quick Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {overviewStats.map((stat, index) => (
-          <Card key={index} className="border-elec-yellow/30 bg-elec-gray">
+          <Card key={index} className="border-elec-yellow/30 bg-white/5">
             <CardContent className="p-4">
               <div className="flex items-center gap-2 mb-2">
                 <stat.icon className="h-4 w-4 text-elec-yellow" />
@@ -699,7 +699,7 @@ const CommercialOverviewCards = () => {
       {/* SECTION 1: WHAT IS COMMERCIAL ELECTRICAL WORK? */}
       {/* ============================================ */}
 
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-3">
             <div className="p-2 bg-elec-yellow/20 rounded-lg">
@@ -857,7 +857,7 @@ const CommercialOverviewCards = () => {
       {/* SECTION 2: OFFICE FIT-OUTS */}
       {/* ============================================ */}
 
-      <Card className="border-blue-500/30 bg-elec-gray">
+      <Card className="border-blue-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-3">
             <div className="p-2 bg-blue-500/20 rounded-lg">
@@ -1056,7 +1056,7 @@ const CommercialOverviewCards = () => {
       {/* SECTION 3: RETAIL & SHOP INSTALLATIONS */}
       {/* ============================================ */}
 
-      <Card className="border-pink-500/30 bg-elec-gray">
+      <Card className="border-pink-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-3">
             <div className="p-2 bg-pink-500/20 rounded-lg">
@@ -1252,7 +1252,7 @@ const CommercialOverviewCards = () => {
       {/* SECTION 4: RESTAURANT & COMMERCIAL KITCHEN */}
       {/* ============================================ */}
 
-      <Card className="border-amber-500/30 bg-elec-gray">
+      <Card className="border-amber-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-3">
             <div className="p-2 bg-amber-500/20 rounded-lg">
@@ -1448,7 +1448,7 @@ const CommercialOverviewCards = () => {
       {/* SECTION 5: HOTELS & HOSPITALITY */}
       {/* ============================================ */}
 
-      <Card className="border-purple-500/30 bg-elec-gray">
+      <Card className="border-purple-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-3">
             <div className="p-2 bg-purple-500/20 rounded-lg">
@@ -1631,7 +1631,7 @@ const CommercialOverviewCards = () => {
       {/* ============================================ */}
 
       {/* Project Types Guide */}
-      <Card className="border-blue-500/30 bg-elec-gray">
+      <Card className="border-blue-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Building className="h-6 w-6 text-blue-400" />
@@ -1665,7 +1665,7 @@ const CommercialOverviewCards = () => {
       </Card>
 
       {/* Compliance Requirements */}
-      <Card className="border-orange-500/30 bg-elec-gray">
+      <Card className="border-orange-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <FileCheck className="h-6 w-6 text-orange-400" />
@@ -1697,7 +1697,7 @@ const CommercialOverviewCards = () => {
       </Card>
 
       {/* Pre-Project Checklist */}
-      <Card className="border-green-500/30 bg-elec-gray">
+      <Card className="border-green-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <CheckCircle className="h-6 w-6 text-green-400" />

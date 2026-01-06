@@ -313,7 +313,7 @@ export const ResultsPreview: React.FC<ResultsPreviewProps> = ({
         <Button
           size="lg"
           onClick={() => onAccept(boardInfo, circuits)}
-          className={cn('w-full gap-2', isMobile ? 'h-14' : 'h-12')}
+          className={cn('w-full gap-2 active:scale-[0.98] transition-transform', isMobile ? 'h-14' : 'h-12')}
         >
           <Check className="h-5 w-5" />
           Accept All ({circuits.length} circuits)

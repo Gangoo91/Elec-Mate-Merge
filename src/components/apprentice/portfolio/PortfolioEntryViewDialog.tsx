@@ -47,7 +47,7 @@ const PortfolioEntryViewDialog = ({ entry, onClose, onEdit }: PortfolioEntryView
           <div className="flex items-start justify-between">
             <div>
               <DialogTitle className="text-xl mb-2">{entry.title}</DialogTitle>
-              <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <div className="flex items-center gap-4 text-sm text-white">
                 <div className="flex items-center gap-1">
                   <Calendar className="h-4 w-4" />
                   {formatDate(entry.dateCreated)}
@@ -84,7 +84,7 @@ const PortfolioEntryViewDialog = ({ entry, onClose, onEdit }: PortfolioEntryView
               <CardTitle className="text-lg">Description</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground whitespace-pre-wrap">{entry.description}</p>
+              <p className="text-white whitespace-pre-wrap">{entry.description}</p>
             </CardContent>
           </Card>
 
@@ -139,7 +139,7 @@ const PortfolioEntryViewDialog = ({ entry, onClose, onEdit }: PortfolioEntryView
                   {entry.learningOutcomes.map((outcome, index) => (
                     <li key={index} className="flex items-start gap-2">
                       <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                      <span className="text-muted-foreground">{outcome}</span>
+                      <span className="text-white">{outcome}</span>
                     </li>
                   ))}
                 </ul>
@@ -158,7 +158,7 @@ const PortfolioEntryViewDialog = ({ entry, onClose, onEdit }: PortfolioEntryView
                   {entry.assessmentCriteria.map((criterion, index) => (
                     <li key={index} className="flex items-start gap-2">
                       <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                      <span className="text-muted-foreground">{criterion}</span>
+                      <span className="text-white">{criterion}</span>
                     </li>
                   ))}
                 </ul>
@@ -173,7 +173,7 @@ const PortfolioEntryViewDialog = ({ entry, onClose, onEdit }: PortfolioEntryView
                 <CardTitle className="text-lg">Reflection</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground whitespace-pre-wrap">{entry.reflection}</p>
+                <p className="text-white whitespace-pre-wrap">{entry.reflection}</p>
               </CardContent>
             </Card>
           )}
@@ -195,7 +195,7 @@ const PortfolioEntryViewDialog = ({ entry, onClose, onEdit }: PortfolioEntryView
                         <FileText className="h-5 w-5 text-elec-yellow" />
                         <div>
                           <p className="font-medium">{file.name}</p>
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-xs text-white">
                             {(file.size / 1024).toFixed(1)} KB • {new Date(file.uploadDate).toLocaleDateString()}
                           </p>
                         </div>
@@ -218,7 +218,7 @@ const PortfolioEntryViewDialog = ({ entry, onClose, onEdit }: PortfolioEntryView
                 <CardTitle className="text-lg">Supervisor Feedback</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground whitespace-pre-wrap">{entry.supervisorFeedback}</p>
+                <p className="text-white whitespace-pre-wrap">{entry.supervisorFeedback}</p>
               </CardContent>
             </Card>
           )}

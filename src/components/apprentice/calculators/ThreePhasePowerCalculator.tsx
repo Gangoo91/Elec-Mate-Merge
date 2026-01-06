@@ -373,7 +373,7 @@ const ThreePhasePowerCalculator = () => {
         <Collapsible open={advancedOpen} onOpenChange={setAdvancedOpen}>
           <CollapsibleTrigger className="w-full p-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between hover:bg-white/10 transition-colors">
             <span className="text-sm font-medium text-white">Advanced Options</span>
-            <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform", advancedOpen && "rotate-180")} />
+            <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform", advancedOpen && "rotate-180")} />
           </CollapsibleTrigger>
           <CollapsibleContent className="mt-3 p-4 rounded-xl bg-white/5 border border-white/10 space-y-3">
             <h5 className="text-sm font-medium text-amber-400">Current Unbalance Analysis</h5>
@@ -445,7 +445,7 @@ const ThreePhasePowerCalculator = () => {
               >
                 {result.apparentPower.toFixed(2)} kVA
               </div>
-              <p className="text-xs text-white/40 mt-1">φ = {result.phaseAngle.toFixed(1)}° • √3 = 1.732</p>
+              <p className="text-xs text-white/70 mt-1">φ = {result.phaseAngle.toFixed(1)}° • √3 = 1.732</p>
             </div>
 
             {/* Power Triangle */}
@@ -514,7 +514,7 @@ const ThreePhasePowerCalculator = () => {
                 <span className="text-white/60">Suggested Protection:</span>
                 <span className="text-amber-400 font-mono">{result.protectiveDevice}</span>
               </div>
-              <p className="text-xs text-white/40 mt-1">*Indicative only - proper circuit design required per BS 7671</p>
+              <p className="text-xs text-white/70 mt-1">*Indicative only - proper circuit design required per BS 7671</p>
             </div>
           </CalculatorResult>
 
@@ -526,7 +526,7 @@ const ThreePhasePowerCalculator = () => {
                   <Zap className="h-4 w-4 text-purple-400" />
                   <span className="text-sm sm:text-base font-medium text-purple-300">How It Worked Out</span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showCalculation && "rotate-180")} />
+                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showCalculation && "rotate-180")} />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0 space-y-3">
                 <div className="space-y-2">
@@ -613,7 +613,7 @@ const ThreePhasePowerCalculator = () => {
                   <Info className="h-4 w-4 text-blue-400" />
                   <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showGuidance && "rotate-180")} />
+                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showGuidance && "rotate-180")} />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0 space-y-2">
                 <p className="text-sm text-blue-200/80">
@@ -639,7 +639,7 @@ const ThreePhasePowerCalculator = () => {
                   <BookOpen className="h-4 w-4 text-amber-400" />
                   <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 Regs at a Glance</span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showBsRegs && "rotate-180")} />
+                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showBsRegs && "rotate-180")} />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0">
                 <div className="space-y-2 text-sm text-amber-200/80">

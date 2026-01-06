@@ -152,11 +152,11 @@ const AM2Module3Section3 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
+      <div className="border-b border-white/10 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 3
@@ -173,10 +173,10 @@ const AM2Module3Section3 = () => {
             <Lightbulb className="w-4 h-4" />
             Module 3 – Section 3
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-6">
             Lighting Circuits – One-Way, Two-Way, Intermediate
           </h1>
-          <p className="text-base text-muted-foreground mb-8 leading-relaxed">
+          <p className="text-base text-white mb-8 leading-relaxed">
             Master lighting circuit installation for AM2 assessment - one-way, two-way, and intermediate switching with professional workmanship standards.
           </p>
         </div>
@@ -202,16 +202,16 @@ const AM2Module3Section3 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm text-white mb-4">
               By the end of this section, you should be able to:
             </p>
-            <ul className="space-y-2 text-xs sm:text-sm text-foreground">
+            <ul className="space-y-2 text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Install one-way, two-way, and intermediate lighting circuits as per AM2 drawings and specifications
@@ -241,7 +241,7 @@ const AM2Module3Section3 = () => {
         </Card>
 
         {/* One-Way Switching */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Lightbulb className="w-5 h-5" />
@@ -251,11 +251,11 @@ const AM2Module3Section3 = () => {
 
             {/* Detailed Step-by-Step Installation */}
             <div>
-              <h3 className="font-medium text-foreground mb-3">Detailed Installation Steps</h3>
+              <h3 className="font-medium text-white mb-3">Detailed Installation Steps</h3>
               <div className="space-y-4">
-                <div className="border border-border/20 rounded-lg p-4">
+                <div className="border border-white/10 rounded-lg p-4">
                   <h4 className="font-medium text-elec-yellow mb-2">Phase 1: Cable Installation & Preparation</h4>
-                  <ol className="space-y-2 text-sm text-muted-foreground">
+                  <ol className="space-y-2 text-sm text-white">
                     <li className="flex gap-2">
                       <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
                       <div>
@@ -287,9 +287,9 @@ const AM2Module3Section3 = () => {
                   </ol>
                 </div>
 
-                <div className="border border-border/20 rounded-lg p-4">
+                <div className="border border-white/10 rounded-lg p-4">
                   <h4 className="font-medium text-elec-yellow mb-2">Phase 2: Switch Connections</h4>
-                  <ol className="space-y-2 text-sm text-muted-foreground" start={5}>
+                  <ol className="space-y-2 text-sm text-white" start={5}>
                     <li className="flex gap-2">
                       <span className="font-medium text-elec-yellow min-w-[20px]">5.</span>
                       <div>
@@ -336,8 +336,8 @@ const AM2Module3Section3 = () => {
               </ul>
             </div>
             
-            <div className="bg-card border border-elec-yellow/20 rounded-lg p-4 mt-6">
-              <p className="text-sm text-muted-foreground">
+            <div className="bg-transparent border border-elec-yellow/20 rounded-lg p-4 mt-6">
+              <p className="text-sm text-white">
                 <strong>Key Point:</strong> In one-way switching, only the live conductor is switched. The neutral must go directly to the fitting, not through the switch terminals.
               </p>
             </div>
@@ -353,7 +353,7 @@ const AM2Module3Section3 = () => {
         />
 
         {/* Two-Way Switching */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Zap className="w-5 h-5" />
@@ -363,11 +363,11 @@ const AM2Module3Section3 = () => {
 
             {/* Detailed Installation Steps */}
             <div>
-              <h3 className="font-medium text-foreground mb-3">Complete Installation Process</h3>
+              <h3 className="font-medium text-white mb-3">Complete Installation Process</h3>
               <div className="space-y-4">
-                <div className="border border-border/20 rounded-lg p-4">
+                <div className="border border-white/10 rounded-lg p-4">
                   <h4 className="font-medium text-elec-yellow mb-2">Phase 1: Cable Installation & Planning</h4>
-                  <ol className="space-y-2 text-sm text-muted-foreground">
+                  <ol className="space-y-2 text-sm text-white">
                     <li className="flex gap-2">
                       <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
                       <div>
@@ -392,9 +392,9 @@ const AM2Module3Section3 = () => {
                   </ol>
                 </div>
 
-                <div className="border border-border/20 rounded-lg p-4">
+                <div className="border border-white/10 rounded-lg p-4">
                   <h4 className="font-medium text-elec-yellow mb-2">Phase 2: Switch 1 Connections (Feed Point)</h4>
-                  <ol className="space-y-2 text-sm text-muted-foreground" start={4}>
+                  <ol className="space-y-2 text-sm text-white" start={4}>
                     <li className="flex gap-2">
                       <span className="font-medium text-elec-yellow min-w-[20px]">4.</span>
                       <div>
@@ -419,9 +419,9 @@ const AM2Module3Section3 = () => {
                   </ol>
                 </div>
 
-                <div className="border border-border/20 rounded-lg p-4">
+                <div className="border border-white/10 rounded-lg p-4">
                   <h4 className="font-medium text-elec-yellow mb-2">Phase 3: Switch 2 Connections (Load Point)</h4>
-                  <ol className="space-y-2 text-sm text-muted-foreground" start={7}>
+                  <ol className="space-y-2 text-sm text-white" start={7}>
                     <li className="flex gap-2">
                       <span className="font-medium text-elec-yellow min-w-[20px]">7.</span>
                       <div>
@@ -461,8 +461,8 @@ const AM2Module3Section3 = () => {
               </ul>
             </div>
             
-            <div className="bg-card border border-amber-500/20 rounded-lg p-4 mt-6">
-              <p className="text-sm text-muted-foreground">
+            <div className="bg-transparent border border-amber-500/20 rounded-lg p-4 mt-6">
+              <p className="text-sm text-white">
                 <strong>Common Error:</strong> Swapping L1 and L2 connections means one switch position won't work. Always check both switches operate the light in both positions.
               </p>
             </div>
@@ -478,7 +478,7 @@ const AM2Module3Section3 = () => {
         />
 
         {/* Intermediate Switching */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CircuitBoard className="w-5 h-5" />
@@ -488,11 +488,11 @@ const AM2Module3Section3 = () => {
 
             {/* Detailed Installation Steps */}
             <div>
-              <h3 className="font-medium text-foreground mb-3">Complete Installation Process</h3>
+              <h3 className="font-medium text-white mb-3">Complete Installation Process</h3>
               <div className="space-y-4">
-                <div className="border border-border/20 rounded-lg p-4">
+                <div className="border border-white/10 rounded-lg p-4">
                   <h4 className="font-medium text-elec-yellow mb-2">Phase 1: Circuit Planning</h4>
-                  <ol className="space-y-2 text-sm text-muted-foreground">
+                  <ol className="space-y-2 text-sm text-white">
                     <li className="flex gap-2">
                       <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
                       <div>
@@ -517,9 +517,9 @@ const AM2Module3Section3 = () => {
                   </ol>
                 </div>
 
-                <div className="border border-border/20 rounded-lg p-4">
+                <div className="border border-white/10 rounded-lg p-4">
                   <h4 className="font-medium text-elec-yellow mb-2">Phase 2: Intermediate Switch Connections</h4>
-                  <ol className="space-y-2 text-sm text-muted-foreground" start={4}>
+                  <ol className="space-y-2 text-sm text-white" start={4}>
                     <li className="flex gap-2">
                       <span className="font-medium text-elec-yellow min-w-[20px]">4.</span>
                       <div>
@@ -551,9 +551,9 @@ const AM2Module3Section3 = () => {
                   </ol>
                 </div>
 
-                <div className="border border-border/20 rounded-lg p-4">
+                <div className="border border-white/10 rounded-lg p-4">
                   <h4 className="font-medium text-elec-yellow mb-2">Phase 3: Final Two-Way Switch</h4>
-                  <ol className="space-y-2 text-sm text-muted-foreground" start={8}>
+                  <ol className="space-y-2 text-sm text-white" start={8}>
                     <li className="flex gap-2">
                       <span className="font-medium text-elec-yellow min-w-[20px]">8.</span>
                       <div>
@@ -581,9 +581,9 @@ const AM2Module3Section3 = () => {
             </div>
 
             {/* How It Works */}
-            <div className="bg-background/50 p-4 rounded-lg mt-6">
-              <h3 className="font-medium text-foreground mb-3">How Intermediate Switching Works</h3>
-              <div className="space-y-3 text-sm text-muted-foreground">
+            <div className="bg-[#1a1a1a]/50 p-4 rounded-lg mt-6">
+              <h3 className="font-medium text-white mb-3">How Intermediate Switching Works</h3>
+              <div className="space-y-3 text-sm text-white">
                 <p>
                   <strong>Internal Crossing:</strong> The intermediate switch internally crosses its connections when operated. This allows it to "reverse" the strapper signals between the two-way switches.
                 </p>
@@ -623,7 +623,7 @@ const AM2Module3Section3 = () => {
         />
 
         {/* Testing Requirements */}
-        <Card className="bg-card border-elec-yellow/30 mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-8">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <TestTube2 className="w-5 h-5" />
@@ -632,20 +632,20 @@ const AM2Module3Section3 = () => {
             
             <div className="space-y-4">
               <div>
-                <h3 className="font-medium text-foreground mb-2">Required Tests Before Energisation</h3>
+                <h3 className="font-medium text-white mb-2">Required Tests Before Energisation</h3>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-background/50 p-4 rounded-lg">
+                  <div className="bg-[#1a1a1a]/50 p-4 rounded-lg">
                     <h4 className="font-medium text-elec-yellow mb-2">Continuity Tests</h4>
-                    <ul className="space-y-1 text-sm text-muted-foreground">
+                    <ul className="space-y-1 text-sm text-white">
                       <li>• Protective conductor continuity</li>
                       <li>• Ring final circuit continuity (if applicable)</li>
                       <li>• Switched live continuity in all switch positions</li>
                       <li>• Neutral conductor continuity</li>
                     </ul>
                   </div>
-                  <div className="bg-background/50 p-4 rounded-lg">
+                  <div className="bg-[#1a1a1a]/50 p-4 rounded-lg">
                     <h4 className="font-medium text-elec-yellow mb-2">Other Required Tests</h4>
-                    <ul className="space-y-1 text-sm text-muted-foreground">
+                    <ul className="space-y-1 text-sm text-white">
                       <li>• Insulation resistance (≥1MΩ)</li>
                       <li>• Polarity at all relevant points</li>
                       <li>• Earth fault loop impedance</li>
@@ -655,7 +655,7 @@ const AM2Module3Section3 = () => {
                 </div>
               </div>
 
-              <div className="bg-card border border-amber-500/20 rounded-lg p-4">
+              <div className="bg-transparent border border-amber-500/20 rounded-lg p-4">
                 <h3 className="font-medium text-amber-800 dark:text-amber-200 mb-2">Testing Sequence for Lighting Circuits</h3>
                 <ol className="space-y-1 text-sm text-amber-700 dark:text-amber-300">
                   <li>1. Visual inspection - Check all connections, sleeving, mechanical security</li>
@@ -716,7 +716,7 @@ const AM2Module3Section3 = () => {
         </Card>
 
         {/* Final Quiz */}
-        <Card className="bg-card border-elec-yellow/30">
+        <Card className="bg-transparent border-elec-yellow/30">
           <div className="p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-6 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
@@ -730,7 +730,7 @@ const AM2Module3Section3 = () => {
         </Card>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="../section2">
               <ArrowLeft className="w-4 h-4 mr-2" />
@@ -738,7 +738,7 @@ const AM2Module3Section3 = () => {
             </Link>
           </Button>
           
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2 text-sm text-white">
             <Clock className="w-4 h-4" />
             Estimated reading time: 25-30 minutes
           </div>

@@ -124,7 +124,7 @@ const PayCalculator = () => {
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border-elec-yellow/20 bg-white/5">
       <CardHeader>
         <div className="flex items-center gap-2">
           <Calculator className="h-5 w-5 text-elec-yellow" />
@@ -205,7 +205,7 @@ const PayCalculator = () => {
                 id="student-loan"
                 checked={hasStudentLoan}
                 onChange={(e) => setHasStudentLoan(e.target.checked)}
-                className="w-4 h-4 text-elec-yellow bg-gray-100 border-gray-300 rounded focus:ring-elec-yellow"
+                className="w-4 h-4 text-elec-yellow bg-white/5 border-white/20 rounded focus:ring-elec-yellow"
               />
               <Label htmlFor="student-loan" className="text-sm">
                 I have a student loan (Plan 2)
@@ -226,17 +226,17 @@ const PayCalculator = () => {
                 <h5 className="text-sm font-medium text-elec-yellow mb-2">Gross Pay (Before Tax)</h5>
                 
                 <div className="flex justify-between items-center p-2 bg-elec-yellow/10 rounded-lg">
-                  <span className="text-xs text-muted-foreground">Hourly Rate:</span>
+                  <span className="text-xs text-white">Hourly Rate:</span>
                   <span className="font-bold text-elec-yellow text-sm">£{results.hourlyRate}</span>
                 </div>
                 
                 <div className="flex justify-between items-center p-2 bg-blue-500/10 rounded-lg">
-                  <span className="text-xs text-muted-foreground">Monthly Gross:</span>
+                  <span className="text-xs text-white">Monthly Gross:</span>
                   <span className="font-bold text-blue-400 text-sm">£{results.monthlyGross}</span>
                 </div>
                 
                 <div className="flex justify-between items-center p-2 bg-purple-500/10 rounded-lg">
-                  <span className="text-xs text-muted-foreground">Annual Gross:</span>
+                  <span className="text-xs text-white">Annual Gross:</span>
                   <span className="font-bold text-purple-400 text-sm">£{results.annualGross}</span>
                 </div>
               </div>
@@ -246,23 +246,23 @@ const PayCalculator = () => {
                 <h5 className="text-sm font-medium text-red-400 mb-2">Monthly Deductions</h5>
                 
                 <div className="flex justify-between items-center p-2 bg-red-500/10 rounded-lg">
-                  <span className="text-xs text-muted-foreground">Income Tax:</span>
+                  <span className="text-xs text-white">Income Tax:</span>
                   <span className="font-medium text-red-400 text-sm">-£{results.incomeTax}</span>
                 </div>
                 
                 <div className="flex justify-between items-center p-2 bg-red-500/10 rounded-lg">
-                  <span className="text-xs text-muted-foreground">National Insurance:</span>
+                  <span className="text-xs text-white">National Insurance:</span>
                   <span className="font-medium text-red-400 text-sm">-£{results.nationalInsurance}</span>
                 </div>
                 
                 <div className="flex justify-between items-center p-2 bg-red-500/10 rounded-lg">
-                  <span className="text-xs text-muted-foreground">Pension ({pensionContribution}%):</span>
+                  <span className="text-xs text-white">Pension ({pensionContribution}%):</span>
                   <span className="font-medium text-red-400 text-sm">-£{results.pension}</span>
                 </div>
                 
                 {hasStudentLoan && (
                   <div className="flex justify-between items-center p-2 bg-red-500/10 rounded-lg">
-                    <span className="text-xs text-muted-foreground">Student Loan:</span>
+                    <span className="text-xs text-white">Student Loan:</span>
                     <span className="font-medium text-red-400 text-sm">-£{results.studentLoan}</span>
                   </div>
                 )}
@@ -283,7 +283,7 @@ const PayCalculator = () => {
                 </div>
                 
                 <div className="flex justify-between items-center p-2 bg-green-500/10 rounded-lg">
-                  <span className="text-xs text-muted-foreground">Weekly Net Pay:</span>
+                  <span className="text-xs text-white">Weekly Net Pay:</span>
                   <span className="font-medium text-green-400 text-sm">£{results.weeklyNet}</span>
                 </div>
                 
@@ -293,7 +293,7 @@ const PayCalculator = () => {
                 </div>
               </div>
               
-              <div className="text-xs text-muted-foreground mt-3 space-y-1">
+              <div className="text-xs text-white mt-3 space-y-1">
                 <p>* Tax calculations based on 2025 UK rates</p>
                 <p>* Overtime assumes 5 hours/week at time-and-a-half rate</p>
                 <p>* Student loan deduction applies to Plan 2 (earnings over £27,295)</p>

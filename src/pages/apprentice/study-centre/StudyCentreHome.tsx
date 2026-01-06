@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { ModuleCard } from "@/components/shared/ModuleCard";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Search, Zap, BookOpen, Shield, Award, GraduationCap, CheckCircle, Settings, Info, AlertTriangle } from "lucide-react";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
+import { Search, Zap, BookOpen, Shield, Award, GraduationCap, CheckCircle, Settings, Info, AlertTriangle, Target, Flame, ChevronLeft } from "lucide-react";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 export default function StudyCentreHome() {
   const navigate = useNavigate();
@@ -21,7 +23,7 @@ export default function StudyCentreHome() {
       progress: 0,
       lessonsCount: 12,
       questionsCount: 250,
-      icon: <Shield className="h-4 w-4 text-primary" />
+      icon: <Shield className="h-4 w-4 text-blue-400" />
     },
     {
       id: "level2-module2",
@@ -32,7 +34,7 @@ export default function StudyCentreHome() {
       progress: 0,
       lessonsCount: 18,
       questionsCount: 250,
-      icon: <Zap className="h-4 w-4 text-primary" />
+      icon: <Zap className="h-4 w-4 text-blue-400" />
     },
     {
       id: "level2-module3",
@@ -43,7 +45,7 @@ export default function StudyCentreHome() {
       progress: 0,
       lessonsCount: 24,
       questionsCount: 250,
-      icon: <Settings className="h-4 w-4 text-primary" />
+      icon: <Settings className="h-4 w-4 text-blue-400" />
     },
     {
       id: "level2-module4",
@@ -54,7 +56,7 @@ export default function StudyCentreHome() {
       progress: 0,
       lessonsCount: 16,
       questionsCount: 250,
-      icon: <BookOpen className="h-4 w-4 text-primary" />
+      icon: <BookOpen className="h-4 w-4 text-blue-400" />
     },
     {
       id: "level2-module5",
@@ -65,7 +67,7 @@ export default function StudyCentreHome() {
       progress: 0,
       lessonsCount: 14,
       questionsCount: 250,
-      icon: <CheckCircle className="h-4 w-4 text-primary" />
+      icon: <CheckCircle className="h-4 w-4 text-blue-400" />
     },
     {
       id: "level2-module6",
@@ -76,7 +78,7 @@ export default function StudyCentreHome() {
       progress: 0,
       lessonsCount: 12,
       questionsCount: 250,
-      icon: <Zap className="h-4 w-4 text-amber-400" />
+      icon: <Zap className="h-4 w-4 text-purple-400" />
     },
     {
       id: "level2-module7",
@@ -87,7 +89,7 @@ export default function StudyCentreHome() {
       progress: 0,
       lessonsCount: 10,
       questionsCount: 250,
-      icon: <BookOpen className="h-4 w-4 text-primary" />
+      icon: <BookOpen className="h-4 w-4 text-blue-400" />
     }
   ];
 
@@ -102,7 +104,7 @@ export default function StudyCentreHome() {
       progress: 0,
       lessonsCount: 20,
       questionsCount: 400,
-      icon: <Award className="h-4 w-4 text-amber-400" />
+      icon: <Award className="h-4 w-4 text-elec-yellow" />
     },
     {
       id: "am2-mock",
@@ -136,169 +138,279 @@ export default function StudyCentreHome() {
   const totalQuestions = allModules.reduce((sum, m) => sum + m.questionsCount, 0);
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      {/* Back Button */}
-      <SmartBackButton />
+    <div className="min-h-screen pb-24 bg-elec-dark">
+      {/* Premium Hero Section */}
+      <div className="relative overflow-hidden">
+        {/* Dark gradient background matching sidebar */}
+        <div className="absolute inset-0 bg-gradient-to-br from-elec-dark via-neutral-900 to-elec-dark" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-600/10 via-transparent to-transparent" />
 
-      {/* Header */}
-      <div className="space-y-1">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight flex items-center gap-2">
-          <GraduationCap className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
-          Training Resources
-        </h1>
-        <p className="text-sm sm:text-base text-muted-foreground">
-          Study materials to support your Level 2 & AM2 preparation
-        </p>
-      </div>
-
-      {/* Important Notice */}
-      <div className="bg-amber-500/10 rounded-lg p-3 sm:p-4">
-        <div className="flex items-start gap-3">
-          <div className="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-            <Info className="h-4 w-4 text-amber-400" />
-          </div>
-          <div>
-            <p className="text-sm font-medium text-foreground mb-1">Training Aid Notice</p>
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              These materials are designed as a <strong className="text-amber-400">supplementary training aid</strong> to support
-              your college studies and on-the-job learning. This is not a replacement for formal qualifications,
-              registered training providers, or official City & Guilds/EAL courses.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
-        <div className="bg-card/50 rounded-lg p-3">
-          <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">Topics</div>
-          <div className="text-xl sm:text-2xl font-bold text-foreground">{allModules.length}</div>
-        </div>
-        <div className="bg-primary/10 rounded-lg p-3">
-          <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">Practice Qs</div>
-          <div className="text-xl sm:text-2xl font-bold text-primary">{totalQuestions.toLocaleString()}</div>
-        </div>
-        <div className="bg-amber-500/10 rounded-lg p-3">
-          <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">In Progress</div>
-          <div className="text-xl sm:text-2xl font-bold text-amber-400">{inProgressCount}</div>
-        </div>
-        <div className="bg-green-500/10 rounded-lg p-3">
-          <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">Completed</div>
-          <div className="text-xl sm:text-2xl font-bold text-green-400">{completedCount}</div>
-        </div>
-      </div>
-
-      {/* Search Bar */}
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        <Input
-          type="text"
-          placeholder="Search topics by title or description..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-10 bg-card/50 border-0 text-foreground placeholder:text-muted-foreground"
+        {/* Floating orbs */}
+        <motion.div
+          className="absolute top-10 right-10 w-32 h-32 rounded-full bg-blue-500/5 blur-3xl"
+          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+          transition={{ duration: 4, repeat: Infinity }}
         />
+        <motion.div
+          className="absolute bottom-0 left-10 w-24 h-24 rounded-full bg-purple-500/10 blur-2xl"
+          animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2] }}
+          transition={{ duration: 3, repeat: Infinity, delay: 1 }}
+        />
+
+        <div className="relative px-4 pt-4 pb-6">
+          {/* Back Button */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+          >
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate("/study-centre")}
+              className="mb-4 text-white/60 hover:text-white hover:bg-white/10 gap-2"
+            >
+              <ChevronLeft className="h-4 w-4" />
+              Back to Study Centre
+            </Button>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center"
+          >
+            {/* Icon with glow */}
+            <div className="relative inline-flex mb-4">
+              <div className="absolute inset-0 bg-blue-500/30 rounded-2xl blur-xl animate-pulse" />
+              <div className="relative p-4 rounded-2xl bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 shadow-2xl shadow-blue-500/25">
+                <GraduationCap className="h-8 w-8 text-white" />
+              </div>
+            </div>
+
+            <h1 className="text-3xl font-bold mb-2">
+              <span className="bg-gradient-to-r from-white via-white to-white/80 bg-clip-text text-transparent">
+                Apprentice Training
+              </span>
+            </h1>
+            <p className="text-sm text-white/50 max-w-[320px] mx-auto">
+              Level 2 & AM2 study materials to support your electrical apprenticeship
+            </p>
+          </motion.div>
+
+          {/* Premium Stats Row */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15 }}
+            className="mt-6 grid grid-cols-4 gap-2"
+          >
+            {[
+              { value: allModules.length, label: "Topics", icon: BookOpen, color: "from-blue-500 to-cyan-400" },
+              { value: totalQuestions.toLocaleString(), label: "Questions", icon: Target, color: "from-purple-500 to-pink-400" },
+              { value: inProgressCount, label: "Active", icon: Flame, color: "from-orange-500 to-red-400" },
+              { value: completedCount, label: "Done", icon: CheckCircle, color: "from-emerald-500 to-teal-400" },
+            ].map((stat, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 + idx * 0.05 }}
+                className="relative group"
+              >
+                <div className="relative flex flex-col items-center p-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all">
+                  <div className={cn("p-1.5 rounded-lg bg-gradient-to-br mb-1.5", stat.color)}>
+                    <stat.icon className="h-3.5 w-3.5 text-white" />
+                  </div>
+                  <span className="text-lg font-bold text-white">{stat.value}</span>
+                  <span className="text-[9px] text-white/40 uppercase tracking-wider font-medium">{stat.label}</span>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
       </div>
 
-      {/* Tabs and Module Grid */}
-      <Tabs defaultValue="all" className="w-full">
-        <TabsList className="w-full sm:w-auto mb-4 flex-wrap h-auto bg-card/50">
-          <TabsTrigger value="all" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-            All ({filteredModules.length})
-          </TabsTrigger>
-          <TabsTrigger value="Level 2" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-            Level 2 ({filterByCategory("Level 2").length})
-          </TabsTrigger>
-          <TabsTrigger value="AM2" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-            AM2 ({filterByCategory("AM2").length})
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="all" className="mt-0">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-            {filteredModules.map((module) => (
-              <ModuleCard
-                key={module.id}
-                title={module.title}
-                description={module.description}
-                category={module.category}
-                duration={module.duration}
-                progress={module.progress}
-                completed={module.progress === 100}
-                lessonsCount={module.lessonsCount}
-                questionsCount={module.questionsCount}
-                icon={module.icon}
-                onClick={() => navigate(`/study-centre/apprentice/${module.id}`)}
-              />
-            ))}
+      {/* Main Content */}
+      <div className="px-4 space-y-4 -mt-2">
+        {/* Important Notice */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25 }}
+          className="relative overflow-hidden rounded-xl bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/20 p-4"
+        >
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
+          <div className="flex items-start gap-3">
+            <div className="p-2 rounded-lg bg-amber-500/20 shrink-0">
+              <Info className="h-4 w-4 text-amber-400" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-white mb-1">Training Aid Notice</p>
+              <p className="text-xs text-white/50 leading-relaxed">
+                These materials are designed as a <span className="text-amber-400 font-medium">supplementary training aid</span> to support
+                your college studies and on-the-job learning.
+              </p>
+            </div>
           </div>
-        </TabsContent>
+        </motion.div>
 
-        <TabsContent value="Level 2" className="mt-0">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-            {filterByCategory("Level 2").map((module) => (
-              <ModuleCard
-                key={module.id}
-                title={module.title}
-                description={module.description}
-                category={module.category}
-                duration={module.duration}
-                progress={module.progress}
-                completed={module.progress === 100}
-                lessonsCount={module.lessonsCount}
-                questionsCount={module.questionsCount}
-                icon={module.icon}
-                onClick={() => navigate(`/study-centre/apprentice/${module.id}`)}
-              />
-            ))}
-          </div>
-        </TabsContent>
+        {/* Search Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="relative"
+        >
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/40" />
+          <Input
+            type="text"
+            placeholder="Search topics..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-blue-500/50 focus:ring-blue-500/20"
+          />
+        </motion.div>
 
-        <TabsContent value="AM2" className="mt-0">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-            {filterByCategory("AM2").map((module) => (
-              <ModuleCard
-                key={module.id}
-                title={module.title}
-                description={module.description}
-                category={module.category}
-                duration={module.duration}
-                progress={module.progress}
-                completed={module.progress === 100}
-                lessonsCount={module.lessonsCount}
-                questionsCount={module.questionsCount}
-                icon={module.icon}
-                onClick={() => navigate(`/study-centre/apprentice/${module.id}`)}
-              />
-            ))}
-          </div>
-        </TabsContent>
-      </Tabs>
+        {/* Tabs and Module Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35 }}
+        >
+          <Tabs defaultValue="all" className="w-full">
+            <TabsList className="w-full sm:w-auto mb-4 flex-wrap h-auto bg-white/5 border border-white/10 p-1">
+              <TabsTrigger
+                value="all"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white text-white/60"
+              >
+                All ({filteredModules.length})
+              </TabsTrigger>
+              <TabsTrigger
+                value="Level 2"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-cyan-500 data-[state=active]:text-white text-white/60"
+              >
+                Level 2 ({filterByCategory("Level 2").length})
+              </TabsTrigger>
+              <TabsTrigger
+                value="AM2"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-elec-yellow data-[state=active]:to-amber-500 data-[state=active]:text-elec-dark text-white/60"
+              >
+                AM2 ({filterByCategory("AM2").length})
+              </TabsTrigger>
+            </TabsList>
 
-      {/* Empty State */}
-      {filteredModules.length === 0 && (
-        <div className="text-center py-12">
-          <BookOpen className="h-12 w-12 text-muted-foreground/50 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-foreground mb-2">No topics found</h3>
-          <p className="text-sm text-muted-foreground">
-            Try adjusting your search
-          </p>
-        </div>
-      )}
+            <TabsContent value="all" className="mt-0">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                {filteredModules.map((module, index) => (
+                  <motion.div
+                    key={module.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 + index * 0.05 }}
+                  >
+                    <ModuleCard
+                      title={module.title}
+                      description={module.description}
+                      category={module.category}
+                      duration={module.duration}
+                      progress={module.progress}
+                      completed={module.progress === 100}
+                      lessonsCount={module.lessonsCount}
+                      questionsCount={module.questionsCount}
+                      icon={module.icon}
+                      onClick={() => navigate(`/study-centre/apprentice/${module.id}`)}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </TabsContent>
 
-      {/* Footer Disclaimer */}
-      <div className="bg-card/30 rounded-lg p-3 sm:p-4">
-        <div className="flex items-start gap-3">
-          <AlertTriangle className="h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
-          <div>
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              <strong>Disclaimer:</strong> Elec-Mate study materials are provided for revision and practice purposes only.
-              They do not constitute formal qualifications and should be used alongside your official college curriculum.
-              For accredited qualifications, please contact registered training providers such as City & Guilds, EAL,
-              or your local college.
+            <TabsContent value="Level 2" className="mt-0">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                {filterByCategory("Level 2").map((module, index) => (
+                  <motion.div
+                    key={module.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 + index * 0.05 }}
+                  >
+                    <ModuleCard
+                      title={module.title}
+                      description={module.description}
+                      category={module.category}
+                      duration={module.duration}
+                      progress={module.progress}
+                      completed={module.progress === 100}
+                      lessonsCount={module.lessonsCount}
+                      questionsCount={module.questionsCount}
+                      icon={module.icon}
+                      onClick={() => navigate(`/study-centre/apprentice/${module.id}`)}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="AM2" className="mt-0">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                {filterByCategory("AM2").map((module, index) => (
+                  <motion.div
+                    key={module.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 + index * 0.05 }}
+                  >
+                    <ModuleCard
+                      title={module.title}
+                      description={module.description}
+                      category={module.category}
+                      duration={module.duration}
+                      progress={module.progress}
+                      completed={module.progress === 100}
+                      lessonsCount={module.lessonsCount}
+                      questionsCount={module.questionsCount}
+                      icon={module.icon}
+                      onClick={() => navigate(`/study-centre/apprentice/${module.id}`)}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </TabsContent>
+          </Tabs>
+        </motion.div>
+
+        {/* Empty State */}
+        {filteredModules.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-12"
+          >
+            <div className="p-4 rounded-2xl bg-white/5 inline-block mb-4">
+              <BookOpen className="h-12 w-12 text-white/30" />
+            </div>
+            <h3 className="text-lg font-semibold text-white mb-2">No topics found</h3>
+            <p className="text-sm text-white/50">
+              Try adjusting your search
+            </p>
+          </motion.div>
+        )}
+
+        {/* Footer Disclaimer */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="rounded-xl bg-white/5 border border-white/10 p-4"
+        >
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="h-4 w-4 text-white/40 flex-shrink-0 mt-0.5" />
+            <p className="text-xs text-white/40 leading-relaxed">
+              <strong className="text-white/60">Disclaimer:</strong> Elec-Mate study materials are provided for revision and practice purposes only.
+              For accredited qualifications, please contact registered training providers.
             </p>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

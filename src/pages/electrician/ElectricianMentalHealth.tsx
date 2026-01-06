@@ -16,13 +16,15 @@ import {
   Sparkles,
   ChevronRight,
   AlertTriangle,
-  MessageCircle
+  MessageCircle,
+  Headphones
 } from "lucide-react";
 import ResourcesLibraryTab from "@/components/mental-health/tabs/ResourcesLibraryTab";
 import InteractiveToolsTab from "@/components/mental-health/tabs/InteractiveToolsTab";
 import SupportNetworkTab from "@/components/mental-health/tabs/SupportNetworkTab";
 import CrisisResourcesTab from "@/components/mental-health/tabs/CrisisResourcesTab";
-import MentalHealthMate from "@/components/mental-health/MentalHealthMate";
+import PodcastsTab from "@/components/mental-health/podcasts/PodcastsTab";
+import { PeerSupportHub } from "@/components/mental-health/peer-support";
 import { MentalHealthProvider } from "@/contexts/MentalHealthContext";
 import QuickMoodCheck from "@/components/mental-health/QuickMoodCheck";
 import BreathingExercise from "@/components/mental-health/BreathingExercise";
@@ -111,6 +113,16 @@ const ElectricianMentalHealth = () => {
       borderColor: "border-red-500/20",
       iconBg: "bg-red-500/20",
       iconColor: "text-red-400"
+    },
+    {
+      id: "podcasts",
+      title: "Podcasts",
+      description: "Mental health podcasts for tradespeople",
+      icon: Headphones,
+      color: "bg-gradient-to-br from-orange-500/10 to-amber-500/10",
+      borderColor: "border-orange-500/20",
+      iconBg: "bg-orange-500/20",
+      iconColor: "text-orange-400"
     }
   ];
 
@@ -124,16 +136,7 @@ const ElectricianMentalHealth = () => {
         return <GratitudeJournal onClose={() => setActiveSection(null)} />;
       case "talk":
         return (
-          <div className="space-y-4">
-            <Button
-              variant="ghost"
-              onClick={() => setActiveSection(null)}
-              className="mb-2"
-            >
-              ← Back
-            </Button>
-            <MentalHealthMate />
-          </div>
+          <PeerSupportHub onClose={() => setActiveSection(null)} />
         );
       case "tools":
         return (
@@ -187,6 +190,19 @@ const ElectricianMentalHealth = () => {
             <CrisisResourcesTab />
           </div>
         );
+      case "podcasts":
+        return (
+          <div className="space-y-4">
+            <Button
+              variant="ghost"
+              onClick={() => setActiveSection(null)}
+              className="mb-2"
+            >
+              ← Back to Hub
+            </Button>
+            <PodcastsTab />
+          </div>
+        );
       default:
         return null;
     }
@@ -213,7 +229,7 @@ const ElectricianMentalHealth = () => {
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">
             Mental Health Hub
           </h1>
-          <p className="text-muted-foreground text-sm sm:text-base max-w-md mx-auto">
+          <p className="text-white/80 text-sm sm:text-base max-w-md mx-auto">
             Your wellbeing matters. Take a moment for yourself.
           </p>
           <div className="mt-4">
@@ -232,7 +248,7 @@ const ElectricianMentalHealth = () => {
                 <h3 className="font-semibold text-red-400 text-sm sm:text-base">
                   Need immediate help?
                 </h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">
+                <p className="text-xs sm:text-sm text-white/80">
                   Call <a href="tel:116123" className="font-bold text-red-400 hover:underline">116 123</a> (Samaritans, free 24/7) or text SHOUT to <span className="font-bold">85258</span>
                 </p>
               </div>
@@ -268,7 +284,7 @@ const ElectricianMentalHealth = () => {
               >
                 <action.icon className={`h-8 w-8 ${action.iconColor} mb-2`} />
                 <h3 className="font-semibold text-sm text-white">{action.title}</h3>
-                <p className="text-xs text-muted-foreground mt-0.5">{action.description}</p>
+                <p className="text-xs text-white/80 mt-0.5">{action.description}</p>
               </button>
             ))}
           </div>
@@ -295,9 +311,9 @@ const ElectricianMentalHealth = () => {
                   </div>
                   <div className="flex-1 text-left min-w-0">
                     <h3 className="font-semibold text-white text-base">{section.title}</h3>
-                    <p className="text-sm text-muted-foreground truncate">{section.description}</p>
+                    <p className="text-sm text-white/80 truncate">{section.description}</p>
                   </div>
-                  <ChevronRight className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                  <ChevronRight className="h-5 w-5 text-white/70 flex-shrink-0" />
                 </div>
               </button>
             ))}
@@ -313,7 +329,7 @@ const ElectricianMentalHealth = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-green-400 text-sm mb-1">Daily Tip</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/80">
                   Taking just 5 minutes for yourself each day can significantly reduce stress.
                   Your mental health is just as important as physical safety on site.
                 </p>
@@ -331,7 +347,7 @@ const ElectricianMentalHealth = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-amber-400 text-sm mb-1">For Electrical Professionals</h3>
-                <p className="text-sm text-muted-foreground mb-2">
+                <p className="text-sm text-white/80 mb-2">
                   Construction and electrical workers face unique pressures. The <strong>Electrical Industries Charity</strong> and <strong>Mates in Mind</strong> offer industry-specific support.
                 </p>
                 <div className="flex flex-wrap gap-2">

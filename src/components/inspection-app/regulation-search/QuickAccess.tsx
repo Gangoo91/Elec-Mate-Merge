@@ -65,7 +65,7 @@ const QuickAccess: React.FC<QuickAccessProps> = ({ onRegulationClick }) => {
                       key={regNum}
                       variant="outline"
                       size="sm"
-                      className="border-border text-gray-300 hover:bg-neutral-600 justify-start text-xs"
+                      className="border-border text-white/80 hover:bg-neutral-600 justify-start text-xs"
                       onClick={() => onRegulationClick(regNum)}
                     >
                       {regNum}

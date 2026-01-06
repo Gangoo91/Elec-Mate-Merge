@@ -1,672 +1,445 @@
-import { ArrowLeft, ArrowRight, Users, Shield, FileCheck } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
-import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { evModule1Section1Questions } from '@/data/upskilling/evChargingQuizzes';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
+import useSEO from "@/hooks/useSEO";
+
+const quickCheckQuestions = [
+  {
+    id: "evcharging-m1s3-check1",
+    question: "Which regulation requires competence for all electrical work?",
+    options: ["Building Regulations Part P", "Health and Safety at Work Act 1974", "Electricity at Work Regulations 1989", "CDM Regulations 2015"],
+    correctIndex: 2,
+    explanation: "The Electricity at Work Regulations 1989 specifically requires competence for all electrical work, including proper construction, maintenance, and safe working practices."
+  },
+  {
+    id: "evcharging-m1s3-check2",
+    question: "What is the minimum recommended public liability insurance for EV installers?",
+    options: ["£500,000", "£1 million", "£2 million", "£5 million"],
+    correctIndex: 2,
+    explanation: "A minimum of £2 million public liability insurance is recommended for EV charging installers due to the high-value property damage potential and personal injury risks associated with high-power electrical installations."
+  },
+  {
+    id: "evcharging-m1s3-check3",
+    question: "How often should public EV charging installations typically be inspected?",
+    options: ["Every 6 months", "1-3 years", "5 years", "10 years"],
+    correctIndex: 1,
+    explanation: "Public EV charging installations should typically be inspected every 1-3 years due to high usage levels. Higher usage locations may require annual inspection."
+  }
+];
+
+const faqs = [
+  {
+    question: "Do I need to be part of a competent person scheme to install EV chargers?",
+    answer: "While not strictly mandatory, membership of a competent person scheme (NICEIC, NAPIT, etc.) allows self-certification under Part P of the Building Regulations and is required for OZEV grant eligibility. It also provides insurance benefits and demonstrates professional competence."
+  },
+  {
+    question: "What documentation must I provide after an EV charger installation?",
+    answer: "You must provide an Electrical Installation Certificate (EIC) for new circuits, including test results. Additional documentation includes user manuals, warranty information, maintenance requirements, and G98/G99 notification confirmation if applicable."
+  },
+  {
+    question: "What insurance do I need for EV charging installations?",
+    answer: "Essential coverage includes public liability (minimum £2M), professional indemnity insurance, employer's liability if employing staff, and product liability. Cyber liability should be considered for smart charging systems."
+  },
+  {
+    question: "What is the OZEV Approved Installer Scheme?",
+    answer: "The OZEV (Office for Zero Emission Vehicles) scheme certifies installers who meet specific competency requirements, allowing them to install grant-funded chargers. Requirements include MCS certification, Level 3+ electrical qualification, 18th Edition certification, and appropriate insurance."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+  question: "An employer asks you to install EV chargers at their premises but skip the risk assessment to save time. What should you do?",
+  options: [
+    "Proceed without the risk assessment as they are the client",
+    "Refuse the work and explain the legal requirement",
+    "Complete a basic verbal risk assessment",
+    "Install and do the risk assessment later"
+  ],
+  correctAnswer: 1,
+  explanation: "Risk assessment is a legal requirement under the Health and Safety at Work Act 1974 and CDM Regulations 2015. Refusing work without proper safety procedures is the professional response. Installers have a duty of care that cannot be waived by client requests."
+  }
+];
 
 const EVChargingModule1Section3 = () => {
-  const quizQuestions = evModule1Section1Questions?.slice(3, 6)?.map(q => ({
-    id: q.id,
-    question: q.question,
-    options: q.options,
-    correct: q.correctAnswer,
-    explanation: q.explanation
-  })) || [];
+  useSEO({
+    title: "Installer Responsibilities | EV Charging Module 1.3",
+    description: "Understand the legal, professional and safety responsibilities for EV charging installers including competent person schemes and documentation requirements."
+  });
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-8 sm:pb-12">
-        <Link to="../ev-charging-module-1">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
           <Button
             variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 1
+            <Link to="../ev-charging-module-1">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 1
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-6">
-          <div>
-            <div className="flex items-center gap-3 sm:gap-4 mb-4">
-              <div className="flex items-center gap-2">
-                <Users className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-              </div>
-              <div>
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
-                  Installer Responsibilities and Regulations
-                </h1>
-                <p className="text-lg sm:text-xl text-white">
-                  Professional duties and regulatory compliance for EV charging
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-2 sm:gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">
-                Module 1
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-white">
-                Section 3
-              </Badge>
-            </div>
-          </div>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Introduction</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <p>
-                Installing EV charging equipment carries significant professional responsibilities that extend far beyond basic electrical work. Installers must navigate complex regulations, ensure safety compliance, and maintain professional standards throughout the installation lifecycle.
-              </p>
-              <div className="bg-red-900/30 p-4 rounded-lg border-l-4 border-red-500">
-                <p className="text-red-200">
-                  <strong className="text-red-300">Critical Responsibility:</strong> EV charging installations operate at high power levels with potentially lethal voltages. Professional competence, regulatory compliance, and safety awareness are non-negotiable requirements.
-                </p>
-              </div>
-              <p>
-                This section outlines the essential responsibilities, legal requirements, and professional duties that all EV charging installers must understand and fulfil.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Learning Outcomes</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-3">
-              <p className="text-sm text-white mb-4">By the end of this section, you should be able to:</p>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                  <span>Identify key legal responsibilities for EV charging installers</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                  <span>Understand competent person scheme requirements</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                  <span>Apply appropriate risk assessment and safety procedures</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                  <span>Complete proper documentation and certification requirements</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                  <span>Recognise ongoing maintenance and inspection responsibilities</span>
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Legal Framework and Professional Requirements</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-card p-4 rounded-lg mb-4 border-l-4 border-yellow-400">
-                <h4 className="text-yellow-400 font-semibold mb-3">Understanding Your Legal Position</h4>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-card p-4 rounded-lg border border-red-500">
-                  <h5 className="text-red-300 font-bold mb-4">Primary Legal Obligations</h5>
-                  <div className="space-y-3">
-                    <div className="bg-red-900/20 p-3 rounded">
-                      <h6 className="text-red-200 font-semibold mb-2">Health & Safety at Work Act 1974:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Duty of care to employees and public</li>
-                        <li>• Risk assessment and control measures</li>
-                        <li>• Safe systems of work implementation</li>
-                        <li>• Provision of adequate training and supervision</li>
-                        <li>• Maintenance of safe working environment</li>
-                      </ul>
-                    </div>
-                    <div className="bg-red-900/20 p-3 rounded">
-                      <h6 className="text-red-200 font-semibold mb-2">Electricity at Work Regulations 1989:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Competence requirement for electrical work</li>
-                        <li>• Proper construction and maintenance of systems</li>
-                        <li>• Safe working practices and procedures</li>
-                        <li>• Adequate precautions against electrical danger</li>
-                        <li>• Regular inspection and testing requirements</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg border border-yellow-400">
-                  <h5 className="text-blue-300 font-bold mb-4">Building Regulations Compliance</h5>
-                  <div className="space-y-3">
-                    <div className="bg-blue-900/20 p-3 rounded">
-                      <h6 className="text-blue-200 font-semibold mb-2">Part P Requirements:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Notification to Building Control for new circuits</li>
-                        <li>• Self-certification via competent person schemes</li>
-                        <li>• Installation certificates and documentation</li>
-                        <li>• Compliance with BS 7671 wiring regulations</li>
-                        <li>• Inspection and testing obligations</li>
-                      </ul>
-                    </div>
-                    <div className="bg-blue-900/20 p-3 rounded">
-                      <h6 className="text-blue-200 font-semibold mb-2">Approved Document P:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Definition of notifiable electrical work</li>
-                        <li>• Competency requirements specification</li>
-                        <li>• Testing and inspection procedures</li>
-                        <li>• Certification and record keeping</li>
-                        <li>• Third-party inspection alternatives</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-yellow-900/30 p-4 rounded-lg border border-yellow-400">
-                <h5 className="text-yellow-300 font-semibold mb-2">Professional Indemnity and Insurance</h5>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <h6 className="text-yellow-200 font-medium mb-2">Essential Coverage:</h6>
-                    <ul className="space-y-1">
-                      <li>• Public liability (minimum £2M recommended)</li>
-                      <li>• Professional indemnity insurance</li>
-                      <li>• Employer's liability (if employing staff)</li>
-                      <li>• Product liability for equipment defects</li>
-                      <li>• Cyber liability for smart charging systems</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h6 className="text-yellow-200 font-medium mb-2">Risk Considerations:</h6>
-                    <ul className="space-y-1">
-                      <li>• High-value property damage potential</li>
-                      <li>• Personal injury from electrical faults</li>
-                      <li>• Business interruption claims</li>
-                      <li>• Design and specification errors</li>
-                      <li>• Data breach and privacy violations</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Competent Person Schemes and Qualifications</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-card p-4 rounded-lg mb-4 border-l-4 border-yellow-400">
-                <h4 className="text-yellow-400 font-semibold mb-3">Demonstrating Professional Competence</h4>
-              </div>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <div className="bg-card p-4 rounded-lg border border-green-500">
-                  <h5 className="text-green-300 font-bold mb-3 text-lg">NICEIC</h5>
-                  <div className="space-y-3 text-sm">
-                    <div>
-                      <span className="text-yellow-400 font-medium">Scope:</span>
-                      <p className="mt-1">Approved contractor and domestic installer schemes covering EV charging installations</p>
-                    </div>
-                    <div>
-                      <span className="text-yellow-400 font-medium">Requirements:</span>
-                      <ul className="mt-1 space-y-1">
-                        <li>• Level 3 electrical qualification minimum</li>
-                        <li>• 18th Edition BS 7671 certification</li>
-                        <li>• Inspection and Testing (2391-52) qualification</li>
-                        <li>• EV charging specific training</li>
-                        <li>• Annual assessment and technical monitoring</li>
-                      </ul>
-                    </div>
-                    <div className="bg-green-900/30 p-2 rounded text-xs">
-                      <strong>Benefits:</strong> Self-certification, reduced insurance premiums, marketing support
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg border border-yellow-400">
-                  <h5 className="text-blue-300 font-bold mb-3 text-lg">NAPIT</h5>
-                  <div className="space-y-3 text-sm">
-                    <div>
-                      <span className="text-yellow-400 font-medium">Scope:</span>
-                      <p className="mt-1">Electrical and EV charging competent person scheme with flexible membership options</p>
-                    </div>
-                    <div>
-                      <span className="text-yellow-400 font-medium">Requirements:</span>
-                      <ul className="mt-1 space-y-1">
-                        <li>• NVQ Level 3 or equivalent experience</li>
-                        <li>• Current 18th Edition certification</li>
-                        <li>• Testing and inspection competence</li>
-                        <li>• EV charging installation training</li>
-                        <li>• Continuous professional development</li>
-                      </ul>
-                    </div>
-                    <div className="bg-blue-900/30 p-2 rounded text-xs">
-                      <strong>Benefits:</strong> Comprehensive support, technical helpline, business development
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg border border-purple-500">
-                  <h5 className="text-purple-300 font-bold mb-3 text-lg">ECA/JIB</h5>
-                  <div className="space-y-3 text-sm">
-                    <div>
-                      <span className="text-yellow-400 font-medium">Scope:</span>
-                      <p className="mt-1">Trade association schemes focusing on contractor competence and professional standards</p>
-                    </div>
-                    <div>
-                      <span className="text-yellow-400 font-medium">Requirements:</span>
-                      <ul className="mt-1 space-y-1">
-                        <li>• Appropriate electrical qualifications</li>
-                        <li>• Industry recognised training certificates</li>
-                        <li>• Health and safety competence</li>
-                        <li>• Business and technical insurance</li>
-                        <li>• Regular competence monitoring</li>
-                      </ul>
-                    </div>
-                    <div className="bg-purple-900/30 p-2 rounded text-xs">
-                      <strong>Benefits:</strong> Industry recognition, networking, technical support
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-card p-4 rounded-lg border border-gray-600">
-                <h5 className="text-yellow-400 font-semibold mb-3">Additional Competency Requirements</h5>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <h6 className="text-white font-medium mb-2">EV-Specific Training:</h6>
-                    <ul className="space-y-1 text-sm">
-                      <li>• OZEV approved installer training courses</li>
-                      <li>• Manufacturer-specific installation training</li>
-                      <li>• Smart charging and load management systems</li>
-                      <li>• Grid connection procedures (G98/G99)</li>
-                      <li>• Renewable energy integration</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h6 className="text-white font-medium mb-2">Ongoing Development:</h6>
-                    <ul className="space-y-1 text-sm">
-                      <li>• Annual CPD requirements</li>
-                      <li>• Technology update training</li>
-                      <li>• Regulatory change awareness</li>
-                      <li>• Safety practice refreshers</li>
-                      <li>• Business development support</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-card p-4 rounded-lg border border-green-600 mt-4">
-                <h5 className="text-green-300 font-semibold mb-3">OZEV Approved Installer Scheme</h5>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <h6 className="text-green-200 font-medium mb-2">Registration Requirements:</h6>
-                    <ul className="space-y-1 text-sm">
-                      <li>• MCS or equivalent certification</li>
-                      <li>• Valid electrical qualification (Level 3+)</li>
-                      <li>• 18th Edition certification (current)</li>
-                      <li>• Inspection & Testing qualification</li>
-                      <li>• Appropriate insurance coverage</li>
-                      <li>• Annual compliance monitoring</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h6 className="text-green-200 font-medium mb-2">Scheme Benefits:</h6>
-                    <ul className="space-y-1 text-sm">
-                      <li>• Grant application eligibility</li>
-                      <li>• Government scheme participation</li>
-                      <li>• Customer confidence building</li>
-                      <li>• Technical support access</li>
-                      <li>• Market differentiation</li>
-                      <li>• Professional recognition</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Risk Assessment and Safety Procedures</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-card p-4 rounded-lg mb-4 border-l-4 border-yellow-400">
-                <h4 className="text-yellow-400 font-semibold mb-3">Systematic Approach to Safety Management</h4>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-card p-4 rounded-lg border border-red-500">
-                  <h5 className="text-red-300 font-bold mb-4">Pre-Installation Risk Assessment</h5>
-                  <div className="space-y-3">
-                    <div className="bg-red-900/20 p-3 rounded">
-                      <h6 className="text-red-200 font-semibold mb-2">Site-Specific Hazards:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Existing electrical installation condition</li>
-                        <li>• Working at height requirements</li>
-                        <li>• Confined space or restricted access</li>
-                        <li>• Underground services and utilities</li>
-                        <li>• Environmental conditions and weather</li>
-                        <li>• Public access and traffic management</li>
-                      </ul>
-                    </div>
-                    <div className="bg-red-900/20 p-3 rounded">
-                      <h6 className="text-red-200 font-semibold mb-2">Electrical Safety Considerations:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Live working elimination where possible</li>
-                        <li>• Isolation and lock-off procedures</li>
-                        <li>• Voltage testing and proving</li>
-                        <li>• Personal protective equipment requirements</li>
-                        <li>• Emergency procedures and first aid</li>
-                        <li>• Arc flash and shock protection</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg border border-green-500">
-                  <h5 className="text-green-300 font-bold mb-4">Safe Systems of Work</h5>
-                  <div className="space-y-3">
-                    <div className="bg-green-900/20 p-3 rounded">
-                      <h6 className="text-green-200 font-semibold mb-2">Method Statements:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Step-by-step installation procedures</li>
-                        <li>• Tool and equipment requirements</li>
-                        <li>• Safety precautions at each stage</li>
-                        <li>• Emergency response procedures</li>
-                        <li>• Quality control checkpoints</li>
-                        <li>• Client communication protocols</li>
-                      </ul>
-                    </div>
-                    <div className="bg-green-900/20 p-3 rounded">
-                      <h6 className="text-green-200 font-semibold mb-2">Permit to Work Systems:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• High-risk activity identification</li>
-                        <li>• Isolation and energy control</li>
-                        <li>• Competent person authorisation</li>
-                        <li>• Work completion verification</li>
-                        <li>• System reinstatement procedures</li>
-                        <li>• Documentation and record keeping</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-orange-900/30 p-4 rounded-lg border border-orange-500">
-                <h5 className="text-orange-300 font-semibold mb-2">CDM Regulations 2015 Compliance</h5>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                  <div>
-                    <h6 className="text-orange-200 font-medium mb-2">Designer Duties:</h6>
-                    <ul className="space-y-1">
-                      <li>• Eliminate risks in design phase</li>
-                      <li>• Reduce remaining risks</li>
-                      <li>• Provide design risk information</li>
-                      <li>• Coordinate with other designers</li>
-                      <li>• Check client awareness of duties</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h6 className="text-orange-200 font-medium mb-2">Contractor Obligations:</h6>
-                    <ul className="space-y-1">
-                      <li>• Plan, manage and monitor work</li>
-                      <li>• Check worker competence</li>
-                      <li>• Ensure adequate welfare facilities</li>
-                      <li>• Provide information and training</li>
-                      <li>• Cooperate with others</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h6 className="text-orange-200 font-medium mb-2">Documentation Requirements:</h6>
-                    <ul className="space-y-1">
-                      <li>• Construction phase plans</li>
-                      <li>• Risk assessment records</li>
-                      <li>• Method statement documentation</li>
-                      <li>• Competence evidence</li>
-                      <li>• Health and safety file</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Documentation and Certification Requirements</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-card p-4 rounded-lg mb-4 border-l-4 border-yellow-400">
-                <h4 className="text-yellow-400 font-semibold mb-3">Essential Paperwork and Record Keeping</h4>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-card p-4 rounded-lg border border-yellow-400">
-                  <h5 className="text-blue-300 font-bold mb-4">Installation Certificates</h5>
-                  <div className="space-y-4">
-                    <div className="bg-blue-900/20 p-3 rounded">
-                      <h6 className="text-blue-200 font-semibold mb-2">Electrical Installation Certificate (EIC):</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Required for all new circuits</li>
-                        <li>• Design, construction and inspection details</li>
-                        <li>• Schedule of test results</li>
-                        <li>• Departure from BS 7671 if applicable</li>
-                        <li>• Installer and inspector signatures</li>
-                      </ul>
-                    </div>
-                    <div className="bg-blue-900/20 p-3 rounded">
-                      <h6 className="text-blue-200 font-semibold mb-2">Minor Electrical Installation Works Certificate:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• For additions to existing circuits</li>
-                        <li>• Limited scope installation work</li>
-                        <li>• Essential test results documentation</li>
-                        <li>• Circuit protection verification</li>
-                        <li>• Single person certification allowed</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg border border-green-500">
-                  <h5 className="text-green-300 font-bold mb-4">Testing and Inspection Documentation</h5>
-                  <div className="space-y-4">
-                    <div className="bg-green-900/20 p-3 rounded">
-                      <h6 className="text-green-200 font-semibold mb-2">Initial Verification Tests:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Continuity of protective conductors</li>
-                        <li>• Continuity of ring final circuits</li>
-                        <li>• Insulation resistance testing</li>
-                        <li>• Protection by SELV/PELV/electrical separation</li>
-                        <li>• RCD operation and effectiveness</li>
-                        <li>• Polarity verification</li>
-                      </ul>
-                    </div>
-                    <div className="bg-green-900/20 p-3 rounded">
-                      <h6 className="text-green-200 font-semibold mb-2">EV-Specific Testing:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Type B RCD operation (if fitted)</li>
-                        <li>• PME earthing arrangements</li>
-                        <li>• Charging unit functionality</li>
-                        <li>• Communication systems testing</li>
-                        <li>• Load management verification</li>
-                        <li>• Emergency isolation testing</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-purple-900/30 p-4 rounded-lg border border-purple-500">
-                <h5 className="text-purple-300 font-semibold mb-3">Additional Documentation Requirements</h5>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                  <div>
-                    <h6 className="text-purple-200 font-medium mb-2">Building Control:</h6>
-                    <ul className="space-y-1">
-                      <li>• Building Regulations compliance certificate</li>
-                      <li>• Competent person self-certification</li>
-                      <li>• Third-party inspection reports</li>
-                      <li>• Remedial work certificates</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h6 className="text-purple-200 font-medium mb-2">DNO Notifications:</h6>
-                    <ul className="space-y-1">
-                      <li>• G98 application (&lt;16A per phase)</li>
-                      <li>• G99 application (&gt;16A per phase)</li>
-                      <li>• Connection agreement documentation</li>
-                      <li>• Commissioning certificates</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h6 className="text-purple-200 font-medium mb-2">Client Handover:</h6>
-                    <ul className="space-y-1">
-                      <li>• User manuals and instructions</li>
-                      <li>• Warranty documentation</li>
-                      <li>• Maintenance requirements</li>
-                      <li>• Emergency contact information</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Ongoing Responsibilities and Maintenance</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-card p-4 rounded-lg mb-4 border-l-4 border-yellow-400">
-                <h4 className="text-yellow-400 font-semibold mb-3">Post-Installation Obligations</h4>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-card p-4 rounded-lg border border-orange-500">
-                  <h5 className="text-orange-300 font-bold mb-4">Periodic Inspection and Testing</h5>
-                  <div className="space-y-4">
-                    <div className="bg-orange-900/20 p-3 rounded">
-                      <h6 className="text-orange-200 font-semibold mb-2">Recommended Intervals:</h6>
-                      <div className="text-sm space-y-1">
-                        <div className="flex justify-between">
-                          <span>Domestic installations:</span>
-                          <span className="text-white">10 years</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Commercial workplace:</span>
-                          <span className="text-white">5 years</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Public charging:</span>
-                          <span className="text-white">1-3 years</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>High-usage locations:</span>
-                          <span className="text-white">1 year</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-orange-900/20 p-3 rounded">
-                      <h6 className="text-orange-200 font-semibold mb-2">Inspection Scope:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Visual inspection of all components</li>
-                        <li>• Electrical testing and verification</li>
-                        <li>• Mechanical integrity assessment</li>
-                        <li>• Protection device functionality</li>
-                        <li>• Software and firmware updates</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg border border-green-500">
-                  <h5 className="text-green-300 font-bold mb-4">Maintenance Service Opportunities</h5>
-                  <div className="space-y-4">
-                    <div className="bg-green-900/20 p-3 rounded">
-                      <h6 className="text-green-200 font-semibold mb-2">Service Contract Benefits:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Planned maintenance schedules</li>
-                        <li>• Emergency breakdown response</li>
-                        <li>• Software updates and upgrades</li>
-                        <li>• Compliance monitoring and reporting</li>
-                        <li>• Warranty extension services</li>
-                        <li>• Performance optimisation</li>
-                      </ul>
-                    </div>
-                    <div className="bg-green-900/20 p-3 rounded">
-                      <h6 className="text-green-200 font-semibold mb-2">Revenue Opportunities:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Regular inspection contracts</li>
-                        <li>• Maintenance service agreements</li>
-                        <li>• Upgrade and expansion work</li>
-                        <li>• Energy management consultancy</li>
-                        <li>• Training and support services</li>
-                        <li>• Technology refresh projects</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white">
-              <div className="space-y-4">
-                <p>
-                  Professional responsibility in EV charging installation extends far beyond technical competence. It encompasses legal compliance, safety management, documentation, and ongoing service obligations that protect both installers and clients.
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-red-900/30 p-4 rounded-lg border border-red-500">
-                    <h5 className="text-red-300 font-semibold mb-2">Key Responsibilities:</h5>
-                    <p className="text-red-200 text-sm">
-                      Legal compliance, professional competence, safety management, proper documentation, and ongoing service obligations are all essential elements of professional practice.
-                    </p>
-                  </div>
-                  <div className="bg-green-900/30 p-4 rounded-lg border border-green-500">
-                    <h5 className="text-green-300 font-semibold mb-2">Business Benefits:</h5>
-                    <p className="text-green-200 text-sm">
-                      Professional compliance reduces liability, builds client confidence, creates service opportunities, and establishes competitive advantage in the growing EV market.
-                    </p>
-                  </div>
-                </div>
-                <p>
-                  The regulatory framework provides structure and protection for professional electrical contractors. Understanding and embracing these responsibilities is essential for sustainable success in the EV charging sector.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {quizQuestions.length > 0 && (
-            <SingleQuestionQuiz 
-              questions={quizQuestions}
-              title="Section 3 Knowledge Check"
-            />
-          )}
-
-          <div className="flex justify-between items-center pt-6">
-            <Link to="../ev-charging-module-1-section-2">
-              <Button variant="outline" className="border-gray-600 text-white hover:bg-card">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="../ev-charging-module-1-section-4">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-400/10">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
         </div>
       </div>
+
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Page Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 1.3</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Installer Responsibilities and Regulations
+          </h1>
+          <p className="text-white/80">
+            Professional duties and regulatory compliance for EV charging
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Legal:</strong> H&S Act 1974, EAWR 1989, Building Regs</li>
+              <li><strong>Schemes:</strong> NICEIC, NAPIT, ECA for self-certification</li>
+              <li><strong>Docs:</strong> EIC, risk assessment, G98/G99 notifications</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Part P requirements, OZEV scheme eligibility</li>
+              <li><strong>Use:</strong> Risk assessment before every installation</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Identify key legal responsibilities for installers",
+              "Understand competent person scheme requirements",
+              "Apply risk assessment and safety procedures",
+              "Complete proper documentation and certification",
+              "Recognise ongoing maintenance responsibilities",
+              "Navigate OZEV approved installer requirements"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Legal Framework
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              EV charging installations must comply with multiple legal requirements. Understanding
+              your obligations protects you, your clients, and ensures safe installations.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Primary Legislation</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>H&S at Work Act 1974:</strong> Duty of care</li>
+                  <li><strong>EAWR 1989:</strong> Competence requirement</li>
+                  <li><strong>Building Regs Part P:</strong> Notification</li>
+                  <li><strong>CDM 2015:</strong> Construction safety</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Insurance Requirements</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Public liability:</strong> £2M minimum</li>
+                  <li><strong>Professional indemnity:</strong> Design errors</li>
+                  <li><strong>Employer's liability:</strong> If employing staff</li>
+                  <li><strong>Product liability:</strong> Equipment defects</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
+              <p className="text-sm text-white">
+                <strong className="text-red-400">Critical:</strong> EV charging installations operate
+                at high power levels with potentially lethal voltages. Professional competence,
+                regulatory compliance, and safety awareness are non-negotiable requirements.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Competent Person Schemes
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Competent person schemes allow qualified installers to self-certify work under
+              Building Regulations Part P without involving Building Control.
+            </p>
+
+            <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
+              <div className="p-3 rounded bg-transparent border border-white/10">
+                <p className="font-medium text-white mb-1">NICEIC</p>
+                <p className="text-white/90 text-xs">Approved contractor</p>
+              </div>
+              <div className="p-3 rounded bg-transparent border border-white/10">
+                <p className="font-medium text-white mb-1">NAPIT</p>
+                <p className="text-white/90 text-xs">Flexible membership</p>
+              </div>
+              <div className="p-3 rounded bg-transparent border border-white/10">
+                <p className="font-medium text-white mb-1">ECA/JIB</p>
+                <p className="text-white/90 text-xs">Trade association</p>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Typical Requirements:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Level 3 electrical qualification minimum</li>
+                <li>18th Edition BS 7671 certification (current)</li>
+                <li>Inspection and Testing qualification (2391-52)</li>
+                <li>EV charging specific training</li>
+                <li>Annual assessment and technical monitoring</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">OZEV Approved Installer Scheme</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Purpose:</strong> Required for grant-funded installations</li>
+                <li><strong>Requirements:</strong> MCS certification, Level 3+ qualification, 18th Edition</li>
+                <li><strong>Benefits:</strong> Grant eligibility, customer confidence, market differentiation</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 3 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Risk Assessment and Safety
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Systematic risk assessment is both a legal requirement and essential for safe
+              installations. Every EV charging project requires documented assessment.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Site-Specific Hazards</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Existing electrical installation condition</li>
+                  <li>Working at height requirements</li>
+                  <li>Underground services and utilities</li>
+                  <li>Public access and traffic management</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Electrical Safety</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Isolation and lock-off procedures</li>
+                  <li>Voltage testing and proving</li>
+                  <li>PPE requirements</li>
+                  <li>Arc flash and shock protection</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Safe Systems of Work:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Method statements:</strong> Step-by-step installation procedures</li>
+                <li><strong>Permit to work:</strong> High-risk activity authorisation</li>
+                <li><strong>Emergency procedures:</strong> First aid and incident response</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Section 4 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Documentation Requirements
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Proper documentation protects both installer and client while demonstrating
+              compliance with regulations.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Certificates</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>EIC:</strong> Required for all new circuits</li>
+                  <li><strong>MEIWC:</strong> Additions to existing circuits</li>
+                  <li><strong>Test results:</strong> Full schedule required</li>
+                  <li><strong>Departures:</strong> Note any deviations from BS 7671</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Additional Documents</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Building Control:</strong> Part P self-certification</li>
+                  <li><strong>DNO notifications:</strong> G98/G99 applications</li>
+                  <li><strong>Handover pack:</strong> User manuals, warranty info</li>
+                  <li><strong>Maintenance schedule:</strong> Recommended intervals</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Periodic Inspection Intervals:</p>
+              <div className="grid grid-cols-2 gap-2 text-sm">
+                <div className="flex justify-between p-2 bg-white/5 rounded">
+                  <span>Domestic:</span>
+                  <span className="text-elec-yellow">10 years</span>
+                </div>
+                <div className="flex justify-between p-2 bg-white/5 rounded">
+                  <span>Commercial:</span>
+                  <span className="text-elec-yellow">5 years</span>
+                </div>
+                <div className="flex justify-between p-2 bg-white/5 rounded">
+                  <span>Public charging:</span>
+                  <span className="text-elec-yellow">1-3 years</span>
+                </div>
+                <div className="flex justify-between p-2 bg-white/5 rounded">
+                  <span>High usage:</span>
+                  <span className="text-elec-yellow">1 year</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Professional Best Practice</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Maintain current qualifications and CPD records</li>
+                <li>Document all risk assessments before starting work</li>
+                <li>Issue certificates promptly after completion</li>
+                <li>Keep copies of all documentation for insurance purposes</li>
+                <li>Register with OZEV scheme for grant-funded work</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Skipping risk assessment:</strong> — Legal requirement, not optional</li>
+                <li><strong>Incomplete certificates:</strong> — All sections must be completed</li>
+                <li><strong>Missing DNO notification:</strong> — G98/G99 required for applicable installations</li>
+                <li><strong>Inadequate insurance:</strong> — Review coverage annually as work expands</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quick Reference */}
+        <div className="mt-6 p-5 rounded-lg bg-transparent">
+          <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+            <div>
+              <p className="font-medium text-white mb-1">Key Legislation</p>
+              <ul className="space-y-0.5">
+                <li>Health & Safety at Work Act 1974</li>
+                <li>Electricity at Work Regulations 1989</li>
+                <li>Building Regulations Part P</li>
+                <li>CDM Regulations 2015</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-medium text-white mb-1">Documentation</p>
+              <ul className="space-y-0.5">
+                <li>Electrical Installation Certificate</li>
+                <li>Risk assessment records</li>
+                <li>G98/G99 notifications</li>
+                <li>Part P self-certification</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Quiz Section */}
+        <section className="mb-10 mt-12">
+          <SingleQuestionQuiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-1-section-2">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-1-section-4">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

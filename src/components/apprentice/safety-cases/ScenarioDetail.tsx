@@ -2,7 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { HardHat } from "lucide-react";
+import { HardHat, ArrowLeft, ArrowRight, Send, CheckCircle } from "lucide-react";
 import ScenarioOption from "./ScenarioOption";
 import { SafetyScenario } from "./safetyScenarios";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -30,17 +30,7 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
 }) => {
   const isMobile = useIsMobile();
 
-  console.log('ScenarioDetail - Rendering scenario:', {
-    scenarioId: scenario.id,
-    scenarioTitle: scenario.title,
-    selectedOption,
-    showFeedback,
-    isLastScenario,
-    optionsCount: scenario.options?.length || 0
-  });
-
   const handleOptionSelect = (optionId: string) => {
-    console.log('ScenarioDetail - Option selected:', optionId);
     try {
       onOptionSelect(optionId);
     } catch (error) {
@@ -49,7 +39,6 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
   };
 
   const handleSubmitAnswer = () => {
-    console.log('ScenarioDetail - Submitting answer:', selectedOption);
     try {
       onSubmitAnswer();
     } catch (error) {
@@ -58,7 +47,6 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
   };
 
   const handleReset = () => {
-    console.log('ScenarioDetail - Resetting to scenario list');
     try {
       onReset();
     } catch (error) {
@@ -67,7 +55,6 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
   };
 
   const handleNextScenario = () => {
-    console.log('ScenarioDetail - Moving to next scenario');
     try {
       onNextScenario();
     } catch (error) {
@@ -76,21 +63,30 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
-      <CardHeader>
-        <div className="flex items-center gap-3">
-          <HardHat className="h-6 w-6 text-elec-yellow" />
-          <CardTitle>{scenario.title}</CardTitle>
+    <Card className="bg-gradient-to-br from-white/5 to-elec-card border-white/10 overflow-hidden relative animate-fade-in">
+      <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+
+      <CardHeader className="relative">
+        <div className="flex items-start gap-3">
+          <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30 flex-shrink-0">
+            <HardHat className="h-5 w-5 text-elec-yellow" />
+          </div>
+          <div>
+            <CardTitle className="text-white">{scenario.title}</CardTitle>
+            <CardDescription className="text-white/70 mt-2">
+              {scenario.description}
+            </CardDescription>
+          </div>
         </div>
-        <CardDescription className="text-base text-elec-light/80 mt-2">
-          {scenario.description}
-        </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="bg-elec-dark/40 p-4 rounded-md border border-elec-yellow/20">
-          <p className="font-medium text-lg">{scenario.question}</p>
+
+      <CardContent className="space-y-6 relative">
+        {/* Question Box */}
+        <div className="p-4 rounded-xl bg-white/10 border border-elec-yellow/30">
+          <p className="font-medium text-lg text-white">{scenario.question}</p>
         </div>
 
+        {/* Options */}
         <div className="space-y-3">
           {scenario.options.map((option) => (
             <ScenarioOption
@@ -108,28 +104,42 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
           ))}
         </div>
       </CardContent>
-      <CardFooter className={`flex ${isMobile ? "flex-col" : "justify-end"} gap-3`}>
-        <Button 
-          variant="outline" 
-          onClick={handleReset} 
-          className={isMobile ? "w-full" : ""}
+
+      <CardFooter className={`flex ${isMobile ? "flex-col" : "justify-end"} gap-3 pt-4 border-t border-white/10 relative`}>
+        <Button
+          variant="outline"
+          onClick={handleReset}
+          className={`${isMobile ? "w-full" : ""} border-white/20 hover:bg-white/10 text-white h-11 touch-manipulation active:scale-95 transition-all`}
         >
+          <ArrowLeft className="h-4 w-4 mr-2" />
           Back to Scenarios
         </Button>
+
         {!showFeedback ? (
-          <Button 
-            onClick={handleSubmitAnswer} 
-            disabled={!selectedOption} 
-            className={isMobile ? "w-full" : ""}
+          <Button
+            onClick={handleSubmitAnswer}
+            disabled={!selectedOption}
+            className={`${isMobile ? "w-full" : ""} bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold h-11 disabled:opacity-30 touch-manipulation active:scale-95 transition-all`}
           >
+            <Send className="h-4 w-4 mr-2" />
             Submit Answer
           </Button>
         ) : (
-          <Button 
-            onClick={handleNextScenario} 
-            className={isMobile ? "w-full" : ""}
+          <Button
+            onClick={handleNextScenario}
+            className={`${isMobile ? "w-full" : ""} bg-green-500 hover:bg-green-500/90 text-white font-semibold h-11 touch-manipulation active:scale-95 transition-all`}
           >
-            {isLastScenario ? "Complete All Scenarios" : "Next Scenario"}
+            {isLastScenario ? (
+              <>
+                <CheckCircle className="h-4 w-4 mr-2" />
+                Complete All Scenarios
+              </>
+            ) : (
+              <>
+                Next Scenario
+                <ArrowRight className="h-4 w-4 ml-2" />
+              </>
+            )}
           </Button>
         )}
       </CardFooter>

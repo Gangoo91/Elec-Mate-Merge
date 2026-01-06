@@ -67,8 +67,7 @@ const InstrumentationModule2Section1 = () => {
       ],
       correct: 1,
       explanation: "Understanding the distinction helps with proper system design, effective troubleshooting, correct component selection, and understanding signal flow in instrumentation systems."
-    }
-  ];
+  }  ];
 
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">

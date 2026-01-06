@@ -191,20 +191,20 @@ const FlashcardsLearning = () => {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Flashcards</h1>
-          <p className="text-muted-foreground text-sm mt-1">Quick revision for key electrical concepts</p>
+          <p className="text-white/70 text-sm mt-1">Quick revision for key electrical concepts</p>
         </div>
         <SmartBackButton />
       </div>
 
       {/* Header Card */}
-      <div className="bg-gradient-to-br from-elec-gray to-elec-gray/80 p-4 sm:p-6 rounded-xl border border-elec-yellow/20">
+      <div className="bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 p-4 sm:p-6 rounded-xl border border-elec-yellow/20">
         <div className="flex gap-4 items-start">
           <div className="bg-elec-yellow/20 p-3 rounded-lg shrink-0">
             <Zap className="h-6 w-6 text-elec-yellow" />
           </div>
           <div>
             <h2 className="text-lg font-semibold mb-1">Quick Revision Cards</h2>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-white/70 text-sm">
               Tap cards to flip. Use these during breaks for effective microlearning.
             </p>
           </div>
@@ -212,7 +212,7 @@ const FlashcardsLearning = () => {
       </div>
 
       <Tabs defaultValue={currentCategory} onValueChange={handleTabChange} className="w-full">
-        <TabsList className="grid grid-cols-2 sm:grid-cols-4 h-auto gap-1 bg-elec-gray p-1">
+        <TabsList className="grid grid-cols-2 sm:grid-cols-4 h-auto gap-1 bg-white/5 border border-white/10 p-1">
           {flashcardCategories.map((category) => (
             <TabsTrigger
               key={category.id}
@@ -243,11 +243,11 @@ const FlashcardsLearning = () => {
                 >
                   {/* Front of card (Question) */}
                   <Card
-                    className="absolute inset-0 border-elec-yellow/30 bg-gradient-to-br from-elec-gray via-elec-gray to-elec-yellow/5 shadow-lg"
+                    className="absolute inset-0 border-elec-yellow/30 bg-gradient-to-br from-white/10 via-white/5 to-elec-yellow/10 shadow-lg"
                     style={{ backfaceVisibility: 'hidden' }}
                   >
                     <CardContent className="flex flex-col justify-between h-full p-6">
-                      <div className="flex items-center justify-between text-xs text-muted-foreground mb-4">
+                      <div className="flex items-center justify-between text-xs text-white/60 mb-4">
                         <span className="bg-elec-yellow/10 px-2 py-1 rounded text-elec-yellow">
                           Question
                         </span>
@@ -258,7 +258,7 @@ const FlashcardsLearning = () => {
                           {currentCard?.question}
                         </p>
                       </div>
-                      <div className="flex items-center justify-center gap-2 text-muted-foreground text-sm mt-4">
+                      <div className="flex items-center justify-center gap-2 text-white/60 text-sm mt-4">
                         <RotateCcw className="h-4 w-4" />
                         <span>Tap to reveal answer</span>
                       </div>
@@ -267,14 +267,14 @@ const FlashcardsLearning = () => {
 
                   {/* Back of card (Answer) */}
                   <Card
-                    className="absolute inset-0 border-elec-yellow/50 bg-gradient-to-br from-elec-yellow/20 via-elec-gray to-elec-gray shadow-lg"
+                    className="absolute inset-0 border-elec-yellow/50 bg-gradient-to-br from-elec-yellow/20 via-white/5 to-white/10 shadow-lg"
                     style={{
                       backfaceVisibility: 'hidden',
                       transform: 'rotateY(180deg)'
                     }}
                   >
                     <CardContent className="flex flex-col justify-between h-full p-6">
-                      <div className="flex items-center justify-between text-xs text-muted-foreground mb-4">
+                      <div className="flex items-center justify-between text-xs text-white/60 mb-4">
                         <span className="bg-green-500/20 px-2 py-1 rounded text-green-400">
                           Answer
                         </span>
@@ -285,7 +285,7 @@ const FlashcardsLearning = () => {
                           {currentCard?.answer}
                         </p>
                       </div>
-                      <div className="flex items-center justify-center gap-2 text-muted-foreground text-sm mt-4">
+                      <div className="flex items-center justify-center gap-2 text-white/60 text-sm mt-4">
                         <RotateCcw className="h-4 w-4" />
                         <span>Tap to see question</span>
                       </div>

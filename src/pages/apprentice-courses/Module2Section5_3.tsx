@@ -5,11 +5,51 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import ResistanceCalculator from "@/components/apprentice-courses/ResistanceCalculator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 const TITLE = "Factors Affecting Resistance - Level 2 Module 2 Section 5.3";
 const DESCRIPTION = "Learn how length, area, temperature and material affect electrical resistance - with practical examples and BS 7671 guidance.";
+
+const quickCheckQuestions = [
+  {
+    id: "length-effect",
+    question: "If you double the length of a cable (keeping CSA and material the same), what happens to resistance?",
+    options: [
+      "Resistance halves",
+      "Resistance doubles",
+      "Resistance stays the same",
+      "Resistance quadruples"
+    ],
+    correctIndex: 1,
+    explanation: "Resistance is directly proportional to length. Double the length = double the resistance (R = ρL/A)."
+  },
+  {
+    id: "area-effect",
+    question: "What happens to resistance if you double the cross-sectional area of a cable?",
+    options: [
+      "Resistance doubles",
+      "Resistance halves",
+      "Resistance quadruples",
+      "No change to resistance"
+    ],
+    correctIndex: 1,
+    explanation: "Resistance is inversely proportional to area. Double the area = half the resistance (R = ρL/A)."
+  },
+  {
+    id: "temp-effect",
+    question: "How does increasing temperature typically affect metal conductor resistance?",
+    options: [
+      "Resistance decreases significantly",
+      "Resistance increases",
+      "No effect on resistance",
+      "Resistance becomes zero"
+    ],
+    correctIndex: 1,
+    explanation: "Metal conductors have a positive temperature coefficient - resistance increases with temperature (typically ~0.4% per °C for copper)."
+  }
+];
 
 const quizQuestions = [
   {
@@ -230,6 +270,8 @@ const Module2Section5_3 = () => {
         {/* Try it yourself – calculator */}
         <ResistanceCalculator />
 
+        <InlineCheck {...quickCheckQuestions[0]} />
+
         {/* Key Factors */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Key Factors</h2>
@@ -269,6 +311,8 @@ const Module2Section5_3 = () => {
           </div>
         </Card>
 
+        <InlineCheck {...quickCheckQuestions[1]} />
+
         {/* Practical Notes */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Practical Notes</h2>
@@ -279,6 +323,8 @@ const Module2Section5_3 = () => {
             <li>Use correct lugs and torque; consider bimetallic solutions for Al↔Cu transitions.</li>
           </ul>
         </Card>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
 
         {/* BS 7671 References (guidance) */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
@@ -355,14 +401,14 @@ const Module2Section5_3 = () => {
         </Card>
 
         {/* Navigation */}
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-          <Button variant="outline" className="flex-1" asChild>
-            <Link to="..">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 2.5
-            </Link>
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5" asChild>
+            <Link to="../5-2"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
           </Button>
-        </div>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a]" asChild>
+            <Link to="..">Complete Module<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
+          </Button>
+        </nav>
       </div>
     </div>
   );

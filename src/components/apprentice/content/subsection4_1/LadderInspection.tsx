@@ -10,7 +10,7 @@ const LadderInspection = () => {
         <CardTitle className="text-xl font-bold text-elec-yellow">Ladder Inspection & Safe Use</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="bg-elec-dark/50 border-l-4 border-red-500 p-4 rounded-r">
+        <div className="bg-white/10 border-l-4 border-red-500 p-4 rounded-r">
           <div className="flex items-center gap-2 mb-2">
             <AlertTriangle className="h-5 w-5 text-red-500" />
             <h4 className="font-semibold text-elec-yellow">Pre-use Inspection Requirements</h4>
@@ -23,7 +23,7 @@ const LadderInspection = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-          <Card className="bg-elec-dark/50 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20">
             <CardHeader className="pb-2">
               <div className="flex items-center">
                 <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
@@ -46,7 +46,7 @@ const LadderInspection = () => {
             </CardContent>
           </Card>
           
-          <Card className="bg-elec-dark/50 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20">
             <CardHeader className="pb-2">
               <div className="flex items-center">
                 <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
@@ -71,7 +71,7 @@ const LadderInspection = () => {
         </div>
         
         <div className="mt-4">
-          <Card className="bg-elec-dark/50 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg font-semibold text-elec-yellow">Formal Inspection Requirements</CardTitle>
             </CardHeader>
@@ -81,28 +81,28 @@ const LadderInspection = () => {
                 inspections at regular intervals:
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="bg-elec-dark/70 p-3 rounded-lg border border-elec-yellow/10">
+                <div className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <h5 className="font-medium text-elec-yellow mb-2 flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Weekly Visual Inspections
                   </h5>
                   <p className="text-sm">Required when ladder is in frequent use or in harsh environments</p>
                 </div>
-                <div className="bg-elec-dark/70 p-3 rounded-lg border border-elec-yellow/10">
+                <div className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <h5 className="font-medium text-elec-yellow mb-2 flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Detailed Inspection Every 3-6 Months
                   </h5>
                   <p className="text-sm">Must be conducted by a competent person and results recorded</p>
                 </div>
-                <div className="bg-elec-dark/70 p-3 rounded-lg border border-elec-yellow/10">
+                <div className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <h5 className="font-medium text-elec-yellow mb-2 flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Tagging System
                   </h5>
                   <p className="text-sm">Colour-coded or dated tags to indicate inspection status</p>
                 </div>
-                <div className="bg-elec-dark/70 p-3 rounded-lg border border-elec-yellow/10">
+                <div className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <h5 className="font-medium text-elec-yellow mb-2 flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Records Retention

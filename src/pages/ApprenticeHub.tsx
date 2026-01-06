@@ -1,200 +1,477 @@
-import { Link } from "react-router-dom";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+/**
+ * ApprenticeHub
+ *
+ * Premium apprentice command center with glass morphism styling,
+ * real-time stats, and best-in-class mobile experience.
+ * Yellow/gold theme throughout.
+ */
+
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import {
+  GraduationCap,
   Clock,
   Heart,
-  WrenchIcon,
-  Settings,
-  GraduationCap,
-  Zap,
-  CheckSquare,
   Calculator,
-  ArrowLeft,
-  ArrowRight,
-  Sparkles,
   BookOpen,
+  Settings,
+  WrenchIcon,
+  ClipboardCheck,
+  Sparkles,
+  ArrowRight,
+  ArrowLeft,
+  Flame,
+  Target,
+  Award,
+  ChevronRight,
   Brain,
-} from "lucide-react";
+  FileText,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { useApprenticeData } from '@/hooks/useApprenticeData';
+import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
 
-const ApprenticeHub = () => {
-  // Featured AI Tools card
-  const featuredCard = {
-    title: "AI Study Assistant",
-    description: "Get instant help with electrical theory, regulations, and exam preparation from our AI-powered assistant",
-    icon: Sparkles,
-    link: "/apprentice/advanced-help"
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: 'spring', stiffness: 300, damping: 24 },
+  },
+};
+
+// Premium Hero Component
+function ApprenticeHero() {
+  const { user, stats, isLoading } = useApprenticeData();
+
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Good morning';
+    if (hour < 18) return 'Good afternoon';
+    return 'Good evening';
   };
 
-  // Main 2x2 grid - 4 most essential tools
-  const mainResources = [
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="relative overflow-hidden glass-premium rounded-2xl glow-yellow"
+    >
+      {/* Gradient accent line */}
+      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
+
+      {/* Decorative blob */}
+      <div className="absolute top-0 right-0 w-40 sm:w-56 h-40 sm:h-56 bg-elec-yellow/[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
+
+      <div className="relative z-10 p-5 sm:p-6">
+        <div className="flex items-start gap-4">
+          {/* Icon */}
+          <div className="flex-shrink-0 p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+            <GraduationCap className="h-8 w-8 text-elec-yellow" />
+          </div>
+
+          {/* Content */}
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-1.5 text-elec-yellow mb-1">
+              <Sparkles className="h-3 w-3" />
+              <span className="text-[10px] sm:text-xs font-medium tracking-wide uppercase">
+                Apprentice Hub
+              </span>
+            </div>
+
+            <h1 className="text-xl sm:text-2xl font-semibold text-white leading-tight">
+              {getGreeting()}, <span className="text-elec-yellow">{user.firstName}</span>
+            </h1>
+
+            <p className="text-sm text-white/70 mt-1">
+              Your command center for apprenticeship success
+            </p>
+
+            {/* Status badges */}
+            <div className="flex items-center gap-2 mt-3 flex-wrap">
+              {user.apprenticeYear && (
+                <Badge
+                  variant="outline"
+                  className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow text-[10px] sm:text-xs"
+                >
+                  Year {user.apprenticeYear}
+                </Badge>
+              )}
+              {stats.learning.currentStreak > 0 && (
+                <Badge
+                  variant="outline"
+                  className="bg-orange-500/10 border-orange-500/30 text-orange-400 text-[10px] sm:text-xs"
+                >
+                  <Flame className="w-3 h-3 mr-1" />
+                  {stats.learning.currentStreak} day streak
+                </Badge>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+// Stats Bar Component
+function ApprenticeStatsBar() {
+  const { stats, isLoading } = useApprenticeData();
+
+  const statItems = [
     {
-      id: 1,
-      title: "Electrical Calculators",
-      description: "Cable sizing, voltage drop, fault current and more",
-      icon: Calculator,
-      link: "/apprentice/calculators"
-    },
-    {
-      id: 2,
-      title: "Portfolio & OJT",
-      description: "Track hours, log evidence, build your portfolio",
+      label: 'OJT Hours',
+      value: stats.ojtHours.logged,
+      suffix: ` / ${stats.ojtHours.target}`,
       icon: Clock,
-      link: "/apprentice/ojt"
+      progress: stats.ojtHours.percentComplete,
     },
     {
-      id: 3,
-      title: "Mental Health Hub",
-      description: "Wellbeing resources, support networks and guidance",
-      icon: Heart,
-      link: "/apprentice/mental-health"
+      label: 'Study Streak',
+      value: stats.learning.currentStreak,
+      suffix: ' days',
+      icon: Flame,
     },
     {
-      id: 4,
-      title: "Inspection & Testing",
-      description: "Testing procedures, fault finding, regulations and quizzes",
-      icon: CheckSquare,
-      link: "/apprentice/inspection-testing-hub"
-    }
+      label: 'Portfolio',
+      value: stats.portfolio.evidenceCount,
+      suffix: ' items',
+      icon: FileText,
+    },
+    {
+      label: 'Progress',
+      value: stats.progress.overallPercent,
+      suffix: '%',
+      icon: Target,
+      progress: stats.progress.overallPercent,
+    },
   ];
 
-  // Additional tools section
-  const additionalResources = [
-    {
-      id: 5,
-      title: "On the Job Tools",
-      description: "Quick references for daily work",
-      icon: Settings,
-      link: "/apprentice/on-job-tools"
-    },
-    {
-      id: 6,
-      title: "Guidance Area",
-      description: "Tips, guides and best practices",
-      icon: WrenchIcon,
-      link: "/apprentice/toolbox"
-    },
-    {
-      id: 7,
-      title: "Career Development",
-      description: "Plan your progression pathway",
-      icon: GraduationCap,
-      link: "/apprentice/professional-development"
-    },
-    {
-      id: 8,
-      title: "Study Centre",
-      description: "Training materials and quizzes",
-      icon: BookOpen,
-      link: "/study-centre/apprentice"
-    }
-  ];
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {[...Array(4)].map((_, i) => (
+          <div key={i} className="h-[100px] rounded-xl glass-premium animate-pulse" />
+        ))}
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen mobile-safe-area">
-      <div className="space-y-8 md:space-y-10 animate-fade-in px-4 sm:px-6 pb-8 md:pb-12">
-        {/* Header */}
-        <div className="flex flex-col gap-4 pt-4 md:pt-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
-              Apprentice Hub
-            </h1>
-            <Link to="/dashboard" className="w-full sm:w-auto">
-              <Button variant="outline" className="w-full sm:w-auto h-12 sm:h-10 text-base sm:text-sm">
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 snap-x snap-mandatory scrollbar-none sm:grid sm:grid-cols-4 sm:overflow-visible sm:mx-0 sm:px-0 sm:pb-0"
+    >
+      {statItems.map((stat, index) => (
+        <motion.div
+          key={stat.label}
+          variants={itemVariants}
+          className="flex-shrink-0 w-[140px] snap-start sm:w-full"
+        >
+          <div className="glass-premium rounded-xl p-4 h-[100px]">
+            <div className="flex items-start justify-between gap-2">
+              <div className="p-2 rounded-lg bg-elec-yellow/10">
+                <stat.icon className="h-4 w-4 text-elec-yellow" />
+              </div>
+              <div className="text-right">
+                <div className="flex items-baseline justify-end">
+                  <AnimatedCounter
+                    value={stat.value}
+                    className="text-xl font-bold text-elec-yellow"
+                  />
+                  {stat.suffix && (
+                    <span className="text-xs text-white/50 ml-0.5">{stat.suffix}</span>
+                  )}
+                </div>
+                <p className="text-xs text-white/70 mt-0.5">{stat.label}</p>
+              </div>
+            </div>
+            {stat.progress !== undefined && (
+              <div className="mt-3 h-1 bg-white/[0.05] rounded-full overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${Math.min(stat.progress, 100)}%` }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                  className="h-full bg-elec-yellow rounded-full"
+                />
+              </div>
+            )}
+          </div>
+        </motion.div>
+      ))}
+    </motion.div>
+  );
+}
+
+// Featured Card Component
+function FeaturedCard() {
+  return (
+    <Link to="/apprentice/advanced-help" className="block group touch-manipulation">
+      <motion.div
+        whileHover={{ y: -2, scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+        className="relative overflow-hidden glass-premium rounded-2xl"
+      >
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
+        <div className="absolute -top-16 -right-16 w-32 h-32 bg-elec-yellow/[0.08] blur-3xl rounded-full pointer-events-none" />
+
+        <div className="relative z-10 p-5 sm:p-6 text-center">
+          <div className="inline-flex p-3 rounded-2xl bg-elec-yellow/10 mb-4 group-hover:bg-elec-yellow/20 transition-colors">
+            <Sparkles className="h-8 w-8 text-elec-yellow" />
+          </div>
+
+          <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
+            AI Study Assistant
+          </h3>
+          <p className="text-sm text-white/70 max-w-md mx-auto mb-4">
+            Get instant help with electrical theory, regulations, and exam preparation
+          </p>
+
+          <div className="inline-flex items-center gap-2 text-elec-yellow font-medium text-sm group-hover:gap-3 transition-all">
+            <span>Start Learning</span>
+            <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+          </div>
+        </div>
+      </motion.div>
+    </Link>
+  );
+}
+
+// Tool Card Component
+interface ToolCardProps {
+  title: string;
+  description: string;
+  icon: typeof Clock;
+  link: string;
+  featured?: boolean;
+  badges?: string[];
+}
+
+function ToolCard({ title, description, icon: Icon, link, featured, badges }: ToolCardProps) {
+  return (
+    <Link to={link} className="block group touch-manipulation">
+      <motion.div
+        whileHover={{ y: -2, scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+        className={cn(
+          'relative overflow-hidden glass-premium rounded-xl h-full min-h-[140px]',
+          featured && 'bg-gradient-to-br from-elec-yellow/[0.08] to-transparent'
+        )}
+      >
+        {featured && (
+          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
+        )}
+
+        <div className="p-4 sm:p-5 flex items-start gap-4">
+          <div
+            className={cn(
+              'flex-shrink-0 p-2.5 rounded-lg transition-colors',
+              featured
+                ? 'bg-elec-yellow/20 group-hover:bg-elec-yellow/30 ring-1 ring-elec-yellow/30'
+                : 'bg-elec-yellow/10 group-hover:bg-elec-yellow/20'
+            )}
+          >
+            <Icon className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow" />
+          </div>
+
+          <div className="flex-1 min-w-0">
+            <h3 className="text-base sm:text-lg font-semibold text-white mb-1 group-hover:text-elec-yellow transition-colors">
+              {title}
+            </h3>
+            <p className="text-sm text-white/70 leading-relaxed line-clamp-2">
+              {description}
+            </p>
+            {badges && (
+              <div className="flex flex-wrap gap-1.5 mt-2">
+                {badges.map((badge, i) => (
+                  <Badge
+                    key={i}
+                    variant="outline"
+                    className="text-[10px] bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow"
+                  >
+                    {badge}
+                  </Badge>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <ChevronRight className="h-5 w-5 text-white/40 group-hover:text-elec-yellow group-hover:translate-x-1 transition-all flex-shrink-0" />
+        </div>
+      </motion.div>
+    </Link>
+  );
+}
+
+// Compact Tool Card for More Resources
+function CompactToolCard({ title, description, icon: Icon, link }: ToolCardProps) {
+  return (
+    <Link to={link} className="block group touch-manipulation">
+      <motion.div
+        whileHover={{ y: -2, scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        className="glass-premium rounded-xl h-full min-h-[120px] sm:min-h-[130px]"
+      >
+        <div className="p-4 flex flex-col items-center justify-center text-center h-full">
+          <div className="p-2 rounded-lg bg-elec-yellow/10 mb-2 group-hover:bg-elec-yellow/20 transition-colors">
+            <Icon className="h-6 w-6 text-elec-yellow" />
+          </div>
+          <h3 className="text-sm sm:text-base font-semibold text-white mb-1 group-hover:text-elec-yellow transition-colors">
+            {title}
+          </h3>
+          <p className="text-xs text-white/60 line-clamp-2 hidden sm:block">
+            {description}
+          </p>
+        </div>
+      </motion.div>
+    </Link>
+  );
+}
+
+// Section Header
+function SectionHeader({ title }: { title: string }) {
+  return (
+    <div className="flex items-center gap-2 px-1">
+      <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
+      <h2 className="text-lg sm:text-xl font-semibold text-white">{title}</h2>
+    </div>
+  );
+}
+
+// Main resources
+const mainResources: ToolCardProps[] = [
+  {
+    title: 'Electrical Calculators',
+    description: 'Cable sizing, voltage drop, fault current and more',
+    icon: Calculator,
+    link: '/apprentice/calculators',
+  },
+  {
+    title: 'Portfolio & OJT',
+    description: 'Track hours, log evidence, build your portfolio',
+    icon: Clock,
+    link: '/apprentice/ojt',
+  },
+  {
+    title: 'Mental Health Hub',
+    description: 'Wellbeing resources, support networks and guidance',
+    icon: Heart,
+    link: '/apprentice/mental-health',
+  },
+  {
+    title: 'Inspection & Testing',
+    description: 'Master I&T with comprehensive guides, quizzes, and BS 7671 regulations',
+    icon: ClipboardCheck,
+    link: '/apprentice/inspection-testing-hub',
+    featured: true,
+    badges: ['8 Topics', 'Interactive', 'Exam Ready'],
+  },
+];
+
+// Additional resources
+const additionalResources: ToolCardProps[] = [
+  {
+    title: 'On the Job Tools',
+    description: 'Quick references for daily work',
+    icon: Settings,
+    link: '/apprentice/on-job-tools',
+  },
+  {
+    title: 'Guidance Area',
+    description: 'Tips, guides and best practices',
+    icon: WrenchIcon,
+    link: '/apprentice/toolbox',
+  },
+  {
+    title: 'Career Development',
+    description: 'Plan your progression pathway',
+    icon: GraduationCap,
+    link: '/apprentice/professional-development',
+  },
+  {
+    title: 'Study Centre',
+    description: 'Training materials and quizzes',
+    icon: BookOpen,
+    link: '/study-centre/apprentice',
+  },
+];
+
+const ApprenticeHub = () => {
+  return (
+    <div className="min-h-screen bg-[hsl(240,5.9%,10%)]">
+      <div className="mx-auto max-w-6xl py-4 md:py-6 lg:py-8 pb-safe">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-6 sm:space-y-8"
+        >
+          {/* Back Button */}
+          <motion.div variants={itemVariants} className="px-4 sm:px-0">
+            <Link to="/dashboard">
+              <Button
+                variant="ghost"
+                className="text-white/70 hover:text-white hover:bg-white/[0.05] -ml-2"
+              >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Dashboard
               </Button>
             </Link>
-          </div>
-          <p className="text-base text-muted-foreground max-w-2xl">
-            Everything you need to succeed in your electrical apprenticeship
-          </p>
-        </div>
+          </motion.div>
 
-        {/* Featured AI Assistant Card */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-2 px-1">
-            <div className="h-1 w-1 rounded-full bg-elec-yellow"></div>
-            <h2 className="text-xl sm:text-2xl font-bold">AI-Powered Learning</h2>
-          </div>
-          <Link to={featuredCard.link} className="block focus:outline-none group touch-manipulation">
-            <Card className="border-elec-yellow/30 hover:border-elec-yellow/50 active:scale-[0.98] relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <CardHeader className="flex flex-col items-center justify-center text-center py-6 px-4 relative">
-                <div className="p-3 rounded-2xl bg-elec-yellow/10 mb-3 group-hover:bg-elec-yellow/20 transition-colors duration-300">
-                  <Sparkles className="h-10 w-10 text-elec-yellow" />
-                </div>
-                <CardTitle className="text-lg sm:text-xl font-bold mb-2">
-                  {featuredCard.title}
-                </CardTitle>
-                <p className="text-sm text-muted-foreground leading-relaxed max-w-lg">
-                  {featuredCard.description}
-                </p>
-                <div className="flex items-center gap-2 mt-4 text-elec-yellow text-sm font-semibold group-hover:gap-3 transition-all duration-300">
-                  <span>Start Learning</span>
-                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
-                </div>
-              </CardHeader>
-            </Card>
-          </Link>
-        </div>
+          {/* Hero */}
+          <motion.section variants={itemVariants} className="px-4 sm:px-0">
+            <ApprenticeHero />
+          </motion.section>
 
-        {/* Essential Tools Grid */}
-        <div className="space-y-5">
-          <div className="flex items-center gap-2 px-1">
-            <div className="h-1 w-1 rounded-full bg-elec-yellow"></div>
-            <h2 className="text-xl sm:text-2xl font-bold">Essential Tools</h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-            {mainResources.map((resource) => (
-              <Link to={resource.link} key={resource.id} className="block focus:outline-none group touch-manipulation">
-                <Card className="hover:bg-[#222222] hover:border-elec-yellow/40 active:scale-[0.97] h-full min-h-[140px]">
-                  <CardHeader className="flex flex-row items-start gap-4 py-5 sm:py-6 px-4 sm:px-5">
-                    <div className="p-2.5 rounded-lg bg-elec-yellow/10 group-hover:bg-elec-yellow/20 transition-colors duration-300 flex-shrink-0">
-                      <resource.icon className="h-7 w-7 sm:h-8 sm:w-8 text-elec-yellow" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <CardTitle className="text-base sm:text-lg font-semibold leading-tight mb-1.5">
-                        {resource.title}
-                      </CardTitle>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        {resource.description}
-                      </p>
-                    </div>
-                    <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-elec-yellow group-hover:translate-x-1 transition-all duration-300 flex-shrink-0 mt-1" />
-                  </CardHeader>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </div>
+          {/* Stats Bar */}
+          <motion.section variants={itemVariants} className="sm:px-0">
+            <ApprenticeStatsBar />
+          </motion.section>
 
-        {/* Additional Resources */}
-        <div className="space-y-5">
-          <div className="flex items-center gap-2 px-1">
-            <div className="h-1 w-1 rounded-full bg-elec-yellow"></div>
-            <h2 className="text-xl sm:text-2xl font-bold">More Resources</h2>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-            {additionalResources.map((resource) => (
-              <Link to={resource.link} key={resource.id} className="block focus:outline-none group touch-manipulation">
-                <Card className="hover:bg-[#222222] hover:border-elec-yellow/40 active:scale-[0.97] h-full min-h-[120px] sm:min-h-[130px]">
-                  <CardHeader className="flex flex-col items-center justify-center text-center py-4 sm:py-5 px-3">
-                    <div className="p-2 rounded-lg bg-elec-yellow/10 mb-2 group-hover:bg-elec-yellow/20 transition-colors duration-300">
-                      <resource.icon className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow" />
-                    </div>
-                    <CardTitle className="text-sm sm:text-base font-semibold leading-tight mb-1">
-                      {resource.title}
-                    </CardTitle>
-                    <p className="text-xs text-muted-foreground line-clamp-2 hidden sm:block">
-                      {resource.description}
-                    </p>
-                  </CardHeader>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </div>
+          {/* Featured AI Card */}
+          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+            <SectionHeader title="AI-Powered Learning" />
+            <FeaturedCard />
+          </motion.section>
+
+          {/* Essential Tools */}
+          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+            <SectionHeader title="Essential Tools" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              {mainResources.map((resource) => (
+                <ToolCard key={resource.link} {...resource} />
+              ))}
+            </div>
+          </motion.section>
+
+          {/* More Resources */}
+          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+            <SectionHeader title="More Resources" />
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {additionalResources.map((resource) => (
+                <CompactToolCard key={resource.link} {...resource} />
+              ))}
+            </div>
+          </motion.section>
+
+          {/* Footer spacing */}
+          <div className="h-4 sm:h-6" />
+        </motion.div>
       </div>
     </div>
   );

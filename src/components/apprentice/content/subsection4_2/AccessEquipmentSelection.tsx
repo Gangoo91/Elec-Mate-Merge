@@ -16,7 +16,7 @@ const AccessEquipmentSelection = () => {
           hazards present.
         </p>
         
-        <div className="bg-elec-dark/50 border-l-4 border-red-500 p-4 rounded-r">
+        <div className="bg-white/10 border-l-4 border-red-500 p-4 rounded-r">
           <div className="flex items-center gap-2 mb-2">
             <AlertTriangle className="h-5 w-5 text-red-500" />
             <h4 className="font-semibold text-elec-yellow">Electrical Specific Considerations</h4>
@@ -29,7 +29,7 @@ const AccessEquipmentSelection = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="bg-elec-dark/50 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20">
             <CardHeader className="pb-2">
               <div className="flex items-center">
                 <HardHat className="h-5 w-5 text-elec-yellow mr-2" />
@@ -48,7 +48,7 @@ const AccessEquipmentSelection = () => {
             </CardContent>
           </Card>
           
-          <Card className="bg-elec-dark/50 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20">
             <CardHeader className="pb-2">
               <div className="flex items-center">
                 <HardHat className="h-5 w-5 text-elec-yellow mr-2" />
@@ -67,7 +67,7 @@ const AccessEquipmentSelection = () => {
             </CardContent>
           </Card>
           
-          <Card className="bg-elec-dark/50 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20">
             <CardHeader className="pb-2">
               <div className="flex items-center">
                 <HardHat className="h-5 w-5 text-elec-yellow mr-2" />
@@ -87,7 +87,7 @@ const AccessEquipmentSelection = () => {
           </Card>
         </div>
         
-        <Card className="bg-elec-dark/50 border border-elec-yellow/20 mt-4">
+        <Card className="bg-white/10 border border-elec-yellow/20 mt-4">
           <CardHeader className="pb-2">
             <CardTitle className="text-lg font-semibold text-elec-yellow">Selection Decision Process</CardTitle>
           </CardHeader>
@@ -131,7 +131,7 @@ const AccessEquipmentSelection = () => {
           </CardContent>
         </Card>
         
-        <Card className="bg-elec-dark/50 border border-elec-yellow/20 mt-4">
+        <Card className="bg-white/10 border border-elec-yellow/20 mt-4">
           <CardHeader className="pb-2">
             <CardTitle className="text-lg font-semibold text-elec-yellow">Fall Protection Systems for Electrical Work</CardTitle>
           </CardHeader>

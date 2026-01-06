@@ -104,7 +104,7 @@ const EquipmentChecklistCard = () => {
       case 'testing': return 'border-blue-500/20 bg-blue-500/5';
       case 'safety': return 'border-green-500/20 bg-green-500/5';
       case 'isolation': return 'border-orange-500/20 bg-orange-500/5';
-      default: return 'border-gray-500/20 bg-gray-500/5';
+      default: return 'border-white/20 bg-white/5';
     }
   };
 

@@ -16,7 +16,7 @@ const Subsection1_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
     <div className="space-y-8">
       <h1 className="text-2xl font-bold text-elec-yellow">Building Regulations (Part P)</h1>
       
-      <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-lg p-6 mb-6">
+      <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-6 mb-6">
         <h2 className="text-xl font-semibold text-elec-yellow mb-4 flex items-center">
           <AlertTriangle className="mr-3 h-6 w-6 text-elec-yellow" />
           Introduction to Building Regulations
@@ -33,7 +33,7 @@ const Subsection1_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </p>
       </div>
       
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow flex items-center">
             <List className="mr-3 h-6 w-6" />
@@ -48,7 +48,7 @@ const Subsection1_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             injuries from fire or electric shocks.
           </p>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Main Part P Requirements:</h3>
             <ul className="list-disc pl-5 space-y-2">
               <li>Reasonable provision must be made in the design, installation, inspection and testing of electrical installations to protect people from fire or injury</li>
@@ -59,7 +59,7 @@ const Subsection1_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </ul>
           </div>
 
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mt-4">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mt-4">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Types of Notifiable Work:</h3>
             <p className="mb-3">Part P defines two categories of work that require notification:</p>
             <ul className="list-disc pl-5 space-y-2">
@@ -72,7 +72,7 @@ const Subsection1_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </CardContent>
       </Card>
       
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow flex items-center">
             <ClipboardCheck className="mr-3 h-6 w-6" />
@@ -86,7 +86,7 @@ const Subsection1_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             is essential for all electrical professionals working on domestic properties.
           </p>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Routes to Compliance:</h3>
             <ol className="list-decimal pl-5 space-y-3">
               <li>
@@ -112,7 +112,7 @@ const Subsection1_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </ol>
           </div>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mt-4">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mt-4">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Required Certification:</h3>
             <p className="mb-3">When completing electrical work under Part P, the following certificates are required:</p>
             <ul className="list-disc pl-5 space-y-2">
@@ -124,7 +124,7 @@ const Subsection1_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </CardContent>
       </Card>
       
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow flex items-center">
             <FileText className="mr-3 h-6 w-6" />
@@ -138,7 +138,7 @@ const Subsection1_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             regulatory requirements while ensuring client satisfaction and compliance.
           </p>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Best Practices for Part P Compliance:</h3>
             <ul className="list-disc pl-5 space-y-2">
               <li><span className="font-semibold">Thorough documentation</span> - Keep detailed records of all electrical work conducted</li>

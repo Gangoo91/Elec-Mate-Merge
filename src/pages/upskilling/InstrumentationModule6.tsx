@@ -41,7 +41,7 @@ const InstrumentationModule6 = () => {
       title: "Advanced Calibration Topics and Best Practices",
       icon: Shield,
       description: "Advanced techniques, troubleshooting, and future calibration trends"
-    }
+  }
   ];
 
   return (

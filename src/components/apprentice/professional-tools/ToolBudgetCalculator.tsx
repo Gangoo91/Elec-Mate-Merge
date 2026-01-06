@@ -4,8 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Progress } from "@/components/ui/progress";
-import { Calculator, PoundSterling, TrendingUp } from "lucide-react";
+import { Calculator, PoundSterling, Wallet, Target } from "lucide-react";
 import { useState } from "react";
 
 const ToolBudgetCalculator = () => {
@@ -54,31 +53,38 @@ const ToolBudgetCalculator = () => {
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-yellow/10">
-      <CardHeader>
-        <div className="flex items-center gap-2">
-          <Calculator className="h-5 w-5 text-elec-yellow" />
-          <CardTitle className="text-elec-yellow">Tool Budget Calculator</CardTitle>
-        </div>
+    <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+      <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+      <CardHeader className="relative">
+        <CardTitle className="text-white flex items-center gap-3">
+          <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+            <Calculator className="h-5 w-5 text-elec-yellow" />
+          </div>
+          Tool Budget Calculator
+        </CardTitle>
+        <p className="text-sm text-white/60">
+          Plan your tool investments and see how your budget allocates
+        </p>
       </CardHeader>
-      <CardContent>
+      <CardContent className="relative">
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <Label htmlFor="monthly-budget">Monthly Budget (£)</Label>
+            <div className="space-y-2">
+              <Label htmlFor="monthly-budget" className="text-white/70">Monthly Budget (£)</Label>
               <Input
                 id="monthly-budget"
                 type="number"
                 value={monthlyBudget}
                 onChange={(e) => setMonthlyBudget(e.target.value)}
                 placeholder="200"
+                className="bg-white/10 border-white/20 focus:border-elec-yellow/50 h-11"
               />
             </div>
-            
-            <div>
-              <Label htmlFor="timeframe">Timeframe (months)</Label>
+
+            <div className="space-y-2">
+              <Label htmlFor="timeframe" className="text-white/70">Timeframe (months)</Label>
               <Select value={timeframe} onValueChange={setTimeframe}>
-                <SelectTrigger>
+                <SelectTrigger className="bg-white/10 border-white/20 h-11">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -89,11 +95,11 @@ const ToolBudgetCalculator = () => {
                 </SelectContent>
               </Select>
             </div>
-            
-            <div>
-              <Label htmlFor="priority">Priority Level</Label>
+
+            <div className="space-y-2">
+              <Label htmlFor="priority" className="text-white/70">Priority Level</Label>
               <Select value={priority} onValueChange={setPriority}>
-                <SelectTrigger>
+                <SelectTrigger className="bg-white/10 border-white/20 h-11">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -104,30 +110,44 @@ const ToolBudgetCalculator = () => {
               </Select>
             </div>
           </div>
-          
-          <Button onClick={calculateBudget} className="w-full">
+
+          <Button
+            onClick={calculateBudget}
+            className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium touch-manipulation active:scale-95 transition-all"
+          >
+            <Target className="h-4 w-4 mr-2" />
             Calculate Budget Plan
           </Button>
-          
+
           {totalBudget > 0 && (
-            <div className="space-y-4">
-              <div className="flex items-center justify-between text-lg font-semibold">
-                <span className="text-white">Total Budget:</span>
-                <span className="text-elec-yellow flex items-center gap-1">
-                  <PoundSterling className="h-4 w-4" />
+            <div className="space-y-4 pt-4 border-t border-white/10">
+              <div className="p-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/30 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-elec-yellow/20">
+                    <Wallet className="h-5 w-5 text-elec-yellow" />
+                  </div>
+                  <span className="text-white font-medium">Total Budget:</span>
+                </div>
+                <span className="text-elec-yellow font-bold text-xl flex items-center gap-1">
+                  <PoundSterling className="h-5 w-5" />
                   {totalBudget.toFixed(0)}
                 </span>
               </div>
-              
+
               <div className="space-y-3">
-                <h4 className="font-medium text-white">Recommended Allocation:</h4>
+                <h4 className="font-semibold text-white">Recommended Allocation:</h4>
                 {Object.entries(breakdown).map(([tool, amount]) => (
-                  <div key={tool} className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">{tool}</span>
-                      <span className="text-elec-yellow">£{amount.toFixed(0)}</span>
+                  <div key={tool} className="p-3 rounded-xl bg-white/10 border border-white/10">
+                    <div className="flex justify-between text-sm mb-2">
+                      <span className="text-white/70">{tool}</span>
+                      <span className="text-elec-yellow font-medium">£{amount.toFixed(0)}</span>
                     </div>
-                    <Progress value={(amount / totalBudget) * 100} className="h-2" />
+                    <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-elec-yellow transition-all"
+                        style={{ width: `${(amount / totalBudget) * 100}%` }}
+                      />
+                    </div>
                   </div>
                 ))}
               </div>

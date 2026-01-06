@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -6,11 +6,13 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import {
   Select,
@@ -31,30 +33,122 @@ import {
   Camera,
   Shield,
   ChevronRight,
+  Users,
+  Award,
+  Eye,
+  EyeOff,
+  Crown,
+  Star,
+  Power,
+  AlertCircle,
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useElecIdProfile } from "@/hooks/useElecIdProfile";
 import { getExpiryStatus, calculateProfileCompleteness } from "@/utils/elecIdGenerator";
 import { getECSCardType, UK_JOB_TITLES, ECS_CARD_TYPES } from "@/data/uk-electrician-constants";
+import { TrainingRequestsCard } from "./TrainingRequestsCard";
 
 interface ElecIdOverviewProps {
   onNavigate?: (tabId: string) => void;
 }
 
+// Verification tier configuration
+const VERIFICATION_TIERS = {
+  basic: {
+    label: "Basic",
+    color: "text-muted-foreground",
+    bgColor: "bg-white/10",
+    borderColor: "border-white/20",
+    icon: Shield,
+    description: "Profile created",
+  },
+  verified: {
+    label: "Verified",
+    color: "text-blue-400",
+    bgColor: "bg-blue-500/20",
+    borderColor: "border-blue-500/30",
+    icon: CheckCircle2,
+    description: "ECS Card + 1 qualification verified",
+  },
+  premium: {
+    label: "Premium",
+    color: "text-elec-yellow",
+    bgColor: "bg-elec-yellow/20",
+    borderColor: "border-elec-yellow/30",
+    icon: Crown,
+    description: "Fully verified professional",
+  },
+};
+
 const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
   const { profile } = useAuth();
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const {
+    profile: elecIdProfile,
+    isOptedOut,
+    setOptOut,
+    updateProfile
+  } = useElecIdProfile();
 
-  // Mock data - will be replaced with real Elec-ID data from hooks
-  const [elecIdData, setElecIdData] = useState({
-    elecIdNumber: "EM-ABC123",
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isOptOutDialogOpen, setIsOptOutDialogOpen] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+
+  // Local state synced with profile
+  const [availableForHire, setAvailableForHire] = useState(true);
+  const [profileVisibility, setProfileVisibility] = useState<"public" | "employers_only" | "private">("employers_only");
+  const [verificationTier, setVerificationTier] = useState<"basic" | "verified" | "premium">("basic");
+
+  // Sync local state with profile data
+  useEffect(() => {
+    if (elecIdProfile) {
+      setAvailableForHire(elecIdProfile.available_for_hire);
+      setProfileVisibility(elecIdProfile.profile_visibility);
+      setVerificationTier(elecIdProfile.verification_tier);
+    }
+  }, [elecIdProfile]);
+
+  // Handle availability toggle
+  const handleAvailabilityChange = async (checked: boolean) => {
+    setAvailableForHire(checked);
+    setIsSaving(true);
+    await updateProfile({ available_for_hire: checked });
+    setIsSaving(false);
+  };
+
+  // Handle visibility change
+  const handleVisibilityChange = async (value: "public" | "employers_only" | "private") => {
+    setProfileVisibility(value);
+    setIsSaving(true);
+    await updateProfile({ profile_visibility: value });
+    setIsSaving(false);
+  };
+
+  // Handle opt-out
+  const handleOptOut = async () => {
+    setIsSaving(true);
+    await setOptOut(true);
+    setIsSaving(false);
+    setIsOptOutDialogOpen(false);
+  };
+
+  // Handle opt back in
+  const handleOptIn = async () => {
+    setIsSaving(true);
+    await setOptOut(false);
+    setIsSaving(false);
+  };
+
+  // Use profile data or fallbacks
+  const elecIdData = {
+    elecIdNumber: elecIdProfile?.elec_id_number || "EM-XXXXXX",
     jobTitle: "approved",
     jobTitleLabel: "Approved Electrician",
-    ecsCardType: "gold",
-    ecsCardExpiry: "2026-12-15",
-    isVerified: true,
+    ecsCardType: elecIdProfile?.ecs_card_type || "gold",
+    ecsCardExpiry: elecIdProfile?.ecs_expiry_date || "2026-12-15",
+    isVerified: elecIdProfile?.is_verified || false,
     photoUrl: null as string | null,
-    bio: "",
-  });
+    bio: elecIdProfile?.bio || "",
+  };
 
   const [editFormData, setEditFormData] = useState({
     jobTitle: elecIdData.jobTitle,
@@ -335,6 +429,230 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
         </CardContent>
       </Card>
 
+      {/* Verification Tier & Talent Pool Settings */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Verification Tier Card */}
+        <Card className={`${VERIFICATION_TIERS[verificationTier].bgColor} ${VERIFICATION_TIERS[verificationTier].borderColor} border`}>
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              {React.createElement(VERIFICATION_TIERS[verificationTier].icon, {
+                className: `h-8 w-8 ${VERIFICATION_TIERS[verificationTier].color}`,
+              })}
+              <div className="flex-1">
+                <div className="flex items-center gap-2">
+                  <h4 className={`font-semibold ${VERIFICATION_TIERS[verificationTier].color}`}>
+                    {VERIFICATION_TIERS[verificationTier].label} Tier
+                  </h4>
+                  {verificationTier === "premium" && (
+                    <Badge className="bg-elec-yellow text-elec-dark text-[10px] px-1.5">TOP</Badge>
+                  )}
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  {VERIFICATION_TIERS[verificationTier].description}
+                </p>
+              </div>
+              {verificationTier !== "premium" && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className={`${VERIFICATION_TIERS[verificationTier].borderColor} text-xs`}
+                  onClick={() => onNavigate?.("qualifications")}
+                >
+                  <Award className="h-3 w-3 mr-1" />
+                  Upgrade Tier
+                </Button>
+              )}
+            </div>
+            {/* Tier progress */}
+            {verificationTier !== "premium" && (
+              <div className="mt-3 pt-3 border-t border-white/10">
+                <div className="flex items-center justify-between text-xs mb-1.5">
+                  <span className="text-muted-foreground">Progress to next tier</span>
+                  <span className={VERIFICATION_TIERS[verificationTier].color}>
+                    {verificationTier === "basic" ? "1/2 documents" : "3/4 documents"}
+                  </span>
+                </div>
+                <Progress
+                  value={verificationTier === "basic" ? 50 : 75}
+                  className="h-1.5"
+                />
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Talent Pool Settings Card */}
+        <Card className={`border ${availableForHire && !isOptedOut ? "bg-green-500/10 border-green-500/30" : "bg-white/5 border-white/10"}`}>
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <div className={`p-2 rounded-lg ${availableForHire && !isOptedOut ? "bg-green-500/20" : "bg-white/10"}`}>
+                <Users className={`h-5 w-5 ${availableForHire && !isOptedOut ? "text-green-400" : "text-muted-foreground"}`} />
+              </div>
+              <div className="flex-1">
+                <h4 className="font-semibold text-foreground">Talent Pool</h4>
+                <p className="text-sm text-muted-foreground">
+                  {isOptedOut
+                    ? "Elec-ID disabled"
+                    : availableForHire
+                    ? "Visible to employers"
+                    : "Hidden from employers"}
+                </p>
+              </div>
+              <Switch
+                checked={availableForHire && !isOptedOut}
+                onCheckedChange={handleAvailabilityChange}
+                disabled={isOptedOut || isSaving}
+                className="data-[state=checked]:bg-green-500"
+              />
+            </div>
+            {availableForHire && !isOptedOut && (
+              <div className="mt-3 pt-3 border-t border-white/10">
+                <Label className="text-xs text-muted-foreground mb-2 block">Profile Visibility</Label>
+                <Select
+                  value={profileVisibility}
+                  onValueChange={handleVisibilityChange}
+                  disabled={isSaving}
+                >
+                  <SelectTrigger className="h-8 text-xs bg-white/5 border-white/20">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-elec-gray border-white/20">
+                    <SelectItem value="public">
+                      <div className="flex items-center gap-2">
+                        <Eye className="h-3 w-3" />
+                        Public - Anyone can view
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="employers_only">
+                      <div className="flex items-center gap-2">
+                        <Users className="h-3 w-3" />
+                        Employers Only
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="private">
+                      <div className="flex items-center gap-2">
+                        <EyeOff className="h-3 w-3" />
+                        Private - Share link only
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Opt-Out Banner (when opted out) */}
+      {isOptedOut && (
+        <Card className="bg-orange-500/10 border-orange-500/30">
+          <CardContent className="p-4">
+            <div className="flex items-start gap-3">
+              <div className="p-2 rounded-lg bg-orange-500/20">
+                <Power className="h-5 w-5 text-orange-400" />
+              </div>
+              <div className="flex-1">
+                <h4 className="font-semibold text-orange-400">Elec-ID Disabled</h4>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Your Elec-ID is hidden from the Talent Pool. Employers cannot discover your profile.
+                  Your credentials and data are still saved.
+                </p>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-orange-500/30 text-orange-400 hover:bg-orange-500/10"
+                onClick={handleOptIn}
+                disabled={isSaving}
+              >
+                Re-enable
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Opt-Out Section (when not opted out) */}
+      {!isOptedOut && (
+        <Card className="bg-white/5 border-white/10">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-white/10">
+                  <Power className="h-5 w-5 text-muted-foreground" />
+                </div>
+                <div>
+                  <h4 className="font-medium text-foreground">Disable Elec-ID</h4>
+                  <p className="text-xs text-muted-foreground">
+                    Remove yourself from the Talent Pool completely
+                  </p>
+                </div>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-white/20 text-muted-foreground hover:text-red-400 hover:border-red-500/30"
+                onClick={() => setIsOptOutDialogOpen(true)}
+              >
+                Disable
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Opt-Out Confirmation Dialog */}
+      <Dialog open={isOptOutDialogOpen} onOpenChange={setIsOptOutDialogOpen}>
+        <DialogContent className="bg-elec-gray border-white/20 max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-foreground flex items-center gap-2">
+              <AlertCircle className="h-5 w-5 text-orange-400" />
+              Disable Elec-ID?
+            </DialogTitle>
+            <DialogDescription className="text-muted-foreground">
+              This will hide your profile from the Talent Pool. Employers will not be able
+              to discover you through search.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 pt-4">
+            <div className="p-3 rounded-lg bg-white/5 border border-white/10">
+              <p className="text-sm text-foreground font-medium mb-2">What happens:</p>
+              <ul className="space-y-1.5 text-sm text-muted-foreground">
+                <li className="flex items-center gap-2">
+                  <EyeOff className="h-4 w-4" />
+                  Hidden from employer searches
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-green-500" />
+                  Your data remains saved
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-green-500" />
+                  You can re-enable anytime
+                </li>
+              </ul>
+            </div>
+            <div className="flex gap-3">
+              <Button
+                variant="outline"
+                className="flex-1 border-white/20"
+                onClick={() => setIsOptOutDialogOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="destructive"
+                className="flex-1"
+                onClick={handleOptOut}
+                disabled={isSaving}
+              >
+                Disable Elec-ID
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Profile Completeness */}
       <Card className="bg-elec-gray/50 border-white/10">
         <CardContent className="p-6">
@@ -406,6 +724,9 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Training Requests from Employers */}
+      <TrainingRequestsCard />
     </div>
   );
 };

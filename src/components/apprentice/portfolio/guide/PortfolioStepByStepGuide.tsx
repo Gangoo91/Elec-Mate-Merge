@@ -68,12 +68,12 @@ const PortfolioStepByStepGuide = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">Step-by-Step Portfolio Building Guide</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Follow this systematic approach to build a comprehensive portfolio that demonstrates 
             your competency and learning throughout your electrical apprenticeship.
           </p>
@@ -82,7 +82,7 @@ const PortfolioStepByStepGuide = () => {
 
       <div className="space-y-4">
         {steps.map((step) => (
-          <Card key={step.number} className="border-elec-yellow/20 bg-elec-gray">
+          <Card key={step.number} className="border-elec-yellow/20 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-elec-yellow text-elec-dark flex items-center justify-center font-bold">
@@ -93,13 +93,13 @@ const PortfolioStepByStepGuide = () => {
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-muted-foreground">{step.description}</p>
+              <p className="text-white">{step.description}</p>
               
               <div className="space-y-2">
                 <h4 className="text-sm font-medium text-elec-yellow">Key Tasks:</h4>
                 <ul className="space-y-1">
                   {step.tasks.map((task, index) => (
-                    <li key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <li key={index} className="flex items-center gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
                       {task}
                     </li>

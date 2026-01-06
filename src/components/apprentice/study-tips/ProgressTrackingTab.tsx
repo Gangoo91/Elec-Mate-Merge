@@ -155,7 +155,7 @@ const ProgressTrackingTab = () => {
           </div>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground mb-4">
+          <p className="text-white mb-4">
             Monitor your learning journey with comprehensive tracking tools and analytics. Research shows that 
             students who track their progress are 42% more likely to achieve their study goals.
           </p>
@@ -163,29 +163,29 @@ const ProgressTrackingTab = () => {
             <div className="text-center p-3 border border-elec-yellow/20 rounded-lg">
               <TrendingUp className="h-8 w-8 text-green-400 mx-auto mb-2" />
               <p className="text-lg font-bold text-white">+25%</p>
-              <p className="text-xs text-muted-foreground">Retention Boost</p>
+              <p className="text-xs text-white">Retention Boost</p>
             </div>
             <div className="text-center p-3 border border-elec-yellow/20 rounded-lg">
               <Target className="h-8 w-8 text-blue-400 mx-auto mb-2" />
               <p className="text-lg font-bold text-white">42%</p>
-              <p className="text-xs text-muted-foreground">Higher Success</p>
+              <p className="text-xs text-white">Higher Success</p>
             </div>
             <div className="text-center p-3 border border-elec-yellow/20 rounded-lg">
               <Clock className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
               <p className="text-lg font-bold text-white">30%</p>
-              <p className="text-xs text-muted-foreground">Time Efficiency</p>
+              <p className="text-xs text-white">Time Efficiency</p>
             </div>
             <div className="text-center p-3 border border-elec-yellow/20 rounded-lg">
               <Trophy className="h-8 w-8 text-purple-400 mx-auto mb-2" />
               <p className="text-lg font-bold text-white">90%</p>
-              <p className="text-xs text-muted-foreground">Goal Achievement</p>
+              <p className="text-xs text-white">Goal Achievement</p>
             </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Current Progress Dashboard */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">Your Current Progress</CardTitle>
         </CardHeader>
@@ -203,10 +203,10 @@ const ProgressTrackingTab = () => {
                     {category.metrics.map((metric, metricIndex) => (
                       <div key={metricIndex} className="space-y-2">
                         <div className="flex items-center justify-between">
-                          <span className="text-sm text-muted-foreground">{metric.name}</span>
+                          <span className="text-sm text-white">{metric.name}</span>
                           <div className="flex items-center gap-2">
                             <span className="text-sm text-white">{metric.current}</span>
-                            <span className="text-xs text-muted-foreground">/ {metric.target}</span>
+                            <span className="text-xs text-white">/ {metric.target}</span>
                           </div>
                         </div>
                         <Progress value={metric.progress} className="h-2" />
@@ -230,14 +230,14 @@ const ProgressTrackingTab = () => {
             {trackingMethods.map((method, index) => (
               <div key={index} className="border border-blue-500/20 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-2">{method.method}</h4>
-                <p className="text-sm text-muted-foreground mb-3">{method.description}</p>
+                <p className="text-sm text-white mb-3">{method.description}</p>
                 
                 <div className="space-y-3">
                   <div>
                     <h5 className="font-medium text-blue-300 text-sm mb-1">Key Benefits:</h5>
                     <ul className="space-y-1">
                       {method.benefits.map((benefit, benefitIndex) => (
-                        <li key={benefitIndex} className="text-xs text-muted-foreground flex items-start gap-2">
+                        <li key={benefitIndex} className="text-xs text-white flex items-start gap-2">
                           <CheckCircle className="h-3 w-3 text-blue-400 mt-0.5 flex-shrink-0" />
                           {benefit}
                         </li>
@@ -274,7 +274,7 @@ const ProgressTrackingTab = () => {
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <h4 className="font-semibold text-white mb-1">{tool.tool}</h4>
-                    <p className="text-sm text-muted-foreground">{tool.description}</p>
+                    <p className="text-sm text-white">{tool.description}</p>
                   </div>
                   <Badge variant="outline" className="text-xs border-green-400/30 text-green-400">
                     {tool.bestFor.split(' ')[0]}
@@ -286,7 +286,7 @@ const ProgressTrackingTab = () => {
                     <h5 className="font-medium text-green-300 text-sm mb-2">Key Features:</h5>
                     <ul className="space-y-1">
                       {tool.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="text-xs text-muted-foreground flex items-start gap-2">
+                        <li key={featureIndex} className="text-xs text-white flex items-start gap-2">
                           <div className="w-1 h-1 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
                           {feature}
                         </li>
@@ -324,12 +324,12 @@ const ProgressTrackingTab = () => {
             {progressStrategies.map((strategy, index) => (
               <div key={index} className="border border-purple-500/20 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-2">{strategy.strategy}</h4>
-                <p className="text-sm text-muted-foreground mb-3">{strategy.description}</p>
+                <p className="text-sm text-white mb-3">{strategy.description}</p>
                 <div className="bg-purple-500/10 rounded-lg p-3">
                   <h5 className="font-medium text-purple-300 mb-2">Implementation Steps:</h5>
                   <ol className="space-y-1">
                     {strategy.implementation.map((step, stepIndex) => (
-                      <li key={stepIndex} className="text-xs text-muted-foreground flex items-start gap-2">
+                      <li key={stepIndex} className="text-xs text-white flex items-start gap-2">
                         <span className="text-purple-400 font-medium">{stepIndex + 1}.</span>
                         {step}
                       </li>
@@ -355,19 +355,19 @@ const ProgressTrackingTab = () => {
             <div>
               <h4 className="font-medium text-white mb-2">Do's</h4>
               <ul className="space-y-1">
-                <li className="text-sm text-muted-foreground flex items-start gap-2">
+                <li className="text-sm text-white flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   Track consistently, even if just for 5 minutes daily
                 </li>
-                <li className="text-sm text-muted-foreground flex items-start gap-2">
+                <li className="text-sm text-white flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   Focus on trends rather than daily fluctuations
                 </li>
-                <li className="text-sm text-muted-foreground flex items-start gap-2">
+                <li className="text-sm text-white flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   Celebrate small wins and progress milestones
                 </li>
-                <li className="text-sm text-muted-foreground flex items-start gap-2">
+                <li className="text-sm text-white flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   Adjust goals based on realistic progress rates
                 </li>
@@ -376,19 +376,19 @@ const ProgressTrackingTab = () => {
             <div>
               <h4 className="font-medium text-white mb-2">Don'ts</h4>
               <ul className="space-y-1">
-                <li className="text-sm text-muted-foreground flex items-start gap-2">
+                <li className="text-sm text-white flex items-start gap-2">
                   <AlertCircle className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
                   Don't obsess over perfect tracking - consistency matters more
                 </li>
-                <li className="text-sm text-muted-foreground flex items-start gap-2">
+                <li className="text-sm text-white flex items-start gap-2">
                   <AlertCircle className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
                   Don't compare your progress to others too closely
                 </li>
-                <li className="text-sm text-muted-foreground flex items-start gap-2">
+                <li className="text-sm text-white flex items-start gap-2">
                   <AlertCircle className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
                   Don't abandon tracking after a few missed days
                 </li>
-                <li className="text-sm text-muted-foreground flex items-start gap-2">
+                <li className="text-sm text-white flex items-start gap-2">
                   <AlertCircle className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
                   Don't set unrealistic or overwhelming goals
                 </li>
@@ -402,7 +402,7 @@ const ProgressTrackingTab = () => {
       <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-orange-500/10">
         <CardContent className="p-6 text-center">
           <h3 className="text-xl font-semibold text-elec-yellow mb-2">Start Tracking Your Progress Today</h3>
-          <p className="text-muted-foreground mb-4">
+          <p className="text-white mb-4">
             Choose your preferred tracking method and begin monitoring your learning journey for better results.
           </p>
           <div className="flex flex-wrap justify-center gap-2">

@@ -80,7 +80,7 @@ const InstrumentationModule4Section2 = () => {
       ],
       correctAnswer: 1,
       explanation: "Unstable readings are often caused by electrical noise, poor connections, or interference affecting the measurement circuit."
-    }
+  }
   ];
 
   function handleAnswerSelect(answerIndex: number) {
@@ -88,58 +88,58 @@ const InstrumentationModule4Section2 = () => {
       ...prev,
       [currentQuestionIndex]: answerIndex
     }));
-  }
+};
 
   function handleNext() {
     if (currentQuestionIndex < quizQuestions.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1);
     } else {
       setShowResults(true);
-    }
-  }
+  };
+};
 
   function handlePrevious() {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(prev => prev - 1);
-    }
-  }
+  };
+};
 
   function calculateScore() {
     let correct = 0;
     quizQuestions.forEach((question, index) => {
       if (selectedAnswers[index] === question.correctAnswer) {
         correct++;
-      }
+    };
     });
     return correct;
-  }
+};
 
   function resetQuiz() {
     setCurrentQuestionIndex(0);
     setSelectedAnswers({});
     setShowResults(false);
     setQuizStarted(false);
-  }
+};
 
   function startQuiz() {
     setQuizStarted(true);
     setCurrentQuestionIndex(0);
     setSelectedAnswers({});
     setShowResults(false);
-  }
+};
 
   const currentQuestion = quizQuestions[currentQuestionIndex];
   const score = calculateScore();
   const percentage = Math.round((score / quizQuestions.length) * 100);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="../instrumentation-module-4">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 4
@@ -148,10 +148,10 @@ const InstrumentationModule4Section2 = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <BarChart className="h-8 w-8 text-yellow-400" />
+            <BarChart className="h-8 w-8 text-elec-yellow" />
             <Badge 
               variant="secondary" 
-              className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold text-sm px-3 py-1 border-0"
+              className="bg-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/50 font-semibold text-sm px-3 py-1 border-0"
             >
               Module 4 - Section 2
             </Badge>
@@ -170,10 +170,10 @@ const InstrumentationModule4Section2 = () => {
         <div className="space-y-4 sm:space-y-6">
           
           {/* Quick Introduction */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <Eye className="h-6 w-6 text-yellow-400" />
+                <Eye className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-white text-xl">Quick Introduction</CardTitle>
               </div>
             </CardHeader>
@@ -185,7 +185,7 @@ const InstrumentationModule4Section2 = () => {
           </Card>
 
           {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Learning Outcomes</CardTitle>
             </CardHeader>
@@ -193,23 +193,23 @@ const InstrumentationModule4Section2 = () => {
               <p className="text-gray-300 mb-4">By the end of this section, you'll be able to:</p>
               <ul className="space-y-2 text-gray-300">
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Measure frequency and understand its significance in electrical systems
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Analyse signal timing and period measurements
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Apply frequency analysis to rotating equipment diagnostics
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Select appropriate tools for time-domain measurements
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Troubleshoot frequency-related problems in industrial systems
                 </li>
               </ul>
@@ -217,21 +217,21 @@ const InstrumentationModule4Section2 = () => {
           </Card>
 
           {/* Frequency Fundamentals */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <BarChart className="h-5 w-5 text-yellow-400" />
+                <BarChart className="h-5 w-5 text-elec-yellow" />
                 Frequency Fundamentals
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">What is Frequency?</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">What is Frequency?</h4>
                   <p className="text-gray-300 mb-3">
                     Frequency is the number of complete cycles that occur in one second, measured in Hertz (Hz):
                   </p>
-                  <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-4">
+                  <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
                     <div className="text-center">
                       <p className="text-blue-200 text-lg font-mono">f = 1/T</p>
                       <p className="text-gray-300 text-sm mt-2">where f = frequency (Hz) and T = period (seconds)</p>
@@ -240,25 +240,25 @@ const InstrumentationModule4Section2 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Common Frequency Applications</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Common Frequency Applications</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-3">
                       <div className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                        <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                         <div>
                           <span className="text-white font-medium">Power Systems</span>
                           <p className="text-gray-300 text-sm">50Hz (UK) / 60Hz (US) mains frequency</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                        <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                         <div>
                           <span className="text-white font-medium">Motor Control</span>
                           <p className="text-gray-300 text-sm">Variable frequency drives (VFDs)</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                        <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                         <div>
                           <span className="text-white font-medium">Communications</span>
                           <p className="text-gray-300 text-sm">Radio and data transmission</p>
@@ -267,21 +267,21 @@ const InstrumentationModule4Section2 = () => {
                     </div>
                     <div className="space-y-3">
                       <div className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                        <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                         <div>
                           <span className="text-white font-medium">Sensors</span>
                           <p className="text-gray-300 text-sm">Speed and position feedback</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                        <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                         <div>
                           <span className="text-white font-medium">Process Control</span>
                           <p className="text-gray-300 text-sm">Flow and vibration monitoring</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                        <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                         <div>
                           <span className="text-white font-medium">Diagnostics</span>
                           <p className="text-gray-300 text-sm">Equipment health monitoring</p>
@@ -295,17 +295,17 @@ const InstrumentationModule4Section2 = () => {
           </Card>
 
           {/* Time-Based Measurements */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <Clock className="h-5 w-5 text-yellow-400" />
+                <Clock className="h-5 w-5 text-elec-yellow" />
                 Period and Pulse Width Measurements
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Period Measurement</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Period Measurement</h4>
                   <p className="text-gray-300 mb-3">
                     Period is the time for one complete cycle - critical for understanding signal timing:
                   </p>
@@ -321,7 +321,7 @@ const InstrumentationModule4Section2 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Pulse Width and Duty Cycle</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Pulse Width and Duty Cycle</h4>
                   <p className="text-gray-300 mb-3">
                     Important for PWM (Pulse Width Modulation) systems and digital circuits:
                   </p>
@@ -338,25 +338,25 @@ const InstrumentationModule4Section2 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Digital Signal Analysis</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Digital Signal Analysis</h4>
                   <p className="text-gray-300 mb-3">
                     Modern systems rely heavily on digital timing:
                   </p>
                   <ul className="text-gray-300 space-y-2">
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Setup and hold times in microprocessor systems
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Clock jitter and stability measurements
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Communication protocol timing
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       PWM motor control verification
                     </li>
                   </ul>
@@ -366,21 +366,21 @@ const InstrumentationModule4Section2 = () => {
           </Card>
 
           {/* Measurement Tools */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <Activity className="h-5 w-5 text-yellow-400" />
+                <Activity className="h-5 w-5 text-elec-yellow" />
                 Measurement Tools and Techniques
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Frequency Counters</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Frequency Counters</h4>
                   <p className="text-gray-300 mb-3">
                     Dedicated instruments for precise frequency measurement:
                   </p>
-                  <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-4">
+                  <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <h5 className="text-blue-200 font-medium mb-2">Advantages</h5>
@@ -405,21 +405,21 @@ const InstrumentationModule4Section2 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Digital Multimeters</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Digital Multimeters</h4>
                   <p className="text-gray-300 mb-3">
                     Many modern DMMs include frequency measurement capabilities:
                   </p>
                   <ul className="text-gray-300 space-y-2">
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Convenient for general-purpose measurements
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Typically accurate to 0.01% or better
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Range from Hz to MHz in most instruments
                     </li>
                     <li className="flex items-start gap-2">
@@ -430,7 +430,7 @@ const InstrumentationModule4Section2 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Oscilloscopes</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Oscilloscopes</h4>
                   <p className="text-gray-300 mb-3">
                     Essential for visualizing and measuring time-domain signals:
                   </p>
@@ -451,13 +451,13 @@ const InstrumentationModule4Section2 = () => {
           </Card>
 
           {/* Practical Applications */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Practical Applications</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-card/80 rounded-lg p-4 border-l-4 border-yellow-400/30">
+                <div className="bg-transparent/80 rounded-lg p-4 border-l-4 border-elec-yellow/30">
                   <h4 className="text-blue-200 font-medium mb-2">Variable Frequency Drives</h4>
                   <ul className="text-gray-300 text-sm space-y-1">
                     <li>• Output frequency verification</li>
@@ -466,7 +466,7 @@ const InstrumentationModule4Section2 = () => {
                     <li>• Efficiency optimization</li>
                   </ul>
                 </div>
-                <div className="bg-card/80 rounded-lg p-4 border-l-4 border-green-500/50">
+                <div className="bg-transparent/80 rounded-lg p-4 border-l-4 border-green-500/50">
                   <h4 className="text-green-200 font-medium mb-2">Encoder Systems</h4>
                   <ul className="text-gray-300 text-sm space-y-1">
                     <li>• Position feedback verification</li>
@@ -475,7 +475,7 @@ const InstrumentationModule4Section2 = () => {
                     <li>• Timing synchronization</li>
                   </ul>
                 </div>
-                <div className="bg-card/80 rounded-lg p-4 border-l-4 border-purple-500/50">
+                <div className="bg-transparent/80 rounded-lg p-4 border-l-4 border-purple-500/50">
                   <h4 className="text-purple-200 font-medium mb-2">Process Monitoring</h4>
                   <ul className="text-gray-300 text-sm space-y-1">
                     <li>• Flow rate measurement</li>
@@ -484,7 +484,7 @@ const InstrumentationModule4Section2 = () => {
                     <li>• Equipment health assessment</li>
                   </ul>
                 </div>
-                <div className="bg-card/80 rounded-lg p-4 border-l-4 border-orange-500/50">
+                <div className="bg-transparent/80 rounded-lg p-4 border-l-4 border-orange-500/50">
                   <h4 className="text-orange-200 font-medium mb-2">Communication Systems</h4>
                   <ul className="text-gray-300 text-sm space-y-1">
                     <li>• Data transmission rates</li>
@@ -498,7 +498,7 @@ const InstrumentationModule4Section2 = () => {
           </Card>
 
           {/* Common Issues */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Common Issues and Troubleshooting</CardTitle>
             </CardHeader>
@@ -530,7 +530,7 @@ const InstrumentationModule4Section2 = () => {
                   </ul>
                 </div>
 
-                <div className="bg-yellow-600/10 border border-yellow-600/20 rounded-lg p-4">
+                <div className="bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg p-4">
                   <h4 className="text-yellow-200 font-medium mb-2">Measurement Range</h4>
                   <p className="text-gray-300 text-sm mb-2">
                     Choosing the wrong measurement range can lead to errors.
@@ -547,14 +547,14 @@ const InstrumentationModule4Section2 = () => {
           </Card>
 
           {/* Real-World Scenario */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Real-World Scenario</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-blue-900/20 border border-yellow-400/30 rounded-lg p-4">
+              <div className="bg-blue-900/20 border border-elec-yellow/30 rounded-lg p-4">
                 <div className="flex items-start gap-3">
-                  <AlertTriangle className="h-5 w-5 text-yellow-400 mt-1 flex-shrink-0" />
+                  <AlertTriangle className="h-5 w-5 text-elec-yellow mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="font-medium text-white mb-2">Conveyor Speed Monitoring</h4>
                     <p className="text-gray-300 leading-relaxed">
@@ -567,7 +567,7 @@ const InstrumentationModule4Section2 = () => {
           </Card>
 
           {/* Summary */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Summary</CardTitle>
             </CardHeader>
@@ -579,10 +579,10 @@ const InstrumentationModule4Section2 = () => {
           </Card>
 
           {/* Interactive Quiz */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <Brain className="h-5 w-5 text-yellow-400" />
+                <Brain className="h-5 w-5 text-elec-yellow" />
                 Knowledge Check Quiz
               </CardTitle>
             </CardHeader>
@@ -594,7 +594,7 @@ const InstrumentationModule4Section2 = () => {
                   </p>
                   <Button 
                     onClick={startQuiz}
-                    className="bg-yellow-400 text-black hover:bg-yellow-600 font-semibold px-8 py-2"
+                    className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-2"
                   >
                     Start Quiz
                   </Button>
@@ -607,7 +607,7 @@ const InstrumentationModule4Section2 = () => {
                     </span>
                     <div className="w-32 bg-gray-700 rounded-full h-2">
                       <div 
-                        className="bg-yellow-400 h-2 rounded-full transition-all duration-300"
+                        className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
                         style={{ width: `${((currentQuestionIndex + 1) / quizQuestions.length) * 100}%` }}
                       ></div>
                     </div>
@@ -622,7 +622,7 @@ const InstrumentationModule4Section2 = () => {
                           onClick={() => handleAnswerSelect(index)}
                           className={`w-full text-left p-3 rounded border transition-colors ${
                             selectedAnswers[currentQuestionIndex] === index
-                              ? 'border-yellow-400 bg-yellow-600/20 text-yellow-400'
+                              ? 'border-elec-yellow bg-elec-yellow/20 text-elec-yellow'
                               : 'border-gray-600 bg-gray-800/50 text-gray-300 hover:border-gray-500'
                           }`}
                         >
@@ -637,14 +637,14 @@ const InstrumentationModule4Section2 = () => {
                       onClick={handlePrevious}
                       disabled={currentQuestionIndex === 0}
                       variant="outline"
-                      className="border-gray-600 text-gray-300 hover:bg-card disabled:opacity-50"
+                      className="border-gray-600 text-gray-300 hover:bg-transparent disabled:opacity-50"
                     >
                       Previous
                     </Button>
                     <Button
                       onClick={handleNext}
                       disabled={selectedAnswers[currentQuestionIndex] === undefined}
-                      className="bg-yellow-400 text-black hover:bg-yellow-600 disabled:opacity-50"
+                      className="bg-elec-yellow text-black hover:bg-elec-yellow disabled:opacity-50"
                     >
                       {currentQuestionIndex === quizQuestions.length - 1 ? 'Finish' : 'Next'}
                     </Button>
@@ -703,7 +703,7 @@ const InstrumentationModule4Section2 = () => {
                   <div className="text-center">
                     <Button 
                       onClick={resetQuiz}
-                      className="bg-yellow-400 text-black hover:bg-yellow-600 font-semibold px-8 py-2"
+                      className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-2"
                     >
                       Retake Quiz
                     </Button>

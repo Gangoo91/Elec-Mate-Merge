@@ -17,7 +17,7 @@ interface ExamIntroductionProps {
 const ExamIntroduction: React.FC<ExamIntroductionProps> = ({ exam, onStart }) => {
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <CardTitle>Exam Instructions</CardTitle>
         </CardHeader>
@@ -35,7 +35,7 @@ const ExamIntroduction: React.FC<ExamIntroductionProps> = ({ exam, onStart }) =>
             </div>
           </div>
           
-          <div className="bg-elec-dark/50 p-4 rounded-md mt-6">
+          <div className="bg-white/10 p-4 rounded-md mt-6">
             <h3 className="font-semibold mb-2">Important Notes:</h3>
             <ul className="list-disc list-inside space-y-1 text-sm">
               <li>Complete all questions within the allocated time</li>

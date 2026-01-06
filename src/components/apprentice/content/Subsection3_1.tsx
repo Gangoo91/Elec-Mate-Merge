@@ -21,14 +21,14 @@ const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Electrical Hazards Card */}
-        <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-4 space-y-3">
+        <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-4 space-y-3">
           <h3 className="text-lg font-bold text-elec-yellow flex items-center">
             <Zap className="h-5 w-5 mr-2" />
             Electrical Hazards
           </h3>
           
           {!isMobile ? (
-            <div className="bg-elec-dark/70 border border-elec-yellow/30 rounded p-4">
+            <div className="bg-white/10 border border-elec-yellow/30 rounded p-4">
               <h4 className="font-semibold text-elec-yellow mb-2">Current Effects:</h4>
               <ul className="list-disc pl-5 space-y-1 text-sm">
                 <li><span className="font-medium text-white">1-5mA</span> - Slight tingling</li>
@@ -39,7 +39,7 @@ const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </ul>
             </div>
           ) : (
-            <div className="bg-elec-dark/70 border border-elec-yellow/30 rounded p-3">
+            <div className="bg-white/10 border border-elec-yellow/30 rounded p-3">
               <h4 className="font-semibold text-elec-yellow mb-1 text-sm">Current Effects:</h4>
               <ul className="list-disc pl-4 space-y-1 text-xs">
                 <li>1-5mA: Tingling</li>
@@ -60,13 +60,13 @@ const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </div>
         
         {/* Safe Isolation Card */}
-        <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-4 space-y-3">
+        <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-4 space-y-3">
           <h3 className="text-lg font-bold text-elec-yellow flex items-center">
             <Shield className="h-5 w-5 mr-2" />
             Safe Isolation
           </h3>
           
-          <div className="bg-elec-dark/70 border border-elec-yellow/30 rounded p-3">
+          <div className="bg-white/10 border border-elec-yellow/30 rounded p-3">
             <h4 className="font-semibold text-elec-yellow mb-1 text-sm">Safe Isolation Steps:</h4>
             <ol className="list-decimal pl-4 space-y-1 text-xs">
               <li><span className="font-medium">Identify</span> the circuit</li>
@@ -77,7 +77,7 @@ const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </ol>
           </div>
           
-          <div className="bg-elec-dark/70 border border-elec-yellow/30 rounded p-3 text-xs">
+          <div className="bg-white/10 border border-elec-yellow/30 rounded p-3 text-xs">
             <p className="font-medium text-elec-yellow">When live work is permitted:</p>
             <ul className="list-disc pl-4 mt-1 space-y-0.5">
               <li>It's unreasonable for the conductor to be dead</li>
@@ -89,7 +89,7 @@ const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Legislation Card */}
-        <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-4 space-y-3">
+        <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-4 space-y-3">
           <h3 className="text-lg font-bold text-elec-yellow flex items-center">
             <AlertOctagon className="h-5 w-5 mr-2" />
             Key Legislation
@@ -112,13 +112,13 @@ const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </div>
         
         {/* First Aid Card */}
-        <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-4 space-y-3">
+        <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-4 space-y-3">
           <h3 className="text-lg font-bold text-elec-yellow flex items-center">
             <Shield className="h-5 w-5 mr-2" />
             First Aid
           </h3>
           
-          <div className="bg-elec-dark/70 border border-elec-yellow/30 rounded p-3">
+          <div className="bg-white/10 border border-elec-yellow/30 rounded p-3">
             <h4 className="font-semibold text-elec-yellow mb-1 text-sm">Emergency Steps:</h4>
             <ol className="list-decimal pl-4 space-y-1 text-xs">
               <li>Ensure your own safety first</li>

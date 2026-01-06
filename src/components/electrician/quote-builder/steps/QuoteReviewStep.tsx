@@ -1,7 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { User, FileText, Calculator, Package, Wrench, Zap, Download, Briefcase, Loader2, Code, Copy, ChevronDown, ChevronUp } from "lucide-react";
+import { FileCheck, Download, Loader2, Package, Wrench, Zap, FileText } from "lucide-react";
 import { useState } from "react";
 import { Quote } from "@/types/quote";
 import { useToast } from "@/hooks/use-toast";
@@ -17,14 +15,13 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
   const { toast } = useToast();
   const { companyProfile } = useCompanyProfile();
   const [isDownloading, setIsDownloading] = useState(false);
-  const [showTestData, setShowTestData] = useState(false);
 
   const handleDownloadPDF = async () => {
     setIsDownloading(true);
     try {
       const effectiveCompanyProfile = companyProfile || {
-        id: 'default',
-        user_id: 'default',
+        id: "default",
+        user_id: "default",
         company_name: "Your Electrical Company",
         company_email: "contact@yourcompany.com",
         company_phone: "0123 456 7890",
@@ -36,7 +33,7 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
         vat_number: "GB123456789",
         payment_terms: "Payment due within 30 days",
         created_at: new Date(),
-        updated_at: new Date()
+        updated_at: new Date(),
       };
 
       const effectiveQuote = {
@@ -44,7 +41,7 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
         quoteNumber: quote.quoteNumber || `Q${Date.now()}`,
         createdAt: quote.createdAt || new Date(),
         expiryDate: quote.expiryDate || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-        status: quote.status || 'draft',
+        status: quote.status || "draft",
         subtotal: quote.subtotal || 0,
         total: quote.total || 0,
         vatAmount: quote.vatAmount || 0,
@@ -53,15 +50,12 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
           email: "client@example.com",
           phone: "0123 456 7890",
           address: "Client Address",
-          postcode: "AB1 2CD"
-        }
+          postcode: "AB1 2CD",
+        },
       };
 
-      const { data, error } = await supabase.functions.invoke('generate-pdf-monkey', {
-        body: {
-          quote: effectiveQuote,
-          companyProfile: effectiveCompanyProfile
-        }
+      const { data, error } = await supabase.functions.invoke("generate-pdf-monkey", {
+        body: { quote: effectiveQuote, companyProfile: effectiveCompanyProfile },
       });
 
       if (error) throw error;
@@ -69,16 +63,13 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
       let downloadUrl = data.downloadUrl;
       const documentId = data.documentId;
 
-      // If no download URL yet, poll for status
       if (!downloadUrl && documentId) {
-        const maxAttempts = 18; // 90 seconds max (18 × 5s)
+        const maxAttempts = 18;
         for (let i = 0; i < maxAttempts; i++) {
-          await new Promise(resolve => setTimeout(resolve, 5000));
-          
-          const { data: statusData } = await supabase.functions.invoke('generate-pdf-monkey', {
-            body: { mode: 'status', documentId }
+          await new Promise((resolve) => setTimeout(resolve, 5000));
+          const { data: statusData } = await supabase.functions.invoke("generate-pdf-monkey", {
+            body: { mode: "status", documentId },
           });
-
           if (statusData?.downloadUrl) {
             downloadUrl = statusData.downloadUrl;
             break;
@@ -87,41 +78,30 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
       }
 
       if (downloadUrl && quote.id) {
-        // Persist PDF data to database
         await supabase
-          .from('quotes')
+          .from("quotes")
           .update({
             pdf_document_id: documentId,
             pdf_url: downloadUrl,
             pdf_generated_at: new Date().toISOString(),
-            pdf_version: (quote.pdf_version || 0) + 1
+            pdf_version: (quote.pdf_version || 0) + 1,
           })
-          .eq('id', quote.id);
+          .eq("id", quote.id);
 
-        window.open(downloadUrl, '_blank');
-        toast({
-          title: "PDF ready",
-          variant: "success",
-        });
-        
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.open(downloadUrl, "_blank");
+        toast({ title: "PDF ready", variant: "success" });
       } else if (documentId) {
-        toast({
-          title: "PDF in progress",
-          description: "Check back in a moment",
-        });
+        toast({ title: "PDF in progress", description: "Check back in a moment" });
       } else {
-        throw new Error(data.error || 'Failed to generate PDF');
+        throw new Error(data.error || "Failed to generate PDF");
       }
-    } catch (error) {
-      console.error('PDF generation error:', error);
+    } catch (error: any) {
+      console.error("PDF generation error:", error);
       toast({
         title: "PDF generation failed",
         description: error.message || "Please try again",
         variant: "destructive",
       });
-      
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     } finally {
       setIsDownloading(false);
     }
@@ -129,314 +109,125 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case 'labour': return <Wrench className="h-4 w-4" />;
-      case 'materials': return <Package className="h-4 w-4" />;
-      case 'equipment': return <Zap className="h-4 w-4" />;
-      default: return <Package className="h-4 w-4" />;
+      case "labour":
+        return <Wrench className="h-4 w-4 text-blue-500" />;
+      case "materials":
+        return <Package className="h-4 w-4 text-green-500" />;
+      case "equipment":
+        return <Zap className="h-4 w-4 text-purple-500" />;
+      default:
+        return <FileText className="h-4 w-4 text-gray-500" />;
     }
   };
 
+  const categories = ["labour", "materials", "equipment", "manual"];
+
   return (
     <div className="space-y-6">
-      {/* Quote Header */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Client Information */}
-        <Card className="bg-card/50 border border-primary/10">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-lg">
-              <User className="h-5 w-5" />
-              Client Details
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <div>
-              <p className="font-semibold">{quote.client?.name}</p>
-              <p className="text-sm text-muted-foreground">{quote.client?.email}</p>
-              <p className="text-sm text-muted-foreground">{quote.client?.phone}</p>
-            </div>
-            <div>
-              <p className="text-sm">{quote.client?.address}</p>
-              <p className="text-sm">{quote.client?.postcode}</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Quote Information */}
-        <Card className="bg-card/50 border border-primary/10">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-lg">
-              <FileText className="h-5 w-5" />
-              Quote Details
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <div className="flex justify-between">
-              <span className="text-sm text-muted-foreground">Quote Number:</span>
-              <span className="font-medium">{quote.quoteNumber}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-sm text-muted-foreground">Date:</span>
-              <span className="font-medium">{quote.createdAt?.toLocaleDateString()}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-sm text-muted-foreground">Status:</span>
-              <span className="font-medium capitalize">{quote.status}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-sm text-muted-foreground">Items:</span>
-              <span className="font-medium">{quote.items?.length || 0}</span>
-            </div>
-          </CardContent>
-        </Card>
+      {/* Section Header */}
+      <div className="flex items-center gap-2">
+        <FileCheck className="h-5 w-5 text-elec-yellow" />
+        <h2 className="text-lg font-semibold">Review Quote</h2>
       </div>
 
-      {/* Job Details */}
-      {quote.jobDetails && (
-        <Card className="bg-card/50 border border-primary/10">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-lg">
-              <Briefcase className="h-5 w-5" />
-              Job Details
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <div>
-              <h4 className="font-semibold text-lg">{quote.jobDetails.title}</h4>
-              <p className="text-muted-foreground mt-1">{quote.jobDetails.description}</p>
+      {/* Quote Summary Card */}
+      <div className="p-5 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/20 rounded-xl">
+        <div className="flex justify-between items-start mb-4">
+          <div>
+            <p className="text-sm text-muted-foreground">Quote for</p>
+            <p className="font-semibold text-lg">{quote.client?.name}</p>
+            <p className="text-sm text-muted-foreground">{quote.client?.email}</p>
+          </div>
+          <div className="text-right">
+            <p className="text-sm text-muted-foreground">Total</p>
+            <p className="text-3xl font-bold text-elec-yellow">£{(quote.total || 0).toFixed(2)}</p>
+          </div>
+        </div>
+
+        {/* Pricing Breakdown */}
+        <div className="border-t border-border/50 pt-4 space-y-2 text-sm">
+          <div className="flex justify-between">
+            <span className="text-muted-foreground">Subtotal</span>
+            <span>£{(quote.subtotal || 0).toFixed(2)}</span>
+          </div>
+          {quote.settings?.vatRegistered && (
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">VAT ({quote.settings.vatRate}%)</span>
+              <span>£{(quote.vatAmount || 0).toFixed(2)}</span>
             </div>
-            {(quote.jobDetails.location || quote.jobDetails.estimatedDuration || quote.jobDetails.workStartDate) && (
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 border-t">
-                {quote.jobDetails.location && (
-                  <div>
-                    <span className="text-sm font-medium">Location:</span>
-                    <p className="text-sm text-muted-foreground">{quote.jobDetails.location}</p>
-                  </div>
-                )}
-                {quote.jobDetails.estimatedDuration && (
-                  <div>
-                    <span className="text-sm font-medium">Duration:</span>
-                    <p className="text-sm text-muted-foreground">{quote.jobDetails.estimatedDuration}</p>
-                  </div>
-                )}
-                {quote.jobDetails.workStartDate && (
-                  <div>
-                    <span className="text-sm font-medium">Start Date:</span>
-                    <p className="text-sm text-muted-foreground">
-                      {new Date(quote.jobDetails.workStartDate).toLocaleDateString()}
-                    </p>
-                  </div>
-                )}
-              </div>
-            )}
-            {quote.jobDetails.specialRequirements && (
-              <div className="pt-2 border-t">
-                <span className="text-sm font-medium">Special Requirements:</span>
-                <p className="text-sm text-muted-foreground mt-1">{quote.jobDetails.specialRequirements}</p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+          )}
+          <div className="flex justify-between text-base font-semibold pt-2 border-t border-border/50">
+            <span>Total</span>
+            <span className="text-elec-yellow">£{(quote.total || 0).toFixed(2)}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Job Details Summary */}
+      {quote.jobDetails?.title && (
+        <div className="p-4 bg-elec-gray/30 rounded-lg">
+          <h3 className="font-semibold mb-1">{quote.jobDetails.title}</h3>
+          <p className="text-sm text-muted-foreground line-clamp-2">{quote.jobDetails.description}</p>
+          {quote.jobDetails.estimatedDuration && (
+            <p className="text-xs text-muted-foreground mt-2">
+              Duration: {quote.jobDetails.estimatedDuration}
+            </p>
+          )}
+        </div>
       )}
 
-      {/* Quote Items - Split by Category */}
+      {/* Items Breakdown - Grouped by category */}
       <div className="space-y-4">
-        {/* Labour Items */}
-        {quote.items?.filter(item => item.category === 'labour').sort((a, b) => b.totalPrice - a.totalPrice).length > 0 && (
-          <Card className="bg-card border border-primary/10">
-            <CardHeader className="pb-3">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <CardTitle className="flex items-center gap-2 text-base">
-                  <Wrench className="h-5 w-5 text-primary" />
-                  <span>Labour</span>
-                  <span className="inline-flex items-center justify-center min-w-[24px] h-5 px-2 rounded-full bg-primary/10 text-xs font-semibold">
-                    {quote.items?.filter(item => item.category === 'labour').length}
-                  </span>
-                </CardTitle>
-                <div className="px-4 py-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
-                  <span className="text-lg font-bold text-elec-yellow">
-                    £{quote.items?.filter(item => item.category === 'labour').reduce((sum, item) => sum + item.totalPrice, 0).toFixed(2)}
-                  </span>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent className="pt-0">
-              <div className="space-y-3">
-                {quote.items?.filter(item => item.category === 'labour').sort((a, b) => b.totalPrice - a.totalPrice).map((item) => (
-                  <div key={item.id} className="bg-background border border-border rounded-lg p-3">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                      <div className="min-w-0 flex-1">
-                        <p className="font-medium text-sm">{item.description}</p>
-                        <p className="text-xs text-muted-foreground">
-                          {item.quantity} × £{item.unitPrice.toFixed(2)}
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-semibold text-primary">£{item.totalPrice.toFixed(2)}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        )}
+        {categories.map((category) => {
+          const categoryItems = quote.items?.filter((i) => i.category === category) || [];
+          if (categoryItems.length === 0) return null;
 
-        {/* Materials Items */}
-        {quote.items?.filter(item => item.category === 'materials').sort((a, b) => b.totalPrice - a.totalPrice).length > 0 && (
-          <Card className="bg-card border-green-200 dark:border-green-800">
-            <CardHeader className="pb-3">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <CardTitle className="flex items-center gap-2 text-base">
-                  <Package className="h-5 w-5 text-green-600 dark:text-green-400" />
-                  <span>Materials</span>
-                  <span className="inline-flex items-center justify-center min-w-[24px] h-5 px-2 rounded-full bg-green-500/10 text-xs font-semibold text-green-600 dark:text-green-400">
-                    {quote.items?.filter(item => item.category === 'materials').length}
-                  </span>
-                </CardTitle>
-                <div className="px-4 py-2 rounded-lg bg-green-500/10 border border-green-500/20">
-                  <span className="text-lg font-bold text-green-600 dark:text-green-400">
-                    £{quote.items?.filter(item => item.category === 'materials').reduce((sum, item) => sum + item.totalPrice, 0).toFixed(2)}
-                  </span>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent className="pt-0">
-              <div className="space-y-3">
-                {quote.items?.filter(item => item.category === 'materials').sort((a, b) => b.totalPrice - a.totalPrice).map((item) => (
-                  <div key={item.id} className="bg-background border border-green-200 dark:border-green-800 rounded-lg p-3">{/* Updated border color for individual material items */}
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                      <div className="min-w-0 flex-1">
-                        <p className="font-medium text-sm">{item.description}</p>
-                        <p className="text-xs text-muted-foreground">
-                          {item.quantity} × £{item.unitPrice.toFixed(2)}
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-semibold text-primary">£{item.totalPrice.toFixed(2)}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        )}
+          const categoryTotal = categoryItems.reduce((sum, i) => sum + i.totalPrice, 0);
 
-        {/* Equipment Items */}
-        {quote.items?.filter(item => item.category === 'equipment').sort((a, b) => b.totalPrice - a.totalPrice).length > 0 && (
-          <Card className="bg-card border-blue-200 dark:border-blue-800">
-            <CardHeader className="pb-3">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <CardTitle className="flex items-center gap-2 text-base">
-                  <Zap className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                  <span>Equipment</span>
-                  <span className="inline-flex items-center justify-center min-w-[24px] h-5 px-2 rounded-full bg-blue-500/10 text-xs font-semibold text-blue-600 dark:text-blue-400">
-                    {quote.items?.filter(item => item.category === 'equipment').length}
-                  </span>
-                </CardTitle>
-                <div className="px-4 py-2 rounded-lg bg-blue-500/10 border border-blue-500/20">
-                  <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
-                    £{quote.items?.filter(item => item.category === 'equipment').reduce((sum, item) => sum + item.totalPrice, 0).toFixed(2)}
-                  </span>
-                </div>
+          return (
+            <div key={category} className="space-y-2">
+              <div className="flex justify-between items-center">
+                <p className="text-sm font-medium capitalize flex items-center gap-2">
+                  {getCategoryIcon(category)}
+                  {category} ({categoryItems.length})
+                </p>
+                <p className="text-sm font-semibold">£{categoryTotal.toFixed(2)}</p>
               </div>
-            </CardHeader>
-            <CardContent className="pt-0">
-              <div className="space-y-3">
-                {quote.items?.filter(item => item.category === 'equipment').sort((a, b) => b.totalPrice - a.totalPrice).map((item) => (
-                  <div key={item.id} className="bg-background border border-border rounded-lg p-3">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                      <div className="min-w-0 flex-1">
-                        <p className="font-medium text-sm">{item.description}</p>
-                        <p className="text-xs text-muted-foreground">
-                          {item.quantity} × £{item.unitPrice.toFixed(2)}
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-semibold text-primary">£{item.totalPrice.toFixed(2)}</p>
-                      </div>
-                    </div>
+              <div className="space-y-1 pl-6">
+                {categoryItems.map((item) => (
+                  <div key={item.id} className="flex justify-between text-sm text-muted-foreground">
+                    <span className="truncate flex-1 mr-2">{item.description}</span>
+                    <span className="shrink-0">£{item.totalPrice.toFixed(2)}</span>
                   </div>
                 ))}
               </div>
-            </CardContent>
-          </Card>
-        )}
+            </div>
+          );
+        })}
       </div>
 
-      {/* Quote Totals */}
-      <Card className="bg-elec-gray border-elec-yellow/20">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Calculator className="h-5 w-5" />
-            Quote Summary
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            <div className="flex justify-between">
-              <span>Subtotal</span>
-              <span>£{(quote.subtotal || 0).toFixed(2)}</span>
-            </div>
-            {quote.settings?.vatRegistered && (
-              <div className="flex justify-between">
-                <span>VAT ({quote.settings.vatRate}%)</span>
-                <span>£{(quote.vatAmount || 0).toFixed(2)}</span>
-              </div>
-            )}
-            <Separator />
-            <div className="flex justify-between text-lg font-semibold">
-              <span>Total Amount</span>
-              <span className="text-elec-yellow">£{(quote.total || 0).toFixed(2)}</span>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Quote Actions */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <Button 
-          onClick={handleDownloadPDF} 
+      {/* Action Buttons */}
+      <div className="space-y-3 pt-4 border-t border-border/50">
+        <Button
+          onClick={handleDownloadPDF}
           disabled={isDownloading}
-          className="flex items-center gap-2 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 disabled:opacity-50"
+          className="w-full h-14 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold"
         >
           {isDownloading ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
+            <Loader2 className="h-5 w-5 mr-2 animate-spin" />
           ) : (
-            <Download className="h-4 w-4" />
+            <Download className="h-5 w-5 mr-2" />
           )}
-          {isDownloading ? "Generating..." : "Download PDF"}
+          {isDownloading ? "Generating PDF..." : "Download PDF"}
         </Button>
-        
-        <QuoteSendDropdown 
-          quote={quote as Quote}
-          onSuccess={() => {
-            toast({
-              title: "Quote sent",
-              description: "Quote has been sent successfully",
-              variant: "success"
-            });
-          }}
-          disabled={!quote.client?.email || !quote.id}
-          className="flex items-center gap-2 w-full"
-        />
-        
-        <Button 
-          onClick={() => {
-            toast({
-              title: "Amendment Feature",
-              description: "Amendment functionality coming soon - edit items above to modify quote.",
-              variant: "default"
-            });
-          }} 
-          variant="outline" 
-          className="flex items-center gap-2 border-elec-blue text-elec-blue hover:bg-elec-blue/10"
-        >
-          <FileText className="h-4 w-4" />
-          Amend Quote
-        </Button>
-      </div>
 
+        <QuoteSendDropdown
+          quote={quote as Quote}
+          onSuccess={() => toast({ title: "Quote sent", variant: "success" })}
+          disabled={!quote.client?.email || !quote.id}
+          className="w-full h-14"
+        />
+      </div>
     </div>
   );
 };

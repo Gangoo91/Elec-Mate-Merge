@@ -25,7 +25,7 @@ const IntroSection = ({ subsectionId }: IntroSectionProps) => {
       />
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-5 hover:border-elec-yellow/40 transition-colors">
+        <div className="bg-white/5 border border-elec-yellow/20 rounded-lg p-5 hover:border-elec-yellow/40 transition-colors">
           <div className="flex items-center gap-3 mb-3">
             <div className="bg-elec-yellow/10 p-2 rounded-md">
               <FileText className="h-5 w-5 text-elec-yellow" />
@@ -52,7 +52,7 @@ const IntroSection = ({ subsectionId }: IntroSectionProps) => {
           </ul>
         </div>
         
-        <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-5 hover:border-elec-yellow/40 transition-colors">
+        <div className="bg-white/5 border border-elec-yellow/20 rounded-lg p-5 hover:border-elec-yellow/40 transition-colors">
           <div className="flex items-center gap-3 mb-3">
             <div className="bg-elec-yellow/10 p-2 rounded-md">
               <ExternalLink className="h-5 w-5 text-elec-yellow" />
@@ -66,7 +66,7 @@ const IntroSection = ({ subsectionId }: IntroSectionProps) => {
               </div>
               <div>
                 <p className="text-sm font-medium text-white group-hover:text-elec-yellow transition-colors">Electricity at Work Regulations 1989</p>
-                <p className="text-xs text-gray-400">HSE legal framework for electrical safety</p>
+                <p className="text-xs text-white">HSE legal framework for electrical safety</p>
               </div>
             </li>
             <li className="flex items-start gap-3 group">
@@ -75,7 +75,7 @@ const IntroSection = ({ subsectionId }: IntroSectionProps) => {
               </div>
               <div>
                 <p className="text-sm font-medium text-white group-hover:text-elec-yellow transition-colors">HSG85 - Electricity at work: Safe working practices</p>
-                <p className="text-xs text-gray-400">Health and Safety Executive guidance</p>
+                <p className="text-xs text-white">Health and Safety Executive guidance</p>
               </div>
             </li>
             <li className="flex items-start gap-3 group">
@@ -84,7 +84,7 @@ const IntroSection = ({ subsectionId }: IntroSectionProps) => {
               </div>
               <div>
                 <p className="text-sm font-medium text-white group-hover:text-elec-yellow transition-colors">BS 7671:2018 - Requirements for Electrical Installations</p>
-                <p className="text-xs text-gray-400">IET Wiring Regulations 18th Edition</p>
+                <p className="text-xs text-white">IET Wiring Regulations 18th Edition</p>
               </div>
             </li>
             <li className="flex items-start gap-3 group">
@@ -93,7 +93,7 @@ const IntroSection = ({ subsectionId }: IntroSectionProps) => {
               </div>
               <div>
                 <p className="text-sm font-medium text-white group-hover:text-elec-yellow transition-colors">GS38 - Electrical test equipment for use by electricians</p>
-                <p className="text-xs text-gray-400">Guidance on proper test equipment</p>
+                <p className="text-xs text-white">Guidance on proper test equipment</p>
               </div>
             </li>
           </ul>

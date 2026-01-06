@@ -25,7 +25,7 @@ const RcdRegulationsTab = () => {
             <CardContent className="space-y-3">
               <div className="space-y-2">
                 <h4 className="font-semibold text-elec-yellow">Key Requirements:</h4>
-                <ul className="text-sm text-gray-300 space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>• Socket outlets ≤20A shall be protected by 30mA RCD</li>
                   <li>• Mobile equipment used outdoors ≤20A</li>
                   <li>• Cables concealed in walls at depth ≤50mm</li>
@@ -43,7 +43,7 @@ const RcdRegulationsTab = () => {
             <CardContent className="space-y-3">
               <div className="space-y-2">
                 <h4 className="font-semibold text-elec-yellow">Selection Criteria:</h4>
-                <ul className="text-sm text-gray-300 space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>• Type of RCD suitable for the circuit</li>
                   <li>• Rated residual operating current</li>
                   <li>• Time delay characteristics</li>
@@ -61,7 +61,7 @@ const RcdRegulationsTab = () => {
             <CardContent className="space-y-3">
               <div className="space-y-2">
                 <h4 className="font-semibold text-elec-yellow">Special Requirements:</h4>
-                <ul className="text-sm text-gray-300 space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>• Bathrooms: 30mA RCD for all circuits</li>
                   <li>• Swimming pools: 30mA RCD protection</li>
                   <li>• Agricultural premises: Enhanced protection</li>
@@ -79,7 +79,7 @@ const RcdRegulationsTab = () => {
             <CardContent className="space-y-3">
               <div className="space-y-2">
                 <h4 className="font-semibold text-elec-yellow">Protection Methods:</h4>
-                <ul className="text-sm text-gray-300 space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>• Automatic disconnection of supply</li>
                   <li>• Double or reinforced insulation</li>
                   <li>• Electrical separation</li>

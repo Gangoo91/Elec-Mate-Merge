@@ -203,13 +203,13 @@ const Module1Section7 = () => {
   const score = calculateScore();
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="../module-1">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 1
@@ -218,10 +218,10 @@ const Module1Section7 = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <Flag className="h-8 w-8 text-yellow-400" />
+            <Flag className="h-8 w-8 text-elec-yellow" />
             <Badge 
               variant="secondary" 
-              className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold text-sm px-3 py-1 border-0"
+              className="bg-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/50 font-semibold text-sm px-3 py-1 border-0"
             >
               Module 1 - Section 7
             </Badge>
@@ -240,10 +240,10 @@ const Module1Section7 = () => {
         <div className="space-y-4 sm:space-y-6">
           
           {/* Quick Intro Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <BookOpen className="h-6 w-6 text-yellow-400" />
+                <BookOpen className="h-6 w-6 text-elec-yellow" />
                 Quick Intro
               </CardTitle>
             </CardHeader>
@@ -255,10 +255,10 @@ const Module1Section7 = () => {
           </Card>
 
           {/* Learning Outcomes Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Target className="h-6 w-6 text-yellow-400" />
+                <Target className="h-6 w-6 text-elec-yellow" />
                 Learning Outcomes
               </CardTitle>
             </CardHeader>
@@ -284,10 +284,10 @@ const Module1Section7 = () => {
           </Card>
 
           {/* Main Content Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <BookOpen className="h-6 w-6 text-yellow-400" />
+                <BookOpen className="h-6 w-6 text-elec-yellow" />
                 Main Content
               </CardTitle>
             </CardHeader>
@@ -312,7 +312,7 @@ const Module1Section7 = () => {
               <div className="space-y-4">
                 <h4 className="text-white font-semibold text-lg">Core Principles to Remember:</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-yellow-400/10 p-4 rounded-lg border border-blue-600/20">
+                  <div className="bg-elec-yellow/10 p-4 rounded-lg border border-blue-600/20">
                     <h5 className="text-blue-300 font-medium mb-2">Testing Methodology</h5>
                     <p className="text-sm text-white">Testing must be planned, methodical, and properly sequenced</p>
                   </div>
@@ -335,8 +335,8 @@ const Module1Section7 = () => {
               <div className="space-y-4">
                 <h4 className="text-white font-semibold text-lg">Detailed Section Review:</h4>
                 <div className="space-y-4">
-                  <div className="bg-card/50 p-4 rounded-lg border-l-4 border-yellow-400">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Section 1: Introduction to Inspection & Testing</h5>
+                  <div className="bg-transparent/50 p-4 rounded-lg border-l-4 border-elec-yellow">
+                    <h5 className="text-elec-yellow font-semibold mb-2">Section 1: Introduction to Inspection & Testing</h5>
                     <p className="text-sm text-white mb-2">Foundation concepts including why we test, legal obligations, and the role of standards.</p>
                     <ul className="text-xs text-gray-300 space-y-1">
                       <li>• Safety protection for people and property</li>
@@ -345,8 +345,8 @@ const Module1Section7 = () => {
                     </ul>
                   </div>
                   
-                  <div className="bg-card/50 p-4 rounded-lg border-l-4 border-yellow-400">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Section 2: When Testing is Required</h5>
+                  <div className="bg-transparent/50 p-4 rounded-lg border-l-4 border-elec-yellow">
+                    <h5 className="text-elec-yellow font-semibold mb-2">Section 2: When Testing is Required</h5>
                     <p className="text-sm text-white mb-2">Specific circumstances requiring inspection and testing.</p>
                     <ul className="text-xs text-gray-300 space-y-1">
                       <li>• Initial verification of new installations</li>
@@ -355,7 +355,7 @@ const Module1Section7 = () => {
                     </ul>
                   </div>
                   
-                  <div className="bg-card/50 p-4 rounded-lg border-l-4 border-green-400">
+                  <div className="bg-transparent/50 p-4 rounded-lg border-l-4 border-green-400">
                     <h5 className="text-green-400 font-semibold mb-2">Sections 3-4: Testing Methods & Types</h5>
                     <p className="text-sm text-white mb-2">Overview of inspection techniques and electrical tests.</p>
                     <ul className="text-xs text-gray-300 space-y-1">
@@ -365,7 +365,7 @@ const Module1Section7 = () => {
                     </ul>
                   </div>
                   
-                  <div className="bg-card/50 p-4 rounded-lg border-l-4 border-purple-400">
+                  <div className="bg-transparent/50 p-4 rounded-lg border-l-4 border-purple-400">
                     <h5 className="text-purple-400 font-semibold mb-2">Section 5: Competency & Responsibility</h5>
                     <p className="text-sm text-white mb-2">Professional requirements and legal responsibilities.</p>
                     <ul className="text-xs text-gray-300 space-y-1">
@@ -375,7 +375,7 @@ const Module1Section7 = () => {
                     </ul>
                   </div>
                   
-                  <div className="bg-card/50 p-4 rounded-lg border-l-4 border-orange-400">
+                  <div className="bg-transparent/50 p-4 rounded-lg border-l-4 border-orange-400">
                     <h5 className="text-orange-400 font-semibold mb-2">Section 6: Documentation</h5>
                     <p className="text-sm text-white mb-2">Essential certificates and record-keeping requirements.</p>
                     <ul className="text-xs text-gray-300 space-y-1">
@@ -390,7 +390,7 @@ const Module1Section7 = () => {
               {/* Industry Context */}
               <div className="space-y-4">
                 <h4 className="text-white font-semibold text-lg">Real-World Industry Context:</h4>
-                <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 p-6 rounded-lg border border-yellow-400/30">
+                <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 p-6 rounded-lg border border-elec-yellow/30">
                   <h5 className="text-blue-300 font-semibold mb-3">Common Industry Scenarios</h5>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
@@ -426,7 +426,7 @@ const Module1Section7 = () => {
                       <p className="text-xs text-gray-300">Module 1 - Theory and legal framework</p>
                     </div>
                     <div className="text-center space-y-2">
-                      <div className="w-12 h-12 bg-yellow-400/20 rounded-full flex items-center justify-center mx-auto">
+                      <div className="w-12 h-12 bg-elec-yellow/20 rounded-full flex items-center justify-center mx-auto">
                         <span className="text-blue-300 font-bold">2</span>
                       </div>
                       <h6 className="text-blue-300 font-semibold">Practical Skills</h6>
@@ -446,13 +446,13 @@ const Module1Section7 = () => {
                {/* Looking Ahead */}
                <div className="space-y-4">
                  <h4 className="text-white font-semibold text-lg">Preparation for Module 2:</h4>
-                 <div className="bg-card/50 p-4 rounded-lg">
+                 <div className="bg-transparent/50 p-4 rounded-lg">
                    <p className="text-base text-white mb-3">
                      Next, we move from theory to practice. Module 2 covers essential safety procedures, test equipment familiarisation, and site preparation techniques.
                    </p>
                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                      <div className="space-y-2">
-                       <h6 className="text-yellow-400 font-medium">You'll Need to Understand:</h6>
+                       <h6 className="text-elec-yellow font-medium">You'll Need to Understand:</h6>
                        <ul className="text-sm text-gray-300 space-y-1">
                          <li>• Safe isolation procedures</li>
                          <li>• Test equipment operation</li>
@@ -461,7 +461,7 @@ const Module1Section7 = () => {
                        </ul>
                      </div>
                      <div className="space-y-2">
-                       <h6 className="text-yellow-400 font-medium">Skills You'll Develop:</h6>
+                       <h6 className="text-elec-yellow font-medium">Skills You'll Develop:</h6>
                        <ul className="text-sm text-gray-300 space-y-1">
                          <li>• Equipment calibration checks</li>
                          <li>• Isolation verification</li>
@@ -477,20 +477,20 @@ const Module1Section7 = () => {
           </Card>
 
           {/* Quick Knowledge Checks */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-6 w-6 text-yellow-400" />
+                <CheckCircle className="h-6 w-6 text-elec-yellow" />
                 Quick Knowledge Checks
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-yellow-400/10 p-4 rounded-lg">
+                <div className="bg-elec-yellow/10 p-4 rounded-lg">
                   <h4 className="text-white font-semibold mb-2">Check 1: Testing Priority</h4>
                   <p className="text-sm">What must always come first in any electrical testing?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">Visual inspection - to identify obvious hazards before electrical testing</p>
                   </details>
                 </div>
@@ -498,7 +498,7 @@ const Module1Section7 = () => {
                   <h4 className="text-white font-semibold mb-2">Check 2: Certificate Responsibility</h4>
                   <p className="text-sm">Who takes legal responsibility when signing a certificate?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">The person signing the certificate - they take full legal responsibility</p>
                   </details>
                 </div>
@@ -506,7 +506,7 @@ const Module1Section7 = () => {
                   <h4 className="text-white font-semibold mb-2">Check 3: Module 1 Focus</h4>
                   <p className="text-sm">What does Module 1 primarily cover?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">Foundation knowledge: what, why, when, who, and documentation basics</p>
                   </details>
                 </div>
@@ -514,7 +514,7 @@ const Module1Section7 = () => {
                   <h4 className="text-white font-semibold mb-2">Check 4: Core Principle</h4>
                   <p className="text-sm">Complete: "If it's not documented..."</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">"...it didn't happen" - proper documentation is essential</p>
                   </details>
                 </div>
@@ -523,10 +523,10 @@ const Module1Section7 = () => {
           </Card>
 
           {/* Frequently Asked Questions */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-6 w-6 text-yellow-400" />
+                <AlertTriangle className="h-6 w-6 text-elec-yellow" />
                 Frequently Asked Questions
               </CardTitle>
             </CardHeader>
@@ -561,15 +561,15 @@ const Module1Section7 = () => {
           </Card>
 
           {/* Professional Development Notes */}
-          <Card className="bg-yellow-400/10 border-blue-600/30">
+          <Card className="bg-elec-yellow/10 border-blue-600/30">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Target className="h-6 w-6 text-yellow-400" />
+                <Target className="h-6 w-6 text-elec-yellow" />
                 Professional Development Notes
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
-              <div className="bg-yellow-400/20 p-4 rounded-lg">
+              <div className="bg-elec-yellow/20 p-4 rounded-lg">
                 <h4 className="text-white font-semibold mb-2">Building on Module 1</h4>
                 <p className="text-sm mb-3">
                   Module 1 establishes the foundation, but your professional development journey is just beginning. The principles you've learned here will guide every inspection and test you perform throughout your career.
@@ -582,7 +582,7 @@ const Module1Section7 = () => {
                   <li>• Understand different installation types and their specific requirements</li>
                   <li>• Stay current with BS 7671 amendments and industry best practices</li>
                 </ul>
-                <div className="mt-3 p-3 bg-yellow-600/20 rounded">
+                <div className="mt-3 p-3 bg-elec-yellow/20 rounded">
                   <p className="text-xs"><strong>Remember:</strong> Competency is built through continuous learning, practice, and experience. Module 1 is your foundation - build on it responsibly.</p>
                 </div>
               </div>
@@ -590,10 +590,10 @@ const Module1Section7 = () => {
           </Card>
 
           {/* Enhanced On-the-Job Scenarios Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Briefcase className="h-6 w-6 text-yellow-400" />
+                <Briefcase className="h-6 w-6 text-elec-yellow" />
                 Real-World Professional Scenarios
               </CardTitle>
             </CardHeader>
@@ -625,9 +625,9 @@ const Module1Section7 = () => {
               </div>
 
               {/* Scenario 2 */}
-              <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 p-6 rounded-lg border border-yellow-400/30">
+              <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 p-6 rounded-lg border border-elec-yellow/30">
                 <div className="flex items-start gap-3 mb-4">
-                  <FileText className="h-6 w-6 text-yellow-400 mt-1 flex-shrink-0" />
+                  <FileText className="h-6 w-6 text-elec-yellow mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="text-blue-300 font-bold text-lg mb-2">Scenario 2: Certificate Signing Dilemma</h4>
                     <p className="text-white mb-3">
@@ -635,7 +635,7 @@ const Module1Section7 = () => {
                     </p>
                   </div>
                 </div>
-                <div className="bg-blue-900/20 p-4 rounded-lg border-l-4 border-yellow-400">
+                <div className="bg-blue-900/20 p-4 rounded-lg border-l-4 border-elec-yellow">
                   <h5 className="text-blue-200 font-semibold mb-2">Professional Response:</h5>
                   <ul className="text-white space-y-2 text-sm">
                     <li>• <strong>Refuse to sign:</strong> "I cannot sign a certificate for work I haven't personally carried out or thoroughly verified."</li>
@@ -700,8 +700,8 @@ const Module1Section7 = () => {
               </div>
 
               {/* Professional Reflection */}
-              <div className="bg-yellow-400/10 p-6 rounded-lg border-l-4 border-yellow-400">
-                <h4 className="text-yellow-400 font-semibold text-lg mb-3">Professional Reflection Questions</h4>
+              <div className="bg-elec-yellow/10 p-6 rounded-lg border-l-4 border-elec-yellow">
+                <h4 className="text-elec-yellow font-semibold text-lg mb-3">Professional Reflection Questions</h4>
                 <p className="text-white mb-3">After reviewing these scenarios, ask yourself:</p>
                 <ul className="text-white space-y-2 text-sm">
                   <li>• How would I handle pressure to compromise professional standards?</li>
@@ -716,10 +716,10 @@ const Module1Section7 = () => {
           </Card>
 
           {/* Comprehensive Key Takeaways Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Shield className="h-6 w-6 text-yellow-400" />
+                <Shield className="h-6 w-6 text-elec-yellow" />
                 Essential Module 1 Key Takeaways
               </CardTitle>
             </CardHeader>
@@ -727,7 +727,7 @@ const Module1Section7 = () => {
               
               {/* Legal & Professional Responsibilities */}
               <div className="space-y-4">
-                <h4 className="text-yellow-400 font-semibold text-lg border-b border-yellow-400/30 pb-2">Legal & Professional Responsibilities</h4>
+                <h4 className="text-elec-yellow font-semibold text-lg border-b border-elec-yellow/30 pb-2">Legal & Professional Responsibilities</h4>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="bg-red-900/20 p-4 rounded-lg border-l-4 border-red-400">
                     <div className="flex items-start gap-3">
@@ -738,9 +738,9 @@ const Module1Section7 = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="bg-blue-900/20 p-4 rounded-lg border-l-4 border-yellow-400">
+                  <div className="bg-blue-900/20 p-4 rounded-lg border-l-4 border-elec-yellow">
                     <div className="flex items-start gap-3">
-                      <FileText className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <FileText className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <div>
                         <h5 className="text-blue-300 font-semibold mb-1">EAWR 1989 Compliance</h5>
                         <p className="text-sm text-white">Regulation 16 requires competent persons for electrical work. Incompetence can result in prosecution, unlimited fines, and imprisonment.</p>
@@ -772,16 +772,16 @@ const Module1Section7 = () => {
               <div className="space-y-4">
                 <h4 className="text-blue-300 font-semibold text-lg border-b border-blue-300/30 pb-2">Testing & Inspection Fundamentals</h4>
                 <div className="grid md:grid-cols-3 gap-4">
-                  <div className="bg-card/50 p-4 rounded-lg border border-yellow-400/30">
+                  <div className="bg-transparent/50 p-4 rounded-lg border border-elec-yellow/30">
                     <div className="text-center mb-3">
-                      <div className="w-12 h-12 bg-yellow-400/10 rounded-full flex items-center justify-center mx-auto mb-2">
-                        <span className="text-yellow-400 font-bold text-lg">1</span>
+                      <div className="w-12 h-12 bg-elec-yellow/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <span className="text-elec-yellow font-bold text-lg">1</span>
                       </div>
-                      <h5 className="text-yellow-400 font-semibold">Visual First</h5>
+                      <h5 className="text-elec-yellow font-semibold">Visual First</h5>
                     </div>
                     <p className="text-sm text-white text-center">Visual inspection must ALWAYS precede any electrical testing. Identify obvious dangers before applying test voltages.</p>
                   </div>
-                  <div className="bg-card/50 p-4 rounded-lg border border-yellow-400/20">
+                  <div className="bg-transparent/50 p-4 rounded-lg border border-elec-yellow/20">
                     <div className="text-center mb-3">
                       <div className="w-12 h-12 bg-blue-400/20 rounded-full flex items-center justify-center mx-auto mb-2">
                         <span className="text-blue-300 font-bold text-lg">2</span>
@@ -790,7 +790,7 @@ const Module1Section7 = () => {
                     </div>
                     <p className="text-sm text-white text-center">Continuity, insulation resistance, and polarity tests must be completed before any circuit is energised.</p>
                   </div>
-                  <div className="bg-card/50 p-4 rounded-lg border border-green-400/20">
+                  <div className="bg-transparent/50 p-4 rounded-lg border border-green-400/20">
                     <div className="text-center mb-3">
                       <div className="w-12 h-12 bg-green-400/20 rounded-full flex items-center justify-center mx-auto mb-2">
                         <span className="text-green-300 font-bold text-lg">3</span>
@@ -800,7 +800,7 @@ const Module1Section7 = () => {
                     <p className="text-sm text-white text-center">Earth fault loop impedance, RCD testing, and functional checks verify the installation operates safely when energised.</p>
                   </div>
                 </div>
-                <div className="bg-yellow-900/20 p-4 rounded-lg border border-yellow-400/30">
+                <div className="bg-yellow-900/20 p-4 rounded-lg border border-elec-yellow/30">
                   <p className="text-white text-center"><strong className="text-yellow-300">Critical Rule:</strong> Never skip or reorder the prescribed testing sequence. Each test builds on the previous one to ensure comprehensive safety verification.</p>
                 </div>
               </div>
@@ -818,8 +818,8 @@ const Module1Section7 = () => {
                       <p className="text-xs text-white">Practical ability to perform tasks safely and correctly</p>
                     </div>
                     <div className="text-center">
-                      <div className="w-16 h-16 bg-yellow-400/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                        <BookOpen className="h-8 w-8 text-yellow-400" />
+                      <div className="w-16 h-16 bg-elec-yellow/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <BookOpen className="h-8 w-8 text-elec-yellow" />
                       </div>
                       <h5 className="text-blue-300 font-semibold mb-1">Knowledge</h5>
                       <p className="text-xs text-white">Understanding of principles, regulations, and procedures</p>
@@ -832,8 +832,8 @@ const Module1Section7 = () => {
                       <p className="text-xs text-white">Real-world application across different scenarios</p>
                     </div>
                     <div className="text-center">
-                      <div className="w-16 h-16 bg-yellow-600/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                        <Lightbulb className="h-8 w-8 text-yellow-400" />
+                      <div className="w-16 h-16 bg-elec-yellow/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <Lightbulb className="h-8 w-8 text-elec-yellow" />
                       </div>
                       <h5 className="text-yellow-300 font-semibold mb-1">Understanding</h5>
                       <p className="text-xs text-white">Ability to interpret, adapt, and make sound decisions</p>
@@ -872,7 +872,7 @@ const Module1Section7 = () => {
                       <li>• Keep copies for minimum periods</li>
                     </ul>
                   </div>
-                  <div className="bg-blue-900/20 p-4 rounded-lg border border-yellow-400/30">
+                  <div className="bg-blue-900/20 p-4 rounded-lg border border-elec-yellow/30">
                     <h5 className="text-blue-300 font-semibold mb-2 flex items-center gap-2">
                       <Shield className="h-5 w-5" />
                       Legal Protection
@@ -888,8 +888,8 @@ const Module1Section7 = () => {
               </div>
 
               {/* Final Professional Reminder */}
-              <div className="bg-gradient-to-r from-yellow-400/10 to-orange-600/20 p-6 rounded-lg border-2 border-yellow-400/30">
-                <h4 className="text-yellow-400 font-bold text-xl mb-3 text-center">The Bottom Line</h4>
+              <div className="bg-gradient-to-r from-elec-yellow/10 to-orange-600/20 p-6 rounded-lg border-2 border-elec-yellow/30">
+                <h4 className="text-elec-yellow font-bold text-xl mb-3 text-center">The Bottom Line</h4>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <h5 className="text-white font-semibold mb-2">Never Compromise On:</h5>
@@ -910,8 +910,8 @@ const Module1Section7 = () => {
                     </ul>
                   </div>
                 </div>
-                <div className="mt-4 p-4 bg-card/50 rounded-lg text-center">
-                  <p className="text-yellow-400 font-semibold">Module 1 provides your foundation - build your career on these principles with pride and professionalism.</p>
+                <div className="mt-4 p-4 bg-transparent/50 rounded-lg text-center">
+                  <p className="text-elec-yellow font-semibold">Module 1 provides your foundation - build your career on these principles with pride and professionalism.</p>
                 </div>
               </div>
 
@@ -919,10 +919,10 @@ const Module1Section7 = () => {
           </Card>
 
           {/* Interactive Quiz Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Lightbulb className="h-6 w-6 text-yellow-400" />
+                <Lightbulb className="h-6 w-6 text-elec-yellow" />
                 Knowledge Check Quiz - 10 Questions
               </CardTitle>
             </CardHeader>
@@ -935,7 +935,7 @@ const Module1Section7 = () => {
                 <div className="space-y-6">
                   <div className="text-center">
                     <h3 className="text-2xl font-bold text-white mb-4">Quiz Complete!</h3>
-                    <div className="text-4xl font-bold text-yellow-400 mb-2">
+                    <div className="text-4xl font-bold text-elec-yellow mb-2">
                       {score}/{quizQuestions.length}
                     </div>
                     <p className="text-white">
@@ -949,11 +949,11 @@ const Module1Section7 = () => {
                       const isCorrect = userAnswer === question.correctAnswer;
                       
                       return (
-                        <Card key={question.id} className="bg-card border-gray-600">
+                        <Card key={question.id} className="bg-transparent border-gray-600">
                           <CardHeader className="pb-3">
                             <div className="flex items-start justify-between gap-4">
                               <div className="space-y-2">
-                                <Badge variant="secondary" className="bg-yellow-400/10 text-yellow-400 text-xs">
+                                <Badge variant="secondary" className="bg-elec-yellow/10 text-elec-yellow text-xs">
                                   {question.topic}
                                 </Badge>
                                 <CardTitle className="text-lg text-white leading-relaxed">
@@ -978,9 +978,9 @@ const Module1Section7 = () => {
                                     key={optionIndex}
                                     className={`p-3 rounded border-2 ${
                                       isCorrectAnswer 
-                                        ? 'border-green-500 bg-card text-green-200'
+                                        ? 'border-green-500 bg-transparent text-green-200'
                                         : isUserAnswer 
-                                          ? 'border-red-500 bg-card text-red-200'
+                                          ? 'border-red-500 bg-transparent text-red-200'
                                           : 'border-gray-600 text-gray-300'
                                     }`}
                                   >
@@ -989,7 +989,7 @@ const Module1Section7 = () => {
                                 );
                               })}
                             </div>
-                            <div className="bg-blue-900/20 border border-yellow-400/30 p-3 rounded">
+                            <div className="bg-blue-900/20 border border-elec-yellow/30 p-3 rounded">
                               <p className="text-blue-200 text-sm leading-relaxed">
                                 <strong>Explanation:</strong> {question.explanation}
                               </p>
@@ -1003,7 +1003,7 @@ const Module1Section7 = () => {
                   <div className="flex justify-center">
                     <Button
                       onClick={handleRestart}
-                      className="bg-yellow-400 text-black hover:bg-yellow-400"
+                      className="bg-elec-yellow text-black hover:bg-elec-yellow"
                     >
                       Retake Quiz
                     </Button>
@@ -1021,16 +1021,16 @@ const Module1Section7 = () => {
                   {/* Progress Bar */}
                   <div className="w-full bg-gray-700 rounded-full h-2">
                     <div 
-                      className="bg-yellow-400 h-2 rounded-full transition-all duration-300"
+                      className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
                       style={{ width: `${((currentQuestion + 1) / quizQuestions.length) * 100}%` }}
                     />
                   </div>
 
                   {/* Question */}
-                  <Card className="bg-card border-gray-600">
+                  <Card className="bg-transparent border-gray-600">
                     <CardHeader>
                       <div className="flex items-center gap-2 mb-2">
-                        <Badge variant="secondary" className="bg-yellow-400/10 text-yellow-400">
+                        <Badge variant="secondary" className="bg-elec-yellow/10 text-elec-yellow">
                           {currentQ.topic}
                         </Badge>
                       </div>
@@ -1046,7 +1046,7 @@ const Module1Section7 = () => {
                             onClick={() => handleAnswerSelect(index)}
                             className={`w-full text-left p-4 rounded-lg border-2 transition-all duration-200 ${
                               selectedAnswers[currentQuestion] === index
-                                ? 'border-yellow-400 bg-yellow-400/10 text-white'
+                                ? 'border-elec-yellow bg-elec-yellow/10 text-white'
                                 : 'border-gray-600 hover:border-gray-500 text-gray-300 hover:text-white'
                             }`}
                           >
@@ -1078,7 +1078,7 @@ const Module1Section7 = () => {
                           onClick={() => setCurrentQuestion(index)}
                           className={`w-3 h-3 rounded-full transition-all duration-200 ${
                             index === currentQuestion
-                              ? 'bg-yellow-400'
+                              ? 'bg-elec-yellow'
                               : selectedAnswers[index] !== undefined
                                 ? 'bg-green-500'
                                 : 'bg-gray-600'
@@ -1090,7 +1090,7 @@ const Module1Section7 = () => {
                     <Button
                       onClick={handleNext}
                       disabled={!isAnswered}
-                      className="bg-yellow-400 text-black hover:bg-yellow-400 disabled:opacity-50"
+                      className="bg-elec-yellow text-black hover:bg-elec-yellow disabled:opacity-50"
                     >
                       {currentQuestion === quizQuestions.length - 1 ? 'Finish' : 'Next'}
                     </Button>

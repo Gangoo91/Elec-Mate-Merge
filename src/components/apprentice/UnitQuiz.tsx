@@ -222,7 +222,7 @@ const UnitQuiz = ({
   const isLastQuestion = activeQuestion === quizQuestions.length - 1;
 
   return (
-    <div className="bg-elec-gray p-6 rounded-lg border border-elec-yellow/20 space-y-6 animate-fade-in">
+    <div className="bg-white/5 p-6 rounded-lg border border-elec-yellow/20 space-y-6 animate-fade-in">
       <div className="flex justify-between items-center">
         <h3 className="font-bold">Unit Quiz - ELEC2/01</h3>
         <div className="text-sm text-elec-light/70">

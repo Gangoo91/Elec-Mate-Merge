@@ -1,118 +1,216 @@
 
+import { useState } from "react";
 import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Wrench, CheckCircle, Store, Heart, Shield, AlertTriangle } from "lucide-react";
+import { Wrench, CheckCircle, Store, Heart, Shield, Zap, Star, Target, AlertTriangle } from "lucide-react";
 import EssentialToolsTab from "@/components/apprentice/professional-tools/EssentialToolsTab";
 import ToolSelectionTab from "@/components/apprentice/professional-tools/ToolSelectionTab";
 import SuppliersAndCostsTab from "@/components/apprentice/professional-tools/SuppliersAndCostsTab";
+import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const ToolsGuide = () => {
+  const [activeTab, setActiveTab] = useState("essential");
+  const isMobile = useIsMobile();
+
   const toolCategories = [
-    { name: "Hand Tools", count: "15-20 essential items", priority: "High", cost: "£200-400" },
-    { name: "Power Tools", count: "5-8 key tools", priority: "Medium", cost: "£300-800" },
-    { name: "Test Equipment", count: "3-5 instruments", priority: "Critical", cost: "£400-1200" },
-    { name: "PPE & Safety", count: "Complete safety kit", priority: "Critical", cost: "£150-300" }
+    { name: "Hand Tools", count: "15-20 items", priority: "High", cost: "£200-400", color: "text-blue-400", bg: "from-blue-500/10 to-blue-500/5", border: "border-blue-500/30" },
+    { name: "Power Tools", count: "5-8 tools", priority: "Medium", cost: "£300-800", color: "text-green-400", bg: "from-green-500/10 to-green-500/5", border: "border-green-500/30" },
+    { name: "Test Equipment", count: "3-5 items", priority: "Critical", cost: "£400-1200", color: "text-red-400", bg: "from-red-500/10 to-red-500/5", border: "border-red-500/30" },
+    { name: "PPE & Safety", count: "Full kit", priority: "Critical", cost: "£150-300", color: "text-elec-yellow", bg: "from-elec-yellow/10 to-elec-yellow/5", border: "border-elec-yellow/30" }
   ];
 
+  const keyBenefits = [
+    { title: "Professional Image", desc: "Quality tools show clients you're serious about your work", icon: Star },
+    { title: "Work Efficiency", desc: "Right tool for the job means faster, better results", icon: Zap },
+    { title: "Safety First", desc: "Proper equipment protects you and others on site", icon: Shield },
+    { title: "Career Investment", desc: "Quality tools last years and pay for themselves", icon: Target }
+  ];
+
+  const renderMobileContent = () => (
+    <MobileAccordion type="single" collapsible defaultValue="essential" className="w-full">
+      <MobileAccordionItem value="essential">
+        <MobileAccordionTrigger className="text-elec-yellow">
+          <div className="flex items-center gap-2">
+            <Wrench className="h-5 w-5" />
+            Essential Tools
+          </div>
+        </MobileAccordionTrigger>
+        <MobileAccordionContent>
+          <EssentialToolsTab />
+        </MobileAccordionContent>
+      </MobileAccordionItem>
+
+      <MobileAccordionItem value="selection">
+        <MobileAccordionTrigger className="text-elec-yellow">
+          <div className="flex items-center gap-2">
+            <CheckCircle className="h-5 w-5" />
+            Tool Selection & Quality
+          </div>
+        </MobileAccordionTrigger>
+        <MobileAccordionContent>
+          <ToolSelectionTab />
+        </MobileAccordionContent>
+      </MobileAccordionItem>
+
+      <MobileAccordionItem value="suppliers">
+        <MobileAccordionTrigger className="text-elec-yellow">
+          <div className="flex items-center gap-2">
+            <Store className="h-5 w-5" />
+            Suppliers & Costs
+          </div>
+        </MobileAccordionTrigger>
+        <MobileAccordionContent>
+          <SuppliersAndCostsTab />
+        </MobileAccordionContent>
+      </MobileAccordionItem>
+    </MobileAccordion>
+  );
+
   return (
-    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
-      <div className="flex flex-col items-center justify-center mb-6">
-        <h1 className="text-3xl font-bold tracking-tight mb-4">Professional Tool Guide</h1>
-        <p className="text-muted-foreground text-center max-w-2xl mb-4">
-          Comprehensive guidance for building your professional electrician toolkit - from essential tools to smart purchasing decisions and quality assessment
+    <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8 animate-fade-in px-4 sm:px-6 lg:px-8 pb-20">
+      {/* Hero Header */}
+      <div className="flex flex-col items-center justify-center mb-6 text-center">
+        <div className="p-3 bg-elec-yellow/20 rounded-2xl mb-4">
+          <Wrench className="h-8 w-8 sm:h-10 sm:w-10 text-elec-yellow" />
+        </div>
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
+          Professional Tool Guide
+        </h1>
+        <p className="text-white/80 max-w-2xl mb-4 text-sm sm:text-base">
+          Comprehensive guidance for building your professional electrician toolkit - from essential tools to smart purchasing decisions and quality assessment.
         </p>
         <SmartBackButton />
       </div>
 
-      <Alert className="border-blue-500/50 bg-blue-500/10">
-        <Shield className="h-4 w-4 text-blue-400" />
-        <AlertDescription className="text-blue-200">
-          Building a professional toolkit is an investment in your career. This comprehensive guide provides everything you need for informed decision-making and strategic purchasing.
-        </AlertDescription>
-      </Alert>
+      {/* Info Alert */}
+      <Card className="border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-blue-500/5">
+        <CardContent className="p-4 flex items-start gap-3">
+          <Shield className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
+          <p className="text-white/80 text-sm">
+            Building a professional toolkit is an investment in your career. This comprehensive guide provides everything you need for informed decision-making and strategic purchasing.
+          </p>
+        </CardContent>
+      </Card>
 
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Wrench className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Professional Tool Categories</CardTitle>
-          </div>
+      {/* Tool Categories */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+        {toolCategories.map((category, index) => (
+          <Card key={index} className={`${category.border} bg-gradient-to-br ${category.bg}`}>
+            <CardContent className="p-4 text-center">
+              <h4 className={`font-semibold ${category.color} mb-2`}>{category.name}</h4>
+              <p className="text-white/80 text-sm mb-2">{category.count}</p>
+              <Badge
+                variant="outline"
+                className={`mb-2 ${
+                  category.priority === 'Critical' ? 'border-red-500/40 text-red-400' :
+                  category.priority === 'High' ? 'border-orange-500/40 text-orange-400' :
+                  'border-blue-500/40 text-blue-400'
+                }`}
+              >
+                {category.priority}
+              </Badge>
+              <p className="text-xs text-white/60">{category.cost}</p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* Why Quality Tools Matter */}
+      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-elec-yellow flex items-center gap-2 text-lg sm:text-xl">
+            <Zap className="h-5 w-5" />
+            Why Quality Tools Matter
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {toolCategories.map((category, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4 text-center">
-                <h4 className="font-semibold text-white mb-2">{category.name}</h4>
-                <div className="text-sm text-elec-yellow mb-1">{category.count}</div>
-                <Badge 
-                  variant="outline" 
-                  className={`mb-2 ${
-                    category.priority === 'Critical' ? 'border-red-500/40 text-red-400' :
-                    category.priority === 'High' ? 'border-orange-500/40 text-orange-400' :
-                    'border-blue-500/40 text-blue-400'
-                  }`}
-                >
-                  {category.priority} Priority
-                </Badge>
-                <p className="text-xs text-muted-foreground">{category.cost}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {keyBenefits.map((benefit, index) => (
+              <div key={index} className="bg-white/5 border border-white/10 p-4 rounded-lg hover:border-elec-yellow/30 transition-all">
+                <div className="p-2 bg-elec-yellow/20 rounded-lg w-fit mb-3">
+                  <benefit.icon className="h-5 w-5 text-elec-yellow" />
+                </div>
+                <h4 className="font-semibold text-white text-sm mb-1">{benefit.title}</h4>
+                <p className="text-white/70 text-xs">{benefit.desc}</p>
               </div>
             ))}
           </div>
         </CardContent>
       </Card>
 
-      <Tabs defaultValue="essential" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="essential" className="flex items-center gap-2">
-            <Wrench className="h-4 w-4" />
-            Essential Tools
-          </TabsTrigger>
-          <TabsTrigger value="selection" className="flex items-center gap-2">
-            <CheckCircle className="h-4 w-4" />
-            Tool Selection & Quality
-          </TabsTrigger>
-          <TabsTrigger value="suppliers" className="flex items-center gap-2">
-            <Store className="h-4 w-4" />
-            Suppliers & Costs
-          </TabsTrigger>
-        </TabsList>
+      {/* Desktop Tabs / Mobile Accordion */}
+      {isMobile ? (
+        renderMobileContent()
+      ) : (
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-3 h-auto p-1 bg-white/5 border border-white/10">
+            <TabsTrigger value="essential" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark py-3 gap-2">
+              <Wrench className="h-4 w-4" />
+              <span className="hidden sm:inline">Essential Tools</span>
+            </TabsTrigger>
+            <TabsTrigger value="selection" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark py-3 gap-2">
+              <CheckCircle className="h-4 w-4" />
+              <span className="hidden sm:inline">Selection & Quality</span>
+            </TabsTrigger>
+            <TabsTrigger value="suppliers" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark py-3 gap-2">
+              <Store className="h-4 w-4" />
+              <span className="hidden sm:inline">Suppliers & Costs</span>
+            </TabsTrigger>
+          </TabsList>
 
-        <TabsContent value="essential">
-          <EssentialToolsTab />
-        </TabsContent>
+          <TabsContent value="essential" className="mt-6">
+            <EssentialToolsTab />
+          </TabsContent>
 
-        <TabsContent value="selection">
-          <ToolSelectionTab />
-        </TabsContent>
+          <TabsContent value="selection" className="mt-6">
+            <ToolSelectionTab />
+          </TabsContent>
 
-        <TabsContent value="suppliers">
-          <SuppliersAndCostsTab />
-        </TabsContent>
-      </Tabs>
+          <TabsContent value="suppliers" className="mt-6">
+            <SuppliersAndCostsTab />
+          </TabsContent>
+        </Tabs>
+      )}
 
-      <Alert className="border-orange-500/50 bg-orange-500/10">
-        <AlertTriangle className="h-4 w-4 text-orange-400" />
-        <AlertDescription className="text-orange-200">
-          <strong>Remember:</strong> Quality tools are a long-term investment. Never compromise on safety-critical equipment like test instruments and PPE. Plan strategically and invest wisely.
-        </AlertDescription>
-      </Alert>
+      {/* Warning Alert */}
+      <Card className="border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-orange-500/5">
+        <CardContent className="p-4 flex items-start gap-3">
+          <AlertTriangle className="h-5 w-5 text-orange-400 mt-0.5 flex-shrink-0" />
+          <p className="text-white/80 text-sm">
+            <strong className="text-orange-400">Remember:</strong> Quality tools are a long-term investment. Never compromise on safety-critical equipment like test instruments and PPE. Plan strategically and invest wisely.
+          </p>
+        </CardContent>
+      </Card>
 
-      <Card className="border-green-500/50 bg-green-500/10">
+      {/* Journey Card */}
+      <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/5">
         <CardHeader>
-          <CardTitle className="text-green-300 flex items-center gap-2">
+          <CardTitle className="text-green-400 flex items-center gap-2">
             <Heart className="h-5 w-5" />
             Your Professional Journey
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">
-            Building a professional toolkit is a career-long investment in your success. Focus on quality over quantity, 
-            plan your purchases strategically, and maintain your tools properly. A well-chosen and maintained toolkit will serve you throughout 
+        <CardContent className="space-y-4">
+          <p className="text-white/80 leading-relaxed">
+            Building a professional toolkit is a career-long investment in your success. Focus on quality over quantity,
+            plan your purchases strategically, and maintain your tools properly. A well-chosen and maintained toolkit will serve you throughout
             your entire electrical career and contribute to your professional reputation.
           </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {[
+              { text: "Buy quality, buy once", icon: Star },
+              { text: "Maintain tools regularly", icon: Wrench },
+              { text: "Replace when unsafe", icon: Shield }
+            ].map((tip, index) => (
+              <div key={index} className="flex items-center gap-2 p-3 bg-white/5 border border-white/10 rounded-lg">
+                <tip.icon className="h-4 w-4 text-green-400" />
+                <span className="text-white/90 text-sm">{tip.text}</span>
+              </div>
+            ))}
+          </div>
         </CardContent>
       </Card>
     </div>

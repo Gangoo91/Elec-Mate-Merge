@@ -17,7 +17,7 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
   return (
     <div className="space-y-6">
       {/* Main header with background */}
-      <div className="bg-elec-dark border border-elec-yellow/30 rounded-lg p-5">
+      <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-5">
         <h2 className="text-2xl md:text-3xl font-bold text-elec-yellow">Safe Execution and Emergency Procedures</h2>
         <p className="mt-2 text-elec-light/80">
           Applying correct procedures when working with electrical systems and being prepared for emergency response
@@ -40,7 +40,7 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       
       {/* Content Sections - Optimised layout */}
       <div className="space-y-6 mt-6">
-        <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-5">
+        <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-5">
           <h3 className="text-xl font-semibold text-elec-yellow mb-3">Safe Isolation Procedures</h3>
           
           <p className="text-elec-light/90 mb-3">Follow these crucial steps for safe electrical isolation:</p>
@@ -92,7 +92,7 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </Table>
           </div>
           
-          <div className="bg-elec-gray/50 p-3 rounded-lg mt-3">
+          <div className="bg-white/5 p-3 rounded-lg mt-3">
             <h4 className="font-medium text-white mb-1">Safe Isolation Certification:</h4>
             <p className="text-elec-light/80 text-sm">
               Remember that formal certification is required for isolation procedures in many work environments. Ensure you have the appropriate training and authorisation before performing isolation.
@@ -101,13 +101,13 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-5">
+          <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-5">
             <h3 className="text-xl font-semibold text-elec-yellow mb-3">Tool Usage Best Practices</h3>
             
             <p className="text-elec-light/90 mb-3">Implement these practices to ensure safe handling of tools:</p>
             
             <div className="space-y-3">
-              <div className="bg-elec-gray/50 p-3 rounded-lg">
+              <div className="bg-white/5 p-3 rounded-lg">
                 <h4 className="font-medium text-white">Selection</h4>
                 <ul className="list-disc pl-4 mt-1 text-elec-light/80 text-sm">
                   <li>Use insulated tools rated for the voltage</li>
@@ -117,7 +117,7 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </ul>
               </div>
               
-              <div className="bg-elec-gray/50 p-3 rounded-lg">
+              <div className="bg-white/5 p-3 rounded-lg">
                 <h4 className="font-medium text-white">Handling</h4>
                 <ul className="list-disc pl-4 mt-1 text-elec-light/80 text-sm">
                   <li>Maintain firm grip on handles, never touch metal parts</li>
@@ -127,7 +127,7 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </ul>
               </div>
               
-              <div className="bg-elec-gray/50 p-3 rounded-lg">
+              <div className="bg-white/5 p-3 rounded-lg">
                 <h4 className="font-medium text-white">Maintenance</h4>
                 <ul className="list-disc pl-4 mt-1 text-elec-light/80 text-sm">
                   <li>Inspect tools before each use for damage</li>
@@ -139,14 +139,14 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </div>
           </div>
         
-          <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-5">
+          <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-5">
             <h3 className="text-xl font-semibold text-elec-yellow mb-3">Safe Live Testing</h3>
             
             <p className="text-elec-light/90 mb-3">
               While it's always preferable to work on de-energised circuits, certain diagnostic procedures require live testing:
             </p>
             
-            <div className="bg-elec-gray/50 p-3 rounded-lg">
+            <div className="bg-white/5 p-3 rounded-lg">
               <h4 className="font-medium text-white mb-1">When Live Testing is Permitted:</h4>
               <ul className="list-disc pl-4 text-elec-light/80 text-sm">
                 <li>Diagnosing faults that can't be found without power</li>
@@ -175,7 +175,7 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           </div>
         </div>
         
-        <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-5">
+        <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-5">
           <h3 className="text-xl font-semibold text-elec-yellow mb-3">Emergency Response Protocols</h3>
           
           <p className="text-elec-light/90 mb-3">
@@ -183,7 +183,7 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-elec-gray/50 p-4 rounded-lg">
+            <div className="bg-white/5 p-4 rounded-lg">
               <h4 className="font-medium text-white mb-2">Electric Shock Response</h4>
               <ol className="list-decimal pl-5 space-y-1 text-elec-light/80">
                 <li>Do not touch the casualty if still in contact with the source</li>
@@ -195,12 +195,12 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 <li>Begin CPR if not breathing normally</li>
               </ol>
               
-              <div className="mt-2 p-2 bg-elec-dark rounded text-xs">
+              <div className="mt-2 p-2 bg-white/10 rounded text-xs">
                 <strong>UK Guidance:</strong> The UK Resuscitation Council recommends 30 chest compressions followed by 2 rescue breaths for adult CPR.
               </div>
             </div>
             
-            <div className="bg-elec-gray/50 p-4 rounded-lg">
+            <div className="bg-white/5 p-4 rounded-lg">
               <h4 className="font-medium text-white mb-2">Electrical Fire Response</h4>
               <ol className="list-decimal pl-5 space-y-1 text-elec-light/80">
                 <li>Raise the alarm and call emergency services (999)</li>
@@ -212,13 +212,13 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 <li>Report to assembly point and await emergency services</li>
               </ol>
               
-              <div className="mt-2 p-2 bg-elec-dark rounded text-xs">
+              <div className="mt-2 p-2 bg-white/10 rounded text-xs">
                 <strong>Fire Extinguisher:</strong> CO₂ extinguishers are identified by black labels and are safe for electrical fires.
               </div>
             </div>
           </div>
           
-          <div className="bg-elec-gray/50 p-4 rounded-lg mt-4">
+          <div className="bg-white/5 p-4 rounded-lg mt-4">
             <h4 className="font-medium text-white mb-2">Communication During Emergencies</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -246,14 +246,14 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           </div>
         </div>
         
-        <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-5">
+        <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-5">
           <h3 className="text-xl font-semibold text-elec-yellow mb-3">Practical Exercise: Emergency Response Plan</h3>
           
           <p className="text-elec-light/90 mb-3">
             Apply your knowledge to create an emergency response plan for the following scenario:
           </p>
           
-          <div className="bg-elec-gray/50 p-4 rounded-lg my-4">
+          <div className="bg-white/5 p-4 rounded-lg my-4">
             <h4 className="font-medium text-white mb-2">Scenario: Industrial Distribution Board Failure</h4>
             <p className="text-elec-light/90 mb-3">
               You are working on a team installing a new industrial distribution board in a manufacturing facility. The facility remains operational during the installation, with only the immediate work area isolated. While making final connections, you notice smoke coming from an adjacent existing distribution board that is still live.

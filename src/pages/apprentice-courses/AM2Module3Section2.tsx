@@ -210,11 +210,11 @@ const AM2Module3Section2 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
+      <div className="border-b border-white/10 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 3
@@ -230,10 +230,10 @@ const AM2Module3Section2 = () => {
           <Badge variant="secondary" className="bg-elec-yellow text-black font-medium">
             Module 3 – Section 2
           </Badge>
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground">
+          <h1 className="text-3xl md:text-4xl font-bold text-white">
             Power Circuits – Ring, Radial, Cooker, Motor
           </h1>
-          <div className="flex items-center gap-4 text-muted-foreground">
+          <div className="flex items-center gap-4 text-white">
             <div className="flex items-center gap-1">
               <Clock className="w-4 h-4" />
               <span className="text-sm">~30 min read</span>
@@ -246,13 +246,13 @@ const AM2Module3Section2 = () => {
         </div>
 
         {/* Critical Warning */}
-        <Card className="border-red-500/50 bg-card">
+        <Card className="border-red-500/50 ">
           <CardContent className="p-6">
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-6 h-6 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <h3 className="font-semibold text-foreground mb-2">Critical Assessment Area</h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <h3 className="font-semibold text-white mb-2">Critical Assessment Area</h3>
+                <p className="text-white leading-relaxed">
                   Power circuits are where most AM2 candidates lose marks or fail. You must demonstrate not just technical knowledge but competent, safe, and workmanlike installation. The assessor watches for accuracy to specification, safe practices, and professional workmanship. Incorrect cable selection, incomplete testing, or poor workmanship will result in failure.
                 </p>
               </div>
@@ -263,9 +263,9 @@ const AM2Module3Section2 = () => {
         {/* Learning Outcomes */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-            <p className="text-muted-foreground mb-4">By the end of this section, you should be able to:</p>
-            <ul className="space-y-2 text-muted-foreground">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+            <p className="text-white mb-4">By the end of this section, you should be able to:</p>
+            <ul className="space-y-2 text-white">
               <li className="flex items-start gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-elec-blue mt-2 flex-shrink-0"></span>
                 Install ring, radial, cooker, and motor circuits as per AM2 drawings and specifications
@@ -297,16 +297,16 @@ const AM2Module3Section2 = () => {
         {/* Ring Final Circuit */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">1. Ring Final Circuit</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">1. Ring Final Circuit</h2>
             <div className="space-y-4">
               <div>
-                <h3 className="font-medium text-foreground mb-2">Typical Specification</h3>
-                <p className="text-muted-foreground">2.5mm² twin & earth cable, 32A MCB protection. Must form a complete closed loop.</p>
+                <h3 className="font-medium text-white mb-2">Typical Specification</h3>
+                <p className="text-white">2.5mm² twin & earth cable, 32A MCB protection. Must form a complete closed loop.</p>
               </div>
               
               <div>
-                <h3 className="font-medium text-foreground mb-2">Critical Testing Requirements</h3>
-                <ul className="space-y-1 text-muted-foreground">
+                <h3 className="font-medium text-white mb-2">Critical Testing Requirements</h3>
+                <ul className="space-y-1 text-white">
                   <li>• End-to-end continuity (Line, Neutral, CPC)</li>
                   <li>• Cross connections for r₁ + rₙ and r₁ + r₂</li>
                   <li>• Polarity checks at all outlets</li>
@@ -315,8 +315,8 @@ const AM2Module3Section2 = () => {
               </div>
 
               <div>
-                <h3 className="font-medium text-foreground mb-2">Assessor Focus Points</h3>
-                <ul className="space-y-1 text-muted-foreground">
+                <h3 className="font-medium text-white mb-2">Assessor Focus Points</h3>
+                <ul className="space-y-1 text-white">
                   <li>• Ring continuity completely intact</li>
                   <li>• All terminations correct and secure</li>
                   <li>• CPCs sleeved with green/yellow and properly connected</li>
@@ -339,11 +339,11 @@ const AM2Module3Section2 = () => {
         {/* Radial Circuit */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">2. Radial Circuit</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">2. Radial Circuit</h2>
             <div className="space-y-4">
               <div>
-                <h3 className="font-medium text-foreground mb-2">Typical Specifications</h3>
-                <ul className="space-y-1 text-muted-foreground">
+                <h3 className="font-medium text-white mb-2">Typical Specifications</h3>
+                <ul className="space-y-1 text-white">
                   <li>• 2.5mm² on 20A MCB for standard loads</li>
                   <li>• 4mm² on 32A MCB for higher loads</li>
                   <li>• Simple end-to-end wiring, no loop back to origin</li>
@@ -351,8 +351,8 @@ const AM2Module3Section2 = () => {
               </div>
               
               <div>
-                <h3 className="font-medium text-foreground mb-2">Assessor Focus Points</h3>
-                <ul className="space-y-1 text-muted-foreground">
+                <h3 className="font-medium text-white mb-2">Assessor Focus Points</h3>
+                <ul className="space-y-1 text-white">
                   <li>• Correct cable size as specified on drawings</li>
                   <li>• Neat terminations at final point</li>
                   <li>• Protective device rating matches specification</li>
@@ -367,16 +367,16 @@ const AM2Module3Section2 = () => {
         {/* Cooker Circuit */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">3. Cooker Circuit</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">3. Cooker Circuit</h2>
             <div className="space-y-4">
               <div>
-                <h3 className="font-medium text-foreground mb-2">Typical Specification</h3>
-                <p className="text-muted-foreground">6mm² twin & earth cable, 32-40A MCB, connected through cooker control unit and outlet plate.</p>
+                <h3 className="font-medium text-white mb-2">Typical Specification</h3>
+                <p className="text-white">6mm² twin & earth cable, 32-40A MCB, connected through cooker control unit and outlet plate.</p>
               </div>
               
               <div>
-                <h3 className="font-medium text-foreground mb-2">Assessor Focus Points</h3>
-                <ul className="space-y-1 text-muted-foreground">
+                <h3 className="font-medium text-white mb-2">Assessor Focus Points</h3>
+                <ul className="space-y-1 text-white">
                   <li>• Correct cable size as per specification</li>
                   <li>• Secure terminations (large conductors need proper clamping)</li>
                   <li>• Cable sheath enters accessory - no bare conductors visible</li>
@@ -385,8 +385,8 @@ const AM2Module3Section2 = () => {
                 </ul>
               </div>
 
-              <div className="bg-card border border-amber-500/20 rounded-lg p-4">
-                <p className="text-sm text-muted-foreground">
+              <div className="bg-transparent border border-amber-500/20 rounded-lg p-4">
+                <p className="text-sm text-white">
                   <strong>Common Error:</strong> Over-stripping cable sheath leaving bare conductors visible at outlet plate. This is the most frequent reason for losing marks on cooker circuits.
                 </p>
               </div>
@@ -405,16 +405,16 @@ const AM2Module3Section2 = () => {
         {/* Motor Circuit */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">4. Motor Circuit</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">4. Motor Circuit</h2>
             <div className="space-y-4">
               <div>
-                <h3 className="font-medium text-foreground mb-2">Typical Configuration</h3>
-                <p className="text-muted-foreground">Usually wired in SWA or flex, feeding a DOL (Direct-On-Line) starter. May include start/stop control circuit.</p>
+                <h3 className="font-medium text-white mb-2">Typical Configuration</h3>
+                <p className="text-white">Usually wired in SWA or flex, feeding a DOL (Direct-On-Line) starter. May include start/stop control circuit.</p>
               </div>
               
               <div>
-                <h3 className="font-medium text-foreground mb-2">Assessor Focus Points</h3>
-                <ul className="space-y-1 text-muted-foreground">
+                <h3 className="font-medium text-white mb-2">Assessor Focus Points</h3>
+                <ul className="space-y-1 text-white">
                   <li>• Correct SWA gland termination with earth continuity</li>
                   <li>• Proper polarity at starter and motor terminals</li>
                   <li>• Overload protection device set appropriately for motor FLC</li>
@@ -424,8 +424,8 @@ const AM2Module3Section2 = () => {
                 </ul>
               </div>
 
-              <div className="bg-card border border-elec-yellow/20 rounded-lg p-4">
-                <p className="text-sm text-muted-foreground">
+              <div className="bg-transparent border border-elec-yellow/20 rounded-lg p-4">
+                <p className="text-sm text-white">
                   <strong>Professional Tip:</strong> Practice SWA glanding until it's second nature. Use a checklist: gland tight, banjo fitted, earth continuous, cable strain relief adequate.
                 </p>
               </div>
@@ -444,19 +444,19 @@ const AM2Module3Section2 = () => {
         {/* General Assessor Expectations */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">5. General Assessor Expectations (All Power Circuits)</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">5. General Assessor Expectations (All Power Circuits)</h2>
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div>
-                <h3 className="font-medium text-foreground mb-3">Technical Requirements</h3>
-                <ul className="space-y-2 text-muted-foreground">
+                <h3 className="font-medium text-white mb-3">Technical Requirements</h3>
+                <ul className="space-y-2 text-white">
                   <li>• <strong>Specification compliance:</strong> Cable sizes, routes, protective devices exactly as shown</li>
                   <li>• <strong>Safety:</strong> CPC sleeved and connected, no exposed copper</li>
                   <li>• <strong>Testing:</strong> All tests completed before energisation</li>
                 </ul>
               </div>
               <div>
-                <h3 className="font-medium text-foreground mb-3">Workmanship Standards</h3>
-                <ul className="space-y-2 text-muted-foreground">
+                <h3 className="font-medium text-white mb-3">Workmanship Standards</h3>
+                <ul className="space-y-2 text-white">
                   <li>• <strong>Installation quality:</strong> Straight runs, level accessories, neat terminations</li>
                   <li>• <strong>Professional finish:</strong> Conduits/trunking aligned, cables not twisted</li>
                   <li>• <strong>Protection integrity:</strong> No damage to cable insulation</li>
@@ -469,12 +469,12 @@ const AM2Module3Section2 = () => {
         {/* Common Candidate Errors */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">6. Common Candidate Errors (NET Guidance)</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">6. Common Candidate Errors (NET Guidance)</h2>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-3">
-                <div className="p-3 bg-card border border-red-500/20 rounded-lg">
-                  <h4 className="font-medium text-foreground text-sm">Critical Errors (Fail)</h4>
-                  <ul className="text-sm text-muted-foreground mt-2 space-y-1">
+                <div className="p-3 border border-red-500/20 rounded-lg">
+                  <h4 className="font-medium text-white text-sm">Critical Errors (Fail)</h4>
+                  <ul className="text-sm text-white mt-2 space-y-1">
                     <li>• Wrong cable size installed</li>
                     <li>• Ring finals left open (broken)</li>
                     <li>• CPC unsleeved or not terminated</li>
@@ -483,9 +483,9 @@ const AM2Module3Section2 = () => {
                 </div>
               </div>
               <div className="space-y-3">
-                <div className="p-3 bg-card border border-amber-500/20 rounded-lg">
-                  <h4 className="font-medium text-foreground text-sm">Workmanship Issues (Marks Lost)</h4>
-                  <ul className="text-sm text-muted-foreground mt-2 space-y-1">
+                <div className="p-3 border border-amber-500/20 rounded-lg">
+                  <h4 className="font-medium text-white text-sm">Workmanship Issues (Marks Lost)</h4>
+                  <ul className="text-sm text-white mt-2 space-y-1">
                     <li>• Cooker cable sheath not fully enclosed</li>
                     <li>• Poor SWA glanding technique</li>
                     <li>• Over-tightened terminals damaging insulation</li>
@@ -508,11 +508,11 @@ const AM2Module3Section2 = () => {
         {/* Practical Guidance */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">7. Practical Guidance</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">7. Practical Guidance</h2>
             <div className="space-y-4">
               <div>
-                <h3 className="font-medium text-foreground mb-2">Time Management Strategies</h3>
-                <ul className="space-y-2 text-muted-foreground">
+                <h3 className="font-medium text-white mb-2">Time Management Strategies</h3>
+                <ul className="space-y-2 text-white">
                   <li>• <strong>Ring circuits:</strong> Lay out both ends before terminating to ensure continuity</li>
                   <li>• <strong>Radials:</strong> Mark clearly where the circuit ends to avoid confusion</li>
                   <li>• <strong>Cooker circuits:</strong> Pre-shape large cables before termination</li>
@@ -521,8 +521,8 @@ const AM2Module3Section2 = () => {
               </div>
               
               <div>
-                <h3 className="font-medium text-foreground mb-2">Professional Techniques</h3>
-                <ul className="space-y-2 text-muted-foreground">
+                <h3 className="font-medium text-white mb-2">Professional Techniques</h3>
+                <ul className="space-y-2 text-white">
                   <li>• Record test results as you perform them - don't leave until the end</li>
                   <li>• Treat every installation as show home quality</li>
                   <li>• Double-check ring continuity before final termination</li>
@@ -536,26 +536,26 @@ const AM2Module3Section2 = () => {
         {/* Real-World Examples */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">8. Real-World Examples</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">8. Real-World Examples</h2>
             <div className="grid gap-4">
-              <div className="p-4 bg-card border border-red-500/20 rounded-lg">
-                <h4 className="font-medium text-foreground mb-2">Example 1: Ring Final Failure</h4>
-                <p className="text-muted-foreground text-sm">Candidate installed ring final but left one leg disconnected in consumer unit. Failed continuity test → section fail. Always verify complete loop before termination.</p>
+              <div className="p-4 border border-red-500/20 rounded-lg">
+                <h4 className="font-medium text-white mb-2">Example 1: Ring Final Failure</h4>
+                <p className="text-white text-sm">Candidate installed ring final but left one leg disconnected in consumer unit. Failed continuity test → section fail. Always verify complete loop before termination.</p>
               </div>
               
-              <div className="p-4 bg-card border border-red-500/20 rounded-lg">
-                <h4 className="font-medium text-foreground mb-2">Example 2: Cooker Circuit Workmanship</h4>
-                <p className="text-muted-foreground text-sm">Cooker circuit wired with sheath stripped back too far. Exposed cable insulation visible at outlet plate = significant marks lost for poor workmanship.</p>
+              <div className="p-4 border border-red-500/20 rounded-lg">
+                <h4 className="font-medium text-white mb-2">Example 2: Cooker Circuit Workmanship</h4>
+                <p className="text-white text-sm">Cooker circuit wired with sheath stripped back too far. Exposed cable insulation visible at outlet plate = significant marks lost for poor workmanship.</p>
               </div>
 
-              <div className="p-4 bg-card border border-amber-500/20 rounded-lg">
-                <h4 className="font-medium text-foreground mb-2">Example 3: Motor Circuit Incomplete</h4>
-                <p className="text-muted-foreground text-sm">Motor circuit wired correctly but overload protection not set for motor FLC. Assessor flagged incomplete installation - lost marks for attention to detail.</p>
+              <div className="p-4 border border-amber-500/20 rounded-lg">
+                <h4 className="font-medium text-white mb-2">Example 3: Motor Circuit Incomplete</h4>
+                <p className="text-white text-sm">Motor circuit wired correctly but overload protection not set for motor FLC. Assessor flagged incomplete installation - lost marks for attention to detail.</p>
               </div>
 
-              <div className="p-4 bg-card border border-amber-500/20 rounded-lg">
-                <h4 className="font-medium text-foreground mb-2">Example 4: Terminal Damage</h4>
-                <p className="text-muted-foreground text-sm">Candidate over-tightened terminals on 6mm² cooker cable, crushing insulation. Lost significant workmanship marks for poor technique.</p>
+              <div className="p-4 border border-amber-500/20 rounded-lg">
+                <h4 className="font-medium text-white mb-2">Example 4: Terminal Damage</h4>
+                <p className="text-white text-sm">Candidate over-tightened terminals on 6mm² cooker cable, crushing insulation. Lost significant workmanship marks for poor technique.</p>
               </div>
             </div>
           </CardContent>
@@ -564,31 +564,31 @@ const AM2Module3Section2 = () => {
         {/* FAQ Section */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">9. Frequently Asked Questions</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">9. Frequently Asked Questions</h2>
             <div className="space-y-4">
               <div>
-                <h3 className="font-medium text-foreground mb-2">Q1: Do I need to calculate cable sizes in AM2?</h3>
-                <p className="text-muted-foreground">No - follow the AM2 specification exactly as provided. No calculations are required or expected.</p>
+                <h3 className="font-medium text-white mb-2">Q1: Do I need to calculate cable sizes in AM2?</h3>
+                <p className="text-white">No - follow the AM2 specification exactly as provided. No calculations are required or expected.</p>
               </div>
               
               <div>
-                <h3 className="font-medium text-foreground mb-2">Q2: Will the assessor open socket outlets and accessories?</h3>
-                <p className="text-muted-foreground">Yes - expect sample inspections of terminations, so ensure all connections are neat and secure.</p>
+                <h3 className="font-medium text-white mb-2">Q2: Will the assessor open socket outlets and accessories?</h3>
+                <p className="text-white">Yes - expect sample inspections of terminations, so ensure all connections are neat and secure.</p>
               </div>
               
               <div>
-                <h3 className="font-medium text-foreground mb-2">Q3: Can I energise a circuit before completing all tests?</h3>
-                <p className="text-muted-foreground">No - that's unsafe practice and results in immediate failure. All tests must be completed first.</p>
+                <h3 className="font-medium text-white mb-2">Q3: Can I energise a circuit before completing all tests?</h3>
+                <p className="text-white">No - that's unsafe practice and results in immediate failure. All tests must be completed first.</p>
               </div>
               
               <div>
-                <h3 className="font-medium text-foreground mb-2">Q4: What if I accidentally damage cable insulation?</h3>
-                <p className="text-muted-foreground">Replace the cable section - tape repairs are not acceptable and will result in failure.</p>
+                <h3 className="font-medium text-white mb-2">Q4: What if I accidentally damage cable insulation?</h3>
+                <p className="text-white">Replace the cable section - tape repairs are not acceptable and will result in failure.</p>
               </div>
               
               <div>
-                <h3 className="font-medium text-foreground mb-2">Q5: How important is neatness compared to correctness?</h3>
-                <p className="text-muted-foreground">Both matter significantly: correctness is essential for safety, neatness is heavily marked for professionalism.</p>
+                <h3 className="font-medium text-white mb-2">Q5: How important is neatness compared to correctness?</h3>
+                <p className="text-white">Both matter significantly: correctness is essential for safety, neatness is heavily marked for professionalism.</p>
               </div>
             </div>
           </CardContent>
@@ -603,20 +603,20 @@ const AM2Module3Section2 = () => {
         />
 
         {/* Summary */}
-        <Card className="bg-card border-green-500/20">
+        <Card className="bg-transparent border-green-500/20">
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">10. Summary</h2>
-            <p className="text-muted-foreground mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">10. Summary</h2>
+            <p className="text-white mb-4">
               In AM2, power circuits must be installed to specification, neatly, and safely. Assessors check:
             </p>
-            <ul className="space-y-2 text-muted-foreground">
+            <ul className="space-y-2 text-white">
               <li>• <strong>Technical accuracy:</strong> Ring continuity, correct radial wiring, proper cooker cable termination</li>
               <li>• <strong>Motor circuits:</strong> Overloads set correctly, SWA glanded properly with earth continuity</li>
               <li>• <strong>Professional standards:</strong> CPCs sleeved, terminations secure, accessories level</li>
               <li>• <strong>Safety compliance:</strong> No unsafe shortcuts, circuits tested fully before energisation</li>
             </ul>
-            <div className="mt-4 p-4 bg-background rounded-lg border">
-              <p className="text-sm font-medium text-foreground">
+            <div className="mt-4 p-4 bg-[#1a1a1a] rounded-lg border">
+              <p className="text-sm font-medium text-white">
                 Remember: Unsafe = Fail | Untidy = Marks Lost | Accurate + Neat + Safe = Pass
               </p>
             </div>
@@ -626,8 +626,8 @@ const AM2Module3Section2 = () => {
         {/* Quiz Section */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Test Your Knowledge</h2>
-            <p className="text-muted-foreground mb-6">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Test Your Knowledge</h2>
+            <p className="text-white mb-6">
               Complete this comprehensive quiz to test your understanding of power circuit installation and assessment requirements.
             </p>
             <Quiz questions={quizQuestions} title="Power Circuits Assessment Quiz" />

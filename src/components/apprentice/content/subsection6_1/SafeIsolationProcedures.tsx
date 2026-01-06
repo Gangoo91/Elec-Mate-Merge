@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 const SafeIsolationProcedures = () => {
   return (
-    <Card className="bg-elec-gray border border-elec-yellow/20 h-full">
+    <Card className="bg-white/5 border border-elec-yellow/20 h-full">
       <CardHeader className="bg-gradient-to-r from-elec-yellow/10 to-transparent border-b border-elec-yellow/20 pb-3">
         <div className="flex items-center gap-2">
           <LockKeyhole className="h-5 w-5 text-elec-yellow" />
@@ -26,14 +26,14 @@ const SafeIsolationProcedures = () => {
             {steps.map((step, index) => (
               <div 
                 key={index} 
-                className="p-3 bg-elec-dark/70 border border-elec-yellow/20 rounded-lg flex gap-3 hover:border-elec-yellow/40 transition-colors"
+                className="p-3 bg-white/10 border border-elec-yellow/20 rounded-lg flex gap-3 hover:border-elec-yellow/40 transition-colors"
               >
                 <div className="bg-elec-yellow/10 h-8 w-8 rounded-full flex items-center justify-center shrink-0 mt-0.5">
                   <span className="text-elec-yellow font-medium">{index + 1}</span>
                 </div>
                 <div className="space-y-1">
                   <h6 className="font-semibold text-white">{step.title}</h6>
-                  <p className="text-sm text-gray-300">{step.description}</p>
+                  <p className="text-sm text-white/80">{step.description}</p>
                 </div>
               </div>
             ))}
@@ -75,8 +75,8 @@ const SafeIsolationProcedures = () => {
               <AlertTriangle className="h-5 w-5 text-red-400 shrink-0 mt-0.5" />
               <div>
                 <h6 className="font-medium text-red-400">Critical Safety Warning</h6>
-                <p className="text-sm text-gray-300 mt-1">
-                  Never rely on isolation switches alone. Always follow the complete safe isolation procedure and verify 
+                <p className="text-sm text-white/80 mt-1">
+                  Never rely on isolation switches alone. Always follow the complete safe isolation procedure and verify
                   the absence of voltage before beginning work.
                 </p>
               </div>
@@ -84,12 +84,12 @@ const SafeIsolationProcedures = () => {
           </div>
           
           {/* Regulations */}
-          <div className="p-3 bg-elec-dark/50 rounded-lg border border-elec-yellow/20 mt-2">
+          <div className="p-3 bg-white/10 rounded-lg border border-elec-yellow/20 mt-2">
             <div className="flex items-center gap-2">
               <Zap className="h-4 w-4 text-elec-yellow" />
               <span className="text-sm text-elec-yellow font-medium">Electricity at Work Regulations 1989</span>
             </div>
-            <p className="text-xs text-gray-300 mt-1">
+            <p className="text-xs text-white/80 mt-1">
               Regulation 13 specifically requires that adequate precautions are taken to prevent electrical equipment that has 
               been made dead from becoming live while work is carried out.
             </p>

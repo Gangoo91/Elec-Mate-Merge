@@ -23,7 +23,7 @@ const Level3 = () => {
               <h3 className="text-sm sm:text-base lg:text-lg font-bold text-foreground leading-tight group-hover:text-primary transition-colors duration-300">
                 Inspection, testing, and commissioning
               </h3>
-              <p className="text-muted-foreground text-[10px] sm:text-xs leading-relaxed">
+              <p className="text-white/70 text-[10px] sm:text-xs leading-relaxed">
                 Advanced inspection and testing procedures
               </p>
             </CardContent>
@@ -39,7 +39,7 @@ const Level3 = () => {
               <h3 className="text-sm sm:text-base lg:text-lg font-bold text-foreground leading-tight group-hover:text-primary transition-colors duration-300">
                 Fault diagnosis and rectification
               </h3>
-              <p className="text-muted-foreground text-[10px] sm:text-xs leading-relaxed">
+              <p className="text-white/70 text-[10px] sm:text-xs leading-relaxed">
                 Identifying and fixing electrical system faults
               </p>
             </CardContent>
@@ -55,7 +55,7 @@ const Level3 = () => {
               <h3 className="text-sm sm:text-base lg:text-lg font-bold text-foreground leading-tight group-hover:text-primary transition-colors duration-300">
                 Electrical systems design
               </h3>
-              <p className="text-muted-foreground text-[10px] sm:text-xs leading-relaxed">
+              <p className="text-white/70 text-[10px] sm:text-xs leading-relaxed">
                 Designing efficient and safe electrical systems
               </p>
             </CardContent>
@@ -71,7 +71,7 @@ const Level3 = () => {
               <h3 className="text-sm sm:text-base lg:text-lg font-bold text-foreground leading-tight group-hover:text-primary transition-colors duration-300">
                 Understanding environmental technologies
               </h3>
-              <p className="text-muted-foreground text-[10px] sm:text-xs leading-relaxed">
+              <p className="text-white/70 text-[10px] sm:text-xs leading-relaxed">
                 Sustainable and renewable electrical systems
               </p>
             </CardContent>
@@ -87,7 +87,7 @@ const Level3 = () => {
               <h3 className="text-sm sm:text-base lg:text-lg font-bold text-foreground leading-tight group-hover:text-primary transition-colors duration-300">
                 Electrical science (advanced)
               </h3>
-              <p className="text-muted-foreground text-[10px] sm:text-xs leading-relaxed">
+              <p className="text-white/70 text-[10px] sm:text-xs leading-relaxed">
                 Advanced electrical theory and principles
               </p>
             </CardContent>
@@ -103,7 +103,7 @@ const Level3 = () => {
               <h3 className="text-sm sm:text-base lg:text-lg font-bold text-foreground leading-tight group-hover:text-primary transition-colors duration-300">
                 Regulations and legislation
               </h3>
-              <p className="text-muted-foreground text-[10px] sm:text-xs leading-relaxed">
+              <p className="text-white/70 text-[10px] sm:text-xs leading-relaxed">
                 Advanced regulatory knowledge and compliance
               </p>
             </CardContent>

@@ -375,13 +375,13 @@ const SafeIsolationGuide = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-white">
+    <div className="min-h-screen bg-[#1a1a1a] text-white">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="module-8/section-3">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Practical Assessment
@@ -390,7 +390,7 @@ const SafeIsolationGuide = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3 mb-4">
-            <Shield className="h-8 w-8 text-yellow-400" />
+            <Shield className="h-8 w-8 text-elec-yellow" />
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
               Safe Isolation Procedures
             </h1>
@@ -430,16 +430,16 @@ const SafeIsolationGuide = () => {
 
           {/* Step-by-Step Procedure */}
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-yellow-400 mb-6 flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-elec-yellow mb-6 flex items-center gap-2">
               <Lock className="h-6 w-6" />
               The 8-Step Safe Isolation Procedure
             </h2>
             
             {isolationSteps.map((step) => (
-              <Card key={step.step} className="bg-card border-transparent hover:border-yellow-400/30 transition-all duration-300">
+              <Card key={step.step} className="bg-transparent border-transparent hover:border-elec-yellow/30 transition-all duration-300">
                 <CardHeader>
                   <div className="flex items-start gap-4">
-                    <Badge className="bg-yellow-400 text-black font-bold px-3 py-1 text-sm min-w-[60px]">
+                    <Badge className="bg-elec-yellow text-black font-bold px-3 py-1 text-sm min-w-[60px]">
                       Step {step.step}
                     </Badge>
                     <div className="flex-1">
@@ -451,14 +451,14 @@ const SafeIsolationGuide = () => {
                 <CardContent className="space-y-6">
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div>
-                      <h4 className="font-semibold text-yellow-400 mb-3 flex items-center gap-2">
+                      <h4 className="font-semibold text-elec-yellow mb-3 flex items-center gap-2">
                         <CheckCircle className="h-4 w-4" />
                         Procedure Details
                       </h4>
                       <ul className="space-y-2">
                         {step.details.map((detail, index) => (
                           <li key={index} className="text-white text-sm flex items-start gap-2">
-                            <span className="text-yellow-400 mt-1">•</span>
+                            <span className="text-elec-yellow mt-1">•</span>
                             {detail}
                           </li>
                         ))}
@@ -502,14 +502,14 @@ const SafeIsolationGuide = () => {
 
           {/* Equipment Requirements */}
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-yellow-400 mb-6 flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-elec-yellow mb-6 flex items-center gap-2">
               <Activity className="h-6 w-6" />
               Essential Equipment Requirements
             </h2>
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {equipmentRequirements.map((equipment, index) => (
-                <Card key={index} className="bg-card border-transparent">
+                <Card key={index} className="bg-transparent border-transparent">
                   <CardHeader>
                     <CardTitle className="text-cyan-400 text-lg">{equipment.equipment}</CardTitle>
                     <Badge variant="secondary" className="bg-cyan-600/20 text-cyan-300 text-xs w-fit">
@@ -533,7 +533,7 @@ const SafeIsolationGuide = () => {
 
           {/* Common Errors */}
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-yellow-400 mb-6 flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-elec-yellow mb-6 flex items-center gap-2">
               <XCircle className="h-6 w-6" />
               Critical Errors and Consequences
             </h2>
@@ -573,22 +573,22 @@ const SafeIsolationGuide = () => {
 
           {/* Regulatory Context */}
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-yellow-400 mb-6 flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-elec-yellow mb-6 flex items-center gap-2">
               <BookOpen className="h-6 w-6" />
               Legal and Regulatory Framework
             </h2>
             
             <div className="space-y-4">
               {regulatoryContext.map((reg, index) => (
-                <Card key={index} className="bg-card border-yellow-400/30">
+                <Card key={index} className="bg-transparent border-elec-yellow/30">
                   <CardHeader>
-                    <CardTitle className="text-yellow-400 text-lg">{reg.regulation}</CardTitle>
+                    <CardTitle className="text-elec-yellow text-lg">{reg.regulation}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-2">
                       {reg.requirements.map((req, reqIndex) => (
                         <li key={reqIndex} className="text-white text-sm flex items-start gap-2">
-                          <CheckCircle className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                          <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                           {req}
                         </li>
                       ))}
@@ -601,14 +601,14 @@ const SafeIsolationGuide = () => {
 
           {/* Assessment Scenarios */}
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-yellow-400 mb-6 flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-elec-yellow mb-6 flex items-center gap-2">
               <Users className="h-6 w-6" />
               Practical Assessment Scenarios
             </h2>
             
             <div className="space-y-6">
               {assessmentScenarios.map((scenario, index) => (
-                <Card key={index} className="bg-card border-transparent">
+                <Card key={index} className="bg-transparent border-transparent">
                   <CardHeader>
                     <CardTitle className="text-purple-400 text-xl">{scenario.scenario}</CardTitle>
                     <p className="text-white">{scenario.setup}</p>

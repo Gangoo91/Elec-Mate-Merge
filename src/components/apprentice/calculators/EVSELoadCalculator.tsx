@@ -260,14 +260,14 @@ const EVSELoadCalculator = () => {
                 <div className="text-3xl font-bold bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}>
                   {result.totalDiversifiedLoad.toFixed(1)}
                 </div>
-                <p className="text-xs text-white/50">kW</p>
+                <p className="text-xs text-white/80">kW</p>
               </div>
               <div className="text-center">
                 <p className="text-sm text-white/60 mb-1">Design Current</p>
                 <div className="text-3xl font-bold bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}>
                   {result.designCurrent.toFixed(0)}
                 </div>
-                <p className="text-xs text-white/50">A</p>
+                <p className="text-xs text-white/80">A</p>
               </div>
             </div>
 
@@ -323,7 +323,7 @@ const EVSELoadCalculator = () => {
                   <Info className="h-4 w-4 text-blue-400" />
                   <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showGuidance && "rotate-180")} />
+                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showGuidance && "rotate-180")} />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0 space-y-2 text-sm text-blue-200/80">
                 <p><strong className="text-blue-300">Design Current:</strong> Determines cable sizing and protection device rating. {result.designCurrent > 100 ? "High current - consider 3-phase supply." : "Standard residential/commercial load."}</p>
@@ -341,7 +341,7 @@ const EVSELoadCalculator = () => {
                   <BookOpen className="h-4 w-4 text-amber-400" />
                   <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 Requirements</span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showRegs && "rotate-180")} />
+                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showRegs && "rotate-180")} />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0 space-y-2 text-sm text-amber-200/80">
                 <p><strong className="text-amber-300">Section 722:</strong> EV charging installations - RCD protection mandatory (30mA Type A minimum)</p>
@@ -359,7 +359,7 @@ const EVSELoadCalculator = () => {
       {!result && chargingPoints.length === 0 && (
         <div className="p-6 rounded-xl bg-white/5 border border-white/10 text-center">
           <Car className="h-10 w-10 mx-auto mb-3 text-white/30" />
-          <p className="text-sm text-white/50">Add charging points to calculate EVSE load requirements</p>
+          <p className="text-sm text-white/80">Add charging points to calculate EVSE load requirements</p>
         </div>
       )}
 

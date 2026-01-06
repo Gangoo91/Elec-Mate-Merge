@@ -8,7 +8,7 @@ interface BrandCardProps {
 
 const BrandCard = ({ category, brands }: BrandCardProps) => {
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border-elec-yellow/20 bg-white/5">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg">{category}</CardTitle>
       </CardHeader>

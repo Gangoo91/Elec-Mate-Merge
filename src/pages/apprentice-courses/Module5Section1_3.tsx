@@ -184,11 +184,11 @@ const Module5Section1_3 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 sticky top-0 z-10 backdrop-blur-sm bg-[#1a1a1a]/95">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white/70 hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 1
@@ -203,24 +203,24 @@ const Module5Section1_3 = () => {
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-2 rounded-lg ">
-              <Lightbulb className="w-6 h-6 text-foreground" />
+              <Lightbulb className="w-6 h-6 text-white" />
             </div>
             <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 5.1.3
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Electrical Symbols and Conventions
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white/70">
             Master electrical symbols from BS 7671 and common site conventions for accurate installation work.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-white/10 bg-transparent">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
             <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
@@ -241,9 +241,9 @@ const Module5Section1_3 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-white/10 bg-transparent">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Recognise standard electrical symbols from BS 7671.</li>
             <li>Interpret common site conventions used in electrical drawings.</li>
             <li>Differentiate between symbol types for wiring, containment, and accessories.</li>
@@ -253,13 +253,13 @@ const Module5Section1_3 = () => {
 
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-white/10 bg-transparent">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* Purpose of Symbols */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Purpose of Symbols</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Purpose of Symbols</h3>
+            <p className="text-base text-white mb-4">
               Electrical symbols serve essential communication functions in technical drawings:
             </p>
             
@@ -268,22 +268,22 @@ const Module5Section1_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Communication and Clarity</p>
-                    <p className="text-base text-foreground mb-2"><strong>Universal understanding:</strong> Symbols provide a standardised language.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-elec-yellow mb-1">Communication and Clarity</p>
+                    <p className="text-base text-white mb-2"><strong>Universal understanding:</strong> Symbols provide a standardised language.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Clear communication across all electrical trades</li>
                       <li>Reduces misunderstandings and installation errors</li>
                       <li>Maintains consistency across different projects</li>
                       <li>Enables quick recognition of electrical components</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Drawing efficiency:</strong> Symbols reduce clutter and improve readability.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Drawing efficiency:</strong> Symbols reduce clutter and improve readability.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Avoids lengthy text descriptions</li>
                       <li>Keeps drawings clean and professional</li>
                       <li>Allows more information in less space</li>
                       <li>Makes complex installations easier to understand</li>
                     </ul>
-                    <div className="text-xs sm:text-sm text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs sm:text-sm text-white bg-white/5 p-2 rounded border border-white/10">
                       <strong>Key principle:</strong> Symbols are the universal language of electrical engineering
                     </div>
                   </div>
@@ -303,8 +303,8 @@ const Module5Section1_3 = () => {
 
           {/* Categories of Symbols */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Categories of Symbols</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Categories of Symbols</h3>
+            <p className="text-base text-white mb-4">
               Electrical symbols are organised into main categories for different system components:
             </p>
             
@@ -316,8 +316,8 @@ const Module5Section1_3 = () => {
                     <p className="font-semibold text-green-600 dark:text-green-400 mb-1">Main Symbol Categories</p>
                     <div className="grid md:grid-cols-2 gap-4 mb-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Lighting symbols:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Lighting symbols:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                           <li>Circle with cross = ceiling light</li>
                           <li>Pendant symbols for hanging lights</li>
                           <li>Emergency lighting indicators</li>
@@ -325,8 +325,8 @@ const Module5Section1_3 = () => {
                         </ul>
                       </div>
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Power symbols:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Power symbols:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                           <li>Double circle = socket outlet</li>
                           <li>Switched socket variations</li>
                           <li>Special purpose outlets (cooker, shower)</li>
@@ -334,8 +334,8 @@ const Module5Section1_3 = () => {
                         </ul>
                       </div>
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Switch symbols:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Switch symbols:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                           <li>"S" in a square = switch</li>
                           <li>Multi-way switch indicators</li>
                           <li>Dimmer switch symbols</li>
@@ -343,8 +343,8 @@ const Module5Section1_3 = () => {
                         </ul>
                       </div>
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Containment symbols:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Containment symbols:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                           <li>Lines with marks = trunking/conduit</li>
                           <li>Cable tray indicators</li>
                           <li>Underground cable routes</li>
@@ -352,7 +352,7 @@ const Module5Section1_3 = () => {
                         </ul>
                       </div>
                     </div>
-                    <div className="text-xs sm:text-sm text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs sm:text-sm text-white bg-white/5 p-2 rounded border border-white/10">
                       <strong>Remember:</strong> Each category has multiple variations - always check the legend
                     </div>
                   </div>
@@ -372,8 +372,8 @@ const Module5Section1_3 = () => {
 
           {/* BS 7671 Standards */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">BS 7671 Standards</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">BS 7671 Standards</h3>
+            <p className="text-base text-white mb-4">
               All electrical symbols must comply with BS 7671 for consistency and safety:
             </p>
             
@@ -382,22 +382,22 @@ const Module5Section1_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Regulatory Compliance</p>
-                    <p className="text-base text-foreground mb-2"><strong>BS 7671 requirements:</strong> Standard symbols for all UK installations.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-elec-yellow mb-1">Regulatory Compliance</p>
+                    <p className="text-base text-white mb-2"><strong>BS 7671 requirements:</strong> Standard symbols for all UK installations.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>All drawings must use approved BS 7671 symbols</li>
                       <li>Ensures consistency across the electrical industry</li>
                       <li>Maintains safety standards and reduces errors</li>
                       <li>Provides legal compliance for installations</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Professional standards:</strong> Using correct symbols demonstrates competence.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Professional standards:</strong> Using correct symbols demonstrates competence.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Shows understanding of electrical standards</li>
                       <li>Builds confidence with clients and supervisors</li>
                       <li>Prevents installation errors and disputes</li>
                       <li>Meets professional certification requirements</li>
                     </ul>
-                    <div className="text-xs sm:text-sm text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs sm:text-sm text-white bg-white/5 p-2 rounded border border-white/10">
                       <strong>Important:</strong> Stay updated with BS 7671 amendments and symbol changes
                     </div>
                   </div>
@@ -417,8 +417,8 @@ const Module5Section1_3 = () => {
 
           {/* Common Site Conventions */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Common Site Conventions</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Common Site Conventions</h3>
+            <p className="text-base text-white mb-4">
               While following BS standards, sites may use variations for specific requirements:
             </p>
             
@@ -427,22 +427,22 @@ const Module5Section1_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Site-Specific Adaptations</p>
-                    <p className="text-base text-foreground mb-2"><strong>Adapted symbols:</strong> Sites may modify symbols for clarity.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-elec-yellow mb-1">Site-Specific Adaptations</p>
+                    <p className="text-base text-white mb-2"><strong>Adapted symbols:</strong> Sites may modify symbols for clarity.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Arrows for cable run directions</li>
                       <li>Numbers for circuit identification</li>
                       <li>Shading for different electrical zones</li>
                       <li>Special symbols for unique equipment</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Legend provision:</strong> Every drawing must include comprehensive legends.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Legend provision:</strong> Every drawing must include comprehensive legends.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Explains all symbols used on the drawing</li>
                       <li>Defines abbreviations and reference codes</li>
                       <li>Shows any site-specific variations</li>
                       <li>Must be checked before starting work</li>
                     </ul>
-                    <div className="text-xs sm:text-sm text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs sm:text-sm text-white bg-white/5 p-2 rounded border border-white/10">
                       <strong>Golden rule:</strong> Always check the legend first - never assume symbol meanings
                     </div>
                   </div>
@@ -456,8 +456,8 @@ const Module5Section1_3 = () => {
 
           {/* Errors and Misinterpretation */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Errors and Misinterpretation</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Errors and Misinterpretation</h3>
+            <p className="text-base text-white mb-4">
               Understanding common errors helps prevent costly installation mistakes:
             </p>
             
@@ -466,22 +466,22 @@ const Module5Section1_3 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Common Errors and Prevention</p>
-                    <p className="text-base text-foreground mb-2"><strong>Symbol interpretation errors:</strong> Common mistakes and their consequences.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-elec-yellow mb-1">Common Errors and Prevention</p>
+                    <p className="text-base text-white mb-2"><strong>Symbol interpretation errors:</strong> Common mistakes and their consequences.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Not checking legends causes costly mistakes</li>
                       <li>Mixing up similar symbols (lighting vs. power)</li>
                       <li>Assuming symbols without verification</li>
                       <li>Using outdated symbol references</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Prevention strategies:</strong> Avoiding symbol-related errors.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Prevention strategies:</strong> Avoiding symbol-related errors.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Always double-check unfamiliar symbols</li>
                       <li>Keep BS 7671 reference materials accessible</li>
                       <li>Ask supervisors when uncertain</li>
                       <li>Cross-reference with specifications</li>
                     </ul>
-                    <div className="text-xs sm:text-sm text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs sm:text-sm text-white bg-white/5 p-2 rounded border border-white/10">
                       <strong>Consequences:</strong> Wrong installation, delays, material waste, and costly rework
                     </div>
                   </div>
@@ -533,16 +533,16 @@ const Module5Section1_3 = () => {
           <CardContent className="space-y-4">
             <div className="space-y-3">
               <div>
-                <p className="font-semibold">Q: Do all projects use BS 7671 symbols only?</p>
-                <p className="text-muted-foreground">A: No — site-specific symbols may be added, so always check the legend for any variations or additional symbols.</p>
+                <p className="font-semibold text-white">Q: Do all projects use BS 7671 symbols only?</p>
+                <p className="text-white/70">A: No — site-specific symbols may be added, so always check the legend for any variations or additional symbols.</p>
               </div>
               <div>
-                <p className="font-semibold">Q: What if I don't recognise a symbol?</p>
-                <p className="text-muted-foreground">A: Always refer to the drawing legend first, then ask your supervisor if the symbol isn't clear or explained.</p>
+                <p className="font-semibold text-white">Q: What if I don't recognise a symbol?</p>
+                <p className="text-white/70">A: Always refer to the drawing legend first, then ask your supervisor if the symbol isn't clear or explained.</p>
               </div>
               <div>
-                <p className="font-semibold">Q: Are electrical symbols the same worldwide?</p>
-                <p className="text-muted-foreground">A: No — different countries use different standards. In the UK, we follow BS 7671 and related British Standards.</p>
+                <p className="font-semibold text-white">Q: Are electrical symbols the same worldwide?</p>
+                <p className="text-white/70">A: No — different countries use different standards. In the UK, we follow BS 7671 and related British Standards.</p>
               </div>
             </div>
           </CardContent>

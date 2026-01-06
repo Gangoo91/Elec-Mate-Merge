@@ -116,7 +116,7 @@ const EvidenceCollectionCard = () => {
       <Card className="border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-pink-500/10">
         <CardHeader>
           <CardTitle className="text-purple-400">Evidence Collection & Quality</CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Best practices for collecting and maintaining high-quality training evidence
           </p>
         </CardHeader>
@@ -136,7 +136,7 @@ const EvidenceCollectionCard = () => {
                     className={`p-4 rounded-lg border cursor-pointer transition-all ${
                       selectedEvidenceType === evidence.type
                         ? "border-purple-500/50 bg-purple-500/20"
-                        : "border-purple-500/20 bg-elec-gray/50 hover:border-purple-500/30"
+                        : "border-purple-500/20 bg-white/5 hover:border-purple-500/30"
                     }`}
                     onClick={() => setSelectedEvidenceType(
                       selectedEvidenceType === evidence.type ? null : evidence.type
@@ -146,13 +146,13 @@ const EvidenceCollectionCard = () => {
                       {evidence.icon}
                       <h4 className="font-medium text-white">{evidence.type}</h4>
                     </div>
-                    <p className="text-sm text-muted-foreground mb-3">{evidence.description}</p>
+                    <p className="text-sm text-white mb-3">{evidence.description}</p>
                     
                     {selectedEvidenceType === evidence.type && (
                       <div className="space-y-3 animate-fade-in">
                         <div>
                           <span className="text-xs font-medium text-purple-400">Examples:</span>
-                          <ul className="text-xs text-muted-foreground mt-1 space-y-1">
+                          <ul className="text-xs text-white mt-1 space-y-1">
                             {evidence.examples.map((example, idx) => (
                               <li key={idx} className="flex items-start gap-1">
                                 <span className="text-purple-400">•</span>
@@ -164,7 +164,7 @@ const EvidenceCollectionCard = () => {
                         
                         <div>
                           <span className="text-xs font-medium text-green-400">Best Practices:</span>
-                          <ul className="text-xs text-muted-foreground mt-1 space-y-1">
+                          <ul className="text-xs text-white mt-1 space-y-1">
                             {evidence.bestPractices.map((practice, idx) => (
                               <li key={idx} className="flex items-start gap-1">
                                 <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
@@ -194,13 +194,13 @@ const EvidenceCollectionCard = () => {
             <TabsContent value="quality" className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {qualityStandards.map((standard, index) => (
-                  <div key={index} className="p-4 bg-elec-gray/50 rounded-lg border border-purple-500/20">
+                  <div key={index} className="p-4 bg-white/5 rounded-lg border border-purple-500/20">
                     <h4 className="font-medium text-white mb-2">{standard.standard}</h4>
-                    <p className="text-sm text-muted-foreground mb-3">{standard.description}</p>
+                    <p className="text-sm text-white mb-3">{standard.description}</p>
                     
                     <div>
                       <span className="text-xs font-medium text-purple-400">Key Checkpoints:</span>
-                      <ul className="text-xs text-muted-foreground mt-1 space-y-1">
+                      <ul className="text-xs text-white mt-1 space-y-1">
                         {standard.checkpoints.map((checkpoint, idx) => (
                           <li key={idx} className="flex items-start gap-1">
                             <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
@@ -218,16 +218,16 @@ const EvidenceCollectionCard = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <h4 className="font-medium text-white">Digital Organisation Structure</h4>
-                  <div className="p-4 bg-elec-gray/50 rounded-lg border border-purple-500/20">
+                  <div className="p-4 bg-white/5 rounded-lg border border-purple-500/20">
                     <div className="space-y-2 text-sm font-mono">
                       <div className="text-purple-400">📁 Off-the-Job Training Evidence/</div>
                       <div className="ml-4 text-blue-400">📁 2024-2025/</div>
                       <div className="ml-8 text-green-400">📁 Month-01-September/</div>
-                      <div className="ml-12 text-muted-foreground">📄 College-Attendance-Record.pdf</div>
-                      <div className="ml-12 text-muted-foreground">📄 Online-Module-Certificate.pdf</div>
+                      <div className="ml-12 text-white">📄 College-Attendance-Record.pdf</div>
+                      <div className="ml-12 text-white">📄 Online-Module-Certificate.pdf</div>
                       <div className="ml-8 text-green-400">📁 Month-02-October/</div>
-                      <div className="ml-12 text-muted-foreground">📄 Workshop-Photos.jpg</div>
-                      <div className="ml-12 text-muted-foreground">📄 Reflection-Log.docx</div>
+                      <div className="ml-12 text-white">📄 Workshop-Photos.jpg</div>
+                      <div className="ml-12 text-white">📄 Reflection-Log.docx</div>
                     </div>
                   </div>
                 </div>
@@ -247,7 +247,7 @@ const EvidenceCollectionCard = () => {
                     ].map((item, index) => (
                       <div key={index} className="flex items-center gap-2 text-sm">
                         <CheckCircle className="h-4 w-4 text-green-400" />
-                        <span className="text-muted-foreground">{item}</span>
+                        <span className="text-white">{item}</span>
                       </div>
                     ))}
                   </div>

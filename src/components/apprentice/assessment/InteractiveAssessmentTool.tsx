@@ -3,8 +3,11 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MobileInput } from "@/components/ui/mobile-input";
-import { Progress } from "@/components/ui/progress";
-import { CheckCircle, AlertTriangle, Camera, FileText, Award } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import {
+  CheckCircle, AlertTriangle, Camera, FileText, Award,
+  ChevronLeft, ChevronRight, Lightbulb, Target, Sparkles
+} from "lucide-react";
 
 interface AssessmentItem {
   id: string;
@@ -34,7 +37,6 @@ const InteractiveAssessmentTool = ({ tool, onComplete, isCompleted }: Interactiv
   const [notes, setNotes] = useState("");
   const [assessmentComplete, setAssessmentComplete] = useState(false);
 
-  // Convert basic items to detailed assessment items
   const assessmentItems: AssessmentItem[] = tool.items.map((item, index) => ({
     id: `item-${index}`,
     text: item,
@@ -71,7 +73,7 @@ const InteractiveAssessmentTool = ({ tool, onComplete, isCompleted }: Interactiv
       "weather considerations": "Check for rain, wind, temperature extremes. Electrical work should not be performed in wet conditions unless specifically protected.",
       "access route safety": "Ensure clear, stable access routes. Check for trip hazards, adequate lighting, and secure barriers where needed."
     };
-    
+
     return guidanceMap[item.toLowerCase()] || "Follow relevant safety procedures and regulations for this assessment item.";
   }
 
@@ -104,156 +106,204 @@ const InteractiveAssessmentTool = ({ tool, onComplete, isCompleted }: Interactiv
     setAssessmentComplete(true);
   };
 
-  const getRiskColor = (level: string) => {
+  const getRiskConfig = (level: string) => {
     switch (level) {
-      case "high": return "text-red-400 bg-red-400/10";
-      case "medium": return "text-yellow-400 bg-yellow-400/10";
-      case "low": return "text-green-400 bg-green-400/10";
-      default: return "text-elec-yellow bg-elec-yellow/10";
+      case "high": return { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/30' };
+      case "medium": return { bg: 'bg-elec-yellow/10', text: 'text-elec-yellow', border: 'border-elec-yellow/30' };
+      case "low": return { bg: 'bg-green-500/10', text: 'text-green-400', border: 'border-green-500/30' };
+      default: return { bg: 'bg-white/5', text: 'text-white/70', border: 'border-white/20' };
     }
   };
 
   if (assessmentComplete) {
     const completedItems = Object.keys(responses).length;
     const successRate = (completedItems / assessmentItems.length) * 100;
-    
+
     return (
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Award className="h-6 w-6" />
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30">
+              <Award className="h-6 w-6 text-green-400" />
+            </div>
             Assessment Complete!
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-6 relative">
           <div className="text-center space-y-4">
-            <div className="text-6xl">🎉</div>
+            <div className="p-4 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30 inline-block">
+              <Sparkles className="h-12 w-12 text-green-400" />
+            </div>
             <h3 className="text-2xl font-bold text-white">Well Done!</h3>
-            <p className="text-muted-foreground">
+            <p className="text-white/60">
               You've successfully completed the {tool.title}
             </p>
-            
-            <div className="bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-4">
-              <div className="grid grid-cols-2 gap-4 text-center">
-                <div>
-                  <div className="text-2xl font-bold text-elec-yellow">{completedItems}</div>
-                  <div className="text-sm text-muted-foreground">Items Assessed</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-green-400">{successRate.toFixed(0)}%</div>
-                  <div className="text-sm text-muted-foreground">Completion Rate</div>
-                </div>
+
+            <div className="grid grid-cols-2 gap-4 mt-6">
+              <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
+                <div className="text-3xl font-bold text-elec-yellow mb-1">{completedItems}</div>
+                <div className="text-sm text-white/60">Items Assessed</div>
+              </div>
+              <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
+                <div className="text-3xl font-bold text-green-400 mb-1">{successRate.toFixed(0)}%</div>
+                <div className="text-sm text-white/60">Completion Rate</div>
               </div>
             </div>
           </div>
 
           {notes && (
-            <div className="border border-elec-yellow/20 rounded-lg p-4">
-              <h4 className="font-semibold text-white mb-2">Your Notes:</h4>
-              <p className="text-sm text-muted-foreground">{notes}</p>
+            <div className="p-4 rounded-xl bg-purple-500/10 border border-purple-500/30">
+              <h4 className="font-semibold text-purple-300 mb-2">Your Notes:</h4>
+              <p className="text-sm text-white/70">{notes}</p>
             </div>
           )}
 
           <div className="space-y-3">
-            <h4 className="font-semibold text-white">Key Points Summary:</h4>
-            <ul className="space-y-2">
-              {assessmentItems.map((item, index) => (
-                <li key={item.id} className="flex items-start gap-2 text-sm">
+            <h4 className="font-semibold text-white flex items-center gap-2">
+              <CheckCircle className="h-4 w-4 text-green-400" />
+              Key Points Summary
+            </h4>
+            <div className="space-y-2">
+              {assessmentItems.map((item) => (
+                <div key={item.id} className="flex items-start gap-3 p-3 rounded-xl bg-white/10 border border-white/10">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span className="text-muted-foreground">{item.text}</span>
-                </li>
+                  <span className="text-sm text-white/70">{item.text}</span>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         </CardContent>
       </Card>
     );
   }
 
+  const riskConfig = getRiskConfig(currentItem.riskLevel);
+
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-elec-yellow">{tool.title}</CardTitle>
-            <span className="text-sm text-muted-foreground">
-              {currentStep + 1} of {assessmentItems.length}
-            </span>
+      {/* Main Assessment Card */}
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <div className="flex items-center justify-between mb-4">
+            <CardTitle className="text-white flex items-center gap-3">
+              <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+                <Target className="h-5 w-5 text-elec-yellow" />
+              </div>
+              {tool.title}
+            </CardTitle>
+            <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
+              {currentStep + 1} / {assessmentItems.length}
+            </Badge>
           </div>
-          <Progress value={progress} className="h-2" />
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <span className={`text-xs px-2 py-1 rounded ${getRiskColor(currentItem.riskLevel)}`}>
-                {currentItem.riskLevel.toUpperCase()} RISK
-              </span>
-              <span className="text-xs text-muted-foreground">{currentItem.category}</span>
+
+          {/* Progress Bar */}
+          <div className="space-y-2">
+            <div className="h-2.5 bg-white/10 rounded-full overflow-hidden">
+              <div
+                className="h-full rounded-full transition-all duration-500 bg-gradient-to-r from-elec-yellow to-elec-yellow/70"
+                style={{ width: `${progress}%` }}
+              />
             </div>
-            
+          </div>
+        </CardHeader>
+
+        <CardContent className="space-y-6 relative">
+          {/* Current Item Info */}
+          <div className="space-y-4">
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge className={`${riskConfig.bg} ${riskConfig.text} border ${riskConfig.border}`}>
+                {currentItem.riskLevel.toUpperCase()} RISK
+              </Badge>
+              <span className="text-xs text-white/60">{currentItem.category}</span>
+            </div>
+
             <h3 className="text-lg font-semibold text-white">{currentItem.text}</h3>
-            
+
             {currentItem.guidance && (
-              <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
-                <div className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
+              <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/30">
+                <div className="flex items-start gap-3">
+                  <div className="p-2 rounded-lg bg-blue-500/20 flex-shrink-0">
+                    <Lightbulb className="h-4 w-4 text-blue-400" />
+                  </div>
                   <div>
                     <h4 className="font-medium text-blue-400 mb-1">Guidance</h4>
-                    <p className="text-sm text-muted-foreground">{currentItem.guidance}</p>
+                    <p className="text-sm text-white/70">{currentItem.guidance}</p>
                   </div>
                 </div>
               </div>
             )}
           </div>
 
-          <div className="space-y-4">
+          {/* Response Buttons */}
+          <div className="space-y-3">
             <h4 className="font-medium text-white">Assessment Status</h4>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <Button
-                variant={responses[currentItem.id] === "compliant" ? "default" : "outline"}
+              <button
                 onClick={() => handleResponse("compliant")}
-                className="flex items-center gap-2"
+                className={`
+                  flex items-center justify-center gap-2 p-4 rounded-xl
+                  border transition-all duration-200
+                  touch-manipulation active:scale-[0.98]
+                  ${responses[currentItem.id] === "compliant"
+                    ? 'bg-green-500/20 border-green-500/50 text-green-400'
+                    : 'bg-white/10 border-white/10 hover:border-green-500/30 text-white/70'
+                  }
+                `}
               >
-                <CheckCircle className="h-4 w-4" />
+                <CheckCircle className="h-5 w-5" />
                 Compliant
-              </Button>
-              <Button
-                variant={responses[currentItem.id] === "non-compliant" ? "destructive" : "outline"}
+              </button>
+              <button
                 onClick={() => handleResponse("non-compliant")}
-                className="flex items-center gap-2"
+                className={`
+                  flex items-center justify-center gap-2 p-4 rounded-xl
+                  border transition-all duration-200
+                  touch-manipulation active:scale-[0.98]
+                  ${responses[currentItem.id] === "non-compliant"
+                    ? 'bg-red-500/20 border-red-500/50 text-red-400'
+                    : 'bg-white/10 border-white/10 hover:border-red-500/30 text-white/70'
+                  }
+                `}
               >
-                <AlertTriangle className="h-4 w-4" />
+                <AlertTriangle className="h-5 w-5" />
                 Non-Compliant
-              </Button>
-              <Button
-                variant={responses[currentItem.id] === "not-applicable" ? "secondary" : "outline"}
+              </button>
+              <button
                 onClick={() => handleResponse("not-applicable")}
-                className="flex items-center gap-2"
+                className={`
+                  flex items-center justify-center gap-2 p-4 rounded-xl
+                  border transition-all duration-200
+                  touch-manipulation active:scale-[0.98]
+                  ${responses[currentItem.id] === "not-applicable"
+                    ? 'bg-white/10 border-white/30 text-white'
+                    : 'bg-white/10 border-white/10 hover:border-white/30 text-white/70'
+                  }
+                `}
               >
-                <FileText className="h-4 w-4" />
+                <FileText className="h-5 w-5" />
                 N/A
-              </Button>
+              </button>
             </div>
           </div>
 
+          {/* Additional Details */}
           {responses[currentItem.id] && (
             <div className="space-y-4">
-              <div>
-                <MobileInput
-                  label="Additional Details (Optional)"
-                  placeholder="Enter specific observations, measurements, or notes..."
-                  value={responses[currentItem.id]?.details || ""}
-                  onChange={(e) => handleResponse({
-                    ...responses[currentItem.id],
-                    details: e.target.value
-                  })}
-                />
-              </div>
-              
+              <MobileInput
+                label="Additional Details (Optional)"
+                placeholder="Enter specific observations, measurements, or notes..."
+                value={responses[currentItem.id]?.details || ""}
+                onChange={(e) => handleResponse({
+                  ...responses[currentItem.id],
+                  details: e.target.value
+                })}
+              />
+
               <Button
                 variant="outline"
-                size="sm"
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 border-white/20 hover:bg-white/5 hover:border-purple-500/50"
               >
                 <Camera className="h-4 w-4" />
                 Add Photo Evidence
@@ -261,42 +311,54 @@ const InteractiveAssessmentTool = ({ tool, onComplete, isCompleted }: Interactiv
             </div>
           )}
 
-          <div className="flex justify-between">
+          {/* Navigation */}
+          <div className="flex justify-between pt-4">
             <Button
               variant="outline"
               onClick={prevStep}
               disabled={currentStep === 0}
+              className="flex items-center gap-2 border-white/20 hover:bg-white/5 disabled:opacity-30"
             >
+              <ChevronLeft className="h-4 w-4" />
               Previous
             </Button>
-            
+
             {currentStep === assessmentItems.length - 1 ? (
               <Button
                 onClick={nextStep}
                 disabled={!responses[currentItem.id]}
-                className="bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+                className="bg-green-500 hover:bg-green-500/90 text-white disabled:opacity-30"
               >
                 Complete Assessment
+                <CheckCircle className="ml-2 h-4 w-4" />
               </Button>
             ) : (
               <Button
                 onClick={nextStep}
                 disabled={!responses[currentItem.id]}
+                className="bg-elec-yellow hover:bg-elec-yellow/90 text-black disabled:opacity-30"
               >
                 Next
+                <ChevronRight className="ml-2 h-4 w-4" />
               </Button>
             )}
           </div>
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      {/* Notes Card */}
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10">
         <CardHeader>
-          <CardTitle className="text-lg">Assessment Notes</CardTitle>
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/30">
+              <FileText className="h-5 w-5 text-purple-400" />
+            </div>
+            Assessment Notes
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <MobileInput
-            label="Assessment Notes"
+            label="General Notes"
             placeholder="Add general notes about the site conditions, any concerns, or recommendations..."
             value={notes}
             onChange={(e) => setNotes(e.target.value)}

@@ -39,7 +39,7 @@ const QuizAchievements = () => {
       case 'performance': return 'from-elec-yellow/20 to-amber-500/20 border-elec-yellow/30';
       case 'milestone': return 'from-blue-500/20 to-cyan-500/20 border-blue-500/30';
       case 'advanced': return 'from-purple-500/20 to-pink-500/20 border-purple-500/30';
-      default: return 'from-gray-500/20 to-slate-500/20 border-gray-500/30';
+      default: return 'from-gray-500/20 to-slate-500/20 border-white/20';
     }
   };
 

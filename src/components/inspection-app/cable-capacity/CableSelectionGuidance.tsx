@@ -196,7 +196,7 @@ export const CableSelectionGuidance = () => {
               <div className="space-y-2">
                 <h4 className="font-semibold text-foreground">Design Considerations:</h4>
                 {recommendation.reasoning.map((reason, index) => (
-                  <div key={index} className="flex items-center gap-2 text-sm text-gray-300">
+                  <div key={index} className="flex items-center gap-2 text-sm text-white/80">
                     <ArrowRight className="h-3 w-3 text-elec-yellow" />
                     {reason}
                   </div>
@@ -216,7 +216,7 @@ export const CableSelectionGuidance = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="p-4 bg-green-500/10 rounded-lg border border-green-500/30">
               <h4 className="font-semibold text-green-400 mb-2">✓ Best Practices</h4>
-              <ul className="text-sm text-gray-300 space-y-1">
+              <ul className="text-sm text-white/80 space-y-1">
                 <li>• Always apply appropriate correction factors</li>
                 <li>• Consider future load growth (10-20% margin)</li>
                 <li>• Account for voltage drop limitations</li>
@@ -227,7 +227,7 @@ export const CableSelectionGuidance = () => {
             
             <div className="p-4 bg-red-500/10 rounded-lg border border-red-500/30">
               <h4 className="font-semibold text-red-400 mb-2">✗ Common Mistakes</h4>
-              <ul className="text-sm text-gray-300 space-y-1">
+              <ul className="text-sm text-white/80 space-y-1">
                 <li>• Ignoring ambient temperature effects</li>
                 <li>• Overlooking cable grouping factors</li>
                 <li>• Using tabulated values without corrections</li>
@@ -239,7 +239,7 @@ export const CableSelectionGuidance = () => {
           
           <div className="p-4 bg-blue-500/10 rounded-lg border border-blue-500/30">
             <h4 className="font-semibold text-blue-400 mb-2">Key Regulations</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-300">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white/80">
               <div>
                 <strong>BS 7671 Section 433:</strong> Protection against overload current
               </div>

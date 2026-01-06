@@ -6,14 +6,17 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Loader2, Lightbulb, Zap, Megaphone, Brain } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import {
+  ArrowLeft, Loader2, Lightbulb, Zap, Megaphone, Brain,
+  ChevronDown, Settings2, Sparkles, Users, Shield, BookOpen
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
+import { motion, AnimatePresence } from "framer-motion";
 import ClientTypeSelector, { ClientType } from "@/components/electrician-tools/ai-tools/client-explainer/ClientTypeSelector";
 import TemplateSelector, { Template } from "@/components/electrician-tools/ai-tools/client-explainer/TemplateSelector";
-import LivePreview from "@/components/electrician-tools/ai-tools/client-explainer/LivePreview";
 import OutputPanel from "@/components/electrician-tools/ai-tools/client-explainer/OutputPanel";
+import { cn } from "@/lib/utils";
 
 const ClientExplainerPage = () => {
   const navigate = useNavigate();
@@ -34,7 +37,6 @@ const ClientExplainerPage = () => {
 
   const handleSelectTemplate = (template: Template) => {
     setTechnicalNotes(template.sample);
-    // Set appropriate settings based on template
     switch (template.urgency) {
       case "high":
         setTone("urgent");
@@ -109,14 +111,21 @@ const ClientExplainerPage = () => {
     includeCostInfo
   });
 
+  const toggleOptions = [
+    { key: 'includeAnalogy', label: 'Include Analogies', desc: 'Use everyday comparisons', icon: Lightbulb, value: includeAnalogy, onChange: setIncludeAnalogy },
+    { key: 'emphasizeSafety', label: 'Safety Emphasis', desc: 'Highlight safety concerns', icon: Shield, value: emphasizeSafety, onChange: setEmphasizeSafety },
+    { key: 'includeCostInfo', label: 'Cost Information', desc: 'Include pricing context', icon: Zap, value: includeCostInfo, onChange: setIncludeCostInfo },
+    { key: 'includeBS7671', label: 'BS 7671 References', desc: 'Include regulation refs', icon: BookOpen, value: includeBS7671, onChange: setIncludeBS7671 },
+  ];
+
   return (
     <div className="min-h-screen bg-background pb-24">
       {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-xl border-b border-border/30">
         <div className="px-4 py-3">
           <button
             onClick={() => navigate('/electrician-tools/ai-tooling')}
-            className="flex items-center gap-2 text-white active:opacity-70 transition-opacity touch-manipulation"
+            className="flex items-center gap-2 text-foreground active:opacity-70 transition-opacity touch-manipulation min-h-[44px]"
           >
             <ArrowLeft className="h-5 w-5" />
             <span className="text-sm font-medium">AI Tools</span>
@@ -124,236 +133,241 @@ const ClientExplainerPage = () => {
         </div>
       </div>
 
-      <main className="px-4 py-4 space-y-5">
-        {/* Hero Header */}
-        <div className="flex items-center gap-3">
-          <div className="p-3 rounded-xl bg-gradient-to-br from-pink-500/20 to-rose-500/10 border border-pink-500/20">
-            <Megaphone className="h-6 w-6 text-pink-400" />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold text-white">Client Explainer</h1>
-            <p className="text-sm text-white/50">Convert technical findings to client-friendly explanations</p>
+      <main className="px-4 py-5 space-y-5 max-w-4xl mx-auto">
+        {/* Hero Section */}
+        <div className="rounded-2xl border border-border/30 bg-gradient-to-br from-card via-card/95 to-card/90 backdrop-blur-xl p-5 overflow-hidden relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-pink-500/[0.03] via-transparent to-rose-500/[0.02] pointer-events-none" />
+
+          <div className="relative flex items-center gap-4">
+            <div className="p-3 rounded-xl bg-gradient-to-br from-pink-500/20 to-rose-500/10 border border-pink-500/20">
+              <Megaphone className="h-7 w-7 text-pink-400" />
+            </div>
+            <div className="flex-1">
+              <h1 className="text-xl font-bold text-foreground">Client Explainer</h1>
+              <p className="text-sm text-muted-foreground mt-0.5">Convert technical findings to client-friendly explanations</p>
+            </div>
           </div>
         </div>
 
-          {/* Mobile-first responsive layout */}
-          <div className="space-y-6 lg:grid lg:grid-cols-1 xl:grid-cols-3 lg:gap-6 lg:space-y-0">
-            {/* Input Panel - Full width on mobile, 2 cols on xl */}
-            <div className="xl:col-span-2 space-y-4 mobile-section-spacing">
-              {/* Smart Input Section */}
-              <Card className="mobile-card border-border/50 bg-card/50 p-0">
-                <CardHeader className="mobile-padding">
-                  <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:justify-between gap-3">
-                    <div className="flex items-center space-x-2">
-                      <Brain className="h-5 w-5 text-elec-yellow" />
-                      <CardTitle className="mobile-heading">Client Explanation Tool</CardTitle>
-                    </div>
-                    <div className="flex gap-2 w-full sm:w-auto">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setShowTemplates(!showTemplates)}
-                        className="mobile-button-secondary flex-1 sm:flex-none touch-target"
-                      >
-                        <Lightbulb className="h-4 w-4 mr-1" />
-                        Templates
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setShowAdvanced(!showAdvanced)}
-                        className="mobile-button-secondary flex-1 sm:flex-none touch-target"
-                      >
-                        <Zap className="h-4 w-4 mr-1" />
-                        Settings
-                      </Button>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="mobile-padding space-y-6">
-                  {/* Client Type Selector */}
-                  <div className="space-y-3">
-                    <Label className="mobile-subheading text-foreground">Who are you explaining this to?</Label>
-                    <ClientTypeSelector
-                      selected={clientType}
-                      onSelect={setClientType}
-                    />
-                  </div>
+        {/* Client Type Selector */}
+        <div className="rounded-xl border border-border/30 bg-card/50 backdrop-blur-xl p-4 space-y-4">
+          <div className="flex items-center gap-2">
+            <Users className="h-5 w-5 text-elec-yellow" />
+            <h2 className="font-semibold text-foreground">Who are you explaining to?</h2>
+          </div>
+          <ClientTypeSelector
+            selected={clientType}
+            onSelect={setClientType}
+          />
+        </div>
 
-                  {/* Templates Collapsible */}
-                  <Collapsible open={showTemplates} onOpenChange={setShowTemplates}>
-                    <CollapsibleContent className="space-y-4 mt-4">
-                      <TemplateSelector onSelectTemplate={handleSelectTemplate} />
-                    </CollapsibleContent>
-                  </Collapsible>
+        {/* Templates Section (Collapsible) */}
+        <div className="rounded-xl border border-border/30 bg-card/50 backdrop-blur-xl overflow-hidden">
+          <button
+            onClick={() => setShowTemplates(!showTemplates)}
+            className="w-full flex items-center justify-between p-4 min-h-[56px] touch-manipulation"
+          >
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-elec-yellow/10">
+                <Lightbulb className="h-5 w-5 text-elec-yellow" />
+              </div>
+              <div className="text-left">
+                <h3 className="font-semibold text-foreground">Templates</h3>
+                <p className="text-xs text-muted-foreground">Quick-start with common scenarios</p>
+              </div>
+            </div>
+            <motion.div animate={{ rotate: showTemplates ? 180 : 0 }}>
+              <ChevronDown className="h-5 w-5 text-muted-foreground" />
+            </motion.div>
+          </button>
 
-                  {/* Technical Notes Input */}
-                  <div className="space-y-3">
-                    <Label htmlFor="technical-notes" className="mobile-subheading text-foreground">
-                      Technical Findings or Electrical Work
-                    </Label>
-                    <Textarea
-                      id="technical-notes"
-                      placeholder="Describe your electrical findings, test results, work completed, or safety concerns. Include specific details like circuit numbers, test readings, or regulation references..."
-                      value={technicalNotes}
-                      onChange={(e) => setTechnicalNotes(e.target.value)}
-                      className="mobile-input-spacing min-h-[120px] resize-none text-foreground"
-                      rows={6}
-                    />
-                    <p className="mobile-small-text text-foreground/70">
-                      Be specific about findings. Include BS 7671 regulation references, test readings, and safety classifications (C1/C2/C3) where applicable.
-                    </p>
-                  </div>
+          <AnimatePresence>
+            {showTemplates && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="px-4 pb-4 border-t border-border/30 pt-4">
+                  <TemplateSelector onSelectTemplate={handleSelectTemplate} />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
-                  {/* Basic Settings */}
-                  <div className="space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div className="space-y-2">
-                      <Label className="mobile-small-text font-medium text-foreground">Communication Style</Label>
-                      <Select value={tone} onValueChange={setTone}>
-                        <SelectTrigger className="touch-target mobile-focus text-foreground">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="professional">Professional</SelectItem>
-                          <SelectItem value="friendly">Friendly & Approachable</SelectItem>
-                          <SelectItem value="reassuring">Reassuring & Calm</SelectItem>
-                          <SelectItem value="urgent">Direct & Urgent</SelectItem>
-                          <SelectItem value="technical">Technical Detail</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
+        {/* Technical Notes Input */}
+        <div className="rounded-xl border border-border/30 bg-card/50 backdrop-blur-xl p-4 space-y-4">
+          <div className="flex items-center gap-2">
+            <Brain className="h-5 w-5 text-elec-yellow" />
+            <h2 className="font-semibold text-foreground">Technical Findings</h2>
+          </div>
 
-                    <div className="space-y-2">
-                      <Label className="mobile-small-text font-medium text-foreground">Complexity Level</Label>
-                      <Select value={readingLevel} onValueChange={setReadingLevel}>
-                        <SelectTrigger className="touch-target mobile-focus text-foreground">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="simple">Simple Language</SelectItem>
-                          <SelectItem value="standard">Standard Explanation</SelectItem>
-                          <SelectItem value="technical">Technical Detail</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
+          <Textarea
+            placeholder="Describe your electrical findings, test results, work completed, or safety concerns. Include specific details like circuit numbers, test readings, or regulation references..."
+            value={technicalNotes}
+            onChange={(e) => setTechnicalNotes(e.target.value)}
+            className="min-h-[140px] resize-none text-base bg-background/50 border-border/30 focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
+            style={{ fontSize: '16px' }}
+          />
 
-                    <div className="space-y-2 sm:col-span-2 lg:col-span-1">
-                      <Label className="mobile-small-text font-medium text-foreground">Priority Level</Label>
-                      <Select value={urgencyLevel} onValueChange={setUrgencyLevel}>
-                        <SelectTrigger className="touch-target mobile-focus text-foreground">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="low">Routine Work</SelectItem>
-                          <SelectItem value="medium">Important Issue</SelectItem>
-                          <SelectItem value="high">Safety Concern</SelectItem>
-                          <SelectItem value="immediate">Immediate Action Required</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
+          <p className="text-xs text-muted-foreground">
+            Be specific about findings. Include BS 7671 regulation references, test readings, and safety classifications (C1/C2/C3) where applicable.
+          </p>
+        </div>
 
-                  {/* Advanced Settings */}
-                  <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
-                    <CollapsibleContent className="space-y-4 mt-4">
-                      <div className="space-y-3">
-                        <Label className="mobile-small-text font-medium text-foreground">Additional Options</Label>
-                        <div className="grid grid-cols-1 gap-3">
-                          <div className="mobile-card-compact mobile-interactive flex items-center justify-between p-4 bg-muted/30 rounded-lg border border-border/50">
-                            <div className="space-y-1">
-                              <Label className="mobile-small-text font-medium text-foreground">Include Analogies</Label>
-                              <p className="text-xs text-foreground/70">Use everyday comparisons to explain technical concepts</p>
-                            </div>
-                            <Switch
-                              checked={includeAnalogy}
-                              onCheckedChange={setIncludeAnalogy}
-                              className="ml-3"
-                            />
-                          </div>
+        {/* Tone & Settings Row */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="rounded-xl border border-border/30 bg-card/50 backdrop-blur-xl p-4 space-y-2">
+            <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Style</Label>
+            <Select value={tone} onValueChange={setTone}>
+              <SelectTrigger className="h-12 bg-background/50 border-border/30 text-foreground">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="professional">Professional</SelectItem>
+                <SelectItem value="friendly">Friendly</SelectItem>
+                <SelectItem value="reassuring">Reassuring</SelectItem>
+                <SelectItem value="urgent">Urgent</SelectItem>
+                <SelectItem value="technical">Technical</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
-                          <div className="mobile-card-compact mobile-interactive flex items-center justify-between p-4 bg-muted/30 rounded-lg border border-border/50">
-                            <div className="space-y-1">
-                              <Label className="mobile-small-text font-medium text-foreground">Cost Information</Label>
-                              <p className="text-xs text-foreground/70">Include pricing context and potential costs</p>
-                            </div>
-                            <Switch
-                              checked={includeCostInfo}
-                              onCheckedChange={setIncludeCostInfo}
-                              className="ml-3"
-                            />
-                          </div>
+          <div className="rounded-xl border border-border/30 bg-card/50 backdrop-blur-xl p-4 space-y-2">
+            <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Complexity</Label>
+            <Select value={readingLevel} onValueChange={setReadingLevel}>
+              <SelectTrigger className="h-12 bg-background/50 border-border/30 text-foreground">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="simple">Simple</SelectItem>
+                <SelectItem value="standard">Standard</SelectItem>
+                <SelectItem value="technical">Technical</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
-                          <div className="mobile-card-compact mobile-interactive flex items-center justify-between p-4 bg-muted/30 rounded-lg border border-border/50">
-                            <div className="space-y-1">
-                              <Label className="mobile-small-text font-medium text-foreground">Safety Emphasis</Label>
-                              <p className="text-xs text-foreground/70">Highlight safety concerns and importance</p>
-                            </div>
-                            <Switch
-                              checked={emphasizeSafety}
-                              onCheckedChange={setEmphasizeSafety}
-                              className="ml-3"
-                            />
-                          </div>
+          <div className="rounded-xl border border-border/30 bg-card/50 backdrop-blur-xl p-4 space-y-2">
+            <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Priority</Label>
+            <Select value={urgencyLevel} onValueChange={setUrgencyLevel}>
+              <SelectTrigger className={cn(
+                "h-12 bg-background/50 border-border/30 text-foreground",
+                urgencyLevel === 'high' && "border-red-500/30",
+                urgencyLevel === 'immediate' && "border-red-500/50"
+              )}>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="low">Routine</SelectItem>
+                <SelectItem value="medium">Important</SelectItem>
+                <SelectItem value="high">Safety Concern</SelectItem>
+                <SelectItem value="immediate">Immediate</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
 
-                          <div className="mobile-card-compact mobile-interactive flex items-center justify-between p-4 bg-muted/30 rounded-lg border border-border/50">
-                            <div className="space-y-1">
-                              <Label className="mobile-small-text font-medium text-foreground">BS 7671 References</Label>
-                              <p className="text-xs text-foreground/70">Include UK electrical regulation references</p>
-                            </div>
-                            <Switch
-                              checked={includeBS7671}
-                              onCheckedChange={setIncludeBS7671}
-                              className="ml-3"
-                            />
-                          </div>
+        {/* Advanced Options (Collapsible) */}
+        <div className="rounded-xl border border-border/30 bg-card/50 backdrop-blur-xl overflow-hidden">
+          <button
+            onClick={() => setShowAdvanced(!showAdvanced)}
+            className="w-full flex items-center justify-between p-4 min-h-[56px] touch-manipulation"
+          >
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-elec-yellow/10">
+                <Settings2 className="h-5 w-5 text-elec-yellow" />
+              </div>
+              <div className="text-left">
+                <h3 className="font-semibold text-foreground">Advanced Options</h3>
+                <p className="text-xs text-muted-foreground">Customize output style</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              {(includeAnalogy || emphasizeSafety || includeCostInfo || includeBS7671) && (
+                <Badge variant="secondary" className="text-xs">
+                  {[includeAnalogy, emphasizeSafety, includeCostInfo, includeBS7671].filter(Boolean).length} active
+                </Badge>
+              )}
+              <motion.div animate={{ rotate: showAdvanced ? 180 : 0 }}>
+                <ChevronDown className="h-5 w-5 text-muted-foreground" />
+              </motion.div>
+            </div>
+          </button>
+
+          <AnimatePresence>
+            {showAdvanced && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="px-4 pb-4 border-t border-border/30 pt-4 space-y-2">
+                  {toggleOptions.map(({ key, label, desc, icon: Icon, value, onChange }) => (
+                    <button
+                      key={key}
+                      onClick={() => onChange(!value)}
+                      className={cn(
+                        "w-full flex items-center justify-between p-4 rounded-xl",
+                        "min-h-[60px] touch-manipulation transition-all",
+                        value
+                          ? "bg-elec-yellow/10 border border-elec-yellow/30"
+                          : "bg-background/50 border border-border/30 hover:bg-accent/30"
+                      )}
+                    >
+                      <div className="flex items-center gap-3">
+                        <Icon className={cn("h-5 w-5", value ? "text-elec-yellow" : "text-muted-foreground")} />
+                        <div className="text-left">
+                          <p className="font-medium text-foreground text-sm">{label}</p>
+                          <p className="text-xs text-muted-foreground">{desc}</p>
                         </div>
                       </div>
-                    </CollapsibleContent>
-                  </Collapsible>
+                      <Switch
+                        checked={value}
+                        onCheckedChange={onChange}
+                        className="pointer-events-none"
+                      />
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
-                  {/* Generate Button */}
-                  <Button 
-                    onClick={handleGenerate}
-                    disabled={isGenerating || !technicalNotes.trim()}
-                    className="mobile-button-primary w-full touch-target bg-gradient-to-r from-elec-yellow to-elec-yellow/90 hover:from-elec-yellow/90 hover:to-elec-yellow/80 text-black font-semibold h-12 sm:h-14 text-base sm:text-lg shadow-lg shadow-elec-yellow/25 border-0 rounded-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
-                  >
-                    {isGenerating ? (
-                      <>
-                        <Loader2 className="mr-3 h-6 w-6 animate-spin text-black" />
-                        <span className="text-base sm:text-lg">Generating...</span>
-                      </>
-                    ) : (
-                      <>
-                        <Zap className="mr-3 h-6 w-6 text-black" />
-                        <span className="text-base sm:text-lg">Generate</span>
-                      </>
-                    )}
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
+        {/* Generate Button */}
+        <Button
+          onClick={handleGenerate}
+          disabled={isGenerating || !technicalNotes.trim()}
+          className={cn(
+            "w-full h-14 text-base font-semibold rounded-xl transition-all duration-300",
+            "bg-gradient-to-r from-elec-yellow to-elec-yellow/90",
+            "hover:from-elec-yellow/90 hover:to-elec-yellow/80",
+            "text-black shadow-lg shadow-elec-yellow/25",
+            "hover:scale-[1.02] active:scale-[0.98]",
+            "disabled:opacity-50 disabled:hover:scale-100"
+          )}
+        >
+          {isGenerating ? (
+            <>
+              <Loader2 className="mr-3 h-6 w-6 animate-spin" />
+              Generating...
+            </>
+          ) : (
+            <>
+              <Sparkles className="mr-3 h-6 w-6" />
+              Generate Explanation
+            </>
+          )}
+        </Button>
 
-            {/* Output Section - Full width on mobile, right column on xl */}
-            <div className="space-y-6 mobile-section-spacing">
-              {/* Live Preview - Hidden on mobile when no content */}
-              <div className="hidden sm:block">
-                <LivePreview
-                  content={technicalNotes}
-                  tone={tone}
-                  readingLevel={readingLevel}
-                  clientType={clientType}
-                  includeAnalogy={includeAnalogy}
-                  emphasizeSafety={emphasizeSafety}
-                />
-              </div>
-
-              {/* Output Panel */}
-              <OutputPanel
-                content={generatedExplanation}
-                settings={getCurrentSettings()}
-              />
-            </div>
-          </div>
+        {/* Output Panel */}
+        <OutputPanel
+          content={generatedExplanation}
+          settings={getCurrentSettings()}
+        />
       </main>
     </div>
   );

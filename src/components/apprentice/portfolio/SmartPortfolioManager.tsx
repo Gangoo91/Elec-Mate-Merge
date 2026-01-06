@@ -25,7 +25,7 @@ const SmartPortfolioManager = () => {
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <div className="animate-spin h-4 w-4 border-2 border-elec-yellow border-t-transparent rounded-full" />
@@ -61,7 +61,7 @@ const SmartPortfolioManager = () => {
       <div className="space-y-6">
         <QualificationSelector />
         
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardHeader>
             <CardTitle>Smart Portfolio System</CardTitle>
             <CardDescription>
@@ -73,21 +73,21 @@ const SmartPortfolioManager = () => {
               <div className="text-center space-y-2">
                 <Target className="h-8 w-8 mx-auto text-elec-yellow" />
                 <h3 className="font-semibold">Tailored Requirements</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white">
                   Portfolio categories specific to your qualification
                 </p>
               </div>
               <div className="text-center space-y-2">
                 <FileText className="h-8 w-8 mx-auto text-elec-yellow" />
                 <h3 className="font-semibold">Pre-built Templates</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white">
                   Ready-to-use templates with assessment criteria
                 </p>
               </div>
               <div className="text-center space-y-2">
                 <TrendingUp className="h-8 w-8 mx-auto text-elec-yellow" />
                 <h3 className="font-semibold">Compliance Tracking</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white">
                   Real-time progress tracking towards qualification
                 </p>
               </div>
@@ -99,7 +99,7 @@ const SmartPortfolioManager = () => {
   }
 
   return (
-    <div className="space-y-6 bg-elec-gray min-h-screen p-4 sm:p-6">
+    <div className="space-y-6 bg-white/5 min-h-screen p-4 sm:p-6">
       {/* Current Qualification Display */}
       <QualificationSelector />
 
@@ -127,36 +127,36 @@ const SmartPortfolioManager = () => {
       {/* Quick Stats */}
       {analytics && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="border-elec-yellow/20 bg-elec-dark">
+          <Card className="border-elec-yellow/20 bg-white/10">
             <CardContent className="p-4">
               <div className="flex items-center gap-2">
                 <FileText className="h-5 w-5 text-elec-yellow" />
                 <div>
-                  <p className="text-sm text-muted-foreground">Total Entries</p>
+                  <p className="text-sm text-white">Total Entries</p>
                   <p className="text-2xl font-bold text-elec-yellow">{analytics.totalEntries}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="border-elec-yellow/20 bg-elec-dark">
+          <Card className="border-elec-yellow/20 bg-white/10">
             <CardContent className="p-4">
               <div className="flex items-center gap-2">
                 <Target className="h-5 w-5 text-green-400" />
                 <div>
-                  <p className="text-sm text-muted-foreground">Completed</p>
+                  <p className="text-sm text-white">Completed</p>
                   <p className="text-2xl font-bold text-green-400">{analytics.completedEntries}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="border-elec-yellow/20 bg-elec-dark">
+          <Card className="border-elec-yellow/20 bg-white/10">
             <CardContent className="p-4">
               <div className="flex items-center gap-2">
                 <TrendingUp className="h-5 w-5 text-purple-400" />
                 <div>
-                  <p className="text-sm text-muted-foreground">Time Logged</p>
+                  <p className="text-sm text-white">Time Logged</p>
                   <p className="text-2xl font-bold text-purple-400">{Math.round(analytics.totalTimeSpent / 60)}h</p>
                 </div>
               </div>
@@ -184,7 +184,7 @@ const SmartPortfolioManager = () => {
                     const progressPercentage = Math.round((completedEntries / category.requiredEntries) * 100);
 
                     return (
-                      <Card key={category.id} className="border-elec-yellow/20 bg-elec-dark">
+                      <Card key={category.id} className="border-elec-yellow/20 bg-white/10">
                         <CardContent className="p-4">
                           <div className="flex items-center justify-between mb-2">
                             <h3 className="font-semibold">{category.name}</h3>
@@ -193,14 +193,14 @@ const SmartPortfolioManager = () => {
                               {completedEntries}/{category.requiredEntries}
                             </Badge>
                           </div>
-                          <p className="text-sm text-muted-foreground mb-3">{category.description}</p>
-                          <div className="w-full bg-elec-gray rounded-full h-2">
+                          <p className="text-sm text-white mb-3">{category.description}</p>
+                          <div className="w-full bg-white/5 rounded-full h-2">
                             <div 
                               className="bg-elec-yellow h-2 rounded-full transition-all duration-500"
                               style={{ width: `${Math.min(progressPercentage, 100)}%` }}
                             />
                           </div>
-                          <p className="text-xs text-muted-foreground mt-1">{progressPercentage}% complete</p>
+                          <p className="text-xs text-white mt-1">{progressPercentage}% complete</p>
                         </CardContent>
                       </Card>
                     );
@@ -239,7 +239,7 @@ const SmartPortfolioManager = () => {
       {/* Add Entry Form Modal */}
       {showAddForm && (
         <Dialog open={showAddForm} onOpenChange={setShowAddForm}>
-          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-elec-gray border-elec-yellow/20">
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-white/5 border-elec-yellow/20">
             <DialogHeader>
               <DialogTitle>Add Portfolio Entry</DialogTitle>
             </DialogHeader>
@@ -258,13 +258,13 @@ const SmartPortfolioManager = () => {
       {/* Change Course Warning Dialog */}
       {showChangeCourseDialog && (
         <Dialog open={showChangeCourseDialog} onOpenChange={setShowChangeCourseDialog}>
-          <DialogContent className="max-w-lg bg-elec-gray border-elec-yellow/20">
+          <DialogContent className="max-w-lg bg-white/5 border-elec-yellow/20">
             <DialogHeader>
               <div className="flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5 text-yellow-500" />
                 <DialogTitle>Change Course Warning</DialogTitle>
               </div>
-              <DialogDescription className="text-muted-foreground">
+              <DialogDescription className="text-white">
                 Changing your course will have the following effects:
               </DialogDescription>
             </DialogHeader>
@@ -272,7 +272,7 @@ const SmartPortfolioManager = () => {
             <div className="space-y-4">
               <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
                 <h4 className="font-semibold text-yellow-500 mb-2">Important Notice:</h4>
-                <ul className="space-y-2 text-sm text-muted-foreground">
+                <ul className="space-y-2 text-sm text-white">
                   <li>• Your compliance tracking will be reset for the new qualification</li>
                   <li>• Portfolio entries will remain but may need reassignment to new categories</li>
                   <li>• Progress analytics will be recalculated</li>
@@ -306,7 +306,7 @@ const SmartPortfolioManager = () => {
       {/* Change Course Selector Dialog */}
       {showChangeCourseSelector && (
         <Dialog open={showChangeCourseSelector} onOpenChange={setShowChangeCourseSelector}>
-          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-elec-gray border-elec-yellow/20">
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-white/5 border-elec-yellow/20">
             <DialogHeader>
               <DialogTitle>Change Your Course</DialogTitle>
             </DialogHeader>

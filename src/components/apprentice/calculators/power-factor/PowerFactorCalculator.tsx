@@ -124,7 +124,7 @@ const PowerFactorCalculator = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Zap className="h-5 w-5 text-elec-yellow" />
@@ -195,7 +195,7 @@ const PowerFactorCalculator = () => {
             
             {/* Result Section */}
             <div className="space-y-4">
-              <div className="rounded-md bg-elec-dark p-6 min-h-[200px] flex items-center justify-center">
+              <div className="rounded-md bg-white/10 p-6 min-h-[200px] flex items-center justify-center">
                 <PowerFactorResult powerFactor={powerFactor} />
               </div>
               <PowerFactorInfo />

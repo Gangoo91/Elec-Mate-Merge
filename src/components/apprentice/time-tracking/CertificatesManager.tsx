@@ -14,7 +14,7 @@ const CertificatesManager = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h3 className="text-lg font-semibold">Certificates & Qualifications</h3>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Keep track of your professional certificates, qualifications and achievements
           </p>
         </div>

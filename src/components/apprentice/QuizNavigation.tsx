@@ -32,7 +32,7 @@ const QuizNavigation = ({
         <ChevronLeft className="h-4 w-4 mr-1" /> Previous
       </Button>
 
-      <span className="text-sm text-muted-foreground order-first sm:order-none">
+      <span className="text-sm text-white order-first sm:order-none">
         Question {activeQuestion + 1} of {questionsCount}
         {userAnswers[activeQuestion] !== null && " • Answered"}
       </span>

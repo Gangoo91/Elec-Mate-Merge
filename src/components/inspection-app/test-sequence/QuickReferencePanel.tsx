@@ -23,7 +23,7 @@ const QuickReferencePanel = ({ quickRefValues, onClose }: QuickReferencePanelPro
             variant="ghost" 
             size="sm"
             onClick={onClose}
-            className="text-gray-400 hover:text-foreground"
+            className="text-white/70 hover:text-foreground"
           >
             ✕
           </Button>
@@ -37,10 +37,10 @@ const QuickReferencePanel = ({ quickRefValues, onClose }: QuickReferencePanelPro
           <CardContent className="space-y-3">
             {quickRefValues.map((item, index) => (
               <div key={index} className="flex justify-between items-center text-sm">
-                <span className="text-gray-300">{item.label}</span>
+                <span className="text-white/80">{item.label}</span>
                 <div className="text-right">
                   <div className="font-bold text-foreground">{item.value}</div>
-                  <div className="text-xs text-gray-400">{item.regulation}</div>
+                  <div className="text-xs text-white/70">{item.regulation}</div>
                 </div>
               </div>
             ))}
@@ -55,15 +55,15 @@ const QuickReferencePanel = ({ quickRefValues, onClose }: QuickReferencePanelPro
           <CardContent className="space-y-2">
             <div className="flex items-center gap-2">
               <Badge className="bg-red-500/20 text-red-400 border-red-500/30">ISOLATION</Badge>
-              <span className="text-sm text-gray-300">Supply isolated</span>
+              <span className="text-sm text-white/80">Supply isolated</span>
             </div>
             <div className="flex items-center gap-2">
               <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">DEAD</Badge>
-              <span className="text-sm text-gray-300">No voltage present</span>
+              <span className="text-sm text-white/80">No voltage present</span>
             </div>
             <div className="flex items-center gap-2">
               <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/30">LIVE</Badge>
-              <span className="text-sm text-gray-300">Supply energised</span>
+              <span className="text-sm text-white/80">Supply energised</span>
             </div>
           </CardContent>
         </Card>
@@ -76,15 +76,15 @@ const QuickReferencePanel = ({ quickRefValues, onClose }: QuickReferencePanelPro
           <CardContent className="space-y-2">
             <div className="flex items-center gap-2">
               <Badge className="bg-red-500 text-foreground">CRITICAL</Badge>
-              <span className="text-sm text-gray-300">Must complete first</span>
+              <span className="text-sm text-white/80">Must complete first</span>
             </div>
             <div className="flex items-center gap-2">
               <Badge className="bg-orange-500 text-foreground">HIGH</Badge>
-              <span className="text-sm text-gray-300">Essential tests</span>
+              <span className="text-sm text-white/80">Essential tests</span>
             </div>
             <div className="flex items-center gap-2">
               <Badge className="bg-yellow-500 text-black">MEDIUM</Badge>
-              <span className="text-sm text-gray-300">Standard tests</span>
+              <span className="text-sm text-white/80">Standard tests</span>
             </div>
           </CardContent>
         </Card>
@@ -100,19 +100,19 @@ const QuickReferencePanel = ({ quickRefValues, onClose }: QuickReferencePanelPro
           <CardContent className="space-y-2 text-sm">
             <div className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Complete safe isolation FIRST</span>
+              <span className="text-white/80">Complete safe isolation FIRST</span>
             </div>
             <div className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Test EARTH TO LINE first for Zs</span>
+              <span className="text-white/80">Test EARTH TO LINE first for Zs</span>
             </div>
             <div className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Isolate RCDs during loop impedance testing</span>
+              <span className="text-white/80">Isolate RCDs during loop impedance testing</span>
             </div>
             <div className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Follow test sequence order strictly</span>
+              <span className="text-white/80">Follow test sequence order strictly</span>
             </div>
           </CardContent>
         </Card>

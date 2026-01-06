@@ -196,7 +196,7 @@ const StressManagementTools = () => {
               <div className="text-3xl font-bold text-blue-300 mb-1">
                 {formatTime(getRemainingTime())}
               </div>
-              <div className="text-sm text-muted-foreground mb-3">
+              <div className="text-sm text-white/80 mb-3">
                 Time remaining • Cycle {cycleCount + 1}
               </div>
               <Progress value={getProgressPercentage()} className="h-2 mb-4" />
@@ -216,7 +216,7 @@ const StressManagementTools = () => {
                   >
                     <div className="text-center">
                       <div className="text-2xl font-bold text-foreground">{phaseTimeLeft}</div>
-                      <div className="text-xs text-muted-foreground">seconds</div>
+                      <div className="text-xs text-white/80">seconds</div>
                     </div>
                   </div>
                 </div>
@@ -249,7 +249,7 @@ const StressManagementTools = () => {
               </Button>
             </div>
 
-            <div className="text-xs text-muted-foreground">
+            <div className="text-xs text-white/80">
               Find a quiet space and follow the breathing guide
             </div>
           </div>

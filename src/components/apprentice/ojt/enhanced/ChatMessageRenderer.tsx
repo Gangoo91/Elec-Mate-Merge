@@ -82,7 +82,7 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
       if (trimmed.startsWith('> ')) {
         const quoteText = trimmed.replace('> ', '');
         return (
-          <blockquote key={index} className="border-l-4 border-elec-yellow/50 pl-4 py-2 my-2 bg-elec-yellow/5 rounded-r italic text-gray-300">
+          <blockquote key={index} className="border-l-4 border-elec-yellow/50 pl-4 py-2 my-2 bg-elec-yellow/5 rounded-r italic text-white/80">
             {quoteText}
           </blockquote>
         );
@@ -115,7 +115,7 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
       // Key requirements header
       if (trimmed.match(/^\*\*Key requirements:\*\*$/i)) {
         return (
-          <p key={index} className="text-sm font-semibold text-gray-400 mt-3 mb-2 uppercase tracking-wide">
+          <p key={index} className="text-sm font-semibold text-white mt-3 mb-2 uppercase tracking-wide">
             Key Requirements
           </p>
         );
@@ -135,7 +135,7 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
             <span className="text-elec-yellow font-bold text-sm bg-elec-yellow/10 w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5">
               {stepNum}
             </span>
-            <span className="text-gray-200 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: processed }} />
+            <span className="text-white/90 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: processed }} />
           </div>
         );
       }
@@ -152,7 +152,7 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
         return (
           <div key={index} className="mb-1.5 flex items-start gap-2 ml-1">
             <span className="text-elec-yellow text-xs mt-1.5">●</span>
-            <span className="text-gray-200 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: processed }} />
+            <span className="text-white/90 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: processed }} />
           </div>
         );
       }
@@ -177,7 +177,7 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
           .replace(/BS\s*7671/gi, '<span class="px-1.5 py-0.5 bg-blue-500/25 text-blue-300 rounded font-semibold">$&</span>');
 
         return (
-          <p key={index} className="mb-2 text-sm text-gray-200 leading-relaxed" dangerouslySetInnerHTML={{ __html: processed }} />
+          <p key={index} className="mb-2 text-sm text-white/90 leading-relaxed" dangerouslySetInnerHTML={{ __html: processed }} />
         );
       }
 
@@ -186,7 +186,7 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
         return (
           <div key={index} className="mb-1.5 flex items-start gap-2 ml-1">
             <span className="text-green-400 text-sm shrink-0">✓</span>
-            <span className="text-gray-200 text-sm">{trimmed.replace(/^[✅✓]\s*/, '')}</span>
+            <span className="text-white/90 text-sm">{trimmed.replace(/^[✅✓]\s*/, '')}</span>
           </div>
         );
       }
@@ -195,7 +195,7 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
         return (
           <div key={index} className="mb-1.5 flex items-start gap-2 ml-1">
             <span className="text-red-400 text-sm shrink-0">✗</span>
-            <span className="text-gray-200 text-sm">{trimmed.replace(/^[❌✗]\s*/, '')}</span>
+            <span className="text-white/90 text-sm">{trimmed.replace(/^[❌✗]\s*/, '')}</span>
           </div>
         );
       }
@@ -208,7 +208,7 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
         .replace(regulationNumbers, '<span class="px-1 py-0.5 bg-purple-500/15 text-purple-300 rounded text-xs font-medium">$&</span>');
 
       return (
-        <p key={index} className="mb-2 text-sm text-gray-200 leading-relaxed" dangerouslySetInnerHTML={{ __html: processed }} />
+        <p key={index} className="mb-2 text-sm text-white/90 leading-relaxed" dangerouslySetInnerHTML={{ __html: processed }} />
       );
     }).filter(Boolean);
   };
@@ -218,7 +218,7 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
       <div className={`max-w-[90%] rounded-xl ${
         isUser
           ? 'bg-elec-yellow text-elec-gray px-4 py-3 shadow-lg'
-          : 'bg-gradient-to-br from-gray-800/90 to-gray-900/90 border border-gray-700/50 px-4 py-4 shadow-xl'
+          : 'bg-gradient-to-br from-white/10 to-white/5 border border-white/15 px-4 py-4 shadow-xl'
       }`}>
         <div className={`${isUser ? 'text-elec-gray' : 'text-white'}`}>
           {isUser ? (

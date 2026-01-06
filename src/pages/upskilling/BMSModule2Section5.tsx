@@ -1,739 +1,475 @@
-import { useState, useEffect } from 'react';
-import { ArrowLeft, ArrowRight, Network, Target, CheckCircle, Zap, Cpu, HardDrive, Router, AlertTriangle, Activity } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
-import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { bmsModule2Section5QuizData } from '@/data/upskilling/bmsModule2Section5QuizData';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
+import { bmsModule2Section5QuizData } from "@/data/upskilling/bmsModule2Section5QuizData";
+import useSEO from "@/hooks/useSEO";
+
+const quickCheckQuestions = [
+  {
+    id: "io-modules-check1",
+    question: "Why would an I/O module be added to a BMS?",
+    options: [
+      "To replace a faulty main controller",
+      "To provide additional connection points when controller capacity is exceeded",
+      "To convert all signals from analog to digital",
+      "To reduce the system's power consumption"
+    ],
+    correctIndex: 1,
+    explanation: "I/O modules are added to provide additional connection points for sensors and actuators when the main controller's capacity is exceeded, allowing system expansion without replacing the controller."
+  },
+  {
+    id: "io-modules-check2",
+    question: "Give one example of a device connected via an analog output module.",
+    options: [
+      "A door contact switch",
+      "A fire alarm sounder",
+      "A modulating valve actuator",
+      "A pump status indicator"
+    ],
+    correctIndex: 2,
+    explanation: "Analog output modules connect to devices requiring variable control signals, such as modulating valve actuators that need precise positioning control."
+  },
+  {
+    id: "io-modules-check3",
+    question: "What must be configured so the BMS recognises an expansion module?",
+    options: [
+      "The module's power consumption rating",
+      "The module's communication address and point mapping",
+      "The module's physical dimensions",
+      "The module's colour coding scheme"
+    ],
+    correctIndex: 1,
+    explanation: "Each expansion module must have a unique communication address configured and its input/output points properly mapped in the BMS software so the controller can recognise and communicate with it."
+  },
+  {
+    id: "io-modules-check4",
+    question: "Why is labelling important when installing I/O expansion modules?",
+    options: [
+      "To meet fire safety regulations",
+      "For easy identification, maintenance, and troubleshooting",
+      "To improve the system's energy efficiency",
+      "To reduce electromagnetic interference"
+    ],
+    correctIndex: 1,
+    explanation: "Clear labelling is essential for easy identification, maintenance, and troubleshooting, especially in I/O panels that contain many modules and terminations. It helps technicians quickly locate and work on specific points."
+  }
+];
+
+const faqs = [
+  {
+    question: "When should I use I/O expansion modules instead of upgrading the controller?",
+    answer: "Use expansion modules when you need additional I/O capacity, when equipment is far from the main controller (distributed architecture), or for future-proofing. They're more cost-effective than controller upgrades for moderate capacity increases."
+  },
+  {
+    question: "What's the difference between local and central module installation?",
+    answer: "Local installation places modules near the equipment they serve, reducing cable runs and improving signal quality. Central installation keeps modules in main panels for easier maintenance access and better environmental protection."
+  },
+  {
+    question: "How do I set a unique address on an expansion module?",
+    answer: "Most modules use DIP switches or rotary switches for physical addressing. Each module on the same network must have a unique address. Check the manufacturer's documentation for the specific addressing range and method."
+  },
+  {
+    question: "What communication protocols do expansion modules use?",
+    answer: "Common protocols include BACnet (BACnet/IP or MS/TP), Modbus (RTU or TCP), LonWorks, and manufacturer-specific proprietary protocols. The protocol must match your main controller's capabilities."
+  }
+];
 
 const BMSModule2Section5 = () => {
-  const [inlineChecks, setInlineChecks] = useState<Record<string, number | null>>({
-    check1: null,
-    check2: null,
-    check3: null,
-    check4: null
+  useSEO({
+    title: "I/O Modules and Expansion Devices | BMS Module 2.5",
+    description: "Learn about I/O modules and expansion devices in Building Management Systems. Understand system expansion, digital/analog modules, and installation requirements."
   });
 
-  // SEO
-  useEffect(() => {
-    const title = 'I/O Modules and Expansion Devices | BMS Module 2 Section 5';
-    document.title = title;
-    const desc = 'Learn about I/O modules and expansion devices in Building Management Systems. Understand system expansion, digital/analog modules, and installation requirements.';
-    let meta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.name = 'description';
-      document.head.appendChild(meta);
-    }
-    if (meta) meta.content = desc;
-  }, []);
-
-  const handleInlineAnswer = (checkId: string, answerIndex: number) => {
-    setInlineChecks(prev => ({ ...prev, [checkId]: answerIndex }));
-  };
-
-  const InlineCheck = ({ 
-    id, 
-    question, 
-    options, 
-    correctAnswer, 
-    explanation 
-  }: { 
-    id: string; 
-    question: string; 
-    options: string[]; 
-    correctAnswer: number; 
-    explanation: string; 
-  }) => {
-    const selectedAnswer = inlineChecks[id];
-    const showFeedback = selectedAnswer !== null;
-
-    return (
-      <Card className="bg-card border-gray-700 mt-4">
-        <CardContent className="p-4">
-          <p className="text-white font-medium mb-3">{question}</p>
-          <div className="space-y-2">
-            {options.map((option, index) => (
-              <button
-                key={index}
-                onClick={() => handleInlineAnswer(id, index)}
-                disabled={showFeedback}
-                className={`w-full text-left p-3 rounded-lg border transition-all duration-200 ${
-                  showFeedback
-                    ? index === correctAnswer
-                      ? 'border-green-500 bg-green-500/20 text-white'
-                      : selectedAnswer === index
-                      ? 'border-red-500 bg-red-500/20 text-white'
-                      : 'border-gray-600 bg-gray-800 text-white'
-                    : selectedAnswer === index
-                    ? 'border-yellow-400 bg-yellow-600/20 text-white'
-                    : 'border-gray-600 bg-gray-800 text-white hover:border-gray-500'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
-                    showFeedback
-                      ? index === correctAnswer
-                        ? 'border-green-500 bg-green-500'
-                        : selectedAnswer === index
-                        ? 'border-red-500 bg-red-500'
-                        : 'border-gray-500'
-                      : selectedAnswer === index
-                      ? 'border-yellow-400 bg-yellow-400'
-                      : 'border-gray-500'
-                  }`}>
-                    {showFeedback && index === correctAnswer && (
-                      <CheckCircle className="w-3 h-3 text-white" />
-                    )}
-                    {showFeedback && selectedAnswer === index && index !== correctAnswer && (
-                      <div className="w-2 h-2 rounded-full bg-white"></div>
-                    )}
-                    {!showFeedback && selectedAnswer === index && (
-                      <div className="w-2 h-2 rounded-full bg-black"></div>
-                    )}
-                  </div>
-                  <span className="text-sm">{option}</span>
-                </div>
-              </button>
-            ))}
-          </div>
-          {showFeedback && (
-            <div className="mt-3 p-3 bg-blue-900/30 border border-blue-700/50 rounded-lg">
-              <p className="text-blue-200 text-sm">{explanation}</p>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-    );
-  };
-
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-12">
-        <Link to="../bms-module-2">
-          <Button
-            variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-6 sm:mb-8 px-4 py-2 rounded-md"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 2
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../bms-module-2">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-6 sm:space-y-8 max-w-4xl mx-auto">
-          {/* Header */}
-          <div>
-            <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
-              <Cpu className="h-8 w-8 text-yellow-400 flex-shrink-0" />
-              <div>
-                <h1 className="text-2xl sm:text-3xl font-bold text-white">
-                  I/O Modules and Expansion Devices
-                </h1>
-                <p className="text-base text-white mt-2">
-                  Expanding BMS controller capacity with additional input/output modules
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-2 sm:gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">
-                Module 2
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-white">
-                Section 5
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-white">
-                18 min read
-              </Badge>
-            </div>
-          </div>
-
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white text-xl sm:text-2xl">Introduction</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <p className="text-base sm:text-lg leading-relaxed">
-                A Building Management System (BMS) controller can only handle a limited number of inputs and outputs (I/O). 
-                To manage larger or more complex systems, additional <strong>I/O modules and expansion devices</strong> are used.
-              </p>
-              <p className="text-base sm:text-lg leading-relaxed">
-                These devices allow electricians and engineers to connect more sensors, actuators, and control points 
-                without replacing the main controller. Understanding when and how to implement expansion modules is 
-                essential for scalable BMS installations.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white text-xl sm:text-2xl flex items-center gap-2">
-                <Target className="h-6 w-6 text-yellow-400" />
-                Learning Outcomes
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white">
-              <p className="mb-4 text-base sm:text-lg">By the end of this section, you should be able to:</p>
-              <div className="grid gap-3 sm:gap-4">
-                {[
-                  "Explain the purpose of I/O modules and expansion devices in a BMS",
-                  "Identify when expansion modules are needed", 
-                  "Understand how digital and analog signals are extended",
-                  "Recognise the electrician's role in installing and wiring I/O modules"
-                ].map((outcome, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm sm:text-base">{outcome}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Section 1: Purpose of I/O Modules */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white text-xl sm:text-2xl flex items-center gap-2">
-                <Cpu className="h-6 w-6 text-yellow-400" />
-                1. Purpose of I/O Modules
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4 sm:space-y-6">
-              <p className="text-base sm:text-lg">
-                I/O modules expand the capacity of BMS controllers by providing additional connection points 
-                for sensors, actuators, and control devices without requiring expensive controller upgrades.
-              </p>
-              
-              <div className="bg-card/80 border border-gray-700 rounded-lg p-4">
-                <h4 className="font-semibold text-yellow-400 mb-3">Key Functions:</h4>
-                <div className="space-y-3 text-white">
-                  <div>
-                    <h5 className="font-medium text-white mb-1">Capacity Extension</h5>
-                    <p className="text-sm text-white">Add more connection points when the main controller's I/O capacity is exceeded</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-white mb-1">Distributed Architecture</h5>
-                    <p className="text-sm text-white">Install modules locally near equipment to reduce cable runs and improve signal quality</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-white mb-1">Cost-Effective Expansion</h5>
-                    <p className="text-sm text-white">More economical than replacing the main controller with a larger unit</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-white mb-1">System Flexibility</h5>
-                    <p className="text-sm text-white">Allow for future expansion and modifications without major system changes</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-blue-900/20 border border-blue-700/50 rounded-lg p-4">
-                <h4 className="font-semibold text-blue-200 mb-2">Installation Locations</h4>
-                <div className="grid sm:grid-cols-2 gap-4 text-blue-100 text-sm">
-                  <div>
-                    <h5 className="font-medium text-blue-300 mb-2">Local Installation</h5>
-                    <p className="mb-2">Near equipment being controlled</p>
-                    <p className="mb-2">Reduces cable runs and costs</p>
-                    <p>Improves signal quality and reliability</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-blue-300 mb-2">Central Installation</h5>
-                    <p className="mb-2">In main control panels</p>
-                    <p className="mb-2">Easier maintenance and access</p>
-                    <p>Better environmental protection</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-green-900/20 border border-green-700/50 rounded-lg p-4">
-                <h4 className="font-semibold text-green-200 mb-2">When Expansion is Needed</h4>
-                <div className="space-y-3 text-green-100 text-sm">
-                  <div>
-                    <h5 className="font-medium text-green-300">Controller Capacity Exceeded</h5>
-                    <p>Main controller has insufficient I/O points for project requirements</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-green-300">Future-Proofing</h5>
-                    <p>Anticipating system growth and expansion requirements</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-green-300">Distributed Control</h5>
-                    <p>Equipment located far from main controller requires local I/O</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-green-300">Retrofit Projects</h5>
-                    <p>Adding new sensors and actuators to existing systems</p>
-                  </div>
-                </div>
-              </div>
-
-              <InlineCheck
-                id="check1"
-                question="Why would an I/O module be added to a BMS?"
-                options={[
-                  "To replace a faulty main controller",
-                  "To provide additional connection points when controller capacity is exceeded",
-                  "To convert all signals from analog to digital", 
-                  "To reduce the system's power consumption"
-                ]}
-                correctAnswer={1}
-                explanation="I/O modules are added to provide additional connection points for sensors and actuators when the main controller's capacity is exceeded, allowing system expansion without replacing the controller."
-              />
-            </CardContent>
-          </Card>
-
-          {/* Section 2: Types of Expansion Devices */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white text-xl sm:text-2xl flex items-center gap-2">
-                <HardDrive className="h-6 w-6 text-yellow-400" />
-                2. Types of Expansion Devices
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4 sm:space-y-6">
-              <p className="text-base sm:text-lg">
-                Different types of I/O modules handle specific signal types and control functions. 
-                Understanding each type helps in selecting the correct module for specific applications.
-              </p>
-              
-              <div className="bg-card/80 border border-gray-700 rounded-lg p-4">
-                <h4 className="font-semibold text-yellow-400 mb-3">Digital Input Modules:</h4>
-                <div className="space-y-3 text-white">
-                  <div>
-                    <h5 className="font-medium text-white mb-1">Applications</h5>
-                    <p className="text-sm text-white">Door contacts, window switches, pump status, fan status, alarm inputs, emergency stops</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-white mb-1">Signal Types</h5>
-                    <p className="text-sm text-white">Dry contacts, 24V DC/AC signals, voltage-free contacts</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-white mb-1">Typical Capacity</h5>
-                    <p className="text-sm text-white">8, 16, or 32 input points per module</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-purple-900/20 border border-purple-700/50 rounded-lg p-4">
-                <h4 className="font-semibold text-purple-200 mb-3">Digital Output Modules:</h4>
-                <div className="space-y-3 text-purple-100 text-sm">
-                  <div>
-                    <h5 className="font-medium text-purple-300">Control Functions</h5>
-                    <p>Pump starters, fan contactors, lighting circuits, valve on/off control, alarm sounders</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-purple-300">Output Types</h5>
-                    <p>Relay outputs (volt-free), transistor outputs (24V DC), triac outputs (240V AC)</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-purple-300">Load Ratings</h5>
-                    <p>Typically 2A to 10A per channel, depending on output type and voltage</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-blue-900/20 border border-blue-700/50 rounded-lg p-4">
-                <h4 className="font-semibold text-blue-200 mb-3">Analog Input Modules:</h4>
-                <div className="space-y-3 text-blue-100 text-sm">
-                  <div>
-                    <h5 className="font-medium text-blue-300">Connected Sensors</h5>
-                    <p>Temperature sensors (NTC, RTD), humidity transmitters, CO₂ sensors, pressure transmitters</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-blue-300">Signal Types</h5>
-                    <p>0-10V DC, 4-20mA, resistance (RTD, thermistor), thermocouple</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-blue-300">Resolution</h5>
-                    <p>12-bit to 16-bit conversion for high accuracy measurements</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-green-900/20 border border-green-700/50 rounded-lg p-4">
-                <h4 className="font-semibold text-green-200 mb-3">Analog Output Modules:</h4>
-                <div className="space-y-3 text-green-100 text-sm">
-                  <div>
-                    <h5 className="font-medium text-green-300">Control Applications</h5>
-                    <p>Modulating valve actuators, damper actuators, variable speed drives, heating element control</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-green-300">Output Signals</h5>
-                    <p>0-10V DC, 4-20mA current loop, adjustable voltage ranges</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-green-300">Control Range</h5>
-                    <p>Typically 0-100% modulation with high resolution control</p>
-                  </div>
-                </div>
-              </div>
-
-              <InlineCheck
-                id="check2"
-                question="Give one example of a device connected via an analog output module."
-                options={[
-                  "A door contact switch",
-                  "A fire alarm sounder",
-                  "A modulating valve actuator", 
-                  "A pump status indicator"
-                ]}
-                correctAnswer={2}
-                explanation="Analog output modules connect to devices requiring variable control signals, such as modulating valve actuators that need precise positioning control."
-              />
-            </CardContent>
-          </Card>
-
-          {/* Section 3: Communication and Integration */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white text-xl sm:text-2xl flex items-center gap-2">
-                <Router className="h-6 w-6 text-yellow-400" />
-                3. Communication and Integration
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4 sm:space-y-6">
-              <p className="text-base sm:text-lg">
-                Expansion modules must communicate effectively with the main BMS controller using standardised 
-                protocols and proper addressing schemes for reliable system operation.
-              </p>
-              
-              <div className="bg-card/80 border border-gray-700 rounded-lg p-4">
-                <h4 className="font-semibold text-yellow-400 mb-3">Communication Protocols:</h4>
-                <div className="space-y-3 text-white">
-                  <div>
-                    <h5 className="font-medium text-white mb-1">BACnet</h5>
-                    <p className="text-sm text-white">Open standard protocol widely used in commercial buildings. Supports BACnet/IP over Ethernet and BACnet MS/TP over RS-485</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-white mb-1">Modbus</h5>
-                    <p className="text-sm text-white">Simple, robust protocol for industrial applications. Available as Modbus RTU (serial) and Modbus TCP (Ethernet)</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-white mb-1">Proprietary Protocols</h5>
-                    <p className="text-sm text-white">Manufacturer-specific protocols often optimised for specific systems but may limit interoperability</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-white mb-1">LonWorks</h5>
-                    <p className="text-sm text-white">ISO/IEC standard protocol with built-in networking and interoperability features</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-amber-900/20 border border-amber-700/50 rounded-lg p-4">
-                <h4 className="font-semibold text-amber-200 mb-2">Module Addressing and Configuration</h4>
-                <div className="grid sm:grid-cols-2 gap-4 text-amber-100 text-sm">
-                  <div>
-                    <h5 className="font-medium text-amber-300 mb-2">Physical Addressing</h5>
-                    <p className="mb-2">DIP switches or rotary switches on module</p>
-                    <p className="mb-2">Each module needs unique address</p>
-                    <p>Address range defined by protocol</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-amber-300 mb-2">Software Configuration</h5>
-                    <p className="mb-2">Point mapping in BMS software</p>
-                    <p className="mb-2">Signal type and range configuration</p>
-                    <p>Alarm and trending setup</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-blue-900/20 border border-blue-700/50 rounded-lg p-4">
-                <h4 className="font-semibold text-blue-200 mb-2">Installation Types</h4>
-                <div className="space-y-3 text-blue-100 text-sm">
-                  <div>
-                    <h5 className="font-medium text-blue-300">Panel-Mounted Modules</h5>
-                    <p>Installed in control panels with environmental protection. Suitable for central locations with multiple cable terminations</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-blue-300">DIN Rail Modules</h5>
-                    <p>Compact modules for standard DIN rail mounting in distribution boards. Easy installation and replacement</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-blue-300">Remote Terminal Units (RTUs)</h5>
-                    <p>Weatherproof enclosures for outdoor or harsh environment installations</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-red-900/20 border border-red-700/50 rounded-lg p-4">
-                <h4 className="font-semibold text-red-200 mb-2">Network Considerations</h4>
-                <div className="space-y-3 text-red-100 text-sm">
-                  <div>
-                    <h5 className="font-medium text-red-300">Cable Requirements</h5>
-                    <p>Use appropriate cable for protocol (Cat5e for Ethernet, screened twisted pair for RS-485)</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-red-300">Network Topology</h5>
-                    <p>Follow protocol requirements for daisy-chain, star, or ring topologies</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-red-300">Termination and Bias</h5>
-                    <p>Proper line termination essential for reliable serial communication</p>
-                  </div>
-                </div>
-              </div>
-
-              <InlineCheck
-                id="check3"
-                question="What must be configured so the BMS recognises an expansion module?"
-                options={[
-                  "The module's power consumption rating",
-                  "The module's communication address and point mapping",
-                  "The module's physical dimensions", 
-                  "The module's colour coding scheme"
-                ]}
-                correctAnswer={1}
-                explanation="Each expansion module must have a unique communication address configured and its input/output points properly mapped in the BMS software so the controller can recognise and communicate with it."
-              />
-            </CardContent>
-          </Card>
-
-          {/* Section 4: Installation and Electrician's Role */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white text-xl sm:text-2xl flex items-center gap-2">
-                <AlertTriangle className="h-6 w-6 text-yellow-400" />
-                4. Installation and Electrician's Role
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4 sm:space-y-6">
-              <p className="text-base sm:text-lg">
-                Proper installation of I/O modules requires careful attention to power supply, wiring practices, 
-                and system integration to ensure reliable operation and ease of maintenance.
-              </p>
-              
-              <div className="bg-card/80 border border-gray-700 rounded-lg p-4">
-                <h4 className="font-semibold text-yellow-400 mb-3">Essential Installation Requirements:</h4>
-                <div className="space-y-3 text-white">
-                  <div>
-                    <h5 className="font-medium text-white mb-1">Power Supply Verification</h5>
-                    <p className="text-sm text-white">Confirm correct voltage (typically 24V DC/AC) and adequate current capacity for all connected modules</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-white mb-1">Wiring Segregation</h5>
-                    <p className="text-sm text-white">Keep power and signal wiring separate to avoid interference. Use different cable routes and trunking</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-white mb-1">Environmental Protection</h5>
-                    <p className="text-sm text-white">Ensure appropriate IP rating for installation location. Consider temperature and humidity conditions</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-white mb-1">Earthing and Screening</h5>
-                    <p className="text-sm text-white">Proper earthing of module chassis and screening of signal cables to prevent interference</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-red-900/20 border border-red-700/50 rounded-lg p-4">
-                <h4 className="font-semibold text-red-200 mb-2">Critical Installation Checks</h4>
-                <div className="space-y-3 text-red-100 text-sm">
-                  <div>
-                    <h5 className="font-medium text-red-300">Datasheet Compliance</h5>
-                    <p>Wire modules exactly according to manufacturer's datasheets. Check pinouts and terminal assignments</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-red-300">Address Configuration</h5>
-                    <p>Set unique communication addresses using DIP switches or software configuration</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-red-300">Cable Specifications</h5>
-                    <p>Use correct cable types and sizes. Signal cables often require screening or specific impedance</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-red-300">Load Verification</h5>
-                    <p>Ensure output modules are not overloaded. Check current ratings for all connected devices</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-green-900/20 border border-green-700/50 rounded-lg p-4">
-                <h4 className="font-semibold text-green-200 mb-2">Labelling and Documentation</h4>
-                <div className="space-y-3 text-green-100 text-sm">
-                  <div>
-                    <h5 className="font-medium text-green-300">Module Identification</h5>
-                    <p>Clear labelling of each module with address, function, and location reference</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-green-300">Terminal Marking</h5>
-                    <p>All terminals clearly marked with point numbers and cable references</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-green-300">Cable Schedules</h5>
-                    <p>Comprehensive cable schedules showing connections between modules and field devices</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-green-300">As-Built Documentation</h5>
-                    <p>Updated drawings and schedules reflecting actual installation for maintenance teams</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-amber-900/20 border border-amber-700/50 rounded-lg p-4">
-                <h4 className="font-semibold text-amber-200 mb-2">Commissioning and Testing</h4>
-                <div className="space-y-3 text-amber-100 text-sm">
-                  <div>
-                    <h5 className="font-medium text-amber-300">Communication Testing</h5>
-                    <p>Verify all modules are recognised by the main controller and responding correctly</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-amber-300">I/O Point Testing</h5>
-                    <p>Test all input and output points individually to confirm correct operation</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-amber-300">Signal Quality Checks</h5>
-                    <p>Measure analog signal levels and verify they are within expected ranges</p>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-amber-300">System Integration</h5>
-                    <p>Work with commissioning engineers to integrate modules into overall control strategy</p>
-                  </div>
-                </div>
-              </div>
-
-              <InlineCheck
-                id="check4"
-                question="Why is labelling important when installing I/O expansion modules?"
-                options={[
-                  "To meet fire safety regulations",
-                  "For easy identification, maintenance, and troubleshooting",
-                  "To improve the system's energy efficiency", 
-                  "To reduce electromagnetic interference"
-                ]}
-                correctAnswer={1}
-                explanation="Clear labelling is essential for easy identification, maintenance, and troubleshooting, especially in I/O panels that contain many modules and terminations. It helps technicians quickly locate and work on specific points."
-              />
-            </CardContent>
-          </Card>
-
-          {/* Practical Guidance */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white text-xl sm:text-2xl flex items-center gap-2">
-                <Zap className="h-6 w-6 text-yellow-400" />
-                Practical Guidance
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <p className="text-base sm:text-lg font-medium text-yellow-400">As an electrician:</p>
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                  <p className="text-white">Always check if the system design requires extra I/O before starting installation work</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                  <p className="text-white">Install expansion modules close to the equipment they serve to reduce cabling runs and costs</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                  <p className="text-white">Work closely with commissioning engineers to verify all points are recognised by the BMS</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                  <p className="text-white">Keep wiring tidy and well-labelled — I/O panels often contain many terminations, so clarity is vital</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Real World Example */}
-          <Card className="bg-gradient-to-br from-elec-gray to-gray-800 border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white text-xl sm:text-2xl flex items-center gap-2">
-                <Activity className="h-6 w-6 text-yellow-400" />
-                Real World Example
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <div className="bg-red-900/20 border border-red-700/50 rounded-lg p-4">
-                <h4 className="font-semibold text-red-200 mb-2">The Problem</h4>
-                <p className="text-red-100 text-sm">
-                  On a university campus project, the main BMS controller ran out of analog inputs because 
-                  extra CO₂ sensors were added to more classrooms during construction. The existing controller 
-                  had no spare capacity for the additional sensors.
-                </p>
-              </div>
-              <div className="bg-amber-900/20 border border-amber-700/50 rounded-lg p-4">
-                <h4 className="font-semibold text-amber-200 mb-2">The Solution</h4>
-                <p className="text-amber-100 text-sm">
-                  An analog input expansion module was installed in the plant room panel. The module was 
-                  configured with a unique BACnet address and connected to the main controller via the 
-                  existing RS-485 network. All new CO₂ sensors were wired to this expansion module.
-                </p>
-              </div>
-              <div className="bg-green-900/20 border border-green-700/50 rounded-lg p-4">
-                <h4 className="font-semibold text-green-200 mb-2">The Result</h4>
-                <p className="text-green-100 text-sm">
-                  Once properly addressed and tested, the BMS could monitor all classrooms effectively 
-                  without replacing the main controller. The expansion module provided 16 additional 
-                  analog inputs at a fraction of the cost of a controller upgrade, and the installation 
-                  was completed on schedule.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Summary */}
-          <Card className="bg-gradient-to-br from-elec-gray to-gray-800 border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white text-xl sm:text-2xl">Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <div className="grid gap-4">
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                  <p>I/O modules extend the capacity of BMS controllers without requiring expensive upgrades</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                  <p>Types include digital input/output and analog input/output modules for different signal types</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                  <p>Expansion devices communicate with the controller using standard protocols like BACnet and Modbus</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                  <p>Electricians are responsible for proper wiring, addressing, labelling, and commissioning verification</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white text-xl sm:text-2xl flex items-center gap-2">
-                <Activity className="h-6 w-6 text-yellow-400" />
-                Knowledge Check Quiz
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <SingleQuestionQuiz 
-                questions={bmsModule2Section5QuizData}
-                title="I/O Modules and Expansion Devices Quiz"
-              />
-            </CardContent>
-          </Card>
-
-          {/* Navigation */}
-          <div className="flex justify-between pt-8">
-            <Link to="../bms-module-2-section-4">
-              <Button variant="outline" className="border-gray-600 text-white hover:bg-card">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="../bms-module-2-section-6">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
         </div>
       </div>
+
+      <article className="px-4 sm:px-6 py-8 sm:py-12 max-w-4xl mx-auto">
+        {/* Page Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 2.5</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            I/O Modules and Expansion Devices
+          </h1>
+          <p className="text-white/80">
+            Expanding BMS controller capacity with additional input/output modules
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Purpose:</strong> Extend controller capacity cost-effectively</li>
+              <li><strong>Types:</strong> DI, DO, AI, AO modules for different signals</li>
+              <li><strong>Protocols:</strong> BACnet, Modbus, LonWorks, proprietary</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> When controller runs out of I/O points</li>
+              <li><strong>Use:</strong> Local installation near equipment</li>
+              <li><strong>Configure:</strong> Unique address and point mapping</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Purpose of I/O modules and expansion devices in BMS",
+              "When expansion modules are needed",
+              "How digital and analog signals are extended",
+              "Electrician's role in installing and wiring I/O modules"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1: Purpose of I/O Modules */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Purpose of I/O Modules
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              A BMS controller can only handle a limited number of inputs and outputs (I/O). To manage larger or more
+              complex systems, additional I/O modules and expansion devices are used to extend capacity without
+              replacing the main controller.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Functions:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Capacity extension:</strong> Add connection points when controller I/O is exceeded</li>
+                <li><strong>Distributed architecture:</strong> Install locally to reduce cable runs</li>
+                <li><strong>Cost-effective:</strong> More economical than replacing the main controller</li>
+                <li><strong>System flexibility:</strong> Allow future expansion without major changes</li>
+              </ul>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Local Installation</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Near equipment being controlled</li>
+                  <li>Reduces cable runs and costs</li>
+                  <li>Improves signal quality and reliability</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Central Installation</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>In main control panels</li>
+                  <li>Easier maintenance and access</li>
+                  <li>Better environmental protection</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">When Expansion is Needed:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Controller capacity exceeded:</strong> Insufficient I/O points for project requirements</li>
+                <li><strong>Future-proofing:</strong> Anticipating system growth</li>
+                <li><strong>Distributed control:</strong> Equipment far from main controller</li>
+                <li><strong>Retrofit projects:</strong> Adding to existing systems</li>
+              </ul>
+            </div>
+          </div>
+
+          <InlineCheck {...quickCheckQuestions[0]} />
+        </section>
+
+        {/* Section 2: Types of Expansion Devices */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Types of Expansion Devices
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Different types of I/O modules handle specific signal types and control functions. Understanding each
+              type helps in selecting the correct module for specific applications.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Digital Input Modules</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Applications:</strong> Door contacts, pump status, alarms</li>
+                  <li><strong>Signals:</strong> Dry contacts, 24V DC/AC, voltage-free</li>
+                  <li><strong>Capacity:</strong> 8, 16, or 32 inputs per module</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Digital Output Modules</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Functions:</strong> Pump starters, fan contactors, lighting</li>
+                  <li><strong>Types:</strong> Relay, transistor (24V), triac (240V)</li>
+                  <li><strong>Ratings:</strong> Typically 2A to 10A per channel</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Analog Input Modules</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Sensors:</strong> Temperature (NTC, RTD), humidity, CO₂</li>
+                  <li><strong>Signals:</strong> 0-10V DC, 4-20mA, resistance</li>
+                  <li><strong>Resolution:</strong> 12-bit to 16-bit conversion</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Analog Output Modules</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Applications:</strong> Modulating valves, dampers, VSDs</li>
+                  <li><strong>Signals:</strong> 0-10V DC, 4-20mA current loop</li>
+                  <li><strong>Control:</strong> 0-100% modulation with high resolution</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+        </section>
+
+        {/* Section 3: Communication and Integration */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Communication and Integration
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Expansion modules must communicate effectively with the main BMS controller using standardised
+              protocols and proper addressing schemes for reliable system operation.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Communication Protocols:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>BACnet:</strong> Open standard for commercial buildings (IP or MS/TP over RS-485)</li>
+                <li><strong>Modbus:</strong> Simple, robust protocol (RTU serial or TCP Ethernet)</li>
+                <li><strong>LonWorks:</strong> ISO/IEC standard with built-in networking</li>
+                <li><strong>Proprietary:</strong> Manufacturer-specific, optimised but limited interoperability</li>
+              </ul>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Physical Addressing</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>DIP switches or rotary switches on module</li>
+                  <li>Each module needs unique address</li>
+                  <li>Address range defined by protocol</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Software Configuration</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Point mapping in BMS software</li>
+                  <li>Signal type and range configuration</li>
+                  <li>Alarm and trending setup</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-red-400/80 mb-2">Network Considerations:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Cable requirements:</strong> Cat5e for Ethernet, screened twisted pair for RS-485</li>
+                <li><strong>Network topology:</strong> Follow protocol requirements (daisy-chain, star, ring)</li>
+                <li><strong>Termination:</strong> Proper line termination essential for serial communication</li>
+              </ul>
+            </div>
+          </div>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+        </section>
+
+        {/* Section 4: Installation and Electrician's Role */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Installation and Electrician's Role
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Proper installation of I/O modules requires careful attention to power supply, wiring practices,
+              and system integration to ensure reliable operation and ease of maintenance.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Installation Requirements:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Power supply:</strong> Confirm correct voltage (typically 24V DC/AC) and adequate current</li>
+                <li><strong>Wiring segregation:</strong> Keep power and signal wiring separate</li>
+                <li><strong>Environmental protection:</strong> Appropriate IP rating for location</li>
+                <li><strong>Earthing and screening:</strong> Proper earthing and signal cable screening</li>
+              </ul>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-red-400/80 mb-2">Critical Installation Checks</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Wire according to manufacturer datasheets</li>
+                  <li>Set unique communication addresses</li>
+                  <li>Use correct cable types and sizes</li>
+                  <li>Verify output load ratings</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Labelling and Documentation</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Clear module identification labels</li>
+                  <li>Terminal marking with point numbers</li>
+                  <li>Comprehensive cable schedules</li>
+                  <li>As-built documentation for maintenance</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Commissioning and Testing:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Communication testing:</strong> Verify all modules are recognised by controller</li>
+                <li><strong>I/O point testing:</strong> Test all inputs and outputs individually</li>
+                <li><strong>Signal quality:</strong> Measure analog signals are within expected ranges</li>
+                <li><strong>Integration:</strong> Work with commissioning engineers for system integration</li>
+              </ul>
+            </div>
+          </div>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+        </section>
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">As an Electrician</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Always check if the system design requires extra I/O before starting work</li>
+                <li>Install expansion modules close to the equipment they serve</li>
+                <li>Work closely with commissioning engineers to verify all points</li>
+                <li>Keep wiring tidy and well-labelled — clarity is vital</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Duplicate addresses</strong> — each module must have a unique address</li>
+                <li><strong>Overloading outputs</strong> — always check current ratings</li>
+                <li><strong>Poor labelling</strong> — makes future maintenance difficult</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Real World Example */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4">Real World Example</h2>
+          <div className="p-5 rounded-lg bg-transparent border border-white/10">
+            <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">University Campus Expansion</h3>
+            <div className="text-sm text-white space-y-3">
+              <p><strong>Problem:</strong> Main BMS controller ran out of analog inputs when extra CO₂ sensors were added to more classrooms during construction.</p>
+              <p><strong>Solution:</strong> An analog input expansion module was installed in the plant room panel, configured with a unique BACnet address and connected via the existing RS-485 network.</p>
+              <p><strong>Result:</strong> The BMS could monitor all classrooms without replacing the main controller. The 16 additional analog inputs cost a fraction of a controller upgrade, and installation was completed on schedule.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quick Reference */}
+        <div className="mt-6 p-5 rounded-lg bg-transparent border border-white/10">
+          <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+            <div>
+              <p className="font-medium text-elec-yellow/80 mb-1">Module Types</p>
+              <ul className="space-y-0.5">
+                <li>DI: Door contacts, status signals</li>
+                <li>DO: Starters, contactors, lighting</li>
+                <li>AI: Temperature, humidity, CO₂</li>
+                <li>AO: Modulating valves, dampers, VSDs</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-medium text-elec-yellow/80 mb-1">Common Protocols</p>
+              <ul className="space-y-0.5">
+                <li>BACnet: IP or MS/TP (RS-485)</li>
+                <li>Modbus: RTU (serial) or TCP (Ethernet)</li>
+                <li>LonWorks: ISO/IEC standard</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Quiz Section */}
+        <section className="my-10">
+          <SingleQuestionQuiz
+            questions={bmsModule2Section5QuizData}
+            title="Test Your Knowledge"
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../bms-module-2-section-4">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../bms-module-2-section-6">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

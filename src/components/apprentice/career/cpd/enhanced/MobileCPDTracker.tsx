@@ -20,10 +20,11 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
 
   if (loading || !stats) {
     return (
-      <div className="space-y-4 p-4">
-        <div className="h-32 bg-elec-gray rounded-lg animate-pulse"></div>
-        <div className="h-24 bg-elec-gray rounded-lg animate-pulse"></div>
-        <div className="h-40 bg-elec-gray rounded-lg animate-pulse"></div>
+      <div className="space-y-4 animate-fade-in">
+        <div className="h-14 bg-gradient-to-br from-elec-gray to-elec-card rounded-xl animate-pulse border border-elec-yellow/20"></div>
+        <div className="h-32 bg-gradient-to-br from-elec-gray to-elec-card rounded-xl animate-pulse border border-elec-yellow/20"></div>
+        <div className="h-12 bg-white/5 rounded-lg animate-pulse"></div>
+        <div className="h-40 bg-gradient-to-br from-elec-gray to-elec-card rounded-xl animate-pulse border border-elec-yellow/20"></div>
       </div>
     );
   }
@@ -45,35 +46,36 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
   };
 
   return (
-    <div className="space-y-4 pb-20">
+    <div className="space-y-4 pb-20 animate-fade-in">
       {/* Quick Add Button - Sticky */}
-      <div className="sticky top-0 z-10 bg-elec-dark/95 backdrop-blur-sm p-4 -m-4 mb-4">
-        <Button 
-          onClick={onAddEntry} 
-          className="w-full bg-elec-yellow text-elec-dark hover:bg-amber-400"
+      <div className="sticky top-0 z-10 bg-elec-dark/95 backdrop-blur-sm py-3 -mx-4 px-4 border-b border-white/10">
+        <Button
+          onClick={onAddEntry}
+          className="w-full h-12 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 touch-manipulation active:scale-95 transition-all font-medium text-base"
         >
-          <Plus className="mr-2 h-4 w-4" />
+          <Plus className="mr-2 h-5 w-5" />
           Add CPD Entry
         </Button>
       </div>
 
       {/* Key Metrics - Compact */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardContent className="p-4">
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+        <CardContent className="p-4 relative">
           <div className="grid grid-cols-2 gap-4">
-            <div className="text-center">
+            <div className="text-center p-3 rounded-lg bg-white/5 border border-white/10">
               <div className="text-2xl font-bold text-elec-yellow">{stats.hoursThisYear}</div>
-              <div className="text-xs text-muted-foreground">Hours This Year</div>
+              <div className="text-xs text-white/70">Hours This Year</div>
             </div>
-            <div className="text-center">
+            <div className="text-center p-3 rounded-lg bg-white/5 border border-white/10">
               <div className={`text-2xl font-bold ${getComplianceColor()}`}>{stats.completionPercentage}%</div>
-              <div className="text-xs text-muted-foreground">Progress</div>
+              <div className="text-xs text-white/70">Progress</div>
             </div>
           </div>
-          <div className="mt-4 space-y-2">
-            <div className="flex justify-between text-sm">
+          <div className="mt-4 space-y-2 p-3 rounded-lg bg-white/5 border border-white/10">
+            <div className="flex justify-between text-sm text-white">
               <span>Annual Target</span>
-              <span>{stats.hoursThisYear} / {stats.targetHours} hours</span>
+              <span className="text-elec-yellow font-medium">{stats.hoursThisYear} / {stats.targetHours} hours</span>
             </div>
             <Progress value={stats.completionPercentage} className="h-2" />
           </div>
@@ -81,7 +83,7 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
       </Card>
 
       {/* Tab Navigation */}
-      <div className="flex space-x-1 bg-elec-gray rounded-lg p-1">
+      <div className="flex space-x-1 bg-white/5 rounded-xl p-1 border border-white/10">
         {[
           { id: 'overview', label: 'Overview', icon: TrendingUp },
           { id: 'recent', label: 'Recent', icon: Clock },
@@ -92,10 +94,10 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
-              className={`flex-1 flex items-center justify-center gap-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                activeTab === tab.id 
-                  ? 'bg-elec-yellow text-elec-dark' 
-                  : 'text-muted-foreground hover:text-white'
+              className={`flex-1 flex items-center justify-center gap-2 px-3 py-3 rounded-lg text-sm font-medium transition-all touch-manipulation ${
+                activeTab === tab.id
+                  ? 'bg-elec-yellow text-elec-dark'
+                  : 'text-white/70 hover:text-white hover:bg-white/5'
               }`}
             >
               <Icon className="h-4 w-4" />
@@ -110,34 +112,37 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
         <div className="space-y-4">
           {/* Quick Stats */}
           <div className="grid grid-cols-2 gap-3">
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardContent className="p-3 text-center">
-                <div className="text-lg font-bold text-amber-400">{stats.daysRemaining}</div>
-                <div className="text-xs text-muted-foreground">Days Left</div>
+            <Card className="bg-gradient-to-br from-elec-gray to-amber-950/20 border-amber-500/20 overflow-hidden relative">
+              <div className="absolute top-0 right-0 w-16 h-16 bg-amber-500/5 rounded-full blur-xl -translate-y-1/2 translate-x-1/2" />
+              <CardContent className="p-4 text-center relative">
+                <div className="text-2xl font-bold text-amber-400">{stats.daysRemaining}</div>
+                <div className="text-xs text-white/70">Days Left</div>
               </CardContent>
             </Card>
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardContent className="p-3 text-center">
-                <div className="text-lg font-bold text-blue-400">{stats.hoursThisMonth}</div>
-                <div className="text-xs text-muted-foreground">This Month</div>
+            <Card className="bg-gradient-to-br from-elec-gray to-blue-950/20 border-blue-500/20 overflow-hidden relative">
+              <div className="absolute top-0 right-0 w-16 h-16 bg-blue-500/5 rounded-full blur-xl -translate-y-1/2 translate-x-1/2" />
+              <CardContent className="p-4 text-center relative">
+                <div className="text-2xl font-bold text-blue-400">{stats.hoursThisMonth}</div>
+                <div className="text-xs text-white/70">This Month</div>
               </CardContent>
             </Card>
           </div>
 
           {/* Category Breakdown - Top 3 */}
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm">Top Categories</CardTitle>
+          <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+            <CardHeader className="pb-3 relative">
+              <CardTitle className="text-sm text-white">Top Categories</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3">
+            <CardContent className="space-y-3 relative">
               {stats.categoryBreakdown.slice(0, 3).map((category, index) => (
-                <div key={index} className="flex items-center justify-between">
-                  <span className="text-xs font-medium">{category.category}</span>
+                <div key={index} className="flex items-center justify-between p-2 rounded-lg bg-white/5 border border-white/10">
+                  <span className="text-xs font-medium text-white">{category.category}</span>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs text-muted-foreground">{category.hours}h</span>
-                    <div className="w-12 bg-elec-dark rounded-full h-1">
-                      <div 
-                        className="h-1 rounded-full bg-elec-yellow"
+                    <span className="text-xs text-elec-yellow font-medium">{category.hours}h</span>
+                    <div className="w-16 bg-white/10 rounded-full h-1.5">
+                      <div
+                        className="h-1.5 rounded-full bg-elec-yellow transition-all"
                         style={{ width: `${category.percentage}%` }}
                       />
                     </div>
@@ -152,35 +157,34 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
       {activeTab === 'recent' && (
         <div className="space-y-3">
           {recentEntries.map((entry) => (
-            <Card 
-              key={entry.id} 
-              className="border-elec-yellow/20 bg-elec-gray cursor-pointer hover:bg-elec-gray/80 transition-colors"
+            <Card
+              key={entry.id}
+              className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10 hover:border-elec-yellow/30 cursor-pointer transition-all overflow-hidden relative touch-manipulation active:scale-[0.98]"
               onClick={() => onViewEntry(entry.id)}
             >
-              <CardContent className="p-4">
-                <div className="flex items-start justify-between">
-                  <div className="space-y-1 flex-1">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-elec-yellow/5 rounded-full blur-xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <CardContent className="p-4 relative">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="space-y-2 flex-1 min-w-0">
                     <h3 className="font-medium text-white text-sm line-clamp-2">{entry.activity}</h3>
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <span>{entry.date}</span>
-                      <span>•</span>
-                      <span>{entry.hours}h</span>
-                      <span>•</span>
-                      <Badge variant="outline" className="text-xs px-1 py-0">
+                    <div className="flex flex-wrap items-center gap-2 text-xs">
+                      <span className="px-2 py-1 rounded bg-white/5 text-white/70">{entry.date}</span>
+                      <span className="px-2 py-1 rounded bg-elec-yellow/10 text-elec-yellow font-medium">{entry.hours}h</span>
+                      <Badge variant="outline" className="text-xs bg-blue-500/10 text-blue-400 border-blue-500/30">
                         {entry.status}
                       </Badge>
                     </div>
                   </div>
-                  <ChevronRight className="h-4 w-4 text-muted-foreground ml-2" />
+                  <ChevronRight className="h-5 w-5 text-white/50 flex-shrink-0" />
                 </div>
               </CardContent>
             </Card>
           ))}
-          
-          <Button 
-            variant="outline" 
+
+          <Button
+            variant="outline"
             onClick={onViewHistory}
-            className="w-full border-elec-yellow/30 hover:bg-elec-yellow/10"
+            className="w-full h-11 border-white/20 hover:bg-white/10 touch-manipulation active:scale-95 transition-all"
           >
             View All Entries
           </Button>
@@ -190,42 +194,46 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
       {activeTab === 'goals' && (
         <div className="space-y-3">
           {activeGoals.map((goal) => (
-            <Card key={goal.id} className="border-elec-yellow/20 bg-elec-gray">
-              <CardContent className="p-4">
+            <Card key={goal.id} className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-elec-yellow/5 rounded-full blur-xl -translate-y-1/2 translate-x-1/2" />
+              <CardContent className="p-4 relative">
                 <div className="space-y-3">
-                  <div className="flex items-start justify-between">
+                  <div className="flex items-start justify-between gap-2">
                     <h3 className="font-medium text-white text-sm">{goal.title}</h3>
-                    <Badge variant="outline" className="text-xs">
+                    <Badge variant="outline" className="text-xs bg-blue-500/10 text-blue-400 border-blue-500/30">
                       {goal.status}
                     </Badge>
                   </div>
-                  
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-xs">
-                      <span>Progress</span>
-                      <span>{goal.currentHours} / {goal.targetHours} hours</span>
+
+                  <div className="space-y-2 p-2 rounded-lg bg-white/5 border border-white/10">
+                    <div className="flex justify-between text-xs text-white">
+                      <span className="text-white/60">Progress</span>
+                      <span className="text-elec-yellow font-medium">{goal.currentHours} / {goal.targetHours} hours</span>
                     </div>
-                    <Progress 
-                      value={(goal.currentHours / goal.targetHours) * 100} 
-                      className="h-2" 
+                    <Progress
+                      value={(goal.currentHours / goal.targetHours) * 100}
+                      className="h-2"
                     />
                   </div>
-                  
-                  <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                    <Calendar className="h-3 w-3" />
+
+                  <div className="flex items-center gap-2 text-xs text-white/70">
+                    <Calendar className="h-3.5 w-3.5 text-elec-yellow" />
                     <span>Due: {new Date(goal.deadline).toLocaleDateString()}</span>
                   </div>
                 </div>
               </CardContent>
             </Card>
           ))}
-          
+
           {activeGoals.length === 0 && (
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardContent className="p-6 text-center">
-                <Target className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                <p className="text-sm text-muted-foreground">No active goals</p>
-                <p className="text-xs text-muted-foreground mt-1">Create goals to track your progress</p>
+            <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+              <CardContent className="p-6 text-center relative">
+                <div className="p-3 rounded-full bg-gradient-to-br from-white/10 to-white/5 border border-white/20 w-fit mx-auto mb-3">
+                  <Target className="h-6 w-6 text-white/50" />
+                </div>
+                <p className="text-sm text-white font-medium">No active goals</p>
+                <p className="text-xs text-white/60 mt-1">Create goals to track your progress</p>
               </CardContent>
             </Card>
           )}
@@ -234,18 +242,18 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
 
       {/* Quick Actions */}
       <div className="grid grid-cols-2 gap-3">
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           onClick={onViewHistory}
-          className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+          className="h-11 border-white/20 hover:bg-white/10 touch-manipulation active:scale-95 transition-all"
         >
           <Clock className="mr-2 h-4 w-4" />
           History
         </Button>
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           onClick={handleQuickExport}
-          className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+          className="h-11 border-white/20 hover:bg-white/10 touch-manipulation active:scale-95 transition-all"
         >
           <Download className="mr-2 h-4 w-4" />
           Export

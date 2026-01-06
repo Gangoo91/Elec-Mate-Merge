@@ -621,7 +621,7 @@ const JobProfitabilityCalculator = () => {
                 <p className="text-sm font-medium text-white mb-2">
                   {selectedPresetData.name}
                 </p>
-                <p className="text-xs text-white/60 mb-3">
+                <p className="text-xs text-white mb-3">
                   {selectedPresetData.description}
                 </p>
                 <div className="grid grid-cols-4 gap-2 text-xs">
@@ -642,14 +642,14 @@ const JobProfitabilityCalculator = () => {
                     <div className="text-white font-medium">
                       {selectedPresetData.defaults.overheadPercentage}%
                     </div>
-                    <div className="text-white/50">overhead</div>
+                    <div className="text-white">overhead</div>
                   </div>
                   <div className="text-center">
                     <TrendingUp className="h-3 w-3 text-blue-400 mx-auto mb-1" />
                     <div className="text-white font-medium">
                       {selectedPresetData.defaults.desiredProfitMargin}%
                     </div>
-                    <div className="text-white/50">profit</div>
+                    <div className="text-white">profit</div>
                   </div>
                 </div>
               </div>
@@ -700,7 +700,7 @@ const JobProfitabilityCalculator = () => {
                 </span>
               </div>
               <label className="flex items-center gap-2 cursor-pointer">
-                <span className="text-xs text-white/60">Multi-worker</span>
+                <span className="text-xs text-white">Multi-worker</span>
                 <input
                   type="checkbox"
                   checked={inputs.useMultiWorker}
@@ -984,7 +984,7 @@ const JobProfitabilityCalculator = () => {
               </div>
               <ChevronDown
                 className={cn(
-                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  "h-4 w-4 text-white/80 transition-transform duration-200",
                   showAdvanced && "rotate-180"
                 )}
               />
@@ -1102,13 +1102,13 @@ const JobProfitabilityCalculator = () => {
             </button>
             <button
               onClick={loadExample}
-              className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 transition-colors touch-manipulation"
+              className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/90 hover:bg-white/10 transition-colors touch-manipulation"
             >
               <Lightbulb className="h-5 w-5" />
             </button>
             <button
               onClick={resetCalculator}
-              className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 transition-colors touch-manipulation"
+              className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/90 hover:bg-white/10 transition-colors touch-manipulation"
             >
               <RotateCcw className="h-5 w-5" />
             </button>
@@ -1131,14 +1131,14 @@ const JobProfitabilityCalculator = () => {
                   <span className={cn("font-medium", profitabilityStatus.color)}>
                     {profitabilityStatus.title}
                   </span>
-                  <p className="text-sm text-white/60">{profitabilityStatus.message}</p>
+                  <p className="text-sm text-white">{profitabilityStatus.message}</p>
                 </div>
               </div>
             )}
 
             <CalculatorResult category="business">
               <div className="text-center pb-4 border-b border-white/10">
-                <p className="text-sm text-white/60 mb-1">Actual Profit</p>
+                <p className="text-sm text-white mb-1">Actual Profit</p>
                 <div
                   className={cn(
                     "text-4xl font-bold",
@@ -1199,7 +1199,7 @@ const JobProfitabilityCalculator = () => {
               {/* VAT Breakdown */}
               {vatRegistered && vatAmount > 0 && (
                 <div className="pt-4 mt-4 border-t border-white/10">
-                  <p className="text-xs text-white/50 mb-3">VAT Breakdown</p>
+                  <p className="text-xs text-white mb-3">VAT Breakdown</p>
                   <div className="grid grid-cols-3 gap-3 text-center">
                     <div>
                       <div className="text-xs text-blue-400 mb-1">Quote (ex VAT)</div>
@@ -1257,7 +1257,7 @@ const JobProfitabilityCalculator = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      "h-4 w-4 text-white/40 transition-transform duration-200",
+                      "h-4 w-4 text-white/80 transition-transform duration-200",
                       showGuidance && "rotate-180"
                     )}
                   />
@@ -1316,7 +1316,7 @@ const JobProfitabilityCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/40 transition-transform duration-200",
+                    "h-4 w-4 text-white/80 transition-transform duration-200",
                     showHistory && "rotate-180"
                   )}
                 />
@@ -1333,25 +1333,25 @@ const JobProfitabilityCalculator = () => {
                         <span className="text-sm font-medium text-white">
                           {item.jobType}
                         </span>
-                        <span className="text-xs text-white/50">
+                        <span className="text-xs text-white">
                           {item.timestamp.toLocaleDateString()}
                         </span>
                       </div>
                       <div className="grid grid-cols-3 gap-2 text-xs">
                         <div>
-                          <span className="text-white/50">Quote:</span>
+                          <span className="text-white">Quote:</span>
                           <span className="text-white ml-1">
                             £{item.inputs.quoteAmount}
                           </span>
                         </div>
                         <div>
-                          <span className="text-white/50">Profit:</span>
+                          <span className="text-white">Profit:</span>
                           <span className="text-white ml-1">
                             £{item.results.actualProfit.toFixed(0)}
                           </span>
                         </div>
                         <div>
-                          <span className="text-white/50">Margin:</span>
+                          <span className="text-white">Margin:</span>
                           <span
                             className={cn(
                               "ml-1",
@@ -1388,7 +1388,7 @@ const JobProfitabilityCalculator = () => {
               </div>
               <ChevronDown
                 className={cn(
-                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  "h-4 w-4 text-white/80 transition-transform duration-200",
                   showReference && "rotate-180"
                 )}
               />

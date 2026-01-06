@@ -17,7 +17,7 @@ const SafetyGuidelines = () => {
       case 'Critical': return 'text-red-400 bg-red-400/10';
       case 'Essential': return 'text-orange-400 bg-orange-400/10';
       case 'Required': return 'text-blue-400 bg-blue-400/10';
-      default: return 'text-white/80 bg-gray-400/10';
+      default: return 'text-white/80 bg-white/5';
     }
   };
 

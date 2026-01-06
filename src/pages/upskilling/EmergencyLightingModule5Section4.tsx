@@ -13,13 +13,13 @@ import { EmergencyLightingModule5Section4Quiz } from '@/components/upskilling/em
 
 const EmergencyLightingModule5Section4 = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="../emergency-lighting-module-5">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 5
@@ -28,10 +28,10 @@ const EmergencyLightingModule5Section4 = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <FileCheck className="h-8 w-8 text-yellow-400" />
+            <FileCheck className="h-8 w-8 text-elec-yellow" />
             <Badge 
               variant="secondary" 
-              className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold text-sm px-3 py-1 border-0"
+              className="bg-yellow-600/40 text-elec-yellow hover:bg-yellow-600/50 font-semibold text-sm px-3 py-1 border-0"
             >
               Module 5 - Section 4
             </Badge>
@@ -62,14 +62,14 @@ const EmergencyLightingModule5Section4 = () => {
             <Link to="../emergency-lighting-module-5-section-3" className="flex-1">
               <Button 
                 variant="outline" 
-                className="w-full border-gray-600 text-white hover:bg-card hover:text-yellow-400"
+                className="w-full border-gray-600 text-white hover:bg-transparent hover:text-elec-yellow"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Previous: Initial Verification
               </Button>
             </Link>
             <Link to="../emergency-lighting-module-5" className="flex-1">
-              <Button className="w-full bg-yellow-400 text-black hover:bg-yellow-600">
+              <Button className="w-full bg-elec-yellow text-black hover:bg-yellow-600">
                 Complete Module
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>

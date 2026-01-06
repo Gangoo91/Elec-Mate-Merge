@@ -10,11 +10,11 @@ const Level3Module6Section3_3 = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
+      <div className="border-b border-white/10 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-0 text-sm sm:text-base" asChild>
+          <Button variant="ghost" className="text-white/70 hover:text-white p-0 text-sm sm:text-base" asChild>
             <Link to="../section3">
               <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
               Back to Section 3
@@ -25,10 +25,10 @@ const Level3Module6Section3_3 = () => {
 
       {/* Main Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 lg:py-12">
-        <h1 className="text-xl sm:text-2xl lg:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-4 sm:mb-6">
+        <h1 className="text-xl sm:text-2xl lg:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 sm:mb-6">
           3.3 Consumer Units and Distribution Boards
         </h1>
-        <p className="text-lg sm:text-xl text-muted-foreground mb-6 sm:mb-8">
+        <p className="text-lg sm:text-xl text-white/70 mb-6 sm:mb-8">
           Selecting appropriate consumer units and distribution boards for installations
         </p>
 

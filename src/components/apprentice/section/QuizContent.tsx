@@ -110,7 +110,7 @@ const QuizContent = ({
   };
 
   return (
-    <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-6">
+    <div className="bg-white/5 border border-elec-yellow/20 rounded-lg p-6">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <div className="p-2 rounded-full bg-elec-yellow flex items-center justify-center">
@@ -130,15 +130,15 @@ const QuizContent = ({
       {!quizStarted ? (
         <>
           <div className="mb-8">
-            <p className="text-muted-foreground">
+            <p className="text-white">
               This quiz will test your understanding of the key health and safety concepts 
               covered in this unit. Complete the quiz to demonstrate your knowledge.
             </p>
           </div>
           
-          <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-lg p-6 mb-6">
+          <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-6 mb-6">
             <h2 className="text-xl font-semibold mb-4 text-elec-yellow">Quiz Instructions</h2>
-            <ul className="space-y-2 text-muted-foreground">
+            <ul className="space-y-2 text-white">
               <li>• The quiz contains 30 multiple choice questions</li>
               <li>• You need to score at least 70% to pass</li>
               <li>• You have 30 minutes to complete the quiz</li>

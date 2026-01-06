@@ -54,7 +54,7 @@ const QuizReviewInterface: React.FC<QuizReviewInterfaceProps> = ({
   };
 
   const getAnswerStyle = (index: number) => {
-    if (!currentAnswer) return 'border-gray-600';
+    if (!currentAnswer) return 'border-white/40';
 
     const isCorrect = index === currentQuestion.correctAnswer;
     const isUserAnswer = index === currentAnswer.selectedAnswer;
@@ -68,7 +68,7 @@ const QuizReviewInterface: React.FC<QuizReviewInterfaceProps> = ({
     if (isUserAnswer && !isCorrect) {
       return 'border-red-500 bg-red-500/10 text-red-400';
     }
-    return 'border-gray-600';
+    return 'border-white/40';
   };
 
   const getDifficultyColor = (difficulty: string): string => {
@@ -76,7 +76,7 @@ const QuizReviewInterface: React.FC<QuizReviewInterfaceProps> = ({
       case 'Beginner': return 'bg-green-500/20 text-green-400 border-green-500/50';
       case 'Intermediate': return 'bg-amber-500/20 text-amber-400 border-amber-500/50';
       case 'Advanced': return 'bg-red-500/20 text-red-400 border-red-500/50';
-      default: return 'bg-gray-500/20 text-white/80 border-gray-500/50';
+      default: return 'bg-white/10 text-white/80 border-white/50';
     }
   };
 
@@ -125,7 +125,7 @@ const QuizReviewInterface: React.FC<QuizReviewInterfaceProps> = ({
             </div>
             
             <div className="flex items-center gap-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white/80">
                 {correctCount}/{questions.length} correct ({Math.round((correctCount / questions.length) * 100)}%)
               </div>
               <Button variant="outline" onClick={onBack}>
@@ -158,7 +158,7 @@ const QuizReviewInterface: React.FC<QuizReviewInterfaceProps> = ({
               <div className="flex gap-2 pb-2">
                 {questions.map((_, index) => {
                   const status = getQuestionStatus(index);
-                  let bgColor = 'bg-gray-700';
+                  let bgColor = 'bg-white/10';
                   let textColor = 'text-white';
                   
                   if (status === 'correct') {
@@ -203,7 +203,7 @@ const QuizReviewInterface: React.FC<QuizReviewInterfaceProps> = ({
               </div>
             )}
             {currentAnswer && (
-              <div className="flex items-center gap-2 text-muted-foreground">
+              <div className="flex items-center gap-2 text-white/80">
                 <Clock className="h-4 w-4" />
                 <span className="text-sm">{currentAnswer.timeSpent}s</span>
               </div>
@@ -218,7 +218,7 @@ const QuizReviewInterface: React.FC<QuizReviewInterfaceProps> = ({
           <CardTitle className="text-lg leading-relaxed">
             {currentQuestion.question}
           </CardTitle>
-          <div className="text-sm text-muted-foreground">
+          <div className="text-sm text-white/80">
             Category: {currentQuestion.category}
           </div>
         </CardHeader>
@@ -258,12 +258,12 @@ const QuizReviewInterface: React.FC<QuizReviewInterfaceProps> = ({
           </div>
 
           {showExplanations && (
-            <div className="mt-6 p-4 bg-gray-800/50 rounded-lg border">
+            <div className="mt-6 p-4 bg-white/5 rounded-lg border">
               <div className="flex items-start gap-3">
                 <Info className="h-5 w-5 text-elec-blue mt-0.5" />
                 <div>
                   <h4 className="font-medium mb-2">Explanation</h4>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-sm text-white/80 leading-relaxed">
                     {currentQuestion.explanation}
                   </p>
                   {currentQuestion.regulation && (
@@ -291,7 +291,7 @@ const QuizReviewInterface: React.FC<QuizReviewInterfaceProps> = ({
               Previous
             </Button>
 
-            <div className="text-sm text-muted-foreground">
+            <div className="text-sm text-white/80">
               Question {currentQuestionIndex + 1} of {questions.length}
             </div>
 

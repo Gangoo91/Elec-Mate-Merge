@@ -21,7 +21,7 @@ const PersonalDetailsSection = ({
 }: PersonalDetailsSectionProps) => {
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-2 text-sm font-semibold text-gray-300 border-b border-border pb-2">
+      <div className="flex items-center gap-2 text-sm font-semibold text-white/80 border-b border-border pb-2">
         <User className="h-4 w-4 text-elec-yellow" />
         Personal Details
       </div>
@@ -29,7 +29,7 @@ const PersonalDetailsSection = ({
       <div className="space-y-6">
         <div className="space-y-2">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-            <Label htmlFor="inspectorName" className="text-sm font-medium text-gray-300">
+            <Label htmlFor="inspectorName" className="text-sm font-medium text-white/80">
               Inspector Name *
             </Label>
             {formData.clientName && (
@@ -49,7 +49,7 @@ const PersonalDetailsSection = ({
             value={formData.inspectorName || ''}
             onChange={(e) => onUpdate('inspectorName', e.target.value)}
             placeholder="Full name of inspector"
-            className={`w-full bg-muted border-border text-foreground placeholder:text-gray-400 focus:border-elec-yellow focus:ring-elec-yellow ${
+            className={`w-full bg-muted border-border text-foreground placeholder:text-white/70 focus:border-elec-yellow focus:ring-elec-yellow ${
               !formData.inspectorName?.trim() ? 'border-orange-500 focus:border-orange-400 focus:ring-orange-400' : ''
             }`}
           />
@@ -57,7 +57,7 @@ const PersonalDetailsSection = ({
 
         <div className="space-y-2">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-            <Label htmlFor="inspectorDate" className="text-sm font-medium text-gray-300">
+            <Label htmlFor="inspectorDate" className="text-sm font-medium text-white/80">
               Date of Inspection
             </Label>
             <Button

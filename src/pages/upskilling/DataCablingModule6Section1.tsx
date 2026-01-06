@@ -1,575 +1,395 @@
-import { ArrowLeft, BookOpen, CheckCircle, AlertTriangle, Building, Zap, Network, Globe } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Link } from 'react-router-dom';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
+import useSEO from "@/hooks/useSEO";
+
+const quickCheckQuestions = [
+  {
+    id: "datacabling-m6s1-check1",
+    question: "What is the maximum horizontal cable length specified in TIA/EIA-568?",
+    options: ["80 metres", "90 metres", "100 metres", "110 metres"],
+    correctIndex: 1,
+    explanation: "TIA/EIA-568 specifies a maximum horizontal cable length of 90 metres, with an additional 10 metres allowed for patch cords (5m each end) for a total channel length of 100m."
+  },
+  {
+    id: "datacabling-m6s1-check2",
+    question: "Which topology is specified as the primary architecture in TIA/EIA-568?",
+    options: ["Ring topology", "Bus topology", "Star topology", "Mesh topology"],
+    correctIndex: 2,
+    explanation: "TIA/EIA-568 specifies star topology as the primary architecture, with each outlet connected directly to a telecommunications room via horizontal cabling."
+  },
+  {
+    id: "datacabling-m6s1-check3",
+    question: "What does ISO Class EA correspond to in TIA category terms?",
+    options: ["Category 5e", "Category 6", "Category 6A", "Category 7"],
+    correctIndex: 2,
+    explanation: "ISO Class EA corresponds to TIA Category 6A, both supporting frequencies up to 500 MHz and enabling 10GBASE-T applications over the full 100-metre channel length."
+  }
+];
+
+const faqs = [
+  {
+    question: "What's the difference between TIA-568 and ISO/IEC 11801?",
+    answer: "TIA-568 is the North American standard, while ISO/IEC 11801 is the international equivalent. Both specify similar requirements for structured cabling but use different terminology (categories vs classes). Performance requirements are largely harmonised."
+  },
+  {
+    question: "Which standard should I follow in the UK?",
+    answer: "In the UK, EN 50173 applies, which is the European implementation of ISO/IEC 11801. It uses class designations (D, E, EA, F) rather than categories, though performance specifications align with TIA standards."
+  },
+  {
+    question: "What does 'channel' mean in cabling standards?",
+    answer: "A channel refers to the complete end-to-end transmission path including horizontal cables, patch cords, connectors, and all interconnection hardware. Maximum channel length is 100m (90m permanent link + 10m patch cords)."
+  },
+  {
+    question: "Can I mix standards in the same installation?",
+    answer: "Yes, but consistency is important. Use the same wiring scheme throughout (T568A or T568B), and ensure all components meet at least the minimum class/category specification. Documentation should clearly state which standards apply."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+  question: "A multinational company needs to standardise network infrastructure across offices in New York, London, and Singapore. What is the key consideration for ensuring compatibility?",
+  options: [
+    "Use TIA-568 exclusively in all locations",
+    "Ensure equivalent class/category performance despite different regional standards",
+    "Install different cable types in each region",
+    "Only use wireless networks to avoid standards conflicts"
+  ],
+  correctAnswer: 1,
+  explanation: "Different regions follow different standards (TIA-568, EN 50173, ISO/IEC 11801), but performance specifications are harmonised. Using equivalent class/category specifications (e.g., Cat 6A/Class EA) ensures compatibility regardless of regional standard."
+  }
+];
 
 const DataCablingModule6Section1 = () => {
-  const quiz = [
-    {
-      question: "Which organisation publishes the TIA/EIA-568 standard?",
-      options: [
-        "International Organization for Standardization (ISO)",
-        "Telecommunications Industry Association (TIA)",
-        "Institute of Electrical and Electronics Engineers (IEEE)",
-        "International Electrotechnical Commission (IEC)"
-      ],
-      correct: 1,
-      explanation: "TIA/EIA-568 is published by the Telecommunications Industry Association (TIA), which was formerly part of the Electronic Industries Alliance (EIA)."
-    },
-    {
-      question: "What is the maximum horizontal cable length specified in TIA/EIA-568?",
-      options: [
-        "90 metres",
-        "100 metres",
-        "110 metres",
-        "150 metres"
-      ],
-      correct: 0,
-      explanation: "TIA/EIA-568 specifies a maximum horizontal cable length of 90 metres, with an additional 10 metres allowed for patch cords (5m at each end)."
-    },
-    {
-      question: "Which standard provides the European equivalent to TIA/EIA-568?",
-      options: [
-        "ISO/IEC 11801",
-        "EN 50173",
-        "Both ISO/IEC 11801 and EN 50173",
-        "IEEE 802.3"
-      ],
-      correct: 2,
-      explanation: "Both ISO/IEC 11801 (international) and EN 50173 (European) provide equivalent standards to TIA/EIA-568, with EN 50173 being the European implementation of ISO/IEC 11801."
-    },
-    {
-      question: "What does the 'channel' refer to in cabling standards?",
-      options: [
-        "Only the horizontal cable",
-        "The entire transmission path including patch cords",
-        "Only the backbone cabling",
-        "The telecommunications room equipment"
-      ],
-      correct: 1,
-      explanation: "A 'channel' refers to the complete end-to-end transmission path, including horizontal cables, patch cords, connectors, and all interconnection hardware."
-    },
-    {
-      question: "Which topology is specified as the primary architecture in TIA/EIA-568?",
-      options: [
-        "Ring topology",
-        "Bus topology",
-        "Star topology",
-        "Mesh topology"
-      ],
-      correct: 2,
-      explanation: "TIA/EIA-568 specifies star topology as the primary architecture, with each outlet connected directly to a telecommunications room via horizontal cabling."
-    }
-  ];
+  useSEO({
+    title: "TIA/EIA 568 and ISO/IEC 11801 Overview | Data Cabling Module 6.1",
+    description: "Understanding international cabling standards for structured cabling system design and installation."
+  });
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="px-8 pt-8 pb-12">
-        <Link to="../data-cabling-module-6">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
           <Button
             variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 6
-          </Button>
-        </Link>
-
-        <div className="space-y-6">
-          <div className="flex items-center gap-4 mb-6">
-            <BookOpen className="h-8 w-8 text-yellow-400" strokeWidth={2.5} />
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-white">
-                TIA/EIA 568 and ISO/IEC 11801 Overview
-              </h1>
-              <p className="text-base md:text-lg text-gray-400">
-                International cabling standards and requirements
-              </p>
-            </div>
-          </div>
-
-          <div className="flex gap-4 mb-8">
-            <Badge variant="secondary" className="bg-yellow-400 text-black">
-              Section 1
-            </Badge>
-            <Badge variant="outline" className="border-gray-600 text-gray-300">
-              12 minutes
-            </Badge>
-          </div>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <BookOpen className="h-5 w-5 text-yellow-400" />
-                Introduction to International Cabling Standards
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                International cabling standards provide the foundation for modern network infrastructure. 
-                Understanding TIA/EIA-568 and ISO/IEC 11801 is essential for designing, installing, and 
-                maintaining reliable data communication systems that meet global requirements.
-              </p>
-              <p>
-                These standards ensure interoperability, performance consistency, and future-proofing of 
-                network installations worldwide. They cover everything from cable specifications to 
-                installation practices and testing requirements.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-green-400" />
-                Learning Objectives
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <ul className="space-y-2 list-disc list-inside">
-                <li>Understand the scope and purpose of TIA/EIA-568 and ISO/IEC 11801 standards</li>
-                <li>Compare North American and international cabling approaches</li>
-                <li>Identify key architectural requirements and topologies</li>
-                <li>Learn about cable specifications and performance parameters</li>
-                <li>Understand testing and certification requirements</li>
-                <li>Apply standards to real-world installation scenarios</li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Globe className="h-5 w-5 text-yellow-400" />
-                TIA/EIA-568: North American Standard
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <div>
-                <h4 className="text-lg font-semibold text-white mb-3">Standard Overview</h4>
-                <p className="mb-4">
-                  TIA/EIA-568 is the premier North American standard for commercial building 
-                  telecommunications cabling infrastructure. Originally published in 1991, 
-                  it has evolved through multiple revisions to address advancing technology needs.
-                </p>
-                
-                <div className="bg-card p-4 rounded-lg mb-4">
-                  <h5 className="text-white font-semibold mb-2">Current Standard Structure:</h5>
-                  <ul className="space-y-2 text-sm">
-                    <li><strong>TIA-568.0-E:</strong> Generic Telecommunications Cabling (2020)</li>
-                    <li><strong>TIA-568.1-E:</strong> Commercial Building Cabling (2020)</li>
-                    <li><strong>TIA-568.2-D:</strong> Balanced Twisted-Pair Cabling (2018)</li>
-                    <li><strong>TIA-568.3-D:</strong> Optical Fibre Cabling (2016)</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="text-lg font-semibold text-white mb-3">Key Architectural Requirements</h4>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Star Topology</h5>
-                    <p className="text-sm">
-                      Each work area outlet connects directly to a telecommunications room 
-                      via horizontal cabling. No splices or bridged taps allowed in horizontal runs.
-                    </p>
-                  </div>
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Distance Limitations</h5>
-                    <p className="text-sm">
-                      Maximum 90m horizontal cable + 10m total patch cord length (5m each end). 
-                      Total channel length must not exceed 100m.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="text-lg font-semibold text-white mb-3">Cable Categories and Applications</h4>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm border-collapse">
-                    <thead>
-                      <tr className="border-b border-gray-600">
-                        <th className="text-left p-2 text-yellow-400">Category</th>
-                        <th className="text-left p-2 text-yellow-400">Frequency</th>
-                        <th className="text-left p-2 text-yellow-400">Applications</th>
-                        <th className="text-left p-2 text-yellow-400">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody className="text-gray-300">
-                      <tr className="border-b border-gray-700">
-                        <td className="p-2 font-semibold">Cat 5e</td>
-                        <td className="p-2">100 MHz</td>
-                        <td className="p-2">1000BASE-T, Basic PoE</td>
-                        <td className="p-2 text-green-400">Current</td>
-                      </tr>
-                      <tr className="border-b border-gray-700">
-                        <td className="p-2 font-semibold">Cat 6</td>
-                        <td className="p-2">250 MHz</td>
-                        <td className="p-2">1000BASE-T, PoE+</td>
-                        <td className="p-2 text-green-400">Current</td>
-                      </tr>
-                      <tr className="border-b border-gray-700">
-                        <td className="p-2 font-semibold">Cat 6A</td>
-                        <td className="p-2">500 MHz</td>
-                        <td className="p-2">10GBASE-T, PoE++</td>
-                        <td className="p-2 text-green-400">Current</td>
-                      </tr>
-                      <tr className="border-b border-gray-700">
-                        <td className="p-2 font-semibold">Cat 8</td>
-                        <td className="p-2">2000 MHz</td>
-                        <td className="p-2">25/40GBASE-T</td>
-                        <td className="p-2 text-yellow-400">Latest</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Building className="h-5 w-5 text-purple-400" />
-                ISO/IEC 11801: International Standard
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <div>
-                <h4 className="text-lg font-semibold text-white mb-3">Global Harmonisation</h4>
-                <p className="mb-4">
-                  ISO/IEC 11801 provides the international framework for structured cabling 
-                  systems. It harmonises cabling standards globally while allowing regional 
-                  adaptations through national standards like EN 50173 in Europe.
-                </p>
-                
-                <div className="bg-card p-4 rounded-lg mb-4">
-                  <h5 className="text-white font-semibold mb-2">Standard Series Structure:</h5>
-                  <ul className="space-y-2 text-sm">
-                    <li><strong>ISO/IEC 11801-1:</strong> General Requirements and Office Areas (2017)</li>
-                    <li><strong>ISO/IEC 11801-2:</strong> Office Premises (2017)</li>
-                    <li><strong>ISO/IEC 11801-3:</strong> Industrial Premises (2017)</li>
-                    <li><strong>ISO/IEC 11801-4:</strong> Single Tenant Houses (2017)</li>
-                    <li><strong>ISO/IEC 11801-5:</strong> Data Centres (2017)</li>
-                    <li><strong>ISO/IEC 11801-6:</strong> Distributed Building Services (2017)</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="text-lg font-semibold text-white mb-3">Channel vs Link Performance</h4>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Permanent Link</h5>
-                    <p className="text-sm mb-2">
-                      Fixed cabling from telecommunications outlet to patch panel 
-                      (90m maximum). Excludes equipment and patch cords.
-                    </p>
-                    <ul className="text-xs space-y-1">
-                      <li>• Used for installation verification</li>
-                      <li>• Tests cabling infrastructure only</li>
-                      <li>• More stringent requirements</li>
-                    </ul>
-                  </div>
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Channel</h5>
-                    <p className="text-sm mb-2">
-                      Complete transmission path including patch cords 
-                      (100m maximum total). End-to-end performance.
-                    </p>
-                    <ul className="text-xs space-y-1">
-                      <li>• Used for application support verification</li>
-                      <li>• Tests complete signal path</li>
-                      <li>• Reflects real-world performance</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="text-lg font-semibold text-white mb-3">Class Specifications Comparison</h4>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm border-collapse">
-                    <thead>
-                      <tr className="border-b border-gray-600">
-                        <th className="text-left p-2 text-yellow-400">ISO Class</th>
-                        <th className="text-left p-2 text-yellow-400">TIA Category</th>
-                        <th className="text-left p-2 text-yellow-400">Frequency</th>
-                        <th className="text-left p-2 text-yellow-400">Typical Applications</th>
-                      </tr>
-                    </thead>
-                    <tbody className="text-gray-300">
-                      <tr className="border-b border-gray-700">
-                        <td className="p-2 font-semibold">Class D</td>
-                        <td className="p-2">Cat 5e</td>
-                        <td className="p-2">100 MHz</td>
-                        <td className="p-2">Fast Ethernet, Gigabit Ethernet</td>
-                      </tr>
-                      <tr className="border-b border-gray-700">
-                        <td className="p-2 font-semibold">Class E</td>
-                        <td className="p-2">Cat 6</td>
-                        <td className="p-2">250 MHz</td>
-                        <td className="p-2">Gigabit Ethernet, PoE+</td>
-                      </tr>
-                      <tr className="border-b border-gray-700">
-                        <td className="p-2 font-semibold">Class EA</td>
-                        <td className="p-2">Cat 6A</td>
-                        <td className="p-2">500 MHz</td>
-                        <td className="p-2">10 Gigabit Ethernet, PoE++</td>
-                      </tr>
-                      <tr className="border-b border-gray-700">
-                        <td className="p-2 font-semibold">Class FA</td>
-                        <td className="p-2">Cat 7A</td>
-                        <td className="p-2">1000 MHz</td>
-                        <td className="p-2">10+ Gigabit applications</td>
-                      </tr>
-                      <tr className="border-b border-gray-700">
-                        <td className="p-2 font-semibold">Class I/II</td>
-                        <td className="p-2">Cat 8.1/8.2</td>
-                        <td className="p-2">2000 MHz</td>
-                        <td className="p-2">25/40 Gigabit Ethernet</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Network className="h-5 w-5 text-green-400" />
-                Practical Implementation Considerations
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <div>
-                <h4 className="text-lg font-semibold text-white mb-3">Regional Differences and Adaptations</h4>
-                <div className="grid md:grid-cols-3 gap-4">
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">North America</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• TIA/EIA-568 primary</li>
-                      <li>• RJ45 connectors standard</li>
-                      <li>• T568A/B wiring schemes</li>
-                      <li>• 110-style terminations</li>
-                    </ul>
-                  </div>
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Europe</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• EN 50173 implementation</li>
-                      <li>• ISO/IEC 11801 alignment</li>
-                      <li>• Class-based specifications</li>
-                      <li>• LSA-PLUS terminations</li>
-                    </ul>
-                  </div>
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">International</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• ISO/IEC 11801 framework</li>
-                      <li>• Regional adaptations</li>
-                      <li>• Harmonised testing</li>
-                      <li>• Global interoperability</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="text-lg font-semibold text-white mb-3">Installation Requirements</h4>
-                <div className="space-y-4">
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Bend Radius Requirements</h5>
-                    <div className="grid md:grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <p className="mb-2"><strong>During Installation:</strong></p>
-                        <ul className="space-y-1">
-                          <li>• Cat 5e/6: 4× cable diameter minimum</li>
-                          <li>• Cat 6A: 6× cable diameter minimum</li>
-                          <li>• No kinks or sharp bends</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="mb-2"><strong>After Installation:</strong></p>
-                        <ul className="space-y-1">
-                          <li>• Cat 5e/6: 8× cable diameter minimum</li>
-                          <li>• Cat 6A: 10× cable diameter minimum</li>
-                          <li>• Maintain throughout cable run</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Pulling Tension Limits</h5>
-                    <div className="grid md:grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <p className="mb-2"><strong>Maximum Pulling Force:</strong></p>
-                        <ul className="space-y-1">
-                          <li>• 4-pair UTP: 25 lbf (110 N)</li>
-                          <li>• 4-pair STP: 25 lbf (110 N)</li>
-                          <li>• Use pulling grips/lubricants</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="mb-2"><strong>Installation Practices:</strong></p>
-                        <ul className="space-y-1">
-                          <li>• Avoid crushing or pinching</li>
-                          <li>• Support cable weight properly</li>
-                          <li>• Use appropriate cable management</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Alert className="bg-blue-900/20 border-yellow-400">
-            <Zap className="h-4 w-4 text-yellow-400" />
-            <AlertDescription className="text-blue-100">
-              <strong>Pro Tip:</strong> When working on international projects, always verify which standard 
-              applies in the specific region. Some countries adopt ISO/IEC 11801 directly, while others 
-              create national versions with regional modifications. Understanding these differences is 
-              crucial for compliance and successful project completion.
-            </AlertDescription>
-          </Alert>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-orange-400" />
-                Real-World Scenario: Multi-National Installation
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="bg-card p-4 rounded-lg">
-                <h5 className="text-yellow-400 font-semibold mb-2">Scenario:</h5>
-                <p className="text-sm mb-4">
-                  A global technology company is standardising their network infrastructure across 
-                  offices in New York (USA), London (UK), and Singapore. Each location has different 
-                  local requirements but needs interoperable systems.
-                </p>
-
-                <div className="grid md:grid-cols-3 gap-4 text-sm">
-                  <div>
-                    <h6 className="text-white font-semibold mb-1">New York Office</h6>
-                    <ul className="space-y-1">
-                      <li>• Follow TIA-568.1-E</li>
-                      <li>• Cat 6A throughout</li>
-                      <li>• T568B wiring standard</li>
-                      <li>• 110-style patch panels</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h6 className="text-white font-semibold mb-1">London Office</h6>
-                    <ul className="space-y-1">
-                      <li>• Follow EN 50173-1</li>
-                      <li>• Class EA specification</li>
-                      <li>• T568A wiring standard</li>
-                      <li>• LSA-PLUS terminations</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h6 className="text-white font-semibold mb-1">Singapore Office</h6>
-                    <ul className="space-y-1">
-                      <li>• Follow ISO/IEC 11801-2</li>
-                      <li>• Class EA specification</li>
-                      <li>• Local building codes</li>
-                      <li>• Climate considerations</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="mt-4 p-3 bg-green-900/20 rounded-lg">
-                  <p className="text-green-200 text-sm">
-                    <strong>Solution:</strong> All three installations use Cat 6A/Class EA cables and 
-                    RJ45 connectors for compatibility. Performance specifications align across standards, 
-                    ensuring seamless network operation regardless of regional differences in installation practices.
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-green-400" />
-                Section Summary
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <ul className="space-y-2 list-disc list-inside">
-                <li>TIA/EIA-568 and ISO/IEC 11801 provide the foundation for structured cabling worldwide</li>
-                <li>Both standards specify star topology with 90m horizontal + 10m patch cord limits</li>
-                <li>Regional implementations maintain global interoperability while addressing local needs</li>
-                <li>Understanding both channel and permanent link concepts is essential for proper testing</li>
-                <li>Installation practices must follow strict bend radius and tension requirements</li>
-                <li>Category/Class equivalencies ensure compatibility across different standard frameworks</li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-yellow-400" />
-                Knowledge Check
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {quiz.map((q, index) => (
-                <div key={index} className="bg-card p-4 rounded-lg">
-                  <h4 className="text-white font-semibold mb-3">
-                    Question {index + 1}: {q.question}
-                  </h4>
-                  <div className="space-y-2">
-                    {q.options.map((option, optIndex) => (
-                      <div
-                        key={optIndex}
-                        className={`p-2 rounded cursor-pointer transition-colors ${
-                          optIndex === q.correct
-                            ? 'bg-green-900/30 border border-green-500 text-green-200'
-                            : 'bg-gray-700 hover:bg-gray-600 text-gray-300'
-                        }`}
-                      >
-                        {String.fromCharCode(65 + optIndex)}. {option}
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-3 p-3 bg-blue-900/20 rounded border border-yellow-400">
-                    <p className="text-blue-200 text-sm">
-                      <strong>Answer:</strong> {String.fromCharCode(65 + q.correct)}. {q.explanation}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-
-          <div className="flex justify-between pt-6">
             <Link to="../data-cabling-module-6">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-700">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Module 6
-              </Button>
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 6
             </Link>
-            <Link to="../data-cabling-module-6-section-2">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
-                Next: Class D, E, EA, F Standards
-                <ArrowLeft className="ml-2 h-4 w-4 rotate-180" />
-              </Button>
-            </Link>
-          </div>
+          </Button>
         </div>
       </div>
+
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Page Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 6.1</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            TIA/EIA 568 and ISO/IEC 11801 Overview
+          </h1>
+          <p className="text-white/80">
+            International cabling standards and requirements
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>TIA-568:</strong> North American standard (categories)</li>
+              <li><strong>ISO/IEC 11801:</strong> International standard (classes)</li>
+              <li><strong>Key limit:</strong> 90m horizontal + 10m patch cords</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Star topology, category markings on cables</li>
+              <li><strong>Use:</strong> Match regional standard, ensure class equivalence</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Understand TIA-568 and ISO 11801 scope",
+              "Compare categories and classes",
+              "Apply architectural requirements",
+              "Identify regional standards differences",
+              "Select appropriate specifications",
+              "Ensure international compatibility"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            TIA/EIA-568: North American Standard
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              TIA/EIA-568 is the premier North American standard for commercial building
+              telecommunications cabling infrastructure, defining requirements for design,
+              installation, and testing.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Current Standard Structure</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>TIA-568.0-E:</strong> Generic Cabling (2020)</li>
+                  <li><strong>TIA-568.1-E:</strong> Commercial Buildings (2020)</li>
+                  <li><strong>TIA-568.2-D:</strong> Twisted-Pair (2018)</li>
+                  <li><strong>TIA-568.3-D:</strong> Optical Fibre (2016)</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Requirements</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Topology:</strong> Star configuration</li>
+                  <li><strong>Horizontal:</strong> 90m maximum</li>
+                  <li><strong>Channel:</strong> 100m total</li>
+                  <li><strong>No splices:</strong> Point-to-point only</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">Cat 5e</p>
+                <p className="text-white/90 text-xs">100MHz, 1Gbps</p>
+              </div>
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">Cat 6/6A</p>
+                <p className="text-white/90 text-xs">250/500MHz</p>
+              </div>
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">Cat 8</p>
+                <p className="text-white/90 text-xs">2000MHz, 30m</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            ISO/IEC 11801: International Standard
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              ISO/IEC 11801 provides the international framework for structured cabling systems,
+              harmonising standards globally while allowing regional adaptations.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Standard Series Structure:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>ISO/IEC 11801-1:</strong> General Requirements (2017)</li>
+                <li><strong>ISO/IEC 11801-2:</strong> Office Premises (2017)</li>
+                <li><strong>ISO/IEC 11801-3:</strong> Industrial Premises (2017)</li>
+                <li><strong>ISO/IEC 11801-5:</strong> Data Centres (2017)</li>
+              </ul>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Permanent Link</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Fixed cabling: outlet to patch panel</li>
+                  <li>90m maximum length</li>
+                  <li>Excludes patch cords</li>
+                  <li>Used for installation verification</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Channel</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Complete transmission path</li>
+                  <li>100m maximum length</li>
+                  <li>Includes all patch cords</li>
+                  <li>Real-world performance test</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 3 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Class and Category Equivalence
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Understanding the relationship between ISO classes and TIA categories is essential
+              for specifying compatible cabling across different regional standards.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Class/Category Comparison:</p>
+              <div className="grid sm:grid-cols-2 gap-4 mt-3">
+                <div className="p-3 rounded bg-white/5">
+                  <p className="text-sm font-medium text-white mb-2">ISO Classes</p>
+                  <ul className="text-xs text-white/90 space-y-1">
+                    <li>Class D: 100MHz (Cat 5e)</li>
+                    <li>Class E: 250MHz (Cat 6)</li>
+                    <li>Class EA: 500MHz (Cat 6A)</li>
+                    <li>Class F/FA: 600-1000MHz (Cat 7)</li>
+                    <li>Class I/II: 2000MHz (Cat 8)</li>
+                  </ul>
+                </div>
+                <div className="p-3 rounded bg-white/5">
+                  <p className="text-sm font-medium text-white mb-2">Regional Implementation</p>
+                  <ul className="text-xs text-white/90 space-y-1">
+                    <li>North America: TIA-568</li>
+                    <li>Europe: EN 50173</li>
+                    <li>International: ISO/IEC 11801</li>
+                    <li>Performance: Harmonised</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Practical implications:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Category 6A and Class EA are functionally equivalent</li>
+                <li>Both support 10GBASE-T at 100 metres</li>
+                <li>Testing standards are harmonised across regions</li>
+                <li>Components meeting one standard typically meet equivalent</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Regional Considerations</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Verify which standard applies in your region</li>
+                <li>Use equivalent class/category for multinational projects</li>
+                <li>Document the standard followed in all installations</li>
+                <li>Ensure test equipment is configured for correct standard</li>
+                <li>Include standard references in specifications</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Mixing terminology:</strong> — Confusing classes with categories</li>
+                <li><strong>Wrong test limits:</strong> — Using TIA limits for ISO certification</li>
+                <li><strong>Exceeding distances:</strong> — Not accounting for total channel length</li>
+                <li><strong>Ignoring regional:</strong> — Assuming TIA applies everywhere</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quick Reference */}
+        <div className="mt-6 p-5 rounded-lg bg-transparent">
+          <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+            <div>
+              <p className="font-medium text-white mb-1">TIA-568 (North America)</p>
+              <ul className="space-y-0.5">
+                <li>Categories: 5e, 6, 6A, 8</li>
+                <li>T568A/B wiring</li>
+                <li>110-style terminations</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-medium text-white mb-1">ISO/IEC 11801 (International)</p>
+              <ul className="space-y-0.5">
+                <li>Classes: D, E, EA, F, I</li>
+                <li>Harmonised performance</li>
+                <li>Regional adaptations</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Quiz Section */}
+        <section className="mb-10 mt-12">
+          <SingleQuestionQuiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../data-cabling-module-6">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module
+            </Link>
+          </Button>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../data-cabling-module-6-section-2">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

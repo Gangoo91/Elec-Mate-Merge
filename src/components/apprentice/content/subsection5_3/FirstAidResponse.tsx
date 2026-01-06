@@ -12,7 +12,7 @@ const FirstAidResponse = () => {
         and minimise long-term damage while waiting for emergency services.
       </p>
       
-      <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4 md:p-5">
+      <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-4 md:p-5">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {/* First Column */}
           <div className="space-y-4">
@@ -23,7 +23,7 @@ const FirstAidResponse = () => {
               <h4 className="font-medium text-elec-yellow text-lg">Electric Shock Response</h4>
             </div>
             
-            <div className="bg-elec-gray rounded-md p-3">
+            <div className="bg-white/5 rounded-md p-3">
               <h5 className="font-medium text-elec-yellow text-base mb-2">Initial Action</h5>
               <ol className="list-decimal list-inside text-base space-y-2">
                 <li className="text-red-400 font-medium">Do NOT touch the casualty if they are still in contact with the electrical source</li>
@@ -33,7 +33,7 @@ const FirstAidResponse = () => {
               </ol>
             </div>
             
-            <div className="bg-elec-gray rounded-md p-3">
+            <div className="bg-white/5 rounded-md p-3">
               <h5 className="font-medium text-elec-yellow text-base mb-2">Primary Assessment</h5>
               <ul className="list-disc list-inside text-base space-y-2">
                 <li>Check responsiveness by shouting and gently shaking</li>
@@ -53,7 +53,7 @@ const FirstAidResponse = () => {
               <h4 className="font-medium text-elec-yellow text-lg">Treating Electrical Burns</h4>
             </div>
             
-            <div className="bg-elec-gray rounded-md p-3">
+            <div className="bg-white/5 rounded-md p-3">
               <h5 className="font-medium text-elec-yellow text-base mb-2">Electrical Burn Care</h5>
               <ul className="list-disc list-inside text-base space-y-2">
                 <li>Remove jewellery and constricting items from affected area</li>
@@ -64,7 +64,7 @@ const FirstAidResponse = () => {
               </ul>
             </div>
             
-            <div className="bg-elec-gray rounded-md p-3">
+            <div className="bg-white/5 rounded-md p-3">
               <h5 className="font-medium text-elec-yellow text-base mb-2">Types of Electrical Burns</h5>
               <ul className="list-disc list-inside text-base space-y-2">
                 <li><span className="text-elec-yellow">Entry/Exit burns:</span> Where current enters/exits body</li>
@@ -85,7 +85,7 @@ const FirstAidResponse = () => {
               <h4 className="font-medium text-elec-yellow text-lg">Monitoring & Complications</h4>
             </div>
             
-            <div className="bg-elec-gray rounded-md p-3">
+            <div className="bg-white/5 rounded-md p-3">
               <h5 className="font-medium text-elec-yellow text-base mb-2">Signs of Complications</h5>
               <ul className="list-disc list-inside text-base space-y-2">
                 <li>Irregular heartbeat or cardiac arrest</li>
@@ -96,7 +96,7 @@ const FirstAidResponse = () => {
               </ul>
             </div>
             
-            <div className="bg-elec-gray rounded-md p-3">
+            <div className="bg-white/5 rounded-md p-3">
               <h5 className="font-medium text-elec-yellow text-base mb-2">Important Notes</h5>
               <ul className="list-disc list-inside text-base space-y-2">
                 <li>All electric shock victims should receive medical assessment</li>
@@ -109,7 +109,7 @@ const FirstAidResponse = () => {
           </div>
         </div>
         
-        <div className="mt-4 p-4 bg-elec-dark/70 rounded-lg text-base">
+        <div className="mt-4 p-4 bg-white/10 rounded-lg text-base">
           <p className="font-medium mb-1 text-elec-yellow">Important:</p>
           <p>The Health and Safety (First-Aid) Regulations 1981 require employers to provide adequate first-aid equipment, 
           facilities and trained personnel. In electrical work environments, specific first-aid provisions for electrical injuries 

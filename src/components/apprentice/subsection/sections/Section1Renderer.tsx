@@ -98,9 +98,9 @@ export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete, isEl
   
   console.log("Section1Renderer - No matching subsection found for:", subsectionId);
   return (
-    <Card className="border-elec-yellow/20 bg-elec-dark/50">
+    <Card className="border-elec-yellow/20 bg-white/10">
       <CardContent className="p-6 text-center">
-        <p className="text-muted-foreground">Content for subsection {subsectionId} is not yet available.</p>
+        <p className="text-white">Content for subsection {subsectionId} is not yet available.</p>
       </CardContent>
     </Card>
   );

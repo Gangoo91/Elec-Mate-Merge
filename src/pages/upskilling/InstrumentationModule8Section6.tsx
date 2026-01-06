@@ -459,7 +459,7 @@ const InstrumentationModule8Section6 = () => {
                 ],
                 correctAnswer: 1,
                 explanation: "Safety system bypasses should only occur with proper risk assessment, senior management approval, alternative protection measures, and immediate restoration after testing is complete."
-              }
+            }
             ]}
             title="Section 6 Knowledge Check"
           />

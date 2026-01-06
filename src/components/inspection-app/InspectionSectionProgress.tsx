@@ -47,7 +47,7 @@ const InspectionSectionProgress = ({ sectionItems, inspectionItems }: Inspection
         ) : progress.completed > 0 ? (
           <AlertTriangle className="h-4 w-4 text-yellow-500" />
         ) : (
-          <div className="h-4 w-4 bg-gray-300 rounded-full" />
+          <div className="h-4 w-4 bg-white/10 rounded-full" />
         )}
       </div>
     </div>

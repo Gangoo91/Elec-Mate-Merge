@@ -20,7 +20,7 @@ const ResourcesList = ({ resources, dataSource, onSelectResource }: ResourcesLis
         </h4>
         
         {dataSource && (
-          <span className="text-xs text-muted-foreground bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full">
+          <span className="text-xs text-white/80 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full">
             Source: {dataSource}
           </span>
         )}
@@ -34,7 +34,7 @@ const ResourcesList = ({ resources, dataSource, onSelectResource }: ResourcesLis
         >
           <div>
             <div className="font-medium text-sm">{resource.name}</div>
-            <div className="text-xs text-muted-foreground flex items-center gap-1">
+            <div className="text-xs text-white/80 flex items-center gap-1">
               <MapPin className="h-3 w-3" /> {resource.distance}
             </div>
           </div>
@@ -49,7 +49,7 @@ const ResourcesList = ({ resources, dataSource, onSelectResource }: ResourcesLis
                 {resource.open_now ? "Open" : "Closed"}
               </span>
             )}
-            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+            <ChevronRight className="h-4 w-4 text-white/80" />
           </div>
         </div>
       ))}

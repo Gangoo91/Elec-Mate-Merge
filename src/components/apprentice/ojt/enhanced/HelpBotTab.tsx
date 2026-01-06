@@ -216,7 +216,7 @@ const HelpBotTab = () => {
   return (
     <div className="space-y-4">
       {/* Main Chat Card */}
-      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-gray to-elec-gray/80">
+      <Card className="border-elec-yellow/30 bg-gradient-to-br from-white/5 to-elec-gray/80">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="text-elec-yellow flex items-center gap-2">
@@ -230,7 +230,7 @@ const HelpBotTab = () => {
               20+ Years Experience
             </Badge>
           </div>
-          <p className="text-sm text-muted-foreground mt-1">
+          <p className="text-sm text-white mt-1">
             Master electrician with decades of UK experience. Ask anything about electrical work, regulations, testing, or your apprenticeship.
           </p>
         </CardHeader>
@@ -243,12 +243,12 @@ const HelpBotTab = () => {
                   <Bot className="h-8 w-8 text-elec-yellow" />
                 </div>
                 <h3 className="font-semibold text-lg mb-2">Hello! I'm Dave.</h3>
-                <p className="text-muted-foreground mb-4 max-w-md">
+                <p className="text-white mb-4 max-w-md">
                   I'm a qualified electrician with over 20 years in the UK trade. I've trained dozens of apprentices
                   and know BS 7671 inside out. Whether it's regulations, testing, calculations, or career advice -
                   I'm here to help.
                 </p>
-                <div className="text-xs text-muted-foreground bg-elec-gray/50 px-3 py-2 rounded-lg">
+                <div className="text-xs text-white bg-white/5 px-3 py-2 rounded-lg">
                   💡 Use the quick questions below or ask me anything about electrical work
                 </div>
               </div>
@@ -263,14 +263,14 @@ const HelpBotTab = () => {
                 ))}
                 {isLoading && (
                   <div className="flex justify-start mb-4">
-                    <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-4 max-w-[85%]">
+                    <div className="bg-white/5 border border-elec-yellow/20 rounded-lg p-4 max-w-[85%]">
                       <div className="flex items-center gap-3">
                         <div className="flex gap-1">
                           <div className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
                           <div className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
                           <div className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
                         </div>
-                        <span className="text-sm text-muted-foreground">Dave is thinking...</span>
+                        <span className="text-sm text-white">Dave is thinking...</span>
                       </div>
                     </div>
                   </div>
@@ -311,19 +311,19 @@ const HelpBotTab = () => {
         </CardHeader>
         <CardContent className="space-y-2">
           {quickQuestionCategories.map((category) => (
-            <div key={category.id} className="border border-elec-gray rounded-lg overflow-hidden">
+            <div key={category.id} className="border border-white/5 rounded-lg overflow-hidden">
               <button
                 onClick={() => toggleCategory(category.id)}
-                className="w-full flex items-center justify-between p-3 hover:bg-elec-gray/50 transition-colors"
+                className="w-full flex items-center justify-between p-3 hover:bg-white/5 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <category.icon className={`h-4 w-4 ${category.color}`} />
                   <span className="font-medium text-sm">{category.name}</span>
                 </div>
                 {expandedCategory === category.id ? (
-                  <ChevronUp className="h-4 w-4 text-muted-foreground" />
+                  <ChevronUp className="h-4 w-4 text-white" />
                 ) : (
-                  <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                  <ChevronDown className="h-4 w-4 text-white" />
                 )}
               </button>
               {expandedCategory === category.id && (
@@ -332,7 +332,7 @@ const HelpBotTab = () => {
                     <button
                       key={index}
                       onClick={() => handleQuickQuestion(question)}
-                      className="w-full text-left text-sm p-2 rounded hover:bg-elec-yellow/10 transition-colors text-muted-foreground hover:text-foreground"
+                      className="w-full text-left text-sm p-2 rounded hover:bg-elec-yellow/10 transition-colors text-white hover:text-foreground"
                       disabled={isLoading}
                     >
                       {question}
@@ -347,30 +347,30 @@ const HelpBotTab = () => {
 
       {/* Pro Tips */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <div className="bg-elec-gray/50 border border-elec-yellow/20 rounded-lg p-3">
+        <div className="bg-white/5 border border-elec-yellow/20 rounded-lg p-3">
           <div className="flex items-center gap-2 mb-1">
             <Shield className="h-4 w-4 text-red-500" />
             <span className="text-xs font-medium">Safety First</span>
           </div>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-white">
             Dave always emphasises safe working practices. Never skip isolation procedures.
           </p>
         </div>
-        <div className="bg-elec-gray/50 border border-elec-yellow/20 rounded-lg p-3">
+        <div className="bg-white/5 border border-elec-yellow/20 rounded-lg p-3">
           <div className="flex items-center gap-2 mb-1">
             <BookOpen className="h-4 w-4 text-orange-500" />
             <span className="text-xs font-medium">Regs Expert</span>
           </div>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-white">
             Ask about BS 7671 - Dave knows the 18th Edition inside out.
           </p>
         </div>
-        <div className="bg-elec-gray/50 border border-elec-yellow/20 rounded-lg p-3">
+        <div className="bg-white/5 border border-elec-yellow/20 rounded-lg p-3">
           <div className="flex items-center gap-2 mb-1">
             <GraduationCap className="h-4 w-4 text-cyan-500" />
             <span className="text-xs font-medium">Career Advice</span>
           </div>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-white">
             From apprentice to running your own business - get guidance on your journey.
           </p>
         </div>

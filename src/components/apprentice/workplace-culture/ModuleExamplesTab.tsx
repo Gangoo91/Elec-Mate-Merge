@@ -17,22 +17,22 @@ const ModuleExamplesTab = ({ module }: ModuleExamplesTabProps) => {
 
   if (isMobile) {
     return (
-      <div className="space-y-4">
+      <div className="space-y-3 animate-fade-in">
         <Accordion type="single" collapsible className="w-full">
           {module.content.examples.map((example, index) => (
-            <AccordionItem key={index} value={`example-item-${index}`} className="border-elec-yellow/20 bg-elec-dark/40">
-              <AccordionTrigger className="px-4 font-medium">
-                Situation: {example.situation}
+            <AccordionItem key={index} value={`example-item-${index}`} className="border-blue-500/20 bg-gradient-to-br from-elec-gray to-elec-card rounded-xl overflow-hidden mb-2">
+              <AccordionTrigger className="px-4 font-medium text-blue-400 hover:no-underline text-left">
+                <span className="text-sm">Situation: {example.situation}</span>
               </AccordionTrigger>
               <AccordionContent className="px-4 pb-4">
                 <div className="space-y-3">
-                  <div className="pl-4 border-l-2 border-green-500">
-                    <p className="text-sm text-green-400 mb-1">Effective Approach:</p>
-                    <p className="text-elec-light/90">{example.rightApproach}</p>
+                  <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
+                    <p className="text-xs font-medium text-green-400 mb-2">Effective Approach:</p>
+                    <p className="text-sm text-white/80">{example.rightApproach}</p>
                   </div>
-                  <div className="pl-4 border-l-2 border-red-500">
-                    <p className="text-sm text-red-400 mb-1">Less Effective Approach:</p>
-                    <p className="text-elec-light/90">{example.wrongApproach}</p>
+                  <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20">
+                    <p className="text-xs font-medium text-red-400 mb-2">Less Effective Approach:</p>
+                    <p className="text-sm text-white/80">{example.wrongApproach}</p>
                   </div>
                 </div>
               </AccordionContent>
@@ -44,18 +44,18 @@ const ModuleExamplesTab = ({ module }: ModuleExamplesTabProps) => {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 animate-fade-in">
       {module.content.examples.map((example, index) => (
-        <div key={index} className="bg-elec-dark/40 p-4 rounded-md border border-elec-yellow/20">
-          <h4 className="font-medium mb-2">Situation: {example.situation}</h4>
-          <div className="space-y-3 mt-4">
-            <div className="pl-4 border-l-2 border-green-500">
-              <p className="text-sm text-green-400 mb-1">Effective Approach:</p>
-              <p className="text-elec-light/90">{example.rightApproach}</p>
+        <div key={index} className="p-5 rounded-xl bg-white/10 border border-white/10">
+          <h4 className="font-semibold text-blue-400 mb-4">Situation: {example.situation}</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/20">
+              <p className="text-sm font-medium text-green-400 mb-2">Effective Approach:</p>
+              <p className="text-white/80">{example.rightApproach}</p>
             </div>
-            <div className="pl-4 border-l-2 border-red-500">
-              <p className="text-sm text-red-400 mb-1">Less Effective Approach:</p>
-              <p className="text-elec-light/90">{example.wrongApproach}</p>
+            <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20">
+              <p className="text-sm font-medium text-red-400 mb-2">Less Effective Approach:</p>
+              <p className="text-white/80">{example.wrongApproach}</p>
             </div>
           </div>
         </div>

@@ -226,7 +226,7 @@ const WellbeingJournal = () => {
             <BookOpen className="h-6 w-6 text-purple-400" />
           </div>
           <h2 className="text-xl font-bold text-foreground mb-1">Wellbeing Journal</h2>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white/80">
             Track your thoughts, feelings, and growth
           </p>
         </div>
@@ -239,7 +239,7 @@ const WellbeingJournal = () => {
               Synced to cloud
             </span>
           ) : (
-            <span className="flex items-center gap-1 text-muted-foreground">
+            <span className="flex items-center gap-1 text-white/80">
               <CloudOff className="h-3 w-3" />
               Local only - sign in to sync
             </span>
@@ -251,19 +251,19 @@ const WellbeingJournal = () => {
           <Card className="border-purple-500/20 bg-purple-500/5">
             <CardContent className="p-3 text-center">
               <div className="text-2xl font-bold text-purple-400">{entries.length}</div>
-              <div className="text-[10px] text-muted-foreground">Entries</div>
+              <div className="text-[10px] text-white/80">Entries</div>
             </CardContent>
           </Card>
           <Card className="border-orange-500/20 bg-orange-500/5">
             <CardContent className="p-3 text-center">
               <div className="text-2xl font-bold text-orange-400">{getStreak()}</div>
-              <div className="text-[10px] text-muted-foreground">Day Streak</div>
+              <div className="text-[10px] text-white/80">Day Streak</div>
             </CardContent>
           </Card>
           <Card className="border-green-500/20 bg-green-500/5">
             <CardContent className="p-3 text-center">
               <div className="text-2xl font-bold text-green-400">{getAverageMood()}</div>
-              <div className="text-[10px] text-muted-foreground">Avg Mood</div>
+              <div className="text-[10px] text-white/80">Avg Mood</div>
             </CardContent>
           </Card>
         </div>
@@ -282,7 +282,7 @@ const WellbeingJournal = () => {
           <div className="space-y-2">
             <div className="flex gap-2">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/80" />
                 <Input
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -349,7 +349,7 @@ const WellbeingJournal = () => {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between mb-1">
-                          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <div className="flex items-center gap-2 text-xs text-white/80">
                             <Calendar className="h-3 w-3" />
                             {new Date(entry.date).toLocaleDateString('en-GB', {
                               weekday: 'short',
@@ -381,7 +381,7 @@ const WellbeingJournal = () => {
                           </div>
                         )}
                       </div>
-                      <ChevronRight className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                      <ChevronRight className="h-5 w-5 text-white/80 flex-shrink-0" />
                     </div>
                   </CardContent>
                 </Card>
@@ -390,8 +390,8 @@ const WellbeingJournal = () => {
           ) : entries.length > 0 ? (
             <Card className="border-white/10 bg-white/5">
               <CardContent className="text-center py-8">
-                <Search className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
-                <p className="text-sm text-muted-foreground">No matching entries found</p>
+                <Search className="h-10 w-10 text-white/80 mx-auto mb-3" />
+                <p className="text-sm text-white/80">No matching entries found</p>
               </CardContent>
             </Card>
           ) : (
@@ -399,7 +399,7 @@ const WellbeingJournal = () => {
               <CardContent className="text-center py-8">
                 <Sparkles className="h-10 w-10 text-purple-400 mx-auto mb-3" />
                 <h3 className="font-medium text-foreground mb-2">Start Your Journal</h3>
-                <p className="text-sm text-muted-foreground mb-4">
+                <p className="text-sm text-white/80 mb-4">
                   Writing regularly helps identify patterns in your mental health.
                   Just a few minutes a day can make a difference.
                 </p>
@@ -420,7 +420,7 @@ const WellbeingJournal = () => {
                 <TrendingUp className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <h4 className="font-medium text-blue-400 text-sm mb-1">Your Insight</h4>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-white/80">
                     {getStreak() >= 3
                       ? `Great consistency! You've journaled for ${getStreak()} days in a row. This habit builds self-awareness.`
                       : entries.length >= 7
@@ -447,7 +447,7 @@ const WellbeingJournal = () => {
             <ChevronLeft className="h-4 w-4 mr-1" />
             Back
           </Button>
-          <span className="text-sm text-muted-foreground">
+          <span className="text-sm text-white/80">
             {new Date().toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })}
           </span>
           <Button
@@ -477,7 +477,7 @@ const WellbeingJournal = () => {
                   }`}
                 >
                   <span className="text-2xl">{mood.emoji}</span>
-                  <span className="text-[10px] text-muted-foreground">{mood.label}</span>
+                  <span className="text-[10px] text-white/80">{mood.label}</span>
                 </button>
               ))}
             </div>
@@ -516,7 +516,7 @@ const WellbeingJournal = () => {
         <Card className="border-green-500/20 bg-green-500/5">
           <CardContent className="p-4">
             <h3 className="text-sm font-medium text-green-400 mb-2">Gratitude</h3>
-            <p className="text-xs text-muted-foreground mb-3">What are you grateful for today?</p>
+            <p className="text-xs text-white/80 mb-3">What are you grateful for today?</p>
 
             <div className="flex gap-2 mb-2">
               <Input
@@ -537,7 +537,7 @@ const WellbeingJournal = () => {
                   <div key={index} className="flex items-center gap-2 p-2 rounded bg-green-500/10">
                     <span className="text-green-400">+</span>
                     <span className="text-sm text-foreground flex-1">{item}</span>
-                    <button onClick={() => removeGratitude(index)} className="text-muted-foreground hover:text-foreground">
+                    <button onClick={() => removeGratitude(index)} className="text-white/80 hover:text-foreground">
                       <X className="h-4 w-4" />
                     </button>
                   </div>
@@ -551,7 +551,7 @@ const WellbeingJournal = () => {
         <Card className="border-orange-500/20 bg-orange-500/5">
           <CardContent className="p-4">
             <h3 className="text-sm font-medium text-orange-400 mb-2">Triggers or Challenges</h3>
-            <p className="text-xs text-muted-foreground mb-3">Any stressors affecting you? (optional)</p>
+            <p className="text-xs text-white/80 mb-3">Any stressors affecting you? (optional)</p>
 
             <div className="flex gap-2 mb-2">
               <Input
@@ -572,7 +572,7 @@ const WellbeingJournal = () => {
                   <div key={index} className="flex items-center gap-2 p-2 rounded bg-orange-500/10">
                     <span className="text-orange-400">!</span>
                     <span className="text-sm text-foreground flex-1">{item}</span>
-                    <button onClick={() => removeTrigger(index)} className="text-muted-foreground hover:text-foreground">
+                    <button onClick={() => removeTrigger(index)} className="text-white/80 hover:text-foreground">
                       <X className="h-4 w-4" />
                     </button>
                   </div>
@@ -597,7 +597,7 @@ const WellbeingJournal = () => {
                   className={`px-3 py-1 rounded-full text-xs transition-all ${
                     currentEntry.tags?.includes(tag)
                       ? 'bg-purple-500 text-foreground'
-                      : 'bg-white/10 text-muted-foreground hover:bg-white/20'
+                      : 'bg-white/10 text-white/80 hover:bg-white/20'
                   }`}
                 >
                   {tag}
@@ -650,7 +650,7 @@ const WellbeingJournal = () => {
               </div>
               <div>
                 <div className="text-lg font-semibold text-foreground">{mood?.label}</div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2 text-sm text-white/80">
                   <Calendar className="h-4 w-4" />
                   {new Date(selectedEntry.date).toLocaleDateString('en-GB', {
                     weekday: 'long',
@@ -659,7 +659,7 @@ const WellbeingJournal = () => {
                     year: 'numeric'
                   })}
                 </div>
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <div className="flex items-center gap-2 text-xs text-white/80">
                   <Clock className="h-3 w-3" />
                   {selectedEntry.time}
                 </div>

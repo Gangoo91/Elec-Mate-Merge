@@ -27,7 +27,7 @@ const IndustrialComplianceRequirements = () => {
   ];
 
   return (
-    <Card className="border-red-500/30 bg-elec-gray">
+    <Card className="border-red-500/30 bg-white/5">
       <CardHeader>
         <div className="flex items-center gap-2">
           <FileCheck className="h-6 w-6 text-red-400" />

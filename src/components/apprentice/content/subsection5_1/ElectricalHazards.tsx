@@ -14,7 +14,7 @@ const ElectricalHazards = () => {
       </p>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="bg-elec-dark/50 border border-elec-yellow/20">
+        <Card className="bg-white/10 border border-elec-yellow/20">
           <CardHeader className="pb-2">
             <div className="flex items-center gap-2">
               <Zap className="h-5 w-5 text-elec-yellow" />
@@ -47,7 +47,7 @@ const ElectricalHazards = () => {
           </CardContent>
         </Card>
         
-        <Card className="bg-elec-dark/50 border border-elec-yellow/20">
+        <Card className="bg-white/10 border border-elec-yellow/20">
           <CardHeader className="pb-2">
             <div className="flex items-center gap-2">
               <Cable className="h-5 w-5 text-elec-yellow" />
@@ -80,7 +80,7 @@ const ElectricalHazards = () => {
           </CardContent>
         </Card>
         
-        <Card className="bg-elec-dark/50 border border-elec-yellow/20">
+        <Card className="bg-white/10 border border-elec-yellow/20">
           <CardHeader className="pb-2">
             <div className="flex items-center gap-2">
               <AlertTriangle className="h-5 w-5 text-elec-yellow" />
@@ -115,7 +115,7 @@ const ElectricalHazards = () => {
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-        <Card className="bg-elec-dark/50 border border-elec-yellow/20">
+        <Card className="bg-white/10 border border-elec-yellow/20">
           <CardHeader className="pb-2">
             <div className="flex items-center gap-2">
               <AlertTriangle className="h-5 w-5 text-elec-yellow" />
@@ -144,7 +144,7 @@ const ElectricalHazards = () => {
           </CardContent>
         </Card>
         
-        <Card className="bg-elec-dark/50 border border-elec-yellow/20">
+        <Card className="bg-white/10 border border-elec-yellow/20">
           <CardHeader className="pb-2">
             <div className="flex items-center gap-2">
               <AlertTriangle className="h-5 w-5 text-elec-yellow" />

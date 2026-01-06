@@ -82,7 +82,7 @@ const QuickMoodCheck = ({ onClose }: QuickMoodCheckProps) => {
           <div className="w-full max-w-sm space-y-6 animate-fade-in">
             <div className="text-center">
               <h2 className="text-2xl font-bold text-foreground mb-2">How are you feeling?</h2>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-white/80 text-sm">
                 Take a moment to check in with yourself
               </p>
             </div>
@@ -122,7 +122,7 @@ const QuickMoodCheck = ({ onClose }: QuickMoodCheckProps) => {
               <h2 className="text-xl font-bold text-foreground mb-1">
                 Feeling {selectedMoodData.label.toLowerCase()}
               </h2>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-white/80 text-sm">
                 Want to add a note? (optional)
               </p>
             </div>
@@ -154,7 +154,7 @@ const QuickMoodCheck = ({ onClose }: QuickMoodCheckProps) => {
 
             <div>
               <h2 className="text-2xl font-bold text-foreground mb-2">Check-In Saved</h2>
-              <p className="text-muted-foreground">
+              <p className="text-white/80">
                 Thanks for taking a moment to check in.
               </p>
             </div>
@@ -165,7 +165,7 @@ const QuickMoodCheck = ({ onClose }: QuickMoodCheckProps) => {
                 <div className="grid grid-cols-2 gap-4 text-center">
                   <div>
                     <div className="text-2xl font-bold text-foreground">{moodHistory.length}</div>
-                    <div className="text-xs text-muted-foreground">Days Tracked</div>
+                    <div className="text-xs text-white/80">Days Tracked</div>
                   </div>
                   <div>
                     <div className="flex items-center justify-center gap-1">
@@ -188,10 +188,10 @@ const QuickMoodCheck = ({ onClose }: QuickMoodCheckProps) => {
                         </>
                       )}
                       {!getTrend() && (
-                        <span className="text-sm text-muted-foreground">Keep tracking</span>
+                        <span className="text-sm text-white/80">Keep tracking</span>
                       )}
                     </div>
-                    <div className="text-xs text-muted-foreground">Trend</div>
+                    <div className="text-xs text-white/80">Trend</div>
                   </div>
                 </div>
               </CardContent>

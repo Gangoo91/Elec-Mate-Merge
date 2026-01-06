@@ -139,14 +139,14 @@ const CPCContinuityGuide = () => {
     {
       category: "Good",
       range: "0.05Ω - 0.2Ω per 100m",
-      color: "text-yellow-400 bg-yellow-400/20",
+      color: "text-elec-yellow bg-elec-yellow/20",
       description: "Acceptable resistance for most applications",
       implications: "Adequate fault current levels, normal operation expected"
     },
     {
       category: "Acceptable",
       range: "0.2Ω - 1.0Ω",
-      color: "text-yellow-400 bg-yellow-600/20",
+      color: "text-elec-yellow bg-elec-yellow/20",
       description: "Higher resistance but still within limits",
       implications: "Check against circuit requirements, may need investigation"
     },
@@ -178,13 +178,13 @@ const CPCContinuityGuide = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="module-8/section-3">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Practical Tests
@@ -193,7 +193,7 @@ const CPCContinuityGuide = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <Zap className="h-8 w-8 text-yellow-400" />
+            <Zap className="h-8 w-8 text-elec-yellow" />
             <Badge 
               variant="secondary" 
               className="bg-green-600/40 text-green-300 hover:bg-green-600/50 font-semibold text-sm px-3 py-1 border-0"
@@ -215,10 +215,10 @@ const CPCContinuityGuide = () => {
         <div className="max-w-6xl mx-auto space-y-8">
 
           {/* Why We Test Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <BookOpen className="h-6 w-6 text-yellow-400" />
+                <BookOpen className="h-6 w-6 text-elec-yellow" />
                 Why We Test CPC Continuity
               </CardTitle>
             </CardHeader>
@@ -227,9 +227,9 @@ const CPCContinuityGuide = () => {
                 {whyWeTest.map((reason, index) => {
                   const IconComponent = reason.icon;
                   return (
-                    <div key={index} className="bg-card/80 p-4 rounded-lg">
+                    <div key={index} className="bg-transparent/80 p-4 rounded-lg">
                       <div className="flex items-center gap-3 mb-2">
-                        <IconComponent className="h-5 w-5 text-yellow-400" />
+                        <IconComponent className="h-5 w-5 text-elec-yellow" />
                         <h3 className="text-white font-semibold">{reason.title}</h3>
                       </div>
                       <p className="text-white text-sm">{reason.description}</p>
@@ -241,20 +241,20 @@ const CPCContinuityGuide = () => {
           </Card>
 
           {/* Science Behind It */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Target className="h-6 w-6 text-yellow-400" />
+                <Target className="h-6 w-6 text-elec-yellow" />
                 The Science Behind CPC Testing
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               {scienceBehind.map((science, index) => (
-                <div key={index} className="bg-card/80 p-4 rounded-lg">
+                <div key={index} className="bg-transparent/80 p-4 rounded-lg">
                   <h3 className="text-white font-semibold mb-2">{science.title}</h3>
                   <p className="text-white text-sm mb-3">{science.description}</p>
-                  <div className="bg-card p-3 rounded border-l-4 border-yellow-400">
-                    <code className="text-yellow-400 text-sm font-mono">{science.formula}</code>
+                  <div className="bg-transparent p-3 rounded border-l-4 border-elec-yellow">
+                    <code className="text-elec-yellow text-sm font-mono">{science.formula}</code>
                   </div>
                 </div>
               ))}
@@ -262,18 +262,18 @@ const CPCContinuityGuide = () => {
           </Card>
 
           {/* Hands-On Practical Testing */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Settings className="h-6 w-6 text-yellow-400" />
+                <Settings className="h-6 w-6 text-elec-yellow" />
                 Hands-On: How to Actually Do the Test
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="bg-yellow-600/20 p-4 rounded-lg border border-yellow-600/30">
+              <div className="bg-elec-yellow/20 p-4 rounded-lg border border-elec-yellow/30">
                 <div className="flex items-center gap-2 mb-2">
-                  <Eye className="h-5 w-5 text-yellow-400" />
-                  <h4 className="text-yellow-400 font-semibold">Before You Start</h4>
+                  <Eye className="h-5 w-5 text-elec-yellow" />
+                  <h4 className="text-elec-yellow font-semibold">Before You Start</h4>
                 </div>
                 <p className="text-yellow-200 text-sm">
                   You have a low-resistance ohmmeter (like a Megger MFT) and you're testing a radial socket circuit. 
@@ -282,9 +282,9 @@ const CPCContinuityGuide = () => {
               </div>
 
               <div className="space-y-4">
-                <div className="bg-card/80 p-6 rounded-lg">
+                <div className="bg-transparent/80 p-6 rounded-lg">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="bg-yellow-400 text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">1</div>
+                    <div className="bg-elec-yellow text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">1</div>
                     <h3 className="text-white text-lg font-semibold">Set Up Your Meter</h3>
                   </div>
                   <div className="space-y-3">
@@ -292,15 +292,15 @@ const CPCContinuityGuide = () => {
                     <p className="text-white">• Select continuity/low-resistance mode (usually marked with Ω symbol)</p>
                     <p className="text-white">• Check test current is set to 200mA (standard for CPC testing)</p>
                     <p className="text-white">• Connect your test leads to the meter (usually red = positive, black = negative)</p>
-                    <div className="bg-yellow-400/20 p-3 rounded border-l-4 border-yellow-400">
+                    <div className="bg-elec-yellow/20 p-3 rounded border-l-4 border-elec-yellow">
                       <p className="text-blue-200 text-sm"><strong>Tip:</strong> Touch the test leads together - reading should be close to 0.00Ω (this is your lead resistance)</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-6 rounded-lg">
+                <div className="bg-transparent/80 p-6 rounded-lg">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="bg-yellow-400 text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">2</div>
+                    <div className="bg-elec-yellow text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">2</div>
                     <h3 className="text-white text-lg font-semibold">Locate Your Test Points</h3>
                   </div>
                   <div className="space-y-3">
@@ -315,9 +315,9 @@ const CPCContinuityGuide = () => {
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-6 rounded-lg">
+                <div className="bg-transparent/80 p-6 rounded-lg">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="bg-yellow-400 text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">3</div>
+                    <div className="bg-elec-yellow text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">3</div>
                     <h3 className="text-white text-lg font-semibold">Make the Connections</h3>
                   </div>
                   <div className="space-y-3">
@@ -325,15 +325,15 @@ const CPCContinuityGuide = () => {
                     <p className="text-white">• Connect the other test lead to the earth terminal at the socket</p>
                     <p className="text-white">• Ensure good mechanical contact (clean terminals if necessary)</p>
                     <p className="text-white">• Make sure no parallel paths exist (disconnect bonding if required)</p>
-                    <div className="bg-yellow-400/20 p-3 rounded border-l-4 border-yellow-400">
+                    <div className="bg-elec-yellow/20 p-3 rounded border-l-4 border-elec-yellow">
                       <p className="text-blue-200 text-sm"><strong>Physical Tip:</strong> Use crocodile clips for secure connection, press firmly on spring-loaded probes</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-6 rounded-lg">
+                <div className="bg-transparent/80 p-6 rounded-lg">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="bg-yellow-400 text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">4</div>
+                    <div className="bg-elec-yellow text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">4</div>
                     <h3 className="text-white text-lg font-semibold">Take the Reading</h3>
                   </div>
                   <div className="space-y-3">
@@ -346,8 +346,8 @@ const CPCContinuityGuide = () => {
                         <p className="text-green-400 font-semibold">Good Reading</p>
                         <p className="text-green-300 text-sm">0.05Ω - 0.20Ω</p>
                       </div>
-                      <div className="bg-yellow-600/20 p-3 rounded text-center">
-                        <p className="text-yellow-400 font-semibold">Check Further</p>
+                      <div className="bg-elec-yellow/20 p-3 rounded text-center">
+                        <p className="text-elec-yellow font-semibold">Check Further</p>
                         <p className="text-yellow-300 text-sm">0.20Ω - 1.00Ω</p>
                       </div>
                       <div className="bg-red-600/20 p-3 rounded text-center">
@@ -358,9 +358,9 @@ const CPCContinuityGuide = () => {
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-6 rounded-lg">
+                <div className="bg-transparent/80 p-6 rounded-lg">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="bg-yellow-400 text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">5</div>
+                    <div className="bg-elec-yellow text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">5</div>
                     <h3 className="text-white text-lg font-semibold">Test Multiple Points</h3>
                   </div>
                   <div className="space-y-3">
@@ -368,15 +368,15 @@ const CPCContinuityGuide = () => {
                     <p className="text-white">• Move the other lead to each socket/accessory on the circuit</p>
                     <p className="text-white">• Record readings for each point tested</p>
                     <p className="text-white">• The furthest point should give the highest reading</p>
-                    <div className="bg-yellow-400/20 p-3 rounded border-l-4 border-yellow-400">
+                    <div className="bg-elec-yellow/20 p-3 rounded border-l-4 border-elec-yellow">
                       <p className="text-blue-200 text-sm"><strong>Pattern:</strong> Readings should increase with distance - socket 1: 0.05Ω, socket 2: 0.08Ω, socket 3: 0.12Ω</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-6 rounded-lg">
+                <div className="bg-transparent/80 p-6 rounded-lg">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="bg-yellow-400 text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">6</div>
+                    <div className="bg-elec-yellow text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">6</div>
                     <h3 className="text-white text-lg font-semibold">What You See on Different Meters</h3>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -415,10 +415,10 @@ const CPCContinuityGuide = () => {
           </Card>
 
           {/* Alternative Test Methods */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Target className="h-6 w-6 text-yellow-400" />
+                <Target className="h-6 w-6 text-elec-yellow" />
                 Can't Reach? Alternative Test Methods
               </CardTitle>
             </CardHeader>
@@ -435,9 +435,9 @@ const CPCContinuityGuide = () => {
               </div>
 
               <div className="space-y-4">
-                <div className="bg-card/80 p-6 rounded-lg">
+                <div className="bg-transparent/80 p-6 rounded-lg">
                   <h3 className="text-white text-lg font-semibold mb-4 flex items-center gap-3">
-                    <span className="bg-yellow-400 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">1</span>
+                    <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">1</span>
                     R1 + R2 Method at the Distribution Board
                   </h3>
                   <div className="space-y-3">
@@ -448,13 +448,13 @@ const CPCContinuityGuide = () => {
                       <li>• Measure resistance between line and CPC at the DB end</li>
                       <li>• This gives you the total R1 + R2 value for the circuit</li>
                     </ul>
-                    <div className="bg-yellow-400/20 p-3 rounded border-l-4 border-yellow-400 mt-3">
+                    <div className="bg-elec-yellow/20 p-3 rounded border-l-4 border-elec-yellow mt-3">
                       <p className="text-blue-200 text-sm"><strong>Why this works:</strong> Current flows down the line conductor, through the link, and back via the CPC</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-6 rounded-lg">
+                <div className="bg-transparent/80 p-6 rounded-lg">
                   <h3 className="text-white text-lg font-semibold mb-4 flex items-center gap-3">
                     <span className="bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">2</span>
                     Temporary Link Method
@@ -474,7 +474,7 @@ const CPCContinuityGuide = () => {
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-6 rounded-lg">
+                <div className="bg-transparent/80 p-6 rounded-lg">
                   <h3 className="text-white text-lg font-semibold mb-4 flex items-center gap-3">
                     <span className="bg-purple-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">3</span>
                     Junction Box Test Points
@@ -493,9 +493,9 @@ const CPCContinuityGuide = () => {
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-6 rounded-lg">
+                <div className="bg-transparent/80 p-6 rounded-lg">
                   <h3 className="text-white text-lg font-semibold mb-4 flex items-center gap-3">
-                    <span className="bg-yellow-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">4</span>
+                    <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">4</span>
                     Extended Test Leads
                   </h3>
                   <div className="space-y-3">
@@ -506,18 +506,18 @@ const CPCContinuityGuide = () => {
                       <li>• Compensate for additional lead resistance</li>
                       <li>• Ensure good connections at joints</li>
                     </ul>
-                    <div className="bg-yellow-600/20 p-3 rounded border-l-4 border-yellow-400 mt-3">
+                    <div className="bg-elec-yellow/20 p-3 rounded border-l-4 border-elec-yellow mt-3">
                       <p className="text-yellow-200 text-sm"><strong>Important:</strong> Null (zero) your leads AFTER extending to account for extra resistance</p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-lg font-semibold mb-4">Practical Example: Long Circuit Test</h3>
                 <div className="space-y-4">
-                  <div className="bg-card p-4 rounded">
-                    <h4 className="text-yellow-400 font-medium mb-2">Scenario:</h4>
+                  <div className="bg-transparent p-4 rounded">
+                    <h4 className="text-elec-yellow font-medium mb-2">Scenario:</h4>
                     <p className="text-white text-sm">32A ring main, 50 metres long, your leads are only 4 metres</p>
                   </div>
                   
@@ -563,10 +563,10 @@ const CPCContinuityGuide = () => {
           </Card>
 
           {/* Complete Testing Procedure */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Activity className="h-6 w-6 text-yellow-400" />
+                <Activity className="h-6 w-6 text-elec-yellow" />
                 Complete Testing Procedure
               </CardTitle>
             </CardHeader>
@@ -574,12 +574,12 @@ const CPCContinuityGuide = () => {
               {testingSteps.map((step) => {
                 const IconComponent = step.icon;
                 return (
-                  <div key={step.step} className="bg-card/80 p-6 rounded-lg">
+                  <div key={step.step} className="bg-transparent/80 p-6 rounded-lg">
                     <div className="flex items-center gap-4 mb-4">
-                      <div className="bg-yellow-400 text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">
+                      <div className="bg-elec-yellow text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">
                         {step.step}
                       </div>
-                      <IconComponent className="h-6 w-6 text-yellow-400" />
+                      <IconComponent className="h-6 w-6 text-elec-yellow" />
                       <h3 className="text-white text-lg font-semibold">{step.title}</h3>
                     </div>
                     
@@ -603,7 +603,7 @@ const CPCContinuityGuide = () => {
                         <ul className="text-white text-sm space-y-1">
                           {step.safetyPoints.map((point, index) => (
                             <li key={index} className="flex items-start gap-2">
-                              <AlertTriangle className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                              <AlertTriangle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                               {point}
                             </li>
                           ))}
@@ -617,17 +617,17 @@ const CPCContinuityGuide = () => {
           </Card>
 
           {/* Expected Results */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Activity className="h-6 w-6 text-yellow-400" />
+                <Activity className="h-6 w-6 text-elec-yellow" />
                 Expected Results & Interpretation
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {expectedResults.map((result, index) => (
-                  <div key={index} className="bg-card/80 p-4 rounded-lg">
+                  <div key={index} className="bg-transparent/80 p-4 rounded-lg">
                     <div className="flex items-center gap-2 mb-2">
                       <Badge className={`${result.color} border-0`}>
                         {result.category}
@@ -640,10 +640,10 @@ const CPCContinuityGuide = () => {
                 ))}
               </div>
               
-              <div className="bg-yellow-400/20 p-4 rounded-lg border border-blue-600/30">
+              <div className="bg-elec-yellow/20 p-4 rounded-lg border border-blue-600/30">
                 <div className="flex items-center gap-2 mb-2">
-                  <Info className="h-5 w-5 text-yellow-400" />
-                  <h4 className="text-yellow-400 font-semibold">Important Notes</h4>
+                  <Info className="h-5 w-5 text-elec-yellow" />
+                  <h4 className="text-elec-yellow font-semibold">Important Notes</h4>
                 </div>
                 <ul className="text-blue-200 text-sm space-y-1">
                   <li>• Results must be compared with circuit design values</li>
@@ -656,16 +656,16 @@ const CPCContinuityGuide = () => {
           </Card>
 
           {/* Common Problems */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <AlertTriangle className="h-6 w-6 text-yellow-400" />
+                <AlertTriangle className="h-6 w-6 text-elec-yellow" />
                 Common Problems & Solutions
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {commonProblems.map((item, index) => (
-                <div key={index} className="bg-card/80 p-4 rounded-lg">
+                <div key={index} className="bg-transparent/80 p-4 rounded-lg">
                   <h3 className="text-white font-semibold mb-3">{item.problem}</h3>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div>
@@ -697,15 +697,15 @@ const CPCContinuityGuide = () => {
           </Card>
 
           {/* Final Tips */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Shield className="h-6 w-6 text-yellow-400" />
+                <Shield className="h-6 w-6 text-elec-yellow" />
                 Professional Tips
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-card/80 p-4 rounded-lg">
+              <div className="bg-transparent/80 p-4 rounded-lg">
                 <ul className="text-white text-sm space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
@@ -733,24 +733,24 @@ const CPCContinuityGuide = () => {
           </Card>
 
           {/* Real-World Scenarios */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Eye className="h-6 w-6 text-yellow-400" />
+                <Eye className="h-6 w-6 text-elec-yellow" />
                 Real-World Testing Scenarios
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               
               {/* Scenario 1: Domestic Installation */}
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
-                  <span className="bg-yellow-400 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">1</span>
+                  <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">1</span>
                   Domestic Kitchen Extension - 32A Ring Main
                 </h3>
                 
                 <div className="space-y-4">
-                  <div className="bg-yellow-400/20 p-4 rounded border-l-4 border-yellow-400">
+                  <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
                     <p className="text-blue-200 text-sm">
                       <strong>Scenario:</strong> Testing a new kitchen ring main - 2.5mm² T&E cable, 25-metre run, 8 socket outlets
                     </p>
@@ -780,8 +780,8 @@ const CPCContinuityGuide = () => {
                     </div>
                   </div>
 
-                  <div className="bg-card p-4 rounded">
-                    <h4 className="text-yellow-400 font-medium mb-2">Expected Test Results:</h4>
+                  <div className="bg-transparent p-4 rounded">
+                    <h4 className="text-elec-yellow font-medium mb-2">Expected Test Results:</h4>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                       <div className="bg-green-600/20 p-3 rounded text-center">
                         <p className="text-green-400 font-semibold">End-to-End Line</p>
@@ -798,7 +798,7 @@ const CPCContinuityGuide = () => {
                     </div>
                   </div>
 
-                  <div className="bg-yellow-600/20 p-4 rounded border-l-4 border-yellow-400">
+                  <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
                     <p className="text-yellow-200 text-sm">
                       <strong>Pro Tip:</strong> Mark each socket with masking tape as you test - "L1", "L2" etc. 
                       This helps you track which leg of the ring each socket is on and speeds up the R1+R2 test.
@@ -808,7 +808,7 @@ const CPCContinuityGuide = () => {
               </div>
 
               {/* Scenario 2: Commercial Installation */}
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
                   <span className="bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">2</span>
                   Office Refurbishment - Multiple Circuits
@@ -823,7 +823,7 @@ const CPCContinuityGuide = () => {
 
                   <div className="space-y-3">
                     <h4 className="text-white font-medium">Practical Testing Strategy:</h4>
-                    <div className="bg-card p-4 rounded space-y-2">
+                    <div className="bg-transparent p-4 rounded space-y-2">
                       <p className="text-white text-sm"><strong>1. Pre-Test Preparation (30 mins):</strong></p>
                       <ul className="text-white text-sm ml-4 space-y-1">
                         <li>• Obtain site plans and circuit schedules</li>
@@ -853,7 +853,7 @@ const CPCContinuityGuide = () => {
               </div>
 
               {/* Scenario 3: Fault Finding */}
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
                   <span className="bg-red-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">3</span>
                   Fault Investigation - High Resistance Reading
@@ -869,8 +869,8 @@ const CPCContinuityGuide = () => {
                   <div className="space-y-3">
                     <h4 className="text-white font-medium">Systematic Fault Finding Process:</h4>
                     <div className="space-y-3">
-                      <div className="bg-card p-3 rounded">
-                        <p className="text-yellow-400 font-medium text-sm">Step 1: Verify the Problem</p>
+                      <div className="bg-transparent p-3 rounded">
+                        <p className="text-elec-yellow font-medium text-sm">Step 1: Verify the Problem</p>
                         <ul className="text-white text-sm mt-2 space-y-1">
                           <li>• Re-test with different meter</li>
                           <li>• Check test lead resistance</li>
@@ -879,8 +879,8 @@ const CPCContinuityGuide = () => {
                         </ul>
                       </div>
                       
-                      <div className="bg-card p-3 rounded">
-                        <p className="text-yellow-400 font-medium text-sm">Step 2: Isolate the Problem</p>
+                      <div className="bg-transparent p-3 rounded">
+                        <p className="text-elec-yellow font-medium text-sm">Step 2: Isolate the Problem</p>
                         <ul className="text-white text-sm mt-2 space-y-1">
                           <li>• Test continuity of each cable section</li>
                           <li>• Check connections at junction boxes</li>
@@ -889,8 +889,8 @@ const CPCContinuityGuide = () => {
                         </ul>
                       </div>
                       
-                      <div className="bg-card p-3 rounded">
-                        <p className="text-yellow-400 font-medium text-sm">Step 3: Found the Culprit</p>
+                      <div className="bg-transparent p-3 rounded">
+                        <p className="text-elec-yellow font-medium text-sm">Step 3: Found the Culprit</p>
                         <ul className="text-white text-sm mt-2 space-y-1">
                           <li>• Loose earth terminal in junction box</li>
                           <li>• Adding 2.2Ω to circuit resistance</li>
@@ -913,21 +913,21 @@ const CPCContinuityGuide = () => {
           </Card>
 
           {/* Practical Equipment Guide */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Settings className="h-6 w-6 text-yellow-400" />
+                <Settings className="h-6 w-6 text-elec-yellow" />
                 Practical Equipment Setup & Techniques
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-lg font-semibold mb-4">Meter Selection & Setup</h3>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <h4 className="text-yellow-400 font-medium mb-2">Recommended Meters:</h4>
+                    <h4 className="text-elec-yellow font-medium mb-2">Recommended Meters:</h4>
                     <ul className="text-white text-sm space-y-2">
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
@@ -949,7 +949,7 @@ const CPCContinuityGuide = () => {
                   </div>
                   
                   <div>
-                    <h4 className="text-yellow-400 font-medium mb-2">Essential Setup Steps:</h4>
+                    <h4 className="text-elec-yellow font-medium mb-2">Essential Setup Steps:</h4>
                     <ul className="text-white text-sm space-y-2">
                       <li>• Check calibration certificate is current</li>
                       <li>• Verify test leads are undamaged</li>
@@ -961,7 +961,7 @@ const CPCContinuityGuide = () => {
                   </div>
                 </div>
 
-                <div className="bg-yellow-600/20 p-4 rounded border-l-4 border-yellow-400 mt-4">
+                <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow mt-4">
                   <p className="text-yellow-200 text-sm">
                     <strong>Field Tip:</strong> Always carry a basic multimeter as backup. Digital meters can fail, 
                     and a simple continuity tester can get you out of trouble when you need to verify a circuit quickly.
@@ -969,7 +969,7 @@ const CPCContinuityGuide = () => {
                 </div>
               </div>
 
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-lg font-semibold mb-4">Test Lead Techniques</h3>
                 
                 <div className="space-y-4">
@@ -997,7 +997,7 @@ const CPCContinuityGuide = () => {
                     </div>
                   </div>
 
-                  <div className="bg-yellow-400/20 p-4 rounded border-l-4 border-yellow-400">
+                  <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
                     <p className="text-blue-200 text-sm">
                       <strong>Professional Technique:</strong> For critical measurements, take the reading three times 
                       with slight probe movement each time. If all three readings are similar, you can be confident 
@@ -1007,13 +1007,13 @@ const CPCContinuityGuide = () => {
                 </div>
               </div>
 
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-lg font-semibold mb-4">Environmental Considerations</h3>
                 
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="bg-yellow-400/20 p-4 rounded">
-                      <h4 className="text-yellow-400 font-semibold mb-2">Cold Conditions</h4>
+                    <div className="bg-elec-yellow/20 p-4 rounded">
+                      <h4 className="text-elec-yellow font-semibold mb-2">Cold Conditions</h4>
                       <ul className="text-blue-200 text-sm space-y-1">
                         <li>• Copper resistance decreases</li>
                         <li>• Readings will be lower</li>
@@ -1043,8 +1043,8 @@ const CPCContinuityGuide = () => {
                     </div>
                   </div>
 
-                  <div className="bg-card p-4 rounded">
-                    <h4 className="text-yellow-400 font-medium mb-2">Temperature Correction Formula:</h4>
+                  <div className="bg-transparent p-4 rounded">
+                    <h4 className="text-elec-yellow font-medium mb-2">Temperature Correction Formula:</h4>
                     <p className="text-white text-sm font-mono">R₂ = R₁ × [1 + 0.004(T₂ - T₁)]</p>
                     <p className="text-white text-sm mt-2">Where: R₁ = measured resistance, T₁ = test temp, T₂ = operating temp (typically 70°C)</p>
                   </div>
@@ -1054,40 +1054,40 @@ const CPCContinuityGuide = () => {
           </Card>
 
           {/* Time-Saving Techniques */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Activity className="h-6 w-6 text-yellow-400" />
+                <Activity className="h-6 w-6 text-elec-yellow" />
                 Time-Saving Techniques for Professionals
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-lg font-semibold mb-4">Efficient Testing Workflow</h3>
                 
                 <div className="space-y-4">
-                  <div className="bg-card p-4 rounded">
-                    <h4 className="text-yellow-400 font-medium mb-2">Pre-Test Organisation (Saves 30-40 minutes):</h4>
+                  <div className="bg-transparent p-4 rounded">
+                    <h4 className="text-elec-yellow font-medium mb-2">Pre-Test Organisation (Saves 30-40 minutes):</h4>
                     <ul className="text-white text-sm space-y-2">
                       <li className="flex items-start gap-2">
-                        <span className="text-yellow-400">1.</span>
+                        <span className="text-elec-yellow">1.</span>
                         <span>Photograph all distribution boards before starting</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <span className="text-yellow-400">2.</span>
+                        <span className="text-elec-yellow">2.</span>
                         <span>Create a simple floor plan sketch with circuit numbers</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <span className="text-yellow-400">3.</span>
+                        <span className="text-elec-yellow">3.</span>
                         <span>Pre-label test certificate with all circuit references</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <span className="text-yellow-400">4.</span>
+                        <span className="text-elec-yellow">4.</span>
                         <span>Check all required tools are working before starting</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <span className="text-yellow-400">5.</span>
+                        <span className="text-elec-yellow">5.</span>
                         <span>Identify any potential access issues early</span>
                       </li>
                     </ul>
@@ -1105,8 +1105,8 @@ const CPCContinuityGuide = () => {
                       </ul>
                     </div>
                     
-                    <div className="bg-yellow-400/20 p-4 rounded">
-                      <h4 className="text-yellow-400 font-semibold mb-2">Smart Recording</h4>
+                    <div className="bg-elec-yellow/20 p-4 rounded">
+                      <h4 className="text-elec-yellow font-semibold mb-2">Smart Recording</h4>
                       <ul className="text-blue-200 text-sm space-y-1">
                         <li>• Use voice recorder for readings</li>
                         <li>• Take photos of unusual results</li>
@@ -1119,12 +1119,12 @@ const CPCContinuityGuide = () => {
                 </div>
               </div>
 
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-lg font-semibold mb-4">Common Shortcuts (That Actually Work)</h3>
                 
                 <div className="space-y-4">
-                  <div className="bg-yellow-600/20 p-4 rounded border-l-4 border-yellow-400">
-                    <h4 className="text-yellow-400 font-semibold mb-2">The "Reference Socket" Method</h4>
+                  <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
+                    <h4 className="text-elec-yellow font-semibold mb-2">The "Reference Socket" Method</h4>
                     <p className="text-yellow-200 text-sm mb-2">
                       For multiple similar circuits, establish a "reference" reading from a known good circuit, 
                       then you can quickly spot any circuits that read significantly different.
@@ -1137,8 +1137,8 @@ const CPCContinuityGuide = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-yellow-400/20 p-4 rounded border-l-4 border-yellow-400">
-                    <h4 className="text-yellow-400 font-semibold mb-2">The "Pattern Recognition" Approach</h4>
+                  <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
+                    <h4 className="text-elec-yellow font-semibold mb-2">The "Pattern Recognition" Approach</h4>
                     <p className="text-blue-200 text-sm mb-2">
                       Experienced electricians develop an eye for normal vs abnormal readings based on circuit characteristics.
                     </p>

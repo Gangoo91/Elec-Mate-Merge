@@ -179,7 +179,7 @@ const ResistorColourCodeCalculator = () => {
                 {name}
               </span>
               {showTolerance && toleranceValue && (
-                <span className="block text-[8px] text-white/40">{toleranceValue}</span>
+                <span className="block text-[8px] text-white/70">{toleranceValue}</span>
               )}
             </button>
           );
@@ -211,7 +211,7 @@ const ResistorColourCodeCalculator = () => {
           <p className="text-xs text-white/60 mb-3 text-center">Resistor Preview</p>
           <div className="flex items-center justify-center">
             {/* Left lead */}
-            <div className="w-8 h-1 bg-gray-400 rounded-l" />
+            <div className="w-8 h-1 bg-white/40 rounded-l" />
             {/* Resistor body */}
             <div className="relative flex items-center px-2 py-3 bg-amber-100 dark:bg-amber-900/40 rounded-lg border border-amber-200/30">
               <div className="flex gap-1.5">
@@ -235,9 +235,9 @@ const ResistorColourCodeCalculator = () => {
               </div>
             </div>
             {/* Right lead */}
-            <div className="w-8 h-1 bg-gray-400 rounded-r" />
+            <div className="w-8 h-1 bg-white/40 rounded-r" />
           </div>
-          <div className="flex justify-center gap-4 mt-2 text-[10px] text-white/40">
+          <div className="flex justify-center gap-4 mt-2 text-[10px] text-white/70">
             <span>1st</span>
             <span>2nd</span>
             <span>×</span>
@@ -294,7 +294,7 @@ const ResistorColourCodeCalculator = () => {
               >
                 {result.formattedValue}
               </div>
-              <p className="text-sm text-white/50 mt-1">{result.tolerance} tolerance</p>
+              <p className="text-sm text-white/80 mt-1">{result.tolerance} tolerance</p>
             </div>
 
             <ResultsGrid columns={2}>
@@ -315,13 +315,13 @@ const ResistorColourCodeCalculator = () => {
 
             {/* Tolerance Range */}
             <div className="pt-3 mt-3 border-t border-white/10">
-              <p className="text-xs text-white/50 mb-2">Actual Value Range</p>
+              <p className="text-xs text-white/80 mb-2">Actual Value Range</p>
               {(() => {
                 const range = calculateToleranceRange(result.resistance, result.tolerance);
                 return (
                   <div className="flex items-center justify-between p-3 rounded-lg bg-white/5">
                     <span className="text-sm text-white/80">{formatResistance(range.min)}</span>
-                    <span className="text-white/40">to</span>
+                    <span className="text-white/70">to</span>
                     <span className="text-sm text-white/80">{formatResistance(range.max)}</span>
                   </div>
                 );
@@ -338,7 +338,7 @@ const ResistorColourCodeCalculator = () => {
                   <span className="text-sm sm:text-base font-medium text-blue-300">How It Worked Out</span>
                 </div>
                 <ChevronDown className={cn(
-                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  "h-4 w-4 text-white/70 transition-transform duration-200",
                   showGuidance && "rotate-180"
                 )} />
               </CollapsibleTrigger>
@@ -380,7 +380,7 @@ const ResistorColourCodeCalculator = () => {
               <span className="text-sm sm:text-base font-medium text-amber-300">Quick Reference</span>
             </div>
             <ChevronDown className={cn(
-              "h-4 w-4 text-white/40 transition-transform duration-200",
+              "h-4 w-4 text-white/70 transition-transform duration-200",
               showReference && "rotate-180"
             )} />
           </CollapsibleTrigger>
@@ -401,7 +401,7 @@ const ResistorColourCodeCalculator = () => {
                   <p className="text-xs mt-1">Tolerance: Gold (±5%), Silver (±10%), Brown (±1%)</p>
                 </div>
               </div>
-              <p className="text-xs text-white/50 pt-2 border-t border-white/10">
+              <p className="text-xs text-white/80 pt-2 border-t border-white/10">
                 Tip: The tolerance band usually has a gap from the others. Read resistors left to right.
               </p>
             </div>

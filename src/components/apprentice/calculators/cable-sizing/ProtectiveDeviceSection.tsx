@@ -58,7 +58,7 @@ const ProtectiveDeviceSection = ({
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className="mt-8 pt-8 border-t border-elec-yellow/30">
-      <CollapsibleTrigger className="w-full flex items-center justify-between p-4 text-elec-yellow hover:text-elec-yellow/80 transition-all duration-200 bg-elec-gray/20 rounded-lg border border-elec-yellow/20 hover:border-elec-yellow/40 min-h-[56px] active:scale-[0.98]">
+      <CollapsibleTrigger className="w-full flex items-center justify-between p-4 text-elec-yellow hover:text-elec-yellow/80 transition-all duration-200 bg-white/5 rounded-lg border border-elec-yellow/20 hover:border-elec-yellow/40 min-h-[56px] active:scale-[0.98]">
         <div className="flex items-center gap-2 sm:gap-3">
           <Shield className="h-5 w-5 flex-shrink-0" />
           <span className="font-semibold text-sm sm:text-base">Protective Device Check</span>
@@ -76,7 +76,7 @@ const ProtectiveDeviceSection = ({
               <RequiredFieldTooltip content="Select the type of protective device for overload protection" />
             </label>
             <Select value={deviceType} onValueChange={(v) => setDeviceType(v as DeviceType)}>
-              <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/30 min-h-[48px] text-base">
+              <SelectTrigger className="bg-white/10 border-elec-yellow/30 min-h-[48px] text-base">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -103,7 +103,7 @@ const ProtectiveDeviceSection = ({
               <RequiredFieldTooltip content="Nominal current rating of the protective device" />
             </label>
             <Select value={rating.toString()} onValueChange={(v) => setRating(parseInt(v))}>
-              <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/30 min-h-[48px] text-base">
+              <SelectTrigger className="bg-white/10 border-elec-yellow/30 min-h-[48px] text-base">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="max-h-60">
@@ -143,7 +143,7 @@ const ProtectiveDeviceSection = ({
             {/* Individual Checks */}
             <div className="space-y-3">
               {/* Check 1: Ib ≤ In */}
-              <div className="p-4 bg-elec-dark/30 rounded-lg">
+              <div className="p-4 bg-white/10 rounded-lg">
                 <div className="flex items-start gap-3 text-left">
                   <CheckIcon passed={validation.checks.ibLessEqualIn.passed} />
                   <div className="flex-1 min-w-0">
@@ -161,7 +161,7 @@ const ProtectiveDeviceSection = ({
               </div>
 
               {/* Check 2: In ≤ Iz */}
-              <div className="p-4 bg-elec-dark/30 rounded-lg">
+              <div className="p-4 bg-white/10 rounded-lg">
                 <div className="flex items-start gap-3 text-left">
                   <CheckIcon passed={validation.checks.inLessEqualIz.passed} />
                   <div className="flex-1 min-w-0">
@@ -179,7 +179,7 @@ const ProtectiveDeviceSection = ({
               </div>
 
               {/* Check 3: I2 ≤ 1.45 × Iz */}
-              <div className="p-4 bg-elec-dark/30 rounded-lg">
+              <div className="p-4 bg-white/10 rounded-lg">
                 <div className="flex items-start gap-3 text-left">
                   <CheckIcon passed={validation.checks.i2LessEqual145Iz.passed} />
                   <div className="flex-1 min-w-0">
@@ -216,7 +216,7 @@ const ProtectiveDeviceSection = ({
             )}
 
             {/* Device Reference Info */}
-            <div className="p-4 bg-elec-dark/20 rounded-lg border border-elec-yellow/10">
+            <div className="p-4 bg-white/10 rounded-lg border border-elec-yellow/10">
               <div className="flex items-center gap-2 mb-3 text-left">
                 <Info className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                 <span className="text-sm font-medium text-white">Device I₂ Values</span>

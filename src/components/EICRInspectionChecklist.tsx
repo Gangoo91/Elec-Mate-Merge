@@ -353,7 +353,7 @@ const EICRInspectionChecklist = ({ formData, onUpdate, onNavigateToObservations 
   });
 
   return (
-    <div className="md:max-w-6xl mx-auto space-y-3 sm:space-y-6 pb-20 lg:pb-4 relative">
+    <div className="space-y-1 pb-20 lg:pb-4">
       
       <InspectionStatsSummary inspectionItems={inspectionItems} />
       

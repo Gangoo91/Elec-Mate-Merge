@@ -1,15 +1,15 @@
-import { useRef, useCallback, useEffect } from 'react';
+import { useRef, useCallback, useEffect, useState } from 'react';
 
 interface UseSmoothedStreamingOptions {
-  /** Characters to render per frame (default: 18 for natural reading) */
+  /** Characters to render per frame (default: 3 for very smooth) */
   charsPerFrame?: number;
-  /** Callback when text updates */
-  onUpdate: (text: string) => void;
-  /** Callback when streaming completes */
-  onComplete?: () => void;
+  /** How often to sync to React state in ms (default: 50ms) */
+  stateUpdateInterval?: number;
 }
 
 interface UseSmoothedStreamingReturn {
+  /** Current displayed text (updates smoothly via RAF) */
+  displayedText: string;
   /** Add tokens to the buffer */
   addTokens: (tokens: string) => void;
   /** Flush all remaining tokens immediately */
@@ -18,78 +18,61 @@ interface UseSmoothedStreamingReturn {
   reset: () => void;
   /** Stop the animation loop */
   stop: () => void;
-  /** Get current displayed text */
-  getDisplayedText: () => string;
-  /** Check if currently streaming */
-  isStreaming: () => boolean;
+  /** Check if currently has content to display */
+  isActive: () => boolean;
 }
 
 /**
- * useSmoothedStreaming - RAF-based smooth text streaming
+ * useSmoothedStreaming - RAF-based smooth text streaming with batched React updates
  *
- * Renders text character-by-character at 60fps for a smooth,
- * ChatGPT/Claude-like streaming experience.
- *
- * @example
- * const streaming = useSmoothedStreaming({
- *   charsPerFrame: 18,
- *   onUpdate: (text) => setDisplayedText(text),
- *   onComplete: () => setIsStreaming(false),
- * });
- *
- * // In SSE handler:
- * streaming.addTokens(token);
- *
- * // When done:
- * streaming.flush();
+ * Uses requestAnimationFrame for 60fps visual updates while batching
+ * React state updates to prevent excessive re-renders.
  */
-export function useSmoothedStreaming(options: UseSmoothedStreamingOptions): UseSmoothedStreamingReturn {
-  const { charsPerFrame = 18, onUpdate, onComplete } = options;
+export function useSmoothedStreaming(options: UseSmoothedStreamingOptions = {}): UseSmoothedStreamingReturn {
+  const { charsPerFrame = 3, stateUpdateInterval = 50 } = options;
 
-  // Refs for animation state
+  // React state for displayed text (batched updates)
+  const [displayedText, setDisplayedText] = useState('');
+
+  // Refs for animation state (no re-renders)
   const tokenBufferRef = useRef('');
-  const displayedTextRef = useRef('');
+  const currentTextRef = useRef('');
   const animationFrameRef = useRef<number | null>(null);
   const isStreamingRef = useRef(false);
-  const lastFrameTimeRef = useRef(0);
+  const lastStateUpdateRef = useRef(0);
 
-  // Target ~60fps with adaptive character count
-  const targetFrameTime = 1000 / 60; // ~16.67ms
-
-  const animate = useCallback((currentTime: number) => {
-    // Calculate time since last frame
-    const deltaTime = currentTime - lastFrameTimeRef.current;
-
-    // Adaptive character count based on frame timing
-    // If we're running behind, render more characters to catch up
-    const frameMultiplier = Math.max(1, deltaTime / targetFrameTime);
-    const charsThisFrame = Math.ceil(charsPerFrame * frameMultiplier);
+  // RAF animation loop
+  const animate = useCallback(() => {
+    const now = performance.now();
 
     if (tokenBufferRef.current.length > 0) {
       // Extract characters from buffer
-      const chars = tokenBufferRef.current.slice(0, charsThisFrame);
-      tokenBufferRef.current = tokenBufferRef.current.slice(charsThisFrame);
+      const chars = tokenBufferRef.current.slice(0, charsPerFrame);
+      tokenBufferRef.current = tokenBufferRef.current.slice(charsPerFrame);
 
-      // Update displayed text
-      displayedTextRef.current += chars;
-      onUpdate(displayedTextRef.current);
+      // Update current text ref (instant, no render)
+      currentTextRef.current += chars;
 
-      lastFrameTimeRef.current = currentTime;
+      // Batch React state updates (every stateUpdateInterval ms)
+      if (now - lastStateUpdateRef.current >= stateUpdateInterval) {
+        setDisplayedText(currentTextRef.current);
+        lastStateUpdateRef.current = now;
+      }
     }
 
     // Continue animation if there's more to render or we're still streaming
     if (tokenBufferRef.current.length > 0 || isStreamingRef.current) {
       animationFrameRef.current = requestAnimationFrame(animate);
     } else {
-      // Streaming complete
+      // Final sync when done
+      setDisplayedText(currentTextRef.current);
       animationFrameRef.current = null;
-      onComplete?.();
     }
-  }, [charsPerFrame, onUpdate, onComplete, targetFrameTime]);
+  }, [charsPerFrame, stateUpdateInterval]);
 
   const startAnimation = useCallback(() => {
     if (animationFrameRef.current === null) {
-      lastFrameTimeRef.current = performance.now();
+      lastStateUpdateRef.current = performance.now();
       animationFrameRef.current = requestAnimationFrame(animate);
     }
   }, [animate]);
@@ -101,15 +84,24 @@ export function useSmoothedStreaming(options: UseSmoothedStreamingOptions): UseS
   }, [startAnimation]);
 
   const flush = useCallback(() => {
+    // Stop animation
+    if (animationFrameRef.current !== null) {
+      cancelAnimationFrame(animationFrameRef.current);
+      animationFrameRef.current = null;
+    }
+
     // Immediately render all remaining tokens
     if (tokenBufferRef.current.length > 0) {
-      displayedTextRef.current += tokenBufferRef.current;
+      currentTextRef.current += tokenBufferRef.current;
       tokenBufferRef.current = '';
-      onUpdate(displayedTextRef.current);
     }
+
+    // Final state sync
+    setDisplayedText(currentTextRef.current);
     isStreamingRef.current = false;
-    return displayedTextRef.current;
-  }, [onUpdate]);
+
+    return currentTextRef.current;
+  }, []);
 
   const reset = useCallback(() => {
     if (animationFrameRef.current !== null) {
@@ -117,8 +109,9 @@ export function useSmoothedStreaming(options: UseSmoothedStreamingOptions): UseS
       animationFrameRef.current = null;
     }
     tokenBufferRef.current = '';
-    displayedTextRef.current = '';
+    currentTextRef.current = '';
     isStreamingRef.current = false;
+    setDisplayedText('');
   }, []);
 
   const stop = useCallback(() => {
@@ -129,12 +122,8 @@ export function useSmoothedStreaming(options: UseSmoothedStreamingOptions): UseS
     isStreamingRef.current = false;
   }, []);
 
-  const getDisplayedText = useCallback(() => {
-    return displayedTextRef.current;
-  }, []);
-
-  const isStreaming = useCallback(() => {
-    return isStreamingRef.current || tokenBufferRef.current.length > 0;
+  const isActive = useCallback(() => {
+    return isStreamingRef.current || tokenBufferRef.current.length > 0 || currentTextRef.current.length > 0;
   }, []);
 
   // Cleanup on unmount
@@ -147,12 +136,12 @@ export function useSmoothedStreaming(options: UseSmoothedStreamingOptions): UseS
   }, []);
 
   return {
+    displayedText,
     addTokens,
     flush,
     reset,
     stop,
-    getDisplayedText,
-    isStreaming,
+    isActive,
   };
 }
 

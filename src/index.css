@@ -1,3 +1,4 @@
+@import './styles/touch.css';
 
 @tailwind base;
 @tailwind components;
@@ -92,34 +93,34 @@
   }
 
   .dark {
-    /* OUTER - Pure black for maximum contrast */
-    --background: 0 0% 3%;
-    --foreground: 0 0% 100%;
+    /* UNIFIED COLOR SYSTEM - All greys use hue 240 to match sidebar */
+    --background: 240 5.9% 10%;
+    --foreground: 0 0% 98%;
 
-    /* CARDS/MIDDLE - Dark grey for depth */
-    --card: 0 0% 10%;
-    --card-foreground: 0 0% 100%;
+    /* CARDS - Slightly lighter than background for depth */
+    --card: 240 5.9% 12%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 10%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 240 5.9% 12%;
+    --popover-foreground: 0 0% 98%;
 
     --primary: 47 100% 50%;
-    --primary-foreground: 0 0% 3%;
+    --primary-foreground: 240 5.9% 10%;
 
-    --secondary: 0 0% 14%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 240 5.9% 16%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 75%;
+    --muted: 240 5.9% 16%;
+    --muted-foreground: 240 5% 65%;
 
-    --accent: 0 0% 18%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 240 5.9% 18%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 62.8% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
+    --border: 240 5.9% 22%;
+    --input: 240 5.9% 15%;
     --ring: 47 100% 50%;
 
     /* Additional semantic colors */
@@ -130,13 +131,13 @@
     --info: 199 89% 48%;
     --info-foreground: 0 0% 100%;
 
-    /* Electrical theme colors - Updated for black/grey scheme */
-    --elec-dark: 0 0% 8%;
-    --elec-light: 0 0% 100%;
-    --elec-gray: 0 0% 18%;
+    /* Electrical theme colors - UNIFIED with sidebar hue 240 */
+    --elec-dark: 240 5.9% 8%;
+    --elec-light: 0 0% 98%;
+    --elec-gray: 240 5.9% 18%;
     --elec-yellow: 47 100% 50%;
-    --elec-card: 0 0% 16%;
-    --elec-grey: 0 0% 18%;
+    --elec-card: 240 5.9% 14%;
+    --elec-grey: 240 5.9% 10%;
     
     /* Muted text colors for comfortable reading */
     --text-muted: 210 30% 85%;
@@ -181,7 +182,7 @@
   }
 
   body {
-    @apply bg-elec-grey text-elec-light dark;
+    @apply bg-background text-foreground dark;
   }
   
   .gradient-text {
@@ -290,10 +291,62 @@
       font-size: 16px !important;
     }
   }
+
+  /* Premium Dashboard Utilities */
+
+  /* Glass morphism card - Linear/Notion inspired */
+  .glass-premium {
+    @apply bg-white/[0.03] backdrop-blur-xl border border-white/[0.08];
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Yellow glow effect for featured elements */
+  .glow-yellow {
+    box-shadow: 0 0 60px -15px hsl(47 100% 50% / 0.15);
+  }
+
+  /* Subtle card lift on hover */
+  .card-lift {
+    @apply transition-all duration-300;
+  }
+  .card-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Premium border glow */
+  .border-glow {
+    @apply transition-all duration-300;
+  }
+  .border-glow:hover {
+    border-color: hsl(47 100% 50% / 0.4);
+    box-shadow: 0 0 20px -5px hsl(47 100% 50% / 0.2);
+  }
+
+  /* Streak fire glow for text */
+  .streak-glow {
+    text-shadow: 0 0 20px hsl(25 95% 55% / 0.5);
+  }
+
+  /* Touch-friendly tap target */
+  .touch-target {
+    @apply touch-manipulation;
+    min-height: 44px;
+    min-width: 44px;
+  }
 }
 
-/* Hide scrollbars for specific dropdown and popover components only */
+/* Hide scrollbars utilities */
 @layer components {
+  /* General scrollbar hide utility */
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
   .dropdown-scrollbar-none,
   .popover-scrollbar-none,
   .select-scrollbar-none {
@@ -302,7 +355,7 @@
     /* IE and Edge */
     -ms-overflow-style: none;
   }
-  
+
   .dropdown-scrollbar-none::-webkit-scrollbar,
   .popover-scrollbar-none::-webkit-scrollbar,
   .select-scrollbar-none::-webkit-scrollbar {
@@ -544,6 +597,49 @@
 
   .animate-pulse-subtle {
     animation: pulse-subtle 3s ease-in-out infinite;
+  }
+
+  /* Document scanning animation for OCR preview */
+  @keyframes scan {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+  }
+
+  .animate-scan {
+    animation: scan 2s ease-in-out infinite;
+  }
+
+  /* Shimmer effect for loading states */
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .animate-shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsl(var(--elec-yellow) / 0.1) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
   }
 
   @keyframes bounce-subtle {
@@ -1017,8 +1113,77 @@
   .calculator-badge-info {
     @apply bg-blue-500/20 text-blue-400 border-blue-500/30;
   }
+
+  /* ===== ELEC-ID ANIMATIONS ===== */
+
+  /* Scanning line animation for OCR */
+  @keyframes scan {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+  }
+
+  .animate-scan {
+    animation: scan 2s ease-in-out infinite;
+  }
+
+  /* Safe area padding for bottom action bars */
+  .safe-area-pb {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+
+  /* Tier badge glow effects */
+  .tier-glow-verified {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+
+  .tier-glow-premium {
+    box-shadow: 0 0 20px rgba(250, 204, 21, 0.3);
+  }
+
+  /* Profile strength ring animation */
+  @keyframes ring-fill {
+    from {
+      stroke-dashoffset: 220;
+    }
+    to {
+      stroke-dashoffset: var(--ring-offset);
+    }
+  }
+
+  .animate-ring-fill {
+    animation: ring-fill 1s ease-out forwards;
+  }
+
+  /* Document card hover effects */
+  .document-card-hover {
+    @apply transition-all duration-200 hover:scale-[1.02] hover:shadow-lg;
+  }
+
+  /* Verification pulse */
+  @keyframes verification-pulse {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.7;
+      transform: scale(1.05);
+    }
+  }
+
+  .animate-verification-pulse {
+    animation: verification-pulse 2s ease-in-out infinite;
+  }
 }
-
-/* Touch optimization styles */
-@import './styles/touch.css';
-

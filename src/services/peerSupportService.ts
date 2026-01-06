@@ -1,0 +1,457 @@
+import { supabase } from "@/integrations/supabase/client";
+
+// Types
+export type TrainingLevel = 'peer' | 'trained' | 'mhfa_certified';
+export type ConversationStatus = 'active' | 'ended' | 'archived';
+
+export interface PeerSupporter {
+  id: string;
+  user_id: string;
+  display_name: string;
+  bio?: string;
+  avatar_url?: string;
+  is_available: boolean;
+  is_active: boolean;
+  training_level: TrainingLevel;
+  topics_comfortable_with: string[];
+  total_conversations: number;
+  last_active_at: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface PeerConversation {
+  id: string;
+  supporter_id: string | null;
+  seeker_id: string;
+  status: ConversationStatus;
+  started_at: string;
+  ended_at?: string;
+  last_message_at: string;
+  // Joined data
+  supporter?: PeerSupporter;
+}
+
+export interface PeerMessage {
+  id: string;
+  conversation_id: string;
+  sender_id: string;
+  content: string;
+  is_read: boolean;
+  created_at: string;
+}
+
+export interface CreateSupporterInput {
+  display_name: string;
+  bio?: string;
+  avatar_url?: string;
+  training_level?: TrainingLevel;
+  topics_comfortable_with?: string[];
+}
+
+export interface UpdateSupporterInput {
+  display_name?: string;
+  bio?: string;
+  avatar_url?: string;
+  is_available?: boolean;
+  training_level?: TrainingLevel;
+  topics_comfortable_with?: string[];
+}
+
+// Training level display labels
+export const trainingLevelLabels: Record<TrainingLevel, string> = {
+  peer: 'Peer Supporter',
+  trained: 'Trained Listener',
+  mhfa_certified: 'MHFA Certified',
+};
+
+// Available topics for supporters
+export const supportTopics = [
+  'Work Stress',
+  'Anxiety',
+  'Depression',
+  'Family Issues',
+  'Financial Worries',
+  'Loneliness',
+  'Grief & Loss',
+  'Relationship Problems',
+  'Self-Confidence',
+  'Burnout',
+  'Work-Life Balance',
+  'Career Concerns',
+] as const;
+
+// =====================================================
+// PEER SUPPORTERS
+// =====================================================
+export const peerSupporterService = {
+  /**
+   * Get all available supporters (for browsing)
+   */
+  async getAvailableSupporters(): Promise<PeerSupporter[]> {
+    const { data, error } = await supabase
+      .from('mental_health_peer_supporters')
+      .select('*')
+      .eq('is_available', true)
+      .eq('is_active', true)
+      .order('last_active_at', { ascending: false });
+
+    if (error) throw error;
+    return (data as unknown as PeerSupporter[]) || [];
+  },
+
+  /**
+   * Get a single supporter by ID
+   */
+  async getSupporter(id: string): Promise<PeerSupporter | null> {
+    const { data, error } = await supabase
+      .from('mental_health_peer_supporters')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error && error.code !== 'PGRST116') throw error;
+    return data as unknown as PeerSupporter | null;
+  },
+
+  /**
+   * Get current user's supporter profile
+   */
+  async getMyProfile(): Promise<PeerSupporter | null> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return null;
+
+    const { data, error } = await supabase
+      .from('mental_health_peer_supporters')
+      .select('*')
+      .eq('user_id', user.id)
+      .single();
+
+    if (error && error.code !== 'PGRST116') throw error;
+    return data as unknown as PeerSupporter | null;
+  },
+
+  /**
+   * Register as a peer supporter
+   */
+  async register(input: CreateSupporterInput): Promise<PeerSupporter> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error('Not authenticated');
+
+    const { data, error } = await supabase
+      .from('mental_health_peer_supporters')
+      .insert({
+        user_id: user.id,
+        display_name: input.display_name,
+        bio: input.bio || null,
+        avatar_url: input.avatar_url || null,
+        training_level: input.training_level || 'peer',
+        topics_comfortable_with: input.topics_comfortable_with || [],
+        is_available: false,
+        is_active: true,
+      })
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data as unknown as PeerSupporter;
+  },
+
+  /**
+   * Update supporter profile
+   */
+  async updateProfile(input: UpdateSupporterInput): Promise<PeerSupporter> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error('Not authenticated');
+
+    const updateData: Record<string, unknown> = {
+      updated_at: new Date().toISOString(),
+    };
+
+    if (input.display_name !== undefined) updateData.display_name = input.display_name;
+    if (input.bio !== undefined) updateData.bio = input.bio;
+    if (input.avatar_url !== undefined) updateData.avatar_url = input.avatar_url;
+    if (input.is_available !== undefined) updateData.is_available = input.is_available;
+    if (input.training_level !== undefined) updateData.training_level = input.training_level;
+    if (input.topics_comfortable_with !== undefined) updateData.topics_comfortable_with = input.topics_comfortable_with;
+
+    // Update last_active_at when toggling availability
+    if (input.is_available) {
+      updateData.last_active_at = new Date().toISOString();
+    }
+
+    const { data, error } = await supabase
+      .from('mental_health_peer_supporters')
+      .update(updateData)
+      .eq('user_id', user.id)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data as unknown as PeerSupporter;
+  },
+
+  /**
+   * Toggle availability status
+   */
+  async toggleAvailability(): Promise<PeerSupporter> {
+    const profile = await this.getMyProfile();
+    if (!profile) throw new Error('Not registered as supporter');
+
+    return this.updateProfile({
+      is_available: !profile.is_available,
+    });
+  },
+
+  /**
+   * Deactivate supporter profile (soft delete)
+   */
+  async deactivate(): Promise<void> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error('Not authenticated');
+
+    const { error } = await supabase
+      .from('mental_health_peer_supporters')
+      .update({
+        is_active: false,
+        is_available: false,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('user_id', user.id);
+
+    if (error) throw error;
+  },
+};
+
+// =====================================================
+// PEER CONVERSATIONS
+// =====================================================
+export const peerConversationService = {
+  /**
+   * Get all conversations for current user (as seeker or supporter)
+   */
+  async getMyConversations(): Promise<PeerConversation[]> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return [];
+
+    // First, check if user is a supporter
+    const supporterProfile = await peerSupporterService.getMyProfile();
+
+    // Build query conditions
+    let query = supabase
+      .from('mental_health_peer_conversations')
+      .select(`
+        *,
+        supporter:mental_health_peer_supporters(*)
+      `)
+      .order('last_message_at', { ascending: false });
+
+    // If user is a supporter, get conversations where they are the supporter
+    // Otherwise, get conversations where they are the seeker
+    if (supporterProfile) {
+      query = query.or(`seeker_id.eq.${user.id},supporter_id.eq.${supporterProfile.id}`);
+    } else {
+      query = query.eq('seeker_id', user.id);
+    }
+
+    const { data, error } = await query;
+
+    if (error) throw error;
+    return (data as unknown as PeerConversation[]) || [];
+  },
+
+  /**
+   * Get active conversations only
+   */
+  async getActiveConversations(): Promise<PeerConversation[]> {
+    const conversations = await this.getMyConversations();
+    return conversations.filter(c => c.status === 'active');
+  },
+
+  /**
+   * Start a conversation with a supporter
+   */
+  async startConversation(supporterId: string): Promise<PeerConversation> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error('Not authenticated');
+
+    const { data, error } = await supabase
+      .from('mental_health_peer_conversations')
+      .insert({
+        supporter_id: supporterId,
+        seeker_id: user.id,
+        status: 'active',
+      })
+      .select(`
+        *,
+        supporter:mental_health_peer_supporters(*)
+      `)
+      .single();
+
+    if (error) throw error;
+    return data as unknown as PeerConversation;
+  },
+
+  /**
+   * End a conversation
+   */
+  async endConversation(conversationId: string): Promise<void> {
+    const { error } = await supabase
+      .from('mental_health_peer_conversations')
+      .update({
+        status: 'ended',
+        ended_at: new Date().toISOString(),
+      })
+      .eq('id', conversationId);
+
+    if (error) throw error;
+  },
+
+  /**
+   * Archive a conversation
+   */
+  async archiveConversation(conversationId: string): Promise<void> {
+    const { error } = await supabase
+      .from('mental_health_peer_conversations')
+      .update({
+        status: 'archived',
+      })
+      .eq('id', conversationId);
+
+    if (error) throw error;
+  },
+};
+
+// =====================================================
+// PEER MESSAGES
+// =====================================================
+export const peerMessageService = {
+  /**
+   * Get messages for a conversation
+   */
+  async getMessages(conversationId: string, limit = 50): Promise<PeerMessage[]> {
+    const { data, error } = await supabase
+      .from('mental_health_peer_messages')
+      .select('*')
+      .eq('conversation_id', conversationId)
+      .order('created_at', { ascending: true })
+      .limit(limit);
+
+    if (error) throw error;
+    return (data as unknown as PeerMessage[]) || [];
+  },
+
+  /**
+   * Send a message
+   */
+  async sendMessage(conversationId: string, content: string): Promise<PeerMessage> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error('Not authenticated');
+
+    const { data, error } = await supabase
+      .from('mental_health_peer_messages')
+      .insert({
+        conversation_id: conversationId,
+        sender_id: user.id,
+        content,
+      })
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data as unknown as PeerMessage;
+  },
+
+  /**
+   * Mark messages as read
+   */
+  async markAsRead(conversationId: string): Promise<void> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error('Not authenticated');
+
+    const { error } = await supabase
+      .from('mental_health_peer_messages')
+      .update({ is_read: true })
+      .eq('conversation_id', conversationId)
+      .neq('sender_id', user.id);
+
+    if (error) throw error;
+  },
+
+  /**
+   * Get unread count for a conversation
+   */
+  async getUnreadCount(conversationId: string): Promise<number> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return 0;
+
+    const { count, error } = await supabase
+      .from('mental_health_peer_messages')
+      .select('*', { count: 'exact', head: true })
+      .eq('conversation_id', conversationId)
+      .eq('is_read', false)
+      .neq('sender_id', user.id);
+
+    if (error) throw error;
+    return count || 0;
+  },
+
+  /**
+   * Subscribe to new messages in a conversation (real-time)
+   */
+  subscribeToMessages(
+    conversationId: string,
+    onMessage: (message: PeerMessage) => void
+  ) {
+    const channel = supabase
+      .channel(`peer-messages-${conversationId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'mental_health_peer_messages',
+          filter: `conversation_id=eq.${conversationId}`,
+        },
+        (payload) => {
+          onMessage(payload.new as unknown as PeerMessage);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  },
+};
+
+// =====================================================
+// REAL-TIME PRESENCE (for availability indicators)
+// =====================================================
+export const peerPresenceService = {
+  /**
+   * Subscribe to supporter availability changes
+   */
+  subscribeToAvailability(onUpdate: (supporters: PeerSupporter[]) => void) {
+    const channel = supabase
+      .channel('peer-supporters-availability')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'mental_health_peer_supporters',
+        },
+        async () => {
+          // Fetch updated list when any supporter changes
+          const supporters = await peerSupporterService.getAvailableSupporters();
+          onUpdate(supporters);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  },
+};

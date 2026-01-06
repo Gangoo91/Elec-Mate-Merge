@@ -176,7 +176,7 @@ export default function InspectorProfileForm() {
       {!currentProfile && (
         <div className="bg-elec-gray border border-elec-gray-light rounded-lg p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-gray-400">Profile Completion</span>
+            <span className="text-sm text-white/70">Profile Completion</span>
             <span className="text-sm font-semibold text-elec-yellow">{completionPercentage()}%</span>
           </div>
           <div className="w-full bg-elec-gray-dark rounded-full h-2">
@@ -267,7 +267,7 @@ export default function InspectorProfileForm() {
               <div>
                 <Label htmlFor="companyWebsite" className="text-foreground font-semibold">Website</Label>
                 <div className="relative mt-1.5">
-                  <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/70" />
                   <Input
                     id="companyWebsite"
                     value={formData.companyWebsite}
@@ -356,7 +356,7 @@ export default function InspectorProfileForm() {
             {formData.qualifications.length > 0 && (
               <div className="flex flex-wrap gap-2 pt-2">
                 {formData.qualifications.map((qual) => (
-                  <Badge key={qual} className="bg-elec-yellow/20 text-gray-300 border border-elec-yellow/30">
+                  <Badge key={qual} className="bg-elec-yellow/20 text-white/80 border border-elec-yellow/30">
                     {qual}
                   </Badge>
                 ))}
@@ -454,7 +454,7 @@ export default function InspectorProfileForm() {
                   className="max-w-full h-auto"
                 />
               </div>
-              <p className="text-sm text-gray-400 mt-2">
+              <p className="text-sm text-white/70 mt-2">
                 ✓ Signature ready - click "Save Profile" or "Update Profile" below to save
               </p>
             </div>

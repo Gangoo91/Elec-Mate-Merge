@@ -507,19 +507,19 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
             <div className="space-y-2">
               <h4 className="font-medium text-sm">Section Completion</h4>
               <div className="space-y-1 text-sm">
-                <div className={`flex items-center gap-2 ${hasRequiredInstallationDetails ? 'text-green-600' : 'text-gray-500'}`}>
+                <div className={`flex items-center gap-2 ${hasRequiredInstallationDetails ? 'text-green-600' : 'text-white/60'}`}>
                   {hasRequiredInstallationDetails ? <CheckCircle className="h-4 w-4" /> : <Clock className="h-4 w-4" />}
                   Installation Details
                 </div>
-                <div className={`flex items-center gap-2 ${hasCompletedInspections ? 'text-green-600' : 'text-gray-500'}`}>
+                <div className={`flex items-center gap-2 ${hasCompletedInspections ? 'text-green-600' : 'text-white/60'}`}>
                   {hasCompletedInspections ? <CheckCircle className="h-4 w-4" /> : <Clock className="h-4 w-4" />}
                   Schedule of Inspections
                 </div>
-                <div className={`flex items-center gap-2 ${hasTestResults ? 'text-green-600' : 'text-gray-500'}`}>
+                <div className={`flex items-center gap-2 ${hasTestResults ? 'text-green-600' : 'text-white/60'}`}>
                   {hasTestResults ? <CheckCircle className="h-4 w-4" /> : <Clock className="h-4 w-4" />}
                   Schedule of Testing
                 </div>
-                <div className={`flex items-center gap-2 ${hasRequiredDeclarations ? 'text-green-600' : 'text-gray-500'}`}>
+                <div className={`flex items-center gap-2 ${hasRequiredDeclarations ? 'text-green-600' : 'text-white/60'}`}>
                   {hasRequiredDeclarations ? <CheckCircle className="h-4 w-4" /> : <Clock className="h-4 w-4" />}
                   Declarations & Signatures
                 </div>

@@ -53,7 +53,7 @@ const EquipmentSection = () => {
                     <h6 className="font-medium text-foreground">Basic Hand Tools</h6>
                     <p className="text-xs text-white/80">Screwdrivers, spanners, pliers</p>
                   </div>
-                  <Badge variant="outline" className="text-white/80 border-gray-400">Useful</Badge>
+                  <Badge variant="outline" className="text-white/80 border-white/40">Useful</Badge>
                 </div>
               </div>
             </div>
@@ -132,7 +132,7 @@ const EquipmentSection = () => {
                   </p>
                   <div className="flex flex-wrap gap-1">
                     <Badge variant="outline" className="text-xs text-blue-400 border-blue-400">Optional</Badge>
-                    <Badge variant="outline" className="text-xs text-white/80 border-gray-400">Digital Preferred</Badge>
+                    <Badge variant="outline" className="text-xs text-white/80 border-white/40">Digital Preferred</Badge>
                   </div>
                 </CardContent>
               </Card>

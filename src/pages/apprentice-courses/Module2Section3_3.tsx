@@ -103,6 +103,20 @@ export default function Module2Section3_3() {
       options: ["Only cable colour", "Voltage drop, Zs, and protective device ratings", "Only the total load", "Wire temperature only"],
       correctAnswer: 1,
       explanation: "All factors affecting safety and performance must be verified according to BS 7671."
+    },
+    {
+      id: 9,
+      question: "What happens when you add more branches to a parallel circuit?",
+      options: ["Total resistance increases", "Total current decreases", "Total resistance decreases and total current increases", "Nothing changes"],
+      correctAnswer: 2,
+      explanation: "Each new parallel branch provides another current path, reducing total resistance and increasing total current drawn from the supply."
+    },
+    {
+      id: 10,
+      question: "Three identical 60Ω resistors in parallel have an equivalent resistance of...",
+      options: ["180Ω", "60Ω", "20Ω", "10Ω"],
+      correctAnswer: 2,
+      explanation: "For identical resistors in parallel: Req = R/n = 60Ω/3 = 20Ω"
     }
   ];
 
@@ -386,20 +400,20 @@ export default function Module2Section3_3() {
         </div>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-white/10">
-          <Button variant="outline" asChild>
-            <Link to=".." className="flex items-center gap-2">
-              <ArrowLeft className="w-4 h-4" />
-              Previous: Series Circuits
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../3-2">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous: Series Circuits - Current and Voltage
             </Link>
           </Button>
-          <Button asChild>
-            <Link to=".." className="flex items-center gap-2">
-              Next: Series & Parallel Calculations
-              <ArrowRight className="w-4 h-4" />
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              Back to Module 2.3
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
-        </div>
+        </nav>
       </main>
     </div>
   );

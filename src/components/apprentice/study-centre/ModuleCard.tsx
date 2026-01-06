@@ -24,7 +24,7 @@ export function ModuleCard({ number, title, description, icon: Icon, href }: Mod
       <h3 className="text-elec-light font-semibold text-base mb-3 group-hover:text-elec-yellow transition-colors leading-tight flex-shrink-0">
         {title}
       </h3>
-      <p className="text-muted-foreground leading-relaxed text-sm line-clamp-4">
+      <p className="text-white leading-relaxed text-sm line-clamp-4">
         {description}
       </p>
     </div>

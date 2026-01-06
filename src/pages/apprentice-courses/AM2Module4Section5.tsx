@@ -160,19 +160,19 @@ const AM2Module4Section5 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
+      <div className="border-b border-white/10 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between gap-2">
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-2 sm:p-0 text-sm sm:text-base" asChild>
+            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
               <Link to="..">
                 <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
                 <span className="hidden xs:inline">Back to Module 4</span>
                 <span className="xs:hidden">Back</span>
               </Link>
             </Button>
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-2 sm:p-0 text-sm sm:text-base" asChild>
+            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
               <Link to="..">
                 <span className="hidden xs:inline">Next Module</span>
                 <span className="xs:hidden">Module 5</span>
@@ -191,10 +191,10 @@ const AM2Module4Section5 = () => {
             <Search className="w-4 h-4" />
             Module 4 – Section 5
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4 sm:mb-6 leading-tight">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6 leading-tight">
             Identifying and Reporting Non-Compliances
           </h1>
-          <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
+          <p className="text-sm sm:text-base text-white mb-6 sm:mb-8 leading-relaxed">
             It's not enough to complete an installation and test it — you must also be able to identify when something does not comply with BS 7671 or the specification. In AM2, this means spotting non-compliances during testing or inspection, and then correctly reporting them on the certification.
           </p>
         </div>
@@ -220,16 +220,16 @@ const AM2Module4Section5 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground mb-4">
+            <p className="text-xs sm:text-sm text-white mb-4">
               By the end of this section, you should be able to:
             </p>
-            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
+            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Define what a non-compliance is in the context of BS 7671
@@ -255,7 +255,7 @@ const AM2Module4Section5 = () => {
         </Card>
 
         {/* What is a Non-Compliance */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" />
@@ -336,7 +336,7 @@ const AM2Module4Section5 = () => {
         />
 
         {/* How to Identify Non-Compliances */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Eye className="w-5 h-5" />
@@ -483,8 +483,8 @@ const AM2Module4Section5 = () => {
               </div>
 
               {/* Detailed Examples with BS 7671 References */}
-              <div className="bg-background/50 rounded-lg p-3 sm:p-4">
-                <h4 className="font-medium text-foreground mb-3 text-sm sm:text-base">Detailed Examples with BS 7671 Context:</h4>
+              <div className="bg-[#1a1a1a]/50 rounded-lg p-3 sm:p-4">
+                <h4 className="font-medium text-white mb-3 text-sm sm:text-base">Detailed Examples with BS 7671 Context:</h4>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 text-xs sm:text-sm">
                   <div className="space-y-3">
                     <div className="bg-red-50 dark:bg-red-950/20 rounded p-2">
@@ -529,7 +529,7 @@ const AM2Module4Section5 = () => {
         />
 
         {/* How to Report Non-Compliances */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <FileText className="w-5 h-5" />
@@ -588,15 +588,15 @@ const AM2Module4Section5 = () => {
                 <div className="bg-red-100 dark:bg-red-900/30 border border-red-300 dark:border-red-700/50 rounded-lg p-3 sm:p-4">
                   <h4 className="font-medium text-red-900 dark:text-red-100 mb-3 text-sm sm:text-base">❌ Poor Reporting Examples:</h4>
                   <div className="space-y-2 text-xs sm:text-sm">
-                    <div className="bg-background/50 rounded p-2">
+                    <div className="bg-[#1a1a1a]/50 rounded p-2">
                       <span className="text-red-800 dark:text-red-200">"Earth missing"</span>
                       <p className="text-red-600 dark:text-elec-yellow text-xs mt-1">Too vague, no location specified</p>
                     </div>
-                    <div className="bg-background/50 rounded p-2">
+                    <div className="bg-[#1a1a1a]/50 rounded p-2">
                       <span className="text-red-800 dark:text-red-200">"Ring fault"</span>
                       <p className="text-red-600 dark:text-elec-yellow text-xs mt-1">No detail about nature of fault</p>
                     </div>
-                    <div className="bg-background/50 rounded p-2">
+                    <div className="bg-[#1a1a1a]/50 rounded p-2">
                       <span className="text-red-800 dark:text-red-200">"RCD broken"</span>
                       <p className="text-red-600 dark:text-elec-yellow text-xs mt-1">No test data or specific failure</p>
                     </div>
@@ -606,15 +606,15 @@ const AM2Module4Section5 = () => {
                 <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800/30 rounded-lg p-3 sm:p-4">
                   <h4 className="font-medium text-green-800 dark:text-green-200 mb-3 text-sm sm:text-base">✅ Good Reporting Examples:</h4>
                   <div className="space-y-2 text-xs sm:text-sm">
-                    <div className="bg-background/50 rounded p-2">
+                    <div className="bg-[#1a1a1a]/50 rounded p-2">
                       <span className="text-green-800 dark:text-green-200">"CPC not connected at socket outlet in kitchen"</span>
                       <p className="text-green-600 dark:text-green-400 text-xs mt-1">Specific, clear, located</p>
                     </div>
-                    <div className="bg-background/50 rounded p-2">
+                    <div className="bg-[#1a1a1a]/50 rounded p-2">
                       <span className="text-green-800 dark:text-green-200">"Ring final broken at consumer unit - L conductor"</span>
                       <p className="text-green-600 dark:text-green-400 text-xs mt-1">Specific conductor and location</p>
                     </div>
-                    <div className="bg-background/50 rounded p-2">
+                    <div className="bg-[#1a1a1a]/50 rounded p-2">
                       <span className="text-green-800 dark:text-green-200">"RCD trip time 380ms at ×1 IΔn - exceeds 300ms limit"</span>
                       <p className="text-green-600 dark:text-green-400 text-xs mt-1">Measured value and standard referenced</p>
                     </div>
@@ -651,7 +651,7 @@ const AM2Module4Section5 = () => {
         </Card>
 
         {/* Assessor Expectations */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Target className="w-5 h-5" />
@@ -725,7 +725,7 @@ const AM2Module4Section5 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Lightbulb className="w-5 h-5" />
@@ -813,7 +813,7 @@ const AM2Module4Section5 = () => {
 
               {/* Advanced Techniques */}
               <div className="bg-gradient-to-r from-blue-50 to-green-50 dark:from-blue-950/20 dark:to-green-950/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
-                <h4 className="font-medium text-foreground mb-3 text-sm sm:text-base">Advanced Non-Compliance Identification Techniques:</h4>
+                <h4 className="font-medium text-white mb-3 text-sm sm:text-base">Advanced Non-Compliance Identification Techniques:</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
                   <div>
                     <strong className="text-blue-700 dark:text-elec-yellow block mb-2">Pattern Recognition:</strong>
@@ -848,7 +848,7 @@ const AM2Module4Section5 = () => {
         />
 
         {/* Real-World Examples */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
@@ -909,9 +909,9 @@ const AM2Module4Section5 = () => {
             
             <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-background/50 rounded-lg p-3 sm:p-4">
-                  <h4 className="font-medium text-foreground mb-2 text-sm sm:text-base">Assessment Expectations:</h4>
-                  <ul className="text-xs sm:text-sm text-muted-foreground space-y-1">
+                <div className="bg-[#1a1a1a]/50 rounded-lg p-3 sm:p-4">
+                  <h4 className="font-medium text-white mb-2 text-sm sm:text-base">Assessment Expectations:</h4>
+                  <ul className="text-xs sm:text-sm text-white space-y-1">
                     <li>• Systematic approach to fault identification</li>
                     <li>• Correct interpretation of test results</li>
                     <li>• Professional reporting using technical language</li>
@@ -920,9 +920,9 @@ const AM2Module4Section5 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-background/50 rounded-lg p-3 sm:p-4">
-                  <h4 className="font-medium text-foreground mb-2 text-sm sm:text-base">Professional Development:</h4>
-                  <ul className="text-xs sm:text-sm text-muted-foreground space-y-1">
+                <div className="bg-[#1a1a1a]/50 rounded-lg p-3 sm:p-4">
+                  <h4 className="font-medium text-white mb-2 text-sm sm:text-base">Professional Development:</h4>
+                  <ul className="text-xs sm:text-sm text-white space-y-1">
                     <li>• Regulatory knowledge demonstration</li>
                     <li>• Risk assessment capability</li>
                     <li>• Client communication readiness</li>
@@ -934,7 +934,7 @@ const AM2Module4Section5 = () => {
               
               <div className="bg-elec-yellow/10 rounded-lg p-3 sm:p-4">
                 <h4 className="font-medium text-elec-yellow mb-2 text-sm sm:text-base">Industry Relevance:</h4>
-                <p className="text-xs sm:text-sm text-muted-foreground">
+                <p className="text-xs sm:text-sm text-white">
                   The ability to identify and report non-compliances is crucial for professional electricians. 
                   It demonstrates competence in quality assurance, safety awareness, and regulatory compliance - 
                   all essential skills for real-world electrical work and client trust.
@@ -953,9 +953,9 @@ const AM2Module4Section5 = () => {
             </h2>
             
             <div className="space-y-4">
-              <div className="bg-background/50 rounded-lg p-3 sm:p-4">
-                <h4 className="font-medium text-foreground mb-3 text-sm sm:text-base">Key Takeaways:</h4>
-                <ul className="text-xs sm:text-sm text-muted-foreground space-y-2">
+              <div className="bg-[#1a1a1a]/50 rounded-lg p-3 sm:p-4">
+                <h4 className="font-medium text-white mb-3 text-sm sm:text-base">Key Takeaways:</h4>
+                <ul className="text-xs sm:text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                     <span>Identifying and reporting non-compliances proves professional competence</span>
@@ -985,7 +985,7 @@ const AM2Module4Section5 = () => {
               
               <div className="bg-elec-yellow/10 rounded-lg p-3 sm:p-4">
                 <h4 className="font-medium text-elec-yellow mb-2 text-sm sm:text-base">Module 4 Complete:</h4>
-                <p className="text-xs sm:text-sm text-muted-foreground">
+                <p className="text-xs sm:text-sm text-white">
                   You have now completed Module 4 - Testing and Commissioning. You understand test procedures, 
                   equipment safety, result recording, functional testing, and non-compliance identification. 
                   You're ready to move on to Module 5 for the final components of AM2 success.
@@ -996,13 +996,13 @@ const AM2Module4Section5 = () => {
         </Card>
 
         {/* Quiz Section */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Timer className="w-5 h-5" />
               Test Your Knowledge
             </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground mb-6">
+            <p className="text-xs sm:text-sm text-white mb-6">
               Complete this 10-question quiz to test your understanding of identifying and reporting non-compliances.
             </p>
             <Quiz questions={quizQuestions} title="Identifying and Reporting Non-Compliances" />

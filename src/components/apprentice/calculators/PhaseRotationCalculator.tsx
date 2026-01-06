@@ -61,7 +61,7 @@ const PhaseRotationCalculator = () => {
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border-elec-yellow/20 bg-white/5">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -72,13 +72,13 @@ const PhaseRotationCalculator = () => {
             BS 7671
           </Badge>
         </div>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-white">
           Determine correct phase sequence for three-phase motor connections and installations
         </p>
       </CardHeader>
       <CardContent className="space-y-6">
         <Tabs defaultValue="calculator" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 bg-elec-dark">
+          <TabsList className="grid w-full grid-cols-3 bg-white/10">
             <TabsTrigger value="calculator">Calculator</TabsTrigger>
             <TabsTrigger value="guidance">Guidance</TabsTrigger>
             <TabsTrigger value="reference">Cable Colors</TabsTrigger>
@@ -104,7 +104,7 @@ const PhaseRotationCalculator = () => {
                     <MobileSelectTrigger label="Select Testing Method">
                       <MobileSelectValue placeholder="Choose test method" />
                     </MobileSelectTrigger>
-                    <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                    <MobileSelectContent className="bg-white/10 border-elec-yellow/20">
                       <MobileSelectItem value="phase-rotation-meter">Phase Rotation Meter</MobileSelectItem>
                       <MobileSelectItem value="voltage-measurement">Voltage Measurement</MobileSelectItem>
                       <MobileSelectItem value="motor-behaviour">Motor Rotation Test</MobileSelectItem>
@@ -129,7 +129,7 @@ const PhaseRotationCalculator = () => {
                         <MobileSelectTrigger label="Meter Indication">
                           <MobileSelectValue placeholder="Select meter reading" />
                         </MobileSelectTrigger>
-                        <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                        <MobileSelectContent className="bg-white/10 border-elec-yellow/20">
                           <MobileSelectItem value="l1-l2-l3">L1-L2-L3 (Clockwise)</MobileSelectItem>
                           <MobileSelectItem value="l1-l3-l2">L1-L3-L2 (Anti-clockwise)</MobileSelectItem>
                         </MobileSelectContent>
@@ -204,7 +204,7 @@ const PhaseRotationCalculator = () => {
                         <MobileSelectTrigger label="Observed Motor Rotation">
                           <MobileSelectValue placeholder="Select rotation direction" />
                         </MobileSelectTrigger>
-                        <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+                        <MobileSelectContent className="bg-white/10 border-elec-yellow/20">
                           <MobileSelectItem value="clockwise">Clockwise (Expected for standard motors)</MobileSelectItem>
                           <MobileSelectItem value="anticlockwise">Anti-clockwise (Reversed sequence)</MobileSelectItem>
                         </MobileSelectContent>
@@ -233,7 +233,7 @@ const PhaseRotationCalculator = () => {
                     Analyse Phase Sequence
                   </MobileButton>
                   {!canCalculate() && (
-                    <p className="text-sm text-muted-foreground mt-2 text-center">
+                    <p className="text-sm text-white mt-2 text-center">
                       {!testMethod ? "Select a test method first" : "Complete all required fields"}
                     </p>
                   )}
@@ -301,16 +301,16 @@ const PhaseRotationCalculator = () => {
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-3">
-                        <div className="bg-elec-dark/30 rounded-lg p-3">
+                        <div className="bg-white/10 rounded-lg p-3">
                           <h4 className="font-medium text-elec-yellow mb-2 text-sm">Motor Direction</h4>
-                          <p className="text-sm text-muted-foreground">{result.motorDirection}</p>
+                          <p className="text-sm text-white">{result.motorDirection}</p>
                         </div>
                         
-                        <div className="bg-elec-dark/30 rounded-lg p-3">
+                        <div className="bg-white/10 rounded-lg p-3">
                           <h4 className="font-medium text-elec-yellow mb-2 text-sm">
                             {result.isCorrect ? "Verification" : "Correction Required"}
                           </h4>
-                          <p className="text-sm text-muted-foreground">{result.correctionMethod}</p>
+                          <p className="text-sm text-white">{result.correctionMethod}</p>
                         </div>
 
                         {!result.isCorrect && (
@@ -326,7 +326,7 @@ const PhaseRotationCalculator = () => {
 
                     {/* Visual Representation */}
                     {result.visualRepresentation && (
-                      <div className="bg-elec-dark/30 rounded-lg p-4">
+                      <div className="bg-white/10 rounded-lg p-4">
                         <h4 className="font-medium text-elec-yellow mb-3">Phase Diagram</h4>
                         <div className="flex items-center justify-center">
                           <div className="relative w-32 h-32 border-2 border-elec-yellow/30 rounded-full">
@@ -350,7 +350,7 @@ const PhaseRotationCalculator = () => {
                               }}
                             />
                             <div 
-                              className="absolute w-16 h-0.5 bg-gray-600 origin-left"
+                              className="absolute w-16 h-0.5 bg-white/15 origin-left"
                               style={{ 
                                 left: '50%', 
                                 top: '50%',
@@ -379,11 +379,11 @@ const PhaseRotationCalculator = () => {
                               L2 (Black)
                             </span>
                             <span className="flex items-center gap-1">
-                              <div className="w-3 h-0.5 bg-gray-600"></div>
+                              <div className="w-3 h-0.5 bg-white/15"></div>
                               L3 (Grey)
                             </span>
                           </div>
-                          <p className="text-muted-foreground">
+                          <p className="text-white">
                             Rotation: {result.visualRepresentation.rotationDirection}
                           </p>
                         </div>
@@ -431,9 +431,9 @@ const PhaseRotationCalculator = () => {
                     </Alert>
                   </div>
                 ) : (
-                  <Card className="border-elec-yellow/20 bg-elec-dark/30">
+                  <Card className="border-elec-yellow/20 bg-white/10">
                     <CardContent className="pt-6">
-                      <div className="text-center text-muted-foreground">
+                      <div className="text-center text-white">
                         <RotateCw className="h-12 w-12 mx-auto mb-3" />
                         <p>Select a test method and enter values to analyse phase sequence</p>
                       </div>
@@ -538,11 +538,11 @@ const PhaseRotationCalculator = () => {
                       <span className="font-medium">L1 - Brown</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 bg-green-500/10 rounded">
-                      <div className="w-4 h-4 bg-gray-900 rounded"></div>
+                      <div className="w-4 h-4 bg-white/5 rounded"></div>
                       <span className="font-medium">L2 - Black</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 bg-green-500/10 rounded">
-                      <div className="w-4 h-4 bg-gray-500 rounded"></div>
+                      <div className="w-4 h-4 bg-white/10 rounded"></div>
                       <span className="font-medium">L3 - Grey</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 bg-green-500/10 rounded">
@@ -582,7 +582,7 @@ const PhaseRotationCalculator = () => {
                       <span className="font-medium">L3 - Blue</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 bg-amber-500/10 rounded">
-                      <div className="w-4 h-4 bg-gray-900 rounded"></div>
+                      <div className="w-4 h-4 bg-white/5 rounded"></div>
                       <span className="font-medium">N - Black</span>
                     </div>
                     <div className="flex items-center gap-3 p-2 bg-amber-500/10 rounded">

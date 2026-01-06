@@ -36,7 +36,7 @@ const educationAnalytics: EducationAnalytics = {
 
 const EducationAnalyticsDashboard = () => {
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border-elec-yellow/20 bg-white/5">
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-lg">
           <TrendingUp className="h-5 w-5 text-elec-yellow" />
@@ -48,63 +48,63 @@ const EducationAnalyticsDashboard = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center space-y-1">
             <div className="text-2xl font-bold text-elec-yellow">{educationAnalytics.totalCourses}</div>
-            <div className="text-xs text-muted-foreground">Available Programmes</div>
+            <div className="text-xs text-white">Available Programmes</div>
           </div>
           <div className="text-center space-y-1">
             <div className="text-2xl font-bold text-elec-yellow">{educationAnalytics.totalProviders}</div>
-            <div className="text-xs text-muted-foreground">Education Providers</div>
+            <div className="text-xs text-white">Education Providers</div>
           </div>
           <div className="text-center space-y-1">
             <div className="text-2xl font-bold text-elec-yellow flex items-center justify-center gap-1">
               <Star className="h-4 w-4 fill-elec-yellow" />
               <span>{educationAnalytics.averageRating}</span>
             </div>
-            <div className="text-xs text-muted-foreground">Average Rating</div>
+            <div className="text-xs text-white">Average Rating</div>
           </div>
           <div className="text-center space-y-1">
             <div className="text-2xl font-bold text-elec-yellow">{educationAnalytics.averageEmploymentRate}%</div>
-            <div className="text-xs text-muted-foreground">Employment Rate</div>
+            <div className="text-xs text-white">Employment Rate</div>
           </div>
         </div>
 
         {/* Industry Insights */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="border-elec-yellow/10 bg-elec-dark/50">
+          <Card className="border-elec-yellow/10 bg-white/10">
             <CardContent className="p-4">
               <div className="flex items-center gap-2 mb-3">
                 <GraduationCap className="h-4 w-4 text-green-400" />
                 <span className="text-sm font-medium text-green-400">High Demand</span>
               </div>
               <div className="text-2xl font-bold text-white mb-1">{educationAnalytics.highDemandPrograms}</div>
-              <div className="text-xs text-muted-foreground">programmes in high demand</div>
+              <div className="text-xs text-white">programmes in high demand</div>
               <div className="mt-2 text-xs text-green-400">
                 Excellent career prospects
               </div>
             </CardContent>
           </Card>
 
-          <Card className="border-elec-yellow/10 bg-elec-dark/50">
+          <Card className="border-elec-yellow/10 bg-white/10">
             <CardContent className="p-4">
               <div className="flex items-center gap-2 mb-3">
                 <PoundSterling className="h-4 w-4 text-blue-400" />
                 <span className="text-sm font-medium text-blue-400">Funding Available</span>
               </div>
               <div className="text-2xl font-bold text-white mb-1">{educationAnalytics.fundingOptionsAvailable}</div>
-              <div className="text-xs text-muted-foreground">different funding options</div>
+              <div className="text-xs text-white">different funding options</div>
               <div className="mt-2 text-xs text-blue-400">
                 Multiple pathways to finance
               </div>
             </CardContent>
           </Card>
 
-          <Card className="border-elec-yellow/10 bg-elec-dark/50">
+          <Card className="border-elec-yellow/10 bg-white/10">
             <CardContent className="p-4">
               <div className="flex items-center gap-2 mb-3">
                 <Award className="h-4 w-4 text-amber-400" />
                 <span className="text-sm font-medium text-amber-400">Starting Salary</span>
               </div>
               <div className="text-lg font-bold text-white mb-1">{educationAnalytics.averageStartingSalary}</div>
-              <div className="text-xs text-muted-foreground">average graduate salary</div>
+              <div className="text-xs text-white">average graduate salary</div>
               <div className="mt-2 text-xs text-amber-400">
                 Strong return on investment
               </div>
@@ -120,7 +120,7 @@ const EducationAnalyticsDashboard = () => {
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {educationAnalytics.topCategories.map((category, idx) => (
-              <div key={idx} className="flex items-center justify-between p-3 bg-elec-dark/30 rounded-lg border border-elec-yellow/10">
+              <div key={idx} className="flex items-center justify-between p-3 bg-white/10 rounded-lg border border-elec-yellow/10">
                 <div className="flex items-center gap-2">
                   <Building className="h-3 w-3 text-elec-yellow" />
                   <span className="text-sm text-white">{category.name}</span>
@@ -140,7 +140,7 @@ const EducationAnalyticsDashboard = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div>
                 <h5 className="font-medium mb-2 text-green-400">Growth Areas:</h5>
-                <ul className="space-y-1 text-xs text-muted-foreground">
+                <ul className="space-y-1 text-xs text-white">
                   <li>• Renewable energy programmes (+60% applications)</li>
                   <li>• Digital engineering courses (+40% demand)</li>
                   <li>• Part-time and flexible study (+35%)</li>
@@ -149,7 +149,7 @@ const EducationAnalyticsDashboard = () => {
               </div>
               <div>
                 <h5 className="font-medium mb-2 text-blue-400">Industry Partnerships:</h5>
-                <ul className="space-y-1 text-xs text-muted-foreground">
+                <ul className="space-y-1 text-xs text-white">
                   <li>• 85% of programmes have employer links</li>
                   <li>• Average 94% employment rate post-graduation</li>
                   <li>• £12k+ average salary increase after qualification</li>

@@ -134,7 +134,7 @@ const IntelligentPortfolioTab = () => {
             <CardContent>
               <ul className="space-y-2">
                 {section.suggestions.map((suggestion, idx) => (
-                  <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                  <li key={idx} className="text-sm text-white flex items-start gap-2">
                     <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
                     {suggestion}
                   </li>
@@ -152,13 +152,13 @@ const IntelligentPortfolioTab = () => {
             AI Portfolio Assistant
             <Sparkles className="h-4 w-4 text-yellow-400" />
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Get personalised advice on portfolio development, documentation, and reflection writing
           </p>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="h-96 border border-gray-600 rounded-xl p-4 overflow-y-auto bg-gradient-to-b from-gray-900 to-elec-gray/90 scrollbar-thin scrollbar-thumb-elec-yellow scrollbar-track-gray-800">
+            <div className="h-96 border border-white/20 rounded-xl p-4 overflow-y-auto bg-gradient-to-b from-white/5 to-elec-gray/90 scrollbar-thin scrollbar-thumb-elec-yellow scrollbar-track-white/10">
               {chatMessages.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-center">
                   <div className="bg-gradient-to-r from-elec-yellow to-orange-500 rounded-full p-4 mb-6">
@@ -167,11 +167,11 @@ const IntelligentPortfolioTab = () => {
                   <h3 className="text-xl font-semibold text-white mb-2">
                     Welcome to your AI Portfolio Assistant! ⚡
                   </h3>
-                  <p className="text-muted-foreground mb-6 max-w-md">
+                  <p className="text-white mb-6 max-w-md">
                     Ask me anything about portfolio development, documentation, or apprenticeship guidance. I'm here to help you succeed!
                   </p>
                   <div className="space-y-3">
-                    <p className="text-sm text-muted-foreground">💡 Try asking:</p>
+                    <p className="text-sm text-white">💡 Try asking:</p>
                     <div className="flex flex-wrap gap-2 justify-center">
                       {quickQuestions.slice(0, 2).map((question, index) => (
                         <Badge
@@ -197,8 +197,8 @@ const IntelligentPortfolioTab = () => {
                   ))}
                   {isLoading && (
                     <div className="flex justify-start mb-4">
-                      <div className="bg-gradient-to-br from-elec-gray to-gray-800 border border-gray-600 rounded-xl p-4 mr-4 shadow-xl">
-                        <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                      <div className="bg-gradient-to-br from-elec-gray to-white/10 border border-white/20 rounded-xl p-4 mr-4 shadow-xl">
+                        <div className="flex items-center gap-3 text-sm text-white">
                           <div className="flex space-x-1">
                             <div className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce"></div>
                             <div className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
@@ -219,7 +219,7 @@ const IntelligentPortfolioTab = () => {
                 onChange={(e) => setCurrentMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Ask about portfolio development, documentation, or apprenticeship guidance..."
-                className="flex-1 min-h-[80px] resize-none border-gray-600 bg-gray-800/50 focus:border-elec-yellow transition-colors"
+                className="flex-1 min-h-[80px] resize-none border-white/20 bg-white/5 focus:border-elec-yellow transition-colors"
                 disabled={isLoading}
               />
               <Button
@@ -232,7 +232,7 @@ const IntelligentPortfolioTab = () => {
             </div>
 
             <div className="space-y-3">
-              <p className="text-xs text-muted-foreground flex items-center gap-1">
+              <p className="text-xs text-white flex items-center gap-1">
                 <Sparkles className="h-3 w-3" />
                 Quick questions to get started:
               </p>

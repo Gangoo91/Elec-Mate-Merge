@@ -67,8 +67,7 @@ const InstrumentationModule3Section4 = () => {
       ],
       correct: 1,
       explanation: "Converting RTD resistance changes to temperature values in °C is a common instrumentation conversion, where the sensor's resistance variation is mathematically converted to meaningful temperature units."
-    }
-  ];
+  }  ];
 
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">

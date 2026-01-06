@@ -121,7 +121,7 @@ const ResourceLibrary = () => {
   return (
     <div className="space-y-6">
       {/* Featured Resources */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Star className="h-5 w-5 text-elec-yellow" />
@@ -131,7 +131,7 @@ const ResourceLibrary = () => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {featuredResources.map((resource) => (
-              <Card key={resource.id} className="border-elec-yellow/10 bg-elec-dark/50">
+              <Card key={resource.id} className="border-elec-yellow/10 bg-white/10">
                 <CardContent className="p-4">
                   <div className="flex items-start gap-3">
                     <div className="p-2 rounded bg-elec-yellow/10">
@@ -139,19 +139,19 @@ const ResourceLibrary = () => {
                     </div>
                     <div className="flex-1">
                       <h3 className="font-semibold text-white mb-1">{resource.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-2">{resource.description}</p>
+                      <p className="text-sm text-white mb-2">{resource.description}</p>
                       <div className="flex items-center gap-2 mb-3">
                         <Badge variant="outline" className="text-xs">
                           {resource.type}
                         </Badge>
-                        <span className="text-xs text-muted-foreground">
+                        <span className="text-xs text-white">
                           {resource.downloadCount} downloads
                         </span>
                       </div>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-1">
                           <Star className="h-3 w-3 text-yellow-400 fill-current" />
-                          <span className="text-xs text-muted-foreground">{resource.rating}</span>
+                          <span className="text-xs text-white">{resource.rating}</span>
                         </div>
                         <Button size="sm" className="h-7">
                           <Download className="h-3 w-3 mr-1" />
@@ -168,14 +168,14 @@ const ResourceLibrary = () => {
       </Card>
 
       {/* Search and Filter */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle>Resource Library</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col md:flex-row gap-4 mb-6">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white" />
               <Input
                 placeholder="Search resources..."
                 value={searchTerm}
@@ -200,7 +200,7 @@ const ResourceLibrary = () => {
 
           <div className="space-y-4">
             {filteredResources.map((resource) => (
-              <Card key={resource.id} className="border-elec-yellow/10 bg-elec-dark/30">
+              <Card key={resource.id} className="border-elec-yellow/10 bg-white/10">
                 <CardContent className="p-4">
                   <div className="flex items-start gap-4">
                     <div className="p-3 rounded bg-elec-yellow/10">
@@ -212,7 +212,7 @@ const ResourceLibrary = () => {
                         <div className="flex items-center gap-2">
                           <div className="flex items-center gap-1">
                             <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                            <span className="text-sm text-muted-foreground">{resource.rating}</span>
+                            <span className="text-sm text-white">{resource.rating}</span>
                           </div>
                           <Button size="sm" variant="outline">
                             <Download className="h-4 w-4 mr-1" />
@@ -220,8 +220,8 @@ const ResourceLibrary = () => {
                           </Button>
                         </div>
                       </div>
-                      <p className="text-sm text-muted-foreground mb-3">{resource.description}</p>
-                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                      <p className="text-sm text-white mb-3">{resource.description}</p>
+                      <div className="flex items-center gap-4 text-xs text-white">
                         <div className="flex items-center gap-1">
                           <FileText className="h-3 w-3" />
                           {resource.type} • {resource.size}
@@ -244,8 +244,8 @@ const ResourceLibrary = () => {
 
           {filteredResources.length === 0 && (
             <div className="text-center py-8">
-              <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">No resources found matching your search.</p>
+              <BookOpen className="h-12 w-12 text-white mx-auto mb-4" />
+              <p className="text-white">No resources found matching your search.</p>
             </div>
           )}
         </CardContent>

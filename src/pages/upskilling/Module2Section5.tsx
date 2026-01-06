@@ -8,13 +8,13 @@ import Module2Section5Quiz from '@/components/upskilling/Module2Section5Quiz';
 
 const Module2Section5 = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
         <Link to="../module-2">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 2
@@ -23,7 +23,7 @@ const Module2Section5 = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3 flex-wrap">
-            <Badge variant="secondary" className="bg-yellow-600/20 text-yellow-400 border-yellow-600/30">
+            <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
               Module 2 • Section 5
             </Badge>
             <Badge variant="outline" className="border-gray-600 text-white">
@@ -44,10 +44,10 @@ const Module2Section5 = () => {
         <div className="space-y-4 sm:space-y-6">
           
           {/* Quick Intro */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Wrench className="h-5 w-5 text-yellow-400" />
+                <Wrench className="h-5 w-5 text-elec-yellow" />
                 Introduction to Instrument Calibration
               </CardTitle>
             </CardHeader>
@@ -62,34 +62,34 @@ const Module2Section5 = () => {
           </Card>
 
           {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-yellow-400" />
+                <CheckCircle2 className="h-5 w-5 text-elec-yellow" />
                 Learning Outcomes
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-3">
-              <p className="text-sm font-medium text-yellow-400">By the end of this section, you'll be able to:</p>
+              <p className="text-sm font-medium text-elec-yellow">By the end of this section, you'll be able to:</p>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Understand the critical importance of instrument calibration for safety and legal compliance</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Identify appropriate calibration intervals and maintenance schedules</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Implement routine maintenance and storage best practices</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Recognise signs of faulty or compromised test equipment</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Maintain proper documentation and traceability records</span>
                 </li>
               </ul>
@@ -100,10 +100,10 @@ const Module2Section5 = () => {
           <div className="space-y-6">
             
             {/* Understanding Calibration */}
-            <Card className="bg-card border-transparent">
+            <Card className="bg-transparent border-transparent">
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
-                  <Book className="h-5 w-5 text-yellow-400" />
+                  <Book className="h-5 w-5 text-elec-yellow" />
                   Understanding Calibration
                 </CardTitle>
               </CardHeader>
@@ -114,8 +114,8 @@ const Module2Section5 = () => {
                 <p className="text-sm leading-relaxed">
                   It's not simply about pressing a 'self-test' button—true calibration involves comparing your instrument's readings against certified reference standards that are traceable to national standards. This creates a chain of measurement traceability that ensures your readings are accurate and legally defensible.
                 </p>
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <p className="text-sm font-medium text-yellow-400 mb-2">Key Point:</p>
+                <div className="bg-transparent/80 p-4 rounded-lg">
+                  <p className="text-sm font-medium text-elec-yellow mb-2">Key Point:</p>
                   <p className="text-sm">
                     Calibration differs from verification. Verification checks if the instrument meets specifications, whilst calibration may involve adjustment to bring the instrument within tolerance.
                   </p>
@@ -124,10 +124,10 @@ const Module2Section5 = () => {
             </Card>
 
             {/* Legal and Professional Requirements */}
-            <Card className="bg-card border-transparent">
+            <Card className="bg-transparent border-transparent">
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
-                  <Shield className="h-5 w-5 text-yellow-400" />
+                  <Shield className="h-5 w-5 text-elec-yellow" />
                   Legal and Professional Requirements
                 </CardTitle>
               </CardHeader>
@@ -136,8 +136,8 @@ const Module2Section5 = () => {
                   The requirement for calibrated test equipment isn't just good practice—it's a legal and professional obligation with serious consequences if ignored.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="text-yellow-400 font-medium mb-2">Legal Implications</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="text-elec-yellow font-medium mb-2">Legal Implications</h4>
                     <ul className="space-y-1 text-sm">
                       <li>• Courts may dismiss uncalibrated evidence</li>
                       <li>• Insurance claims may be invalidated</li>
@@ -145,8 +145,8 @@ const Module2Section5 = () => {
                       <li>• Prosecution under EAWR 2005</li>
                     </ul>
                   </div>
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="text-yellow-400 font-medium mb-2">Professional Consequences</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="text-elec-yellow font-medium mb-2">Professional Consequences</h4>
                     <ul className="space-y-1 text-sm">
                       <li>• Loss of scheme membership (NICEIC/NAPIT)</li>
                       <li>• Invalidated certificates and reports</li>
@@ -159,10 +159,10 @@ const Module2Section5 = () => {
             </Card>
 
             {/* Calibration Standards and Traceability */}
-            <Card className="bg-card border-transparent">
+            <Card className="bg-transparent border-transparent">
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
-                  <Target className="h-5 w-5 text-yellow-400" />
+                  <Target className="h-5 w-5 text-elec-yellow" />
                   Calibration Standards and Traceability
                 </CardTitle>
               </CardHeader>
@@ -170,23 +170,23 @@ const Module2Section5 = () => {
                 <p className="text-sm leading-relaxed">
                   Proper calibration requires traceability to national standards through an unbroken chain of comparisons. This ensures that your instrument's readings can be trusted and verified independently.
                 </p>
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-medium mb-3">Traceability Chain</h4>
+                <div className="bg-transparent/80 p-4 rounded-lg">
+                  <h4 className="text-elec-yellow font-medium mb-3">Traceability Chain</h4>
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center gap-2">
-                      <span className="text-yellow-400">1.</span>
+                      <span className="text-elec-yellow">1.</span>
                       <span>National Primary Standards (NPL - National Physical Laboratory)</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-yellow-400">2.</span>
+                      <span className="text-elec-yellow">2.</span>
                       <span>Secondary Standards (UKAS accredited laboratories)</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-yellow-400">3.</span>
+                      <span className="text-elec-yellow">3.</span>
                       <span>Working Standards (Calibration service providers)</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-yellow-400">4.</span>
+                      <span className="text-elec-yellow">4.</span>
                       <span>Your Test Instruments</span>
                     </div>
                   </div>
@@ -198,10 +198,10 @@ const Module2Section5 = () => {
             </Card>
 
             {/* Calibration Intervals and Scheduling */}
-            <Card className="bg-card border-transparent">
+            <Card className="bg-transparent border-transparent">
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
-                  <Calendar className="h-5 w-5 text-yellow-400" />
+                  <Calendar className="h-5 w-5 text-elec-yellow" />
                   Calibration Intervals and Scheduling
                 </CardTitle>
               </CardHeader>
@@ -210,8 +210,8 @@ const Module2Section5 = () => {
                   Determining the correct calibration interval balances cost, risk, and reliability. Whilst 12 months is standard, several factors may require more frequent calibration.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="text-yellow-400 font-medium mb-2">Standard Intervals</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="text-elec-yellow font-medium mb-2">Standard Intervals</h4>
                     <ul className="space-y-1 text-sm">
                       <li>• Multifunction testers: 12 months</li>
                       <li>• RCD testers: 12 months</li>
@@ -219,8 +219,8 @@ const Module2Section5 = () => {
                       <li>• Earth loop impedance testers: 12 months</li>
                     </ul>
                   </div>
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="text-yellow-400 font-medium mb-2">Factors Affecting Frequency</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="text-elec-yellow font-medium mb-2">Factors Affecting Frequency</h4>
                     <ul className="space-y-1 text-sm">
                       <li>• Frequency of use</li>
                       <li>• Working environment conditions</li>
@@ -239,10 +239,10 @@ const Module2Section5 = () => {
             </Card>
 
             {/* Equipment Maintenance Procedures */}
-            <Card className="bg-card border-transparent">
+            <Card className="bg-transparent border-transparent">
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
-                  <Settings className="h-5 w-5 text-yellow-400" />
+                  <Settings className="h-5 w-5 text-elec-yellow" />
                   Equipment Maintenance Procedures
                 </CardTitle>
               </CardHeader>
@@ -251,8 +251,8 @@ const Module2Section5 = () => {
                   Regular maintenance extends instrument life, maintains accuracy between calibrations, and helps identify potential problems before they affect your work.
                 </p>
                 <div className="space-y-4">
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="text-yellow-400 font-medium mb-3">Daily Checks</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="text-elec-yellow font-medium mb-3">Daily Checks</h4>
                     <ul className="space-y-1 text-sm">
                       <li>• Visual inspection of case and display</li>
                       <li>• Test lead continuity and condition</li>
@@ -261,8 +261,8 @@ const Module2Section5 = () => {
                       <li>• Proving unit check (where applicable)</li>
                     </ul>
                   </div>
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="text-yellow-400 font-medium mb-3">Weekly Maintenance</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="text-elec-yellow font-medium mb-3">Weekly Maintenance</h4>
                     <ul className="space-y-1 text-sm">
                       <li>• Clean instrument case and display</li>
                       <li>• Check all function buttons and switches</li>
@@ -271,8 +271,8 @@ const Module2Section5 = () => {
                       <li>• Charge batteries fully</li>
                     </ul>
                   </div>
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="text-yellow-400 font-medium mb-3">Monthly Reviews</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="text-elec-yellow font-medium mb-3">Monthly Reviews</h4>
                     <ul className="space-y-1 text-sm">
                       <li>• Calibration certificate validity check</li>
                       <li>• Test lead insulation resistance check</li>
@@ -286,10 +286,10 @@ const Module2Section5 = () => {
             </Card>
 
             {/* Recognising Equipment Problems */}
-            <Card className="bg-card border-transparent">
+            <Card className="bg-transparent border-transparent">
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
-                  <Eye className="h-5 w-5 text-yellow-400" />
+                  <Eye className="h-5 w-5 text-elec-yellow" />
                   Recognising Equipment Problems
                 </CardTitle>
               </CardHeader>
@@ -323,10 +323,10 @@ const Module2Section5 = () => {
             </Card>
 
             {/* Storage and Transportation */}
-            <Card className="bg-card border-transparent">
+            <Card className="bg-transparent border-transparent">
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
-                  <Shield className="h-5 w-5 text-yellow-400" />
+                  <Shield className="h-5 w-5 text-elec-yellow" />
                   Storage and Transportation Best Practices
                 </CardTitle>
               </CardHeader>
@@ -335,8 +335,8 @@ const Module2Section5 = () => {
                   Proper storage and transportation protect your investment and maintain calibration accuracy between services.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="text-yellow-400 font-medium mb-2">Storage Environment</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="text-elec-yellow font-medium mb-2">Storage Environment</h4>
                     <ul className="space-y-1 text-sm">
                       <li>• Temperature: 0°C to 40°C</li>
                       <li>• Humidity: &lt;85% RH</li>
@@ -345,8 +345,8 @@ const Module2Section5 = () => {
                       <li>• Secure, dry location</li>
                     </ul>
                   </div>
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="text-yellow-400 font-medium mb-2">Transportation Guidelines</h4>
+                  <div className="bg-transparent/80 p-4 rounded-lg">
+                    <h4 className="text-elec-yellow font-medium mb-2">Transportation Guidelines</h4>
                     <ul className="space-y-1 text-sm">
                       <li>• Use padded carrying case</li>
                       <li>• Avoid extreme temperatures</li>
@@ -360,10 +360,10 @@ const Module2Section5 = () => {
             </Card>
 
             {/* Documentation and Record Keeping */}
-            <Card className="bg-card border-transparent">
+            <Card className="bg-transparent border-transparent">
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
-                  <FileText className="h-5 w-5 text-yellow-400" />
+                  <FileText className="h-5 w-5 text-elec-yellow" />
                   Documentation and Record Keeping
                 </CardTitle>
               </CardHeader>
@@ -371,8 +371,8 @@ const Module2Section5 = () => {
                 <p className="text-sm leading-relaxed">
                   Comprehensive documentation provides evidence of due diligence and supports the validity of your test results in legal or compliance situations.
                 </p>
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-medium mb-3">Essential Records</h4>
+                <div className="bg-transparent/80 p-4 rounded-lg">
+                  <h4 className="text-elec-yellow font-medium mb-3">Essential Records</h4>
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
@@ -409,7 +409,7 @@ const Module2Section5 = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
-              <div className="bg-card/80 p-4 rounded-lg">
+              <div className="bg-transparent/80 p-4 rounded-lg">
                 <p className="text-sm font-medium text-orange-300 mb-2">⚠️ Case Study:</p>
                 <p className="text-sm leading-relaxed mb-3">
                   An electrical contractor performs periodic testing on a commercial installation using a tester that's six months overdue for calibration. The loop impedance readings appear normal, and certificates are issued. Three months later, a fault occurs causing a small fire. Investigation reveals the tester was reading 30% low, meaning actual fault levels were dangerously high.
@@ -431,33 +431,33 @@ const Module2Section5 = () => {
           </Card>
 
           {/* Key Takeaways */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-yellow-400" />
+                <CheckCircle2 className="h-5 w-5 text-elec-yellow" />
                 Key Takeaways
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-3">
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Calibration is a legal requirement, not just good practice—non-compliance has serious consequences</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>UKAS-accredited calibration provides traceability to national standards and legal defensibility</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Regular maintenance and monitoring helps identify problems before they compromise safety</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Proper documentation and record-keeping supports professional credibility and compliance</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span>Investment in quality calibration and maintenance protects both safety and business reputation</span>
                 </li>
               </ul>

@@ -60,12 +60,12 @@ const ZsLookupStandards = () => {
         as="section"
       >
         <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
-          <div className="bg-elec-dark/50 rounded p-4">
+          <div className="bg-white/10 rounded p-4">
             <h4 className="text-elec-yellow font-medium mb-3">Why These Time Limits?</h4>
             <div className="grid gap-3 sm:grid-cols-2">
               <div>
                 <h5 className="text-sm font-medium text-elec-light mb-1">0.4 Second Limit (Final Circuits)</h5>
-                <ul className="text-xs space-y-0.5 text-muted-foreground">
+                <ul className="text-xs space-y-0.5 text-white">
                   <li>• Prevents dangerous electric shock</li>
                   <li>• Based on body impedance studies</li>
                   <li>• Critical for socket outlets, hand-held equipment</li>
@@ -75,7 +75,7 @@ const ZsLookupStandards = () => {
               
               <div>
                 <h5 className="text-sm font-medium text-elec-light mb-1">5 Second Limit (Distribution)</h5>
-                <ul className="text-xs space-y-0.5 text-muted-foreground">
+                <ul className="text-xs space-y-0.5 text-white">
                   <li>• Prevents fire risk from sustained fault current</li>
                   <li>• Allows for selective discrimination</li>
                   <li>• Protects fixed wiring and equipment</li>
@@ -102,7 +102,7 @@ const ZsLookupStandards = () => {
       >
         <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
           <div className="grid gap-4 lg:grid-cols-2">
-            <Card className="bg-elec-dark/30 border-elec-yellow/20">
+            <Card className="bg-white/10 border-elec-yellow/20">
               <CardHeader className="pb-2">
                 <CardTitle className="text-elec-light text-sm">Calculation Method</CardTitle>
               </CardHeader>
@@ -120,7 +120,7 @@ const ZsLookupStandards = () => {
               </CardContent>
             </Card>
             
-            <Card className="bg-elec-dark/30 border-elec-yellow/20">
+            <Card className="bg-white/10 border-elec-yellow/20">
               <CardHeader className="pb-2">
                 <CardTitle className="text-elec-light text-sm">Temperature Considerations</CardTitle>
               </CardHeader>
@@ -149,7 +149,7 @@ const ZsLookupStandards = () => {
         as="section"
       >
         <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
-          <div className="bg-elec-dark/50 rounded p-4">
+          <div className="bg-white/10 rounded p-4">
             <h4 className="text-elec-yellow font-medium mb-3">TT System RCD Verification</h4>
             <div className="space-y-3">
               <div className="bg-yellow-500/10 border border-yellow-500/30 rounded p-3">
@@ -184,7 +184,7 @@ const ZsLookupStandards = () => {
         as="section"
       >
         <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
-          <div className="bg-elec-dark/50 rounded p-4">
+          <div className="bg-white/10 rounded p-4">
             <h4 className="text-elec-yellow font-medium mb-3">Standard vs Actual Voltages</h4>
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
@@ -247,8 +247,8 @@ const ZsLookupStandards = () => {
             </div>
           </div>
           
-          <div className="bg-gray-500/10 border border-gray-500/30 rounded p-3">
-            <p className="text-gray-300 text-xs">
+          <div className="bg-white/5 border border-white/30 rounded p-3">
+            <p className="text-white/80 text-xs">
               <strong>Note:</strong> This tool provides guidance based on BS7671:2018+A3:2024. 
               Always refer to the latest edition of BS7671 and relevant standards for authoritative requirements.
             </p>

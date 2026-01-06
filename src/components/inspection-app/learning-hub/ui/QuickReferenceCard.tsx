@@ -37,7 +37,7 @@ export const QuickReferenceCard: React.FC<QuickReferenceCardProps> = ({
               key={index}
               className="bg-background/50 rounded-lg p-3 border border-muted"
             >
-              <div className={cn('text-muted-foreground mb-1', responsiveBody.small)}>
+              <div className={cn('text-white/80 mb-1', responsiveBody.small)}>
                 {item.label}
               </div>
               <div className={cn('text-foreground font-medium', responsiveBody.normal)}>

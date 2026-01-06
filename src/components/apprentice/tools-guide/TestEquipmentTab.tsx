@@ -83,8 +83,8 @@ const TestEquipmentTab = () => {
     <div className="p-6 space-y-6">
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-semibold text-elec-yellow">Test Equipment</h2>
-        <p className="text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-          As you progress through your apprenticeship, you'll need appropriate test equipment that meets UK regulations. 
+        <p className="text-white/80 max-w-3xl mx-auto leading-relaxed">
+          As you progress through your apprenticeship, you'll need appropriate test equipment that meets UK regulations.
           Quality test equipment is essential for safety and compliance.
         </p>
       </div>
@@ -114,21 +114,21 @@ const TestEquipmentTab = () => {
           <Shield className="h-5 w-5" />
           18th Edition Testing Requirements & Progression Guide
         </h3>
-        <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
+        <div className="space-y-3 text-sm text-white/80 leading-relaxed">
           <p>
-            <strong>Year 1-2:</strong> Focus on basic safety equipment. Learn to use voltage indicators, 
+            <strong className="text-blue-300">Year 1-2:</strong> Focus on basic safety equipment. Learn to use voltage indicators,
             proving units, and simple continuity testers. Understand the principles before using complex equipment.
           </p>
           <p>
-            <strong>Year 3-4:</strong> Begin using multifunction testers under supervision. Learn all test 
+            <strong className="text-blue-300">Year 3-4:</strong> Begin using multifunction testers under supervision. Learn all test
             sequences and understand what the readings mean. Practice on training installations first.
           </p>
           <p>
-            <strong>Calibration:</strong> All test equipment must be calibrated annually with valid certificates. 
+            <strong className="text-blue-300">Calibration:</strong> All test equipment must be calibrated annually with valid certificates.
             Uncalibrated equipment can give false readings, compromising safety and invalidating test results.
           </p>
           <p>
-            <strong>Investment Strategy:</strong> Basic equipment: £100-150. Advanced equipment: £1000-2000. 
+            <strong className="text-blue-300">Investment Strategy:</strong> Basic equipment: £100-150. Advanced equipment: £1000-2000.
             Consider finance options or employer schemes for expensive items.
           </p>
         </div>
@@ -139,7 +139,7 @@ const TestEquipmentTab = () => {
           <AlertTriangle className="h-5 w-5" />
           Critical Safety Reminders
         </h3>
-        <ul className="space-y-1 text-sm text-muted-foreground">
+        <ul className="space-y-1 text-sm text-white/80">
           <li>• Always prove your voltage indicator is working before and after use</li>
           <li>• Never use a digital multimeter to prove an installation is dead</li>
           <li>• Test equipment must be regularly PAT tested and calibrated</li>

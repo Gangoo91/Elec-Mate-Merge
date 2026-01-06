@@ -21,7 +21,7 @@ const Subsection8_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+          <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
             <h3 className="text-xl font-bold text-elec-yellow flex items-center">
               <Flame className="h-5 w-5 mr-2" />
               Fire Protection
@@ -58,7 +58,7 @@ const Subsection8_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </div>
           </div>
           
-          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+          <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
             <h3 className="text-xl font-bold text-elec-yellow flex items-center">
               <Thermometer className="h-5 w-5 mr-2" />
               Thermal Considerations
@@ -96,7 +96,7 @@ const Subsection8_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           </div>
         </div>
         
-        <div className="mt-8 bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-6">
+        <div className="mt-8 bg-white/10 border border-elec-yellow/20 rounded-lg p-6">
           <h3 className="text-xl font-bold text-elec-yellow mb-4 flex items-center">
             <Zap className="h-5 w-5 mr-2" />
             Overcurrent Protection Design
@@ -151,7 +151,7 @@ const Subsection8_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </div>
             </div>
             
-            <div className="mt-4 p-4 bg-elec-dark/70 rounded-lg text-sm">
+            <div className="mt-4 p-4 bg-white/10 rounded-lg text-sm">
               <p className="font-medium mb-1 text-elec-yellow">Regulatory Note:</p>
               <p>BS 7671 Section 421 requires that people, fixed equipment, and fixed materials near electrical equipment must be protected against harmful effects of heat or thermal radiation. This includes protection against burns, fire, and ignition. Sections 422 and 423 deal with locations with fire risk and combustible construction materials.</p>
             </div>

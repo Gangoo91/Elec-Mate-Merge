@@ -608,7 +608,7 @@ const InstrumentationModule7Section4 = () => {
                 ],
                 correctAnswer: 2,
                 explanation: "Wire sizing directly affects signal transmission through resistance. Larger cross-sectional areas have lower resistance, which reduces voltage drop along the cable run and improves signal integrity, especially important for long cable runs in 4-20mA loops."
-              }
+            }
             ]}
             title="Section 4 Knowledge Check"
           />

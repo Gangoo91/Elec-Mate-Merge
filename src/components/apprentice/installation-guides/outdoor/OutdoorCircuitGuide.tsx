@@ -176,7 +176,7 @@ const OutdoorCircuitGuide = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <MapPin className="h-6 w-6 text-elec-yellow" />
@@ -195,7 +195,7 @@ const OutdoorCircuitGuide = () => {
         </TabsList>
 
         <TabsContent value="lighting" className="space-y-4">
-          <Card className="border-blue-500/30 bg-elec-gray">
+          <Card className="border-blue-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Sun className="h-6 w-6 text-blue-400" />
@@ -236,7 +236,7 @@ const OutdoorCircuitGuide = () => {
           </Card>
 
           {/* Special Applications */}
-          <Card className="border-purple-500/30 bg-elec-gray">
+          <Card className="border-purple-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Eye className="h-6 w-6 text-purple-400" />
@@ -277,7 +277,7 @@ const OutdoorCircuitGuide = () => {
         </TabsContent>
 
         <TabsContent value="cables" className="space-y-4">
-          <Card className="border-green-500/30 bg-elec-gray">
+          <Card className="border-green-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Cable className="h-6 w-6 text-green-400" />
@@ -311,7 +311,7 @@ const OutdoorCircuitGuide = () => {
             </CardContent>
           </Card>
 
-          <Card className="border-orange-500/30 bg-elec-gray">
+          <Card className="border-orange-500/30 bg-white/5">
             <CardHeader>
               <CardTitle className="text-orange-300 flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5" />
@@ -332,7 +332,7 @@ const OutdoorCircuitGuide = () => {
         </TabsContent>
 
         <TabsContent value="power" className="space-y-4">
-          <Card className="border-cyan-500/30 bg-elec-gray">
+          <Card className="border-cyan-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Settings className="h-6 w-6 text-cyan-400" />
@@ -369,7 +369,7 @@ const OutdoorCircuitGuide = () => {
         </TabsContent>
 
         <TabsContent value="protection" className="space-y-4">
-          <Card className="border-red-500/30 bg-elec-gray">
+          <Card className="border-red-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Shield className="h-6 w-6 text-red-400" />

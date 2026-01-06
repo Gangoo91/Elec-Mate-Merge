@@ -19,7 +19,7 @@ const CourseCard = ({ id, title, icon: Icon, baseUrl = "/apprentice/study" }: Co
   return (
     <Link to={linkPath} className="block h-full">
       <Card 
-        className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-colors cursor-pointer flex flex-col justify-center items-center py-8"
+        className="border-elec-yellow/20 bg-white/5 h-full hover:bg-white/5 transition-colors cursor-pointer flex flex-col justify-center items-center py-8"
       >
         <CardHeader className="text-center pb-0 pt-0">
           <div className="flex flex-col items-center justify-center gap-4">

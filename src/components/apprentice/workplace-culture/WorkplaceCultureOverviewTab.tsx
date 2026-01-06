@@ -73,31 +73,35 @@ const WorkplaceCultureOverviewTab = () => {
       case "Essential": return "bg-orange-500/20 text-orange-400 border-orange-500/30";
       case "Important": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
       case "Useful": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+      default: return "bg-white/10 text-white border-white/20";
     }
   };
 
   return (
-    <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <MessageSquare className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Workplace Culture & Communication Hub</CardTitle>
-          </div>
+    <div className="space-y-6 animate-fade-in">
+      {/* Hero Header */}
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+              <MessageSquare className="h-5 w-5 text-elec-yellow" />
+            </div>
+            Workplace Culture & Communication Hub
+          </CardTitle>
         </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground mb-6">
-            Understanding workplace culture in the UK electrical industry is crucial for your success as an apprentice. 
+        <CardContent className="relative">
+          <p className="text-white/70 mb-6">
+            Understanding workplace culture in the UK electrical industry is crucial for your success as an apprentice.
             This comprehensive guide covers everything from professional communication to regional differences and industry-specific protocols.
           </p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {keyStats.map((stat, index) => (
-              <div key={index} className="text-center p-4 border border-elec-yellow/20 rounded-lg">
+              <div key={index} className="text-center p-4 rounded-xl bg-white/10 border border-elec-yellow/20 hover:border-elec-yellow/40 transition-all">
                 <div className="text-2xl font-bold text-elec-yellow mb-1">{stat.value}</div>
                 <div className="text-sm font-medium text-white mb-1">{stat.label}</div>
-                <div className="text-xs text-muted-foreground">{stat.description}</div>
+                <div className="text-xs text-white/60">{stat.description}</div>
               </div>
             ))}
           </div>
@@ -105,25 +109,28 @@ const WorkplaceCultureOverviewTab = () => {
       </Card>
 
       {/* Common Workplace Challenges */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
-            <AlertTriangle className="h-5 w-5 text-elec-yellow" />
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-orange-500/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-orange-500/20 to-orange-500/5 border border-orange-500/30">
+              <AlertTriangle className="h-5 w-5 text-orange-400" />
+            </div>
             Common Workplace Challenges for Apprentices
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <CardContent className="relative">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {workplaceChallenges.map((item, index) => (
-              <div key={index} className="space-y-3 p-4 border border-elec-yellow/20 rounded-lg">
-                <h4 className="font-semibold text-elec-yellow">{item.challenge}</h4>
-                <p className="text-sm text-muted-foreground">{item.description}</p>
+              <div key={index} className="space-y-3 p-4 rounded-xl bg-white/10 border border-white/10 hover:border-orange-500/30 transition-all">
+                <h4 className="font-semibold text-orange-400">{item.challenge}</h4>
+                <p className="text-sm text-white/60">{item.description}</p>
                 <div className="space-y-2">
                   <h5 className="text-sm font-medium text-white">Tips for Success:</h5>
                   {item.tips.map((tip, tipIndex) => (
                     <div key={tipIndex} className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-sm text-muted-foreground">{tip}</span>
+                      <span className="text-sm text-white/70">{tip}</span>
                     </div>
                   ))}
                 </div>
@@ -134,136 +141,130 @@ const WorkplaceCultureOverviewTab = () => {
       </Card>
 
       {/* Industry Expectations */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
-            <Star className="h-5 w-5 text-elec-yellow" />
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-purple-500/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/30">
+              <Star className="h-5 w-5 text-purple-400" />
+            </div>
             Industry Expectations & Standards
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            {industryExpectations.map((area, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <div className="flex items-center gap-2 mb-3">
-                  <Target className="h-5 w-5 text-elec-yellow" />
-                  <h4 className="font-semibold text-white">{area.area}</h4>
+        <CardContent className="space-y-4 relative">
+          {industryExpectations.map((area, index) => (
+            <div key={index} className="p-4 rounded-xl bg-white/10 border border-white/10">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 rounded-lg bg-purple-500/20">
+                  <Target className="h-4 w-4 text-purple-400" />
                 </div>
-                <p className="text-sm text-muted-foreground mb-4">{area.description}</p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                  {area.expectations.map((expectation, expIndex) => (
-                    <div key={expIndex} className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-sm">{expectation}</span>
-                    </div>
-                  ))}
-                </div>
+                <h4 className="font-semibold text-white">{area.area}</h4>
               </div>
-            ))}
-          </div>
+              <p className="text-sm text-white/60 mb-4">{area.description}</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                {area.expectations.map((expectation, expIndex) => (
+                  <div key={expIndex} className="flex items-start gap-2">
+                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                    <span className="text-sm text-white/70">{expectation}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
         </CardContent>
       </Card>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-elec-yellow" />
+        <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-cyan-500/20 overflow-hidden relative">
+          <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <CardHeader className="relative">
+            <CardTitle className="text-white flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-gradient-to-br from-cyan-500/20 to-cyan-500/5 border border-cyan-500/30">
+                <TrendingUp className="h-4 w-4 text-cyan-400" />
+              </div>
               Your Culture Learning Progress
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {cultureTopics.map((topic, index) => (
-                <div key={index} className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-white">{topic.topic}</span>
-                    <Badge className={getCategoryColor(topic.category)} variant="outline">
-                      {topic.category}
-                    </Badge>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Progress value={topic.progress} className="flex-1" />
-                    <span className="text-sm text-elec-yellow w-12 text-right">{topic.progress}%</span>
-                  </div>
+          <CardContent className="space-y-4 relative">
+            {cultureTopics.map((topic, index) => (
+              <div key={index} className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-white">{topic.topic}</span>
+                  <Badge className={getCategoryColor(topic.category)} variant="outline">
+                    {topic.category}
+                  </Badge>
                 </div>
-              ))}
-            </div>
+                <div className="flex items-center gap-3">
+                  <div className="flex-1 h-2 bg-white/10 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-cyan-500 to-cyan-400 rounded-full transition-all duration-500"
+                      style={{ width: `${topic.progress}%` }}
+                    />
+                  </div>
+                  <span className="text-sm text-cyan-400 w-12 text-right font-medium">{topic.progress}%</span>
+                </div>
+              </div>
+            ))}
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
-              <Building className="h-5 w-5 text-elec-yellow" />
+        <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-green-500/20 overflow-hidden relative">
+          <div className="absolute top-0 right-0 w-48 h-48 bg-green-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <CardHeader className="relative">
+            <CardTitle className="text-white flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30">
+                <Building className="h-4 w-4 text-green-400" />
+              </div>
               Why Workplace Culture Matters
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <CheckCircle className="h-5 w-5 text-green-400 mt-0.5" />
+          <CardContent className="space-y-4 relative">
+            {[
+              { title: "Safety & Compliance", description: "Clear communication prevents accidents and ensures regulatory compliance" },
+              { title: "Career Advancement", description: "Strong relationships with colleagues and supervisors accelerate progression" },
+              { title: "Client Satisfaction", description: "Professional communication builds trust and secures repeat business" },
+              { title: "Industry Reputation", description: "Good workplace behaviour enhances the electrical trade's professional image" }
+            ].map((item, index) => (
+              <div key={index} className="flex items-start gap-3 p-3 rounded-xl bg-white/10 border border-white/10">
+                <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <div>
-                  <h4 className="font-medium text-white">Safety & Compliance</h4>
-                  <p className="text-sm text-muted-foreground">Clear communication prevents accidents and ensures regulatory compliance</p>
+                  <h4 className="font-medium text-white">{item.title}</h4>
+                  <p className="text-sm text-white/60">{item.description}</p>
                 </div>
               </div>
-              
-              <div className="flex items-start gap-3">
-                <CheckCircle className="h-5 w-5 text-green-400 mt-0.5" />
-                <div>
-                  <h4 className="font-medium text-white">Career Advancement</h4>
-                  <p className="text-sm text-muted-foreground">Strong relationships with colleagues and supervisors accelerate progression</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-3">
-                <CheckCircle className="h-5 w-5 text-green-400 mt-0.5" />
-                <div>
-                  <h4 className="font-medium text-white">Client Satisfaction</h4>
-                  <p className="text-sm text-muted-foreground">Professional communication builds trust and secures repeat business</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-3">
-                <CheckCircle className="h-5 w-5 text-green-400 mt-0.5" />
-                <div>
-                  <h4 className="font-medium text-white">Industry Reputation</h4>
-                  <p className="text-sm text-muted-foreground">Good workplace behaviour enhances the electrical trade's professional image</p>
-                </div>
-              </div>
-            </div>
+            ))}
           </CardContent>
         </Card>
       </div>
 
-      <Card className="border-blue-500/20 bg-blue-500/10">
-        <CardHeader>
-          <CardTitle className="text-blue-300 flex items-center gap-2">
-            <Clock className="h-5 w-5" />
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-blue-500/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
+              <Clock className="h-5 w-5 text-blue-400" />
+            </div>
             Getting Started Recommendation
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground mb-4">
+        <CardContent className="relative">
+          <p className="text-white/70 mb-4">
             New to workplace culture? We recommend starting with these essential areas:
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="text-center p-4 border border-blue-500/30 rounded-lg">
-              <Users className="h-8 w-8 text-blue-400 mx-auto mb-2" />
-              <h4 className="font-medium text-white mb-1">Communication Basics</h4>
-              <p className="text-xs text-muted-foreground">Learn fundamental workplace communication skills</p>
-            </div>
-            <div className="text-center p-4 border border-blue-500/30 rounded-lg">
-              <Building className="h-8 w-8 text-blue-400 mx-auto mb-2" />
-              <h4 className="font-medium text-white mb-1">Site Hierarchy</h4>
-              <p className="text-xs text-muted-foreground">Understand roles and reporting structures</p>
-            </div>
-            <div className="text-center p-4 border border-blue-500/30 rounded-lg">
-              <MessageSquare className="h-8 w-8 text-blue-400 mx-auto mb-2" />
-              <h4 className="font-medium text-white mb-1">Professional Language</h4>
-              <p className="text-xs text-muted-foreground">Master industry terminology and etiquette</p>
-            </div>
+            {[
+              { icon: Users, title: "Communication Basics", description: "Learn fundamental workplace communication skills" },
+              { icon: Building, title: "Site Hierarchy", description: "Understand roles and reporting structures" },
+              { icon: MessageSquare, title: "Professional Language", description: "Master industry terminology and etiquette" }
+            ].map((item, index) => (
+              <div key={index} className="text-center p-4 rounded-xl bg-white/10 border border-blue-500/20 hover:border-blue-500/40 transition-all">
+                <div className="p-3 rounded-xl bg-blue-500/10 w-fit mx-auto mb-3">
+                  <item.icon className="h-6 w-6 text-blue-400" />
+                </div>
+                <h4 className="font-medium text-white mb-1">{item.title}</h4>
+                <p className="text-xs text-white/60">{item.description}</p>
+              </div>
+            ))}
           </div>
         </CardContent>
       </Card>

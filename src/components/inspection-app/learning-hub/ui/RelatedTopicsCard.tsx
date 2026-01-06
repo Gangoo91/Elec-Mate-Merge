@@ -53,7 +53,7 @@ export const RelatedTopicsCard: React.FC<RelatedTopicsCardProps> = ({
                     {topic.title}
                   </div>
                   {topic.description && (
-                    <div className={cn('text-muted-foreground truncate', responsiveBody.small)}>
+                    <div className={cn('text-white/80 truncate', responsiveBody.small)}>
                       {topic.description}
                     </div>
                   )}

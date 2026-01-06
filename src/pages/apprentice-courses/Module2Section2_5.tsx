@@ -41,61 +41,75 @@ const Module2Section2_5: React.FC = () => {
   useSEO(TITLE, DESCRIPTION);
 
   const quizQuestions = [
-    { 
-      id: 1, 
-      question: "A 1 kW heater runs for 2 hours. Energy consumed is:", 
-      options: ["0.5 kWh", "1 kWh", "2 kWh", "3 kWh"], 
-      correctAnswer: 2, 
-      explanation: "Energy = Power × Time. 1 kW × 2 h = 2 kWh." 
+    {
+      id: 1,
+      question: "A 1 kW heater runs for 2 hours. Energy consumed is:",
+      options: ["0.5 kWh", "1 kWh", "2 kWh", "3 kWh"],
+      correctAnswer: 2,
+      explanation: "Energy = Power × Time. 1 kW × 2 h = 2 kWh."
     },
-    { 
-      id: 2, 
-      question: "A 500W appliance runs for 3 hours. Energy used is:", 
-      options: ["1.5 kWh", "15 kWh", "0.15 kWh", "3.5 kWh"], 
-      correctAnswer: 0, 
-      explanation: "Convert to kW first: 500W = 0.5 kW. Then: 0.5 kW × 3 h = 1.5 kWh." 
+    {
+      id: 2,
+      question: "A 500W appliance runs for 3 hours. Energy used is:",
+      options: ["1.5 kWh", "15 kWh", "0.15 kWh", "3.5 kWh"],
+      correctAnswer: 0,
+      explanation: "Convert to kW first: 500W = 0.5 kW. Then: 0.5 kW × 3 h = 1.5 kWh."
     },
-    { 
-      id: 3, 
-      question: "What's the cost of 4 kWh at 30p per kWh (excluding standing charge)?", 
-      options: ["£0.12", "£1.20", "£12", "£0.04"], 
-      correctAnswer: 1, 
-      explanation: "Cost = Energy × Unit rate. 4 kWh × £0.30 = £1.20." 
+    {
+      id: 3,
+      question: "What's the cost of 4 kWh at 30p per kWh (excluding standing charge)?",
+      options: ["£0.12", "£1.20", "£12", "£0.04"],
+      correctAnswer: 1,
+      explanation: "Cost = Energy × Unit rate. 4 kWh × £0.30 = £1.20."
     },
-    { 
-      id: 4, 
-      question: "Which change most effectively reduces energy consumption?", 
-      options: ["Increasing voltage", "Reducing running time", "Changing wire colour", "Longer cable runs"], 
-      correctAnswer: 1, 
-      explanation: "Energy = Power × Time. Reducing running time directly reduces energy consumption." 
+    {
+      id: 4,
+      question: "Which change most effectively reduces energy consumption?",
+      options: ["Increasing voltage", "Reducing running time", "Changing wire colour", "Longer cable runs"],
+      correctAnswer: 1,
+      explanation: "Energy = Power × Time. Reducing running time directly reduces energy consumption."
     },
-    { 
-      id: 5, 
-      question: "Best method for quick energy estimates?", 
-      options: ["Pure guesswork", "Power (kW) × Hours", "Hours ÷ Power", "Power (W) × Minutes"], 
-      correctAnswer: 1, 
-      explanation: "E = P × t. Use Power in kW multiplied by time in hours for kWh." 
+    {
+      id: 5,
+      question: "Best method for quick energy estimates?",
+      options: ["Pure guesswork", "Power (kW) × Hours", "Hours ÷ Power", "Power (W) × Minutes"],
+      correctAnswer: 1,
+      explanation: "E = P × t. Use Power in kW multiplied by time in hours for kWh."
     },
-    { 
-      id: 6, 
-      question: "A 3kW immersion heater runs for 1.5 hours. Energy used:", 
-      options: ["2 kWh", "4.5 kWh", "1.5 kWh", "3 kWh"], 
-      correctAnswer: 1, 
-      explanation: "3 kW × 1.5 h = 4.5 kWh." 
+    {
+      id: 6,
+      question: "A 3kW immersion heater runs for 1.5 hours. Energy used:",
+      options: ["2 kWh", "4.5 kWh", "1.5 kWh", "3 kWh"],
+      correctAnswer: 1,
+      explanation: "3 kW × 1.5 h = 4.5 kWh."
     },
-    { 
-      id: 7, 
-      question: "Standing charge on UK electricity bills is:", 
-      options: ["Per kWh used", "Fixed daily amount", "Only for businesses", "Included in unit rate"], 
-      correctAnswer: 1, 
-      explanation: "Standing charge is a fixed daily cost regardless of energy consumption." 
+    {
+      id: 7,
+      question: "Standing charge on UK electricity bills is:",
+      options: ["Per kWh used", "Fixed daily amount", "Only for businesses", "Included in unit rate"],
+      correctAnswer: 1,
+      explanation: "Standing charge is a fixed daily cost regardless of energy consumption."
     },
-    { 
-      id: 8, 
-      question: "On Economy 7 tariff, when is electricity typically cheapest?", 
-      options: ["Peak hours (4-7 PM)", "Night hours (00:30-07:30)", "Weekends only", "Summer months"], 
-      correctAnswer: 1, 
-      explanation: "Economy 7 offers cheaper rates during night hours, typically 00:30-07:30." 
+    {
+      id: 8,
+      question: "On Economy 7 tariff, when is electricity typically cheapest?",
+      options: ["Peak hours (4-7 PM)", "Night hours (00:30-07:30)", "Weekends only", "Summer months"],
+      correctAnswer: 1,
+      explanation: "Economy 7 offers cheaper rates during night hours, typically 00:30-07:30."
+    },
+    {
+      id: 9,
+      question: "Convert 90 minutes to hours for energy calculations:",
+      options: ["0.9 h", "1.5 h", "9 h", "90 h"],
+      correctAnswer: 1,
+      explanation: "90 minutes ÷ 60 = 1.5 hours."
+    },
+    {
+      id: 10,
+      question: "A 2.5kW appliance runs for 4 hours daily. Weekly energy consumption is:",
+      options: ["10 kWh", "70 kWh", "28 kWh", "140 kWh"],
+      correctAnswer: 1,
+      explanation: "Daily: 2.5 kW × 4 h = 10 kWh. Weekly: 10 kWh × 7 = 70 kWh."
     }
   ];
 
@@ -398,10 +412,14 @@ const Module2Section2_5: React.FC = () => {
         </Card>
 
         {/* Bottom nav */}
-        <div className="flex justify-between items-center mb-24">
-          <Button asChild variant="outline"><Link to="..">Previous</Link></Button>
-          <Button asChild><Link to="..">Next</Link></Button>
-        </div>
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mb-24">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5" asChild>
+            <Link to="../2-4"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a]" asChild>
+            <Link to="../2-6">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
+          </Button>
+        </nav>
 
         {/* Structured data */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />

@@ -92,7 +92,7 @@ const TransformerCalculator = () => {
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border-elec-yellow/20 bg-white/5">
       <CardHeader>
         <div className="flex items-center gap-2">
           <Zap className="h-5 w-5 text-elec-yellow" />
@@ -310,32 +310,32 @@ const TransformerCalculator = () => {
                     {/* Key Metrics - Mobile Optimized Stacked Layout */}
                     <div className="space-y-4">
                       <div className="space-y-2">
-                        <div className="text-sm text-muted-foreground">Primary Current:</div>
+                        <div className="text-sm text-white">Primary Current:</div>
                         <div className="font-mono text-elec-yellow text-xl font-bold">{result.primaryRatedCurrent.toFixed(1)} A</div>
                       </div>
                       
                       <div className="space-y-2">
-                        <div className="text-sm text-muted-foreground">Secondary Current:</div>
+                        <div className="text-sm text-white">Secondary Current:</div>
                         <div className="font-mono text-elec-yellow text-xl font-bold">{result.secondaryRatedCurrent.toFixed(1)} A</div>
                       </div>
                       
                       <div className="space-y-2">
-                        <div className="text-sm text-muted-foreground">Real Power:</div>
+                        <div className="text-sm text-white">Real Power:</div>
                         <div className="font-mono text-elec-yellow text-xl font-bold">{result.kw.toFixed(1)} kW</div>
                       </div>
                       
                       <div className="space-y-2">
-                        <div className="text-sm text-muted-foreground">Efficiency:</div>
+                        <div className="text-sm text-white">Efficiency:</div>
                         <div className="font-mono text-elec-yellow text-xl font-bold">{(result.efficiency * 100).toFixed(1)}%</div>
                       </div>
                       
                       <div className="space-y-2">
-                        <div className="text-sm text-muted-foreground">Fault Current:</div>
+                        <div className="text-sm text-white">Fault Current:</div>
                         <div className="font-mono text-elec-yellow text-xl font-bold">{(result.transformerFaultCurrent / 1000).toFixed(1)} kA</div>
                       </div>
                       
                       <div className="space-y-2">
-                        <div className="text-sm text-muted-foreground">Voltage Regulation:</div>
+                        <div className="text-sm text-white">Voltage Regulation:</div>
                         <div className="font-mono text-elec-yellow text-xl font-bold">{(result.voltageRegulation * 100).toFixed(1)}%</div>
                       </div>
                     </div>
@@ -353,17 +353,17 @@ const TransformerCalculator = () => {
                   <CardContent className="pt-0">
                     <div className="space-y-4">
                       <div className="space-y-2">
-                        <div className="text-sm text-muted-foreground">Recommended MCCB Rating:</div>
+                        <div className="text-sm text-white">Recommended MCCB Rating:</div>
                         <div className="font-mono text-elec-yellow text-xl font-bold">{getRecommendedMCCB(result.secondaryRatedCurrent)}A</div>
                       </div>
                       
                       <div className="space-y-2">
-                        <div className="text-sm text-muted-foreground">Minimum Breaking Capacity:</div>
+                        <div className="text-sm text-white">Minimum Breaking Capacity:</div>
                         <div className="font-mono text-elec-yellow text-lg font-bold">{getSwitchgearBreakingCapacity(result.transformerFaultCurrent)}</div>
                       </div>
                       
                       <div className="space-y-2">
-                        <div className="text-sm text-muted-foreground">Inrush Current:</div>
+                        <div className="text-sm text-white">Inrush Current:</div>
                         <div className="font-mono text-elec-yellow text-lg font-bold">{(result.inrushCurrent / 1000).toFixed(1)} kA for {result.inrushDuration}s</div>
                       </div>
                     </div>
@@ -550,8 +550,8 @@ const TransformerCalculator = () => {
                 )}
               </>
             ) : (
-              <div className="rounded-md bg-elec-dark p-6 min-h-[200px] flex items-center justify-center">
-                <div className="text-center text-muted-foreground">
+              <div className="rounded-md bg-white/10 p-6 min-h-[200px] flex items-center justify-center">
+                <div className="text-center text-white">
                   <Zap className="h-8 w-8 mx-auto mb-2 text-elec-yellow/50" />
                   <p>Enter transformer parameters to analyse performance and compliance</p>
                 </div>

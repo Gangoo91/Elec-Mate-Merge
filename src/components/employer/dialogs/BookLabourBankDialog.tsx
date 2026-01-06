@@ -8,12 +8,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { 
-  Calendar, 
-  Clock, 
-  MapPin, 
-  Briefcase, 
-  Zap, 
+import {
+  Calendar,
+  Clock,
+  MapPin,
+  Briefcase,
+  Zap,
   AlertTriangle,
   CheckCircle,
   Award
@@ -21,6 +21,7 @@ import {
 import { jobs } from "@/data/employerMockData";
 import { useEmployer, type BookingDuration, type ShiftPattern, type UrgencyPremium } from "@/contexts/EmployerContext";
 import { toast } from "@/hooks/use-toast";
+import { useHireTracking } from "@/hooks/useHireTracking";
 
 interface Electrician {
   id: string;
@@ -28,6 +29,7 @@ interface Electrician {
   ecsCardType: string;
   dayRate: number;
   hourlyRate: number;
+  elecIdProfileId?: string; // Elec-ID profile for hire tracking
 }
 
 interface BookLabourBankDialogProps {
@@ -61,13 +63,14 @@ const URGENCY_OPTIONS: { value: UrgencyPremium; label: string; multiplier: numbe
   { value: '50%', label: '+50%', multiplier: 1.5 },
 ];
 
-export function BookLabourBankDialog({ 
-  open, 
-  onOpenChange, 
+export function BookLabourBankDialog({
+  open,
+  onOpenChange,
   electrician,
-  preAgreedRate 
+  preAgreedRate
 }: BookLabourBankDialogProps) {
   const { createBooking } = useEmployer();
+  const { recordHire, isRecording } = useHireTracking();
   const activeJobs = jobs.filter(j => j.status === 'Active');
 
   // Form state
@@ -140,15 +143,18 @@ export function BookLabourBankDialog({
     };
   }, [preAgreedRate, electrician, duration, startDate, endDate, urgencyEnabled, urgencyPremium]);
 
-  const handleConfirmBooking = () => {
+  const handleConfirmBooking = async () => {
     if (!electrician) return;
 
     const jobId = selectedJobId && selectedJobId !== 'none' ? selectedJobId : undefined;
+    const jobTitle = jobId ? activeJobs.find(j => j.id === jobId)?.title : undefined;
+
+    // Create the local booking
     createBooking({
       electricianId: electrician.id,
       electricianName: electrician.name,
       jobId,
-      jobTitle: jobId ? activeJobs.find(j => j.id === jobId)?.title : undefined,
+      jobTitle,
       startDate,
       endDate: endDate || undefined,
       duration,
@@ -160,6 +166,11 @@ export function BookLabourBankDialog({
       siteAddress: siteAddress || undefined,
       notes: notes || undefined,
     });
+
+    // Record hire to database for fee tracking (if worker has Elec-ID profile)
+    if (electrician.elecIdProfileId) {
+      await recordHire(electrician.elecIdProfileId, jobTitle);
+    }
 
     toast({
       title: "Booking Request Sent",
@@ -458,19 +469,21 @@ export function BookLabourBankDialog({
 
           {/* Actions */}
           <div className="flex gap-3 pt-2">
-            <Button 
-              variant="outline" 
-              className="flex-1 h-12" 
+            <Button
+              variant="outline"
+              className="flex-1 h-12"
               onClick={() => onOpenChange(false)}
+              disabled={isRecording}
             >
               Cancel
             </Button>
-            <Button 
-              className="flex-1 h-12" 
+            <Button
+              className="flex-1 h-12"
               onClick={handleConfirmBooking}
+              disabled={isRecording}
             >
               <Calendar className="h-4 w-4 mr-2" />
-              Confirm Booking
+              {isRecording ? "Recording..." : "Confirm Booking"}
             </Button>
           </div>
         </div>

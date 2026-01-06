@@ -21,7 +21,7 @@ export const AfddTestCell: React.FC<AfddTestCellProps> = ({ result, onUpdate }) 
         <SelectContent className="bg-elec-gray border-elec-gray text-foreground shadow-lg z-[60]">
           <SelectItem value="✓" className="text-sm text-green-600 font-medium">✓ Pass</SelectItem>
           <SelectItem value="✗" className="text-sm text-red-600 font-medium">✗ Fail</SelectItem>
-          <SelectItem value="N/A" className="text-sm text-gray-600">N/A</SelectItem>
+          <SelectItem value="N/A" className="text-sm text-white/70">N/A</SelectItem>
         </SelectContent>
       </Select>
     </TableCell>

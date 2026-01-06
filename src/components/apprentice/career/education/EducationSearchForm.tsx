@@ -59,12 +59,12 @@ const EducationSearchForm = ({ onSearch, onReset }: EducationSearchFormProps) =>
   const activeFilterCount = Object.values(filters).filter(value => value !== "").length;
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border-elec-yellow/20 bg-white/5">
       <CardContent className="p-6">
         <div className="space-y-4">
           {/* Search Bar */}
           <div className="relative">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-3 top-3 h-4 w-4 text-white" />
             <Input
               placeholder="Search courses, institutions, or qualifications..."
               value={filters.searchTerm}
@@ -98,7 +98,7 @@ const EducationSearchForm = ({ onSearch, onReset }: EducationSearchFormProps) =>
             </Select>
 
             <div className="relative">
-              <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <MapPin className="absolute left-3 top-3 h-4 w-4 text-white" />
               <Input
                 placeholder="Location or region"
                 value={filters.location}

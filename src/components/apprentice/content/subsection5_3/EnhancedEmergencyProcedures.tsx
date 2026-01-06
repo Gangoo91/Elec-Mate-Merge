@@ -30,7 +30,7 @@ const EnhancedEmergencyProcedures = () => {
       case "immediate": return "bg-red-500/20 text-red-300 border-red-500/30";
       case "urgent": return "bg-orange-500/20 text-orange-300 border-orange-500/30";
       case "specialist": return "bg-blue-500/20 text-blue-300 border-blue-500/30";
-      default: return "bg-gray-500/20 text-gray-300 border-gray-500/30";
+      default: return "bg-white/10 text-white/80 border-white/20";
     }
   };
 
@@ -138,7 +138,7 @@ const EnhancedEmergencyProcedures = () => {
             {emergencyContacts.map((contact, index) => (
               <div 
                 key={index} 
-                className="p-4 border border-elec-yellow/20 rounded-lg bg-elec-gray/50 hover:border-elec-yellow/40 transition-colors"
+                className="p-4 border border-elec-yellow/20 rounded-lg bg-white/5 hover:border-elec-yellow/40 transition-colors"
               >
                 <div className="flex justify-between items-start mb-2">
                   <h4 className="font-semibold text-white">{contact.name}</h4>
@@ -146,9 +146,9 @@ const EnhancedEmergencyProcedures = () => {
                     {contact.type}
                   </Badge>
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">{contact.description}</p>
+                <p className="text-sm text-white mb-3">{contact.description}</p>
                 <div className="flex items-center justify-between">
-                  <div className="text-xs text-muted-foreground">
+                  <div className="text-xs text-white">
                     <Clock className="h-3 w-3 inline mr-1" />
                     {contact.hours}
                   </div>
@@ -178,12 +178,12 @@ const EnhancedEmergencyProcedures = () => {
             </div>
             <div className="flex flex-col sm:flex-row gap-2 flex-1">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white" />
                 <Input
                   placeholder="Search procedures..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 bg-elec-gray/50 border-elec-yellow/20"
+                  className="pl-10 bg-white/5 border-elec-yellow/20"
                 />
               </div>
               <div className="flex gap-1 overflow-x-auto">
@@ -195,7 +195,7 @@ const EnhancedEmergencyProcedures = () => {
                     onClick={() => setSelectedCategory(category.value)}
                     className={selectedCategory === category.value 
                       ? "bg-elec-yellow text-elec-dark" 
-                      : "bg-elec-gray/50 border-elec-yellow/20 text-white hover:bg-elec-yellow/10"
+                      : "bg-white/5 border-elec-yellow/20 text-white hover:bg-elec-yellow/10"
                     }
                   >
                     {category.label}
@@ -210,7 +210,7 @@ const EnhancedEmergencyProcedures = () => {
             {filteredProcedures.map((procedure) => (
               <div 
                 key={procedure.id}
-                className="border border-elec-yellow/20 rounded-lg p-4 bg-elec-gray/30 hover:border-elec-yellow/40 transition-colors"
+                className="border border-elec-yellow/20 rounded-lg p-4 bg-white/5 hover:border-elec-yellow/40 transition-colors"
               >
                 <div className="flex items-start gap-3 mb-3">
                   <div className="p-2 bg-elec-yellow/10 rounded">
@@ -223,7 +223,7 @@ const EnhancedEmergencyProcedures = () => {
                         {procedure.priority}
                       </Badge>
                     </div>
-                    <p className="text-xs text-muted-foreground">{procedure.timeframe}</p>
+                    <p className="text-xs text-white">{procedure.timeframe}</p>
                   </div>
                 </div>
                 
@@ -237,7 +237,7 @@ const EnhancedEmergencyProcedures = () => {
                     </div>
                   ))}
                   {procedure.steps.length > 3 && (
-                    <p className="text-xs text-muted-foreground italic">
+                    <p className="text-xs text-white italic">
                       +{procedure.steps.length - 3} more steps...
                     </p>
                   )}

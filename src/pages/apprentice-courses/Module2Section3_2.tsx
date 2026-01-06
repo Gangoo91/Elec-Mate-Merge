@@ -541,20 +541,20 @@ const Module2Section3_2 = () => {
         </Card>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-white/10">
-          <Button variant="outline" asChild>
-            <Link to=".." className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" />
-              Previous: Series and Parallel Overview
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../3-1">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous: Series and Parallel Circuits
             </Link>
           </Button>
-          <Button asChild>
-            <Link to=".." className="flex items-center gap-2">
-              Next: Parallel Circuits
-              <ArrowLeft className="h-4 w-4 rotate-180" />
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../3-3">
+              Next: Parallel Circuits - Current and Voltage
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
-        </div>
+        </nav>
       </div>
     </div>
   );

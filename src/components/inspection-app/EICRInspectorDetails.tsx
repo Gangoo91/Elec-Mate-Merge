@@ -6,14 +6,17 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
-import { AlertTriangle, User, Copy, Trash2, Upload, X, Palette } from 'lucide-react';
+import { AlertTriangle, User, Copy, Trash2, Upload, X, Palette, Shield, Zap } from 'lucide-react';
 import { useInspectorProfiles, InspectorProfile } from '@/hooks/useInspectorProfiles';
+import { useProfileDataService } from '@/hooks/useProfileDataService';
+import { getSourceDisplayInfo } from '@/services/profileDataService';
 import InspectorProfileDialog from './InspectorProfileDialog';
 import { Separator } from '@/components/ui/separator';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { SectionHeader } from '@/components/ui/section-header';
+import { cn } from '@/lib/utils';
 
 interface EICRInspectorDetailsProps {
   formData: any;
@@ -24,6 +27,7 @@ interface EICRInspectorDetailsProps {
 
 const EICRInspectorDetails = ({ formData, onUpdate, isOpen, onToggle }: EICRInspectorDetailsProps) => {
   const { profiles, getDefaultProfile } = useInspectorProfiles();
+  const { profileData, dataSource, isVerified, inspectorDetails, isLoading: profileDataLoading } = useProfileDataService();
   const { toast } = useToast();
   const [availableQualifications] = useState([
     '18th Edition BS7671',
@@ -95,9 +99,47 @@ const EICRInspectorDetails = ({ formData, onUpdate, isOpen, onToggle }: EICRInsp
     const updated = selectedQualifications.includes(qualification)
       ? selectedQualifications.filter(q => q !== qualification)
       : [...selectedQualifications, qualification];
-    
+
     setSelectedQualifications(updated);
     onUpdate('inspectorQualifications', updated.join(', '));
+  };
+
+  // Smart Auto-Fill from cascade (Elec-ID → Inspector Profile → Account)
+  const handleSmartAutoFill = () => {
+    if (!inspectorDetails) {
+      toast({
+        title: "No profile data",
+        description: "Set up your profile in Settings to enable auto-fill.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Fill from cascade data
+    onUpdate('inspectorName', inspectorDetails.name || '');
+    onUpdate('companyName', inspectorDetails.company || '');
+    onUpdate('companyAddress', inspectorDetails.companyAddress || '');
+    onUpdate('companyPhone', inspectorDetails.companyPhone || '');
+    onUpdate('companyEmail', inspectorDetails.companyEmail || '');
+    onUpdate('registrationScheme', inspectorDetails.registrationScheme || '');
+    onUpdate('registrationNumber', inspectorDetails.registrationNumber || '');
+    onUpdate('registrationExpiry', inspectorDetails.registrationExpiry || '');
+
+    if (inspectorDetails.qualifications?.length) {
+      const qualsList = inspectorDetails.qualifications.join(', ');
+      onUpdate('inspectorQualifications', qualsList);
+      setSelectedQualifications(inspectorDetails.qualifications);
+    }
+
+    if (inspectorDetails.signatureData) {
+      onUpdate('inspectorSignature', inspectorDetails.signatureData);
+    }
+
+    const sourceInfo = dataSource ? getSourceDisplayInfo(dataSource) : null;
+    toast({
+      title: isVerified ? "Verified Data Loaded" : "Profile Data Loaded",
+      description: `Auto-filled from ${sourceInfo?.label || 'profile'}${isVerified ? ' (verified)' : ''}.`,
+    });
   };
 
 
@@ -209,25 +251,58 @@ const EICRInspectorDetails = ({ formData, onUpdate, isOpen, onToggle }: EICRInsp
             </Alert>
           )}
 
-          {/* Use Saved Profile Button */}
-          {getDefaultProfile() && (
-            <Button 
-              onClick={() => {
-                const profile = getDefaultProfile();
-                if (profile) {
-                  handleProfileSelect(profile);
-                  toast({
-                    title: "Profile Loaded",
-                    description: "Your saved profile has been applied to inspector details.",
-                  });
-                }
-              }}
-              className="w-full bg-primary hover:bg-primary/90"
-              size="lg"
-            >
-              <User className="h-5 w-5 mr-2" />
-              Use Saved Profile
-            </Button>
+          {/* Smart Auto-Fill Button - Uses cascade: Elec-ID → Inspector Profile → Account */}
+          {(inspectorDetails || getDefaultProfile()) && (
+            <div className="space-y-3">
+              <Button
+                onClick={handleSmartAutoFill}
+                disabled={profileDataLoading || !inspectorDetails}
+                className={cn(
+                  "w-full",
+                  isVerified
+                    ? "bg-green-600 hover:bg-green-700"
+                    : "bg-primary hover:bg-primary/90"
+                )}
+                size="lg"
+              >
+                {isVerified ? (
+                  <>
+                    <Shield className="h-5 w-5 mr-2" />
+                    Auto-Fill from Elec-ID
+                  </>
+                ) : (
+                  <>
+                    <Zap className="h-5 w-5 mr-2" />
+                    Smart Auto-Fill
+                  </>
+                )}
+              </Button>
+
+              {/* Data source indicator */}
+              {dataSource && (
+                <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+                  <span>Data from:</span>
+                  {(() => {
+                    const sourceInfo = getSourceDisplayInfo(dataSource);
+                    return (
+                      <Badge
+                        variant="outline"
+                        className={cn(
+                          'px-2 py-0.5 text-xs',
+                          sourceInfo.bgColor,
+                          sourceInfo.color,
+                          'border',
+                          sourceInfo.borderColor
+                        )}
+                      >
+                        {isVerified && <Shield className="h-3 w-3 mr-1" />}
+                        {sourceInfo.label}
+                      </Badge>
+                    );
+                  })()}
+                </div>
+              )}
+            </div>
           )}
 
           {/* Certificate Number */}
@@ -282,7 +357,7 @@ const EICRInspectorDetails = ({ formData, onUpdate, isOpen, onToggle }: EICRInsp
                     id={qualification}
                     checked={selectedQualifications.includes(qualification)}
                     onCheckedChange={() => toggleQualification(qualification)}
-                    className="border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+                    className="border-white/50 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
                   />
                   <Label 
                     htmlFor={qualification} 
@@ -380,7 +455,7 @@ const EICRInspectorDetails = ({ formData, onUpdate, isOpen, onToggle }: EICRInsp
                       type="color"
                       value={formData.companyAccentColor || '#3b82f6'}
                       onChange={(e) => onUpdate('companyAccentColor', e.target.value)}
-                      className="w-16 p-1 border-gray-300 focus:border-purple-500 focus:ring-purple-500"
+                      className="w-16 p-1 border-white/30 focus:border-purple-500 focus:ring-purple-500"
                     />
                     <Input
                       value={formData.companyAccentColor || '#3b82f6'}

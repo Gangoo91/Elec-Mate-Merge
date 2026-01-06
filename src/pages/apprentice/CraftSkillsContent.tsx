@@ -51,7 +51,7 @@ const CraftSkillsContent = () => {
         <SmartBackButton />
       </div>
       
-      <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-6">
+      <div className="bg-white/5 border border-elec-yellow/20 rounded-lg p-6">
         <div className="flex flex-col items-center text-center mb-10">
           <div className="flex items-center gap-4 mb-2">
             <div className="bg-elec-yellow text-elec-dark w-14 h-14 flex items-center justify-center rounded-full text-2xl font-bold">

@@ -63,7 +63,7 @@ export const RegulationQuickReference = () => {
                     <TableCell className="text-center border-r border-border">
                       <Badge className="bg-orange-500/20 text-orange-400">{item.distribution}</Badge>
                     </TableCell>
-                    <TableCell className="text-gray-300">{item.application}</TableCell>
+                    <TableCell className="text-white/80">{item.application}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -74,8 +74,8 @@ export const RegulationQuickReference = () => {
               <AlertTriangle className="h-4 w-4 text-red-400" />
               <span className="text-red-400 font-semibold text-sm">Critical Note</span>
             </div>
-            <p className="text-gray-300 text-sm">
-              These times are maximum allowable values. Faster disconnection provides better protection. 
+            <p className="text-white/80 text-sm">
+              These times are maximum allowable values. Faster disconnection provides better protection.
               RCD protection allows different disconnection criteria but must still meet shock protection requirements.
             </p>
           </div>
@@ -111,9 +111,9 @@ export const RegulationQuickReference = () => {
                     <TableCell className="text-center border-r border-border">
                       <Badge className="bg-blue-500/20 text-blue-400">{item.rating}</Badge>
                     </TableCell>
-                    <TableCell className="text-center border-r border-border text-gray-300">{item.type}</TableCell>
+                    <TableCell className="text-center border-r border-border text-white/80">{item.type}</TableCell>
                     <TableCell className="text-center">
-                      <Badge className={item.requirement === 'Mandatory' ? 'bg-red-500/20 text-red-400' : 'bg-gray-500/20 text-gray-400'}>
+                      <Badge className={item.requirement === 'Mandatory' ? 'bg-red-500/20 text-red-400' : 'bg-white/10 text-white/70'}>
                         {item.requirement}
                       </Badge>
                     </TableCell>
@@ -170,7 +170,7 @@ export const RegulationQuickReference = () => {
               <Info className="h-4 w-4 text-blue-400" />
               <span className="text-blue-400 font-semibold text-sm">Testing Notes</span>
             </div>
-            <ul className="text-gray-300 text-sm space-y-1">
+            <ul className="text-white/80 text-sm space-y-1">
               <li>• These are typical intervals - specific circumstances may require more frequent testing</li>
               <li>• RCD testing using test button should be carried out by competent persons</li>
               <li>• Records must be kept of all inspections and tests performed</li>

@@ -171,13 +171,13 @@ const Module2Section3 = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="../module-2">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 2
@@ -186,7 +186,7 @@ const Module2Section3 = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3 mb-2">
-            <Badge variant="secondary" className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold">
+            <Badge variant="secondary" className="bg-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/50 font-semibold">
               Section 3
             </Badge>
           </div>
@@ -204,10 +204,10 @@ const Module2Section3 = () => {
         <div className="space-y-4 sm:space-y-6">
           
           {/* Introduction */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <Shield className="h-6 w-6 text-yellow-400" />
+                <Shield className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-white text-xl">Introduction</CardTitle>
               </div>
             </CardHeader>
@@ -225,7 +225,7 @@ const Module2Section3 = () => {
           </Card>
 
           {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white">Learning Outcomes</CardTitle>
             </CardHeader>
@@ -233,23 +233,23 @@ const Module2Section3 = () => {
               <p className="mb-4">By the end of this section, you'll be able to:</p>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Identify the types of PPE relevant to electrical work and their specific applications</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Understand when each type of PPE is required and its limitations</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Know the legal requirements for PPE provision and use under UK regulations</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Apply proper PPE selection criteria for different electrical testing scenarios</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Implement effective PPE maintenance and inspection procedures</span>
                 </li>
               </ul>
@@ -257,17 +257,17 @@ const Module2Section3 = () => {
           </Card>
 
           {/* What Is PPE */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Shield className="h-5 w-5 text-yellow-400" />
+                <Shield className="h-5 w-5 text-elec-yellow" />
                 What Is PPE?
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-6">
               
               <div>
-                <h4 className="font-semibold text-yellow-400 mb-3">Definition and Purpose</h4>
+                <h4 className="font-semibold text-elec-yellow mb-3">Definition and Purpose</h4>
                 <p className="mb-3">
                   Personal Protective Equipment (PPE) is any equipment, appliance, or accessory designed to be worn 
                   or held by a person to protect against one or more health and safety hazards.
@@ -282,7 +282,7 @@ const Module2Section3 = () => {
               </div>
 
               <div>
-                <h4 className="font-semibold text-yellow-400 mb-3">Hierarchy of Control</h4>
+                <h4 className="font-semibold text-elec-yellow mb-3">Hierarchy of Control</h4>
                 <p className="mb-3">PPE is the last line of defence in the hierarchy of control:</p>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 p-3 bg-green-900/20 border border-green-600/20 rounded-lg">
@@ -293,9 +293,9 @@ const Module2Section3 = () => {
                     </div>
                   </div>
                   <div className="flex items-center gap-3 p-3 bg-blue-900/20 border border-blue-600/20 rounded-lg">
-                    <div className="bg-yellow-400 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">2</div>
+                    <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">2</div>
                     <div>
-                      <p className="text-yellow-400 font-semibold">Substitution</p>
+                      <p className="text-elec-yellow font-semibold">Substitution</p>
                       <p className="text-sm">Replace with something safer (e.g., lower voltage testing)</p>
                     </div>
                   </div>
@@ -326,18 +326,18 @@ const Module2Section3 = () => {
           </Card>
 
           {/* Common PPE for Electrical Work */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <HardHat className="h-5 w-5 text-yellow-400" />
+                <HardHat className="h-5 w-5 text-elec-yellow" />
                 Essential PPE for Electrical Work
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-6">
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-card/80 p-6 rounded-lg">
-                  <h4 className="font-semibold text-yellow-400 mb-3 flex items-center gap-2">
+                <div className="bg-transparent/80 p-6 rounded-lg">
+                  <h4 className="font-semibold text-elec-yellow mb-3 flex items-center gap-2">
                     <Zap className="h-4 w-4" />
                     Insulated Gloves
                   </h4>
@@ -364,8 +364,8 @@ const Module2Section3 = () => {
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-6 rounded-lg">
-                  <h4 className="font-semibold text-yellow-400 mb-3">Safety Footwear</h4>
+                <div className="bg-transparent/80 p-6 rounded-lg">
+                  <h4 className="font-semibold text-elec-yellow mb-3">Safety Footwear</h4>
                   <p className="text-sm text-white mb-3">Non-conductive soles reduce shock-to-earth paths</p>
                   <div className="space-y-2">
                     <div>
@@ -389,8 +389,8 @@ const Module2Section3 = () => {
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-6 rounded-lg">
-                  <h4 className="font-semibold text-yellow-400 mb-3">Arc-Rated Clothing</h4>
+                <div className="bg-transparent/80 p-6 rounded-lg">
+                  <h4 className="font-semibold text-elec-yellow mb-3">Arc-Rated Clothing</h4>
                   <p className="text-sm text-white mb-3">Protection against arc flash burns and ignition</p>
                   <div className="space-y-2">
                     <div>
@@ -414,8 +414,8 @@ const Module2Section3 = () => {
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-6 rounded-lg">
-                  <h4 className="font-semibold text-yellow-400 mb-3 flex items-center gap-2">
+                <div className="bg-transparent/80 p-6 rounded-lg">
+                  <h4 className="font-semibold text-elec-yellow mb-3 flex items-center gap-2">
                     <Eye className="h-4 w-4" />
                     Eye and Face Protection
                   </h4>
@@ -442,8 +442,8 @@ const Module2Section3 = () => {
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-6 rounded-lg">
-                  <h4 className="font-semibold text-yellow-400 mb-3">Head Protection</h4>
+                <div className="bg-transparent/80 p-6 rounded-lg">
+                  <h4 className="font-semibold text-elec-yellow mb-3">Head Protection</h4>
                   <p className="text-sm text-white mb-3">Essential on commercial and industrial sites</p>
                   <div className="space-y-2">
                     <div>
@@ -466,8 +466,8 @@ const Module2Section3 = () => {
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-6 rounded-lg">
-                  <h4 className="font-semibold text-yellow-400 mb-3">Hearing Protection</h4>
+                <div className="bg-transparent/80 p-6 rounded-lg">
+                  <h4 className="font-semibold text-elec-yellow mb-3">Hearing Protection</h4>
                   <p className="text-sm text-white mb-3">Required in high noise environments</p>
                   <div className="space-y-2">
                     <div>
@@ -495,23 +495,23 @@ const Module2Section3 = () => {
           </Card>
 
           {/* Legal Framework */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <FileText className="h-5 w-5 text-yellow-400" />
+                <FileText className="h-5 w-5 text-elec-yellow" />
                 Legal Framework and Requirements
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-6">
               
               <div>
-                <h4 className="font-semibold text-yellow-400 mb-3">PPE Regulations 1992</h4>
+                <h4 className="font-semibold text-elec-yellow mb-3">PPE Regulations 1992</h4>
                 <p className="mb-3">
                   Under PPE Regulations 1992 and the Health and Safety at Work Act 1974, specific duties apply:
                 </p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="bg-blue-900/20 border border-blue-600/20 p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Employer Duties:</h5>
+                    <h5 className="text-elec-yellow font-semibold mb-2">Employer Duties:</h5>
                     <ul className="text-white space-y-1 text-sm">
                       <li>• Provide suitable PPE free of charge</li>
                       <li>• Ensure PPE is properly maintained</li>
@@ -536,7 +536,7 @@ const Module2Section3 = () => {
               </div>
 
               <div>
-                <h4 className="font-semibold text-yellow-400 mb-3">Assessment and Selection Requirements</h4>
+                <h4 className="font-semibold text-elec-yellow mb-3">Assessment and Selection Requirements</h4>
                 <p className="mb-3">PPE must be selected based on proper risk assessment:</p>
                 <ul className="text-white space-y-2 text-sm">
                   <li>• Assessment of hazards present</li>
@@ -565,21 +565,21 @@ const Module2Section3 = () => {
           </Card>
 
           {/* When Is PPE Required */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-yellow-400" />
+                <AlertTriangle className="h-5 w-5 text-elec-yellow" />
                 When Is PPE Required in Electrical Testing?
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-6">
               
               <div>
-                <h4 className="font-semibold text-yellow-400 mb-3">Risk-Based PPE Selection</h4>
+                <h4 className="font-semibold text-elec-yellow mb-3">Risk-Based PPE Selection</h4>
                 <p className="mb-3">PPE requirements depend on the specific risks present during testing activities:</p>
                 
                 <div className="space-y-4">
-                  <div className="bg-card/80 p-4 rounded-lg">
+                  <div className="bg-transparent/80 p-4 rounded-lg">
                     <h5 className="text-white font-semibold mb-2">Dead Testing (Circuits Isolated)</h5>
                     <p className="text-white text-sm mb-2">Minimum PPE for routine dead testing:</p>
                     <ul className="text-white space-y-1 text-sm">
@@ -590,7 +590,7 @@ const Module2Section3 = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-card/80 p-4 rounded-lg">
+                  <div className="bg-transparent/80 p-4 rounded-lg">
                     <h5 className="text-white font-semibold mb-2">Live Testing (Energised Systems)</h5>
                     <p className="text-white text-sm mb-2">Enhanced PPE for live testing work:</p>
                     <ul className="text-white space-y-1 text-sm">
@@ -603,7 +603,7 @@ const Module2Section3 = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-card/80 p-4 rounded-lg">
+                  <div className="bg-transparent/80 p-4 rounded-lg">
                     <h5 className="text-white font-semibold mb-2">High-Risk Environments</h5>
                     <p className="text-white text-sm mb-2">Additional considerations for challenging environments:</p>
                     <ul className="text-white space-y-1 text-sm">
@@ -618,7 +618,7 @@ const Module2Section3 = () => {
               </div>
 
               <div>
-                <h4 className="font-semibold text-yellow-400 mb-3">Specific Testing Scenarios</h4>
+                <h4 className="font-semibold text-elec-yellow mb-3">Specific Testing Scenarios</h4>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="bg-green-900/20 border border-green-600/20 p-4 rounded-lg">
                     <h5 className="text-green-400 font-semibold mb-2">Continuity Testing</h5>
@@ -628,8 +628,8 @@ const Module2Section3 = () => {
                       <li>• Knee protection for floor-level work</li>
                     </ul>
                   </div>
-                  <div className="bg-yellow-900/20 border border-yellow-600/20 p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Insulation Testing</h5>
+                  <div className="bg-yellow-900/20 border border-elec-yellow/20 p-4 rounded-lg">
+                    <h5 className="text-elec-yellow font-semibold mb-2">Insulation Testing</h5>
                     <ul className="text-yellow-200 space-y-1 text-sm">
                       <li>• Eye protection from high voltage indicators</li>
                       <li>• Insulated gloves when handling test leads</li>
@@ -682,7 +682,7 @@ const Module2Section3 = () => {
               </div>
 
               <div>
-                <h4 className="font-semibold text-yellow-400 mb-3">Essential Best Practices</h4>
+                <h4 className="font-semibold text-elec-yellow mb-3">Essential Best Practices</h4>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <h5 className="text-white font-semibold mb-2">Selection and Use:</h5>
@@ -725,7 +725,7 @@ const Module2Section3 = () => {
           </Card>
 
           {/* Quick Knowledge Checks */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Quick Knowledge Checks</CardTitle>
             </CardHeader>
@@ -733,7 +733,7 @@ const Module2Section3 = () => {
               <div className="space-y-4">
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       What are the 5 levels in the hierarchy of controls?
                     </summary>
@@ -749,7 +749,7 @@ const Module2Section3 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       How often must insulated gloves be tested?
                     </summary>
@@ -761,7 +761,7 @@ const Module2Section3 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       What class of hard hat is required for electrical work?
                     </summary>
@@ -775,16 +775,16 @@ const Module2Section3 = () => {
           </Card>
 
           {/* Real World Scenario */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <HardHat className="h-5 w-5 text-yellow-400" />
+                <HardHat className="h-5 w-5 text-elec-yellow" />
                 Real World Scenario
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
               <div className="bg-blue-900/20 border border-blue-600/20 p-4 rounded-lg">
-                <h4 className="text-yellow-400 font-semibold mb-2">Scenario: Industrial Motor Control Panel Testing</h4>
+                <h4 className="text-elec-yellow font-semibold mb-2">Scenario: Industrial Motor Control Panel Testing</h4>
                 <p className="text-blue-200 text-sm">
                   You're conducting periodic inspection and testing on a 400V motor control panel in a manufacturing facility. 
                   The panel controls critical production equipment and some tests must be performed live due to operational requirements.
@@ -792,9 +792,9 @@ const Module2Section3 = () => {
               </div>
 
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-3">PPE Selection Process:</h4>
+                <h4 className="text-elec-yellow font-semibold mb-3">PPE Selection Process:</h4>
                 <div className="space-y-3">
-                  <div className="bg-card/80 p-4 rounded-lg">
+                  <div className="bg-transparent/80 p-4 rounded-lg">
                     <h5 className="text-white font-semibold mb-2">1. Risk Assessment</h5>
                     <ul className="text-white space-y-1 text-sm">
                       <li>• 400V three-phase supply with high fault current potential</li>
@@ -805,7 +805,7 @@ const Module2Section3 = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-card/80 p-4 rounded-lg">
+                  <div className="bg-transparent/80 p-4 rounded-lg">
                     <h5 className="text-white font-semibold mb-2">2. PPE Selected</h5>
                     <ul className="text-white space-y-1 text-sm">
                       <li>• Class 0 insulated gloves with leather protectors</li>
@@ -818,7 +818,7 @@ const Module2Section3 = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-card/80 p-4 rounded-lg">
+                  <div className="bg-transparent/80 p-4 rounded-lg">
                     <h5 className="text-white font-semibold mb-2">3. Additional Precautions</h5>
                     <ul className="text-white space-y-1 text-sm">
                       <li>• Coordinated with production to minimise personnel in area</li>
@@ -842,7 +842,7 @@ const Module2Section3 = () => {
           </Card>
 
           {/* Frequently Asked Questions */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Frequently Asked Questions</CardTitle>
             </CardHeader>
@@ -850,7 +850,7 @@ const Module2Section3 = () => {
               <div className="space-y-4">
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       Can I use general work gloves instead of insulated gloves for electrical work?
                     </summary>
@@ -862,7 +862,7 @@ const Module2Section3 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       Do I need arc-rated clothing for all electrical testing?
                     </summary>
@@ -874,7 +874,7 @@ const Module2Section3 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       Who pays for PPE - the employer or employee?
                     </summary>
@@ -886,7 +886,7 @@ const Module2Section3 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       How do I know if my PPE is still safe to use?
                     </summary>
@@ -898,7 +898,7 @@ const Module2Section3 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       Can I modify PPE to make it more comfortable?
                     </summary>
@@ -910,7 +910,7 @@ const Module2Section3 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       Is PPE required for simple domestic electrical testing?
                     </summary>
@@ -922,7 +922,7 @@ const Module2Section3 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       What should I do if I find damaged PPE on site?
                     </summary>
@@ -936,22 +936,22 @@ const Module2Section3 = () => {
           </Card>
 
           {/* Practical Exercises */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <Users className="h-6 w-6 text-yellow-400" />
+                <Users className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-white text-xl">Practical Exercises</CardTitle>
               </div>
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-3">Exercise 1: PPE Selection Matrix</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-3">Exercise 1: PPE Selection Matrix</h4>
                   <p className="text-white mb-3">
                     Create a PPE selection guide for different electrical testing scenarios.
                   </p>
-                  <div className="bg-card/50 p-4 rounded-lg">
-                    <p className="text-yellow-400 font-semibold mb-2">Your task:</p>
+                  <div className="bg-transparent/50 p-4 rounded-lg">
+                    <p className="text-elec-yellow font-semibold mb-2">Your task:</p>
                     <ol className="text-white text-sm space-y-1 list-decimal list-inside">
                       <li>List different testing activities (continuity, insulation, live testing)</li>
                       <li>Identify hazards for each activity</li>
@@ -962,12 +962,12 @@ const Module2Section3 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-3">Exercise 2: PPE Inspection Checklist</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-3">Exercise 2: PPE Inspection Checklist</h4>
                   <p className="text-white mb-3">
                     Develop a comprehensive inspection checklist for electrical PPE.
                   </p>
-                  <div className="bg-card/50 p-4 rounded-lg">
-                    <p className="text-yellow-400 font-semibold mb-2">Include:</p>
+                  <div className="bg-transparent/50 p-4 rounded-lg">
+                    <p className="text-elec-yellow font-semibold mb-2">Include:</p>
                     <ul className="text-white text-sm space-y-1 list-disc list-inside">
                       <li>Visual inspection criteria for each PPE type</li>
                       <li>Testing requirements and frequencies</li>
@@ -978,12 +978,12 @@ const Module2Section3 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-3">Exercise 3: Cost-Benefit Analysis</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-3">Exercise 3: Cost-Benefit Analysis</h4>
                   <p className="text-white mb-3">
                     Compare the costs of PPE against potential accident costs.
                   </p>
-                  <div className="bg-card/50 p-4 rounded-lg">
-                    <p className="text-yellow-400 font-semibold mb-2">Consider:</p>
+                  <div className="bg-transparent/50 p-4 rounded-lg">
+                    <p className="text-elec-yellow font-semibold mb-2">Consider:</p>
                     <ul className="text-white text-sm space-y-1 list-disc list-inside">
                       <li>Initial PPE purchase costs</li>
                       <li>Ongoing maintenance and replacement costs</li>
@@ -1016,7 +1016,7 @@ const Module2Section3 = () => {
           </Card>
 
           {/* Quiz Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Knowledge Check (10 Questions)</CardTitle>
             </CardHeader>

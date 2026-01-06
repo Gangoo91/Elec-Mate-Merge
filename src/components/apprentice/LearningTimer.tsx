@@ -44,13 +44,13 @@ const LearningTimer = ({
     <div className={cn("space-y-4", className)}>
       <div className="flex items-center justify-between">
         <div>
-          <div className="text-sm text-muted-foreground mb-1">Current session</div>
+          <div className="text-sm text-white mb-1">Current session</div>
           <div className="text-3xl font-bold text-elec-yellow">
             {formatTime(displayTime)}
           </div>
         </div>
         <div className="text-right">
-          <div className="text-sm text-muted-foreground mb-1">Today's total</div>
+          <div className="text-sm text-white mb-1">Today's total</div>
           <div className="text-xl font-semibold">
             {formatTime(todayTotal + (isRunning ? displayTime - elapsedTime : 0))}
           </div>

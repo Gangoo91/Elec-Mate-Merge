@@ -1,461 +1,392 @@
-import { useEffect, useMemo } from 'react';
-import { ArrowLeft, Plug, Network, Layers, CheckCircle, AlertTriangle, Settings } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
-import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import type { QuizQuestion } from '@/types/quiz';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
+import useSEO from "@/hooks/useSEO";
+
+const quickCheckQuestions = [
+  {
+    id: "datacabling-m2s4-check1",
+    question: "What is the correct wire sequence for T568B termination?",
+    options: [
+      "White/Orange, Orange, White/Green, Blue, White/Blue, Green, White/Brown, Brown",
+      "White/Green, Green, White/Orange, Blue, White/Blue, Orange, White/Brown, Brown",
+      "Orange, White/Orange, Green, White/Green, Blue, White/Blue, Brown, White/Brown",
+      "White/Orange, Orange, White/Green, Green, White/Blue, Blue, White/Brown, Brown"
+    ],
+    correctIndex: 0,
+    explanation: "T568B standard uses: White/Orange, Orange, White/Green, Blue, White/Blue, Green, White/Brown, Brown sequence. This is the most common standard in commercial installations."
+  },
+  {
+    id: "datacabling-m2s4-check2",
+    question: "What is the maximum untwisted cable length for Category 6 termination?",
+    options: ["6mm", "13mm", "19mm", "25mm"],
+    correctIndex: 1,
+    explanation: "Category 6 cable should have no more than 13mm (0.5 inches) of untwisted pairs at termination to maintain performance specifications."
+  },
+  {
+    id: "datacabling-m2s4-check3",
+    question: "What is the purpose of a load bar in RJ45 connectors?",
+    options: [
+      "To improve cable strain relief",
+      "To maintain proper pair separation",
+      "To reduce insertion loss",
+      "To prevent water ingress"
+    ],
+    correctIndex: 1,
+    explanation: "The load bar maintains proper pair separation and reduces crosstalk by keeping wire pairs in the correct positions throughout the connector."
+  }
+];
+
+const faqs = [
+  {
+    question: "When should I use T568A vs T568B wiring standard?",
+    answer: "T568B is more common in commercial installations and matches older AT&T standards. T568A is the preferred standard for new installations per TIA/EIA. The critical rule is consistency - use the same standard throughout the entire installation."
+  },
+  {
+    question: "What's the difference between 110 and Krone IDC termination?",
+    answer: "Both are insulation displacement connection (IDC) systems but use different blade designs. 110 is the US/TIA standard while Krone is European. They're not interchangeable - you must use the correct punch-down tool for each type."
+  },
+  {
+    question: "Can I reuse RJ45 connectors if I make a termination mistake?",
+    answer: "No, RJ45 connectors are single-use. Once crimped, the contacts are permanently deformed. Attempting to reuse them will result in intermittent connections or complete failures. Always use a new connector."
+  },
+  {
+    question: "Why do modular jack patch panels perform better than 110 blocks?",
+    answer: "Modular jack panels use keystone jacks that maintain better pair geometry and shorter untwisted lengths. They're easier to test and replace individually. For Cat6 and Cat6A, this improved geometry is essential for meeting performance specifications."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+  question: "During termination inspection, you notice 20mm of untwisted cable at a Cat6A keystone jack. What action should you take?",
+  options: [
+    "Accept it - Cat6A has more tolerance",
+    "Re-terminate with maximum 13mm untwist",
+    "Add extra cable ties to secure it",
+    "Test it first before deciding"
+  ],
+  correctAnswer: 1,
+  explanation: "Cat6A actually requires stricter termination than Cat6, not more tolerance. Maximum untwist should be around 13mm or less. Re-termination is required to meet performance specifications."
+  }
+];
 
 const DataCablingModule2Section4 = () => {
-  // SEO
-  useEffect(() => {
-    const title = 'Connectors & Patch Panels | Data Cabling Module 2 Section 4';
-    document.title = title;
-    const desc = 'Comprehensive guide to RJ45 connectors, patch panels, and termination techniques for data cabling installations per BS7671 standards.';
-    let meta = document.querySelector('meta[name="description"]');
-    if (!meta) {
-      meta = document.createElement('meta');
-      (meta as HTMLMetaElement).name = 'description';
-      document.head.appendChild(meta);
-    }
-    (meta as HTMLMetaElement).content = desc;
-
-    // Canonical
-    const href = window.location.origin + '/data-cabling-module-2-section-4';
-    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-    if (!canonical) {
-      canonical = document.createElement('link');
-      canonical.rel = 'canonical';
-      document.head.appendChild(canonical);
-    }
-    canonical.href = href;
-  }, []);
-
-  // Quiz Data
-  const questions: QuizQuestion[] = useMemo(() => [
-    {
-      id: 1,
-      question: 'What is the correct wire sequence for T568B termination?',
-      options: [
-        'White/Orange, Orange, White/Green, Blue, White/Blue, Green, White/Brown, Brown',
-        'White/Green, Green, White/Orange, Blue, White/Blue, Orange, White/Brown, Brown',
-        'Orange, White/Orange, Green, White/Green, Blue, White/Blue, Brown, White/Brown',
-        'White/Orange, Orange, White/Green, Green, White/Blue, Blue, White/Brown, Brown'
-      ],
-      correctAnswer: 0,
-      explanation: 'T568B standard uses: White/Orange, Orange, White/Green, Blue, White/Blue, Green, White/Brown, Brown sequence.'
-    },
-    {
-      id: 2,
-      question: 'What is the maximum untwisted cable length allowed when terminating Category 6 cable?',
-      options: ['6mm', '13mm', '19mm', '25mm'],
-      correctAnswer: 1,
-      explanation: 'Category 6 cable should have no more than 13mm (0.5 inches) of untwisted pairs to maintain performance specifications.'
-    },
-    {
-      id: 3,
-      question: 'Which type of patch panel provides the best performance for Category 6A installations?',
-      options: ['110 IDC patch panel', 'Krone IDC patch panel', 'Modular jack patch panel', 'BIX patch panel'],
-      correctAnswer: 2,
-      explanation: 'Modular jack patch panels provide the best performance for Cat6A as they maintain pair geometry and reduce crosstalk.'
-    },
-    {
-      id: 4,
-      question: 'What is the purpose of the load bar in RJ45 connectors?',
-      options: [
-        'To improve cable strain relief',
-        'To maintain proper pair separation',
-        'To reduce insertion loss',
-        'To prevent electromagnetic interference'
-      ],
-      correctAnswer: 1,
-      explanation: 'The load bar maintains proper pair separation and reduces crosstalk by keeping wire pairs in correct positions.'
-    },
-    {
-      id: 5,
-      question: 'According to BS7671, what is the minimum bend radius for Category 6 cable during installation?',
-      options: ['2 times cable diameter', '4 times cable diameter', '6 times cable diameter', '8 times cable diameter'],
-      correctAnswer: 1,
-      explanation: 'BS7671 specifies minimum bend radius of 4 times the cable diameter to prevent performance degradation.'
-    }
-  ], []);
-
-  const sequentialQuestions = useMemo(
-    () => questions.map(q => ({ id: q.id, question: q.question, options: q.options, correct: q.correctAnswer, explanation: q.explanation })),
-    [questions]
-  );
+  useSEO({
+    title: "Connectors and Patch Panels | Data Cabling Module 2.4",
+    description: "Learn RJ45 connector types, patch panel selection, and professional termination techniques for structured cabling installations."
+  });
 
   return (
-    <div className="min-h-screen bg-background">
-      <div>
-        <Link to="../data-cabling-module-2">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 2
+            <Link to="../data-cabling-module-2">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 2
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-3">
-          <div className="flex items-center gap-3 mb-2">
-            <Plug className="h-8 w-8 text-yellow-400" />
-            <Badge variant="secondary" className="bg-yellow-400/10 text-yellow-400 hover:bg-yellow-400/10 font-semibold">
-              Section 4
-            </Badge>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white">
-            Connectors and Patch Panels
-          </h1>
-          <p className="text-base text-gray-400 max-w-3xl">
-            Professional termination techniques and hardware selection
-          </p>
-        </div>
-
-        <div className="space-y-8 mt-8">
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Network className="h-5 w-5 text-yellow-400" />
-                Introduction to Connectivity Hardware
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                Proper connector and patch panel selection is crucial for maintaining signal integrity throughout the network infrastructure. 
-                This section covers the essential hardware components and professional termination techniques required for reliable data transmission.
-              </p>
-              <div className="bg-card p-4 rounded-lg">
-                <p className="text-yellow-400 font-semibold mb-2">Key Hardware Components:</p>
-                <ul className="space-y-2 text-gray-300">
-                  <li>• <span className="text-white">RJ45 Connectors:</span> 8P8C modular connectors for twisted pair cables</li>
-                  <li>• <span className="text-white">Patch Panels:</span> Centralised termination points for horizontal cabling</li>
-                  <li>• <span className="text-white">Keystone Jacks:</span> Modular outlets for work area connections</li>
-                  <li>• <span className="text-white">Patch Leads:</span> Short cables connecting patch panels to switches</li>
-                  <li>• <span className="text-white">Cable Management:</span> Organisers and supports for neat installations</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-yellow-400" />
-                Learning Outcomes
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="bg-card p-4 rounded-lg">
-                <p className="text-yellow-400 font-semibold mb-3">After completing this section, you will be able to:</p>
-                <ul className="space-y-2 text-gray-300">
-                  <li>• Identify different types of RJ45 connectors and their applications</li>
-                  <li>• Understand T568A and T568B wiring standards and when to use each</li>
-                  <li>• Select appropriate patch panel types for different cable categories</li>
-                  <li>• Apply proper termination techniques to maintain performance specifications</li>
-                  <li>• Implement effective cable management strategies</li>
-                  <li>• Troubleshoot common connector and termination issues</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* RJ45 Connectors */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Plug className="h-5 w-5 text-yellow-400" />
-                RJ45 Connector Types and Standards
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300">
-                RJ45 connectors are the standard interface for Ethernet connections. Understanding the different types and proper termination methods is essential for reliable network performance.
-              </p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-3">Connector Categories</h4>
-                  <div className="space-y-3 text-gray-300">
-                    <div>
-                      <p className="text-white font-medium">Cat5e Connectors</p>
-                      <p className="text-sm">• Standard 8P8C modular plugs</p>
-                      <p className="text-sm">• Suitable up to 100MHz</p>
-                      <p className="text-sm">• Most economical option</p>
-                    </div>
-                    <div>
-                      <p className="text-white font-medium">Cat6 Connectors</p>
-                      <p className="text-sm">• Enhanced internal design</p>
-                      <p className="text-sm">• Load bar for pair separation</p>
-                      <p className="text-sm">• Improved crosstalk performance</p>
-                    </div>
-                    <div>
-                      <p className="text-white font-medium">Cat6A Connectors</p>
-                      <p className="text-sm">• Shielded and unshielded versions</p>
-                      <p className="text-sm">• Larger size to accommodate cable</p>
-                      <p className="text-sm">• 500MHz performance capability</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-3">Wiring Standards</h4>
-                  <div className="space-y-3 text-gray-300">
-                    <div>
-                      <p className="text-white font-medium">T568A Standard</p>
-                      <p className="text-sm">• White/Green, Green, White/Orange, Blue</p>
-                      <p className="text-sm">• White/Blue, Orange, White/Brown, Brown</p>
-                      <p className="text-sm">• Preferred for new installations</p>
-                    </div>
-                    <div>
-                      <p className="text-white font-medium">T568B Standard</p>
-                      <p className="text-sm">• White/Orange, Orange, White/Green, Blue</p>
-                      <p className="text-sm">• White/Blue, Green, White/Brown, Brown</p>
-                      <p className="text-sm">• More common in existing installations</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-yellow-600/20 border border-yellow-400/30 p-4 rounded-lg">
-                <p className="text-yellow-400 font-semibold mb-2">Critical Termination Points:</p>
-                <ul className="space-y-1 text-yellow-400 text-sm">
-                  <li>• Maintain consistent wiring standard throughout installation</li>
-                  <li>• Minimise untwisted cable length (13mm max for Cat6)</li>
-                  <li>• Ensure proper insertion depth and contact engagement</li>
-                  <li>• Use appropriate connector category for cable type</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Patch Panels */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Layers className="h-5 w-5 text-yellow-400" />
-                Patch Panel Selection and Installation
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300">
-                Patch panels provide organised termination points for horizontal cabling and enable flexible reconfiguration of network connections without disturbing permanent links.
-              </p>
-
-              <div className="space-y-4">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-3">Patch Panel Types</h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-300">
-                    <div>
-                      <p className="text-white font-medium mb-2">110 IDC Patch Panels</p>
-                      <ul className="space-y-1 text-sm">
-                        <li>• Insulation displacement connection</li>
-                        <li>• High density configurations</li>
-                        <li>• Tool-dependent termination</li>
-                        <li>• Good for Cat5e applications</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="text-white font-medium mb-2">Modular Jack Panels</p>
-                      <ul className="space-y-1 text-sm">
-                        <li>• Keystone jack compatibility</li>
-                        <li>• Easy maintenance and replacement</li>
-                        <li>• Better performance for high-speed</li>
-                        <li>• Preferred for Cat6/6A installations</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-3">Installation Considerations</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-white font-medium mb-2">Physical Requirements</p>
-                      <ul className="space-y-1 text-gray-300 text-sm">
-                        <li>• 19-inch rack mounting standard</li>
-                        <li>• 1U, 2U height options available</li>
-                        <li>• Cable management space required</li>
-                        <li>• Ventilation considerations for cooling</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="text-white font-medium mb-2">Performance Factors</p>
-                      <ul className="space-y-1 text-gray-300 text-sm">
-                        <li>• Maintain cable category performance</li>
-                        <li>• Proper grounding for shielded systems</li>
-                        <li>• Minimise cable stress and sharp bends</li>
-                        <li>• Allow for future expansion needs</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Termination Techniques */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Settings className="h-5 w-5 text-yellow-400" />
-                Professional Termination Techniques
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300">
-                Proper termination technique directly impacts network performance and reliability. Following established procedures ensures consistent, high-quality connections.
-              </p>
-
-              <div className="space-y-4">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-3">RJ45 Termination Process</h4>
-                  <div className="space-y-3">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-300 text-sm">
-                      <div>
-                        <p className="text-white font-medium mb-2">Preparation Steps</p>
-                        <ol className="space-y-1 list-decimal list-inside">
-                          <li>Strip outer jacket to correct length</li>
-                          <li>Untwist pairs minimally (13mm max)</li>
-                          <li>Arrange conductors per wiring standard</li>
-                          <li>Trim conductors to equal length</li>
-                        </ol>
-                      </div>
-                      <div>
-                        <p className="text-white font-medium mb-2">Termination Steps</p>
-                        <ol className="space-y-1 list-decimal list-inside">
-                          <li>Insert conductors fully into connector</li>
-                          <li>Ensure jacket enters connector body</li>
-                          <li>Crimp with quality termination tool</li>
-                          <li>Test connection before installation</li>
-                        </ol>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-3">Quality Control Measures</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-white font-medium mb-2">Visual Inspection</p>
-                      <ul className="space-y-1 text-gray-300 text-sm">
-                        <li>• Verify correct wire sequence</li>
-                        <li>• Check conductor insertion depth</li>
-                        <li>• Confirm jacket strain relief</li>
-                        <li>• Inspect for damaged conductors</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="text-white font-medium mb-2">Electrical Testing</p>
-                      <ul className="space-y-1 text-gray-300 text-sm">
-                        <li>• Wire map verification</li>
-                        <li>• Continuity testing</li>
-                        <li>• Performance parameter validation</li>
-                        <li>• Documentation of results</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-red-600/20 border border-red-500/30 p-4 rounded-lg">
-                <p className="text-red-300 font-semibold mb-2">Common Termination Errors:</p>
-                <ul className="space-y-1 text-red-200 text-sm">
-                  <li>• Excessive untwisting of cable pairs</li>
-                  <li>• Inconsistent wiring standards within installation</li>
-                  <li>• Poor crimp quality or inadequate contact pressure</li>
-                  <li>• Insufficient jacket strain relief</li>
-                  <li>• Damaged conductors during preparation</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Cable Management */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Network className="h-5 w-5 text-yellow-400" />
-                Cable Management Best Practices
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300">
-                Effective cable management ensures system reliability, facilitates maintenance, and maintains performance specifications throughout the installation lifecycle.
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-3">Rack Organisation</h4>
-                  <ul className="space-y-2 text-gray-300 text-sm">
-                    <li>• Use horizontal and vertical cable managers</li>
-                    <li>• Maintain minimum bend radius requirements</li>
-                    <li>• Separate power and data cables appropriately</li>
-                    <li>• Label all connections clearly and consistently</li>
-                    <li>• Allow adequate space for airflow and cooling</li>
-                  </ul>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-3">Documentation Requirements</h4>
-                  <ul className="space-y-2 text-gray-300 text-sm">
-                    <li>• Create comprehensive cable schedules</li>
-                    <li>• Document test results and certifications</li>
-                    <li>• Maintain as-built drawings and records</li>
-                    <li>• Implement consistent labelling scheme</li>
-                    <li>• Record warranty and maintenance information</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="bg-green-600/20 border border-green-500/30 p-4 rounded-lg">
-                <p className="text-green-300 font-semibold mb-2">Professional Installation Standards:</p>
-                <ul className="space-y-1 text-green-200 text-sm">
-                  <li>• Follow manufacturer specifications for all components</li>
-                  <li>• Maintain workmanship standards throughout installation</li>
-                  <li>• Use appropriate tools and test equipment</li>
-                  <li>• Implement proper safety procedures and PPE</li>
-                  <li>• Provide comprehensive handover documentation</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Knowledge Check</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <SingleQuestionQuiz questions={sequentialQuestions} title="Connectors & Patch Panels Quiz" />
-            </CardContent>
-          </Card>
-
-          {/* Navigation */}
-          <div className="flex justify-between">
-            <Link to="../data-cabling-module-2-section-3">
-              <Button
-                variant="outline"
-                className="border-gray-600 text-gray-300 hover:bg-card/80 hover:text-white"
-              >
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back
-              </Button>
-            </Link>
-            <Link to="../data-cabling-module-2-section-5">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-400">
-                Next
-                <ArrowLeft className="ml-2 h-4 w-4 rotate-180" />
-              </Button>
-            </Link>
-          </div>
         </div>
       </div>
+
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Page Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 2.4</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Connectors and Patch Panels
+          </h1>
+          <p className="text-white/80">
+            Professional termination techniques and hardware
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>RJ45:</strong> 8P8C modular connector for Ethernet</li>
+              <li><strong>T568A/B:</strong> Wiring standards - be consistent</li>
+              <li><strong>Untwist:</strong> Maximum 13mm for Cat6/6A</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Category marking on connectors and panels</li>
+              <li><strong>Use:</strong> Match connector category to cable category</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Identify RJ45 connector types and categories",
+              "Understand T568A and T568B wiring standards",
+              "Select appropriate patch panel types",
+              "Apply proper termination techniques",
+              "Implement cable management strategies",
+              "Troubleshoot termination issues"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            RJ45 Connectors and Standards
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              RJ45 connectors (technically 8P8C modular plugs) are the standard interface for
+              Ethernet networks. Connector quality and proper termination directly impact performance.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Connector Categories</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Cat5e:</strong> Standard 8P8C, 100MHz</li>
+                  <li><strong>Cat6:</strong> Enhanced design with load bar</li>
+                  <li><strong>Cat6A:</strong> Larger body, 500MHz rated</li>
+                  <li><strong>Shielded:</strong> Metal housing for STP/FTP</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Wiring Standards</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>T568A:</strong> Preferred for new installations</li>
+                  <li><strong>T568B:</strong> More common, AT&T compatible</li>
+                  <li><strong>Crossover:</strong> T568A one end, T568B other</li>
+                  <li><strong>Consistency:</strong> Use same standard throughout</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">Pin 1-2</p>
+                <p className="text-white/90 text-xs">Orange pair (T568B)</p>
+              </div>
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">Pin 3-6</p>
+                <p className="text-white/90 text-xs">Green pair (T568B)</p>
+              </div>
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">Pin 4-5</p>
+                <p className="text-white/90 text-xs">Blue pair (both)</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Patch Panel Selection
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Patch panels provide organised termination points for horizontal cabling. Panel type
+              selection affects both performance and ease of maintenance.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Patch Panel Types:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>110 IDC:</strong> Insulation displacement, high density, tool-dependent</li>
+                <li><strong>Krone IDC:</strong> European standard, similar to 110</li>
+                <li><strong>Modular Jack:</strong> Keystone compatible, best for Cat6/6A</li>
+                <li><strong>Angled:</strong> Better cable management, reduced strain</li>
+              </ul>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">110 IDC Panels</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>High port density</li>
+                  <li>Lower cost per port</li>
+                  <li>Requires punch-down tool</li>
+                  <li>Good for Cat5e applications</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Modular Jack Panels</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Easy port replacement</li>
+                  <li>Better high-frequency performance</li>
+                  <li>Individual testing possible</li>
+                  <li>Preferred for Cat6/6A</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 3 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Termination Techniques
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Proper termination technique directly impacts network performance. Following established
+              procedures ensures consistent, reliable connections.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">RJ45 Termination Steps:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>1. Strip jacket:</strong> Remove correct length (typically 25-30mm)</li>
+                <li><strong>2. Arrange pairs:</strong> Follow T568A or T568B sequence</li>
+                <li><strong>3. Minimise untwist:</strong> Maximum 13mm for Cat6</li>
+                <li><strong>4. Trim conductors:</strong> Cut to equal length</li>
+                <li><strong>5. Insert fully:</strong> Conductors must reach connector end</li>
+                <li><strong>6. Crimp properly:</strong> Use quality ratchet crimping tool</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Quality Control:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Visual check:</strong> Verify wire sequence through connector</li>
+                <li><strong>Strain relief:</strong> Jacket must enter connector body</li>
+                <li><strong>Wire map test:</strong> Verify continuity and correct pairing</li>
+                <li><strong>Performance test:</strong> Certify to category standard</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Professional Standards</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Use category-matched connectors for all terminations</li>
+                <li>Maintain consistent wiring standard throughout installation</li>
+                <li>Label all connections clearly and systematically</li>
+                <li>Implement proper cable management in racks</li>
+                <li>Document test results for warranty compliance</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Excessive untwisting:</strong> — Degrades crosstalk performance</li>
+                <li><strong>Wrong connector category:</strong> — Cat5e connector on Cat6 cable</li>
+                <li><strong>Inconsistent standards:</strong> — Mixed T568A and T568B</li>
+                <li><strong>Poor crimping:</strong> — Intermittent or failed connections</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quick Reference */}
+        <div className="mt-6 p-5 rounded-lg bg-transparent">
+          <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+            <div>
+              <p className="font-medium text-white mb-1">T568B Sequence</p>
+              <ul className="space-y-0.5">
+                <li>1: W/Orange, 2: Orange</li>
+                <li>3: W/Green, 4: Blue</li>
+                <li>5: W/Blue, 6: Green</li>
+                <li>7: W/Brown, 8: Brown</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-medium text-white mb-1">Termination Limits</p>
+              <ul className="space-y-0.5">
+                <li>Max untwist: 13mm (Cat6)</li>
+                <li>Min bend: 4x diameter</li>
+                <li>Jacket into connector: Yes</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Quiz Section */}
+        <section className="mb-10 mt-12">
+          <SingleQuestionQuiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../data-cabling-module-2-section-3">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../data-cabling-module-2-section-5">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

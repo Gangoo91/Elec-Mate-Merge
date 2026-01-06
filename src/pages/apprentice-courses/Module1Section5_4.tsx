@@ -150,6 +150,30 @@ const Module1Section5_4 = () => {
       ],
       correctAnswer: 1,
       explanation: "Permit to work systems ensure high-risk activities are properly planned, controlled, and supervised."
+    },
+    {
+      id: 9,
+      question: "Which colour safety notice indicates mandatory requirements?",
+      options: [
+        "Red",
+        "Yellow",
+        "Blue",
+        "Green"
+      ],
+      correctAnswer: 2,
+      explanation: "Blue mandatory notices indicate required actions such as PPE requirements or mandatory safety procedures."
+    },
+    {
+      id: 10,
+      question: "What must be recorded in the accident book?",
+      options: [
+        "Only fatal accidents",
+        "All accidents and injuries, no matter how minor",
+        "Only accidents involving equipment",
+        "Only accidents requiring hospital treatment"
+      ],
+      correctAnswer: 1,
+      explanation: "All accidents and injuries must be recorded in the accident book immediately, regardless of severity."
     }
   ];
 
@@ -177,11 +201,11 @@ const Module1Section5_4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 sticky top-0 z-10 backdrop-blur-sm bg-[#1a1a1a]/95">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white/70 hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 5
@@ -196,24 +220,24 @@ const Module1Section5_4 = () => {
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-2 rounded-lg ">
-              <HardHat className="w-6 h-6 text-foreground" />
+              <HardHat className="w-6 h-6 text-white" />
             </div>
             <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 1.5.4
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Site Safety Procedures and Protocols
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white/70">
             Master essential site safety procedures, emergency protocols, and safety management systems for electrical work environments.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-white/10 bg-transparent">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
             <div className="rounded-lg p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
@@ -234,9 +258,9 @@ const Module1Section5_4 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-white/10 bg-transparent">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Understand the importance and legal requirements for site safety procedures.</li>
             <li>Identify key components of site induction and safety briefing systems.</li>
             <li>Recognise different types of safety notices and their meanings.</li>
@@ -246,13 +270,13 @@ const Module1Section5_4 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-white/10 bg-transparent">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Site Induction Section */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Site Induction and Safety Briefings</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Site Induction and Safety Briefings</h3>
+            <p className="text-base text-white mb-4">
               Site induction is a legal requirement that ensures all workers understand site-specific hazards and safety procedures:
             </p>
             
@@ -262,28 +286,28 @@ const Module1Section5_4 = () => {
                   <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
                     <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Mandatory Induction Requirements</p>
-                    <p className="text-base text-foreground mb-2"><strong>Legal requirement:</strong> No one can work on site without proper induction.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Legal requirement:</strong> No one can work on site without proper induction.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Must be completed before any work activities begin</li>
                       <li>Covers site-specific hazards and control measures</li>
                       <li>Explains emergency procedures and assembly points</li>
                       <li>Details PPE requirements and welfare facilities</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Key induction topics:</strong> Essential information for safe working.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Key induction topics:</strong> Essential information for safe working.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Site layout, access routes, and restricted areas</li>
                       <li>Emergency procedures, first aid, and fire safety</li>
                       <li>Permit to work systems and high-risk activities</li>
                       <li>Environmental hazards and protection measures</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Documentation and records:</strong> Proof of competence and compliance.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Documentation and records:</strong> Proof of competence and compliance.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Induction certificates must be carried on site</li>
                       <li>Records kept of all personnel inducted</li>
                       <li>Refresher training required for extended absences</li>
                       <li>Site-specific competency cards may be issued</li>
                     </ul>
-                    <div className="text-xs sm:text-sm text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs sm:text-sm text-white bg-white/5 p-2 rounded border border-white/10">
                       <strong>Key principle:</strong> Induction protects workers by ensuring everyone understands site-specific risks
                     </div>
                   </div>
@@ -304,8 +328,8 @@ const Module1Section5_4 = () => {
 
           {/* Safety Notices Section */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Safety Notices and Warning Systems</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Safety Notices and Warning Systems</h3>
+            <p className="text-base text-white mb-4">
               Construction sites use various notice and warning systems to communicate hazards and safety requirements:
             </p>
             
@@ -315,35 +339,35 @@ const Module1Section5_4 = () => {
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
                     <p className="font-semibold text-green-600 dark:text-green-400 mb-1">Types of Safety Notices and Their Meanings</p>
-                    <p className="text-base text-foreground mb-2"><strong>Prohibition notices (Red):</strong> Activities that are forbidden.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Prohibition notices (Red):</strong> Activities that are forbidden.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Equipment that must not be used due to safety defects</li>
                       <li>Areas that are out of bounds or dangerous</li>
                       <li>Activities that are temporarily prohibited</li>
                       <li>Can only be removed by competent persons after hazard resolution</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Warning notices (Yellow/Orange):</strong> Alert to hazards present.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Warning notices (Yellow/Orange):</strong> Alert to hazards present.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Indicate specific hazards like overhead lines, excavations</li>
                       <li>Warn of temporary dangers during work activities</li>
                       <li>Highlight areas requiring special precautions</li>
                       <li>Must be clearly visible and regularly maintained</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Mandatory notices (Blue):</strong> Required actions or equipment.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Mandatory notices (Blue):</strong> Required actions or equipment.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>PPE requirements for specific areas or activities</li>
                       <li>Mandatory safety procedures that must be followed</li>
                       <li>Required qualifications or competencies for work areas</li>
                       <li>Safety equipment that must be used</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Information notices (Green):</strong> Safety guidance and emergency information.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Information notices (Green):</strong> Safety guidance and emergency information.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Emergency assembly points and evacuation routes</li>
                       <li>First aid stations and emergency contact numbers</li>
                       <li>Safety equipment locations and instructions</li>
                       <li>General safety reminders and best practices</li>
                     </ul>
-                    <div className="text-xs sm:text-sm text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs sm:text-sm text-white bg-white/5 p-2 rounded border border-white/10">
                       <strong>Key principle:</strong> Safety notices provide critical information - always read and follow them
                     </div>
                   </div>
@@ -364,8 +388,8 @@ const Module1Section5_4 = () => {
 
           {/* Emergency Procedures Section */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Emergency Procedures and Incident Management</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Emergency Procedures and Incident Management</h3>
+            <p className="text-base text-white mb-4">
               Effective emergency procedures and incident management are essential for workplace safety:
             </p>
             
@@ -375,28 +399,28 @@ const Module1Section5_4 = () => {
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
                     <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Emergency Response and Incident Reporting</p>
-                    <p className="text-base text-foreground mb-2"><strong>Emergency procedures:</strong> Clear actions for different emergency types.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Emergency procedures:</strong> Clear actions for different emergency types.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Fire emergency - raise alarm, evacuate, assemble at designated point</li>
                       <li>Medical emergency - secure area, call first aider, contact emergency services</li>
                       <li>Electrical emergency - isolate supply if safe, evacuate danger area</li>
                       <li>Structural collapse - evacuate immediately, call emergency services</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Incident reporting:</strong> Legal requirement to report accidents and near misses.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Incident reporting:</strong> Legal requirement to report accidents and near misses.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>All accidents must be recorded in accident book immediately</li>
                       <li>Near misses help prevent future accidents and should be reported</li>
                       <li>Serious incidents must be reported to HSE within specified timeframes</li>
                       <li>Investigation required to identify causes and prevent recurrence</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>First aid arrangements:</strong> Ensuring adequate emergency care.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>First aid arrangements:</strong> Ensuring adequate emergency care.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Qualified first aiders must be available during all working hours</li>
                       <li>First aid equipment maintained and easily accessible</li>
                       <li>Emergency contact numbers clearly displayed</li>
                       <li>Arrangements for remote or high-risk locations</li>
                     </ul>
-                    <div className="text-xs sm:text-sm text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs sm:text-sm text-white bg-white/5 p-2 rounded border border-white/10">
                       <strong>Key principle:</strong> Quick, appropriate emergency response can save lives and prevent serious injuries
                     </div>
                   </div>
@@ -446,8 +470,8 @@ const Module1Section5_4 = () => {
         </Card>
 
         {/* Permit to Work Systems */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Permit to Work Systems</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-white/10 bg-transparent">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Permit to Work Systems</h2>
           
           <div className="space-y-4">
             <div className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
@@ -457,8 +481,8 @@ const Module1Section5_4 = () => {
                   <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Understanding Permit to Work Systems</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="text-base text-foreground mb-2"><strong>Purpose and scope:</strong> Formal control of high-risk activities.</p>
-                      <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                      <p className="text-base text-white mb-2"><strong>Purpose and scope:</strong> Formal control of high-risk activities.</p>
+                      <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                         <li>Legal document authorising specific high-risk work</li>
                         <li>Ensures proper planning, risk assessment, and control measures</li>
                         <li>Defines responsibilities, competence requirements, and supervision</li>
@@ -466,8 +490,8 @@ const Module1Section5_4 = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="text-base text-foreground mb-2"><strong>When permits are required:</strong> High-risk electrical activities.</p>
-                      <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                      <p className="text-base text-white mb-2"><strong>When permits are required:</strong> High-risk electrical activities.</p>
+                      <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                         <li>Live working on electrical systems above certain voltages</li>
                         <li>Work in confined spaces with electrical hazards</li>
                         <li>Hot work (welding, cutting) near electrical equipment</li>
@@ -475,8 +499,8 @@ const Module1Section5_4 = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="text-base text-foreground mb-2"><strong>Permit process:</strong> Systematic approach to risk control.</p>
-                      <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                      <p className="text-base text-white mb-2"><strong>Permit process:</strong> Systematic approach to risk control.</p>
+                      <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                         <li>Application by competent person details work scope and hazards</li>
                         <li>Assessment by authorised person confirms control measures</li>
                         <li>Issue of permit with specific conditions and time limits</li>
@@ -484,7 +508,7 @@ const Module1Section5_4 = () => {
                       </ul>
                     </div>
                   </div>
-                  <div className="text-xs sm:text-sm text-foreground bg-background/50 p-2 rounded border">
+                  <div className="text-xs sm:text-sm text-white bg-white/5 p-2 rounded border border-white/10">
                     <strong>Key principle:</strong> Permits ensure high-risk work is properly planned, controlled, and supervised
                   </div>
                 </div>
@@ -494,16 +518,16 @@ const Module1Section5_4 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-white/10 bg-transparent">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <details key={index} className="group border border-border/20 rounded-lg">
-                <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50 transition-colors">
-                  <span className="font-medium text-foreground">{faq.question}</span>
-                  <AlertTriangle className="w-5 h-5 text-muted-foreground group-open:rotate-180 transition-transform" />
+              <details key={index} className="group border border-white/10 rounded-lg">
+                <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-white/5 transition-colors">
+                  <span className="font-medium text-white">{faq.question}</span>
+                  <AlertTriangle className="w-5 h-5 text-white/70 group-open:rotate-180 transition-transform" />
                 </summary>
-                <div className="px-4 pb-4 text-muted-foreground border-t border-border/20 pt-4">
+                <div className="px-4 pb-4 text-white/70 border-t border-white/10 pt-4">
                   {faq.answer}
                 </div>
               </details>
@@ -512,12 +536,12 @@ const Module1Section5_4 = () => {
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Recap</h2>
-          <p className="text-base text-foreground mb-4">In this section, you learned about:</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-white/10 bg-transparent">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
+          <p className="text-base text-white mb-4">In this section, you learned about:</p>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div>
-              <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+              <ul className="list-disc pl-6 space-y-2 text-base text-white">
                 <li>The importance and legal requirements for site safety procedures</li>
                 <li>Site induction requirements and key safety briefing topics</li>
                 <li>Different types of safety notices and their meanings</li>
@@ -525,8 +549,8 @@ const Module1Section5_4 = () => {
               </ul>
             </div>
             <div className="rounded-lg p-3 sm:p-4 ">
-              <p className="font-medium text-foreground mb-2">Key takeaway:</p>
-              <p className="text-base text-foreground">
+              <p className="font-medium text-white mb-2">Key takeaway:</p>
+              <p className="text-base text-white">
                 Site safety procedures are not just paperwork - they are essential systems that protect lives and 
                 ensure legal compliance. Following procedures prevents accidents and creates a safer working 
                 environment for everyone on site.
@@ -541,20 +565,20 @@ const Module1Section5_4 = () => {
         </div>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
-          <Button variant="outline" asChild>
-            <Link to="../subsection20">
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Subsection 3
+              Back to Section 5
             </Link>
           </Button>
-          <Button asChild>
-            <Link to="../subsection22">
-              Next: Subsection 5
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              Back to Module 1
               <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
           </Button>
-        </div>
+        </nav>
       </main>
     </div>
   );

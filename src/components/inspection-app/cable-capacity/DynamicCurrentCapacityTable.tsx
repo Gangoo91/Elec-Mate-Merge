@@ -57,7 +57,7 @@ export const DynamicCurrentCapacityTable = () => {
         </CardTitle>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
           <div>
-            <label className="text-sm text-gray-300 mb-1 block">Installation Method</label>
+            <label className="text-sm text-white/80 mb-1 block">Installation Method</label>
             <Select value={selectedMethod} onValueChange={setSelectedMethod}>
                <SelectTrigger className="bg-elec-gray border-elec-gray text-foreground">
                 <SelectValue />
@@ -73,7 +73,7 @@ export const DynamicCurrentCapacityTable = () => {
           </div>
 
           <div>
-            <label className="text-sm text-gray-300 mb-1 block">Ambient Temperature (°C)</label>
+            <label className="text-sm text-white/80 mb-1 block">Ambient Temperature (°C)</label>
             <Select value={ambientTemp} onValueChange={setAmbientTemp}>
              <SelectTrigger className="bg-elec-gray border-elec-gray text-foreground">
                 <SelectValue />
@@ -87,7 +87,7 @@ export const DynamicCurrentCapacityTable = () => {
           </div>
 
           <div>
-            <label className="text-sm text-gray-300 mb-1 block">Circuits Grouped</label>
+            <label className="text-sm text-white/80 mb-1 block">Circuits Grouped</label>
             <Select value={groupingCount} onValueChange={setGroupingCount}>
              <SelectTrigger className="bg-elec-gray border-elec-gray text-foreground">
                 <SelectValue />
@@ -101,7 +101,7 @@ export const DynamicCurrentCapacityTable = () => {
           </div>
 
           <div>
-            <label className="text-sm text-gray-300 mb-1 block">Thermal Insulation</label>
+            <label className="text-sm text-white/80 mb-1 block">Thermal Insulation</label>
             <Select value={thermalInsulation} onValueChange={setThermalInsulation}>
               <SelectTrigger className="bg-elec-gray border-elec-gray text-foreground">
                 <SelectValue />
@@ -122,22 +122,22 @@ export const DynamicCurrentCapacityTable = () => {
             <span className="text-blue-400 font-semibold">Correction Factors Applied</span>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 text-sm">
-            <div className="text-gray-300">
+            <div className="text-white/80">
               Installation: <Badge variant="outline" className="ml-1 text-blue-400 border-blue-400">
                 {installationMethods[selectedMethod as keyof typeof installationMethods]?.factor}
               </Badge>
             </div>
-            <div className="text-gray-300">
+            <div className="text-white/80">
               Ambient: <Badge variant="outline" className="ml-1 text-orange-400 border-orange-400">
                 {ambientTemperatureFactors[Number(ambientTemp) as AmbientTempKey] || 1.0}
               </Badge>
             </div>
-            <div className="text-gray-300">
+            <div className="text-white/80">
               Grouping: <Badge variant="outline" className="ml-1 text-purple-400 border-purple-400">
                 {groupingFactors[Number(groupingCount) as GroupingKey] || 1.0}
               </Badge>
             </div>
-            <div className="text-gray-300">
+            <div className="text-white/80">
               Thermal: <Badge variant="outline" className="ml-1 text-green-400 border-green-400">
                 {thermalInsulationFactors[thermalInsulation as ThermalKey] || 1.0}
               </Badge>
@@ -162,7 +162,7 @@ export const DynamicCurrentCapacityTable = () => {
               return (
                 <TableRow key={cable.value}>
                   <TableCell className="text-foreground font-medium">{cable.label}</TableCell>
-                  <TableCell className="text-gray-300">{cable.currentCarryingCapacity}</TableCell>
+                  <TableCell className="text-white/80">{cable.currentCarryingCapacity}</TableCell>
                   <TableCell className="text-elec-yellow font-bold">{correctedCapacity}</TableCell>
                   <TableCell>
                     <Badge variant={derating >= 90 ? "default" : derating >= 70 ? "secondary" : "destructive"}>

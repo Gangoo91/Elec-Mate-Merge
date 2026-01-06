@@ -79,13 +79,13 @@ const PolarityTestingGuide = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="module-8/section-3">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Practical Tests
@@ -94,7 +94,7 @@ const PolarityTestingGuide = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <Target className="h-8 w-8 text-yellow-400" />
+            <Target className="h-8 w-8 text-elec-yellow" />
             <Badge 
               variant="secondary" 
               className="bg-orange-600/40 text-orange-300 hover:bg-orange-600/50 font-semibold text-sm px-3 py-1 border-0"
@@ -116,10 +116,10 @@ const PolarityTestingGuide = () => {
         <div className="max-w-6xl mx-auto space-y-8">
 
           {/* Why We Test Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <BookOpen className="h-6 w-6 text-yellow-400" />
+                <BookOpen className="h-6 w-6 text-elec-yellow" />
                 Why Polarity Testing is Critical
               </CardTitle>
             </CardHeader>
@@ -128,9 +128,9 @@ const PolarityTestingGuide = () => {
                 {whyWeTest.map((reason, index) => {
                   const IconComponent = reason.icon;
                   return (
-                    <div key={index} className="bg-card/80 p-4 rounded-lg">
+                    <div key={index} className="bg-transparent/80 p-4 rounded-lg">
                       <div className="flex items-center gap-3 mb-2">
-                        <IconComponent className="h-5 w-5 text-yellow-400" />
+                        <IconComponent className="h-5 w-5 text-elec-yellow" />
                         <h3 className="text-white font-semibold">{reason.title}</h3>
                       </div>
                       <p className="text-white text-sm">{reason.description}</p>
@@ -153,16 +153,16 @@ const PolarityTestingGuide = () => {
           </Card>
 
           {/* What to Check */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Eye className="h-6 w-6 text-yellow-400" />
+                <Eye className="h-6 w-6 text-elec-yellow" />
                 What Must Be Checked for Polarity
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {whatToCheck.map((check, index) => (
-                <div key={index} className="bg-card/80 p-4 rounded-lg">
+                <div key={index} className="bg-transparent/80 p-4 rounded-lg">
                   <h3 className="text-white font-semibold mb-2">{check.item}</h3>
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
                     <div>
@@ -174,7 +174,7 @@ const PolarityTestingGuide = () => {
                       <p className="text-white text-xs">{check.danger}</p>
                     </div>
                     <div>
-                      <p className="text-yellow-400 font-medium text-sm">Found At:</p>
+                      <p className="text-elec-yellow font-medium text-sm">Found At:</p>
                       <p className="text-white text-xs">{check.location}</p>
                     </div>
                   </div>
@@ -184,22 +184,22 @@ const PolarityTestingGuide = () => {
           </Card>
 
           {/* Test Methods Overview */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Settings className="h-6 w-6 text-yellow-400" />
+                <Settings className="h-6 w-6 text-elec-yellow" />
                 Polarity Test Methods
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {testMethods.map((method, index) => (
-                <div key={index} className="bg-card/80 p-6 rounded-lg">
+                <div key={index} className="bg-transparent/80 p-6 rounded-lg">
                   <h3 className="text-white text-lg font-semibold mb-3">{method.method}</h3>
                   <p className="text-white text-sm mb-4">{method.description}</p>
                   
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                     <div>
-                      <h4 className="text-yellow-400 font-medium mb-2">When to Use:</h4>
+                      <h4 className="text-elec-yellow font-medium mb-2">When to Use:</h4>
                       <p className="text-white text-sm">{method.when}</p>
                     </div>
                     
@@ -209,7 +209,7 @@ const PolarityTestingGuide = () => {
                     </div>
                     
                     <div>
-                      <h4 className="text-yellow-400 font-medium mb-2">Safety Level:</h4>
+                      <h4 className="text-elec-yellow font-medium mb-2">Safety Level:</h4>
                       <p className="text-white text-sm">{method.safety}</p>
                     </div>
                   </div>
@@ -219,24 +219,24 @@ const PolarityTestingGuide = () => {
           </Card>
 
           {/* Step-by-Step Testing Guide */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Activity className="h-6 w-6 text-yellow-400" />
+                <Activity className="h-6 w-6 text-elec-yellow" />
                 Step-by-Step: How to Test Polarity
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               
               {/* Method 1: Continuity Testing */}
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
-                  <span className="bg-yellow-400 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">1</span>
+                  <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">1</span>
                   Continuity Method (Dead Testing) - PREFERRED
                 </h3>
                 
                 <div className="space-y-4">
-                  <div className="bg-yellow-400/20 p-4 rounded border-l-4 border-yellow-400">
+                  <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
                     <p className="text-blue-200 text-sm">
                       <strong>Safest Method:</strong> Tests with circuit isolated - no electrical danger
                     </p>
@@ -246,10 +246,10 @@ const PolarityTestingGuide = () => {
                     {/* Testing Single-Pole Switches */}
                     <div>
                       <h4 className="text-white font-semibold mb-3">Testing Single-Pole Switches:</h4>
-                      <div className="bg-card p-4 rounded">
+                      <div className="bg-transparent p-4 rounded">
                         <div className="space-y-3">
                           <div>
-                            <p className="text-yellow-400 font-medium text-sm">Step 1: Preparation</p>
+                            <p className="text-elec-yellow font-medium text-sm">Step 1: Preparation</p>
                             <ul className="text-white text-sm space-y-1 ml-4">
                               <li>• Isolate circuit and prove dead</li>
                               <li>• At consumer unit, disconnect phase conductor from MCB</li>
@@ -259,7 +259,7 @@ const PolarityTestingGuide = () => {
                           </div>
                           
                           <div>
-                            <p className="text-yellow-400 font-medium text-sm">Step 2: Testing</p>
+                            <p className="text-elec-yellow font-medium text-sm">Step 2: Testing</p>
                             <ul className="text-white text-sm space-y-1 ml-4">
                               <li>• Go to switch location</li>
                               <li>• Set switch to OFF position</li>
@@ -269,7 +269,7 @@ const PolarityTestingGuide = () => {
                           </div>
                           
                           <div>
-                            <p className="text-yellow-400 font-medium text-sm">Step 3: Verification</p>
+                            <p className="text-elec-yellow font-medium text-sm">Step 3: Verification</p>
                             <ul className="text-white text-sm space-y-1 ml-4">
                               <li>• Set switch to ON position</li>
                               <li>• Test between switch live terminal and earth</li>
@@ -284,10 +284,10 @@ const PolarityTestingGuide = () => {
                     {/* Testing Socket Outlets */}
                     <div>
                       <h4 className="text-white font-semibold mb-3">Testing Socket Outlets:</h4>
-                      <div className="bg-card p-4 rounded">
+                      <div className="bg-transparent p-4 rounded">
                         <div className="space-y-3">
                           <div>
-                            <p className="text-yellow-400 font-medium text-sm">Method: Cross-Connection Test</p>
+                            <p className="text-elec-yellow font-medium text-sm">Method: Cross-Connection Test</p>
                             <ul className="text-white text-sm space-y-1 ml-4">
                               <li>• With circuit isolated, link phase to earth at consumer unit</li>
                               <li>• Test phase terminal to earth terminal at socket</li>
@@ -317,10 +317,10 @@ const PolarityTestingGuide = () => {
                     {/* Testing Edison Screw Lampholders */}
                     <div>
                       <h4 className="text-white font-semibold mb-3">Testing Edison Screw (ES) Lampholders:</h4>
-                      <div className="bg-card p-4 rounded">
+                      <div className="bg-transparent p-4 rounded">
                         <div className="space-y-3">
                           <div>
-                            <p className="text-yellow-400 font-medium text-sm">Critical Safety Test:</p>
+                            <p className="text-elec-yellow font-medium text-sm">Critical Safety Test:</p>
                             <ul className="text-white text-sm space-y-1 ml-4">
                               <li>• Remove lamp from ES fitting</li>
                               <li>• With phase linked to earth at CU</li>
@@ -343,7 +343,7 @@ const PolarityTestingGuide = () => {
               </div>
 
               {/* Method 2: Live Testing */}
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
                   <span className="bg-red-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">2</span>
                   Live Testing Method - CAUTION REQUIRED
@@ -359,10 +359,10 @@ const PolarityTestingGuide = () => {
                   <div className="space-y-4">
                     <div>
                       <h4 className="text-white font-semibold mb-3">Using Approved Voltage Indicator:</h4>
-                      <div className="bg-card p-4 rounded">
+                      <div className="bg-transparent p-4 rounded">
                         <div className="space-y-3">
                           <div>
-                            <p className="text-yellow-400 font-medium text-sm">Switch Testing:</p>
+                            <p className="text-elec-yellow font-medium text-sm">Switch Testing:</p>
                             <ul className="text-white text-sm space-y-1 ml-4">
                               <li>• Set switch to OFF position</li>
                               <li>• Test between switch output and neutral</li>
@@ -372,7 +372,7 @@ const PolarityTestingGuide = () => {
                           </div>
                           
                           <div>
-                            <p className="text-yellow-400 font-medium text-sm">Socket Testing:</p>
+                            <p className="text-elec-yellow font-medium text-sm">Socket Testing:</p>
                             <ul className="text-white text-sm space-y-1 ml-4">
                               <li>• Insert voltage indicator into socket</li>
                               <li>• Test between slots - should read 230V</li>
@@ -384,7 +384,7 @@ const PolarityTestingGuide = () => {
                       </div>
                     </div>
 
-                    <div className="bg-yellow-600/20 p-4 rounded border-l-4 border-yellow-400">
+                    <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
                       <p className="text-yellow-200 text-sm">
                         <strong>Safety Requirements for Live Testing:</strong> Use proper PPE, 
                         GS38 compliant test equipment, and follow safe working procedures.
@@ -397,16 +397,16 @@ const PolarityTestingGuide = () => {
           </Card>
 
           {/* Real-World Examples */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Eye className="h-6 w-6 text-yellow-400" />
+                <Eye className="h-6 w-6 text-elec-yellow" />
                 Real-World Testing Scenarios
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-green-400 font-semibold mb-4">Scenario 1: Lighting Circuit Polarity Test (PASS)</h3>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <div>
@@ -420,7 +420,7 @@ const PolarityTestingGuide = () => {
                   </div>
                   <div>
                     <h4 className="text-white font-medium mb-2">Test Results:</h4>
-                    <div className="bg-card p-3 rounded space-y-1">
+                    <div className="bg-transparent p-3 rounded space-y-1">
                       <p className="text-green-400 font-mono text-sm">Switch OFF: ∞Ω (open circuit) ✓</p>
                       <p className="text-green-400 font-mono text-sm">Switch ON: 0.15Ω (continuity) ✓</p>
                       <p className="text-green-400 font-mono text-sm">All 8 switches tested ✓</p>
@@ -433,7 +433,7 @@ const PolarityTestingGuide = () => {
                 </p>
               </div>
 
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-red-400 font-semibold mb-4">Scenario 2: Socket Outlet Polarity Problem (FAIL)</h3>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <div>
@@ -447,7 +447,7 @@ const PolarityTestingGuide = () => {
                   </div>
                   <div>
                     <h4 className="text-white font-medium mb-2">Test Results:</h4>
-                    <div className="bg-card p-3 rounded space-y-1">
+                    <div className="bg-transparent p-3 rounded space-y-1">
                       <p className="text-green-400 font-mono text-sm">Sockets 1-10: Correct polarity ✓</p>
                       <p className="text-red-400 font-mono text-sm">Socket 11: Phase/neutral swapped ✗</p>
                       <p className="text-red-400 font-mono text-sm">Socket 12: Phase/neutral swapped ✗</p>
@@ -461,8 +461,8 @@ const PolarityTestingGuide = () => {
                 </p>
               </div>
 
-              <div className="bg-card/80 p-6 rounded-lg">
-                <h3 className="text-yellow-400 font-semibold mb-4">Scenario 3: ES Lampholder Safety Issue (CRITICAL)</h3>
+              <div className="bg-transparent/80 p-6 rounded-lg">
+                <h3 className="text-elec-yellow font-semibold mb-4">Scenario 3: ES Lampholder Safety Issue (CRITICAL)</h3>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <div>
                     <h4 className="text-white font-medium mb-2">Setup:</h4>
@@ -475,7 +475,7 @@ const PolarityTestingGuide = () => {
                   </div>
                   <div>
                     <h4 className="text-white font-medium mb-2">Test Results:</h4>
-                    <div className="bg-card p-3 rounded space-y-1">
+                    <div className="bg-transparent p-3 rounded space-y-1">
                       <p className="text-red-400 font-mono text-sm">Centre contact to earth: ∞Ω ✗</p>
                       <p className="text-red-400 font-mono text-sm">Screw thread to earth: 0.12Ω ✗</p>
                       <p className="text-red-400 font-mono text-sm">Polarity completely reversed!</p>
@@ -492,16 +492,16 @@ const PolarityTestingGuide = () => {
           </Card>
 
           {/* Common Problems */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <AlertTriangle className="h-6 w-6 text-yellow-400" />
+                <AlertTriangle className="h-6 w-6 text-elec-yellow" />
                 Common Polarity Problems & Solutions
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-4">
-                <div className="bg-card/80 p-4 rounded-lg">
+                <div className="bg-transparent/80 p-4 rounded-lg">
                   <h3 className="text-red-400 font-semibold mb-3">Problem: Switch Shows Continuity When OFF</h3>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div>
@@ -525,7 +525,7 @@ const PolarityTestingGuide = () => {
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-4 rounded-lg">
+                <div className="bg-transparent/80 p-4 rounded-lg">
                   <h3 className="text-red-400 font-semibold mb-3">Problem: Socket Polarity Reversed</h3>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div>
@@ -550,7 +550,7 @@ const PolarityTestingGuide = () => {
                   </div>
                 </div>
 
-                <div className="bg-card/80 p-4 rounded-lg">
+                <div className="bg-transparent/80 p-4 rounded-lg">
                   <h3 className="text-red-400 font-semibold mb-3">Problem: MCB/Fuse in Neutral</h3>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div>
@@ -579,17 +579,17 @@ const PolarityTestingGuide = () => {
           </Card>
 
           {/* Course Assessment Tips */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <BookOpen className="h-6 w-6 text-yellow-400" />
+                <BookOpen className="h-6 w-6 text-elec-yellow" />
                 Course Assessment & Exam Guidance
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h3 className="text-yellow-400 font-semibold mb-3">Assessment Expectations</h3>
+                <div className="bg-transparent/80 p-4 rounded-lg">
+                  <h3 className="text-elec-yellow font-semibold mb-3">Assessment Expectations</h3>
                   <ul className="text-white text-sm space-y-2">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
@@ -614,7 +614,7 @@ const PolarityTestingGuide = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-card/80 p-4 rounded-lg">
+                <div className="bg-transparent/80 p-4 rounded-lg">
                   <h3 className="text-red-400 font-semibold mb-3">Common Assessment Errors</h3>
                   <ul className="text-white text-sm space-y-2">
                     <li className="flex items-start gap-2">
@@ -659,28 +659,28 @@ const PolarityTestingGuide = () => {
           </Card>
 
           {/* Advanced Testing Scenarios */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Activity className="h-6 w-6 text-yellow-400" />
+                <Activity className="h-6 w-6 text-elec-yellow" />
                 Advanced Testing Scenarios
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-purple-400 font-semibold mb-4">Complex Circuit Testing</h3>
                 <div className="space-y-4">
                   
-                  <div className="bg-card p-4 rounded">
-                    <h4 className="text-yellow-400 font-medium mb-3">Two-Way and Intermediate Switching</h4>
+                  <div className="bg-transparent p-4 rounded">
+                    <h4 className="text-elec-yellow font-medium mb-3">Two-Way and Intermediate Switching</h4>
                     <div className="space-y-3">
                       <p className="text-white text-sm">
                         <strong>Challenge:</strong> Multiple switches controlling one light - which conductor is switched?
                       </p>
                       
                       <div>
-                        <p className="text-yellow-400 font-medium text-sm">Testing Method:</p>
+                        <p className="text-elec-yellow font-medium text-sm">Testing Method:</p>
                         <ol className="text-white text-sm space-y-1 ml-4">
                           <li>1. Link phase to earth at consumer unit</li>
                           <li>2. Test each switch terminal to earth</li>
@@ -699,15 +699,15 @@ const PolarityTestingGuide = () => {
                     </div>
                   </div>
 
-                  <div className="bg-card p-4 rounded">
-                    <h4 className="text-yellow-400 font-medium mb-3">Three-Phase Equipment Testing</h4>
+                  <div className="bg-transparent p-4 rounded">
+                    <h4 className="text-elec-yellow font-medium mb-3">Three-Phase Equipment Testing</h4>
                     <div className="space-y-3">
                       <p className="text-white text-sm">
                         <strong>Application:</strong> Motors, distribution boards, commercial equipment
                       </p>
                       
                       <div>
-                        <p className="text-yellow-400 font-medium text-sm">Extended Test Requirements:</p>
+                        <p className="text-elec-yellow font-medium text-sm">Extended Test Requirements:</p>
                         <ul className="text-white text-sm space-y-1">
                           <li>• Test each phase conductor to earth separately</li>
                           <li>• Verify correct phase rotation at equipment</li>
@@ -728,15 +728,15 @@ const PolarityTestingGuide = () => {
                 </div>
               </div>
 
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-green-400 font-semibold mb-4">Specialist Applications</h3>
                 <div className="space-y-4">
                   
-                  <div className="bg-card p-4 rounded">
+                  <div className="bg-transparent p-4 rounded">
                     <h4 className="text-white font-semibold mb-3">Emergency Lighting Circuits</h4>
                     <div className="space-y-3">
                       <div>
-                        <p className="text-yellow-400 font-medium text-sm">Special Considerations:</p>
+                        <p className="text-elec-yellow font-medium text-sm">Special Considerations:</p>
                         <ul className="text-white text-sm space-y-1">
                           <li>• Maintained vs non-maintained fittings</li>
                           <li>• Central battery system connections</li>
@@ -757,7 +757,7 @@ const PolarityTestingGuide = () => {
                     </div>
                   </div>
 
-                  <div className="bg-card p-4 rounded">
+                  <div className="bg-transparent p-4 rounded">
                     <h4 className="text-white font-semibold mb-3">Fire Alarm and Security Systems</h4>
                     <div className="space-y-3">
                       <div>
@@ -770,7 +770,7 @@ const PolarityTestingGuide = () => {
                         </ul>
                       </div>
                       
-                      <div className="bg-yellow-600/20 p-3 rounded">
+                      <div className="bg-elec-yellow/20 p-3 rounded">
                         <p className="text-yellow-200 text-sm">
                           <strong>Important:</strong> Incorrect polarity in fire alarm circuits can prevent 
                           proper operation during emergencies - life safety critical.
@@ -784,22 +784,22 @@ const PolarityTestingGuide = () => {
           </Card>
 
           {/* Equipment and Tool Guidance */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Settings className="h-6 w-6 text-yellow-400" />
+                <Settings className="h-6 w-6 text-elec-yellow" />
                 Professional Equipment & Tools
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               
-              <div className="bg-card/80 p-6 rounded-lg">
-                <h3 className="text-yellow-400 font-semibold mb-4">Essential Test Equipment for Polarity Testing</h3>
+              <div className="bg-transparent/80 p-6 rounded-lg">
+                <h3 className="text-elec-yellow font-semibold mb-4">Essential Test Equipment for Polarity Testing</h3>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   
                   <div>
                     <h4 className="text-white font-medium mb-3">Continuity Testing (Preferred Method)</h4>
-                    <div className="bg-card p-4 rounded">
+                    <div className="bg-transparent p-4 rounded">
                       <div className="space-y-3">
                         <div>
                           <p className="text-green-400 font-medium text-sm">Low-Resistance Ohmmeter Features:</p>
@@ -813,7 +813,7 @@ const PolarityTestingGuide = () => {
                         </div>
                         
                         <div>
-                          <p className="text-yellow-400 font-medium text-sm">Additional Requirements:</p>
+                          <p className="text-elec-yellow font-medium text-sm">Additional Requirements:</p>
                           <ul className="text-white text-sm space-y-1">
                             <li>• Flying leads for temporary connections</li>
                             <li>• Crocodile clips for secure connections</li>
@@ -827,7 +827,7 @@ const PolarityTestingGuide = () => {
 
                   <div>
                     <h4 className="text-white font-medium mb-3">Live Testing Equipment</h4>
-                    <div className="bg-card p-4 rounded">
+                    <div className="bg-transparent p-4 rounded">
                       <div className="space-y-3">
                         <div>
                           <p className="text-orange-400 font-medium text-sm">Voltage Indicator Requirements:</p>
@@ -854,7 +854,7 @@ const PolarityTestingGuide = () => {
                   </div>
                 </div>
 
-                <div className="mt-4 bg-yellow-400/20 p-4 rounded border-l-4 border-yellow-400">
+                <div className="mt-4 bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
                   <p className="text-blue-200 text-sm">
                     <strong>Best Practice:</strong> Always use continuity testing for initial verification. 
                     Reserve live testing for periodic inspection or where dead testing is impractical.
@@ -862,15 +862,15 @@ const PolarityTestingGuide = () => {
                 </div>
               </div>
 
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-orange-400 font-semibold mb-4">Test Documentation and Records</h3>
                 <div className="space-y-4">
                   
-                  <div className="bg-card p-4 rounded">
+                  <div className="bg-transparent p-4 rounded">
                     <h4 className="text-white font-medium mb-3">Essential Information to Record</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <p className="text-yellow-400 font-medium text-sm mb-2">Circuit Details:</p>
+                        <p className="text-elec-yellow font-medium text-sm mb-2">Circuit Details:</p>
                         <ul className="text-white text-sm space-y-1">
                           <li>• Circuit designation/number</li>
                           <li>• Type of circuit (lighting, power, etc.)</li>
@@ -891,7 +891,7 @@ const PolarityTestingGuide = () => {
                     </div>
                   </div>
 
-                  <div className="bg-card p-4 rounded">
+                  <div className="bg-transparent p-4 rounded">
                     <h4 className="text-white font-medium mb-3">Certification Requirements</h4>
                     <div className="space-y-3">
                       <p className="text-white text-sm">
@@ -919,28 +919,28 @@ const PolarityTestingGuide = () => {
           </Card>
 
           {/* Troubleshooting and Assessment */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Target className="h-6 w-6 text-yellow-400" />
+                <Target className="h-6 w-6 text-elec-yellow" />
                 Advanced Troubleshooting & Assessment Prep
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-purple-400 font-semibold mb-4">Complex Fault Scenarios</h3>
                 <div className="space-y-4">
                   
-                  <div className="bg-card p-4 rounded">
-                    <h4 className="text-yellow-400 font-medium mb-3">Scenario: "The Intermittent Polarity Fault"</h4>
+                  <div className="bg-transparent p-4 rounded">
+                    <h4 className="text-elec-yellow font-medium mb-3">Scenario: "The Intermittent Polarity Fault"</h4>
                     <div className="space-y-3">
                       <p className="text-white text-sm">
                         <strong>Problem:</strong> Socket outlet tests correctly when isolated, fails when circuit energised.
                       </p>
                       
                       <div>
-                        <p className="text-yellow-400 font-medium text-sm">Investigation Steps:</p>
+                        <p className="text-elec-yellow font-medium text-sm">Investigation Steps:</p>
                         <ol className="text-white text-sm space-y-1 ml-4">
                           <li>1. Check for parallel neutral paths through other circuits</li>
                           <li>2. Verify consumer unit neutral bar connections</li>
@@ -960,15 +960,15 @@ const PolarityTestingGuide = () => {
                     </div>
                   </div>
 
-                  <div className="bg-card p-4 rounded">
-                    <h4 className="text-yellow-400 font-medium mb-3">Scenario: "The Reversed Consumer Unit"</h4>
+                  <div className="bg-transparent p-4 rounded">
+                    <h4 className="text-elec-yellow font-medium mb-3">Scenario: "The Reversed Consumer Unit"</h4>
                     <div className="space-y-3">
                       <p className="text-white text-sm">
                         <strong>Discovery:</strong> Multiple circuits showing incorrect polarity after consumer unit replacement.
                       </p>
                       
                       <div>
-                        <p className="text-yellow-400 font-medium text-sm">Root Cause Analysis:</p>
+                        <p className="text-elec-yellow font-medium text-sm">Root Cause Analysis:</p>
                         <ul className="text-white text-sm space-y-1">
                           <li>• Supply tails connected incorrectly at main switch</li>
                           <li>• Affects all outgoing circuits simultaneously</li>
@@ -989,11 +989,11 @@ const PolarityTestingGuide = () => {
                 </div>
               </div>
 
-              <div className="bg-card/80 p-6 rounded-lg">
+              <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-red-400 font-semibold mb-4">Assessment Success Strategies</h3>
                 <div className="space-y-4">
                   
-                  <div className="bg-card p-4 rounded">
+                  <div className="bg-transparent p-4 rounded">
                     <h4 className="text-white font-medium mb-3">What Assessors Look For</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
@@ -1008,7 +1008,7 @@ const PolarityTestingGuide = () => {
                       </div>
                       
                       <div>
-                        <p className="text-yellow-400 font-medium text-sm mb-2">Safety Awareness:</p>
+                        <p className="text-elec-yellow font-medium text-sm mb-2">Safety Awareness:</p>
                         <ul className="text-white text-sm space-y-1">
                           <li>• Risk assessment before testing</li>
                           <li>• Proper isolation procedures</li>
@@ -1020,7 +1020,7 @@ const PolarityTestingGuide = () => {
                     </div>
                   </div>
 
-                  <div className="bg-card p-4 rounded">
+                  <div className="bg-transparent p-4 rounded">
                     <h4 className="text-white font-medium mb-3">Common Assessment Mistakes</h4>
                     <div className="space-y-3">
                       <ul className="text-white text-sm space-y-2">

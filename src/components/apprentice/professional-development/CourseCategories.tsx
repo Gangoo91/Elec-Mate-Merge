@@ -183,7 +183,7 @@ const CourseCategories = () => {
   return (
     <div className="space-y-6">
       {courseCategories.map((category, categoryIndex) => (
-        <Card key={categoryIndex} className="border-elec-yellow/20 bg-elec-gray">
+        <Card key={categoryIndex} className="border-elec-yellow/20 bg-white/5">
           <CardHeader>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -207,7 +207,7 @@ const CourseCategories = () => {
                   <div className="flex items-start justify-between">
                     <div>
                       <h4 className="font-semibold text-white">{course.name}</h4>
-                      <p className="text-sm text-muted-foreground">{course.provider}</p>
+                      <p className="text-sm text-white">{course.provider}</p>
                     </div>
                     <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30">
                       {course.cost}

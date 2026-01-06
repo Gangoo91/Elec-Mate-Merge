@@ -322,7 +322,7 @@ const QuestionsTab = () => {
       case "high": return "bg-red-500/20 text-red-300 border-red-500/30";
       case "medium": return "bg-yellow-500/20 text-yellow-300 border-yellow-500/30";
       case "low": return "bg-green-500/20 text-green-300 border-green-500/30";
-      default: return "bg-gray-500/20 text-gray-300 border-gray-500/30";
+      default: return "bg-white/10 text-white/80 border-white/20";
     }
   };
 
@@ -332,84 +332,102 @@ const QuestionsTab = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="text-center space-y-2">
-        <h2 className="text-2xl font-bold text-elec-yellow">Question Bank</h2>
-        <p className="text-muted-foreground">
-          Common questions apprentices ask supervisors with professional guidance on how to approach each situation
-        </p>
-      </div>
+    <div className="space-y-6 animate-fade-in">
+      {/* Hero Section */}
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+              <HelpCircle className="h-6 w-6 text-elec-yellow" />
+            </div>
+            <CardTitle className="text-2xl text-white">Question Bank</CardTitle>
+          </div>
+          <CardDescription className="text-white/60">
+            Common questions apprentices ask supervisors with professional guidance on how to approach each situation
+          </CardDescription>
+        </CardHeader>
+      </Card>
 
       {/* Search and Filter */}
-      <div className="space-y-4">
-        <div className="relative">
-          <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search questions, answers, or tags..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
-          />
-        </div>
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardContent className="p-5 relative space-y-4">
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white/70" />
+            <Input
+              placeholder="Search questions, answers, or tags..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-11 h-12 bg-white/10 border-white/10 text-white placeholder:text-white/70 focus:border-elec-yellow/50 rounded-xl"
+            />
+          </div>
 
-        <div className="flex flex-wrap gap-2">
-          {categories.map((category) => {
-            const Icon = category.icon;
-            return (
-              <Button
-                key={category.value}
-                variant={selectedCategory === category.value ? "default" : "outline"}
-                size="sm"
-                onClick={() => setSelectedCategory(category.value)}
-                className="flex items-center gap-2"
-              >
-                <Icon className="h-4 w-4" />
-                {category.label}
-              </Button>
-            );
-          })}
-        </div>
-      </div>
+          <div className="flex flex-wrap gap-2">
+            {categories.map((category) => {
+              const Icon = category.icon;
+              return (
+                <Button
+                  key={category.value}
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setSelectedCategory(category.value)}
+                  className={`flex items-center gap-2 h-9 transition-all touch-manipulation active:scale-95 ${
+                    selectedCategory === category.value
+                      ? 'bg-elec-yellow/20 border-elec-yellow/50 text-elec-yellow'
+                      : 'border-white/10 hover:border-elec-yellow/50 hover:bg-elec-yellow/10'
+                  }`}
+                >
+                  <Icon className="h-4 w-4" />
+                  {category.label}
+                </Button>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Questions List */}
       <div className="space-y-4">
         {filteredQuestions.length === 0 ? (
-          <Card className="p-8 text-center">
-            <p className="text-muted-foreground">No questions found matching your search criteria.</p>
+          <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10 p-8 text-center">
+            <p className="text-white/60">No questions found matching your search criteria.</p>
           </Card>
         ) : (
           filteredQuestions.map((question) => {
             const Icon = getCategoryIcon(question.category);
             return (
-              <Card key={question.id} className="border-elec-yellow/20">
+              <Card key={question.id} className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden">
                 <Collapsible>
                   <CollapsibleTrigger
                     className="w-full"
                     onClick={() => toggleQuestion(question.id)}
                   >
-                    <CardHeader className="hover:bg-elec-gray/50 transition-colors">
+                    <CardHeader className="hover:bg-elec-yellow/5 transition-colors">
                       <div className="flex items-start gap-4 text-left">
-                        <Icon className="h-5 w-5 text-elec-yellow mt-1 flex-shrink-0" />
-                        <div className="flex-1 space-y-2">
-                          <div className="flex items-center justify-between">
-                            <CardTitle className="text-base font-medium">
+                        <div className="p-2 rounded-lg bg-elec-yellow/10 flex-shrink-0">
+                          <Icon className="h-4 w-4 text-elec-yellow" />
+                        </div>
+                        <div className="flex-1 space-y-2 min-w-0">
+                          <div className="flex items-start justify-between gap-2">
+                            <CardTitle className="text-base font-medium text-white">
                               {question.question}
                             </CardTitle>
                             {expandedQuestions.has(question.id) ? (
-                              <ChevronUp className="h-4 w-4 text-muted-foreground" />
+                              <ChevronUp className="h-4 w-4 text-white/80 flex-shrink-0" />
                             ) : (
-                              <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                              <ChevronDown className="h-4 w-4 text-white/80 flex-shrink-0" />
                             )}
                           </div>
                           <div className="flex items-center gap-2 flex-wrap">
-                            <Badge variant="outline" className="capitalize">
+                            <Badge variant="outline" className="capitalize bg-white/5 border-white/20 text-white/70">
                               {question.category}
                             </Badge>
-                            <Badge className={getPriorityColor(question.priority)}>
+                            <Badge variant="outline" className={getPriorityColor(question.priority)}>
                               {question.priority} priority
                             </Badge>
-                            {question.tags.map((tag) => (
-                              <Badge key={tag} variant="secondary" className="text-xs">
+                            {question.tags.slice(0, 2).map((tag) => (
+                              <Badge key={tag} variant="outline" className="text-xs bg-elec-yellow/5 border-elec-yellow/20 text-elec-yellow/70">
                                 {tag}
                               </Badge>
                             ))}
@@ -420,8 +438,8 @@ const QuestionsTab = () => {
                   </CollapsibleTrigger>
                   <CollapsibleContent>
                     <CardContent className="pt-0">
-                      <div className="ml-9 p-4 bg-elec-dark/30 rounded-lg">
-                        <p className="text-sm leading-relaxed whitespace-pre-line">
+                      <div className="ml-12 p-4 bg-green-500/5 border border-green-500/20 rounded-xl">
+                        <p className="text-sm leading-relaxed whitespace-pre-line text-white/80">
                           {question.answer}
                         </p>
                       </div>
@@ -435,30 +453,31 @@ const QuestionsTab = () => {
       </div>
 
       {/* Summary Stats */}
-      <Card className="bg-elec-gray/50 border-elec-yellow/20">
-        <CardContent className="p-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            <div>
-              <div className="text-2xl font-bold text-elec-yellow">{questions.length}</div>
-              <div className="text-sm text-muted-foreground">Total Questions</div>
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-48 h-48 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardContent className="p-5 relative">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="text-center p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+              <div className="text-3xl font-bold text-elec-yellow">{questions.length}</div>
+              <div className="text-sm text-white/60">Total Questions</div>
             </div>
-            <div>
-              <div className="text-2xl font-bold text-red-300">
+            <div className="text-center p-3 rounded-xl bg-red-500/10 border border-red-500/20">
+              <div className="text-3xl font-bold text-red-400">
                 {questions.filter(q => q.priority === "high").length}
               </div>
-              <div className="text-sm text-muted-foreground">High Priority</div>
+              <div className="text-sm text-white/60">High Priority</div>
             </div>
-            <div>
-              <div className="text-2xl font-bold text-elec-yellow">
+            <div className="text-center p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
+              <div className="text-3xl font-bold text-purple-400">
                 {categories.length - 1}
               </div>
-              <div className="text-sm text-muted-foreground">Categories</div>
+              <div className="text-sm text-white/60">Categories</div>
             </div>
-            <div>
-              <div className="text-2xl font-bold text-blue-300">
+            <div className="text-center p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
+              <div className="text-3xl font-bold text-blue-400">
                 {filteredQuestions.length}
               </div>
-              <div className="text-sm text-muted-foreground">Filtered Results</div>
+              <div className="text-sm text-white/60">Filtered Results</div>
             </div>
           </div>
         </CardContent>

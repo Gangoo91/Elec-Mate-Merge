@@ -440,7 +440,7 @@ const InstrumentationModule7Section1 = () => {
                 ],
                 correctAnswer: 1,
                 explanation: "A typical 4-20mA loop contains a transmitter (which converts a physical parameter like pressure or temperature into a 4-20mA current signal) and a receiver (such as an analog input card that measures the loop current)."
-              }
+            }
             ]}
             title="Section 1 Knowledge Check"
           />

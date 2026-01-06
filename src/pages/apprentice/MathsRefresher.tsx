@@ -14,73 +14,73 @@ const MathsRefresher = () => {
       </div>
 
       <div className="text-center mb-6 sm:mb-8 px-2">
-        <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto">
-          Refresh your mathematical skills essential for electrical work, from basic arithmetic to 
+        <p className="text-base sm:text-lg text-white/70 max-w-3xl mx-auto">
+          Refresh your mathematical skills essential for electrical work, from basic arithmetic to
           complex calculations needed for electrical theory and installation work.
         </p>
       </div>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-        <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 shadow-lg shadow-black/20">
+        <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-yellow/10 to-elec-yellow/5 hover:from-elec-yellow/15 hover:to-elec-yellow/10 transition-all duration-300 shadow-lg shadow-black/20">
           <CardContent className="flex flex-col items-center justify-center p-4 sm:p-6 h-full">
             <Calculator className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow mb-3 sm:mb-4" />
             <h2 className="text-lg sm:text-xl font-bold mb-2">Basic Arithmetic</h2>
-            <p className="text-center text-muted-foreground mb-4">
+            <p className="text-center text-white/70 mb-4">
               Review addition, subtraction, multiplication, and division - the foundation for all electrical calculations.
             </p>
             <Button variant="study" className="mt-auto">Study Now</Button>
           </CardContent>
         </Card>
         
-        <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 shadow-lg shadow-black/20">
+        <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-yellow/10 to-elec-yellow/5 hover:from-elec-yellow/15 hover:to-elec-yellow/10 transition-all duration-300 shadow-lg shadow-black/20">
           <CardContent className="flex flex-col items-center justify-center p-4 sm:p-6 h-full">
             <Percent className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow mb-3 sm:mb-4" />
             <h2 className="text-lg sm:text-xl font-bold mb-2">Percentages & Ratios</h2>
-            <p className="text-center text-muted-foreground mb-4">
+            <p className="text-center text-white/70 mb-4">
               Learn how to calculate percentages and work with ratios, essential for voltage drop calculations.
             </p>
             <Button variant="study" className="mt-auto">Study Now</Button>
           </CardContent>
         </Card>
         
-        <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 shadow-lg shadow-black/20">
+        <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-yellow/10 to-elec-yellow/5 hover:from-elec-yellow/15 hover:to-elec-yellow/10 transition-all duration-300 shadow-lg shadow-black/20">
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <SquareDot className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">Powers & Roots</h2>
-            <p className="text-center text-muted-foreground mb-4">
+            <p className="text-center text-white/70 mb-4">
               Master powers, square roots and other operations used in power calculations.
             </p>
             <Button variant="study" className="mt-auto">Study Now</Button>
           </CardContent>
         </Card>
         
-        <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 shadow-lg shadow-black/20">
+        <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-yellow/10 to-elec-yellow/5 hover:from-elec-yellow/15 hover:to-elec-yellow/10 transition-all duration-300 shadow-lg shadow-black/20">
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <Pi className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">Algebra Basics</h2>
-            <p className="text-center text-muted-foreground mb-4">
+            <p className="text-center text-white/70 mb-4">
               Understand how to rearrange formulas and solve equations crucial for electrical formulas.
             </p>
             <Button variant="study" className="mt-auto">Study Now</Button>
           </CardContent>
         </Card>
         
-        <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 shadow-lg shadow-black/20">
+        <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-yellow/10 to-elec-yellow/5 hover:from-elec-yellow/15 hover:to-elec-yellow/10 transition-all duration-300 shadow-lg shadow-black/20">
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <Divide className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">Electrical Formula Practice</h2>
-            <p className="text-center text-muted-foreground mb-4">
+            <p className="text-center text-white/70 mb-4">
               Practice with formulas like Ohm's Law, power calculations, and voltage drop equations.
             </p>
             <Button variant="study" className="mt-auto">Study Now</Button>
           </CardContent>
         </Card>
         
-        <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 shadow-lg shadow-black/20">
+        <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-yellow/10 to-elec-yellow/5 hover:from-elec-yellow/15 hover:to-elec-yellow/10 transition-all duration-300 shadow-lg shadow-black/20">
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <Calculator className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">Practice Exercises</h2>
-            <p className="text-center text-muted-foreground mb-4">
+            <p className="text-center text-white/70 mb-4">
               Test your skills with practical exercises based on real electrical scenarios.
             </p>
             <Button variant="study" className="mt-auto">Study Now</Button>

@@ -74,12 +74,12 @@ const EnhancedInspectionSectionCard = ({
 
   const getSectionIcon = (sectionNumber: string) => {
     switch (sectionNumber) {
-      case '1': return <Zap className="h-5 w-5 text-bs7671-earth" />;
-      case '2': return <Shield className="h-5 w-5 text-bs7671-info" />;
-      case '3': return <Shield className="h-5 w-5 text-bs7671-safe" />;
-      case '4': return <Shield className="h-5 w-5 text-bs7671-info" />;
-      case '5': return <Zap className="h-5 w-5 text-bs7671-warning" />;
-      default: return <AlertTriangle className="h-5 w-5 text-bs7671-caution" />;
+      case '1': return <Zap className="h-5 w-5 text-elec-yellow" />;
+      case '2': return <Shield className="h-5 w-5 text-blue-500" />;
+      case '3': return <Shield className="h-5 w-5 text-green-500" />;
+      case '4': return <Shield className="h-5 w-5 text-blue-500" />;
+      case '5': return <Zap className="h-5 w-5 text-amber-500" />;
+      default: return <AlertTriangle className="h-5 w-5 text-orange-500" />;
     }
   };
 
@@ -102,13 +102,13 @@ const EnhancedInspectionSectionCard = ({
   return (
     <div className="relative">
       <Collapsible open={isExpanded} onOpenChange={onToggle}>
-        <div className={`rounded-xl border-2 transition-all duration-300 bg-card/95 backdrop-blur-sm ${
-          sectionPriority === 'critical' 
-            ? 'border-bs7671-earth/50' 
+        <div className={`rounded-xl border transition-all duration-300 bg-card ${
+          sectionPriority === 'critical'
+            ? 'border-elec-yellow/40'
             : sectionPriority === 'important'
-            ? 'border-bs7671-info/50'
-            : 'border-border/50'
-        } ${isExpanded ? 'shadow-2xl' : 'shadow-lg'}`}>
+            ? 'border-blue-500/40'
+            : 'border-border/30'
+        }`}>
           
           {/* Header Section - Clean and Professional */}
           <CollapsibleTrigger className="w-full" asChild>
@@ -117,18 +117,18 @@ const EnhancedInspectionSectionCard = ({
               aria-expanded={isExpanded}
               aria-controls={`section-${section.id}-content`}
             >
-              <div className="px-3 py-1.5 sm:px-5 sm:py-2">
+              <div className="px-3 py-2">
                 {/* Mobile-optimized Header */}
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                   {/* Top Row: Icon + Title + Chevron */}
                   <div className="flex items-start gap-2.5 sm:gap-3 flex-1 min-w-0">
                     {/* Icon Badge - Smaller on mobile */}
                     <div className={`flex-shrink-0 w-9 h-9 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center transition-transform group-hover:scale-105 ${
-                      sectionPriority === 'critical' 
-                        ? 'bg-bs7671-earth/15 border border-bs7671-earth/30' 
+                      sectionPriority === 'critical'
+                        ? 'bg-elec-yellow/10 border border-elec-yellow/30'
                         : sectionPriority === 'important'
-                        ? 'bg-bs7671-info/15 border border-bs7671-info/30'
-                        : 'bg-primary/10 border border-primary/20'
+                        ? 'bg-blue-500/10 border border-blue-500/30'
+                        : 'bg-muted/30 border border-border/30'
                     }`}>
                       <div className="scale-90 sm:scale-100">
                         {getSectionIcon(section.sectionNumber)}
@@ -228,11 +228,11 @@ const EnhancedInspectionSectionCard = ({
           
           <CollapsibleContent>
             {/* Quick Actions Bar */}
-            <div className="px-3 py-2 sm:px-5 sm:py-3 border-t border-border">
-              <div className="flex flex-col gap-3 sm:gap-4 pt-3 sm:pt-4 bg-muted/20 rounded-lg p-3 sm:p-4 border border-border">
+            <div className="px-2 py-2 border-t border-border/30">
+              <div className="flex flex-col gap-2 bg-muted/20 rounded-lg p-2 border border-border/30">
                 <div className="flex items-center gap-2">
-                  <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-bs7671-earth" />
-                  <span className="font-semibold sm:font-bold text-sm sm:text-base text-foreground">Quick Actions</span>
+                  <Zap className="h-4 w-4 text-elec-yellow" />
+                  <span className="font-semibold text-sm text-foreground">Quick Actions</span>
                 </div>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 w-full">
@@ -293,18 +293,18 @@ const EnhancedInspectionSectionCard = ({
             </div>
             
             {/* Inspection Items Section */}
-            <div className="px-5 pb-5">
+            <div className="px-2 pb-3">
               {/* Desktop Table View */}
-              <div className="hidden md:block rounded-lg border border-border overflow-hidden">
+              <div className="hidden md:block rounded-lg border border-border/30 overflow-hidden">
                 <Table>
                   <TableHeader>
-                    <TableRow className="bg-muted/30 border-border hover:bg-muted/30">
-                      <TableHead className="w-16 text-center font-semibold text-foreground">✓</TableHead>
-                      <TableHead className="font-semibold text-foreground">Item & Description</TableHead>
-                      <TableHead className="w-40 font-semibold text-foreground">BS 7671 Clause</TableHead>
-                      <TableHead className="w-56 font-semibold text-foreground">Outcome</TableHead>
-                      <TableHead className="font-semibold text-foreground">Notes & Observations</TableHead>
-                      <TableHead className="w-32 font-semibold text-foreground text-center">Actions</TableHead>
+                    <TableRow className="hover:bg-muted/50">
+                      <TableHead className="w-12 text-center">✓</TableHead>
+                      <TableHead>Item & Description</TableHead>
+                      <TableHead className="w-36">BS 7671 Clause</TableHead>
+                      <TableHead className="w-48">Outcome</TableHead>
+                      <TableHead>Notes</TableHead>
+                      <TableHead className="w-24 text-center">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -327,7 +327,7 @@ const EnhancedInspectionSectionCard = ({
               </div>
 
               {/* Mobile Card View */}
-              <div className="md:hidden space-y-3">
+              <div className="md:hidden space-y-2">
                 {section.items.map((sectionItem) => {
                   const inspectionItem = inspectionItems.find(item => item.id === sectionItem.id);
                   

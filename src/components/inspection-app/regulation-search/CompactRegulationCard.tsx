@@ -13,7 +13,7 @@ interface CompactRegulationCardProps {
 
 const CompactRegulationCard: React.FC<CompactRegulationCardProps> = ({ regulation, onRelatedClick }) => {
   const partColors = {
-    1: 'bg-gray-500/10 border-gray-500/30 text-gray-400',
+    1: 'bg-white/5 border-white/20 text-white/70',
     4: 'bg-red-500/10 border-red-500/30 text-red-400',
     5: 'bg-blue-500/10 border-blue-500/30 text-blue-400',
     6: 'bg-green-500/10 border-green-500/30 text-green-400',
@@ -29,7 +29,7 @@ const CompactRegulationCard: React.FC<CompactRegulationCardProps> = ({ regulatio
   const frequencyColors = {
     common: 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400',
     frequent: 'bg-blue-500/10 border-blue-500/30 text-blue-400',
-    occasional: 'bg-gray-500/10 border-gray-500/30 text-gray-400'
+    occasional: 'bg-white/5 border-white/20 text-white/70'
   };
 
   const FrequencyIcon = regulation.frequency === 'common' ? Star : 
@@ -58,24 +58,24 @@ const CompactRegulationCard: React.FC<CompactRegulationCardProps> = ({ regulatio
             </div>
             
             <h3 className="text-foreground font-semibold text-sm mb-1 leading-tight">{regulation.title}</h3>
-            <p className="text-gray-400 text-xs mb-2">{regulation.section}</p>
+            <p className="text-white/70 text-xs mb-2">{regulation.section}</p>
             
             <div className="p-2 bg-muted rounded border-l-2 border-elec-yellow">
-              <p className="text-gray-300 text-xs leading-relaxed line-clamp-2">{regulation.content}</p>
+              <p className="text-white/80 text-xs leading-relaxed line-clamp-2">{regulation.content}</p>
             </div>
             
             {/* Compact footer info */}
             <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
               {regulation.keywords.slice(0, 3).map((keyword, idx) => (
-                <Badge key={idx} variant="outline" className="text-xs border-gray-600 text-gray-300 h-5">
+                <Badge key={idx} variant="outline" className="text-xs border-white/20 text-white/80 h-5">
                   {keyword}
                 </Badge>
               ))}
               {regulation.keywords.length > 3 && (
-                <span className="text-gray-400">+{regulation.keywords.length - 3}</span>
+                <span className="text-white/70">+{regulation.keywords.length - 3}</span>
               )}
               {regulation.relatedRegs.length > 0 && (
-                <span className="text-gray-400 ml-2">• {regulation.relatedRegs.length} related</span>
+                <span className="text-white/70 ml-2">• {regulation.relatedRegs.length} related</span>
               )}
             </div>
           </div>
@@ -86,7 +86,7 @@ const CompactRegulationCard: React.FC<CompactRegulationCardProps> = ({ regulatio
               <Button
                 variant="outline"
                 size="sm"
-                className="border-gray-600 text-gray-300 hover:bg-gray-700 shrink-0"
+                className="border-white/20 text-white/80 hover:bg-white/10 shrink-0"
               >
                 <ExternalLink className="h-3 w-3 mr-1" />
                 View
@@ -100,7 +100,7 @@ const CompactRegulationCard: React.FC<CompactRegulationCardProps> = ({ regulatio
                   </Badge>
                   <span>{regulation.title}</span>
                 </DialogTitle>
-                <DialogDescription className="text-gray-400">
+                <DialogDescription className="text-white/70">
                   {regulation.section} - Part {regulation.part} of BS 7671
                 </DialogDescription>
               </DialogHeader>
@@ -126,7 +126,7 @@ const CompactRegulationCard: React.FC<CompactRegulationCardProps> = ({ regulatio
                 {/* Main Content */}
                 <div className="p-4 bg-muted rounded-lg border-l-4 border-elec-yellow">
                   <h4 className="font-semibold mb-2 text-elec-yellow">Regulation Content:</h4>
-                  <p className="text-gray-300 leading-relaxed">{regulation.content}</p>
+                  <p className="text-white/80 leading-relaxed">{regulation.content}</p>
                 </div>
                 
                 {/* Apprentice Note */}
@@ -136,7 +136,7 @@ const CompactRegulationCard: React.FC<CompactRegulationCardProps> = ({ regulatio
                       <Info className="h-4 w-4" />
                       Apprentice Note:
                     </h4>
-                    <p className="text-gray-300">{regulation.apprenticeNote}</p>
+                    <p className="text-white/80">{regulation.apprenticeNote}</p>
                   </div>
                 )}
                 
@@ -147,7 +147,7 @@ const CompactRegulationCard: React.FC<CompactRegulationCardProps> = ({ regulatio
                       <Zap className="h-4 w-4" />
                       Test Method:
                     </h4>
-                    <p className="text-gray-300">{regulation.testMethod}</p>
+                    <p className="text-white/80">{regulation.testMethod}</p>
                   </div>
                 )}
                 
@@ -158,16 +158,16 @@ const CompactRegulationCard: React.FC<CompactRegulationCardProps> = ({ regulatio
                       <AlertTriangle className="h-4 w-4" />
                       Safety Tip:
                     </h4>
-                    <p className="text-gray-300">{regulation.safetyTip}</p>
+                    <p className="text-white/80">{regulation.safetyTip}</p>
                   </div>
                 )}
                 
                 {/* Keywords */}
                 <div>
-                  <h4 className="font-semibold mb-2 text-gray-400">Keywords:</h4>
+                  <h4 className="font-semibold mb-2 text-white/70">Keywords:</h4>
                   <div className="flex flex-wrap gap-2">
                     {regulation.keywords.map((keyword, idx) => (
-                      <Badge key={idx} variant="outline" className="border-gray-600 text-gray-300 text-xs">
+                      <Badge key={idx} variant="outline" className="border-white/20 text-white/80 text-xs">
                         {keyword}
                       </Badge>
                     ))}
@@ -177,7 +177,7 @@ const CompactRegulationCard: React.FC<CompactRegulationCardProps> = ({ regulatio
                 {/* Related Regulations */}
                 {regulation.relatedRegs.length > 0 && (
                   <div>
-                    <h4 className="font-semibold mb-2 text-gray-400">Related Regulations:</h4>
+                    <h4 className="font-semibold mb-2 text-white/70">Related Regulations:</h4>
                     <div className="flex flex-wrap gap-2">
                       {regulation.relatedRegs.map((relReg, idx) => (
                         <Button

@@ -262,7 +262,7 @@ const ComprehensiveEvidenceManager = () => {
               onChange={handleFileChange}
               className="cursor-pointer"
             />
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="text-xs text-white mt-1">
               Supported formats: Images, Videos, PDF, Word, Excel (Max 50MB)
             </p>
           </div>
@@ -288,7 +288,7 @@ const ComprehensiveEvidenceManager = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-blue-600">{evidenceStats.totalItems}</div>
-            <p className="text-sm text-muted-foreground">Total Items</p>
+            <p className="text-sm text-white">Total Items</p>
           </div>
         </CardContent>
       </Card>
@@ -297,7 +297,7 @@ const ComprehensiveEvidenceManager = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-green-600">{evidenceStats.photos}</div>
-            <p className="text-sm text-muted-foreground">Photos</p>
+            <p className="text-sm text-white">Photos</p>
           </div>
         </CardContent>
       </Card>
@@ -306,7 +306,7 @@ const ComprehensiveEvidenceManager = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-purple-600">{evidenceStats.documents}</div>
-            <p className="text-sm text-muted-foreground">Documents</p>
+            <p className="text-sm text-white">Documents</p>
           </div>
         </CardContent>
       </Card>
@@ -315,7 +315,7 @@ const ComprehensiveEvidenceManager = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-orange-600">{evidenceStats.videos}</div>
-            <p className="text-sm text-muted-foreground">Videos</p>
+            <p className="text-sm text-white">Videos</p>
           </div>
         </CardContent>
       </Card>
@@ -324,7 +324,7 @@ const ComprehensiveEvidenceManager = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-green-500">{evidenceStats.verified}</div>
-            <p className="text-sm text-muted-foreground">Verified</p>
+            <p className="text-sm text-white">Verified</p>
           </div>
         </CardContent>
       </Card>
@@ -336,7 +336,7 @@ const ComprehensiveEvidenceManager = () => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">Comprehensive Evidence Manager</h2>
-          <p className="text-muted-foreground">Upload, organize, and manage all your training evidence</p>
+          <p className="text-white">Upload, organize, and manage all your training evidence</p>
         </div>
       </div>
 
@@ -363,7 +363,7 @@ const ComprehensiveEvidenceManager = () => {
                     <Image className="h-4 w-4" />
                     Photo Evidence
                   </h4>
-                  <ul className="text-sm text-muted-foreground space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• High quality, well-lit images</li>
                     <li>• Show work progression</li>
                     <li>• Include safety measures</li>
@@ -376,7 +376,7 @@ const ComprehensiveEvidenceManager = () => {
                     <Video className="h-4 w-4" />
                     Video Evidence
                   </h4>
-                  <ul className="text-sm text-muted-foreground space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Max 5 minutes duration</li>
                     <li>• Include clear narration</li>
                     <li>• Show complete procedures</li>
@@ -389,7 +389,7 @@ const ComprehensiveEvidenceManager = () => {
                     <FileText className="h-4 w-4" />
                     Documents
                   </h4>
-                  <ul className="text-sm text-muted-foreground space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Clear, readable text</li>
                     <li>• Professional formatting</li>
                     <li>• Include calculations/workings</li>
@@ -415,7 +415,7 @@ const ComprehensiveEvidenceManager = () => {
                         {getTypeIcon(item.type)}
                         <div>
                           <h3 className="font-semibold">{item.title}</h3>
-                          <p className="text-sm text-muted-foreground">{item.category} • {item.fileSize}</p>
+                          <p className="text-sm text-white">{item.category} • {item.fileSize}</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
@@ -423,7 +423,7 @@ const ComprehensiveEvidenceManager = () => {
                       </div>
                     </div>
                     
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-muted-foreground mb-3">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-white mb-3">
                       <div className="flex items-center gap-1">
                         <Calendar className="h-3 w-3" />
                         {item.uploadDate}

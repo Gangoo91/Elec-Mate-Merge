@@ -351,7 +351,7 @@ const IndustryInsights = () => {
   return (
     <div className="space-y-6">
       {/* Market Trends */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-elec-yellow" />
@@ -382,7 +382,7 @@ const IndustryInsights = () => {
                     <h4 className="text-sm font-medium text-elec-yellow mb-2">Key Opportunities</h4>
                     <ul className="space-y-1">
                       {trend.opportunities.map((opportunity, oppIndex) => (
-                        <li key={oppIndex} className="text-xs text-muted-foreground flex items-center gap-2">
+                        <li key={oppIndex} className="text-xs text-white flex items-center gap-2">
                           <Target className="h-3 w-3 text-green-400 flex-shrink-0" />
                           <span>{opportunity}</span>
                         </li>
@@ -415,7 +415,7 @@ const IndustryInsights = () => {
       </Card>
 
       {/* Salary Progression */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <PoundSterling className="h-5 w-5 text-elec-yellow" />
@@ -451,7 +451,7 @@ const IndustryInsights = () => {
       </Card>
 
       {/* Regional Insights */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <BarChart3 className="h-5 w-5 text-elec-yellow" />
@@ -476,7 +476,7 @@ const IndustryInsights = () => {
                 </div>
                 <div className="space-y-3">
                   <div>
-                    <span className="text-muted-foreground text-sm">Key Specialisms:</span>
+                    <span className="text-white text-sm">Key Specialisms:</span>
                     <div className="flex flex-wrap gap-1 mt-1">
                       {region.specialisms.map((specialism, specIndex) => (
                         <Badge key={specIndex} variant="outline" className="text-xs">
@@ -486,7 +486,7 @@ const IndustryInsights = () => {
                     </div>
                   </div>
                   <div>
-                    <span className="text-muted-foreground text-xs">Major Projects:</span>
+                    <span className="text-white text-xs">Major Projects:</span>
                     <ul className="text-xs text-elec-light/70 mt-1 space-y-1">
                       {region.majorProjects.map((project, projIndex) => (
                         <li key={projIndex} className="flex items-center gap-2">
@@ -505,7 +505,7 @@ const IndustryInsights = () => {
       </Card>
 
       {/* Future Skills */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Lightbulb className="h-5 w-5 text-elec-yellow" />
@@ -544,7 +544,7 @@ const IndustryInsights = () => {
       </Card>
 
       {/* Industry Sector Analysis */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Factory className="h-5 w-5 text-elec-yellow" />
@@ -569,7 +569,7 @@ const IndustryInsights = () => {
                 </div>
                 <div className="space-y-3">
                   <div>
-                    <span className="text-muted-foreground text-xs">Key Drivers:</span>
+                    <span className="text-white text-xs">Key Drivers:</span>
                     <div className="flex flex-wrap gap-1 mt-1">
                       {sector.keyDrivers.map((driver, driverIndex) => (
                         <Badge key={driverIndex} variant="outline" className="text-xs bg-green-500/10">
@@ -579,7 +579,7 @@ const IndustryInsights = () => {
                     </div>
                   </div>
                   <div>
-                    <span className="text-muted-foreground text-xs">Challenges:</span>
+                    <span className="text-white text-xs">Challenges:</span>
                     <div className="flex flex-wrap gap-1 mt-1">
                       {sector.challenges.map((challenge, challengeIndex) => (
                         <Badge key={challengeIndex} variant="outline" className="text-xs bg-red-500/10">
@@ -589,7 +589,7 @@ const IndustryInsights = () => {
                     </div>
                   </div>
                   <div>
-                    <span className="text-muted-foreground text-xs">Opportunities:</span>
+                    <span className="text-white text-xs">Opportunities:</span>
                     <div className="flex flex-wrap gap-1 mt-1">
                       {sector.opportunities.map((opportunity, oppIndex) => (
                         <Badge key={oppIndex} variant="outline" className="text-xs bg-yellow-500/10">
@@ -634,11 +634,11 @@ const IndustryInsights = () => {
                 </div>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="text-muted-foreground text-xs">Training Time:</span>
+                    <span className="text-white text-xs">Training Time:</span>
                     <div className="font-medium text-blue-400">{skill.trainingTime}</div>
                   </div>
                   <div>
-                    <span className="text-muted-foreground text-xs">Certification Cost:</span>
+                    <span className="text-white text-xs">Certification Cost:</span>
                     <div className="font-medium text-purple-400">{skill.certificationCost}</div>
                   </div>
                 </div>

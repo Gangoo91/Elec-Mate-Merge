@@ -1,814 +1,397 @@
-import { ArrowLeft, Award, CheckCircle, AlertTriangle, Zap, TrendingUp, Settings, Target } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Link } from 'react-router-dom';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
+import useSEO from "@/hooks/useSEO";
+
+const quickCheckQuestions = [
+  {
+    id: "datacabling-m6s2-check1",
+    question: "What is the maximum frequency specification for Class EA cabling?",
+    options: ["250 MHz", "500 MHz", "600 MHz", "1000 MHz"],
+    correctIndex: 1,
+    explanation: "Class EA (Category 6A equivalent) supports frequencies up to 500 MHz, enabling 10GBASE-T applications over the full 100-metre channel length."
+  },
+  {
+    id: "datacabling-m6s2-check2",
+    question: "What is the key difference between Class E and Class EA?",
+    options: ["Connector type", "Cable length", "Alien crosstalk performance", "Installation method"],
+    correctIndex: 2,
+    explanation: "Class EA includes specifications for alien crosstalk (AXT) which is critical for 10 Gigabit Ethernet. Class E does not have alien crosstalk requirements."
+  },
+  {
+    id: "datacabling-m6s2-check3",
+    question: "Which class is the minimum requirement for PoE++ Type 4 (90W) in bundled installations?",
+    options: ["Class D", "Class E", "Class EA", "Class F"],
+    correctIndex: 2,
+    explanation: "Class EA (Cat 6A) is recommended for PoE++ Type 4 applications due to its lower DC resistance and better thermal characteristics, especially in bundled cable runs."
+  }
+];
+
+const faqs = [
+  {
+    question: "When should I specify Class EA instead of Class E?",
+    answer: "Specify Class EA when you need 10GBASE-T support, high-power PoE (60-90W), or future-proofing for 15+ years. The alien crosstalk specifications in EA are essential for reliable 10G performance in bundled runs."
+  },
+  {
+    question: "Is Class F (Cat 7) worth the extra cost?",
+    answer: "For most commercial applications, Class EA provides sufficient performance. Class F is primarily for specialised applications requiring superior EMI immunity or frequencies above 500MHz. The shielding requirements add installation complexity."
+  },
+  {
+    question: "Can Class D support 10 Gigabit Ethernet?",
+    answer: "Not reliably at full distance. While 10GBASE-T can technically negotiate on Class D, distance is severely limited (typically 55m) and performance depends heavily on installation quality and alien crosstalk conditions."
+  },
+  {
+    question: "What determines the expected service life of each class?",
+    answer: "Higher classes provide more bandwidth headroom for future applications. Class D may need replacement in 5-7 years, Class E in 7-10 years, while Class EA typically provides 15+ years of usable service."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+  question: "A hospital is upgrading their network to support new medical imaging systems requiring 10GBASE-T and high-power PoE for wireless access points. What is the recommended minimum class specification?",
+  options: [
+    "Class D for cost savings",
+    "Class E for adequate performance",
+    "Class EA for full 10G support and PoE++ capability",
+    "Class F for maximum future-proofing"
+  ],
+  correctAnswer: 2,
+  explanation: "Class EA provides full 10GBASE-T support at 100 metres with alien crosstalk specifications, plus excellent thermal performance for PoE++. It balances capability with reasonable cost, while Class F adds complexity without proportional benefit for this application."
+  }
+];
 
 const DataCablingModule6Section2 = () => {
-  const quiz = [
-    {
-      question: "What is the maximum frequency specification for Class EA cabling?",
-      options: [
-        "250 MHz",
-        "500 MHz",
-        "600 MHz",
-        "1000 MHz"
-      ],
-      correct: 1,
-      explanation: "Class EA (Category 6A equivalent) supports frequencies up to 500 MHz, enabling 10GBASE-T applications over the full 100-metre channel length."
-    },
-    {
-      question: "Which application requires Class F cabling as a minimum?",
-      options: [
-        "1000BASE-T Ethernet",
-        "10GBASE-T Ethernet",
-        "25GBASE-T Ethernet",
-        "100BASE-TX Ethernet"
-      ],
-      correct: 2,
-      explanation: "25GBASE-T Ethernet requires Class F cabling (1000 MHz) as a minimum. 10GBASE-T can run on Class EA, while 1000BASE-T and 100BASE-TX require much lower class specifications."
-    },
-    {
-      question: "What is the key difference between Class E and Class EA?",
-      options: [
-        "Connector type used",
-        "Cable length supported",
-        "Alien crosstalk performance",
-        "Installation requirements"
-      ],
-      correct: 2,
-      explanation: "Class EA includes specifications for alien crosstalk (AXT) which is critical for 10 Gigabit Ethernet. Class E does not have alien crosstalk requirements."
-    },
-    {
-      question: "Which PoE standard can be supported by Class D cabling?",
-      options: [
-        "PoE+ (IEEE 802.3at)",
-        "PoE++ Type 3 (IEEE 802.3bt)",
-        "PoE++ Type 4 (IEEE 802.3bt)",
-        "All of the above"
-      ],
-      correct: 0,
-      explanation: "Class D cabling can reliably support PoE+ (25.5W). Higher power PoE++ applications typically require Class EA cabling for better thermal and electrical performance."
-    },
-    {
-      question: "What is the typical application distance limitation for 25GBASE-T over Class F cabling?",
-      options: [
-        "30 metres",
-        "55 metres",
-        "100 metres",
-        "150 metres"
-      ],
-      correct: 0,
-      explanation: "25GBASE-T typically operates reliably up to 30 metres over Class F cabling due to the high frequency requirements and signal integrity challenges."
-    }
-  ];
+  useSEO({
+    title: "Class D, E, EA, F Standards | Data Cabling Module 6.2",
+    description: "Performance class specifications, applications, and selection criteria for structured cabling systems."
+  });
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="px-8 pt-8 pb-12">
-        <Link to="../data-cabling-module-6">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
           <Button
             variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 6
+            <Link to="../data-cabling-module-6">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 6
+            </Link>
           </Button>
-        </Link>
-
-        <div className="space-y-6">
-          <div className="flex items-center gap-4 mb-6">
-            <Award className="h-8 w-8 text-yellow-400" strokeWidth={2.5} />
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-white">
-                Class D, E, EA, F Standards
-              </h1>
-              <p className="text-base md:text-lg text-gray-400">
-                Performance class specifications and applications
-              </p>
-            </div>
-          </div>
-
-          <div className="flex gap-4 mb-8">
-            <Badge variant="secondary" className="bg-yellow-400 text-black">
-              Section 2
-            </Badge>
-            <Badge variant="outline" className="border-gray-600 text-gray-300">
-              15 minutes
-            </Badge>
-          </div>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Award className="h-5 w-5 text-yellow-400" />
-                Understanding Performance Classes
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                Performance classes define the transmission characteristics of structured cabling systems. 
-                Each class specifies frequency range, electrical parameters, and supported applications. 
-                Understanding these classes is essential for selecting appropriate cabling for current and 
-                future network requirements.
-              </p>
-              <p>
-                The evolution from Class D through to Class F represents advancing technology demands, 
-                from basic Ethernet to multi-gigabit applications and high-power PoE systems.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-green-400" />
-                Learning Objectives
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <ul className="space-y-2 list-disc list-inside">
-                <li>Understand the specifications and applications for each performance class</li>
-                <li>Compare frequency ranges and transmission parameters across classes</li>
-                <li>Identify appropriate class selection for specific applications</li>
-                <li>Learn about alien crosstalk and its impact on performance</li>
-                <li>Understand PoE compatibility across different classes</li>
-                <li>Apply class knowledge to future-proofing strategies</li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Target className="h-5 w-5 text-yellow-400" />
-                Class D: Foundation Level Performance
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <div>
-                <h4 className="text-lg font-semibold text-white mb-3">Technical Specifications</h4>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Performance Parameters</h5>
-                    <ul className="text-sm space-y-1">
-                      <li><strong>Frequency Range:</strong> 1-100 MHz</li>
-                      <li><strong>Insertion Loss:</strong> ≤ 24 dB at 100 MHz</li>
-                      <li><strong>NEXT:</strong> ≥ 30 dB at 100 MHz</li>
-                      <li><strong>Return Loss:</strong> ≥ 10 dB (1-100 MHz)</li>
-                      <li><strong>ELFEXT:</strong> ≥ 17 dB at 100 MHz</li>
-                    </ul>
-                  </div>
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Cable Characteristics</h5>
-                    <ul className="text-sm space-y-1">
-                      <li><strong>Equivalent:</strong> Category 5e</li>
-                      <li><strong>Conductor:</strong> 24 AWG solid copper</li>
-                      <li><strong>Pairs:</strong> 4 twisted pairs</li>
-                      <li><strong>Impedance:</strong> 100Ω ± 15%</li>
-                      <li><strong>Capacitance:</strong> ≤ 5.6 nF/100m</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="text-lg font-semibold text-white mb-3">Applications and Use Cases</h4>
-                <div className="space-y-4">
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Ethernet Applications</h5>
-                    <div className="grid md:grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <p className="mb-2"><strong>Primary Applications:</strong></p>
-                        <ul className="space-y-1">
-                          <li>• 100BASE-TX (100 Mbps)</li>
-                          <li>• 1000BASE-T (1 Gbps)</li>
-                          <li>• Basic telephony systems</li>
-                          <li>• Security cameras (basic)</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="mb-2"><strong>PoE Support:</strong></p>
-                        <ul className="space-y-1">
-                          <li>• PoE (IEEE 802.3af) - 15.4W</li>
-                          <li>• PoE+ (IEEE 802.3at) - 25.5W</li>
-                          <li>• Limited PoE++ applications</li>
-                          <li>• Temperature derating required</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Installation Considerations</h5>
-                    <div className="text-sm space-y-2">
-                      <p><strong>Bundle Size Limitations:</strong> Large cable bundles can cause temperature rise, affecting PoE performance. Consider derating for bundles over 24 cables.</p>
-                      <p><strong>Legacy Upgrade:</strong> Often used when upgrading from Cat 5 systems where existing pathways limit cable size.</p>
-                      <p><strong>Cost Optimization:</strong> Suitable for basic applications where higher performance isn't required.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-green-400" />
-                Class E: Enhanced Performance
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <div>
-                <h4 className="text-lg font-semibold text-white mb-3">Technical Specifications</h4>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Performance Parameters</h5>
-                    <ul className="text-sm space-y-1">
-                      <li><strong>Frequency Range:</strong> 1-250 MHz</li>
-                      <li><strong>Insertion Loss:</strong> ≤ 36 dB at 250 MHz</li>
-                      <li><strong>NEXT:</strong> ≥ 21 dB at 250 MHz</li>
-                      <li><strong>Return Loss:</strong> ≥ 8 dB at 250 MHz</li>
-                      <li><strong>ELFEXT:</strong> ≥ 14 dB at 250 MHz</li>
-                    </ul>
-                  </div>
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Improvements over Class D</h5>
-                    <ul className="text-sm space-y-1">
-                      <li><strong>Equivalent:</strong> Category 6</li>
-                      <li><strong>Tighter Tolerances:</strong> ± 5% impedance</li>
-                      <li><strong>Better Separation:</strong> Pair separation/spline</li>
-                      <li><strong>Reduced Crosstalk:</strong> Improved pair geometry</li>
-                      <li><strong>Higher Headroom:</strong> Better margin for applications</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="text-lg font-semibold text-white mb-3">Applications and Performance</h4>
-                <div className="space-y-4">
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Network Applications</h5>
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-sm border-collapse">
-                        <thead>
-                          <tr className="border-b border-gray-600">
-                            <th className="text-left p-2 text-yellow-400">Application</th>
-                            <th className="text-left p-2 text-yellow-400">Speed</th>
-                            <th className="text-left p-2 text-yellow-400">Distance</th>
-                            <th className="text-left p-2 text-yellow-400">Notes</th>
-                          </tr>
-                        </thead>
-                        <tbody className="text-gray-300">
-                          <tr className="border-b border-gray-700">
-                            <td className="p-2">1000BASE-T</td>
-                            <td className="p-2">1 Gbps</td>
-                            <td className="p-2">100m</td>
-                            <td className="p-2">Excellent margins</td>
-                          </tr>
-                          <tr className="border-b border-gray-700">
-                            <td className="p-2">10GBASE-T</td>
-                            <td className="p-2">10 Gbps</td>
-                            <td className="p-2">55m</td>
-                            <td className="p-2">Limited distance</td>
-                          </tr>
-                          <tr className="border-b border-gray-700">
-                            <td className="p-2">5GBASE-T</td>
-                            <td className="p-2">5 Gbps</td>
-                            <td className="p-2">100m</td>
-                            <td className="p-2">Full distance</td>
-                          </tr>
-                          <tr className="border-b border-gray-700">
-                            <td className="p-2">2.5GBASE-T</td>
-                            <td className="p-2">2.5 Gbps</td>
-                            <td className="p-2">100m</td>
-                            <td className="p-2">Full distance</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">PoE Capabilities</h5>
-                    <div className="grid md:grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <p className="mb-2"><strong>Standard PoE Support:</strong></p>
-                        <ul className="space-y-1">
-                          <li>• PoE+ (25.5W) - Excellent</li>
-                          <li>• PoE++ Type 3 (60W) - Good</li>
-                          <li>• PoE++ Type 4 (90W) - Limited</li>
-                          <li>• Better thermal characteristics</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="mb-2"><strong>Thermal Considerations:</strong></p>
-                        <ul className="space-y-1">
-                          <li>• Lower DC resistance than Class D</li>
-                          <li>• Better heat dissipation</li>
-                          <li>• Suitable for larger bundles</li>
-                          <li>• Reduced temperature derating</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Zap className="h-5 w-5 text-purple-400" />
-                Class EA: Augmented Performance with Alien Crosstalk Control
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <div>
-                <h4 className="text-lg font-semibold text-white mb-3">Technical Specifications</h4>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Performance Parameters</h5>
-                    <ul className="text-sm space-y-1">
-                      <li><strong>Frequency Range:</strong> 1-500 MHz</li>
-                      <li><strong>Insertion Loss:</strong> ≤ 54 dB at 500 MHz</li>
-                      <li><strong>NEXT:</strong> ≥ 15 dB at 500 MHz</li>
-                      <li><strong>Return Loss:</strong> ≥ 8 dB at 500 MHz</li>
-                      <li><strong>ELFEXT:</strong> ≥ 14 dB at 500 MHz</li>
-                    </ul>
-                  </div>
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Alien Crosstalk (AXT) Specifications</h5>
-                    <ul className="text-sm space-y-1">
-                      <li><strong>ANEXT:</strong> ≥ 43 dB at 500 MHz</li>
-                      <li><strong>AELFEXT:</strong> ≥ 37 dB at 500 MHz</li>
-                      <li><strong>Bundle Testing:</strong> 6-around-1 configuration</li>
-                      <li><strong>Critical for:</strong> 10GBASE-T performance</li>
-                      <li><strong>Cable Design:</strong> Enhanced shielding/geometry</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="text-lg font-semibold text-white mb-3">Understanding Alien Crosstalk</h4>
-                <div className="space-y-4">
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">What is Alien Crosstalk?</h5>
-                    <p className="text-sm mb-3">
-                      Alien crosstalk occurs when signals from one cable interfere with signals in 
-                      adjacent cables within a bundle. This becomes critical at higher frequencies 
-                      and affects 10GBASE-T performance significantly.
-                    </p>
-                    <div className="grid md:grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <p className="mb-2"><strong>Sources of AXT:</strong></p>
-                        <ul className="space-y-1">
-                          <li>• Cable-to-cable coupling</li>
-                          <li>• Connector-to-connector coupling</li>
-                          <li>• Unbalanced terminations</li>
-                          <li>• Poor cable management</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="mb-2"><strong>Mitigation Strategies:</strong></p>
-                        <ul className="space-y-1">
-                          <li>• Enhanced cable shielding</li>
-                          <li>• Improved pair geometry</li>
-                          <li>• Quality connectors</li>
-                          <li>• Proper installation practices</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">10GBASE-T Applications</h5>
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-sm border-collapse">
-                        <thead>
-                          <tr className="border-b border-gray-600">
-                            <th className="text-left p-2 text-yellow-400">Configuration</th>
-                            <th className="text-left p-2 text-yellow-400">Distance</th>
-                            <th className="text-left p-2 text-yellow-400">Performance</th>
-                            <th className="text-left p-2 text-yellow-400">Notes</th>
-                          </tr>
-                        </thead>
-                        <tbody className="text-gray-300">
-                          <tr className="border-b border-gray-700">
-                            <td className="p-2">Single cable</td>
-                            <td className="p-2">100m</td>
-                            <td className="p-2">Full rate</td>
-                            <td className="p-2">No AXT concerns</td>
-                          </tr>
-                          <tr className="border-b border-gray-700">
-                            <td className="p-2">Small bundle (&lt;24)</td>
-                            <td className="p-2">100m</td>
-                            <td className="p-2">Full rate</td>
-                            <td className="p-2">Minimal AXT impact</td>
-                          </tr>
-                          <tr className="border-b border-gray-700">
-                            <td className="p-2">Large bundle (≥24)</td>
-                            <td className="p-2">90-100m</td>
-                            <td className="p-2">Full rate</td>
-                            <td className="p-2">AXT testing required</td>
-                          </tr>
-                          <tr className="border-b border-gray-700">
-                            <td className="p-2">Poor installation</td>
-                            <td className="p-2">Variable</td>
-                            <td className="p-2">Degraded</td>
-                            <td className="p-2">May not support 10G</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="text-lg font-semibold text-white mb-3">PoE++ Compatibility</h4>
-                <div className="bg-card p-4 rounded-lg">
-                  <h5 className="text-yellow-400 font-semibold mb-2">High-Power PoE Applications</h5>
-                  <div className="grid md:grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <p className="mb-2"><strong>Supported Applications:</strong></p>
-                      <ul className="space-y-1">
-                        <li>• PoE++ Type 3 (60W) - Excellent</li>
-                        <li>• PoE++ Type 4 (90W) - Good</li>
-                        <li>• High-power wireless APs</li>
-                        <li>• PTZ security cameras</li>
-                        <li>• LED lighting systems</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="mb-2"><strong>Cable Characteristics:</strong></p>
-                      <ul className="space-y-1">
-                        <li>• 23 AWG conductors (larger)</li>
-                        <li>• Lower DC resistance</li>
-                        <li>• Better heat dissipation</li>
-                        <li>• Minimal bundle derating</li>
-                        <li>• Suitable for large installations</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Settings className="h-5 w-5 text-orange-400" />
-                Class F: High-Frequency Performance
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <div>
-                <h4 className="text-lg font-semibold text-white mb-3">Technical Specifications</h4>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Performance Parameters</h5>
-                    <ul className="text-sm space-y-1">
-                      <li><strong>Frequency Range:</strong> 1-600 MHz</li>
-                      <li><strong>Insertion Loss:</strong> ≤ 65 dB at 600 MHz</li>
-                      <li><strong>NEXT:</strong> ≥ 12 dB at 600 MHz</li>
-                      <li><strong>Return Loss:</strong> ≥ 8 dB at 600 MHz</li>
-                      <li><strong>ELFEXT:</strong> ≥ 12 dB at 600 MHz</li>
-                    </ul>
-                  </div>
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Advanced Features</h5>
-                    <ul className="text-sm space-y-1">
-                      <li><strong>Equivalent:</strong> Category 7/7A</li>
-                      <li><strong>Shielding:</strong> Individual pair + overall</li>
-                      <li><strong>Connectors:</strong> GG45/TERA or RJ45</li>
-                      <li><strong>Alien Crosstalk:</strong> Superior performance</li>
-                      <li><strong>EMI Immunity:</strong> Excellent</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="text-lg font-semibold text-white mb-3">Multi-Gigabit Applications</h4>
-                <div className="space-y-4">
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Ethernet Performance</h5>
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-sm border-collapse">
-                        <thead>
-                          <tr className="border-b border-gray-600">
-                            <th className="text-left p-2 text-yellow-400">Application</th>
-                            <th className="text-left p-2 text-yellow-400">Speed</th>
-                            <th className="text-left p-2 text-yellow-400">Distance</th>
-                            <th className="text-left p-2 text-yellow-400">Market Status</th>
-                          </tr>
-                        </thead>
-                        <tbody className="text-gray-300">
-                          <tr className="border-b border-gray-700">
-                            <td className="p-2">10GBASE-T</td>
-                            <td className="p-2">10 Gbps</td>
-                            <td className="p-2">100m</td>
-                            <td className="p-2">Mainstream</td>
-                          </tr>
-                          <tr className="border-b border-gray-700">
-                            <td className="p-2">25GBASE-T</td>
-                            <td className="p-2">25 Gbps</td>
-                            <td className="p-2">30m</td>
-                            <td className="p-2">Emerging</td>
-                          </tr>
-                          <tr className="border-b border-gray-700">
-                            <td className="p-2">40GBASE-T</td>
-                            <td className="p-2">40 Gbps</td>
-                            <td className="p-2">30m</td>
-                            <td className="p-2">Development</td>
-                          </tr>
-                          <tr className="border-b border-gray-700">
-                            <td className="p-2">Multiple 10G</td>
-                            <td className="p-2">4×10 Gbps</td>
-                            <td className="p-2">100m</td>
-                            <td className="p-2">Custom solutions</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Installation Considerations</h5>
-                    <div className="grid md:grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <p className="mb-2"><strong>Cable Requirements:</strong></p>
-                        <ul className="space-y-1">
-                          <li>• S/FTP construction (shielded)</li>
-                          <li>• Larger diameter (6-8mm)</li>
-                          <li>• Stiffer bend radius requirements</li>
-                          <li>• Grounding/bonding critical</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="mb-2"><strong>Pathway Planning:</strong></p>
-                        <ul className="space-y-1">
-                          <li>• Larger conduit requirements</li>
-                          <li>• EMI source separation</li>
-                          <li>• Proper grounding infrastructure</li>
-                          <li>• Climate control considerations</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Alert className="bg-orange-900/20 border-orange-400">
-            <AlertTriangle className="h-4 w-4 text-orange-400" />
-            <AlertDescription className="text-orange-100">
-              <strong>Important:</strong> Class F (Category 7/7A) cables require specialised installation 
-              practices due to shielding requirements. Improper grounding can actually worsen performance 
-              compared to unshielded alternatives. Always follow manufacturer guidelines for shield 
-              termination and grounding.
-            </AlertDescription>
-          </Alert>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Target className="h-5 w-5 text-red-400" />
-                Class Selection Guide
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <div>
-                <h4 className="text-lg font-semibold text-white mb-3">Application-Based Selection</h4>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Basic Office Environment</h5>
-                    <ul className="text-sm space-y-1">
-                      <li><strong>Requirement:</strong> 1 Gbps, basic PoE</li>
-                      <li><strong>Recommendation:</strong> Class D minimum</li>
-                      <li><strong>Future-proof:</strong> Class E preferred</li>
-                      <li><strong>Benefits:</strong> Cost-effective, proven</li>
-                    </ul>
-                  </div>
-                  <div className="bg-card p-4 rounded-lg">
-                    <h5 className="text-yellow-400 font-semibold mb-2">Modern Office/Campus</h5>
-                    <ul className="text-sm space-y-1">
-                      <li><strong>Requirement:</strong> Multi-gigabit, PoE++</li>
-                      <li><strong>Recommendation:</strong> Class EA minimum</li>
-                      <li><strong>Future-proof:</strong> Class EA sufficient</li>
-                      <li><strong>Benefits:</strong> 10G ready, high-power PoE</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="text-lg font-semibold text-white mb-3">Performance vs Cost Analysis</h4>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm border-collapse">
-                    <thead>
-                      <tr className="border-b border-gray-600">
-                        <th className="text-left p-2 text-yellow-400">Class</th>
-                        <th className="text-left p-2 text-yellow-400">Relative Cost</th>
-                        <th className="text-left p-2 text-yellow-400">Installation</th>
-                        <th className="text-left p-2 text-yellow-400">Longevity</th>
-                        <th className="text-left p-2 text-yellow-400">Best For</th>
-                      </tr>
-                    </thead>
-                    <tbody className="text-gray-300">
-                      <tr className="border-b border-gray-700">
-                        <td className="p-2 font-semibold">Class D</td>
-                        <td className="p-2 text-green-400">Lowest</td>
-                        <td className="p-2 text-green-400">Simple</td>
-                        <td className="p-2 text-yellow-400">5-7 years</td>
-                        <td className="p-2">Budget, basic needs</td>
-                      </tr>
-                      <tr className="border-b border-gray-700">
-                        <td className="p-2 font-semibold">Class E</td>
-                        <td className="p-2 text-yellow-400">Low</td>
-                        <td className="p-2 text-green-400">Simple</td>
-                        <td className="p-2 text-green-400">7-10 years</td>
-                        <td className="p-2">Standard office</td>
-                      </tr>
-                      <tr className="border-b border-gray-700">
-                        <td className="p-2 font-semibold">Class EA</td>
-                        <td className="p-2 text-orange-400">Medium</td>
-                        <td className="p-2 text-yellow-400">Moderate</td>
-                        <td className="p-2 text-green-400">10-15 years</td>
-                        <td className="p-2">Modern enterprise</td>
-                      </tr>
-                      <tr className="border-b border-gray-700">
-                        <td className="p-2 font-semibold">Class F</td>
-                        <td className="p-2 text-red-400">High</td>
-                        <td className="p-2 text-red-400">Complex</td>
-                        <td className="p-2 text-green-400">15+ years</td>
-                        <td className="p-2">Specialised/data centres</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-orange-400" />
-                Real-World Scenario: Hospital Network Upgrade
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="bg-card p-4 rounded-lg">
-                <h5 className="text-yellow-400 font-semibold mb-2">Scenario:</h5>
-                <p className="text-sm mb-4">
-                  A 500-bed hospital needs to upgrade their network infrastructure to support new 
-                  medical imaging systems, IoT devices, and wireless infrastructure. The existing 
-                  Cat 5e installation is 12 years old and showing performance limitations.
-                </p>
-
-                <div className="space-y-4">
-                  <div>
-                    <h6 className="text-white font-semibold mb-2">Requirements Analysis:</h6>
-                    <div className="grid md:grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <p className="mb-2"><strong>Current Issues:</strong></p>
-                        <ul className="space-y-1">
-                          <li>• Slow imaging file transfers</li>
-                          <li>• Insufficient PoE for new APs</li>
-                          <li>• Network congestion</li>
-                          <li>• Future-proofing needed</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="mb-2"><strong>New Requirements:</strong></p>
-                        <ul className="space-y-1">
-                          <li>• 10 Gbps backbone capability</li>
-                          <li>• High-power PoE for APs/cameras</li>
-                          <li>• 15-year service life</li>
-                          <li>• EMI resistance (medical equipment)</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h6 className="text-white font-semibold mb-2">Solution Selection:</h6>
-                    <div className="grid md:grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <p className="mb-2"><strong>Chosen: Class EA (Cat 6A)</strong></p>
-                        <ul className="space-y-1">
-                          <li>• Supports 10GBASE-T to 100m</li>
-                          <li>• PoE++ capability for high-power devices</li>
-                          <li>• Proven technology with good longevity</li>
-                          <li>• Reasonable cost vs Class F</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="mb-2"><strong>Implementation Notes:</strong></p>
-                        <ul className="space-y-1">
-                          <li>• UTP chosen over STP (easier installation)</li>
-                          <li>• Alien crosstalk testing in large bundles</li>
-                          <li>• Staged rollout by department priority</li>
-                          <li>• Comprehensive testing program</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-3 bg-green-900/20 rounded-lg">
-                    <p className="text-green-200 text-sm">
-                      <strong>Result:</strong> The Class EA installation successfully supports all current 
-                      requirements and provides headroom for future 25GBASE-T applications. The hospital 
-                      achieved 3× faster file transfers and deployed advanced wireless infrastructure 
-                      supporting 500+ concurrent devices.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-green-400" />
-                Section Summary
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <ul className="space-y-2 list-disc list-inside">
-                <li>Class D provides basic performance for standard office applications and basic PoE</li>
-                <li>Class E offers enhanced performance with better margins and limited 10GBASE-T support</li>
-                <li>Class EA includes alien crosstalk specifications essential for reliable 10GBASE-T</li>
-                <li>Class F enables multi-gigabit applications but requires specialised installation</li>
-                <li>Selection should balance current needs, future requirements, and budget constraints</li>
-                <li>PoE compatibility increases with higher performance classes due to better thermal characteristics</li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-yellow-400" />
-                Knowledge Check
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {quiz.map((q, index) => (
-                <div key={index} className="bg-card p-4 rounded-lg">
-                  <h4 className="text-white font-semibold mb-3">
-                    Question {index + 1}: {q.question}
-                  </h4>
-                  <div className="space-y-2">
-                    {q.options.map((option, optIndex) => (
-                      <div
-                        key={optIndex}
-                        className={`p-2 rounded cursor-pointer transition-colors ${
-                          optIndex === q.correct
-                            ? 'bg-green-900/30 border border-green-500 text-green-200'
-                            : 'bg-gray-700 hover:bg-gray-600 text-gray-300'
-                        }`}
-                      >
-                        {String.fromCharCode(65 + optIndex)}. {option}
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-3 p-3 bg-blue-900/20 rounded border border-yellow-400">
-                    <p className="text-blue-200 text-sm">
-                      <strong>Answer:</strong> {String.fromCharCode(65 + q.correct)}. {q.explanation}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-
-          <div className="flex justify-between pt-6">
-            <Link to="../data-cabling-module-6-section-1">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-700">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous: TIA/EIA 568 Overview
-              </Button>
-            </Link>
-            <Link to="../data-cabling-module-6-section-3">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
-                Next: Building and Campus Standards
-                <ArrowLeft className="ml-2 h-4 w-4 rotate-180" />
-              </Button>
-            </Link>
-          </div>
         </div>
       </div>
+
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Page Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 6.2</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Class D, E, EA, F Standards
+          </h1>
+          <p className="text-white/80">
+            Performance class specifications and applications
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Class D:</strong> 100MHz, 1Gbps, basic PoE</li>
+              <li><strong>Class E:</strong> 250MHz, limited 10G</li>
+              <li><strong>Class EA:</strong> 500MHz, full 10G, PoE++</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Class marking on cable jacket/docs</li>
+              <li><strong>Use:</strong> Class EA for modern enterprise networks</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Understand each class specification",
+              "Compare performance parameters",
+              "Select appropriate class for applications",
+              "Evaluate alien crosstalk requirements",
+              "Plan PoE compatibility",
+              "Estimate service life expectations"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Class D and E: Foundation Performance
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Class D and E represent the foundation levels of structured cabling performance,
+              suitable for basic networking and transitional applications.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Class D (Cat 5e Equivalent)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Frequency:</strong> 1-100 MHz</li>
+                  <li><strong>Applications:</strong> 1000BASE-T, basic PoE</li>
+                  <li><strong>Insertion Loss:</strong> ≤24 dB @ 100MHz</li>
+                  <li><strong>NEXT:</strong> ≥30 dB @ 100MHz</li>
+                  <li><strong>Service life:</strong> 5-7 years remaining</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Class E (Cat 6 Equivalent)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Frequency:</strong> 1-250 MHz</li>
+                  <li><strong>Applications:</strong> 1000BASE-T, PoE+</li>
+                  <li><strong>Insertion Loss:</strong> ≤36 dB @ 250MHz</li>
+                  <li><strong>NEXT:</strong> ≥21 dB @ 250MHz</li>
+                  <li><strong>10G distance:</strong> ~55m (limited)</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">1000BASE-T</p>
+                <p className="text-white/90 text-xs">Both classes OK</p>
+              </div>
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">10GBASE-T</p>
+                <p className="text-white/90 text-xs">E limited, EA full</p>
+              </div>
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">PoE++</p>
+                <p className="text-white/90 text-xs">EA recommended</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Class EA: Augmented Performance
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Class EA (Augmented) adds alien crosstalk specifications essential for reliable
+              10 Gigabit Ethernet performance in bundled cable installations.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Class EA Key Specifications:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Frequency:</strong> 1-500 MHz</li>
+                <li><strong>Insertion Loss:</strong> ≤54 dB @ 500MHz</li>
+                <li><strong>NEXT:</strong> ≥15 dB @ 500MHz</li>
+                <li><strong>ANEXT:</strong> ≥43 dB @ 500MHz (alien crosstalk)</li>
+                <li><strong>Bundle testing:</strong> 6-around-1 configuration</li>
+              </ul>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">10GBASE-T Performance</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Single cable:</strong> 100m full rate</li>
+                  <li><strong>Small bundle:</strong> 100m full rate</li>
+                  <li><strong>Large bundle:</strong> AXT testing required</li>
+                  <li><strong>Reliability:</strong> Excellent</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">PoE++ Capability</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Type 3:</strong> 60W excellent</li>
+                  <li><strong>Type 4:</strong> 90W good</li>
+                  <li><strong>DC resistance:</strong> Lower (23 AWG)</li>
+                  <li><strong>Thermal:</strong> Better heat dissipation</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 3 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Class F: High-Frequency Performance
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Class F provides frequencies up to 600MHz with enhanced shielding, primarily for
+              specialised applications requiring superior EMI immunity.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Class F Specifications</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Frequency:</strong> 1-600 MHz</li>
+                  <li><strong>Equivalent:</strong> Category 7</li>
+                  <li><strong>Shielding:</strong> Individual pair + overall</li>
+                  <li><strong>Connectors:</strong> GG45, TERA (or RJ45)</li>
+                  <li><strong>EMI immunity:</strong> Excellent</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Requirements</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Cable type:</strong> S/FTP construction</li>
+                  <li><strong>Diameter:</strong> 6-8mm (larger)</li>
+                  <li><strong>Bend radius:</strong> Stricter requirements</li>
+                  <li><strong>Grounding:</strong> Critical for performance</li>
+                  <li><strong>Termination:</strong> Specialised skills needed</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">When to consider Class F:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Industrial environments with high EMI</li>
+                <li>Broadcast and audio/video production</li>
+                <li>Security-critical installations requiring EMI containment</li>
+                <li>Applications requiring frequencies above 500MHz</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Class Selection Guide</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Basic office (1G, basic PoE):</strong> Class D minimum, E preferred</li>
+                <li><strong>Modern enterprise (10G, PoE++):</strong> Class EA recommended</li>
+                <li><strong>Data centre (25/40G):</strong> Class I/II or fibre</li>
+                <li><strong>Industrial/high EMI:</strong> Consider Class F shielded</li>
+                <li><strong>15+ year planning:</strong> Class EA provides good headroom</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Over-specifying:</strong> — Class F adds cost/complexity without proportional benefit</li>
+                <li><strong>Under-specifying:</strong> — Class D won't meet future needs</li>
+                <li><strong>Ignoring AXT:</strong> — Class E fails 10G in bundles</li>
+                <li><strong>Poor grounding:</strong> — Shielded cable performs worse than UTP if improperly grounded</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quick Reference */}
+        <div className="mt-6 p-5 rounded-lg bg-transparent">
+          <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+            <div>
+              <p className="font-medium text-white mb-1">Class Frequency</p>
+              <ul className="space-y-0.5">
+                <li>D: 100MHz</li>
+                <li>E: 250MHz</li>
+                <li>EA: 500MHz</li>
+                <li>F: 600MHz</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-medium text-white mb-1">Best For</p>
+              <ul className="space-y-0.5">
+                <li>D: Legacy, basic</li>
+                <li>E: Standard office</li>
+                <li>EA: Enterprise, PoE++</li>
+                <li>F: Industrial, EMI</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Quiz Section */}
+        <section className="mb-10 mt-12">
+          <SingleQuestionQuiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../data-cabling-module-6-section-1">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../data-cabling-module-6-section-3">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

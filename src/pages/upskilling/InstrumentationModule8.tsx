@@ -41,7 +41,7 @@ const InstrumentationModule8 = () => {
       title: "Safety Considerations During Troubleshooting",
       icon: Shield,
       description: "Safe working practices when diagnosing faults"
-    }
+  }
   ];
 
   return (

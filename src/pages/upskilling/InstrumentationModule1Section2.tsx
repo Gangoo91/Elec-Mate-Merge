@@ -67,8 +67,7 @@ const InstrumentationModule1Section2 = () => {
       ],
       correct: 2,
       explanation: "All industries benefit from instrumentation through improved safety, enhanced operational efficiency, better product quality, and regulatory compliance."
-    }
-  ];
+  }  ];
 
 
   return (

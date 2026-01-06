@@ -108,7 +108,7 @@ const ZsLookupGuidance = () => {
               <Badge className="bg-blue-500/20 text-blue-300 mt-0.5">Type B</Badge>
               <div className="flex-1">
                 <p className="text-xs"><strong>3-5 × In trip current</strong></p>
-                <p className="text-xs text-muted-foreground">Resistive loads, lighting, heating, general domestic circuits</p>
+                <p className="text-xs text-white">Resistive loads, lighting, heating, general domestic circuits</p>
               </div>
             </div>
             
@@ -116,7 +116,7 @@ const ZsLookupGuidance = () => {
               <Badge className="bg-green-500/20 text-green-300 mt-0.5">Type C</Badge>
               <div className="flex-1">
                 <p className="text-xs"><strong>5-10 × In trip current</strong></p>
-                <p className="text-xs text-muted-foreground">Inductive loads, fluorescent lighting, small motors, transformers</p>
+                <p className="text-xs text-white">Inductive loads, fluorescent lighting, small motors, transformers</p>
               </div>
             </div>
             
@@ -124,12 +124,12 @@ const ZsLookupGuidance = () => {
               <Badge className="bg-orange-500/20 text-orange-300 mt-0.5">Type D</Badge>
               <div className="flex-1">
                 <p className="text-xs"><strong>10-20 × In trip current</strong></p>
-                <p className="text-xs text-muted-foreground">High inrush current loads, large motors, welding equipment</p>
+                <p className="text-xs text-white">High inrush current loads, large motors, welding equipment</p>
               </div>
             </div>
           </div>
           
-          <div className="bg-elec-dark/50 rounded p-3">
+          <div className="bg-white/10 rounded p-3">
             <p className="text-xs text-elec-light">
               <strong>Curve selection affects Zs:</strong> Higher curves (C, D) allow more fault current before tripping, 
               requiring lower Zs values to ensure 0.4s disconnection time compliance.
@@ -145,7 +145,7 @@ const ZsLookupGuidance = () => {
         as="section"
       >
         <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
-          <div className="bg-elec-dark/50 rounded p-4">
+          <div className="bg-white/10 rounded p-4">
             <h4 className="text-elec-yellow font-medium mb-2">Example 1: Testing a Socket Circuit</h4>
             <div className="text-xs space-y-1">
               <p>• Protection: 32A Type B MCB</p>
@@ -156,7 +156,7 @@ const ZsLookupGuidance = () => {
             </div>
           </div>
           
-          <div className="bg-elec-dark/50 rounded p-4">
+          <div className="bg-white/10 rounded p-4">
             <h4 className="text-elec-yellow font-medium mb-2">Example 2: Circuit Design Check</h4>
             <div className="text-xs space-y-1">
               <p>• Protection: 16A Type C MCB</p>

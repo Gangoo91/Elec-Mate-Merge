@@ -1,448 +1,616 @@
 
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Users, Calendar, MapPin, Globe, Building, Award, MessageCircle, Briefcase, GraduationCap, Zap } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Users,
+  Calendar,
+  MapPin,
+  Globe,
+  Building,
+  Award,
+  MessageCircle,
+  Briefcase,
+  GraduationCap,
+  Zap,
+  ChevronDown,
+  ChevronUp,
+  Sparkles,
+  Linkedin,
+  ExternalLink,
+  CheckCircle,
+  Lightbulb,
+  Target,
+  Star
+} from "lucide-react";
 
 const IndustryNetworkingTab = () => {
+  const [expandedSection, setExpandedSection] = useState<string | null>("bodies");
+
   const professionalBodies = [
     {
-      name: "Institution of Engineering and Technology (IET)",
+      name: "IET",
+      fullName: "Institution of Engineering and Technology",
       type: "Professional Institution",
       description: "The world's largest engineering institution for electrical professionals.",
-      benefits: ["Professional registration", "Technical resources", "Career guidance", "Global network"],
+      benefits: ["Professional registration (EngTech, IEng, CEng)", "Technical resources & standards", "Career guidance & mentoring", "Global network of 150k+ members"],
       membership: "£200-400/year",
       website: "theiet.org",
-      icon: Award,
-      location: "National/International"
+      color: "blue",
+      recommended: true
     },
     {
-      name: "Electrical Contractors' Association (ECA)",
+      name: "ECA",
+      fullName: "Electrical Contractors' Association",
       type: "Trade Association",
       description: "UK's leading trade association for electrical contractors.",
-      benefits: ["Industry representation", "Business support", "Training courses", "Networking events"],
+      benefits: ["Industry representation", "Business & legal support", "Training courses", "Regional networking events"],
       membership: "£300-800/year",
       website: "eca.co.uk",
-      icon: Building,
-      location: "National"
+      color: "yellow"
     },
     {
-      name: "National Inspection Council for Electrical Installation Contracting (NICEIC)",
-      type: "Regulatory Body",
+      name: "NICEIC",
+      fullName: "National Inspection Council for Electrical Installation Contracting",
+      type: "Certification Body",
       description: "Leading certification body for electrical contractors.",
-      benefits: ["Industry recognition", "Customer trust", "Technical support", "Business development"],
+      benefits: ["Industry recognition", "Customer trust & credibility", "Technical support helpline", "Business development tools"],
       membership: "£500-1500/year",
       website: "niceic.com",
-      icon: Award,
-      location: "National"
+      color: "green",
+      recommended: true
     },
     {
-      name: "National Association of Professional Inspectors and Testers (NAPIT)",
+      name: "NAPIT",
+      fullName: "National Association of Professional Inspectors and Testers",
       type: "Certification Body",
       description: "Competent person scheme operator for electrical work.",
-      benefits: ["Certification schemes", "Training courses", "Technical helpline", "Networking"],
+      benefits: ["Certification schemes", "Training courses", "Technical helpline", "Member networking"],
       membership: "£400-1200/year",
       website: "napit.org.uk",
-      icon: Award,
-      location: "National"
+      color: "purple"
     },
     {
-      name: "Renewable Energy Association (REA)",
+      name: "REA",
+      fullName: "Renewable Energy Association",
       type: "Trade Association",
       description: "UK's largest trade association for renewable energy.",
-      benefits: ["Industry insights", "Policy updates", "Business opportunities", "Green technology focus"],
+      benefits: ["Green energy insights", "Policy & regulation updates", "Business opportunities", "Sustainability focus"],
       membership: "£500-2000/year",
       website: "r-e-a.net",
-      icon: Zap,
-      location: "National"
-    },
-    {
-      name: "Society of Operations Engineers (SOE)",
-      type: "Professional Society",
-      description: "Professional body for engineers in transport and related industries.",
-      benefits: ["Professional development", "Technical publications", "Career support", "Industry connections"],
-      membership: "£150-300/year",
-      website: "soe.org.uk",
-      icon: GraduationCap,
-      location: "National"
+      color: "emerald"
     }
   ];
 
-  const networkingEvents = [
+  const keyEvents = [
     {
       name: "Electrical Industry Awards",
       type: "Annual Awards",
-      description: "Premier awards ceremony celebrating excellence in the electrical industry.",
       frequency: "Annual",
       location: "London",
       cost: "£100-500",
-      audience: "Industry professionals",
-      benefits: ["Industry recognition", "Networking", "Business opportunities"]
+      description: "Premier awards celebrating excellence in the electrical industry.",
+      color: "yellow"
     },
     {
       name: "IET Local Networks",
       type: "Regional Meetings",
-      description: "Regular local meetings and technical presentations.",
       frequency: "Monthly",
-      location: "Various UK locations",
+      location: "UK-wide",
       cost: "Free for members",
-      audience: "Engineers and technicians",
-      benefits: ["Technical learning", "Local networking", "Career development"]
-    },
-    {
-      name: "ECA Regional Events",
-      type: "Trade Events",
-      description: "Regional business networking and industry updates.",
-      frequency: "Quarterly",
-      location: "Regional centres",
-      cost: "£50-200",
-      audience: "Electrical contractors",
-      benefits: ["Business networking", "Industry updates", "Training opportunities"]
+      description: "Regular local meetings and technical presentations.",
+      color: "blue"
     },
     {
       name: "ElecTech Live",
       type: "Trade Exhibition",
-      description: "Technology showcase and learning event.",
       frequency: "Annual",
-      location: "Various venues",
+      location: "Various",
       cost: "£200-800",
-      audience: "Electrical professionals",
-      benefits: ["Product launches", "Technical seminars", "Supplier meetings"]
+      description: "Technology showcase and learning event for electrical professionals.",
+      color: "purple"
     },
     {
-      name: "Renewable Energy World Conference",
+      name: "Renewable Energy World",
       type: "Industry Conference",
-      description: "Leading renewable energy conference and exhibition.",
       frequency: "Annual",
-      location: "Birmingham/London",
+      location: "Birmingham",
       cost: "£500-1500",
-      audience: "Renewable energy professionals",
-      benefits: ["Market insights", "Technology updates", "Business development"]
-    },
-    {
-      name: "Smart Buildings Show",
-      type: "Technology Exhibition",
-      description: "Future of intelligent buildings and IoT systems.",
-      frequency: "Annual",
-      location: "London",
-      cost: "£300-1000",
-      audience: "Building services engineers",
-      benefits: ["Future technologies", "Innovation showcase", "Market trends"]
+      description: "Leading renewable energy conference and exhibition.",
+      color: "green"
     }
   ];
 
-  const onlineNetworking = [
+  const onlinePlatforms = [
     {
-      platform: "LinkedIn Electrical Groups",
-      type: "Professional Social Media",
-      description: "Various electrical industry groups and discussions.",
-      members: "50k+ members",
+      name: "LinkedIn",
+      type: "Professional Network",
+      members: "150k+ UK electricians",
       cost: "Free",
-      benefits: ["Job opportunities", "Industry discussions", "Knowledge sharing", "Professional connections"]
+      tip: "Join groups like 'UK Electrical Engineers' and 'Electrical Contractors Network'",
+      color: "blue"
     },
     {
-      platform: "ElectriciansForums.net",
+      name: "ElectriciansForums.net",
       type: "Industry Forum",
-      description: "UK's largest electrical forum community.",
       members: "100k+ members",
       cost: "Free",
-      benefits: ["Technical advice", "Peer support", "Industry news", "Problem solving"]
+      tip: "Great for technical advice and peer support",
+      color: "green"
     },
     {
-      platform: "IET Communities",
+      name: "IET Communities",
       type: "Professional Platform",
-      description: "IET's online community for members.",
       members: "20k+ members",
-      cost: "Membership required",
-      benefits: ["Expert knowledge", "Standards discussions", "Career advice", "Technical resources"]
+      cost: "IET membership required",
+      tip: "Expert knowledge sharing and standards discussions",
+      color: "purple"
     },
     {
-      platform: "ECA Connect",
-      type: "Trade Platform",
-      description: "ECA's member networking platform.",
-      members: "5k+ members",
-      cost: "Membership required",
-      benefits: ["Business networking", "Contract opportunities", "Industry updates", "Supplier connections"]
-    },
-    {
-      platform: "Electrical Review Online",
-      type: "Industry Portal",
-      description: "News, discussions, and networking for electrical professionals.",
-      members: "30k+ readers",
-      cost: "Free",
-      benefits: ["Industry news", "Technical articles", "Product reviews", "Expert opinions"]
-    },
-    {
-      platform: "Facebook Electrical Groups",
-      type: "Social Networking",
-      description: "Various UK electrical trade groups.",
+      name: "Facebook Trade Groups",
+      type: "Social Network",
       members: "Variable",
       cost: "Free",
-      benefits: ["Informal networking", "Quick advice", "Local connections", "Industry banter"]
+      tip: "Search for regional groups like 'London Sparkies' for local connections",
+      color: "cyan"
+    }
+  ];
+
+  const linkedInTips = [
+    {
+      tip: "Professional Headline",
+      description: "Use a specific headline like 'NICEIC Registered Electrician | EV Charging Specialist | BS7671' rather than just 'Electrician'",
+      impact: "3x more profile views"
+    },
+    {
+      tip: "Complete Profile",
+      description: "Add certifications, skills, and a professional photo. Include keywords like '18th Edition', 'Part P', 'EV Installation'",
+      impact: "40x more opportunities"
+    },
+    {
+      tip: "Share Work Photos",
+      description: "Post before/after photos of complex installations. Technical posts get high engagement in trade groups",
+      impact: "10x more connections"
+    },
+    {
+      tip: "Engage Daily",
+      description: "Like and comment on industry posts for 10 mins daily. This builds visibility without creating content",
+      impact: "5x network growth"
     }
   ];
 
   const mentorshipPrograms = [
     {
       program: "IET Mentor Scheme",
-      provider: "Institution of Engineering and Technology",
-      description: "Structured mentoring for engineering professionals.",
+      provider: "IET",
       duration: "12 months",
       cost: "Free for members",
-      benefits: ["Career guidance", "Professional development", "Industry insights", "Goal setting"]
+      description: "Structured mentoring for professional registration",
+      color: "blue"
     },
     {
       program: "ECA Apprentice Mentoring",
-      provider: "Electrical Contractors' Association",
-      description: "Support for apprentices and new entrants.",
+      provider: "ECA",
       duration: "Flexible",
       cost: "Free",
-      benefits: ["Trade knowledge", "Career advice", "Business skills", "Network building"]
+      description: "Support for apprentices and new industry entrants",
+      color: "yellow"
     },
     {
-      program: "Women in Engineering Mentoring",
-      provider: "Various organisations",
-      description: "Supporting women in electrical engineering careers.",
+      program: "Women in Engineering",
+      provider: "Various",
       duration: "6-12 months",
       cost: "Usually free",
-      benefits: ["Gender-specific support", "Role models", "Career progression", "Confidence building"]
-    },
-    {
-      program: "Local Authority Mentoring",
-      provider: "Local councils",
-      description: "Business mentoring for new electrical contractors.",
-      duration: "6-12 months",
-      cost: "Often subsidised",
-      benefits: ["Business skills", "Local market knowledge", "Compliance guidance", "Growth strategies"]
+      description: "Supporting women in electrical engineering careers",
+      color: "pink"
     }
   ];
 
+  const colorMap: Record<string, {
+    border: string;
+    bg: string;
+    icon: string;
+    iconBg: string;
+    badge: string;
+    glow: string;
+  }> = {
+    blue: {
+      border: "border-blue-500/30 hover:border-blue-500/50",
+      bg: "bg-gradient-to-br from-white/5 to-blue-950/20",
+      icon: "text-blue-400",
+      iconBg: "bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30",
+      badge: "bg-blue-500/10 text-blue-400 border-blue-500/30",
+      glow: "bg-blue-500/5"
+    },
+    green: {
+      border: "border-green-500/30 hover:border-green-500/50",
+      bg: "bg-gradient-to-br from-white/5 to-green-950/20",
+      icon: "text-green-400",
+      iconBg: "bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30",
+      badge: "bg-green-500/10 text-green-400 border-green-500/30",
+      glow: "bg-green-500/5"
+    },
+    yellow: {
+      border: "border-elec-yellow/30 hover:border-elec-yellow/50",
+      bg: "bg-gradient-to-br from-white/5 to-yellow-950/20",
+      icon: "text-elec-yellow",
+      iconBg: "bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30",
+      badge: "bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30",
+      glow: "bg-elec-yellow/5"
+    },
+    purple: {
+      border: "border-purple-500/30 hover:border-purple-500/50",
+      bg: "bg-gradient-to-br from-white/5 to-purple-950/20",
+      icon: "text-purple-400",
+      iconBg: "bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/30",
+      badge: "bg-purple-500/10 text-purple-400 border-purple-500/30",
+      glow: "bg-purple-500/5"
+    },
+    emerald: {
+      border: "border-emerald-500/30 hover:border-emerald-500/50",
+      bg: "bg-gradient-to-br from-white/5 to-emerald-950/20",
+      icon: "text-emerald-400",
+      iconBg: "bg-gradient-to-br from-emerald-500/20 to-emerald-500/5 border border-emerald-500/30",
+      badge: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
+      glow: "bg-emerald-500/5"
+    },
+    cyan: {
+      border: "border-cyan-500/30 hover:border-cyan-500/50",
+      bg: "bg-gradient-to-br from-white/5 to-cyan-950/20",
+      icon: "text-cyan-400",
+      iconBg: "bg-gradient-to-br from-cyan-500/20 to-cyan-500/5 border border-cyan-500/30",
+      badge: "bg-cyan-500/10 text-cyan-400 border-cyan-500/30",
+      glow: "bg-cyan-500/5"
+    },
+    pink: {
+      border: "border-pink-500/30 hover:border-pink-500/50",
+      bg: "bg-gradient-to-br from-white/5 to-pink-950/20",
+      icon: "text-pink-400",
+      iconBg: "bg-gradient-to-br from-pink-500/20 to-pink-500/5 border border-pink-500/30",
+      badge: "bg-pink-500/10 text-pink-400 border-pink-500/30",
+      glow: "bg-pink-500/5"
+    },
+    orange: {
+      border: "border-orange-500/30 hover:border-orange-500/50",
+      bg: "bg-gradient-to-br from-white/5 to-orange-950/20",
+      icon: "text-orange-400",
+      iconBg: "bg-gradient-to-br from-orange-500/20 to-orange-500/5 border border-orange-500/30",
+      badge: "bg-orange-500/10 text-orange-400 border-orange-500/30",
+      glow: "bg-orange-500/5"
+    }
+  };
+
+  const toggleSection = (section: string) => {
+    setExpandedSection(expandedSection === section ? null : section);
+  };
+
+  const sections = [
+    { id: "bodies", title: "Professional Bodies", icon: Building, color: "yellow" },
+    { id: "events", title: "Industry Events", icon: Calendar, color: "blue" },
+    { id: "online", title: "Online Communities", icon: MessageCircle, color: "green" },
+    { id: "linkedin", title: "LinkedIn Strategy", icon: Linkedin, color: "blue" },
+    { id: "mentorship", title: "Mentorship Programs", icon: Users, color: "purple" }
+  ];
+
   return (
-    <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Users className="h-5 w-5" />
-            Professional Bodies & Associations
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {professionalBodies.map((body, index) => (
-              <div key={index} className="space-y-3">
-                <div className="flex items-start gap-3 mb-3">
-                  <div className="p-2 rounded-md bg-elec-yellow/10">
-                    <body.icon className="h-5 w-5 text-elec-yellow" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-white mb-1">{body.name}</h3>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Badge variant="outline" className="border-blue-500/40 text-blue-400 text-xs">
-                        {body.type}
-                      </Badge>
-                      <Badge className="bg-green-500/20 text-green-400 border-green-500/40 text-xs">
-                        {body.membership}
-                      </Badge>
+    <div className="space-y-6 animate-fade-in">
+      {/* Hero Section */}
+      <div className="p-4 rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/30 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="relative flex items-start gap-3">
+          <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
+            <Users className="h-5 w-5 text-blue-400" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-xs font-medium text-blue-400 uppercase tracking-wider">Build Your Network</span>
+            </div>
+            <h2 className="text-lg font-semibold text-white mb-1">
+              Industry Networking
+            </h2>
+            <p className="text-sm text-white/70 leading-relaxed">
+              Your network is your net worth. <span className="text-blue-400 font-medium">70% of jobs</span> in the electrical industry
+              come through personal connections and referrals.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Quick Stats */}
+      <div className="grid grid-cols-3 gap-3">
+        <Card className="bg-gradient-to-br from-white/5 to-blue-950/20 border-blue-500/20 overflow-hidden relative">
+          <div className="absolute top-0 right-0 w-16 h-16 bg-blue-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+          <CardContent className="p-3 relative">
+            <div className="flex items-center gap-2 mb-1">
+              <Building className="h-4 w-4 text-blue-400" />
+            </div>
+            <div className="text-lg font-bold text-blue-400">5+</div>
+            <div className="text-[10px] text-white/60">Key Bodies</div>
+          </CardContent>
+        </Card>
+        <Card className="bg-gradient-to-br from-white/5 to-green-950/20 border-green-500/20 overflow-hidden relative">
+          <div className="absolute top-0 right-0 w-16 h-16 bg-green-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+          <CardContent className="p-3 relative">
+            <div className="flex items-center gap-2 mb-1">
+              <MessageCircle className="h-4 w-4 text-green-400" />
+            </div>
+            <div className="text-lg font-bold text-green-400">300k+</div>
+            <div className="text-[10px] text-white/60">Online Members</div>
+          </CardContent>
+        </Card>
+        <Card className="bg-gradient-to-br from-white/5 to-purple-950/20 border-purple-500/20 overflow-hidden relative">
+          <div className="absolute top-0 right-0 w-16 h-16 bg-purple-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+          <CardContent className="p-3 relative">
+            <div className="flex items-center gap-2 mb-1">
+              <Calendar className="h-4 w-4 text-purple-400" />
+            </div>
+            <div className="text-lg font-bold text-purple-400">50+</div>
+            <div className="text-[10px] text-white/60">Events/Year</div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Expandable Sections */}
+      <div className="space-y-3">
+        {sections.map((section) => {
+          const colors = colorMap[section.color];
+          const Icon = section.icon;
+          const isExpanded = expandedSection === section.id;
+
+          return (
+            <Card
+              key={section.id}
+              className={`${colors.bg} ${colors.border} transition-all overflow-hidden relative`}
+            >
+              <div className={`absolute top-0 right-0 w-48 h-48 ${colors.glow} rounded-full blur-3xl -translate-y-1/2 translate-x-1/2`} />
+
+              <CardHeader className="relative pb-0">
+                <Button
+                  variant="ghost"
+                  className="w-full p-0 h-auto hover:bg-transparent justify-between"
+                  onClick={() => toggleSection(section.id)}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={`p-2.5 rounded-xl ${colors.iconBg}`}>
+                      <Icon className={`h-5 w-5 ${colors.icon}`} />
                     </div>
-                    <p className="text-sm text-muted-foreground mb-3">{body.description}</p>
+                    <CardTitle className="text-base text-white">{section.title}</CardTitle>
                   </div>
-                </div>
-                
-                <div className="space-y-2">
-                  <div>
-                    <h4 className="font-medium text-elec-yellow text-sm mb-1">Benefits:</h4>
-                    <ul className="space-y-1">
-                      {body.benefits.map((benefit, idx) => (
-                        <li key={idx} className="text-xs text-elec-light/80 flex items-center gap-2">
-                          <span className="w-1 h-1 bg-elec-yellow rounded-full"></span>
-                          {benefit}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="flex items-center gap-4 text-xs text-elec-light/70">
-                    <span className="flex items-center gap-1">
-                      <Globe className="h-3 w-3" />
-                      {body.website}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <MapPin className="h-3 w-3" />
-                      {body.location}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+                  {isExpanded ? (
+                    <ChevronUp className={`h-5 w-5 ${colors.icon}`} />
+                  ) : (
+                    <ChevronDown className={`h-5 w-5 ${colors.icon}`} />
+                  )}
+                </Button>
+              </CardHeader>
 
-      <Card className="border-blue-500/30 bg-blue-500/10">
-        <CardHeader>
-          <CardTitle className="text-blue-400 flex items-center gap-2">
-            <Calendar className="h-5 w-5" />
-            Industry Events & Conferences
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {networkingEvents.map((event, index) => (
-              <div key={index} className="space-y-2">
-                <div className="flex items-start justify-between mb-2">
-                  <div>
-                    <h3 className="font-semibold text-blue-400">{event.name}</h3>
-                    <div className="flex items-center gap-2 mt-1">
-                      <Badge variant="outline" className="border-blue-500/40 text-blue-400 text-xs">
-                        {event.type}
-                      </Badge>
-                      <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/40 text-xs">
-                        {event.frequency}
-                      </Badge>
+              {isExpanded && (
+                <CardContent className="relative pt-4 animate-fade-in">
+                  {section.id === "bodies" && (
+                    <div className="space-y-3">
+                      {professionalBodies.map((body, index) => {
+                        const bodyColors = colorMap[body.color];
+                        return (
+                          <div
+                            key={index}
+                            className={`p-4 rounded-xl ${bodyColors.bg} ${bodyColors.border} transition-all`}
+                          >
+                            <div className="flex items-start justify-between mb-2">
+                              <div className="flex items-center gap-2">
+                                <div className={`p-2 rounded-lg ${bodyColors.iconBg}`}>
+                                  <Award className={`h-4 w-4 ${bodyColors.icon}`} />
+                                </div>
+                                <div>
+                                  <div className="flex items-center gap-2">
+                                    <h3 className={`font-semibold ${bodyColors.icon}`}>{body.name}</h3>
+                                    {body.recommended && (
+                                      <Badge variant="outline" className="text-[10px] bg-green-500/10 text-green-400 border-green-500/30">
+                                        Recommended
+                                      </Badge>
+                                    )}
+                                  </div>
+                                  <p className="text-xs text-white/60">{body.fullName}</p>
+                                </div>
+                              </div>
+                              <Badge variant="outline" className={`text-[10px] ${bodyColors.badge}`}>
+                                {body.membership}
+                              </Badge>
+                            </div>
+                            <p className="text-sm text-white/70 mb-3">{body.description}</p>
+                            <div className="flex flex-wrap gap-1.5">
+                              {body.benefits.slice(0, 2).map((benefit, idx) => (
+                                <Badge key={idx} variant="outline" className="text-[10px] bg-white/5 text-white/60 border-white/20">
+                                  {benefit}
+                                </Badge>
+                              ))}
+                            </div>
+                            <div className="flex items-center gap-2 mt-3 text-xs text-white/50">
+                              <Globe className="h-3 w-3" />
+                              {body.website}
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
-                  </div>
-                  <div className="text-right text-sm">
-                    <div className="text-green-400 font-medium">{event.cost}</div>
-                    <div className="text-muted-foreground text-xs">{event.location}</div>
-                  </div>
-                </div>
-                
-                <p className="text-sm text-muted-foreground mb-3">{event.description}</p>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <h4 className="font-medium text-blue-400 text-sm mb-1">Target Audience:</h4>
-                    <p className="text-xs text-muted-foreground">{event.audience}</p>
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-blue-400 text-sm mb-1">Key Benefits:</h4>
-                    <ul className="space-y-1">
-                      {event.benefits.map((benefit, idx) => (
-                        <li key={idx} className="text-xs text-muted-foreground flex items-center gap-1">
-                          <span className="w-1 h-1 bg-blue-400 rounded-full"></span>
-                          {benefit}
-                        </li>
+                  )}
+
+                  {section.id === "events" && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {keyEvents.map((event, index) => {
+                        const eventColors = colorMap[event.color];
+                        return (
+                          <div
+                            key={index}
+                            className={`p-4 rounded-xl ${eventColors.bg} ${eventColors.border} transition-all`}
+                          >
+                            <div className="flex items-center justify-between mb-2">
+                              <h3 className={`font-semibold text-sm ${eventColors.icon}`}>{event.name}</h3>
+                              <Badge variant="outline" className={`text-[10px] ${eventColors.badge}`}>
+                                {event.frequency}
+                              </Badge>
+                            </div>
+                            <p className="text-xs text-white/70 mb-3">{event.description}</p>
+                            <div className="flex items-center justify-between text-xs">
+                              <span className="flex items-center gap-1 text-white/50">
+                                <MapPin className="h-3 w-3" />
+                                {event.location}
+                              </span>
+                              <span className="text-green-400 font-medium">{event.cost}</span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {section.id === "online" && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {onlinePlatforms.map((platform, index) => {
+                        const platColors = colorMap[platform.color];
+                        return (
+                          <div
+                            key={index}
+                            className={`p-4 rounded-xl ${platColors.bg} ${platColors.border} transition-all`}
+                          >
+                            <div className="flex items-center justify-between mb-2">
+                              <h3 className={`font-semibold text-sm ${platColors.icon}`}>{platform.name}</h3>
+                              <Badge variant="outline" className={`text-[10px] ${platColors.badge}`}>
+                                {platform.cost}
+                              </Badge>
+                            </div>
+                            <Badge variant="outline" className="text-[10px] bg-white/5 text-white/60 border-white/20 mb-2">
+                              {platform.members}
+                            </Badge>
+                            <p className="text-xs text-white/60 flex items-start gap-1.5 mt-2">
+                              <Lightbulb className="h-3 w-3 text-amber-400 mt-0.5 flex-shrink-0" />
+                              {platform.tip}
+                            </p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {section.id === "linkedin" && (
+                    <div className="space-y-3">
+                      <p className="text-sm text-white/70 mb-4">
+                        LinkedIn is essential for modern electricians. Here's how to optimise your presence:
+                      </p>
+                      {linkedInTips.map((tip, index) => (
+                        <div
+                          key={index}
+                          className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20"
+                        >
+                          <div className="flex items-start justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                              <CheckCircle className="h-4 w-4 text-blue-400" />
+                              <h3 className="font-semibold text-sm text-blue-400">{tip.tip}</h3>
+                            </div>
+                            <Badge variant="outline" className="text-[10px] bg-green-500/10 text-green-400 border-green-500/30">
+                              {tip.impact}
+                            </Badge>
+                          </div>
+                          <p className="text-xs text-white/70">{tip.description}</p>
+                        </div>
                       ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+                    </div>
+                  )}
 
-      <Card className="border-green-500/30 bg-green-500/10">
-        <CardHeader>
-          <CardTitle className="text-green-400 flex items-center gap-2">
-            <MessageCircle className="h-5 w-5" />
-            Online Communities & Forums
+                  {section.id === "mentorship" && (
+                    <div className="space-y-3">
+                      {mentorshipPrograms.map((program, index) => {
+                        const progColors = colorMap[program.color];
+                        return (
+                          <div
+                            key={index}
+                            className={`p-4 rounded-xl ${progColors.bg} ${progColors.border} transition-all`}
+                          >
+                            <div className="flex items-start justify-between mb-2">
+                              <div>
+                                <h3 className={`font-semibold text-sm ${progColors.icon}`}>{program.program}</h3>
+                                <p className="text-xs text-white/60">{program.provider}</p>
+                              </div>
+                              <div className="text-right">
+                                <Badge variant="outline" className={`text-[10px] ${progColors.badge}`}>
+                                  {program.duration}
+                                </Badge>
+                                <div className="text-xs text-green-400 mt-1">{program.cost}</div>
+                              </div>
+                            </div>
+                            <p className="text-xs text-white/70">{program.description}</p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </CardContent>
+              )}
+            </Card>
+          );
+        })}
+      </div>
+
+      {/* Networking Action Plan */}
+      <Card className="bg-gradient-to-br from-white/5 to-elec-card border-orange-500/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-orange-500/20 to-orange-500/5 border border-orange-500/30">
+              <Target className="h-5 w-5 text-orange-400" />
+            </div>
+            Your Networking Action Plan
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {onlineNetworking.map((platform, index) => (
-              <div key={index} className="space-y-2">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-semibold text-green-400">{platform.platform}</h3>
-                  <Badge className="bg-green-500/20 text-green-400 border-green-500/40 text-xs">
-                    {platform.cost}
-                  </Badge>
-                </div>
-                
-                <div className="space-y-2 mb-3">
-                  <Badge variant="outline" className="border-green-500/40 text-green-400 text-xs">
-                    {platform.type}
-                  </Badge>
-                  <p className="text-sm text-muted-foreground">{platform.description}</p>
-                  <p className="text-xs text-green-400 font-medium">{platform.members}</p>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium text-green-400 text-sm mb-1">Benefits:</h4>
-                  <ul className="space-y-1">
-                    {platform.benefits.map((benefit, idx) => (
-                      <li key={idx} className="text-xs text-muted-foreground flex items-center gap-1">
-                        <span className="w-1 h-1 bg-green-400 rounded-full"></span>
-                        {benefit}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+        <CardContent className="relative">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-center">
+              <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center mx-auto mb-3">
+                <span className="text-lg font-bold text-blue-400">1</span>
               </div>
-            ))}
+              <h3 className="font-semibold text-blue-400 mb-2">Start Local</h3>
+              <p className="text-xs text-white/70">
+                Join IET local networks and ECA regional groups to build connections in your area first.
+              </p>
+            </div>
+            <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/20 text-center">
+              <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-3">
+                <span className="text-lg font-bold text-green-400">2</span>
+              </div>
+              <h3 className="font-semibold text-green-400 mb-2">Go Digital</h3>
+              <p className="text-xs text-white/70">
+                Optimise LinkedIn and join online forums to expand your network beyond geographical limits.
+              </p>
+            </div>
+            <div className="p-4 rounded-xl bg-purple-500/10 border border-purple-500/20 text-center">
+              <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center mx-auto mb-3">
+                <span className="text-lg font-bold text-purple-400">3</span>
+              </div>
+              <h3 className="font-semibold text-purple-400 mb-2">Attend Events</h3>
+              <p className="text-xs text-white/70">
+                Aim for 2-3 industry events per year to meet contacts and learn about market trends.
+              </p>
+            </div>
           </div>
         </CardContent>
       </Card>
 
-      <Card className="border-purple-500/30 bg-purple-500/10">
-        <CardHeader>
-          <CardTitle className="text-purple-400 flex items-center gap-2">
-            <Briefcase className="h-5 w-5" />
-            Mentorship Programs
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {mentorshipPrograms.map((program, index) => (
-              <div key={index} className="space-y-2">
-                <div className="flex items-start justify-between mb-2">
-                  <div>
-                    <h3 className="font-semibold text-purple-400">{program.program}</h3>
-                    <p className="text-sm text-muted-foreground mt-1">{program.provider}</p>
-                  </div>
-                  <div className="text-right">
-                    <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/40 text-xs mb-1">
-                      {program.duration}
-                    </Badge>
-                    <div className="text-xs text-green-400">{program.cost}</div>
-                  </div>
-                </div>
-                
-                <p className="text-sm text-muted-foreground mb-3">{program.description}</p>
-                
-                <div>
-                  <h4 className="font-medium text-purple-400 text-sm mb-1">Program Benefits:</h4>
-                  <ul className="grid grid-cols-2 gap-1">
-                    {program.benefits.map((benefit, idx) => (
-                      <li key={idx} className="text-xs text-muted-foreground flex items-center gap-1">
-                        <span className="w-1 h-1 bg-purple-400 rounded-full"></span>
-                        {benefit}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
+      {/* Pro Tip */}
+      <div className="p-4 rounded-xl bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/30">
+        <div className="flex items-start gap-3">
+          <div className="p-2 rounded-lg bg-green-500/20">
+            <Star className="h-5 w-5 text-green-400" />
           </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-orange-500/30 bg-orange-500/10">
-        <CardHeader>
-          <CardTitle className="text-orange-400">Networking Action Plan</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-4 rounded-lg bg-orange-500/5 border border-orange-500/20">
-              <h3 className="font-semibold mb-2 text-orange-400">Start Local</h3>
-              <p className="text-sm text-muted-foreground">
-                Join local IET networks and ECA regional groups to build connections in your area.
-              </p>
-            </div>
-            <div className="p-4 rounded-lg bg-orange-500/5 border border-orange-500/20">
-              <h3 className="font-semibold mb-2 text-orange-400">Go Digital</h3>
-              <p className="text-sm text-muted-foreground">
-                Engage in online forums and LinkedIn groups to expand your network beyond geographical limits.
-              </p>
-            </div>
-            <div className="p-4 rounded-lg bg-orange-500/5 border border-orange-500/20">
-              <h3 className="font-semibold mb-2 text-orange-400">Attend Events</h3>
-              <p className="text-sm text-muted-foreground">
-                Plan to attend at least 2-3 industry events per year to meet new contacts and learn about trends.
-              </p>
-            </div>
+          <div>
+            <p className="font-medium text-green-400 mb-1">Networking ROI</p>
+            <p className="text-sm text-white/70">
+              Invest <span className="text-green-400 font-medium">£500-800 per year</span> in professional memberships and events.
+              This typically returns £5,000-£15,000 in new business opportunities, better job offers, and career advancement.
+              The connections you make early in your career will pay dividends for decades.
+            </p>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };

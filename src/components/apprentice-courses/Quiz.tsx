@@ -124,20 +124,20 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
   }
 
   return (
-    <div className="py-8">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+    <div className="py-6 sm:py-8">
+      {/* Header - Stacks on mobile */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
         <div className="flex items-center gap-2 text-elec-yellow">
-          <Target className="h-5 w-5" />
-          <h2 className="text-xl font-semibold">{title}</h2>
+          <Target className="h-5 w-5 sm:h-6 sm:w-6" />
+          <h2 className="text-lg sm:text-xl font-semibold">{title}</h2>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between sm:justify-end gap-3">
           <span className="text-sm text-white">Question {currentQuestion + 1} of {questions.length}</span>
-          <div className="flex gap-1 items-center">
+          <div className="flex gap-1.5 items-center">
             {questions.map((_, index) => (
               <div
                 key={index}
-                className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                className={`w-2.5 h-2.5 sm:w-2 sm:h-2 rounded-full flex-shrink-0 transition-colors ${
                   index < currentQuestion
                     ? 'bg-green-400'
                     : index === currentQuestion
@@ -151,19 +151,19 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
       </div>
 
       {/* Question */}
-      <div className="space-y-6">
-        <h3 className="text-lg font-medium text-white">
+      <div className="space-y-5 sm:space-y-6">
+        <h3 className="text-base sm:text-lg font-medium text-white leading-relaxed">
           {currentQ?.question}
         </h3>
 
-        {/* Options */}
+        {/* Options - Touch-friendly with min 48px height */}
         <div className="space-y-3">
           {currentQ?.options.map((option, index) => (
             <button
               key={index}
               onClick={() => handleAnswerSelect(index)}
               disabled={showResult}
-              className={`w-full p-4 text-left rounded-lg border transition-all duration-200 ${
+              className={`w-full min-h-[52px] p-4 text-left rounded-xl border-2 transition-all duration-200 active:scale-[0.98] touch-manipulation ${
                 selectedAnswers[currentQuestion] === index
                   ? showResult
                     ? index === currentQ.correctAnswer
@@ -172,11 +172,11 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
                     : 'bg-elec-yellow/20 border-elec-yellow/50 text-elec-yellow'
                   : showResult && index === currentQ.correctAnswer
                   ? 'bg-green-500/20 border-green-400/50 text-green-300'
-                  : 'border-white/10 hover:border-elec-yellow/30 text-white'
+                  : 'border-white/10 hover:border-elec-yellow/30 active:bg-white/5 text-white'
               }`}
             >
-              <div className="flex items-center gap-3">
-                <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className={`w-7 h-7 sm:w-6 sm:h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
                   selectedAnswers[currentQuestion] === index
                     ? showResult
                       ? index === currentQ.correctAnswer
@@ -200,7 +200,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
                     </>
                   )}
                 </div>
-                <span className="flex-1">{option}</span>
+                <span className="flex-1 text-sm sm:text-base leading-snug">{option}</span>
               </div>
             </button>
           ))}
@@ -208,7 +208,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
 
         {/* Explanation */}
         {showResult && currentQ?.explanation && (
-          <div className={`p-4 rounded-lg border ${
+          <div className={`p-4 rounded-xl border ${
             isCorrect
               ? 'bg-green-500/10 border-green-400/30 text-green-300'
               : 'bg-elec-yellow/10 border-elec-yellow/30 text-white'
@@ -216,26 +216,28 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
             <p className="font-medium mb-2">
               {isCorrect ? '✓ Correct!' : 'Explanation:'}
             </p>
-            <p className="text-sm">{currentQ.explanation}</p>
+            <p className="text-sm leading-relaxed">{currentQ.explanation}</p>
           </div>
         )}
 
-        {/* Navigation */}
-        <div className="flex justify-between pt-4">
+        {/* Navigation - Full width buttons on mobile */}
+        <div className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-4">
           <Button
             onClick={handlePrevious}
             disabled={currentQuestion === 0}
             variant="ghost"
-            className="text-white hover:text-elec-yellow disabled:opacity-50"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-elec-yellow disabled:opacity-50 touch-manipulation"
           >
             Previous
           </Button>
 
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
             {!showResult && isAnswered && (
               <Button
                 onClick={handleSubmitAnswer}
-                className="bg-elec-yellow text-[#121212] hover:bg-elec-yellow/90"
+                size="lg"
+                className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
               >
                 Submit Answer
               </Button>
@@ -244,7 +246,8 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
             {showResult && (
               <Button
                 onClick={handleNext}
-                className="bg-elec-yellow text-[#121212] hover:bg-elec-yellow/90"
+                size="lg"
+                className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
               >
                 {currentQuestion === questions.length - 1 ? 'Complete Quiz' : 'Next Question'}
               </Button>

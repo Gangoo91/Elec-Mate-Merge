@@ -51,7 +51,7 @@ const CollapsibleRecentSessions = ({ onAddToPortfolio }: CollapsibleRecentSessio
 
   if (isLoading) {
     return (
-      <Card className="bg-elec-gray border-elec-yellow/20">
+      <Card className="bg-white/5 border-elec-yellow/20">
         <CardContent className="p-4">
           <div className="animate-pulse space-y-2">
             <div className="h-4 bg-elec-yellow/20 rounded w-3/4" />
@@ -63,7 +63,7 @@ const CollapsibleRecentSessions = ({ onAddToPortfolio }: CollapsibleRecentSessio
   }
 
   return (
-    <Card className="bg-elec-gray border-elec-yellow/20">
+    <Card className="bg-white/5 border-elec-yellow/20">
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <CollapsibleTrigger asChild>
           <CardHeader className="pb-3 cursor-pointer hover:bg-elec-yellow/5 transition-colors">
@@ -99,7 +99,7 @@ const CollapsibleRecentSessions = ({ onAddToPortfolio }: CollapsibleRecentSessio
                 {completedSessions.map((session) => (
                   <div
                     key={session.id}
-                    className="bg-elec-dark/30 rounded-lg p-3 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-colors"
+                    className="bg-white/10 rounded-lg p-3 border border-elec-yellow/10 hover:border-elec-yellow/20 transition-colors"
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1 min-w-0">
@@ -134,7 +134,7 @@ const CollapsibleRecentSessions = ({ onAddToPortfolio }: CollapsibleRecentSessio
                         </div>
                         
                         {session.notes && (
-                          <p className="text-xs text-elec-light/70 mt-2 bg-elec-dark/50 rounded p-2">
+                          <p className="text-xs text-elec-light/70 mt-2 bg-white/10 rounded p-2">
                             {session.notes}
                           </p>
                         )}

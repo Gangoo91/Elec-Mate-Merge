@@ -24,9 +24,10 @@ const routeMappings: RouteMapping[] = [
   { pattern: /^\/apprentice\/toolbox\/[^/]+/, label: "Back to Toolbox", destination: "/apprentice/toolbox" },
   { pattern: /^\/apprentice\/toolbox/, label: "Back to Apprentice Hub", destination: "/apprentice" },
 
-  // Apprentice On-Job paths
-  { pattern: /^\/apprentice\/on-job\/[^/]+/, label: "Back to On-Job Tools", destination: "/apprentice/on-job" },
-  { pattern: /^\/apprentice\/on-job/, label: "Back to Apprentice Hub", destination: "/apprentice" },
+  // Apprentice On-Job Tools paths (most specific first)
+  { pattern: /^\/apprentice\/on-job-tools\/electrical-installation-guides\/[^/]+/, label: "Back to Installation Guides", destination: "/apprentice/on-job-tools/electrical-installation-guides" },
+  { pattern: /^\/apprentice\/on-job-tools\/[^/]+/, label: "Back to On-Job Tools", destination: "/apprentice/on-job-tools" },
+  { pattern: /^\/apprentice\/on-job-tools/, label: "Back to Apprentice Hub", destination: "/apprentice" },
 
   // Apprentice Mental Health paths
   { pattern: /^\/apprentice\/mental-health\/[^/]+/, label: "Back to Wellbeing", destination: "/apprentice/mental-health" },

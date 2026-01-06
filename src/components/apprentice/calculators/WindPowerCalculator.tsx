@@ -500,7 +500,7 @@ export function WindPowerCalculator() {
                   <PoundSterling className="h-4 w-4 text-green-400" />
                   <span className="text-sm sm:text-base font-medium text-green-300">2025 Installation Cost Breakdown</span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showCosts && "rotate-180")} />
+                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showCosts && "rotate-180")} />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0 space-y-3">
                 <div className="text-center pb-3 border-b border-white/10">
@@ -530,7 +530,7 @@ export function WindPowerCalculator() {
                   <Info className="h-4 w-4 text-blue-400" />
                   <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showGuidance && "rotate-180")} />
+                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showGuidance && "rotate-180")} />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0 space-y-3">
                 <div className="p-3 rounded-lg bg-white/5">
@@ -568,7 +568,7 @@ export function WindPowerCalculator() {
                   <BookOpen className="h-4 w-4 text-amber-400" />
                   <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 & Planning</span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showRegs && "rotate-180")} />
+                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showRegs && "rotate-180")} />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0 space-y-3">
                 <div className="space-y-2 text-sm text-amber-200/80">

@@ -29,7 +29,7 @@ const R1R2TestingTab = () => {
         <CardContent className="pt-6">
           <div className="mb-4">
             <h2 className="text-xl font-semibold">R1+R2 Testing (Continuity of Protective Conductors)</h2>
-            <p className="text-sm text-muted-foreground mt-1">
+            <p className="text-sm text-white mt-1">
               Tests the continuity of the circuit protective conductors, main and supplementary bonding conductors.
             </p>
           </div>

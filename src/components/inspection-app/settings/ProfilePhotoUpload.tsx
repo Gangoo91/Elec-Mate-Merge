@@ -69,7 +69,7 @@ export function ProfilePhotoUpload({
               className="w-full h-full object-cover"
             />
           ) : (
-            <User className="w-8 h-8 text-gray-500" />
+            <User className="w-8 h-8 text-white/60" />
           )}
         </div>
 
@@ -109,7 +109,7 @@ export function ProfilePhotoUpload({
         />
       </div>
 
-      <p className="text-xs text-gray-300">
+      <p className="text-xs text-white/80">
         Recommended: Square image, max 5MB (JPG, PNG, WEBP)
       </p>
     </div>

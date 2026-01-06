@@ -106,7 +106,7 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
           variant="ghost"
           size="icon"
           onClick={() => setSoundEnabled(!soundEnabled)}
-          className="text-muted-foreground"
+          className="text-white/80"
         >
           {soundEnabled ? <Volume2 className="h-5 w-5" /> : <VolumeX className="h-5 w-5" />}
         </Button>
@@ -122,10 +122,10 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
             </div>
             <div>
               <h2 className="text-2xl font-bold text-foreground mb-2">Well Done!</h2>
-              <p className="text-muted-foreground">
+              <p className="text-white/80">
                 You completed {totalCycles} breathing cycles.
               </p>
-              <p className="text-sm text-muted-foreground mt-2">
+              <p className="text-sm text-white/80 mt-2">
                 Take a moment to notice how you feel.
               </p>
             </div>
@@ -144,7 +144,7 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
           <>
             <div className="text-center mb-8">
               <h2 className="text-xl font-semibold text-foreground mb-1">Box Breathing</h2>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white/80">
                 {phase === 'ready' ? 'Find a comfortable position and relax' : `Cycle ${cyclesCompleted + 1} of ${totalCycles}`}
               </p>
             </div>
@@ -260,7 +260,7 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
       {/* Tips */}
       <Card className="mt-auto border-blue-500/20 bg-blue-500/5">
         <CardContent className="p-4">
-          <p className="text-sm text-muted-foreground text-center">
+          <p className="text-sm text-white/80 text-center">
             {phase === 'ready'
               ? "Box breathing helps activate your parasympathetic nervous system, reducing stress and anxiety."
               : phase === 'complete'

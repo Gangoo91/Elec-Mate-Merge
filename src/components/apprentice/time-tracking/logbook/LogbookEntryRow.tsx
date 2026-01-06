@@ -63,7 +63,7 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
               <Input 
                 value={editedActivity}
                 onChange={(e) => setEditedActivity(e.target.value)}
-                className="w-full bg-elec-gray"
+                className="w-full bg-white/5"
                 disabled={entry.isAutomatic}
               />
             </td>
@@ -72,7 +72,7 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
                 type="number"
                 value={editedDuration}
                 onChange={(e) => setEditedDuration(parseInt(e.target.value) || 0)}
-                className="w-full bg-elec-gray text-center"
+                className="w-full bg-white/5 text-center"
                 disabled={entry.isAutomatic}
               />
             </td>
@@ -80,7 +80,7 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
               <Input 
                 value={editedNotes}
                 onChange={(e) => setEditedNotes(e.target.value)}
-                className="w-full bg-elec-gray"
+                className="w-full bg-white/5"
                 disabled={entry.isAutomatic}
               />
             </td>
@@ -145,7 +145,7 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
                   size="sm"
                   variant="ghost"
                   onClick={() => setShowPortfolioDialog(true)}
-                  className="text-muted-foreground hover:text-foreground"
+                  className="text-white hover:text-foreground"
                   title="Custom Add to Portfolio"
                 >
                   <Plus className="h-4 w-4" />

@@ -65,7 +65,7 @@ const DocumentationGuide = () => {
     <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/10">
       <CardHeader>
         <CardTitle className="text-green-400">Documentation Best Practices</CardTitle>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-white">
           Professional guidance on capturing and presenting your work effectively
         </p>
       </CardHeader>
@@ -95,12 +95,12 @@ const DocumentationGuide = () => {
               <h4 className="font-medium text-white">Photography Guidelines</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {photographyTips.map((item, index) => (
-                  <div key={index} className="p-3 bg-elec-gray/50 rounded border border-green-500/20">
+                  <div key={index} className="p-3 bg-white/5 rounded border border-green-500/20">
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                       <div>
                         <h5 className="font-medium text-white text-sm">{item.tip}</h5>
-                        <p className="text-xs text-muted-foreground mt-1">{item.description}</p>
+                        <p className="text-xs text-white mt-1">{item.description}</p>
                       </div>
                     </div>
                   </div>
@@ -114,12 +114,12 @@ const DocumentationGuide = () => {
               <h4 className="font-medium text-white">Written Evidence Structure</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {writtenEvidenceTips.map((item, index) => (
-                  <div key={index} className="p-3 bg-elec-gray/50 rounded border border-green-500/20">
+                  <div key={index} className="p-3 bg-white/5 rounded border border-green-500/20">
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                       <div>
                         <h5 className="font-medium text-white text-sm">{item.tip}</h5>
-                        <p className="text-xs text-muted-foreground mt-1">{item.description}</p>
+                        <p className="text-xs text-white mt-1">{item.description}</p>
                       </div>
                     </div>
                   </div>
@@ -133,12 +133,12 @@ const DocumentationGuide = () => {
               <h4 className="font-medium text-white">Video Documentation</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {videoTips.map((item, index) => (
-                  <div key={index} className="p-3 bg-elec-gray/50 rounded border border-green-500/20">
+                  <div key={index} className="p-3 bg-white/5 rounded border border-green-500/20">
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                       <div>
                         <h5 className="font-medium text-white text-sm">{item.tip}</h5>
-                        <p className="text-xs text-muted-foreground mt-1">{item.description}</p>
+                        <p className="text-xs text-white mt-1">{item.description}</p>
                       </div>
                     </div>
                   </div>
@@ -150,19 +150,19 @@ const DocumentationGuide = () => {
           <TabsContent value="audio" className="mt-4">
             <div className="space-y-4">
               <h4 className="font-medium text-white">Audio Notes & Reflections</h4>
-              <div className="p-4 bg-elec-gray/50 rounded border border-green-500/20">
+              <div className="p-4 bg-white/5 rounded border border-green-500/20">
                 <div className="flex items-start gap-3">
                   <Shield className="h-5 w-5 text-yellow-400 flex-shrink-0" />
                   <div>
                     <h5 className="font-medium text-white">Important Safety Note</h5>
-                    <p className="text-sm text-muted-foreground mt-1">
+                    <p className="text-sm text-white mt-1">
                       Never record audio whilst working on live electrical systems. Only record 
                       reflections during safe periods or after work completion.
                     </p>
                   </div>
                 </div>
               </div>
-              <ul className="space-y-2 text-sm text-muted-foreground">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400">•</span>
                   Record learning reflections immediately after completing tasks

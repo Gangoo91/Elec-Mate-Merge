@@ -125,7 +125,7 @@ const WeeklyOverview = () => {
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-elec-gray p-3 border border-elec-yellow/20 rounded-md shadow-lg">
+        <div className="bg-white/5 p-3 border border-elec-yellow/20 rounded-md shadow-lg">
           <p className="font-medium">{`${label} (${payload[0]?.payload.date})`}</p>
           <p className="text-sm text-elec-yellow">{`Manual: ${payload[0]?.value} hrs`}</p>
           <p className="text-sm text-elec-yellow/70">{`Automatic: ${payload[1]?.value} hrs`}</p>
@@ -157,7 +157,7 @@ const WeeklyOverview = () => {
         </div>
       </div>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className="pt-6">
           <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
@@ -179,37 +179,37 @@ const WeeklyOverview = () => {
             </ResponsiveContainer>
           </div>
           
-          <div className="mt-4 text-sm text-muted-foreground text-center">
+          <div className="mt-4 text-sm text-white text-center">
             <p>Weekly summary for {formatDateRange(selectedWeek)}</p>
           </div>
         </CardContent>
       </Card>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="bg-elec-dark border-elec-yellow/10">
+        <Card className="bg-white/10 border-elec-yellow/10">
           <CardContent className="p-4 flex flex-col items-center justify-center text-center">
             <div className="text-2xl font-bold text-elec-yellow">
               {chartData.reduce((sum, day) => sum + day.manual + day.automatic, 0).toFixed(1)}
             </div>
-            <p className="text-sm text-muted-foreground mt-1">Total Hours This Week</p>
+            <p className="text-sm text-white mt-1">Total Hours This Week</p>
           </CardContent>
         </Card>
         
-        <Card className="bg-elec-dark border-elec-yellow/10">
+        <Card className="bg-white/10 border-elec-yellow/10">
           <CardContent className="p-4 flex flex-col items-center justify-center text-center">
             <div className="text-2xl font-bold text-elec-yellow">
               {chartData.reduce((sum, day) => sum + day.manual, 0).toFixed(1)}
             </div>
-            <p className="text-sm text-muted-foreground mt-1">Manual Hours</p>
+            <p className="text-sm text-white mt-1">Manual Hours</p>
           </CardContent>
         </Card>
         
-        <Card className="bg-elec-dark border-elec-yellow/10">
+        <Card className="bg-white/10 border-elec-yellow/10">
           <CardContent className="p-4 flex flex-col items-center justify-center text-center">
             <div className="text-2xl font-bold text-elec-yellow">
               {chartData.reduce((sum, day) => sum + day.automatic, 0).toFixed(1)}
             </div>
-            <p className="text-sm text-muted-foreground mt-1">Automatic Hours</p>
+            <p className="text-sm text-white mt-1">Automatic Hours</p>
           </CardContent>
         </Card>
       </div>

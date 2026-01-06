@@ -203,7 +203,7 @@ const PortfolioExportDialog = ({ entries }: PortfolioExportDialogProps) => {
             <Label className="text-base font-medium">Date Range (Optional)</Label>
             <div className="grid grid-cols-2 gap-2 mt-2">
               <div>
-                <Label htmlFor="date-from" className="text-xs text-muted-foreground">From</Label>
+                <Label htmlFor="date-from" className="text-xs text-white">From</Label>
                 <Input
                   id="date-from"
                   type="date"
@@ -215,7 +215,7 @@ const PortfolioExportDialog = ({ entries }: PortfolioExportDialogProps) => {
                 />
               </div>
               <div>
-                <Label htmlFor="date-to" className="text-xs text-muted-foreground">To</Label>
+                <Label htmlFor="date-to" className="text-xs text-white">To</Label>
                 <Input
                   id="date-to"
                   type="date"
@@ -236,7 +236,7 @@ const PortfolioExportDialog = ({ entries }: PortfolioExportDialogProps) => {
                 <span>{exportProgress.step}</span>
                 <span>{exportProgress.progress}/{exportProgress.total}</span>
               </div>
-              <div className="w-full bg-elec-gray rounded-full h-2">
+              <div className="w-full bg-white/5 rounded-full h-2">
                 <div 
                   className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
                   style={{ width: `${(exportProgress.progress / exportProgress.total) * 100}%` }}
@@ -265,7 +265,7 @@ const PortfolioExportDialog = ({ entries }: PortfolioExportDialogProps) => {
           </Button>
           
           {entries.length === 0 && (
-            <p className="text-xs text-muted-foreground text-center">
+            <p className="text-xs text-white text-center">
               No portfolio entries available to export.
             </p>
           )}

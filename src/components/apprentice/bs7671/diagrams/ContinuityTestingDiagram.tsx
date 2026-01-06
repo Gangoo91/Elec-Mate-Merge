@@ -53,7 +53,7 @@ const ContinuityTestingDiagram = ({ systemType, installationType }: ContinuityTe
           </div>
           <div className="flex items-center justify-between">
             <span className="text-xs text-green-100">Circuit End:</span>
-            <Badge variant="outline" className="text-black-300 border-gray-400/30">Black Lead → Earth Terminal</Badge>
+            <Badge variant="outline" className="text-black-300 border-white/30">Black Lead → Earth Terminal</Badge>
           </div>
           <div className="text-xs text-green-200 bg-green-500/10 p-2 rounded">
             <CheckCircle className="h-3 w-3 inline mr-1" />

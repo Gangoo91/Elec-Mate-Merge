@@ -162,7 +162,7 @@ const AddAssessmentDialog = ({ open, onOpenChange, onAddAssessment }: AddAssessm
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px] bg-elec-gray border-elec-yellow/20">
+      <DialogContent className="sm:max-w-[600px] bg-white/5 border-elec-yellow/20">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-elec-light">
             <Award className="h-5 w-5 text-elec-yellow" />
@@ -178,15 +178,15 @@ const AddAssessmentDialog = ({ open, onOpenChange, onAddAssessment }: AddAssessm
               setSelectedTemplate(value);
               handleTemplateSelect(value);
             }}>
-              <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-elec-light">
+              <SelectTrigger className="bg-white/10 border-elec-yellow/20 text-elec-light">
                 <SelectValue placeholder="Choose from common assessments or create custom..." />
               </SelectTrigger>
-              <SelectContent className="bg-elec-dark border-elec-yellow/20 max-h-[300px]">
+              <SelectContent className="bg-white/10 border-elec-yellow/20 max-h-[300px]">
                 {REAL_ASSESSMENTS.map((assessment) => (
                   <SelectItem 
                     key={assessment.title} 
                     value={assessment.title}
-                    className="text-elec-light hover:bg-elec-gray focus:bg-elec-gray"
+                    className="text-elec-light hover:bg-white/5 focus:bg-white/5"
                   >
                     <div className="flex flex-col">
                       <span className="font-medium">{assessment.title}</span>
@@ -207,7 +207,7 @@ const AddAssessmentDialog = ({ open, onOpenChange, onAddAssessment }: AddAssessm
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g., BS 7671:2018 18th Edition"
-                className="bg-elec-dark border-elec-yellow/20 text-elec-light placeholder:text-elec-light/50"
+                className="bg-white/10 border-elec-yellow/20 text-elec-light placeholder:text-elec-light/50"
                 required
               />
             </div>
@@ -219,7 +219,7 @@ const AddAssessmentDialog = ({ open, onOpenChange, onAddAssessment }: AddAssessm
                 value={unitCode}
                 onChange={(e) => setUnitCode(e.target.value)}
                 placeholder="e.g., C&G 2382-18"
-                className="bg-elec-dark border-elec-yellow/20 text-elec-light placeholder:text-elec-light/50"
+                className="bg-white/10 border-elec-yellow/20 text-elec-light placeholder:text-elec-light/50"
               />
             </div>
           </div>
@@ -227,15 +227,15 @@ const AddAssessmentDialog = ({ open, onOpenChange, onAddAssessment }: AddAssessm
           <div className="space-y-2">
             <Label htmlFor="type" className="text-elec-light">Assessment Type *</Label>
             <Select value={type} onValueChange={setType} required>
-              <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-elec-light">
+              <SelectTrigger className="bg-white/10 border-elec-yellow/20 text-elec-light">
                 <SelectValue placeholder="Select assessment type" />
               </SelectTrigger>
-              <SelectContent className="bg-elec-dark border-elec-yellow/20">
+              <SelectContent className="bg-white/10 border-elec-yellow/20">
                 {ASSESSMENT_TYPES.map((assessmentType) => (
                   <SelectItem 
                     key={assessmentType.value} 
                     value={assessmentType.value}
-                    className="text-elec-light hover:bg-elec-gray focus:bg-elec-gray"
+                    className="text-elec-light hover:bg-white/5 focus:bg-white/5"
                   >
                     {assessmentType.label}
                   </SelectItem>
@@ -251,7 +251,7 @@ const AddAssessmentDialog = ({ open, onOpenChange, onAddAssessment }: AddAssessm
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Brief description of what this assessment covers..."
-              className="bg-elec-dark border-elec-yellow/20 text-elec-light placeholder:text-elec-light/50 min-h-[80px]"
+              className="bg-white/10 border-elec-yellow/20 text-elec-light placeholder:text-elec-light/50 min-h-[80px]"
               rows={3}
             />
           </div>
@@ -263,7 +263,7 @@ const AddAssessmentDialog = ({ open, onOpenChange, onAddAssessment }: AddAssessm
                 <Button
                   variant="outline"
                   className={cn(
-                    "w-full justify-start text-left font-normal bg-elec-dark border-elec-yellow/20 text-elec-light hover:bg-elec-gray",
+                    "w-full justify-start text-left font-normal bg-white/10 border-elec-yellow/20 text-elec-light hover:bg-white/5",
                     !dueDate && "text-elec-light/50"
                   )}
                 >
@@ -271,13 +271,13 @@ const AddAssessmentDialog = ({ open, onOpenChange, onAddAssessment }: AddAssessm
                   {dueDate ? format(dueDate, "PPP") : "Pick a date"}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-0 bg-elec-dark border-elec-yellow/20" align="start">
+              <PopoverContent className="w-auto p-0 bg-white/10 border-elec-yellow/20" align="start">
                 <Calendar
                   mode="single"
                   selected={dueDate}
                   onSelect={setDueDate}
                   initialFocus
-                  className={cn("p-3 pointer-events-auto bg-elec-dark text-elec-light")}
+                  className={cn("p-3 pointer-events-auto bg-white/10 text-elec-light")}
                 />
               </PopoverContent>
             </Popover>
@@ -288,7 +288,7 @@ const AddAssessmentDialog = ({ open, onOpenChange, onAddAssessment }: AddAssessm
               type="button" 
               variant="outline" 
               onClick={() => onOpenChange(false)}
-              className="border-elec-yellow/20 text-elec-light hover:bg-elec-gray"
+              className="border-elec-yellow/20 text-elec-light hover:bg-white/5"
             >
               Cancel
             </Button>

@@ -16,7 +16,7 @@ const HigherLearningCourses = () => {
           <h1 className="text-3xl font-bold tracking-tight mb-2">
             <span className="gradient-text">Higher Learning Courses</span>
           </h1>
-          <p className="text-muted-foreground text-sm sm:text-base">
+          <p className="text-white/70 text-sm sm:text-base">
             Advanced qualification pathways for electrical professionals
           </p>
         </div>
@@ -27,7 +27,7 @@ const HigherLearningCourses = () => {
         {higherCategory?.courses.map((course, index) => (
           <Card 
             key={index}
-            className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full"
+            className="border-elec-yellow/30 bg-gradient-to-b from-elec-yellow/10 to-elec-yellow/5 hover:from-elec-yellow/15 hover:to-elec-yellow/10 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full"
           >
             <CardContent className="flex flex-col items-center justify-center p-6 h-full">
               {course.includes("HNC") ? (

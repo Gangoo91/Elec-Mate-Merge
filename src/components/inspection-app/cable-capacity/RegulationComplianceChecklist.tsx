@@ -99,7 +99,7 @@ export const RegulationComplianceChecklist = () => {
       case 'non-compliant':
         return <XCircle className="h-5 w-5 text-red-400" />;
       default:
-        return <div className="h-5 w-5 rounded-full border-2 border-gray-400" />;
+        return <div className="h-5 w-5 rounded-full border-2 border-white/70" />;
     }
   };
 
@@ -112,7 +112,7 @@ export const RegulationComplianceChecklist = () => {
       case 'non-compliant':
         return <Badge className="bg-red-500 text-foreground">Non-Compliant</Badge>;
       default:
-        return <Badge variant="outline" className="text-gray-400 border-gray-400">Unchecked</Badge>;
+        return <Badge variant="outline" className="text-white/70 border-white/70">Unchecked</Badge>;
     }
   };
 
@@ -145,19 +145,19 @@ export const RegulationComplianceChecklist = () => {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
             <div className="text-center">
               <div className="text-3xl font-bold text-green-400">{complianceStats.compliant}</div>
-              <div className="text-sm text-gray-300">Compliant</div>
+              <div className="text-sm text-white/80">Compliant</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-yellow-400">{complianceStats.warning}</div>
-              <div className="text-sm text-gray-300">Warnings</div>
+              <div className="text-sm text-white/80">Warnings</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-red-400">{complianceStats.nonCompliant}</div>
-              <div className="text-sm text-gray-300">Non-Compliant</div>
+              <div className="text-sm text-white/80">Non-Compliant</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-gray-400">{complianceStats.unchecked}</div>
-              <div className="text-sm text-gray-300">Unchecked</div>
+              <div className="text-3xl font-bold text-white/70">{complianceStats.unchecked}</div>
+              <div className="text-sm text-white/80">Unchecked</div>
             </div>
           </div>
           
@@ -200,7 +200,7 @@ export const RegulationComplianceChecklist = () => {
                 {getStatusBadge(item.status)}
               </div>
               
-              <p className="text-sm text-gray-300 mb-3">{item.requirement}</p>
+              <p className="text-sm text-white/80 mb-3">{item.requirement}</p>
               
               <div className="flex gap-2">
                 <Button 
@@ -252,7 +252,7 @@ export const RegulationComplianceChecklist = () => {
                 {getStatusBadge(item.status)}
               </div>
               
-              <p className="text-sm text-gray-300 mb-3">{item.requirement}</p>
+              <p className="text-sm text-white/80 mb-3">{item.requirement}</p>
               
               <div className="flex gap-2">
                 <Button 

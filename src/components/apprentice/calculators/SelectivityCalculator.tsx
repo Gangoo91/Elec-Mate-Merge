@@ -112,7 +112,7 @@ const SelectivityCalculator = () => {
   return (
     <div className="space-y-6">
       {/* Input Section */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <ArrowDownUp className="h-5 w-5 text-elec-yellow" />

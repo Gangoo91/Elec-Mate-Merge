@@ -72,7 +72,7 @@ const WageInformationTab = () => {
         </AlertDescription>
       </Alert>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-elec-yellow">
             <Calculator className="h-5 w-5" />
@@ -82,22 +82,22 @@ const WageInformationTab = () => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-3">
-              <div className="p-3 bg-elec-dark/50 rounded-lg border border-elec-yellow/30">
+              <div className="p-3 bg-white/10 rounded-lg border border-elec-yellow/30">
                 <div className="flex justify-between items-center">
                   <span className="font-medium">Apprentice Minimum Wage</span>
                   <Badge className="bg-elec-yellow/20 text-elec-yellow">£{currentRates.apprenticeMinimum}/hour</Badge>
                 </div>
-                <p className="text-xs text-muted-foreground mt-1">
+                <p className="text-xs text-white mt-1">
                   First year of apprenticeship or if under 19
                 </p>
               </div>
               
-              <div className="p-3 bg-elec-dark/50 rounded-lg border border-green-500/30">
+              <div className="p-3 bg-white/10 rounded-lg border border-green-500/30">
                 <div className="flex justify-between items-center">
                   <span className="font-medium">After First Year (19+)</span>
                   <Badge className="bg-green-500/20 text-green-400">£{currentRates.nationalLivingWage}/hour</Badge>
                 </div>
-                <p className="text-xs text-muted-foreground mt-1">
+                <p className="text-xs text-white mt-1">
                   National Living Wage applies
                 </p>
               </div>

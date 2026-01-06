@@ -49,7 +49,7 @@ const ARComingSoonTab = () => {
             <Eye className="h-6 w-6" />
             Augmented Reality Training
           </CardTitle>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-lg text-white">
             The future of electrical apprentice training is here
           </p>
           <Badge variant="outline" className="self-center bg-blue-500/20 text-blue-300 border-blue-500/50">
@@ -59,7 +59,7 @@ const ARComingSoonTab = () => {
         <CardContent className="text-center space-y-4">
           <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-lg p-8 border border-blue-500/30">
             <Eye className="h-16 w-16 text-blue-400 mx-auto mb-4" />
-            <p className="text-muted-foreground">
+            <p className="text-white">
               Imagine being able to see electrical circuits in 3D, practice with virtual equipment, 
               and receive real-time guidance from mentors - all through augmented reality.
             </p>
@@ -74,14 +74,14 @@ const ARComingSoonTab = () => {
             <Star className="h-5 w-5" />
             Planned AR Features
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Revolutionary training experiences powered by augmented reality technology
           </p>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {arFeatures.map((feature, index) => (
-              <Card key={index} className="border-gray-700 bg-gradient-to-br from-gray-800/50 to-gray-900/50">
+              <Card key={index} className="border-white/15 bg-gradient-to-br from-white/5 to-white/[0.02]">
                 <CardHeader>
                   <CardTitle className="text-lg flex items-center gap-2">
                     <feature.icon className="h-5 w-5 text-blue-400" />
@@ -92,7 +92,7 @@ const ARComingSoonTab = () => {
                   </Badge>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-white">
                     {feature.description}
                   </p>
                 </CardContent>
@@ -109,7 +109,7 @@ const ARComingSoonTab = () => {
             <Calendar className="h-5 w-5" />
             Development Progress
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Track our progress towards bringing AR training to Elec-Mate
           </p>
         </CardHeader>
@@ -124,22 +124,22 @@ const ARComingSoonTab = () => {
                     className={`text-xs ${
                       milestone.status === 'Complete' ? 'bg-green-500/20 text-green-300 border-green-500/50' :
                       milestone.status === 'In Progress' ? 'bg-blue-500/20 text-blue-300 border-blue-500/50' :
-                      'bg-gray-500/20 text-gray-300 border-gray-500/50'
+                      'bg-white/10 text-white/80 border-white/50'
                     }`}
                   >
                     {milestone.status}
                   </Badge>
                 </div>
-                <div className="w-full bg-gray-700 rounded-full h-2">
+                <div className="w-full bg-white/10 rounded-full h-2">
                   <div 
                     className={`h-2 rounded-full transition-all duration-300 ${
                       milestone.progress === 100 ? 'bg-green-500' :
-                      milestone.progress > 0 ? 'bg-blue-500' : 'bg-gray-600'
+                      milestone.progress > 0 ? 'bg-blue-500' : 'bg-white/15'
                     }`}
                     style={{ width: `${milestone.progress}%` }}
                   ></div>
                 </div>
-                <div className="text-xs text-muted-foreground">
+                <div className="text-xs text-white">
                   {milestone.progress}% Complete
                 </div>
               </div>
@@ -155,7 +155,7 @@ const ARComingSoonTab = () => {
             <Eye className="h-5 w-5" />
             AR Preview Concept
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Get a glimpse of what AR training will look like
           </p>
         </CardHeader>
@@ -163,10 +163,10 @@ const ARComingSoonTab = () => {
           <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-lg p-6 border border-purple-500/30">
             <div className="text-center space-y-4">
               <div className="relative">
-                <div className="bg-gray-800 rounded-lg p-8 border-2 border-dashed border-purple-500/50">
+                <div className="bg-white/5 rounded-lg p-8 border-2 border-dashed border-purple-500/50">
                   <Eye className="h-12 w-12 text-purple-400 mx-auto mb-4 animate-pulse" />
                   <p className="text-purple-300 font-semibold">AR Experience Preview</p>
-                  <p className="text-sm text-muted-foreground mt-2">
+                  <p className="text-sm text-white mt-2">
                     Point your device at electrical equipment to see interactive 3D overlays, 
                     safety information, and step-by-step guidance.
                   </p>
@@ -181,15 +181,15 @@ const ARComingSoonTab = () => {
               <div className="grid grid-cols-3 gap-4 mt-6">
                 <div className="text-center">
                   <Zap className="h-8 w-8 text-yellow-400 mx-auto mb-2" />
-                  <p className="text-xs text-muted-foreground">Circuit Visualization</p>
+                  <p className="text-xs text-white">Circuit Visualization</p>
                 </div>
                 <div className="text-center">
                   <Smartphone className="h-8 w-8 text-blue-400 mx-auto mb-2" />
-                  <p className="text-xs text-muted-foreground">Mobile Compatible</p>
+                  <p className="text-xs text-white">Mobile Compatible</p>
                 </div>
                 <div className="text-center">
                   <Clock className="h-8 w-8 text-green-400 mx-auto mb-2" />
-                  <p className="text-xs text-muted-foreground">Real-time Feedback</p>
+                  <p className="text-xs text-white">Real-time Feedback</p>
                 </div>
               </div>
             </div>
@@ -201,7 +201,7 @@ const ARComingSoonTab = () => {
       <Card>
         <CardHeader>
           <CardTitle className="text-elec-yellow">Stay Updated</CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Be the first to know when AR training becomes available
           </p>
         </CardHeader>
@@ -214,7 +214,7 @@ const ARComingSoonTab = () => {
               Get Notified on Release
             </Button>
           </div>
-          <p className="text-xs text-muted-foreground mt-4 text-center">
+          <p className="text-xs text-white mt-4 text-center">
             Expected release: Q3 2025 • Beta testing available Q2 2025
           </p>
         </CardContent>

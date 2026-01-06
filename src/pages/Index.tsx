@@ -312,7 +312,41 @@ const Index = () => {
                   </Button>
                 </div>
 
-                {/* Elec-ID Card Preview */}
+                {/* Elec-ID Card Preview - Mobile */}
+                <div className="relative lg:hidden mt-6">
+                  <div className="bg-elec-gray rounded-xl border border-elec-yellow/30 p-4 shadow-xl">
+                    <div className="h-1 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 rounded-t -mt-4 -mx-4 mb-4" />
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-elec-yellow/20 flex items-center justify-center">
+                        <Lightbulb className="h-5 w-5 text-elec-yellow" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-[9px] uppercase tracking-wider text-gray-500">Elec-ID</div>
+                        <div className="font-mono font-bold text-sm text-white">ELEC-2026-00001</div>
+                      </div>
+                      <div className="flex items-center gap-1 text-[10px] text-green-500 bg-green-500/10 px-2 py-1 rounded">
+                        <ShieldCheck className="h-3 w-3" />
+                        Verified
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-white/10">
+                      <div className="text-center">
+                        <div className="text-base font-bold text-elec-yellow">5</div>
+                        <div className="text-[9px] text-gray-500 uppercase">Years</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-base font-bold text-elec-yellow">8</div>
+                        <div className="text-[9px] text-gray-500 uppercase">Certs</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-base font-bold text-elec-yellow">12</div>
+                        <div className="text-[9px] text-gray-500 uppercase">Training</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Elec-ID Card Preview - Desktop */}
                 <div className="relative hidden lg:block">
                   <div className="absolute inset-0 bg-elec-yellow/20 rounded-2xl blur-3xl" />
                   <div className="relative bg-elec-gray rounded-xl border border-elec-yellow/30 p-5 shadow-2xl">

@@ -83,7 +83,7 @@ const MobileContinuingEducationTab = () => {
     <div className="space-y-4">
       <div className="space-y-3">
         <h2 className="text-xl font-semibold">Further Education & Funding</h2>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-white">
           Comprehensive guide to advancing your qualifications and securing funding.
         </p>
       </div>
@@ -106,7 +106,7 @@ const MobileContinuingEducationTab = () => {
 
         <TabsContent value="education" className="space-y-3">
           {educationOptions.map((option) => (
-            <Card key={option.id} className="border-elec-yellow/20 bg-elec-gray">
+            <Card key={option.id} className="border-elec-yellow/20 bg-white/5">
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
                   <div className="flex-1 min-w-0">
@@ -150,12 +150,12 @@ const MobileContinuingEducationTab = () => {
                   <div className="space-y-3 border-t border-elec-yellow/10 pt-3">
                     <div className="text-xs">
                       <p className="text-elec-yellow/80 mb-1 font-medium">Entry Requirements:</p>
-                      <p className="text-muted-foreground">{option.entryRequirements}</p>
+                      <p className="text-white">{option.entryRequirements}</p>
                     </div>
                     
                     <div className="text-xs">
                       <p className="text-elec-yellow/80 mb-1 font-medium">Progression Options:</p>
-                      <p className="text-muted-foreground">{option.progressionOptions}</p>
+                      <p className="text-white">{option.progressionOptions}</p>
                     </div>
                     
                     <div>
@@ -164,7 +164,7 @@ const MobileContinuingEducationTab = () => {
                         {option.keyTopics.map((topic, idx) => (
                           <span 
                             key={idx}
-                            className="text-xs bg-elec-dark/60 px-2 py-1 rounded"
+                            className="text-xs bg-white/10 px-2 py-1 rounded"
                           >
                             {topic}
                           </span>
@@ -177,7 +177,7 @@ const MobileContinuingEducationTab = () => {
                         <MapPin className="h-3 w-3 text-elec-yellow mt-0.5 flex-shrink-0" />
                         <div>
                           <h4 className="text-xs text-elec-yellow mb-1 font-medium">Example Locations:</h4>
-                          <p className="text-xs text-muted-foreground">{option.locations.join(", ")}</p>
+                          <p className="text-xs text-white">{option.locations.join(", ")}</p>
                         </div>
                       </div>
                     </div>
@@ -198,7 +198,7 @@ const MobileContinuingEducationTab = () => {
       </Tabs>
 
       {/* Benefits Card */}
-      <Card className="border-elec-yellow/20 bg-elec-gray/50">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader className="pb-3">
           <CardTitle className="text-base flex items-center gap-2">
             <GraduationCap className="h-5 w-5 text-elec-yellow" />
@@ -209,15 +209,15 @@ const MobileContinuingEducationTab = () => {
           <div className="space-y-3 text-sm">
             <div>
               <h4 className="text-amber-400 font-medium text-sm">Higher Earnings</h4>
-              <p className="text-xs mt-1 text-muted-foreground">Advanced qualifications can increase earning potential by £5,000-£15,000 annually.</p>
+              <p className="text-xs mt-1 text-white">Advanced qualifications can increase earning potential by £5,000-£15,000 annually.</p>
             </div>
             <div>
               <h4 className="text-amber-400 font-medium text-sm">Career Progression</h4>
-              <p className="text-xs mt-1 text-muted-foreground">Access to management, design, and senior technical roles.</p>
+              <p className="text-xs mt-1 text-white">Access to management, design, and senior technical roles.</p>
             </div>
             <div>
               <h4 className="text-amber-400 font-medium text-sm">Professional Recognition</h4>
-              <p className="text-xs mt-1 text-muted-foreground">Pathway to chartered engineer status and industry leadership.</p>
+              <p className="text-xs mt-1 text-white">Pathway to chartered engineer status and industry leadership.</p>
             </div>
           </div>
         </CardContent>

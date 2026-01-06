@@ -155,12 +155,12 @@ const AM2Module5Section3 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
+      <div className="border-b border-white/10 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between gap-2">
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-2 sm:p-0 text-sm sm:text-base" asChild>
+            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
               <Link to="..">
                 <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
                 <span className="hidden xs:inline">Back to Module 5</span>
@@ -179,13 +179,13 @@ const AM2Module5Section3 = () => {
             <Activity className="w-4 h-4" />
             Module 5 – Section 3
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4 sm:mb-6 leading-tight">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6 leading-tight">
             Using Test Equipment Efficiently
           </h1>
-          <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
+          <p className="text-sm sm:text-base text-white mb-6 sm:mb-8 leading-relaxed">
             In AM2 fault diagnosis, test equipment is your main tool. You will rely on instruments like a multifunction tester (MFT), a continuity tester, an insulation resistance tester, and a voltage indicator to identify faults safely and accurately.
           </p>
-          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+          <p className="text-sm sm:text-base text-white leading-relaxed">
             Efficient use of test equipment means choosing the right tool for the fault, setting it up correctly, applying it safely, and recording results without wasting time or guessing.
           </p>
         </div>
@@ -211,16 +211,16 @@ const AM2Module5Section3 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground mb-4">
+            <p className="text-xs sm:text-sm text-white mb-4">
               By the end of this section, you will be able to:
             </p>
-            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
+            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Select the correct test instrument for different types of faults
@@ -246,7 +246,7 @@ const AM2Module5Section3 = () => {
         </Card>
 
         {/* Core Test Instruments */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Settings className="w-5 h-5" />
@@ -255,18 +255,18 @@ const AM2Module5Section3 = () => {
             
             <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="border border-border/20 rounded-lg p-4">
-                  <h4 className="font-medium text-foreground mb-3">Primary Instruments:</h4>
-                  <ul className="text-sm text-muted-foreground space-y-2">
+                <div className="border border-white/10 rounded-lg p-4">
+                  <h4 className="font-medium text-white mb-3">Primary Instruments:</h4>
+                  <ul className="text-sm text-white space-y-2">
                     <li>• <strong>Multifunction Tester (MFT):</strong> Combines continuity, insulation resistance, Zs, PSC/PSCC, and RCD functions</li>
                     <li>• <strong>Continuity tester:</strong> Proves open circuits and checks rings/CPCs</li>
                     <li>• <strong>Insulation resistance tester:</strong> Detects short circuits or earth faults</li>
                   </ul>
                 </div>
                 
-                <div className="border border-border/20 rounded-lg p-4">
-                  <h4 className="font-medium text-foreground mb-3">Safety Equipment:</h4>
-                  <ul className="text-sm text-muted-foreground space-y-2">
+                <div className="border border-white/10 rounded-lg p-4">
+                  <h4 className="font-medium text-white mb-3">Safety Equipment:</h4>
+                  <ul className="text-sm text-white space-y-2">
                     <li>• <strong>Voltage indicator (two-pole):</strong> Used for safe isolation and proving circuits live/dead</li>
                     <li>• <strong>Proving unit:</strong> Confirms voltage indicator is working before/after use</li>
                     <li>• <strong>GS38 test leads:</strong> Fused and shrouded for safety</li>
@@ -286,7 +286,7 @@ const AM2Module5Section3 = () => {
         />
 
         {/* GS38 Safety Compliance */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5" />
@@ -333,7 +333,7 @@ const AM2Module5Section3 = () => {
         </Card>
 
         {/* Efficient Test Application */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Zap className="w-5 h-5" />
@@ -397,7 +397,7 @@ const AM2Module5Section3 = () => {
         />
 
         {/* Common Errors and Assessor Expectations */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Eye className="w-5 h-5" />
@@ -452,7 +452,7 @@ const AM2Module5Section3 = () => {
         />
 
         {/* Advanced Equipment Mastery */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Zap className="w-5 h-5" />
@@ -539,7 +539,7 @@ const AM2Module5Section3 = () => {
         </Card>
 
         {/* Industry Standards and Compliance */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5" />
@@ -615,7 +615,7 @@ const AM2Module5Section3 = () => {
         </Card>
 
         {/* Advanced Scenarios and Edge Cases */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Eye className="w-5 h-5" />
@@ -684,7 +684,7 @@ const AM2Module5Section3 = () => {
         </Card>
 
         {/* Equipment Maintenance and Calibration */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Settings className="w-5 h-5" />
@@ -744,7 +744,7 @@ const AM2Module5Section3 = () => {
         </Card>
 
         {/* Troubleshooting and Problem Solving */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Target className="w-5 h-5" />
@@ -804,7 +804,7 @@ const AM2Module5Section3 = () => {
         </Card>
 
         {/* Real-World Examples */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
@@ -868,7 +868,7 @@ const AM2Module5Section3 = () => {
         </Card>
 
         {/* FAQ Section */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Lightbulb className="w-5 h-5" />
@@ -877,11 +877,11 @@ const AM2Module5Section3 = () => {
             
             <div className="space-y-4">
               {faqs.map((faq, index) => (
-                <div key={index} className="border border-border/20 rounded-lg p-3 sm:p-4 bg-card">
-                  <h4 className="font-medium text-foreground mb-2 text-sm sm:text-base">
+                <div key={index} className="border border-white/10 rounded-lg p-3 sm:p-4 ">
+                  <h4 className="font-medium text-white mb-2 text-sm sm:text-base">
                     Q{index + 1}: {faq.question}
                   </h4>
-                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-xs sm:text-sm text-white leading-relaxed">
                     {faq.answer}
                   </p>
                 </div>
@@ -891,7 +891,7 @@ const AM2Module5Section3 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
@@ -919,7 +919,7 @@ const AM2Module5Section3 = () => {
         </Card>
 
         {/* Quiz Section */}
-        <div className="border-t border-border/20 pt-8">
+        <div className="border-t border-white/10 pt-8">
           <Quiz 
             title="Test Your Knowledge: Using Test Equipment Efficiently"
             questions={quizQuestions}
@@ -927,7 +927,7 @@ const AM2Module5Section3 = () => {
         </div>
 
         {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 border-t border-border/20">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 border-t border-white/10">
           <Button variant="outline" className="w-full sm:w-auto" asChild>
             <Link to="../section2">
               <ChevronLeft className="w-4 h-4 mr-2" />

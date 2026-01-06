@@ -251,11 +251,11 @@ const IndustryInsightsAnalysis = () => {
 
       <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-4'}`}>
         {industryMetrics.map((metric, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
+          <Card key={index} className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 p-3">
             <div className="text-center space-y-2">
-              {metric.icon}
+              <div className="flex justify-center">{metric.icon}</div>
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white/80`}>{metric.data}</div>
             </div>
           </Card>
         ))}
@@ -267,7 +267,7 @@ const IndustryInsightsAnalysis = () => {
             Key Market Trends & Growth Areas
           </MobileAccordionTrigger>
           <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+            <div className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               {marketTrends.map((trend, index) => (
                 <div key={index} className="space-y-3">
                   <div className="flex items-center justify-between">
@@ -276,7 +276,7 @@ const IndustryInsightsAnalysis = () => {
                       {trend.growthRate}
                     </Badge>
                   </div>
-                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{trend.description}</p>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{trend.description}</p>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div>
@@ -321,7 +321,7 @@ const IndustryInsightsAnalysis = () => {
             Sector Analysis & Market Opportunities
           </MobileAccordionTrigger>
           <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+            <div className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               {sectorAnalysis.map((sector, index) => (
                 <div key={index} className="space-y-3">
                   <div className="flex items-center justify-between">
@@ -388,7 +388,7 @@ const IndustryInsightsAnalysis = () => {
             Future Skills Demand & Salary Premiums
           </MobileAccordionTrigger>
           <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+            <div className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               {futureSkillsDemand.map((category, index) => (
                 <div key={index} className="space-y-3">
                   <div className="flex items-center justify-between">
@@ -400,7 +400,7 @@ const IndustryInsightsAnalysis = () => {
 
                   <div className="space-y-6">
                     {category.skills.map((skill, skillIndex) => (
-                      <div key={skillIndex} className="space-y-3 p-4 border border-elec-yellow/10 rounded-lg bg-elec-gray/30">
+                      <div key={skillIndex} className="space-y-3 p-4 border border-elec-yellow/10 rounded-lg bg-white/5">
                         <div className="flex items-center justify-between">
                           <h5 className={`font-medium text-purple-300 ${isMobile ? 'text-sm' : 'text-base'}`}>{skill.skill}</h5>
                           <div className="flex gap-2">
@@ -417,7 +417,7 @@ const IndustryInsightsAnalysis = () => {
                           </div>
                         </div>
                         
-                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground leading-relaxed`}>{skill.description}</p>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white leading-relaxed`}>{skill.description}</p>
                         
                         <div className="pt-2 border-t border-elec-yellow/10">
                           <h6 className={`font-medium text-purple-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Learning Path</h6>
@@ -437,7 +437,7 @@ const IndustryInsightsAnalysis = () => {
             Industry Outlook & Strategic Recommendations
           </MobileAccordionTrigger>
           <MobileAccordionContent>
-            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+            <div className="bg-white/5 border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="space-y-3">
                 <h4 className={`font-medium text-orange-300 ${isMobile ? 'text-sm' : 'text-base'}`}>Strategic Career Positioning</h4>
                 

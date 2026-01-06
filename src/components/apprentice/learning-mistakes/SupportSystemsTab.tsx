@@ -126,12 +126,12 @@ const SupportSystemsTab = () => {
                     <h3 className="text-lg font-semibold text-white">{contact.title}</h3>
                   </div>
                   
-                  <p className="text-sm text-muted-foreground mb-3">{contact.description}</p>
+                  <p className="text-sm text-white mb-3">{contact.description}</p>
                   
                   <div className="space-y-2">
                     <div>
                       <span className="font-medium text-white">Contact: </span>
-                      <span className="text-sm text-muted-foreground">{contact.contact}</span>
+                      <span className="text-sm text-white">{contact.contact}</span>
                     </div>
                     <Badge variant="outline" className="text-xs border-white/20">
                       {contact.action}
@@ -156,12 +156,12 @@ const SupportSystemsTab = () => {
             {mentalHealthResources.map((resource, index) => (
               <div key={index} className="border border-red-500/20 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-2">{resource.service}</h4>
-                <p className="text-sm text-muted-foreground mb-3">{resource.description}</p>
+                <p className="text-sm text-white mb-3">{resource.description}</p>
                 
                 <div className="space-y-2">
                   <div className="text-sm">
                     <span className="font-medium text-red-300">Phone: </span>
-                    <span className="text-muted-foreground">{resource.contact}</span>
+                    <span className="text-white">{resource.contact}</span>
                   </div>
                   <Button
                     size="sm"
@@ -179,7 +179,7 @@ const SupportSystemsTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">Practical Support Resources</CardTitle>
         </CardHeader>
@@ -190,7 +190,7 @@ const SupportSystemsTab = () => {
                 <h4 className="font-semibold text-white mb-3">{support.area}</h4>
                 <ul className="space-y-2">
                   {support.resources.map((resource, resourceIndex) => (
-                    <li key={resourceIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                    <li key={resourceIndex} className="text-sm text-white flex items-start gap-2">
                       <div className="w-1 h-1 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                       {resource}
                     </li>
@@ -207,7 +207,7 @@ const SupportSystemsTab = () => {
           <CardTitle className="text-green-300">Remember</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-3 text-sm text-muted-foreground">
+          <div className="space-y-3 text-sm text-white">
             <p>
               • <strong>Asking for help is a sign of professionalism</strong> - it shows you care about doing quality work
             </p>

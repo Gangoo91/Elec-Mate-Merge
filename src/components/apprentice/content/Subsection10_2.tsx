@@ -21,7 +21,7 @@ const Subsection10_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+          <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
             <h3 className="text-xl font-bold text-elec-yellow flex items-center">
               <AlignJustify className="h-5 w-5 mr-2" />
               Circuit Arrangements
@@ -58,7 +58,7 @@ const Subsection10_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
             </div>
           </div>
           
-          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+          <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
             <h3 className="text-xl font-bold text-elec-yellow flex items-center">
               <Ruler className="h-5 w-5 mr-2" />
               Cable Sizing and Selection
@@ -96,7 +96,7 @@ const Subsection10_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
           </div>
         </div>
         
-        <div className="mt-8 bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-6">
+        <div className="mt-8 bg-white/10 border border-elec-yellow/20 rounded-lg p-6">
           <h3 className="text-xl font-bold text-elec-yellow mb-4 flex items-center">
             <LineChart className="h-5 w-5 mr-2" />
             Protection Design
@@ -151,7 +151,7 @@ const Subsection10_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
               </div>
             </div>
             
-            <div className="mt-4 p-4 bg-elec-dark/70 rounded-lg text-sm">
+            <div className="mt-4 p-4 bg-white/10 rounded-lg text-sm">
               <p className="font-medium mb-1 text-elec-yellow">Regulatory Note:</p>
               <p>BS 7671 Chapter 43 requires that conductors be protected against overcurrent. The protective devices must be selected and erected to respond to any overcurrent up to and including the prospective short-circuit current. Regulation 411.3.3 requires additional protection by an RCD with a rated residual operating current not exceeding 30mA for socket outlet circuits ≤ 32A and for mobile equipment ≤ 32A for use outdoors.</p>
             </div>

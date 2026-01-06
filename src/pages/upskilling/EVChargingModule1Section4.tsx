@@ -1,494 +1,467 @@
-import { ArrowLeft, ArrowRight, FileText, BookOpen, Scale } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
-import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { evModule1Section1Questions } from '@/data/upskilling/evChargingQuizzes';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
+import useSEO from "@/hooks/useSEO";
+
+const quickCheckQuestions = [
+  {
+    id: "evcharging-m1s4-check1",
+    question: "What is the maximum RCD rating permitted for EV charging under BS 7671 Section 722?",
+    options: ["100mA", "300mA", "30mA", "10mA"],
+    correctIndex: 2,
+    explanation: "BS 7671 Section 722 requires RCD protection with a maximum rating of 30mA for EV charging installations to provide adequate protection against electric shock."
+  },
+  {
+    id: "evcharging-m1s4-check2",
+    question: "Which RCD type is preferred for EV charging installations?",
+    options: ["Type AC", "Type A", "Type B", "Type F"],
+    correctIndex: 2,
+    explanation: "Type B RCDs are preferred for EV charging as they can detect all fault current types including smooth DC, which may occur with certain EV charger configurations. Type A is the minimum requirement."
+  },
+  {
+    id: "evcharging-m1s4-check3",
+    question: "For which installations does G98 apply?",
+    options: ["All commercial installations", "Connections >16A per phase", "Connections ≤16A per phase", "Only DC rapid chargers"],
+    correctIndex: 2,
+    explanation: "G98 applies to smaller connections of 16A or less per phase, covering most domestic single-phase installations and small commercial charging points up to approximately 11kW (3-phase)."
+  }
+];
+
+const faqs = [
+  {
+    question: "When do I need to use G99 instead of G98?",
+    answer: "G99 applies when the connection exceeds 16A per phase. This includes larger commercial installations and rapid chargers. G99 requires a formal application process, network impact assessment, and connection agreement with the DNO."
+  },
+  {
+    question: "Can I use a Type A RCD instead of Type B?",
+    answer: "Type A RCD is the minimum requirement under BS 7671 Section 722. However, Type B is preferred as it provides protection against smooth DC fault currents. Some EV chargers have built-in DC fault detection, allowing Type A upstream, but always check manufacturer requirements."
+  },
+  {
+    question: "What additional measures are needed for PME supplies?",
+    answer: "PME (TN-C-S) supplies require risk assessment and may need additional protective measures such as insulation monitoring devices, enhanced equipotential bonding, alternative earthing arrangements, or PEN conductor integrity monitoring."
+  },
+  {
+    question: "How does the IET Code of Practice differ from BS 7671?",
+    answer: "BS 7671 sets mandatory requirements for electrical safety. The IET Code of Practice provides supplementary guidance specific to EV charging, including practical design recommendations, commissioning procedures, and best practice that goes beyond the minimum regulatory requirements."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+  question: "You're installing a 22kW three-phase EV charger at a commercial premises with a PME supply. What earthing consideration is most critical?",
+  options: [
+    "Use standard TN-C-S earthing without modification",
+    "Risk assess the PME arrangement and consider additional protective measures",
+    "Install without earthing as the charger is plastic",
+    "Connect to water pipes only"
+  ],
+  correctAnswer: 1,
+  explanation: "BS 7671 Section 722.411.4.1 requires risk assessment for PME supplies. Additional measures may include insulation monitoring, enhanced bonding, or alternative earthing. Standard PME earthing may not be appropriate without assessment."
+  }
+];
 
 const EVChargingModule1Section4 = () => {
-  const quizQuestions = evModule1Section1Questions?.slice(6, 8)?.map(q => ({
-    id: q.id,
-    question: q.question,
-    options: q.options,
-    correct: q.correctAnswer,
-    explanation: q.explanation
-  })) || [];
+  useSEO({
+    title: "Key Standards BS 7671, IET CoP, G98/G99 | EV Charging Module 1.4",
+    description: "Master the essential standards for EV charging installations including BS 7671 Section 722, IET Code of Practice, and grid connection requirements."
+  });
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-8 sm:pb-12">
-        <Link to="../ev-charging-module-1">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
           <Button
             variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 1
+            <Link to="../ev-charging-module-1">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 1
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-6">
-          <div>
-            <div className="flex items-center gap-3 sm:gap-4 mb-4">
-              <div className="flex items-center gap-2">
-                <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                <Scale className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-              </div>
-              <div>
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
-                  Key Standards: BS 7671, IET CoP, G98/G99
-                </h1>
-                <p className="text-lg sm:text-xl text-white">
-                  Essential standards and codes of practice for EV charging
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-2 sm:gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">
-                Module 1
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-white">
-                Section 4
-              </Badge>
-            </div>
-          </div>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Introduction</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <p>
-                EV charging installations must comply with multiple technical standards and codes of practice. These documents provide the technical foundation for safe, reliable, and compliant installations, covering everything from basic electrical safety to grid connection requirements.
-              </p>
-              <div className="bg-blue-900/30 p-4 rounded-lg border-l-4 border-yellow-400">
-                <p className="text-blue-200">
-                  <strong className="text-blue-300">Standards Hierarchy:</strong> BS 7671 provides the fundamental electrical safety requirements, while IET Code of Practice offers specific EV guidance. G98/G99 govern grid connections, ensuring installations integrate safely with the distribution network.
-                </p>
-              </div>
-              <p>
-                Understanding these standards is essential for professional compliance and successful project delivery. This section provides comprehensive coverage of the key requirements and their practical application.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Learning Outcomes</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-3">
-              <p className="text-sm text-white mb-4">By the end of this section, you should be able to:</p>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                  <span>Apply BS 7671 Section 722 requirements to EV charging installations</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                  <span>Implement IET Code of Practice recommendations effectively</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                  <span>Navigate G98/G99 grid connection procedures</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                  <span>Understand interrelationships between different standards</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 rounded-full bg-yellow-400 mt-2 flex-shrink-0"></div>
-                  <span>Select appropriate protection and earthing arrangements</span>
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">BS 7671:2018+A2:2022 - Section 722</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-card p-4 rounded-lg mb-4 border-l-4 border-yellow-400">
-                <h4 className="text-yellow-400 font-semibold mb-3">Requirements for Electric Vehicle Charging Installations</h4>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-card p-4 rounded-lg border border-yellow-400">
-                  <h5 className="text-blue-300 font-bold mb-4">Scope and Application</h5>
-                  <div className="space-y-3">
-                    <div className="bg-blue-900/20 p-3 rounded">
-                      <h6 className="text-blue-200 font-semibold mb-2">Section 722 Coverage:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• AC and DC charging point installations</li>
-                        <li>• Supply equipment and cable connections</li>
-                        <li>• Fixed and portable charging equipment</li>
-                        <li>• Domestic, commercial and public installations</li>
-                        <li>• Power levels up to 1000V AC / 1500V DC</li>
-                        <li>• Both tethered and socketed charging points</li>
-                      </ul>
-                    </div>
-                    <div className="bg-blue-900/20 p-3 rounded">
-                      <h6 className="text-blue-200 font-semibold mb-2">Key Exclusions:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Vehicle electrical systems</li>
-                        <li>• Battery replacement facilities</li>
-                        <li>• Battery charging/maintenance facilities</li>
-                        <li>• Trolley bus and railway systems</li>
-                        <li>• Industrial trucks and vehicles</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg border border-green-500">
-                  <h5 className="text-green-300 font-bold mb-4">Fundamental Requirements</h5>
-                  <div className="space-y-3">
-                    <div className="bg-green-900/20 p-3 rounded">
-                      <h6 className="text-green-200 font-semibold mb-2">Protection Against Electric Shock:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Basic protection by insulation/enclosures</li>
-                        <li>• Fault protection by automatic disconnection</li>
-                        <li>• RCD protection mandatory (30mA max)</li>
-                        <li>• Additional protection for PME supplies</li>
-                        <li>• Equipotential bonding requirements</li>
-                      </ul>
-                    </div>
-                    <div className="bg-green-900/20 p-3 rounded">
-                      <h6 className="text-green-200 font-semibold mb-2">Circuit Design Requirements:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Dedicated final circuits preferred</li>
-                        <li>• Appropriate overcurrent protection</li>
-                        <li>• Voltage drop limitations (5% max)</li>
-                        <li>• Conductor sizing for load and environment</li>
-                        <li>• Suitable cable types and installation methods</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-card p-4 rounded-lg border border-red-500">
-                <h5 className="text-red-300 font-bold mb-4">Critical Protection Requirements</h5>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div>
-                    <h6 className="text-red-200 font-semibold mb-2">RCD Protection:</h6>
-                    <div className="space-y-2 text-sm">
-                      <div className="bg-red-900/20 p-2 rounded">
-                        <strong>Type A RCD:</strong>
-                        <p>Minimum requirement, detects AC and pulsating DC fault currents</p>
-                      </div>
-                      <div className="bg-red-900/20 p-2 rounded">
-                        <strong>Type B RCD:</strong>
-                        <p>Preferred for EV charging, detects all fault current types including smooth DC</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <h6 className="text-red-200 font-semibold mb-2">Earthing Systems:</h6>
-                    <div className="space-y-2 text-sm">
-                      <div className="bg-red-900/20 p-2 rounded">
-                        <strong>TN-S Systems:</strong>
-                        <p>Preferred earthing arrangement for EV charging installations</p>
-                      </div>
-                      <div className="bg-red-900/20 p-2 rounded">
-                        <strong>PME (TN-C-S):</strong>
-                        <p>Requires additional protective measures and risk assessment</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <h6 className="text-red-200 font-semibold mb-2">Additional Measures:</h6>
-                    <div className="space-y-2 text-sm">
-                      <div className="bg-red-900/20 p-2 rounded">
-                        <strong>Surge Protection:</strong>
-                        <p>SPD Type 2 recommended for all installations</p>
-                      </div>
-                      <div className="bg-red-900/20 p-2 rounded">
-                        <strong>Isolation:</strong>
-                        <p>Local isolation switch within 2m of charging point</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-purple-900/30 p-4 rounded-lg border border-purple-500">
-                <h5 className="text-purple-300 font-semibold mb-3">PME Special Requirements (722.411.4.1)</h5>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <h6 className="text-purple-200 font-medium mb-2">Risk Assessment Factors:</h6>
-                    <ul className="space-y-1">
-                      <li>• Location and environment of installation</li>
-                      <li>• Type and construction of charging equipment</li>
-                      <li>• Extraneous conductive parts proximity</li>
-                      <li>• PEN conductor integrity assessment</li>
-                      <li>• DNO supply reliability and maintenance</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h6 className="text-purple-200 font-medium mb-2">Additional Protective Measures:</h6>
-                    <ul className="space-y-1">
-                      <li>• Insulation monitoring devices</li>
-                      <li>• Enhanced equipotential bonding</li>
-                      <li>• Alternative earthing arrangements</li>
-                      <li>• Increased electrical separation</li>
-                      <li>• Regular inspection and testing</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">IET Code of Practice for Electric Vehicle Charging Equipment Installation</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-card p-4 rounded-lg mb-4 border-l-4 border-yellow-400">
-                <h4 className="text-yellow-400 font-semibold mb-3">Comprehensive Guidance for EV Charging Installations</h4>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-card p-4 rounded-lg border border-green-500">
-                  <h5 className="text-green-300 font-bold mb-4">Design Considerations</h5>
-                  <div className="space-y-3">
-                    <div className="bg-green-900/20 p-3 rounded">
-                      <h6 className="text-green-200 font-semibold mb-2">Load Assessment:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Maximum demand calculations</li>
-                        <li>• Diversity factors for multiple charging points</li>
-                        <li>• Future expansion considerations</li>
-                        <li>• Supply capacity verification</li>
-                        <li>• Load management system requirements</li>
-                        <li>• Grid connection impact assessment</li>
-                      </ul>
-                    </div>
-                    <div className="bg-green-900/20 p-3 rounded">
-                      <h6 className="text-green-200 font-semibold mb-2">Circuit Design:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Radial vs ring circuit considerations</li>
-                        <li>• Cable selection and sizing methodology</li>
-                        <li>• Installation method impact on current rating</li>
-                        <li>• Voltage drop calculations and limits</li>
-                        <li>• Protective device coordination</li>
-                        <li>• Emergency isolation requirements</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg border border-yellow-400">
-                  <h5 className="text-blue-300 font-bold mb-4">Installation Best Practices</h5>
-                  <div className="space-y-3">
-                    <div className="bg-blue-900/20 p-3 rounded">
-                      <h6 className="text-blue-200 font-semibold mb-2">Physical Installation:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Mounting height and accessibility</li>
-                        <li>• Vehicle approach and maneuvering space</li>
-                        <li>• Cable management and protection</li>
-                        <li>• Weather protection and IP ratings</li>
-                        <li>• Mechanical protection from impact</li>
-                        <li>• Security and anti-theft measures</li>
-                      </ul>
-                    </div>
-                    <div className="bg-blue-900/20 p-3 rounded">
-                      <h6 className="text-blue-200 font-semibold mb-2">Commissioning Procedures:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Initial verification testing sequence</li>
-                        <li>• Functional testing of charging equipment</li>
-                        <li>• Communication system verification</li>
-                        <li>• Load management system testing</li>
-                        <li>• User interface and safety system checks</li>
-                        <li>• Documentation and handover procedures</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-orange-900/30 p-4 rounded-lg border border-orange-500">
-                <h5 className="text-orange-300 font-semibold mb-3">Smart Charging and Load Management</h5>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                  <div>
-                    <h6 className="text-orange-200 font-medium mb-2">Static Load Management:</h6>
-                    <ul className="space-y-1">
-                      <li>• Fixed power allocation per charging point</li>
-                      <li>• Simple current limiting arrangements</li>
-                      <li>• Time-based charging restrictions</li>
-                      <li>• Manual override capabilities</li>
-                      <li>• Basic monitoring and reporting</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h6 className="text-orange-200 font-medium mb-2">Dynamic Load Management:</h6>
-                    <ul className="space-y-1">
-                      <li>• Real-time power allocation adjustment</li>
-                      <li>• Building load monitoring integration</li>
-                      <li>• Automatic charging optimisation</li>
-                      <li>• Grid response capabilities</li>
-                      <li>• Advanced analytics and reporting</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h6 className="text-orange-200 font-medium mb-2">OCPP Implementation:</h6>
-                    <ul className="space-y-1">
-                      <li>• Open Charge Point Protocol compliance</li>
-                      <li>• Vendor-neutral management systems</li>
-                      <li>• Remote monitoring and control</li>
-                      <li>• Firmware update capabilities</li>
-                      <li>• Standardised communication protocols</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Grid Connection Standards: G98 and G99</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-card p-4 rounded-lg mb-4 border-l-4 border-yellow-400">
-                <h4 className="text-yellow-400 font-semibold mb-3">Distribution Network Integration Requirements</h4>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-card p-4 rounded-lg border border-yellow-400">
-                  <h5 className="text-blue-300 font-bold mb-4">G98: Smaller Connections (≤16A per phase)</h5>
-                  <div className="space-y-3">
-                    <div className="bg-blue-900/20 p-3 rounded">
-                      <h6 className="text-blue-200 font-semibold mb-2">Scope and Application:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Domestic single-phase installations</li>
-                        <li>• Small commercial charging points</li>
-                        <li>• Installations up to 11kW (3-phase)</li>
-                        <li>• Type testing requirements</li>
-                        <li>• Simplified connection procedures</li>
-                      </ul>
-                    </div>
-                    <div className="bg-blue-900/20 p-3 rounded">
-                      <h6 className="text-blue-200 font-semibold mb-2">Technical Requirements:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Power quality limits (harmonics, flicker)</li>
-                        <li>• Protection settings and coordination</li>
-                        <li>• Loss of mains detection</li>
-                        <li>• Electromagnetic compatibility (EMC)</li>
-                        <li>• Safety and performance standards</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg border border-orange-500">
-                  <h5 className="text-orange-300 font-bold mb-4">G99: Larger Connections (&gt;16A per phase)</h5>
-                  <div className="space-y-3">
-                    <div className="bg-orange-900/20 p-3 rounded">
-                      <h6 className="text-orange-200 font-semibold mb-2">Enhanced Requirements:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Formal application process required</li>
-                        <li>• Network impact assessment</li>
-                        <li>• Connection agreement necessary</li>
-                        <li>• Comprehensive technical compliance</li>
-                        <li>• Ongoing operational requirements</li>
-                      </ul>
-                    </div>
-                    <div className="bg-orange-900/20 p-3 rounded">
-                      <h6 className="text-orange-200 font-semibold mb-2">Power Quality Management:</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Harmonic distortion limits</li>
-                        <li>• Voltage fluctuation and flicker control</li>
-                        <li>• Power factor requirements</li>
-                        <li>• Frequency response capabilities</li>
-                        <li>• Reactive power management</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Standards Interaction Matrix</CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-card p-4 rounded-lg mb-4 border-l-4 border-yellow-400">
-                <h4 className="text-yellow-400 font-semibold mb-3">How Standards Work Together</h4>
-              </div>
-              
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm border border-gray-600">
-                  <thead>
-                    <tr className="bg-card">
-                      <th className="border border-gray-600 p-3 text-left text-yellow-400">Installation Aspect</th>
-                      <th className="border border-gray-600 p-3 text-left text-blue-300">BS 7671</th>
-                      <th className="border border-gray-600 p-3 text-left text-green-300">IET CoP</th>
-                      <th className="border border-gray-600 p-3 text-left text-purple-300">G98/G99</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-gray-600 p-3 font-medium text-yellow-400">Circuit Protection</td>
-                      <td className="border border-gray-600 p-3">RCD requirements, overcurrent protection, isolation</td>
-                      <td className="border border-gray-600 p-3">Practical guidance, device selection</td>
-                      <td className="border border-gray-600 p-3">Grid interface protection</td>
-                    </tr>
-                    <tr className="bg-card/50">
-                      <td className="border border-gray-600 p-3 font-medium text-yellow-400">Earthing Systems</td>
-                      <td className="border border-gray-600 p-3">PME restrictions, equipotential bonding</td>
-                      <td className="border border-gray-600 p-3">Risk assessment methodology</td>
-                      <td className="border border-gray-600 p-3">DNO earthing requirements</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-600 p-3 font-medium text-yellow-400">Load Management</td>
-                      <td className="border border-gray-600 p-3">Basic safety requirements</td>
-                      <td className="border border-gray-600 p-3">Detailed implementation guidance</td>
-                      <td className="border border-gray-600 p-3">Grid connection limits</td>
-                    </tr>
-                    <tr className="bg-card/50">
-                      <td className="border border-gray-600 p-3 font-medium text-yellow-400">Documentation</td>
-                      <td className="border border-gray-600 p-3">Installation certificates</td>
-                      <td className="border border-gray-600 p-3">Commissioning procedures</td>
-                      <td className="border border-gray-600 p-3">Grid application forms</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-600 p-3 font-medium text-yellow-400">Testing</td>
-                      <td className="border border-gray-600 p-3">Initial verification requirements</td>
-                      <td className="border border-gray-600 p-3">Specific test procedures</td>
-                      <td className="border border-gray-600 p-3">Commissioning tests</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </CardContent>
-          </Card>
-
-          <SingleQuestionQuiz 
-            questions={quizQuestions}
-            title="Knowledge Check: Key Standards"
-          />
-
-          <div className="flex justify-between mt-8">
-            <Link to="../ev-charging-module-1-section-3">
-              <Button variant="outline" className="border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="../ev-charging-module-1-section-5">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-400">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
         </div>
       </div>
+
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Page Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 1.4</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Key Standards: BS 7671, IET CoP, G98/G99
+          </h1>
+          <p className="text-white/80">
+            Essential standards and codes of practice for EV charging
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>BS 7671 722:</strong> EV-specific wiring requirements</li>
+              <li><strong>IET CoP:</strong> Detailed practical guidance</li>
+              <li><strong>G98/G99:</strong> Grid connection procedures</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> 30mA RCD, Type B preferred, PME assessment</li>
+              <li><strong>Use:</strong> G98 for ≤16A, G99 for larger installations</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Apply BS 7671 Section 722 requirements",
+              "Implement IET Code of Practice recommendations",
+              "Navigate G98/G99 grid connection procedures",
+              "Understand interrelationships between standards",
+              "Select appropriate protection arrangements",
+              "Address PME supply considerations"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            BS 7671 Section 722
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Section 722 of BS 7671:2018+A2:2022 contains specific requirements for electric
+              vehicle charging installations, covering AC and DC charging points for all applications.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Scope</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>AC and DC charging point installations</li>
+                  <li>Fixed and portable charging equipment</li>
+                  <li>Domestic, commercial and public</li>
+                  <li>Up to 1000V AC / 1500V DC</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Exclusions</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Vehicle electrical systems</li>
+                  <li>Battery replacement facilities</li>
+                  <li>Trolley bus and railway systems</li>
+                  <li>Industrial trucks and vehicles</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Key Protection Requirements:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>RCD protection:</strong> 30mA maximum, Type A minimum, Type B preferred</li>
+                <li><strong>Voltage drop:</strong> Maximum 5% from origin to charging point</li>
+                <li><strong>Isolation:</strong> Local switch within 2m of charging point</li>
+                <li><strong>Surge protection:</strong> SPD Type 2 recommended</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            RCD and Earthing Requirements
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Correct RCD selection and earthing arrangements are critical for EV charging safety.
+              The type of fault protection depends on the charger design and supply type.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">RCD Types</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Type A:</strong> Minimum requirement, AC + pulsating DC</li>
+                  <li><strong>Type B:</strong> Preferred, detects all fault types</li>
+                  <li><strong>Type F:</strong> Enhanced frequency response</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Earthing Systems</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>TN-S:</strong> Preferred for EV installations</li>
+                  <li><strong>TN-C-S (PME):</strong> Requires risk assessment</li>
+                  <li><strong>TT:</strong> Local earth electrode required</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
+              <p className="text-sm text-white">
+                <strong className="text-elec-yellow">PME Supplies (722.411.4.1):</strong> Risk
+                assessment must consider location, equipment type, extraneous conductive parts,
+                and PEN conductor integrity. Additional measures may include insulation monitoring,
+                enhanced bonding, or alternative earthing.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 3 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            IET Code of Practice
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              The IET Code of Practice for Electric Vehicle Charging Equipment Installation
+              provides comprehensive guidance beyond BS 7671 minimum requirements.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Design Guidance</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Maximum demand calculations</li>
+                  <li>Diversity factors for multiple chargers</li>
+                  <li>Supply capacity verification</li>
+                  <li>Load management recommendations</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Guidance</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Physical mounting and accessibility</li>
+                  <li>Cable management and protection</li>
+                  <li>Weather protection and IP ratings</li>
+                  <li>Commissioning procedures</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Smart Charging Topics:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Static load management:</strong> Fixed power allocation per point</li>
+                <li><strong>Dynamic load management:</strong> Real-time adjustment based on demand</li>
+                <li><strong>OCPP:</strong> Open Charge Point Protocol for interoperability</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Section 4 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Grid Connection: G98 and G99
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              G98 and G99 govern how EV charging installations connect to the distribution
+              network, ensuring grid stability and safety.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div className="p-4 rounded border border-white/10">
+                <p className="text-sm font-medium text-elec-yellow mb-2">G98: ≤16A per phase</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Domestic single-phase installations</li>
+                  <li>Small commercial (up to ~11kW 3-phase)</li>
+                  <li>Simplified connection procedures</li>
+                  <li>Type testing requirements</li>
+                  <li>Notify-and-connect process</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded border border-white/10">
+                <p className="text-sm font-medium text-elec-yellow mb-2">G99: &gt;16A per phase</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Larger commercial installations</li>
+                  <li>Rapid charging stations</li>
+                  <li>Formal application required</li>
+                  <li>Network impact assessment</li>
+                  <li>Connection agreement needed</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Technical Requirements (both):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Power quality limits (harmonics, flicker)</li>
+                <li>Protection settings and coordination</li>
+                <li>Loss of mains detection</li>
+                <li>EMC compliance</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Standards Matrix */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Standards Interaction</h2>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm border border-white/20">
+              <thead>
+                <tr className="bg-white/5">
+                  <th className="border border-white/20 p-3 text-left text-elec-yellow">Aspect</th>
+                  <th className="border border-white/20 p-3 text-left text-white">BS 7671</th>
+                  <th className="border border-white/20 p-3 text-left text-white">IET CoP</th>
+                  <th className="border border-white/20 p-3 text-left text-white">G98/G99</th>
+                </tr>
+              </thead>
+              <tbody className="text-white/90">
+                <tr>
+                  <td className="border border-white/20 p-3 text-elec-yellow/80">Protection</td>
+                  <td className="border border-white/20 p-3">RCD requirements</td>
+                  <td className="border border-white/20 p-3">Device selection</td>
+                  <td className="border border-white/20 p-3">Grid interface</td>
+                </tr>
+                <tr className="bg-white/5">
+                  <td className="border border-white/20 p-3 text-elec-yellow/80">Earthing</td>
+                  <td className="border border-white/20 p-3">PME restrictions</td>
+                  <td className="border border-white/20 p-3">Risk assessment</td>
+                  <td className="border border-white/20 p-3">DNO requirements</td>
+                </tr>
+                <tr>
+                  <td className="border border-white/20 p-3 text-elec-yellow/80">Load</td>
+                  <td className="border border-white/20 p-3">Safety requirements</td>
+                  <td className="border border-white/20 p-3">Implementation</td>
+                  <td className="border border-white/20 p-3">Connection limits</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Application Tips</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Always check latest amendment status for BS 7671</li>
+                <li>Use IET CoP for guidance beyond minimum requirements</li>
+                <li>Submit G98/G99 notifications early in project planning</li>
+                <li>Document PME risk assessments thoroughly</li>
+                <li>Verify charger specifications for RCD compatibility</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Wrong RCD type:</strong> — Check charger requirements for DC detection</li>
+                <li><strong>Ignoring PME risks:</strong> — Always assess external installations</li>
+                <li><strong>Late DNO notification:</strong> — Submit G98/G99 before installation</li>
+                <li><strong>Voltage drop exceeded:</strong> — Calculate for full cable run</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quick Reference */}
+        <div className="mt-6 p-5 rounded-lg bg-transparent">
+          <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+            <div>
+              <p className="font-medium text-white mb-1">BS 7671 Section 722</p>
+              <ul className="space-y-0.5">
+                <li>30mA RCD maximum</li>
+                <li>Type B RCD preferred</li>
+                <li>5% voltage drop limit</li>
+                <li>Local isolation within 2m</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-medium text-white mb-1">Grid Connection</p>
+              <ul className="space-y-0.5">
+                <li>G98: ≤16A per phase</li>
+                <li>G99: &gt;16A per phase</li>
+                <li>DNO notification required</li>
+                <li>Power quality compliance</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Quiz Section */}
+        <section className="mb-10 mt-12">
+          <SingleQuestionQuiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-1-section-3">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-1-section-5">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

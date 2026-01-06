@@ -218,13 +218,13 @@ const AdvancedFundingCalculator = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Calculator className="h-5 w-5 text-elec-yellow" />
             Advanced Education Funding Calculator
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Comprehensive funding analysis including government support, regional variations, and industry-specific options
           </p>
         </CardHeader>
@@ -385,17 +385,17 @@ const AdvancedFundingCalculator = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Total Course Cost:</span>
+                    <span className="text-sm text-white">Total Course Cost:</span>
                     <span className="font-semibold text-lg">£{calculation.totalCost.toLocaleString()}</span>
                   </div>
                   
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Total Funding Available:</span>
+                    <span className="text-sm text-white">Total Funding Available:</span>
                     <span className="font-semibold text-green-400">£{calculation.totalFunding.toLocaleString()}</span>
                   </div>
                   
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Coverage:</span>
+                    <span className="text-sm text-white">Coverage:</span>
                     <Badge variant={calculation.fundingGap === 0 ? "default" : "secondary"}>
                       {Math.round((calculation.totalFunding / calculation.totalCost) * 100)}%
                     </Badge>
@@ -404,36 +404,36 @@ const AdvancedFundingCalculator = () => {
 
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Personal Contribution:</span>
+                    <span className="text-sm text-white">Personal Contribution:</span>
                     <span className={`font-semibold ${calculation.personalContribution > 0 ? 'text-orange-400' : 'text-green-400'}`}>
                       £{calculation.personalContribution.toLocaleString()}
                     </span>
                   </div>
                   
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Monthly Repayment:</span>
+                    <span className="text-sm text-white">Monthly Repayment:</span>
                     <span className="font-semibold">£{Math.round(calculation.monthlyPayment).toLocaleString()}</span>
                   </div>
                   
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Course Duration:</span>
+                    <span className="text-sm text-white">Course Duration:</span>
                     <span className="font-semibold">{calculation.estimatedCompletionTime} year{calculation.estimatedCompletionTime !== 1 ? 's' : ''}</span>
                   </div>
                 </div>
 
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Regional Support:</span>
+                    <span className="text-sm text-white">Regional Support:</span>
                     <span className="font-semibold text-blue-400">£{calculation.regionalSupport.toLocaleString()}</span>
                   </div>
                   
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Industry Funding:</span>
+                    <span className="text-sm text-white">Industry Funding:</span>
                     <span className="font-semibold text-purple-400">£{calculation.industrySpecificFunding.toLocaleString()}</span>
                   </div>
                   
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Repayment Threshold:</span>
+                    <span className="text-sm text-white">Repayment Threshold:</span>
                     <span className="font-semibold">£{calculation.repaymentThreshold.toLocaleString()}</span>
                   </div>
                 </div>
@@ -442,7 +442,7 @@ const AdvancedFundingCalculator = () => {
           </Card>
 
           {/* Funding Sources Breakdown */}
-          <Card className="border-elec-yellow/20 bg-elec-gray">
+          <Card className="border-elec-yellow/20 bg-white/5">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <TrendingUp className="h-5 w-5 text-elec-yellow" />
@@ -457,7 +457,7 @@ const AdvancedFundingCalculator = () => {
                       <h4 className="font-semibold text-elec-yellow">{source.name}</h4>
                       <span className="font-bold text-green-400">£{source.amount.toLocaleString()}</span>
                     </div>
-                    <p className="text-sm text-muted-foreground">{source.description}</p>
+                    <p className="text-sm text-white">{source.description}</p>
                     <Badge variant="outline" className="text-xs">
                       {source.eligibility}
                     </Badge>
@@ -479,7 +479,7 @@ const AdvancedFundingCalculator = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <h4 className="font-semibold mb-2 text-blue-400">Loan Repayment Details</h4>
-                  <ul className="text-sm space-y-1 text-muted-foreground list-disc list-inside">
+                  <ul className="text-sm space-y-1 text-white list-disc list-inside">
                     <li>You only repay when earning over £{calculation.repaymentThreshold.toLocaleString()}</li>
                     <li>Repayments are 9% of income above the threshold</li>
                     <li>Outstanding debt is written off after 30 years</li>
@@ -489,7 +489,7 @@ const AdvancedFundingCalculator = () => {
                 
                 <div>
                   <h4 className="font-semibold mb-2 text-blue-400">Application Process</h4>
-                  <ul className="text-sm space-y-1 text-muted-foreground list-disc list-inside">
+                  <ul className="text-sm space-y-1 text-white list-disc list-inside">
                     <li>Apply for Advanced Learner Loan through Student Finance England</li>
                     <li>Confirm employer contribution agreements</li>
                     <li>Check regional funding eligibility with local authorities</li>
@@ -501,7 +501,7 @@ const AdvancedFundingCalculator = () => {
               {calculation.fundingGap > 0 && (
                 <div className="space-y-2">
                   <h4 className="font-semibold mb-2 text-orange-400">Funding Gap Solutions</h4>
-                  <ul className="text-sm space-y-1 text-muted-foreground list-disc list-inside">
+                  <ul className="text-sm space-y-1 text-white list-disc list-inside">
                     <li>Consider payment plans with training providers</li>
                     <li>Look into hardship funds and bursaries</li>
                     <li>Explore charity and foundation grants</li>

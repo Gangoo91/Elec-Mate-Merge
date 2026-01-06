@@ -186,34 +186,32 @@ const ResourcesTab = () => {
     }
   };
 
-  const getCategoryColor = (category: string) => {
+  const getCategoryConfig = (category: string) => {
     switch (category) {
-      case "BS7671": return "bg-blue-500/20 text-blue-400";
-      case "Testing": return "bg-green-500/20 text-green-400";
-      case "Safety": return "bg-red-500/20 text-red-400";
-      case "Equipment": return "bg-purple-500/20 text-purple-400";
-      case "Wago": return "bg-orange-500/20 text-orange-400";
-      default: return "bg-gray-500/20 text-gray-400";
+      case "BS7671": return { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/30', icon: <BookOpen className="h-4 w-4" /> };
+      case "Testing": return { bg: 'bg-green-500/10', text: 'text-green-400', border: 'border-green-500/30', icon: <Wrench className="h-4 w-4" /> };
+      case "Safety": return { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/30', icon: <Shield className="h-4 w-4" /> };
+      case "Equipment": return { bg: 'bg-purple-500/10', text: 'text-purple-400', border: 'border-purple-500/30', icon: <Calculator className="h-4 w-4" /> };
+      case "Wago": return { bg: 'bg-orange-500/10', text: 'text-orange-400', border: 'border-orange-500/30', icon: <Cable className="h-4 w-4" /> };
+      default: return { bg: 'bg-white/10', text: 'text-white/70', border: 'border-white/20', icon: <FileText className="h-4 w-4" /> };
     }
   };
 
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case "BS7671": return <BookOpen className="h-4 w-4" />;
-      case "Testing": return <Wrench className="h-4 w-4" />;
-      case "Safety": return <Shield className="h-4 w-4" />;
-      case "Equipment": return <Calculator className="h-4 w-4" />;
-      case "Wago": return <Cable className="h-4 w-4" />;
-      default: return <FileText className="h-4 w-4" />;
+  const getTypeConfig = (type: string) => {
+    switch (type) {
+      case "document": return { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/30' };
+      case "video": return { bg: 'bg-purple-500/10', text: 'text-purple-400', border: 'border-purple-500/30' };
+      case "calculator": return { bg: 'bg-green-500/10', text: 'text-green-400', border: 'border-green-500/30' };
+      case "guide": return { bg: 'bg-cyan-500/10', text: 'text-cyan-400', border: 'border-cyan-500/30' };
+      case "standard": return { bg: 'bg-elec-yellow/10', text: 'text-elec-yellow', border: 'border-elec-yellow/30' };
+      default: return { bg: 'bg-white/10', text: 'text-white/70', border: 'border-white/20' };
     }
   };
 
   const handleResourceClick = (resource: Resource) => {
     if (resource.downloadUrl) {
-      // Handle download
       window.open(resource.downloadUrl, '_blank');
     } else if (resource.externalUrl) {
-      // Handle external link
       window.open(resource.externalUrl, '_blank');
     }
   };
@@ -227,136 +225,181 @@ const ResourcesTab = () => {
   }, {} as Record<string, Resource[]>);
 
   return (
-    <div className="space-y-6">
-      <Card className="border-cyan-500/30 bg-gradient-to-br from-cyan-500/10 to-blue-500/10">
-        <CardHeader>
-          <CardTitle className="text-cyan-400 flex items-center gap-2">
-            <BookOpen className="h-5 w-5" />
+    <div className="space-y-6 animate-fade-in">
+      {/* Hero Header Card */}
+      <Card className="bg-gradient-to-br from-white/5 to-elec-card border-cyan-500/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-cyan-500/20 to-cyan-500/5 border border-cyan-500/30">
+              <BookOpen className="h-5 w-5 text-cyan-400" />
+            </div>
             BS7671 Testing Resources Library
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground mb-4">
-            Comprehensive collection of resources, guides, standards, and tools to support your 
-            BS7671 inspection and testing work. Includes detailed Wago connector guidance and 
+        <CardContent className="relative space-y-6">
+          <p className="text-white/70">
+            Comprehensive collection of resources, guides, standards, and tools to support your
+            BS7671 inspection and testing work. Includes detailed Wago connector guidance and
             professional testing procedures.
           </p>
-          
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            {Object.keys(groupedResources).map((category) => (
-              <div key={category} className="text-center">
-                <div className={`p-3 rounded-lg ${getCategoryColor(category)} mb-2`}>
-                  {getCategoryIcon(category)}
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+            {Object.keys(groupedResources).map((category) => {
+              const config = getCategoryConfig(category);
+              return (
+                <div key={category} className="p-4 rounded-xl bg-white/10 border border-white/10 text-center hover:border-white/20 transition-colors">
+                  <div className={`p-2.5 rounded-lg ${config.bg} border ${config.border} inline-block mb-2`}>
+                    <span className={config.text}>{config.icon}</span>
+                  </div>
+                  <div className="text-sm font-medium text-white">{category}</div>
+                  <div className="text-xs text-white/60">
+                    {groupedResources[category].length} resources
+                  </div>
                 </div>
-                <div className="text-sm font-medium">{category}</div>
-                <div className="text-xs text-muted-foreground">
-                  {groupedResources[category].length} resources
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </CardContent>
       </Card>
 
-      {Object.entries(groupedResources).map(([category, categoryResources]) => (
-        <div key={category} className="space-y-4">
-          <div className="flex items-center gap-2">
-            <div className={`p-2 rounded-lg ${getCategoryColor(category)}`}>
-              {getCategoryIcon(category)}
+      {/* Resource Categories */}
+      {Object.entries(groupedResources).map(([category, categoryResources]) => {
+        const categoryConfig = getCategoryConfig(category);
+        return (
+          <div key={category} className="space-y-4">
+            <div className="flex items-center gap-3">
+              <div className={`p-2.5 rounded-xl ${categoryConfig.bg} border ${categoryConfig.border}`}>
+                <span className={categoryConfig.text}>{categoryConfig.icon}</span>
+              </div>
+              <h3 className="text-xl font-semibold text-white">{category} Resources</h3>
+              <Badge className={`${categoryConfig.bg} ${categoryConfig.text} border ${categoryConfig.border}`}>
+                {categoryResources.length}
+              </Badge>
             </div>
-            <h3 className="text-xl font-semibold">{category} Resources</h3>
-            <Badge variant="secondary">{categoryResources.length}</Badge>
-          </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {categoryResources.map((resource) => (
-              <Card 
-                key={resource.id} 
-                className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-colors cursor-pointer"
-                onClick={() => handleResourceClick(resource)}
-              >
-                <CardHeader className="pb-3">
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-start gap-3">
-                      <div className={`p-2 rounded-lg ${getCategoryColor(resource.category)}`}>
-                        {getResourceIcon(resource.type)}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              {categoryResources.map((resource) => {
+                const typeConfig = getTypeConfig(resource.type);
+                return (
+                  <Card
+                    key={resource.id}
+                    className="bg-gradient-to-br from-white/5 to-elec-card border-white/10 hover:border-elec-yellow/30 transition-all duration-300 cursor-pointer group overflow-hidden relative"
+                    onClick={() => handleResourceClick(resource)}
+                  >
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-elec-yellow/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <CardHeader className="pb-3 relative">
+                      <div className="flex items-start gap-3">
+                        <div className={`p-2.5 rounded-xl ${typeConfig.bg} border ${typeConfig.border} flex-shrink-0`}>
+                          <span className={typeConfig.text}>{getResourceIcon(resource.type)}</span>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <CardTitle className="text-white text-base leading-tight">
+                            {resource.title}
+                          </CardTitle>
+                          <p className="text-sm text-white/60 mt-1">
+                            {resource.description}
+                          </p>
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <CardTitle className="text-white text-base leading-tight">
-                          {resource.title}
-                        </CardTitle>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          {resource.description}
-                        </p>
+                    </CardHeader>
+
+                    <CardContent className="pt-0 relative">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3 text-xs text-white/80">
+                          {resource.fileSize && (
+                            <span className="px-2 py-1 rounded-md bg-white/5">{resource.fileSize}</span>
+                          )}
+                          {resource.duration && (
+                            <span className="px-2 py-1 rounded-md bg-white/5">{resource.duration}</span>
+                          )}
+                        </div>
+
+                        <Button
+                          size="sm"
+                          className="h-9 bg-elec-yellow/10 hover:bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30 touch-manipulation"
+                        >
+                          {resource.downloadUrl ? (
+                            <>
+                              <Download className="h-3.5 w-3.5 mr-1.5" />
+                              Download
+                            </>
+                          ) : (
+                            <>
+                              <ExternalLink className="h-3.5 w-3.5 mr-1.5" />
+                              Open
+                            </>
+                          )}
+                        </Button>
                       </div>
-                    </div>
-                  </div>
-                </CardHeader>
-                
-                <CardContent className="pt-0">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                      {resource.fileSize && (
-                        <span>{resource.fileSize}</span>
-                      )}
-                      {resource.duration && (
-                        <span>{resource.duration}</span>
-                      )}
-                    </div>
-                    
-                    <Button size="sm" variant="outline" className="border-elec-yellow/30 hover:bg-elec-yellow/10">
-                      {resource.downloadUrl ? (
-                        <>
-                          <Download className="h-4 w-4 mr-2" />
-                          Download
-                        </>
-                      ) : (
-                        <>
-                          <ExternalLink className="h-4 w-4 mr-2" />
-                          Open
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
 
       {/* Featured Wago Resources Section */}
-      <Card className="border-orange-500/30 bg-orange-500/5">
-        <CardHeader>
-          <CardTitle className="text-orange-400 flex items-center gap-2">
-            <Cable className="h-5 w-5" />
+      <Card className="bg-gradient-to-br from-white/5 to-elec-card border-orange-500/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-orange-500/20 to-orange-500/5 border border-orange-500/30">
+              <Cable className="h-5 w-5 text-orange-400" />
+            </div>
             Featured: Wago Connector Resources
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground mb-4">
-            Specially curated resources for using Wago connectors in testing applications. 
+        <CardContent className="relative space-y-4">
+          <p className="text-white/70">
+            Specially curated resources for using Wago connectors in testing applications.
             These resources will help you make safe, reliable connections during BS7671 testing procedures.
           </p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-orange-500/10 rounded-lg p-4 border border-orange-500/20">
-              <h4 className="font-semibold text-orange-300 mb-2">Quick Reference</h4>
-              <ul className="space-y-1 text-sm text-orange-100">
-                <li>• 221 Series: General testing connections</li>
-                <li>• 773 Series: Test point access</li>
-                <li>• 222 Series: Permanent installations</li>
-                <li>• Selection guide and troubleshooting</li>
+            <div className="p-4 rounded-xl bg-white/10 border border-orange-500/20">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 rounded-lg bg-orange-500/20">
+                  <BookOpen className="h-4 w-4 text-orange-400" />
+                </div>
+                <h4 className="font-semibold text-white">Quick Reference</h4>
+              </div>
+              <ul className="space-y-2">
+                {[
+                  "221 Series: General testing connections",
+                  "773 Series: Test point access",
+                  "222 Series: Permanent installations",
+                  "Selection guide and troubleshooting"
+                ].map((item, index) => (
+                  <li key={index} className="flex items-start gap-2 text-sm text-white/70">
+                    <span className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-1.5 flex-shrink-0" />
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
-            
-            <div className="bg-orange-500/10 rounded-lg p-4 border border-orange-500/20">
-              <h4 className="font-semibold text-orange-300 mb-2">Safety Benefits</h4>
-              <ul className="space-y-1 text-sm text-orange-100">
-                <li>• No conductor damage during testing</li>
-                <li>• Reliable, repeatable connections</li>
-                <li>• Visual verification of connection</li>
-                <li>• Reduced risk of short circuits</li>
+
+            <div className="p-4 rounded-xl bg-white/10 border border-green-500/20">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 rounded-lg bg-green-500/20">
+                  <Shield className="h-4 w-4 text-green-400" />
+                </div>
+                <h4 className="font-semibold text-white">Safety Benefits</h4>
+              </div>
+              <ul className="space-y-2">
+                {[
+                  "No conductor damage during testing",
+                  "Reliable, repeatable connections",
+                  "Visual verification of connection",
+                  "Reduced risk of short circuits"
+                ].map((item, index) => (
+                  <li key={index} className="flex items-start gap-2 text-sm text-white/70">
+                    <span className="w-1.5 h-1.5 bg-green-400 rounded-full mt-1.5 flex-shrink-0" />
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -364,17 +407,22 @@ const ResourcesTab = () => {
       </Card>
 
       {/* Disclaimer */}
-      <Card className="border-amber-500/30 bg-amber-500/10">
-        <CardContent className="pt-6">
-          <div className="flex items-start gap-3">
-            <AlertTriangle className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
-            <div>
-              <h4 className="font-medium text-amber-300 mb-2">Important Disclaimer</h4>
-              <p className="text-sm text-amber-100">
-                Always ensure you have the latest versions of standards and guidance documents. 
-                Some external links may require subscription or purchase. Verify the authenticity 
-                of all downloaded resources and ensure they are from official sources.
-              </p>
+      <Card className="bg-gradient-to-br from-white/5 to-elec-card border-elec-yellow/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardContent className="pt-6 relative">
+          <div className="p-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/30">
+            <div className="flex items-start gap-3">
+              <div className="p-2 rounded-lg bg-elec-yellow/20 flex-shrink-0">
+                <AlertTriangle className="h-4 w-4 text-elec-yellow" />
+              </div>
+              <div>
+                <h4 className="font-semibold text-elec-yellow mb-2">Important Disclaimer</h4>
+                <p className="text-sm text-white/70">
+                  Always ensure you have the latest versions of standards and guidance documents.
+                  Some external links may require subscription or purchase. Verify the authenticity
+                  of all downloaded resources and ensure they are from official sources.
+                </p>
+              </div>
             </div>
           </div>
         </CardContent>

@@ -91,10 +91,10 @@ const SelfCareReminders = () => {
       <CardContent className="space-y-4">
         {reminders.length === 0 ? (
           <div className="text-center py-6">
-            <Clock className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <p className="text-muted-foreground mb-4">No reminders set yet</p>
+            <Clock className="h-12 w-12 text-white/80 mx-auto mb-4" />
+            <p className="text-white/80 mb-4">No reminders set yet</p>
             <div className="space-y-2">
-              <p className="text-sm text-muted-foreground">Try these suggestions:</p>
+              <p className="text-sm text-white/80">Try these suggestions:</p>
               {defaultReminders.map((reminder, index) => (
                 <Button
                   key={index}
@@ -125,14 +125,14 @@ const SelfCareReminders = () => {
                   />
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className={reminder.isActive ? 'text-foreground' : 'text-muted-foreground'}>
+                      <span className={reminder.isActive ? 'text-foreground' : 'text-white/80'}>
                         {reminder.title}
                       </span>
                       {isCompletedToday(reminder) && (
                         <CheckCircle className="h-4 w-4 text-green-400" />
                       )}
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <div className="flex items-center gap-2 text-xs text-white/80">
                       <span>{reminder.time}</span>
                       <Badge variant="outline" className="text-xs">
                         {reminder.frequency}

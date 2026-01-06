@@ -67,8 +67,7 @@ const InstrumentationModule1Section4 = () => {
       ],
       correct: 1,
       explanation: "Pharmaceutical manufacturing requires strict adherence to ISO standards (including ISO/IEC 17025) to ensure product safety, efficacy, and regulatory approval from authorities like MHRA."
-    }
-  ];
+  }  ];
 
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">

@@ -159,12 +159,12 @@ const QuickCalculationPresets: React.FC<QuickCalculationPresetsProps> = ({
       case 'industrial':
         return 'bg-orange-500/20 text-orange-300 border-orange-500/30';
       default:
-        return 'bg-gray-500/20 text-gray-300 border-gray-500/30';
+        return 'bg-white/10 text-white/80 border-white/30';
     }
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border-elec-yellow/20 bg-white/5">
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-sm">
           <Wrench className="h-4 w-4" />
@@ -176,7 +176,7 @@ const QuickCalculationPresets: React.FC<QuickCalculationPresetsProps> = ({
           {presets.map((preset) => (
             <div
               key={preset.id}
-              className="p-3 rounded border border-elec-yellow/10 bg-elec-dark/30 hover:bg-elec-dark/50 transition-colors cursor-pointer"
+              className="p-3 rounded border border-elec-yellow/10 bg-white/10 hover:bg-white/10 transition-colors cursor-pointer"
               onClick={() => onPresetSelect(preset)}
             >
               <div className="flex items-start justify-between mb-2">
@@ -189,7 +189,7 @@ const QuickCalculationPresets: React.FC<QuickCalculationPresetsProps> = ({
                 </Badge>
               </div>
               
-              <p className="text-xs text-muted-foreground mb-2">
+              <p className="text-xs text-white mb-2">
                 {preset.description}
               </p>
               

@@ -35,13 +35,13 @@ const EmergencyLightingModule6Section1 = () => {
     link.href = canonicalHref;
   }, []);
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="../emergency-lighting-module-6">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 6
@@ -50,10 +50,10 @@ const EmergencyLightingModule6Section1 = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <BookOpen className="h-8 w-8 text-yellow-400 drop-shadow-lg" />
+            <BookOpen className="h-8 w-8 text-elec-yellow drop-shadow-lg" />
             <Badge 
               variant="secondary" 
-              className="bg-yellow-400/10 text-yellow-400 border-yellow-400/30 font-semibold text-sm px-3 py-1"
+              className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 font-semibold text-sm px-3 py-1"
             >
               Module 6 - Section 1
             </Badge>
@@ -99,13 +99,13 @@ const EmergencyLightingModule6Section1 = () => {
           {/* Navigation */}
           <div className="flex justify-between pt-8">
             <Link to="../emergency-lighting-module-6">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card/80 hover:text-white">
+              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-transparent/80 hover:text-white">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Module 6
               </Button>
             </Link>
             <Link to="../emergency-lighting-module-6-section-2">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
+              <Button className="bg-elec-yellow text-black hover:bg-yellow-600">
                 Next Section
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>

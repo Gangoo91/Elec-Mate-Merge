@@ -18,9 +18,12 @@ import {
   FileText,
   Brain,
   Calendar,
-  CheckCircle2
+  CheckCircle2,
+  Gauge
 } from 'lucide-react';
 import { LearningSection } from '../LearningHub';
+import { GN3AcceptanceLimits } from './gn3-reference/GN3AcceptanceLimits';
+import { GN3QuickQuiz } from './gn3-reference/GN3QuickQuiz';
 
 interface LearningHubOverviewProps {
   onNavigateToSection: (section: LearningSection) => void;
@@ -178,6 +181,27 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
             </Card>
           );
         })}
+      </div>
+
+      {/* GN3 Quick Reference Section */}
+      <div className="max-w-6xl mx-auto px-3 sm:px-4">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="p-2 bg-elec-yellow/10 rounded-lg border border-elec-yellow/20">
+            <Gauge className="h-5 w-5 text-elec-yellow" />
+          </div>
+          <div>
+            <h2 className="text-xl font-bold text-white">Quick Reference</h2>
+            <p className="text-sm text-white/70">Essential GN3 values & test your knowledge</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+          {/* Acceptance Limits */}
+          <GN3AcceptanceLimits />
+
+          {/* Quick Quiz */}
+          <GN3QuickQuiz questionCount={5} />
+        </div>
       </div>
 
       {/* Amendment 3 Info Section */}

@@ -66,9 +66,9 @@ const PfcTablesSection = () => (
             <p className="font-medium text-blue-400 mb-3">BS 88 Fuses - 0.4 Second Disconnection:</p>
             <div className="space-y-2">
               <div className="grid grid-cols-3 gap-2 font-mono text-xs">
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">Rating</div>
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">Min PFC</div>
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">Multiplier</div>
+                <div className="font-medium text-foreground border-b border-white/40 pb-1">Rating</div>
+                <div className="font-medium text-foreground border-b border-white/40 pb-1">Min PFC</div>
+                <div className="font-medium text-foreground border-b border-white/40 pb-1">Multiplier</div>
                 <div>6A</div><div>43A</div><div>7.2 × In</div>
                 <div>10A</div><div>72A</div><div>7.2 × In</div>
                 <div>16A</div><div>115A</div><div>7.2 × In</div>
@@ -87,9 +87,9 @@ const PfcTablesSection = () => (
             <p className="font-medium text-blue-400 mb-3">BS 1361 Fuses - 0.4 Second Disconnection:</p>
             <div className="space-y-2">
               <div className="grid grid-cols-3 gap-2 font-mono text-xs">
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">Rating</div>
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">Min PFC</div>
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">Multiplier</div>
+                <div className="font-medium text-foreground border-b border-white/40 pb-1">Rating</div>
+                <div className="font-medium text-foreground border-b border-white/40 pb-1">Min PFC</div>
+                <div className="font-medium text-foreground border-b border-white/40 pb-1">Multiplier</div>
                 <div>5A</div><div>23A</div><div>4.6 × In</div>
                 <div>15A</div><div>69A</div><div>4.6 × In</div>
                 <div>20A</div><div>92A</div><div>4.6 × In</div>
@@ -108,9 +108,9 @@ const PfcTablesSection = () => (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <div className="grid grid-cols-3 gap-2 font-mono text-xs">
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">Rating</div>
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">Min PFC</div>
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">Multiplier</div>
+                <div className="font-medium text-foreground border-b border-white/40 pb-1">Rating</div>
+                <div className="font-medium text-foreground border-b border-white/40 pb-1">Min PFC</div>
+                <div className="font-medium text-foreground border-b border-white/40 pb-1">Multiplier</div>
                 <div>5A</div><div>35A</div><div>7.0 × In</div>
                 <div>15A</div><div>105A</div><div>7.0 × In</div>
                 <div>20A</div><div>140A</div><div>7.0 × In</div>
@@ -145,10 +145,10 @@ const PfcTablesSection = () => (
             <div className="space-y-2">
               <p className="text-xs text-white/80 mb-2">RCBOs combine MCB and RCD functions - must meet both requirements:</p>
               <div className="grid grid-cols-4 gap-2 font-mono text-xs">
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">Rating</div>
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">Type B</div>
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">Type C</div>
-                <div className="font-medium text-foreground border-b border-gray-600 pb-1">RCD Test</div>
+                <div className="font-medium text-foreground border-b border-white/40 pb-1">Rating</div>
+                <div className="font-medium text-foreground border-b border-white/40 pb-1">Type B</div>
+                <div className="font-medium text-foreground border-b border-white/40 pb-1">Type C</div>
+                <div className="font-medium text-foreground border-b border-white/40 pb-1">RCD Test</div>
                 <div>6A</div><div>30A</div><div>60A</div><div>150A</div>
                 <div>10A</div><div>50A</div><div>100A</div><div>150A</div>
                 <div>16A</div><div>80A</div><div>160A</div><div>150A</div>

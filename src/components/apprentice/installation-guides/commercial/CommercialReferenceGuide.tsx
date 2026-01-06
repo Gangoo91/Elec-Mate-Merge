@@ -130,7 +130,7 @@ const CommercialReferenceGuide = () => {
   return (
     <div className="space-y-6">
       {/* Search Bar */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardContent className="p-4">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-300 h-4 w-4" />
@@ -166,7 +166,7 @@ const CommercialReferenceGuide = () => {
 
         {/* Commercial Cables Tab */}
         <TabsContent value="cables" className="space-y-4">
-          <Card className="border-elec-yellow/30 bg-elec-gray">
+          <Card className="border-elec-yellow/30 bg-white/5">
             <CardHeader>
               <CardTitle className="text-elec-yellow flex items-center gap-2">
                 <Cable className="h-6 w-6" />
@@ -175,7 +175,7 @@ const CommercialReferenceGuide = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               {filteredCables.map((cable, index) => (
-                <div key={index} className="bg-elec-dark/40 p-4 rounded-lg border border-elec-yellow/20">
+                <div key={index} className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
                   <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3 mb-3">
                     <div className="flex-1">
                       <h4 className="font-medium text-white text-base mb-2">{cable.cable}</h4>
@@ -213,7 +213,7 @@ const CommercialReferenceGuide = () => {
 
         {/* Emergency Lighting Tab */}
         <TabsContent value="emergency" className="space-y-4">
-          <Card className="border-green-500/30 bg-elec-gray">
+          <Card className="border-green-500/30 bg-white/5">
             <CardHeader>
               <CardTitle className="text-green-300 flex items-center gap-2">
                 <Lightbulb className="h-6 w-6" />
@@ -250,7 +250,7 @@ const CommercialReferenceGuide = () => {
 
         {/* Fire Alarm Tab */}
         <TabsContent value="fire-alarm" className="space-y-4">
-          <Card className="border-red-500/30 bg-elec-gray">
+          <Card className="border-red-500/30 bg-white/5">
             <CardHeader>
               <CardTitle className="text-red-300 flex items-center gap-2">
                 <AlertCircle className="h-6 w-6" />
@@ -290,7 +290,7 @@ const CommercialReferenceGuide = () => {
 
         {/* Standards Tab */}
         <TabsContent value="standards" className="space-y-4">
-          <Card className="border-purple-500/30 bg-elec-gray">
+          <Card className="border-purple-500/30 bg-white/5">
             <CardHeader>
               <CardTitle className="text-purple-300 flex items-center gap-2">
                 <BookOpen className="h-6 w-6" />

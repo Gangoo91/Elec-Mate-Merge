@@ -153,12 +153,12 @@ const InspectionItemRow = ({
               {sectionItem.clause}
             </Badge>
           ) : (
-            <Badge variant="secondary" className="text-sm md:text-xs font-mono px-2 py-0.5 bg-gray-500/10 border-gray-500/30 text-gray-400">
+            <Badge variant="secondary" className="text-sm md:text-xs font-mono px-2 py-0.5 bg-white/5 border-white/10 text-white/70">
               No Specific Reg
             </Badge>
           )}
           {sectionItem.description && (
-            <p className={`text-xs ${(isC1OrC2 || isC3) ? 'text-gray-200' : 'text-muted-foreground'}`}>{sectionItem.description}</p>
+            <p className={`text-xs ${(isC1OrC2 || isC3) ? 'text-white/80' : 'text-muted-foreground'}`}>{sectionItem.description}</p>
           )}
         </div>
       </TableCell>
@@ -174,7 +174,7 @@ const InspectionItemRow = ({
           placeholder="Notes..."
           value={localNotes}
           onChange={(e) => handleNotesChange(e.target.value)}
-          className={`text-xs ${isCritical ? 'bg-black text-foreground placeholder-gray-400 border-gray-600' : ''}`}
+          className={`text-xs ${isCritical ? 'bg-black text-foreground placeholder-white/70 border-white/15' : ''}`}
         />
       </TableCell>
       <TableCell>

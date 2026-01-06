@@ -87,14 +87,14 @@ const RegulationsReference = () => {
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-6">
         <h1 className="text-3xl font-bold tracking-tight mb-4">BS 7671 Regulations Quick Reference</h1>
-        <p className="text-muted-foreground text-center max-w-2xl mb-4">
+        <p className="text-white/70 text-center max-w-2xl mb-4">
           Quick access to key sections of BS7671:2018+A3:2024 (18th Edition) wiring regulations
         </p>
         <SmartBackButton />
       </div>
 
       <div className="relative mb-6">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 h-4 w-4" />
         <Input
           placeholder="Search regulations..."
           value={searchTerm}
@@ -105,7 +105,7 @@ const RegulationsReference = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {quickReference.map((item, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-colors">
+          <Card key={index} className="border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 hover:border-elec-yellow/40 transition-colors">
             <CardHeader className="pb-2">
               <div className="flex items-center gap-2">
                 {item.icon}
@@ -113,7 +113,7 @@ const RegulationsReference = () => {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-xs text-muted-foreground">{item.description}</p>
+              <p className="text-xs text-white/70">{item.description}</p>
             </CardContent>
           </Card>
         ))}
@@ -121,22 +121,22 @@ const RegulationsReference = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {filteredRegulations.map((regulation, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+          <Card key={index} className="border-elec-yellow/20 bg-white/5">
             <CardHeader>
               <div className="flex items-center justify-between mb-2">
                 <Badge variant="outline" className="border-elec-yellow/40 text-elec-yellow">
                   {regulation.section}
                 </Badge>
-                <span className="text-xs text-muted-foreground">{regulation.reference}</span>
+                <span className="text-xs text-white/60">{regulation.reference}</span>
               </div>
               <CardTitle className="text-xl text-elec-yellow">{regulation.title}</CardTitle>
-              <p className="text-muted-foreground text-sm">{regulation.description}</p>
+              <p className="text-white/70 text-sm">{regulation.description}</p>
             </CardHeader>
             <CardContent>
               <h4 className="font-semibold text-white mb-2">Key Points:</h4>
               <ul className="space-y-1">
                 {regulation.keyPoints.map((point, pointIndex) => (
-                  <li key={pointIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                  <li key={pointIndex} className="text-sm text-white/70 flex items-start gap-2">
                     <span className="text-elec-yellow mt-1">•</span>
                     {point}
                   </li>
@@ -147,14 +147,14 @@ const RegulationsReference = () => {
         ))}
       </div>
 
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
+      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">Important Notice</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground text-sm">
-            This is a quick reference guide only. Always consult the full BS7671:2018+A3:2024 regulations 
-            and relevant guidance notes for complete requirements. Ensure you have the latest version of the 
+          <p className="text-white/70 text-sm">
+            This is a quick reference guide only. Always consult the full BS7671:2018+A3:2024 regulations
+            and relevant guidance notes for complete requirements. Ensure you have the latest version of the
             regulations as they are updated periodically.
           </p>
         </CardContent>

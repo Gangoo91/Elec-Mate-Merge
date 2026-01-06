@@ -177,19 +177,19 @@ const AM2Module4Section3 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
+      <div className="border-b border-white/10 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between gap-2">
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-2 sm:p-0 text-sm sm:text-base" asChild>
+            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
               <Link to="..">
                 <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
                 <span className="hidden xs:inline">Back to Module 4</span>
                 <span className="xs:hidden">Back</span>
               </Link>
             </Button>
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-2 sm:p-0 text-sm sm:text-base" asChild>
+            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
               <Link to="../section4">
                 <span className="hidden xs:inline">Module 4 Section 4</span>
                 <span className="xs:hidden">Section 4</span>
@@ -208,10 +208,10 @@ const AM2Module4Section3 = () => {
             <FileText className="w-4 h-4" />
             Module 4 – Section 3
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4 sm:mb-6 leading-tight">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6 leading-tight">
             Recording Test Results on Certification
           </h1>
-          <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
+          <p className="text-sm sm:text-base text-white mb-6 sm:mb-8 leading-relaxed">
             Testing in AM2 isn't finished until the results are recorded on the correct certificates. Assessors expect you to fill in documentation (Electrical Installation Certificate and schedule of test results) clearly, accurately, and in full. This proves you can hand over safe, professional paperwork to a client in real life.
           </p>
         </div>
@@ -237,16 +237,16 @@ const AM2Module4Section3 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground mb-4">
+            <p className="text-xs sm:text-sm text-white mb-4">
               By the end of this section, you should be able to:
             </p>
-            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
+            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Correctly complete test certificates used in AM2
@@ -272,7 +272,7 @@ const AM2Module4Section3 = () => {
         </Card>
 
         {/* Paperwork Requirements */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <ClipboardList className="w-5 h-5" />
@@ -312,7 +312,7 @@ const AM2Module4Section3 = () => {
         />
 
         {/* What Assessors Look For */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Target className="w-5 h-5" />
@@ -418,7 +418,7 @@ const AM2Module4Section3 = () => {
         />
 
         {/* Advanced Certificate Completion Techniques */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Award className="w-5 h-5" />
@@ -500,7 +500,7 @@ const AM2Module4Section3 = () => {
         </Card>
 
         {/* Recording Realistic Values */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Calculator className="w-5 h-5" />
@@ -562,7 +562,7 @@ const AM2Module4Section3 = () => {
         </Card>
 
         {/* Strategies for Success */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <TrendingUp className="w-5 h-5" />
@@ -642,7 +642,7 @@ const AM2Module4Section3 = () => {
         />
 
         {/* Troubleshooting Documentation Issues */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Calculator className="w-5 h-5" />
@@ -655,17 +655,17 @@ const AM2Module4Section3 = () => {
                 <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-800/30 rounded-lg p-4">
                   <h4 className="font-medium text-yellow-800 dark:text-yellow-200 mb-3 text-sm sm:text-base">Common Documentation Problems:</h4>
                   <div className="space-y-3 text-xs sm:text-sm">
-                    <div className="bg-background/50 rounded p-2">
-                      <strong className="text-foreground">Problem:</strong> <span className="text-muted-foreground">Values don't match between different test sections</span><br/>
-                      <strong className="text-foreground">Solution:</strong> <span className="text-muted-foreground">Cross-reference all entries, ensure consistency</span>
+                    <div className="bg-[#1a1a1a]/50 rounded p-2">
+                      <strong className="text-white">Problem:</strong> <span className="text-white">Values don't match between different test sections</span><br/>
+                      <strong className="text-white">Solution:</strong> <span className="text-white">Cross-reference all entries, ensure consistency</span>
                     </div>
-                    <div className="bg-background/50 rounded p-2">
-                      <strong className="text-foreground">Problem:</strong> <span className="text-muted-foreground">Uncertain about which sections apply</span><br/>
-                      <strong className="text-foreground">Solution:</strong> <span className="text-muted-foreground">Review circuit design, consult GN3 guidance</span>
+                    <div className="bg-[#1a1a1a]/50 rounded p-2">
+                      <strong className="text-white">Problem:</strong> <span className="text-white">Uncertain about which sections apply</span><br/>
+                      <strong className="text-white">Solution:</strong> <span className="text-white">Review circuit design, consult GN3 guidance</span>
                     </div>
-                    <div className="bg-background/50 rounded p-2">
-                      <strong className="text-foreground">Problem:</strong> <span className="text-muted-foreground">Running out of time for paperwork</span><br/>
-                      <strong className="text-foreground">Solution:</strong> <span className="text-muted-foreground">Record as you test, allocate specific time slots</span>
+                    <div className="bg-[#1a1a1a]/50 rounded p-2">
+                      <strong className="text-white">Problem:</strong> <span className="text-white">Running out of time for paperwork</span><br/>
+                      <strong className="text-white">Solution:</strong> <span className="text-white">Record as you test, allocate specific time slots</span>
                     </div>
                   </div>
                 </div>
@@ -730,7 +730,7 @@ const AM2Module4Section3 = () => {
         </Card>
 
         {/* Real-World Examples */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
@@ -791,9 +791,9 @@ const AM2Module4Section3 = () => {
             
             <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-background/50 rounded-lg p-3 sm:p-4">
-                  <h4 className="font-medium text-foreground mb-2 text-sm sm:text-base">Documentation Standards:</h4>
-                  <ul className="text-xs sm:text-sm text-muted-foreground space-y-1">
+                <div className="bg-[#1a1a1a]/50 rounded-lg p-3 sm:p-4">
+                  <h4 className="font-medium text-white mb-2 text-sm sm:text-base">Documentation Standards:</h4>
+                  <ul className="text-xs sm:text-sm text-white space-y-1">
                     <li>• All certificates must be fully completed</li>
                     <li>• Professional handwriting standards enforced</li>
                     <li>• Realistic values that match installation type</li>
@@ -801,9 +801,9 @@ const AM2Module4Section3 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-background/50 rounded-lg p-3 sm:p-4">
-                  <h4 className="font-medium text-foreground mb-2 text-sm sm:text-base">Assessment Focus Areas:</h4>
-                  <ul className="text-xs sm:text-sm text-muted-foreground space-y-1">
+                <div className="bg-[#1a1a1a]/50 rounded-lg p-3 sm:p-4">
+                  <h4 className="font-medium text-white mb-2 text-sm sm:text-base">Assessment Focus Areas:</h4>
+                  <ul className="text-xs sm:text-sm text-white space-y-1">
                     <li>• Accuracy of recorded measurements</li>
                     <li>• Consistency between test results</li>
                     <li>• Professional presentation quality</li>
@@ -814,7 +814,7 @@ const AM2Module4Section3 = () => {
               
               <div className="bg-elec-yellow/10 rounded-lg p-3 sm:p-4">
                 <h4 className="font-medium text-elec-yellow mb-2 text-sm sm:text-base">Key Success Factors:</h4>
-                <p className="text-xs sm:text-sm text-muted-foreground">
+                <p className="text-xs sm:text-sm text-white">
                   NET assessors specifically look for candidates who can demonstrate professional documentation skills that would be acceptable 
                   for client handover in real-world scenarios. This includes neat presentation, accurate technical data, and complete compliance records.
                 </p>
@@ -832,9 +832,9 @@ const AM2Module4Section3 = () => {
             </h2>
             
             <div className="space-y-4">
-              <div className="bg-background/50 rounded-lg p-3 sm:p-4">
-                <h4 className="font-medium text-foreground mb-3 text-sm sm:text-base">Key Takeaways:</h4>
-                <ul className="text-xs sm:text-sm text-muted-foreground space-y-2">
+              <div className="bg-[#1a1a1a]/50 rounded-lg p-3 sm:p-4">
+                <h4 className="font-medium text-white mb-3 text-sm sm:text-base">Key Takeaways:</h4>
+                <ul className="text-xs sm:text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                     <span>Paperwork is part of the test — not an afterthought</span>
@@ -860,7 +860,7 @@ const AM2Module4Section3 = () => {
               
               <div className="bg-elec-yellow/10 rounded-lg p-3 sm:p-4">
                 <h4 className="font-medium text-elec-yellow mb-2 text-sm sm:text-base">Next Steps:</h4>
-                <p className="text-xs sm:text-sm text-muted-foreground">
+                <p className="text-xs sm:text-sm text-white">
                   You're now ready to move on to Module 4 Section 4, where we'll cover the practical implementation 
                   and integration of all testing procedures in real AM2 scenarios.
                 </p>
@@ -870,13 +870,13 @@ const AM2Module4Section3 = () => {
         </Card>
 
         {/* Quiz Section */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Timer className="w-5 h-5" />
               Test Your Knowledge
             </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground mb-6">
+            <p className="text-xs sm:text-sm text-white mb-6">
               Complete this 10-question quiz to test your understanding of professional certification and test result recording.
             </p>
             <Quiz questions={quizQuestions} title="Recording Test Results on Certification" />

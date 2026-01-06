@@ -533,20 +533,20 @@ const Module2Section3_1 = () => {
         />
 
         {/* Navigation */}
-        <div className="flex justify-between items-center mt-12 pt-8 border-t border-white/10">
-          <Button variant="outline" asChild>
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
+              Back to Module 2.3
             </Link>
           </Button>
-          <Button asChild>
-            <Link to="..">
-              Next
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../3-2">
+              Next: Series Circuits - Current and Voltage
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
-        </div>
+        </nav>
       </div>
     </div>
   );

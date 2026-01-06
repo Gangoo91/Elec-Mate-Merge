@@ -49,7 +49,7 @@ const R1R2Guidance = () => {
             </Card>
           </div>
           
-          <div className="bg-elec-dark/50 rounded p-3">
+          <div className="bg-white/10 rounded p-3">
             <p className="text-xs text-elec-light">
               <strong>Key relationship:</strong> Zs = Ze + R1+R2, where Ze is external earth fault loop impedance. 
               R1+R2 testing provides the internal circuit component needed for complete Zs calculation.
@@ -122,7 +122,7 @@ const R1R2Guidance = () => {
         as="section"
       >
         <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
-          <div className="bg-elec-dark/50 rounded p-4">
+          <div className="bg-white/10 rounded p-4">
             <h4 className="text-elec-yellow font-medium mb-3">Minimum CPC Sizes</h4>
             <div className="grid gap-3 sm:grid-cols-2">
               <div>
@@ -132,7 +132,7 @@ const R1R2Guidance = () => {
                     <span>Line CSA:</span>
                     <span className="font-mono">CPC = Line CSA</span>
                   </div>
-                  <p className="text-muted-foreground">CPC same size as line conductor</p>
+                  <p className="text-white">CPC same size as line conductor</p>
                 </div>
               </div>
               
@@ -143,7 +143,7 @@ const R1R2Guidance = () => {
                     <span>Line CSA:</span>
                     <span className="font-mono">CPC = Line CSA ÷ 2</span>
                   </div>
-                  <p className="text-muted-foreground">Minimum 16mm² CPC required</p>
+                  <p className="text-white">Minimum 16mm² CPC required</p>
                 </div>
               </div>
             </div>
@@ -199,7 +199,7 @@ const R1R2Guidance = () => {
         as="section"
       >
         <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
-          <div className="bg-elec-dark/50 rounded p-4">
+          <div className="bg-white/10 rounded p-4">
             <h4 className="text-elec-yellow font-medium mb-3">Why Temperature Matters</h4>
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
@@ -305,7 +305,7 @@ const R1R2Guidance = () => {
       >
         <div className="space-y-4 text-elec-light text-sm sm:text-[0.95rem]">
           <div className="grid gap-4 lg:grid-cols-3">
-            <Card className="bg-elec-dark/30 border-elec-yellow/20">
+            <Card className="bg-white/10 border-elec-yellow/20">
               <CardHeader className="pb-2">
                 <CardTitle className="text-elec-light text-sm">New Installation</CardTitle>
               </CardHeader>
@@ -319,7 +319,7 @@ const R1R2Guidance = () => {
               </CardContent>
             </Card>
             
-            <Card className="bg-elec-dark/30 border-elec-yellow/20">
+            <Card className="bg-white/10 border-elec-yellow/20">
               <CardHeader className="pb-2">
                 <CardTitle className="text-elec-light text-sm">Periodic Inspection</CardTitle>
               </CardHeader>
@@ -333,7 +333,7 @@ const R1R2Guidance = () => {
               </CardContent>
             </Card>
             
-            <Card className="bg-elec-dark/30 border-elec-yellow/20">
+            <Card className="bg-white/10 border-elec-yellow/20">
               <CardHeader className="pb-2">
                 <CardTitle className="text-elec-light text-sm">Fault Finding</CardTitle>
               </CardHeader>

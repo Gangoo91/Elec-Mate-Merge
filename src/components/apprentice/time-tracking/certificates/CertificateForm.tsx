@@ -45,7 +45,7 @@ const CertificateForm = ({ onSubmit, isUploading }: CertificateFormProps) => {
           id="certificate-name" 
           placeholder="E.g., Health and Safety Level 2" 
           required 
-          className="bg-elec-dark"
+          className="bg-white/10"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
@@ -58,7 +58,7 @@ const CertificateForm = ({ onSubmit, isUploading }: CertificateFormProps) => {
             id="issue-date" 
             type="date" 
             required 
-            className="bg-elec-dark"
+            className="bg-white/10"
             value={issueDate}
             onChange={(e) => setIssueDate(e.target.value)}
           />
@@ -68,7 +68,7 @@ const CertificateForm = ({ onSubmit, isUploading }: CertificateFormProps) => {
           <Input 
             id="expiry-date" 
             type="date" 
-            className="bg-elec-dark"
+            className="bg-white/10"
             value={expiryDate}
             onChange={(e) => setExpiryDate(e.target.value)}
           />
@@ -81,7 +81,7 @@ const CertificateForm = ({ onSubmit, isUploading }: CertificateFormProps) => {
           id="issued-by" 
           placeholder="E.g., City & Guilds, EAL" 
           required 
-          className="bg-elec-dark"
+          className="bg-white/10"
           value={issuedBy}
           onChange={(e) => setIssuedBy(e.target.value)}
         />
@@ -94,10 +94,10 @@ const CertificateForm = ({ onSubmit, isUploading }: CertificateFormProps) => {
           type="file" 
           accept=".pdf,.jpg,.jpeg,.png" 
           required 
-          className="bg-elec-dark"
+          className="bg-white/10"
           onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
         />
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-white">
           Accepted formats: PDF, JPG, PNG. Max size: 5MB
         </p>
       </div>

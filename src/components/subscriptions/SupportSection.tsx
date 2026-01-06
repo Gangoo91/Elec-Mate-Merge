@@ -62,7 +62,7 @@ const SupportSection = () => {
       {/* Section Header */}
       <div className="text-center">
         <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">Need Help?</h2>
-        <p className="text-muted-foreground max-w-xl mx-auto">
+        <p className="text-white/70 max-w-xl mx-auto">
           Our support team is here to help you with any questions about your subscription.
         </p>
       </div>
@@ -74,7 +74,7 @@ const SupportSection = () => {
             key={index}
             href={option.disabled ? undefined : option.href}
             className={cn(
-              "group relative overflow-hidden rounded-2xl p-6 transition-all duration-300",
+              "group relative overflow-hidden rounded-2xl p-6 transition-all duration-300 touch-manipulation min-h-[44px]",
               "bg-elec-gray/50 backdrop-blur-sm border",
               option.borderColor,
               !option.disabled && "hover:scale-[1.02] hover:shadow-xl cursor-pointer",
@@ -107,7 +107,7 @@ const SupportSection = () => {
 
               {/* Content */}
               <h3 className="text-lg font-semibold text-foreground mb-1">{option.title}</h3>
-              <p className="text-sm text-muted-foreground mb-3">{option.description}</p>
+              <p className="text-sm text-white/70 mb-3">{option.description}</p>
 
               {/* Action */}
               <div className={cn(
@@ -129,7 +129,7 @@ const SupportSection = () => {
           size="lg"
           onClick={handleRefreshStatus}
           disabled={isRefreshing}
-          className="w-full sm:w-auto border-white/10 hover:border-elec-yellow/50 hover:bg-elec-yellow/10"
+          className="w-full sm:w-auto border-white/10 hover:border-elec-yellow/50 hover:bg-elec-yellow/10 touch-manipulation min-h-[44px]"
         >
           {isRefreshing ? (
             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -141,7 +141,7 @@ const SupportSection = () => {
       </div>
 
       {/* Bottom Note */}
-      <p className="text-center text-xs text-muted-foreground pt-4">
+      <p className="text-center text-xs text-white/70 pt-4">
         For billing inquiries or to cancel your subscription, please email{" "}
         <a href="mailto:info@elec-mate.com" className="text-elec-yellow hover:underline">
           info@elec-mate.com

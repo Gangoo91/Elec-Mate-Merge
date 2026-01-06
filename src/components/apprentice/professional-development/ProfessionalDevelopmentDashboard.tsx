@@ -87,7 +87,7 @@ const ProfessionalDevelopmentDashboard = () => {
       case 'completed': return 'text-green-400 bg-green-500/10 border-green-500/30';
       case 'on-track': return 'text-blue-400 bg-blue-500/10 border-blue-500/30';
       case 'planning': return 'text-orange-400 bg-orange-500/10 border-orange-500/30';
-      default: return 'text-gray-400 bg-gray-500/10 border-gray-500/30';
+      default: return 'text-white bg-white/5 border-white/20';
     }
   };
 
@@ -96,7 +96,7 @@ const ProfessionalDevelopmentDashboard = () => {
       case 'high': return 'text-red-400 bg-red-500/10 border-red-500/30';
       case 'medium': return 'text-orange-400 bg-orange-500/10 border-orange-500/30';
       case 'low': return 'text-green-400 bg-green-500/10 border-green-500/30';
-      default: return 'text-gray-400 bg-gray-500/10 border-gray-500/30';
+      default: return 'text-white bg-white/5 border-white/20';
     }
   };
 
@@ -104,48 +104,48 @@ const ProfessionalDevelopmentDashboard = () => {
     <div className="space-y-6">
       {/* Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-2xl font-bold text-elec-yellow">75%</p>
-                <p className="text-sm text-muted-foreground">Overall Progress</p>
+                <p className="text-sm text-white">Overall Progress</p>
               </div>
               <Target className="h-8 w-8 text-elec-yellow" />
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-2xl font-bold text-elec-yellow">3</p>
-                <p className="text-sm text-muted-foreground">Active Goals</p>
+                <p className="text-sm text-white">Active Goals</p>
               </div>
               <Trophy className="h-8 w-8 text-elec-yellow" />
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-2xl font-bold text-elec-yellow">12</p>
-                <p className="text-sm text-muted-foreground">CPD Hours</p>
+                <p className="text-sm text-white">CPD Hours</p>
               </div>
               <Clock className="h-8 w-8 text-elec-yellow" />
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-2xl font-bold text-elec-yellow">450</p>
-                <p className="text-sm text-muted-foreground">Total Points</p>
+                <p className="text-sm text-white">Total Points</p>
               </div>
               <Award className="h-8 w-8 text-elec-yellow" />
             </div>
@@ -154,7 +154,7 @@ const ProfessionalDevelopmentDashboard = () => {
       </div>
 
       {/* Development Goals */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Target className="h-5 w-5 text-elec-yellow" />
@@ -164,11 +164,11 @@ const ProfessionalDevelopmentDashboard = () => {
         <CardContent>
           <div className="space-y-4">
             {developmentGoals.map((goal, index) => (
-              <div key={index} className="p-4 bg-elec-dark/30 rounded-lg">
+              <div key={index} className="p-4 bg-white/10 rounded-lg">
                 <div className="flex items-center justify-between mb-3">
                   <div>
                     <h3 className="font-semibold text-white">{goal.title}</h3>
-                    <p className="text-sm text-muted-foreground">{goal.description}</p>
+                    <p className="text-sm text-white">{goal.description}</p>
                   </div>
                   <Badge className={getStatusColor(goal.status)}>
                     {goal.status === 'completed' && <CheckCircle className="h-3 w-3 mr-1" />}
@@ -182,7 +182,7 @@ const ProfessionalDevelopmentDashboard = () => {
                     <Progress value={goal.progress} className="h-2" />
                   </div>
                   <span className="text-sm font-medium">{goal.progress}%</span>
-                  <span className="text-sm text-muted-foreground">{goal.target}</span>
+                  <span className="text-sm text-white">{goal.target}</span>
                 </div>
               </div>
             ))}
@@ -192,7 +192,7 @@ const ProfessionalDevelopmentDashboard = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Achievements */}
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Trophy className="h-5 w-5 text-elec-yellow" />
@@ -202,7 +202,7 @@ const ProfessionalDevelopmentDashboard = () => {
           <CardContent>
             <div className="space-y-3">
               {recentAchievements.map((achievement, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-elec-dark/30 rounded-lg">
+                <div key={index} className="flex items-center justify-between p-3 bg-white/10 rounded-lg">
                   <div className="flex items-center gap-3">
                     <div className="p-2 rounded bg-elec-yellow/10">
                       {achievement.type === 'assessment' && <BookOpen className="h-4 w-4 text-elec-yellow" />}
@@ -211,7 +211,7 @@ const ProfessionalDevelopmentDashboard = () => {
                     </div>
                     <div>
                       <p className="font-medium text-white">{achievement.title}</p>
-                      <p className="text-sm text-muted-foreground">{achievement.date}</p>
+                      <p className="text-sm text-white">{achievement.date}</p>
                     </div>
                   </div>
                   <div className="text-right">
@@ -224,7 +224,7 @@ const ProfessionalDevelopmentDashboard = () => {
         </Card>
 
         {/* Upcoming Milestones */}
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Calendar className="h-5 w-5 text-elec-yellow" />
@@ -234,10 +234,10 @@ const ProfessionalDevelopmentDashboard = () => {
           <CardContent>
             <div className="space-y-3">
               {upcomingMilestones.map((milestone, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-elec-dark/30 rounded-lg">
+                <div key={index} className="flex items-center justify-between p-3 bg-white/10 rounded-lg">
                   <div>
                     <p className="font-medium text-white">{milestone.title}</p>
-                    <p className="text-sm text-muted-foreground">{milestone.date}</p>
+                    <p className="text-sm text-white">{milestone.date}</p>
                   </div>
                   <Badge className={getImportanceColor(milestone.importance)}>
                     {milestone.importance} priority

@@ -21,7 +21,7 @@ const Subsection10_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+          <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
             <h3 className="text-xl font-bold text-elec-yellow flex items-center">
               <ClipboardList className="h-5 w-5 mr-2" />
               Design Process
@@ -58,7 +58,7 @@ const Subsection10_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
             </div>
           </div>
           
-          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+          <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
             <h3 className="text-xl font-bold text-elec-yellow flex items-center">
               <Calculator className="h-5 w-5 mr-2" />
               Design Calculations
@@ -96,7 +96,7 @@ const Subsection10_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
           </div>
         </div>
         
-        <div className="mt-8 bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-6">
+        <div className="mt-8 bg-white/10 border border-elec-yellow/20 rounded-lg p-6">
           <h3 className="text-xl font-bold text-elec-yellow mb-4 flex items-center">
             <Brain className="h-5 w-5 mr-2" />
             Design Considerations
@@ -151,7 +151,7 @@ const Subsection10_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
               </div>
             </div>
             
-            <div className="mt-4 p-4 bg-elec-dark/70 rounded-lg text-sm">
+            <div className="mt-4 p-4 bg-white/10 rounded-lg text-sm">
               <p className="font-medium mb-1 text-elec-yellow">Regulatory Note:</p>
               <p>BS 7671 requires that every installation be divided into circuits as necessary for safety, maintenance, and functional requirements. Regulation 311.1 states that the design shall be carried out by a competent person with appropriate skills and knowledge. Design calculations and decisions must be documented to demonstrate compliance with regulations.</p>
             </div>

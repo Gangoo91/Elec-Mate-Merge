@@ -337,7 +337,7 @@ const TaxNIEstimator = () => {
           {/* Tax Year Selection */}
           <div className="flex items-center gap-2 mb-3">
             <Calendar className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white/80">Tax Year</span>
+            <span className="text-sm font-medium text-white">Tax Year</span>
           </div>
 
           <div className="flex gap-2 mb-4">
@@ -347,7 +347,7 @@ const TaxNIEstimator = () => {
                 "flex-1 h-12 rounded-xl font-medium text-sm transition-all",
                 taxYear === "2025/26"
                   ? "text-black"
-                  : "bg-white/5 border border-white/10 text-white/70"
+                  : "bg-white/5 border border-white/10 text-white"
               )}
               style={
                 taxYear === "2025/26"
@@ -365,7 +365,7 @@ const TaxNIEstimator = () => {
                 "flex-1 h-12 rounded-xl font-medium text-sm transition-all",
                 taxYear === "2024/25"
                   ? "text-black"
-                  : "bg-white/5 border border-white/10 text-white/70"
+                  : "bg-white/5 border border-white/10 text-white"
               )}
               style={
                 taxYear === "2024/25"
@@ -382,7 +382,7 @@ const TaxNIEstimator = () => {
           {/* Business Income */}
           <div className="flex items-center gap-2 mb-3">
             <PoundSterling className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white/80">Business Income</span>
+            <span className="text-sm font-medium text-white">Business Income</span>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -425,13 +425,13 @@ const TaxNIEstimator = () => {
             <CollapsibleTrigger className="w-full flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
               <div className="flex items-center gap-2">
                 <Receipt className="h-4 w-4 text-amber-400" />
-                <span className="text-sm font-medium text-white/80">
+                <span className="text-sm font-medium text-white">
                   Additional Deductions & VAT
                 </span>
               </div>
               <ChevronDown
                 className={cn(
-                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  "h-4 w-4 text-white/80 transition-transform duration-200",
                   showAdvanced && "rotate-180"
                 )}
               />
@@ -467,7 +467,7 @@ const TaxNIEstimator = () => {
               <div className="pt-3 border-t border-white/10">
                 <div className="flex items-center gap-2 mb-3">
                   <Percent className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm font-medium text-white/80">
+                  <span className="text-sm font-medium text-white">
                     VAT Configuration
                   </span>
                 </div>
@@ -479,7 +479,7 @@ const TaxNIEstimator = () => {
                       "flex-1 h-10 rounded-xl font-medium text-sm transition-all",
                       inputs.vatRegistered
                         ? "bg-blue-500/20 border border-blue-500/30 text-blue-300"
-                        : "bg-white/5 border border-white/10 text-white/60"
+                        : "bg-white/5 border border-white/10 text-white"
                     )}
                   >
                     VAT Registered
@@ -490,7 +490,7 @@ const TaxNIEstimator = () => {
                       "flex-1 h-10 rounded-xl font-medium text-sm transition-all",
                       !inputs.vatRegistered
                         ? "bg-blue-500/20 border border-blue-500/30 text-blue-300"
-                        : "bg-white/5 border border-white/10 text-white/60"
+                        : "bg-white/5 border border-white/10 text-white"
                     )}
                   >
                     Not Registered
@@ -523,7 +523,7 @@ const TaxNIEstimator = () => {
                   />
                   <div>
                     <span className="text-sm text-white/80">Marriage Allowance</span>
-                    <p className="text-xs text-white/50">
+                    <p className="text-xs text-white">
                       Receiving unused allowance from spouse
                     </p>
                   </div>
@@ -554,13 +554,13 @@ const TaxNIEstimator = () => {
             </button>
             <button
               onClick={loadExample}
-              className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 transition-colors touch-manipulation"
+              className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation"
             >
               <Lightbulb className="h-5 w-5" />
             </button>
             <button
               onClick={resetCalculator}
-              className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 transition-colors touch-manipulation"
+              className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation"
             >
               <RotateCcw className="h-5 w-5" />
             </button>
@@ -584,14 +584,14 @@ const TaxNIEstimator = () => {
                   <span className={cn("font-medium", taxStatus.color)}>
                     {taxStatus.label} Tax Burden ({estimates.effectiveRate.toFixed(1)}%)
                   </span>
-                  <p className="text-sm text-white/60">{taxStatus.message}</p>
+                  <p className="text-sm text-white">{taxStatus.message}</p>
                 </div>
               </div>
             )}
 
             <CalculatorResult category="business">
               <div className="text-center pb-4 border-b border-white/10">
-                <p className="text-sm text-white/60 mb-1">Total Tax & NI</p>
+                <p className="text-sm text-white mb-1">Total Tax & NI</p>
                 <div
                   className="text-4xl font-bold bg-clip-text text-transparent"
                   style={{
@@ -600,7 +600,7 @@ const TaxNIEstimator = () => {
                 >
                   {formatCurrency(estimates.totalTaxNI)}
                 </div>
-                <p className="text-sm text-white/60 mt-1">per year</p>
+                <p className="text-sm text-white mt-1">per year</p>
               </div>
 
               <ResultsGrid columns={2}>
@@ -632,7 +632,7 @@ const TaxNIEstimator = () => {
 
               {/* Payment Schedule */}
               <div className="pt-4 mt-4 border-t border-white/10">
-                <p className="text-xs text-white/50 mb-3">Payment Schedule</p>
+                <p className="text-xs text-white mb-3">Payment Schedule</p>
                 <div className="grid grid-cols-3 gap-3 text-center">
                   <div>
                     <div className="text-xs text-blue-400 mb-1">Monthly Reserve</div>
@@ -658,7 +658,7 @@ const TaxNIEstimator = () => {
               {/* VAT if registered */}
               {inputs.vatRegistered && estimates.vat > 0 && (
                 <div className="pt-4 mt-4 border-t border-white/10">
-                  <p className="text-xs text-white/50 mb-3">VAT Liability</p>
+                  <p className="text-xs text-white mb-3">VAT Liability</p>
                   <div className="grid grid-cols-2 gap-3 text-center">
                     <div>
                       <div className="text-xs text-purple-400 mb-1">Annual VAT</div>
@@ -692,7 +692,7 @@ const TaxNIEstimator = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      "h-4 w-4 text-white/40 transition-transform duration-200",
+                      "h-4 w-4 text-white/80 transition-transform duration-200",
                       showGuidance && "rotate-180"
                     )}
                   />
@@ -700,19 +700,19 @@ const TaxNIEstimator = () => {
 
                 <CollapsibleContent className="p-4 pt-0">
                   <div className="space-y-2 text-sm">
-                    <div className="flex justify-between text-white/60">
+                    <div className="flex justify-between text-white">
                       <span>Business Income:</span>
                       <span className="text-white">
                         {formatCurrency(inputs.annualIncome)}
                       </span>
                     </div>
-                    <div className="flex justify-between text-white/60">
+                    <div className="flex justify-between text-white">
                       <span>Business Expenses:</span>
                       <span className="text-red-400">
                         -{formatCurrency(inputs.businessExpenses)}
                       </span>
                     </div>
-                    <div className="flex justify-between text-white/60">
+                    <div className="flex justify-between text-white">
                       <span>Capital Allowances:</span>
                       <span className="text-red-400">
                         -{formatCurrency(inputs.capitalAllowances)}
@@ -724,13 +724,13 @@ const TaxNIEstimator = () => {
                         {formatCurrency(estimates.grossProfit)}
                       </span>
                     </div>
-                    <div className="flex justify-between text-white/60">
+                    <div className="flex justify-between text-white">
                       <span>Personal Allowance:</span>
                       <span className="text-green-400">
                         -{formatCurrency(TAX_RATES.personalAllowance)}
                       </span>
                     </div>
-                    <div className="flex justify-between text-white/60">
+                    <div className="flex justify-between text-white">
                       <span>Pension & Donations:</span>
                       <span className="text-green-400">
                         -
@@ -767,7 +767,7 @@ const TaxNIEstimator = () => {
               </div>
               <ChevronDown
                 className={cn(
-                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  "h-4 w-4 text-white/80 transition-transform duration-200",
                   showReference && "rotate-180"
                 )}
               />

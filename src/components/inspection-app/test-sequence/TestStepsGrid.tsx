@@ -24,7 +24,7 @@ const TestStepsGrid = ({ steps, currentStep, onStepClick }: TestStepsGridProps) 
       case 'CRITICAL': return 'bg-red-500';
       case 'HIGH': return 'bg-orange-500';
       case 'MEDIUM': return 'bg-yellow-500';
-      default: return 'bg-gray-500';
+      default: return 'bg-white/15';
     }
   };
 
@@ -33,7 +33,7 @@ const TestStepsGrid = ({ steps, currentStep, onStepClick }: TestStepsGridProps) 
       case 'isolation': return 'bg-red-500/20 text-red-400 border-red-500/30';
       case 'dead': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
       case 'live': return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
-      default: return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+      default: return 'bg-white/10 text-white/70 border-white/20';
     }
   };
 
@@ -64,7 +64,7 @@ const TestStepsGrid = ({ steps, currentStep, onStepClick }: TestStepsGridProps) 
               </Badge>
             </div>
             <h4 className="font-semibold text-foreground text-sm mb-1 flex-1">{step.title}</h4>
-            <p className="text-xs text-gray-400 mb-2">{step.regulation}</p>
+            <p className="text-xs text-white/70 mb-2">{step.regulation}</p>
             <Badge className={`${getTestTypeColor(step.testType)} text-xs self-start`}>
               {step.testType.toUpperCase()}
             </Badge>

@@ -114,7 +114,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
               <div className="text-sm font-medium text-elec-yellow mb-1">
                 {industryTemplates.find(t => t.id === inputs.template)?.name}
               </div>
-              <div className="text-xs text-muted-foreground">
+              <div className="text-xs text-white">
                 {industryTemplates.find(t => t.id === inputs.template)?.description}
               </div>
             </div>

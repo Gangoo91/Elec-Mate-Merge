@@ -6,7 +6,7 @@ export interface QuizQuestion {
   explanation: string;
 }
 
-export const bmsModule4Section3QuizQuestions: QuizQuestion[] = [
+export const bmsModule4Section3QuizData: QuizQuestion[] = [
   {
     id: 1,
     question: "How can access control systems save energy as well as provide security?",
@@ -128,3 +128,6 @@ export const bmsModule4Section3QuizQuestions: QuizQuestion[] = [
     explanation: "The electricians installed maglocks but failed to integrate them with the fire alarm system, meaning doors remained locked during fire alarm activation, preventing safe evacuation."
   }
 ];
+
+// Alias for backwards compatibility
+export const bmsModule4Section3QuizQuestions = bmsModule4Section3QuizData;

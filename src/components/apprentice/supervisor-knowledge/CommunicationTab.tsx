@@ -146,115 +146,123 @@ const CommunicationTab = () => {
   ];
 
   return (
-    <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <MessageSquare className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Professional Communication Skills</CardTitle>
+    <div className="space-y-6 animate-fade-in">
+      {/* Hero Section */}
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+              <MessageSquare className="h-6 w-6 text-elec-yellow" />
+            </div>
+            <CardTitle className="text-2xl text-white">Professional Communication Skills</CardTitle>
           </div>
         </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">
-            Master the art of professional communication in the electrical industry. Learn how to interact 
+        <CardContent className="relative">
+          <p className="text-white/70">
+            Master the art of professional communication in the electrical industry. Learn how to interact
             effectively with supervisors, colleagues, and clients while building strong working relationships.
           </p>
         </CardContent>
       </Card>
 
+      {/* Communication Channels */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {communicationChannels.map((channel, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
+          <Card key={index} className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10 hover:border-white/20 transition-all overflow-hidden relative group">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <CardHeader className="relative">
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-full bg-elec-yellow/10">
-                  <channel.icon className="h-5 w-5 text-elec-yellow" />
+                <div className={`p-2.5 rounded-xl ${channel.color.replace('bg-', 'bg-gradient-to-br from-').replace('/20', '/20 to-').replace('text-', '')} border ${channel.color.replace('bg-', 'border-').replace('/20', '/30')}`}>
+                  <channel.icon className={`h-5 w-5 ${channel.color.split(' ')[1]}`} />
                 </div>
                 <CardTitle className="text-white">{channel.channel}</CardTitle>
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-medium text-white mb-2">Best Used For:</h4>
-                  <p className="text-sm text-muted-foreground">{channel.bestFor}</p>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium text-white mb-2">Advantages:</h4>
-                  <ul className="space-y-1">
-                    {channel.advantages.map((advantage, idx) => (
-                      <li key={idx} className="text-sm text-muted-foreground flex items-center gap-2">
-                        <CheckCircle className="h-3 w-3 text-green-400" />
-                        {advantage}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium text-white mb-2">Professional Tips:</h4>
-                  <ul className="space-y-1">
-                    {channel.tips.map((tip, idx) => (
-                      <li key={idx} className="text-sm text-muted-foreground flex items-center gap-2">
-                        <Star className="h-3 w-3 text-elec-yellow" />
-                        {tip}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+            <CardContent className="relative space-y-4">
+              <div>
+                <h4 className="font-medium text-white/90 mb-2">Best Used For:</h4>
+                <p className="text-sm text-white/60">{channel.bestFor}</p>
+              </div>
+
+              <div>
+                <h4 className="font-medium text-white/90 mb-2">Advantages:</h4>
+                <ul className="space-y-1.5">
+                  {channel.advantages.map((advantage, idx) => (
+                    <li key={idx} className="text-sm text-white/60 flex items-center gap-2">
+                      <CheckCircle className="h-3.5 w-3.5 text-green-400 flex-shrink-0" />
+                      {advantage}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-medium text-white/90 mb-2">Professional Tips:</h4>
+                <ul className="space-y-1.5">
+                  {channel.tips.map((tip, idx) => (
+                    <li key={idx} className="text-sm text-white/60 flex items-center gap-2">
+                      <Star className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0" />
+                      {tip}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      <Card className="border-blue-500/20 bg-blue-500/10">
-        <CardHeader>
-          <CardTitle className="text-blue-300 flex items-center gap-2">
-            <Volume2 className="h-5 w-5" />
+      {/* Communication Scenarios */}
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-blue-500/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
+              <Volume2 className="h-5 w-5 text-blue-400" />
+            </div>
             Communication Scenarios & Scripts
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="relative">
           <div className="space-y-6">
             {communicationScenarios.map((scenario, index) => (
-              <div key={index} className="border border-blue-500/30 rounded-lg p-4">
-                <div className="flex items-center gap-2 mb-3">
-                  <h3 className="font-medium text-white">{scenario.title}</h3>
-                  <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30" variant="outline">
+              <div key={index} className="p-5 rounded-xl bg-blue-500/5 border border-blue-500/20">
+                <div className="flex items-center gap-2 mb-4">
+                  <h3 className="font-semibold text-white">{scenario.title}</h3>
+                  <Badge variant="outline" className="bg-blue-500/20 text-blue-400 border-blue-500/30">
                     {scenario.difficulty}
                   </Badge>
                 </div>
-                
+
                 <div className="space-y-4">
-                  <div className="bg-blue-500/5 rounded p-3">
-                    <h4 className="font-medium text-blue-300 mb-1">Scenario:</h4>
-                    <p className="text-sm text-muted-foreground">{scenario.scenario}</p>
+                  <div className="p-4 rounded-lg bg-white/10 border border-white/10">
+                    <h4 className="font-medium text-blue-400 mb-1">Scenario:</h4>
+                    <p className="text-sm text-white/70">{scenario.scenario}</p>
                   </div>
-                  
+
                   <div>
-                    <h4 className="font-medium text-blue-300 mb-2">Approach:</h4>
-                    <p className="text-sm text-blue-200">{scenario.approach}</p>
+                    <h4 className="font-medium text-blue-400 mb-2">Approach:</h4>
+                    <p className="text-sm text-white/80">{scenario.approach}</p>
                   </div>
-                  
+
                   <div>
-                    <h4 className="font-medium text-blue-300 mb-2">Example Phrases:</h4>
+                    <h4 className="font-medium text-blue-400 mb-2">Example Phrases:</h4>
                     <div className="space-y-2">
                       {scenario.examples.map((example, idx) => (
-                        <div key={idx} className="bg-blue-500/10 rounded p-2">
-                          <p className="text-sm text-blue-100 italic">"{example}"</p>
+                        <div key={idx} className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                          <p className="text-sm text-blue-200 italic">"{example}"</p>
                         </div>
                       ))}
                     </div>
                   </div>
-                  
+
                   <div>
-                    <h4 className="font-medium text-blue-300 mb-2">Key Tips:</h4>
+                    <h4 className="font-medium text-blue-400 mb-2">Key Tips:</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                       {scenario.tips.map((tip, idx) => (
-                        <div key={idx} className="text-sm text-muted-foreground flex items-center gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-400" />
+                        <div key={idx} className="text-sm text-white/60 flex items-center gap-2">
+                          <CheckCircle className="h-3.5 w-3.5 text-green-400 flex-shrink-0" />
                           {tip}
                         </div>
                       ))}
@@ -267,42 +275,39 @@ const CommunicationTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-green-500/20 bg-green-500/10">
-        <CardHeader>
-          <CardTitle className="text-green-300 flex items-center gap-2">
-            <MessageSquare className="h-5 w-5" />
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-green-500/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30">
+              <MessageSquare className="h-5 w-5 text-green-400" />
+            </div>
             Professional Language Examples
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="relative">
           <div className="space-y-4">
             {professionalLanguage.map((example, index) => (
-              <div key={index} className="border border-green-500/30 rounded-lg p-4">
-                <h4 className="font-medium text-white mb-3 capitalize">{example.situation}</h4>
+              <div key={index} className="p-5 rounded-xl bg-green-500/5 border border-green-500/20">
+                <h4 className="font-semibold text-white mb-4 capitalize">{example.situation}</h4>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <Badge className="bg-red-500/20 text-red-400 border-red-500/30" variant="outline">
-                        Poor
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-red-300 italic">"{example.poor}"</p>
+                  <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20 space-y-2">
+                    <Badge className="bg-red-500/20 text-red-400 border-red-500/30" variant="outline">
+                      Poor
+                    </Badge>
+                    <p className="text-sm text-red-200 italic">"{example.poor}"</p>
                   </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/30" variant="outline">
-                        Better
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-yellow-300 italic">"{example.better}"</p>
+                  <div className="p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/20 space-y-2">
+                    <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/30" variant="outline">
+                      Better
+                    </Badge>
+                    <p className="text-sm text-yellow-200 italic">"{example.better}"</p>
                   </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <Badge className="bg-green-500/20 text-green-400 border-green-500/30" variant="outline">
-                        Best
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-green-300 italic">"{example.best}"</p>
+                  <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20 space-y-2">
+                    <Badge className="bg-green-500/20 text-green-400 border-green-500/30" variant="outline">
+                      Best
+                    </Badge>
+                    <p className="text-sm text-green-200 italic">"{example.best}"</p>
                   </div>
                 </div>
               </div>
@@ -311,41 +316,44 @@ const CommunicationTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-red-500/20 bg-red-500/10">
-        <CardHeader>
-          <CardTitle className="text-red-300 flex items-center gap-2">
-            <AlertTriangle className="h-5 w-5" />
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-red-500/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-red-500/20 to-red-500/5 border border-red-500/30">
+              <AlertTriangle className="h-5 w-5 text-red-400" />
+            </div>
             Handling Difficult Conversations
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="relative">
           <div className="space-y-6">
             {difficultConversations.map((conversation, index) => (
-              <div key={index} className="border border-red-500/30 rounded-lg p-4">
-                <h3 className="font-medium text-white mb-3">{conversation.scenario}</h3>
-                
+              <div key={index} className="p-5 rounded-xl bg-red-500/5 border border-red-500/20">
+                <h3 className="font-semibold text-white mb-4">{conversation.scenario}</h3>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  <div>
-                    <h4 className="font-medium text-red-300 mb-2">Challenge:</h4>
-                    <p className="text-sm text-muted-foreground">{conversation.challenge}</p>
+                  <div className="p-4 rounded-lg bg-white/10 border border-white/10">
+                    <h4 className="font-medium text-red-400 mb-2">Challenge:</h4>
+                    <p className="text-sm text-white/70">{conversation.challenge}</p>
                   </div>
-                  <div>
-                    <h4 className="font-medium text-red-300 mb-2">Approach:</h4>
-                    <p className="text-sm text-muted-foreground">{conversation.approach}</p>
+                  <div className="p-4 rounded-lg bg-white/10 border border-white/10">
+                    <h4 className="font-medium text-red-400 mb-2">Approach:</h4>
+                    <p className="text-sm text-white/70">{conversation.approach}</p>
                   </div>
                 </div>
-                
-                <div className="bg-red-500/10 rounded p-3 mb-4">
-                  <h4 className="font-medium text-red-300 mb-2">Example Script:</h4>
-                  <p className="text-sm text-red-100 italic">"{conversation.script}"</p>
+
+                <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20 mb-4">
+                  <h4 className="font-medium text-red-400 mb-2">Example Script:</h4>
+                  <p className="text-sm text-red-200 italic">"{conversation.script}"</p>
                 </div>
-                
+
                 <div>
-                  <h4 className="font-medium text-red-300 mb-2">Follow-up Actions:</h4>
+                  <h4 className="font-medium text-red-400 mb-2">Follow-up Actions:</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     {conversation.followUp.map((action, idx) => (
-                      <div key={idx} className="text-sm text-muted-foreground flex items-center gap-2">
-                        <Clock className="h-3 w-3 text-red-400" />
+                      <div key={idx} className="text-sm text-white/60 flex items-center gap-2">
+                        <Clock className="h-3.5 w-3.5 text-red-400 flex-shrink-0" />
                         {action}
                       </div>
                     ))}

@@ -15,8 +15,7 @@ import JobVacancies from "@/pages/electrician/JobVacancies";
 import ElectricalMaterials from "@/pages/electrician/ElectricalMaterials";
 
 import ElectricalTools from "@/pages/electrician/ElectricalTools";
-import LivePricing from "@/pages/electrician/LivePricing";
-import LivePricingRedesigned from "@/pages/electrician/LivePricingRedesigned";
+import LivePricingHub from "@/pages/electrician/LivePricingHub";
 import ElectricalHub from "@/pages/ElectricalHub";
 import CareerProgression from "@/pages/electrician/CareerProgression";
 import BusinessHub from "@/pages/electrician/BusinessHub";
@@ -95,7 +94,7 @@ const ElectricianHubRoutes = () => (
     <Route path="safety-shares/resources" element={<SafetyResources />} />
     <Route path="safety-shares/resources-enhanced" element={<SafetyResourcesEnhanced />} />
     <Route path="safety-shares/lfe" element={<LearningFromExperience />} />
-    <Route path="live-pricing" element={<LivePricingRedesigned />} />
+    <Route path="live-pricing" element={<LivePricingHub />} />
     <Route path="mental-health" element={<ElectricianMentalHealth />} />
     <Route path="mental-health/work-life-balance" element={<WorkLifeBalance />} />
     <Route path="mental-health/resources" element={<MentalHealthResources />} />

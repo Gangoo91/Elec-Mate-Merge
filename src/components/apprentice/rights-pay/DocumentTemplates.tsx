@@ -162,7 +162,7 @@ Signature: _________________ Date: _________`
       case "Complaint": return "bg-red-500/20 text-red-400 border-red-500/40";
       case "Request": return "bg-blue-500/20 text-blue-400 border-blue-500/40";
       case "Safety": return "bg-orange-500/20 text-orange-400 border-orange-500/40";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/40";
+      default: return "bg-white/10 text-white border-white/30";
     }
   };
 
@@ -189,7 +189,7 @@ Signature: _________________ Date: _________`
                         {template.category}
                       </Badge>
                     </div>
-                    <p className="text-sm text-muted-foreground mb-3">{template.description}</p>
+                    <p className="text-sm text-white mb-3">{template.description}</p>
                   </div>
                 </div>
                 

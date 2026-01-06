@@ -116,12 +116,12 @@ const EvidenceCollectionGuide = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">Evidence Collection Guide</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Comprehensive guidance on collecting, organising, and presenting evidence for your 
             electrical apprenticeship portfolio. Quality evidence demonstrates your competency 
             and learning journey effectively.
@@ -131,7 +131,7 @@ const EvidenceCollectionGuide = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {evidenceTypes.map((evidence) => (
-          <Card key={evidence.type} className="border-elec-yellow/20 bg-elec-gray">
+          <Card key={evidence.type} className="border-elec-yellow/20 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-3">
                 <div className="p-2 rounded-lg bg-elec-yellow/10">
@@ -141,13 +141,13 @@ const EvidenceCollectionGuide = () => {
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-muted-foreground text-sm">{evidence.description}</p>
+              <p className="text-white text-sm">{evidence.description}</p>
               
               <div>
                 <h4 className="text-sm font-medium text-elec-yellow mb-2">Examples:</h4>
                 <ul className="space-y-1">
                   {evidence.examples.map((example, index) => (
-                    <li key={index} className="text-sm text-muted-foreground flex items-start">
+                    <li key={index} className="text-sm text-white flex items-start">
                       <span className="w-1 h-1 bg-elec-yellow rounded-full mt-2 mr-2 flex-shrink-0"></span>
                       {example}
                     </li>

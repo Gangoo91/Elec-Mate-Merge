@@ -59,24 +59,24 @@ const TrainingProvidersCard = () => {
     <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/10">
       <CardHeader>
         <CardTitle className="text-green-400">Training Provider Types</CardTitle>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-white">
           Understanding different organisations that deliver off-the-job training
         </p>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
           {providerTypes.map((provider, index) => (
-            <div key={index} className="p-4 bg-elec-gray/50 rounded-lg border border-green-500/20">
+            <div key={index} className="p-4 bg-white/5 rounded-lg border border-green-500/20">
               <div className="flex items-center gap-3 mb-3">
                 {provider.icon}
                 <h4 className="font-medium text-white">{provider.type}</h4>
               </div>
-              <p className="text-sm text-muted-foreground mb-3">{provider.description}</p>
+              <p className="text-sm text-white mb-3">{provider.description}</p>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <span className="text-xs font-medium text-green-400">Key Features:</span>
-                  <ul className="text-xs text-muted-foreground mt-1 space-y-1">
+                  <ul className="text-xs text-white mt-1 space-y-1">
                     {provider.characteristics.map((char, idx) => (
                       <li key={idx} className="flex items-start gap-1">
                         <span className="text-green-400">•</span>
@@ -88,7 +88,7 @@ const TrainingProvidersCard = () => {
                 
                 <div>
                   <span className="text-xs font-medium text-blue-400">Examples:</span>
-                  <ul className="text-xs text-muted-foreground mt-1 space-y-1">
+                  <ul className="text-xs text-white mt-1 space-y-1">
                     {provider.examples.map((example, idx) => (
                       <li key={idx} className="flex items-start gap-1">
                         <span className="text-blue-400">•</span>
@@ -100,7 +100,7 @@ const TrainingProvidersCard = () => {
                 
                 <div>
                   <span className="text-xs font-medium text-yellow-400">Considerations:</span>
-                  <ul className="text-xs text-muted-foreground mt-1 space-y-1">
+                  <ul className="text-xs text-white mt-1 space-y-1">
                     {provider.considerations.map((consideration, idx) => (
                       <li key={idx} className="flex items-start gap-1">
                         <span className="text-yellow-400">!</span>
@@ -116,7 +116,7 @@ const TrainingProvidersCard = () => {
         
         <div className="mt-6 p-4 bg-blue-500/20 rounded-lg border border-blue-500/30">
           <h5 className="font-medium text-blue-400 mb-2">Choosing the Right Provider</h5>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-muted-foreground">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white">
             <div>
               <span className="font-medium text-white">Consider:</span>
               <ul className="mt-1 space-y-1">

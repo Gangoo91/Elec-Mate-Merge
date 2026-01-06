@@ -192,102 +192,121 @@ const ResourcesTab = () => {
       case 'Professional Development': return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
       case 'Training & Education': return 'bg-green-500/10 text-green-400 border-green-500/20';
       case 'Employment Support': return 'bg-purple-500/10 text-purple-400 border-purple-500/20';
-      default: return 'bg-gray-500/10 text-gray-400 border-gray-500/20';
+      default: return 'bg-white/5 text-white border-white/10';
     }
   };
 
-  const renderResourceSection = (title: string, resources: ContactResource[], description: string) => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="text-xl font-semibold text-elec-yellow mb-2">{title}</h3>
-        <p className="text-muted-foreground text-sm mb-4">{description}</p>
-      </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {resources.map((resource) => (
-          <Card key={resource.id} className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader className="pb-3">
-              <div className="flex items-start gap-3">
-                <resource.icon className="h-6 w-6 text-elec-yellow shrink-0 mt-1" />
-                <div className="flex-1">
-                  <CardTitle className="text-lg mb-1">{resource.name}</CardTitle>
-                  <Badge variant="outline" className={getCategoryColor(resource.category)}>
-                    {resource.category}
-                  </Badge>
+  const getSectionColor = (title: string) => {
+    if (title.includes('Emergency')) return { border: 'border-red-500/20', bg: 'bg-red-500/5', text: 'text-red-400', icon: 'from-red-500/20 to-red-500/5', blur: 'bg-red-500/5' };
+    if (title.includes('Professional')) return { border: 'border-blue-500/20', bg: 'bg-blue-500/5', text: 'text-blue-400', icon: 'from-blue-500/20 to-blue-500/5', blur: 'bg-blue-500/5' };
+    if (title.includes('Training')) return { border: 'border-green-500/20', bg: 'bg-green-500/5', text: 'text-green-400', icon: 'from-green-500/20 to-green-500/5', blur: 'bg-green-500/5' };
+    return { border: 'border-purple-500/20', bg: 'bg-purple-500/5', text: 'text-purple-400', icon: 'from-purple-500/20 to-purple-500/5', blur: 'bg-purple-500/5' };
+  };
+
+  const renderResourceSection = (title: string, resources: ContactResource[], description: string) => {
+    const colors = getSectionColor(title);
+    return (
+      <div className="space-y-4">
+        <div className="p-4 rounded-xl bg-gradient-to-br from-elec-gray to-elec-card border border-white/10">
+          <h3 className={`text-xl font-semibold ${colors.text} mb-2`}>{title}</h3>
+          <p className="text-white/60 text-sm">{description}</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {resources.map((resource) => (
+            <Card key={resource.id} className={`bg-gradient-to-br from-elec-gray to-elec-card ${colors.border} hover:border-white/20 transition-all overflow-hidden relative group`}>
+              <div className={`absolute top-0 right-0 w-32 h-32 ${colors.blur} rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity`} />
+              <CardHeader className="pb-3 relative">
+                <div className="flex items-start gap-3">
+                  <div className={`p-2.5 rounded-xl bg-gradient-to-br ${colors.icon} border ${colors.border}`}>
+                    <resource.icon className={`h-5 w-5 ${colors.text}`} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <CardTitle className="text-lg text-white mb-2">{resource.name}</CardTitle>
+                    <Badge variant="outline" className={getCategoryColor(resource.category)}>
+                      {resource.category}
+                    </Badge>
+                  </div>
                 </div>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <CardDescription className="text-elec-light/80">
-                {resource.description}
-              </CardDescription>
-              
-              <div className="space-y-2 text-sm">
-                {resource.availability && (
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-muted-foreground">{resource.availability}</span>
-                  </div>
-                )}
-                {resource.cost && (
-                  <div className="flex items-center gap-2">
-                    <span className="text-muted-foreground">Cost: {resource.cost}</span>
-                  </div>
-                )}
-              </div>
-              
-              <div className="flex gap-2 pt-2">
-                {resource.phone && (
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={() => handlePhoneCall(resource.phone!)}
-                    className="flex items-center gap-2"
-                  >
-                    <Phone className="h-4 w-4" />
-                    Call
-                  </Button>
-                )}
-                {resource.website && (
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={() => handleWebsiteVisit(resource.website!)}
-                    className="flex items-center gap-2"
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                    Website
-                  </Button>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+              </CardHeader>
+              <CardContent className="space-y-4 relative">
+                <CardDescription className="text-white/70">
+                  {resource.description}
+                </CardDescription>
+
+                <div className="space-y-2 text-sm">
+                  {resource.availability && (
+                    <div className="flex items-center gap-2">
+                      <Clock className="h-4 w-4 text-white/70" />
+                      <span className="text-white/60">{resource.availability}</span>
+                    </div>
+                  )}
+                  {resource.cost && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-white/60">Cost: {resource.cost}</span>
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex gap-2 pt-2">
+                  {resource.phone && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handlePhoneCall(resource.phone!)}
+                      className="flex items-center gap-2 h-10 border-white/20 hover:border-elec-yellow/50 hover:bg-elec-yellow/10 touch-manipulation active:scale-95 transition-all"
+                    >
+                      <Phone className="h-4 w-4" />
+                      Call
+                    </Button>
+                  )}
+                  {resource.website && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleWebsiteVisit(resource.website!)}
+                      className="flex items-center gap-2 h-10 border-white/20 hover:border-elec-yellow/50 hover:bg-elec-yellow/10 touch-manipulation active:scale-95 transition-all"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                      Website
+                    </Button>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
-    <div className="space-y-8">
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Phone className="h-5 w-5 text-elec-yellow" />
-            Professional Support Contacts
-          </CardTitle>
-          <CardDescription>
-            Real contact information for organisations that can help with workplace issues, 
+    <div className="space-y-8 animate-fade-in">
+      {/* Hero Section */}
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+              <Phone className="h-6 w-6 text-elec-yellow" />
+            </div>
+            <CardTitle className="text-2xl text-white">Professional Support Contacts</CardTitle>
+          </div>
+          <CardDescription className="text-white/70">
+            Real contact information for organisations that can help with workplace issues,
             safety concerns, career development, and professional guidance.
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="bg-amber-500/10 border border-amber-500/20 rounded-md p-4">
+        <CardContent className="relative">
+          <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
+              <div className="p-2 rounded-lg bg-amber-500/20">
+                <AlertTriangle className="h-5 w-5 text-amber-400" />
+              </div>
               <div>
-                <p className="font-medium text-amber-200 mb-1">Important Notice</p>
+                <p className="font-semibold text-amber-300 mb-1">Important Notice</p>
                 <p className="text-amber-200/80 text-sm">
-                  For immediate electrical safety emergencies, always call 999. 
+                  For immediate electrical safety emergencies, always call 999.
                   These contacts are for professional guidance, reporting, and non-emergency support.
                 </p>
               </div>
@@ -320,15 +339,16 @@ const ResourcesTab = () => {
         "Support for workplace rights, employment issues, and professional representation"
       )}
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      {/* Footer Disclaimer */}
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10">
         <CardContent className="p-6">
           <div className="text-center space-y-2">
-            <p className="text-sm text-muted-foreground">
-              <strong>Disclaimer:</strong> Contact information is provided for guidance only. 
-              Always verify current details before making contact. For workplace emergencies, 
+            <p className="text-sm text-white/60">
+              <strong className="text-white/80">Disclaimer:</strong> Contact information is provided for guidance only.
+              Always verify current details before making contact. For workplace emergencies,
               follow your company's emergency procedures first.
             </p>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white/70">
               Last updated: {new Date().toLocaleDateString('en-GB')}
             </p>
           </div>

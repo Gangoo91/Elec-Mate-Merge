@@ -67,8 +67,7 @@ const InstrumentationModule2Section5 = () => {
       ],
       correct: 1,
       explanation: "An ADC (Analog-to-Digital Converter) converts continuous analog signals into digital format so they can be processed by digital systems like computers and PLCs."
-    }
-  ];
+  }  ];
 
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">

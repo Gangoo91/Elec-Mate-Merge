@@ -21,10 +21,10 @@ const ToolboxCard = ({ title, icon, link, onSelect, description, comingSoon }: T
   // Create the card content
   const cardContent = (
     <Card 
-      className={`border-elec-yellow/20 bg-elec-gray transition-all duration-300 h-full flex flex-col relative overflow-hidden ${
+      className={`border-elec-yellow/20 bg-white/5 transition-all duration-300 h-full flex flex-col relative overflow-hidden ${
         comingSoon 
           ? 'opacity-80 border-amber-500/30' 
-          : 'hover:bg-elec-gray/80 cursor-pointer hover:scale-102'
+          : 'hover:bg-white/5 cursor-pointer hover:scale-102'
       }`}
     >
       {comingSoon && (
@@ -56,7 +56,7 @@ const ToolboxCard = ({ title, icon, link, onSelect, description, comingSoon }: T
       <CardContent className="flex flex-col flex-1 justify-between relative z-10">
         {description && (
           <div className={`text-sm mb-4 ${
-            comingSoon ? 'text-muted-foreground/70' : 'text-muted-foreground'
+            comingSoon ? 'text-white/70' : 'text-white'
           }`}>
             {description}
           </div>

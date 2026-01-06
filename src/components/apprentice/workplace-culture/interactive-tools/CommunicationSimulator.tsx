@@ -91,7 +91,7 @@ const CommunicationSimulator = ({ onBack }: CommunicationSimulatorProps) => {
       case 'excellent': return 'text-green-400 bg-green-500/20 border-green-500/30';
       case 'good': return 'text-yellow-400 bg-yellow-500/20 border-yellow-500/30';
       case 'poor': return 'text-red-400 bg-red-500/20 border-red-500/30';
-      default: return 'text-gray-400 bg-gray-500/20 border-gray-500/30';
+      default: return 'text-white bg-white/10 border-white/20';
     }
   };
 
@@ -106,30 +106,41 @@ const CommunicationSimulator = ({ onBack }: CommunicationSimulatorProps) => {
 
   if (!currentScenario) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-6 animate-fade-in">
         <div className="flex items-center gap-4 mb-6">
-          <Button variant="outline" onClick={onBack} className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            onClick={onBack}
+            className="flex items-center gap-2 h-11 border-white/20 hover:border-elec-yellow/50 hover:bg-elec-yellow/10 touch-manipulation active:scale-95 transition-all"
+          >
             <ArrowLeft className="h-4 w-4" />
             Back to Tools
           </Button>
           <div>
             <h2 className="text-2xl font-bold text-white">Communication Scenario Simulator</h2>
-            <p className="text-muted-foreground">Practice workplace conversations in realistic scenarios</p>
+            <p className="text-white/60">Practice workplace conversations in realistic scenarios</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {scenarios.map((scenario) => (
-            <Card key={scenario.id} className="border-elec-yellow/20 bg-elec-gray cursor-pointer hover:border-elec-yellow/40 transition-colors" onClick={() => handleScenarioSelect(scenario)}>
-              <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
-                  <MessageSquare className="h-5 w-5 text-elec-yellow" />
+            <Card
+              key={scenario.id}
+              className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 hover:border-elec-yellow/40 cursor-pointer transition-all overflow-hidden relative group"
+              onClick={() => handleScenarioSelect(scenario)}
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <CardHeader className="relative">
+                <CardTitle className="text-white flex items-center gap-3">
+                  <div className="p-2 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+                    <MessageSquare className="h-4 w-4 text-elec-yellow" />
+                  </div>
                   {scenario.title}
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground text-sm mb-4">{scenario.context}</p>
-                <Button className="w-full">
+              <CardContent className="relative">
+                <p className="text-white/60 text-sm mb-4">{scenario.context}</p>
+                <Button className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation active:scale-95 transition-all">
                   Start Scenario
                 </Button>
               </CardContent>
@@ -141,73 +152,100 @@ const CommunicationSimulator = ({ onBack }: CommunicationSimulatorProps) => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <div className="flex items-center gap-4 mb-6">
-        <Button variant="outline" onClick={() => setCurrentScenario(null)} className="flex items-center gap-2">
+        <Button
+          variant="outline"
+          onClick={() => setCurrentScenario(null)}
+          className="flex items-center gap-2 h-11 border-white/20 hover:border-elec-yellow/50 hover:bg-elec-yellow/10 touch-manipulation active:scale-95 transition-all"
+        >
           <ArrowLeft className="h-4 w-4" />
           Back to Scenarios
         </Button>
         <div>
           <h2 className="text-2xl font-bold text-white">{currentScenario.title}</h2>
-          <p className="text-muted-foreground">Choose your response carefully</p>
+          <p className="text-white/60">Choose your response carefully</p>
         </div>
       </div>
 
-      <Card className="border-blue-500/20 bg-blue-500/10">
-        <CardHeader>
-          <CardTitle className="text-blue-300">Scenario Context</CardTitle>
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-blue-500/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
+              <Users className="h-4 w-4 text-blue-400" />
+            </div>
+            Scenario Context
+          </CardTitle>
         </CardHeader>
-        <CardContent>
-          <p className="text-blue-100 mb-4">{currentScenario.context}</p>
-          <div className="bg-blue-500/20 rounded-lg p-4">
-            <h4 className="font-medium text-blue-200 mb-2">The Situation:</h4>
-            <p className="text-blue-100 italic">"{currentScenario.situation}"</p>
+        <CardContent className="relative">
+          <p className="text-white/80 mb-4">{currentScenario.context}</p>
+          <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
+            <h4 className="font-medium text-blue-400 mb-2">The Situation:</h4>
+            <p className="text-white/80 italic">"{currentScenario.situation}"</p>
           </div>
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow">How do you respond?</CardTitle>
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-48 h-48 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+              <MessageSquare className="h-4 w-4 text-elec-yellow" />
+            </div>
+            How do you respond?
+          </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="relative">
           <div className="space-y-4">
             {currentScenario.responses.map((response, index) => (
               <div key={index} className="space-y-2">
                 <Button
                   variant="outline"
-                  className={`w-full text-left p-4 h-auto whitespace-normal justify-start ${
-                    selectedResponse === index ? 'border-elec-yellow bg-elec-yellow/10' : ''
+                  className={`w-full text-left p-4 h-auto whitespace-normal justify-start transition-all ${
+                    selectedResponse === index
+                      ? 'border-elec-yellow bg-elec-yellow/10'
+                      : 'border-white/10 hover:border-white/20'
                   }`}
                   onClick={() => handleResponseSelect(index)}
                 >
-                  <span className="block">{response.text}</span>
+                  <span className="block text-white/80">{response.text}</span>
                 </Button>
-                
+
                 {showFeedback && selectedResponse === index && (
-                  <div className={`border rounded-lg p-4 ${getRatingColor(response.rating)}`}>
+                  <div className={`rounded-xl p-4 ${getRatingColor(response.rating)}`}>
                     <div className="flex items-center gap-2 mb-2">
-                      {getRatingIcon(response.rating)}
+                      <div className={`p-1.5 rounded-lg ${response.rating === 'excellent' ? 'bg-green-500/20' : response.rating === 'good' ? 'bg-yellow-500/20' : 'bg-red-500/20'}`}>
+                        {getRatingIcon(response.rating)}
+                      </div>
                       <Badge variant="outline" className={getRatingColor(response.rating)}>
                         {response.rating.charAt(0).toUpperCase() + response.rating.slice(1)}
                       </Badge>
                     </div>
-                    <p className="text-sm">{response.feedback}</p>
+                    <p className="text-sm text-white/80">{response.feedback}</p>
                   </div>
                 )}
               </div>
             ))}
           </div>
-          
+
           {showFeedback && (
-            <div className="mt-6 pt-4 border-t border-muted/20">
-              <Button onClick={() => setCurrentScenario(null)} className="mr-4">
+            <div className="mt-6 pt-4 border-t border-white/10 flex flex-wrap gap-3">
+              <Button
+                onClick={() => setCurrentScenario(null)}
+                className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation active:scale-95 transition-all"
+              >
                 Try Another Scenario
               </Button>
-              <Button variant="outline" onClick={() => {
-                setSelectedResponse(null);
-                setShowFeedback(false);
-              }}>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setSelectedResponse(null);
+                  setShowFeedback(false);
+                }}
+                className="h-11 border-white/20 hover:border-elec-yellow/50 hover:bg-elec-yellow/10 touch-manipulation active:scale-95 transition-all"
+              >
                 Try Again
               </Button>
             </div>

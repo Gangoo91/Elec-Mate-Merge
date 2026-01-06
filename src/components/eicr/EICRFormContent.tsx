@@ -16,6 +16,7 @@ interface EICRFormContentProps {
   onCloseStartNewDialog: () => void;
   onConfirmStartNew: () => void;
   onConfirmDuplicate?: () => void;
+  onOpenBoardScan?: () => void;
 }
 
 const EICRFormContent: React.FC<EICRFormContentProps> = ({
@@ -29,7 +30,8 @@ const EICRFormContent: React.FC<EICRFormContentProps> = ({
   showStartNewDialog,
   onCloseStartNewDialog,
   onConfirmStartNew,
-  onConfirmDuplicate
+  onConfirmDuplicate,
+  onOpenBoardScan
 }) => {
   const handleApplyRcdPreset = (circuitIds: string[], preset: any) => {
     const currentResults = formData.testResults || [];
@@ -49,8 +51,7 @@ const EICRFormContent: React.FC<EICRFormContentProps> = ({
   };
 
   return (
-    <div className="px-2 md:px-4">
-
+    <div>
       <DraftHeaderActions
         hasDraft={hasDraft}
         draftTimestamp={draftTimestamp}
@@ -60,15 +61,19 @@ const EICRFormContent: React.FC<EICRFormContentProps> = ({
       />
 
       {formData.testResults && formData.testResults.length > 0 && (
-        <div className="mb-6">
-          <QuickRcdPresets 
+        <div className="mb-4">
+          <QuickRcdPresets
             testResults={formData.testResults}
             onApplyToCircuits={handleApplyRcdPreset}
           />
         </div>
       )}
 
-      <EICRFormTabs formData={formData} onUpdate={onUpdate} />
+      <EICRFormTabs
+        formData={formData}
+        onUpdate={onUpdate}
+        onOpenBoardScan={onOpenBoardScan}
+      />
 
       <StartNewEICRDialog
         isOpen={showStartNewDialog}

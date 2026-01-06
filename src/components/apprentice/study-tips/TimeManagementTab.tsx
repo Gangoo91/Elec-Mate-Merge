@@ -122,7 +122,7 @@ const TimeManagementTab = () => {
                           </Badge>
                           <h4 className="font-medium text-white">{activity.activity}</h4>
                         </div>
-                        <p className="text-sm text-muted-foreground">{activity.description}</p>
+                        <p className="text-sm text-white">{activity.description}</p>
                       </div>
                     ))}
                   </div>
@@ -133,7 +133,7 @@ const TimeManagementTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Target className="h-6 w-6 text-elec-yellow" />
@@ -149,7 +149,7 @@ const TimeManagementTab = () => {
                   {category.tips.map((item, itemIndex) => (
                     <div key={itemIndex}>
                       <h4 className="font-medium text-white text-sm mb-1">{item.tip}</h4>
-                      <p className="text-xs text-muted-foreground">{item.explanation}</p>
+                      <p className="text-xs text-white">{item.explanation}</p>
                     </div>
                   ))}
                 </div>
@@ -159,7 +159,7 @@ const TimeManagementTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <CheckCircle className="h-6 w-6 text-elec-yellow" />
@@ -173,7 +173,7 @@ const TimeManagementTab = () => {
                 <h3 className="font-semibold text-white mb-3">{env.aspect}</h3>
                 <ul className="space-y-2">
                   {env.recommendations.map((rec, recIndex) => (
-                    <li key={recIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                    <li key={recIndex} className="text-sm text-white flex items-start gap-2">
                       <div className="w-1 h-1 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                       {rec}
                     </li>

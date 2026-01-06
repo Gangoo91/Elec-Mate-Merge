@@ -37,7 +37,7 @@ const InteractiveLightDemo = ({ subsectionId }: InteractiveLightDemoProps) => {
         <div className="text-center">
           <div 
             className={`w-20 h-20 rounded-md flex items-center justify-center cursor-pointer
-              ${circuitComplete ? 'bg-elec-yellow/20 border-2 border-elec-yellow' : 'bg-elec-dark/70 border-2 border-elec-yellow/30'}`}
+              ${circuitComplete ? 'bg-elec-yellow/20 border-2 border-elec-yellow' : 'bg-white/10 border-2 border-elec-yellow/30'}`}
             onClick={toggleCircuit}
           >
             <span className="text-sm font-medium">
@@ -52,7 +52,7 @@ const InteractiveLightDemo = ({ subsectionId }: InteractiveLightDemoProps) => {
         <div className="text-center">
           <div 
             className={`w-16 h-16 rounded-md flex items-center justify-center cursor-pointer
-              ${circuitComplete ? 'bg-elec-yellow/20 border-2 border-elec-yellow hover:bg-elec-yellow/40' : 'bg-elec-dark/70 border-2 border-elec-yellow/30'}`}
+              ${circuitComplete ? 'bg-elec-yellow/20 border-2 border-elec-yellow hover:bg-elec-yellow/40' : 'bg-white/10 border-2 border-elec-yellow/30'}`}
             onClick={toggleLight}
           >
             <span className="text-sm font-medium">Switch</span>
@@ -65,7 +65,7 @@ const InteractiveLightDemo = ({ subsectionId }: InteractiveLightDemoProps) => {
         <div className="text-center">
           <div 
             className={`w-24 h-24 rounded-full flex items-center justify-center
-              ${isLightOn && circuitComplete ? 'bg-elec-yellow shadow-lg shadow-elec-yellow/50' : 'bg-elec-dark/70 border-2 border-elec-yellow/30'}`}
+              ${isLightOn && circuitComplete ? 'bg-elec-yellow shadow-lg shadow-elec-yellow/50' : 'bg-white/10 border-2 border-elec-yellow/30'}`}
           >
             <span className="text-sm font-medium">
               {isLightOn && circuitComplete ? 'ON' : 'OFF'}
@@ -75,7 +75,7 @@ const InteractiveLightDemo = ({ subsectionId }: InteractiveLightDemoProps) => {
         </div>
       </div>
       
-      <div className="bg-elec-dark/50 p-4 rounded-md mt-6">
+      <div className="bg-white/10 p-4 rounded-md mt-6">
         <h4 className="font-semibold text-white mb-2">How it works:</h4>
         <ol className="list-decimal pl-5 space-y-2">
           <li>The circuit must be complete for electricity to flow</li>

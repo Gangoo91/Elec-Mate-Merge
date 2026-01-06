@@ -30,7 +30,7 @@ const TestStepCard = ({ step, onPrevious, onNext, canGoPrevious, canGoNext }: Te
       case 'CRITICAL': return 'bg-red-500';
       case 'HIGH': return 'bg-orange-500';
       case 'MEDIUM': return 'bg-yellow-500';
-      default: return 'bg-gray-500';
+      default: return 'bg-white/15';
     }
   };
 
@@ -39,7 +39,7 @@ const TestStepCard = ({ step, onPrevious, onNext, canGoPrevious, canGoNext }: Te
       case 'isolation': return 'bg-red-500/20 text-red-400 border-red-500/30';
       case 'dead': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
       case 'live': return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
-      default: return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+      default: return 'bg-white/10 text-white/70 border-white/20';
     }
   };
 
@@ -80,7 +80,7 @@ const TestStepCard = ({ step, onPrevious, onNext, canGoPrevious, canGoNext }: Te
               <Target className="h-5 w-5 text-orange-400" />
               <span className="font-semibold text-orange-400">Priority Testing Method</span>
             </div>
-            <p className="text-gray-300 text-sm">
+            <p className="text-white/80 text-sm">
               <strong>Always test EARTH TO LINE first</strong> when measuring loop impedance. This provides maximum safety by ensuring the earth path is tested before line to neutral measurements.
             </p>
           </div>
@@ -90,19 +90,19 @@ const TestStepCard = ({ step, onPrevious, onNext, canGoPrevious, canGoNext }: Te
           <div className="space-y-3">
             <div className="p-4 bg-muted/50 rounded-lg border border-blue-500/30 min-h-[6rem]">
               <h4 className="font-semibold text-blue-400 mb-2">Description</h4>
-              <p className="text-gray-300 text-sm">{step.description}</p>
+              <p className="text-white/80 text-sm">{step.description}</p>
             </div>
             
             <div className="p-4 bg-muted/50 rounded-lg border border-green-500/30 min-h-[6rem]">
               <h4 className="font-semibold text-green-400 mb-2">Test Method</h4>
-              <p className="text-gray-300 text-sm">{step.method}</p>
+              <p className="text-white/80 text-sm">{step.method}</p>
             </div>
           </div>
           
           <div className="space-y-3">
             <div className="p-4 bg-muted/50 rounded-lg border border-yellow-500/30 min-h-[6rem]">
               <h4 className="font-semibold text-yellow-400 mb-2">Acceptance Criteria</h4>
-              <p className="text-gray-300 text-sm">{step.acceptance}</p>
+              <p className="text-white/80 text-sm">{step.acceptance}</p>
             </div>
             
             <div className="p-4 bg-muted/50 rounded-lg border border-red-500/30 min-h-[6rem]">
@@ -110,7 +110,7 @@ const TestStepCard = ({ step, onPrevious, onNext, canGoPrevious, canGoNext }: Te
                 <AlertTriangle className="h-4 w-4" />
                 Safety Notes
               </h4>
-              <p className="text-gray-300 text-sm">{step.safety}</p>
+              <p className="text-white/80 text-sm">{step.safety}</p>
             </div>
           </div>
         </div>
@@ -120,7 +120,7 @@ const TestStepCard = ({ step, onPrevious, onNext, canGoPrevious, canGoNext }: Te
             variant="outline"
             onClick={onPrevious}
             disabled={!canGoPrevious}
-            className="border-gray-600 text-gray-300 hover:bg-gray-700"
+            className="border-white/20 text-white/80 hover:bg-white/10"
           >
             Previous Step
           </Button>

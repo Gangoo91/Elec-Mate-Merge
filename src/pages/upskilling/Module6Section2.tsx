@@ -44,21 +44,21 @@ const RCDTypesQuiz = () => {
     const percentage = Math.round((score / rcdTypesQuizData.length) * 100);
     
     return (
-      <Card className="bg-card border-transparent">
+      <Card className="bg-transparent border-transparent">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-white">
-            <Award className="h-5 w-5 text-yellow-400" />
+            <Award className="h-5 w-5 text-elec-yellow" />
             Quiz Complete - RCD Types
           </CardTitle>
         </CardHeader>
         <CardContent className="text-center space-y-6">
           <div className="space-y-2">
-            <div className={`text-4xl font-bold ${percentage >= 80 ? 'text-green-400' : percentage >= 60 ? 'text-yellow-400' : 'text-red-400'}`}>
+            <div className={`text-4xl font-bold ${percentage >= 80 ? 'text-green-400' : percentage >= 60 ? 'text-elec-yellow' : 'text-red-400'}`}>
               {score}/{rcdTypesQuizData.length}
             </div>
             <div className="text-white">Score: {percentage}%</div>
           </div>
-          <Button onClick={() => window.location.reload()} className="bg-yellow-400 text-black hover:bg-yellow-400">
+          <Button onClick={() => window.location.reload()} className="bg-elec-yellow text-black hover:bg-elec-yellow">
             <RotateCcw className="mr-2 h-4 w-4" />
             Restart Quiz
           </Button>
@@ -73,19 +73,19 @@ const RCDTypesQuiz = () => {
   const isCorrect = userAnswer === question.correctAnswer;
 
   return (
-    <Card className="bg-card border-transparent">
+    <Card className="bg-transparent border-transparent">
       <CardHeader>
         <CardTitle className="flex items-center justify-between text-white">
           <span className="flex items-center gap-2">
-            <Award className="h-5 w-5 text-yellow-400" />
+            <Award className="h-5 w-5 text-elec-yellow" />
             RCD Types Quiz
           </span>
           <span className="text-sm text-white">{currentQuestion + 1} of {rcdTypesQuizData.length}</span>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        <div className="w-full bg-card/80 rounded-full h-2">
-          <div className="bg-yellow-400 h-2 rounded-full transition-all duration-300" style={{ width: `${((currentQuestion + 1) / rcdTypesQuizData.length) * 100}%` }} />
+        <div className="w-full bg-transparent/80 rounded-full h-2">
+          <div className="bg-elec-yellow h-2 rounded-full transition-all duration-300" style={{ width: `${((currentQuestion + 1) / rcdTypesQuizData.length) * 100}%` }} />
         </div>
         <div className="space-y-4">
           <h3 className="text-lg font-medium text-white leading-relaxed">{question.question}</h3>
@@ -97,10 +97,10 @@ const RCDTypesQuiz = () => {
                     ? "bg-green-600/20 text-green-200 border-green-600/30"
                     : index === userAnswer && userAnswer !== question.correctAnswer
                     ? "bg-red-600/20 text-red-200 border-red-600/30"
-                    : "bg-card/80 text-white border-transparent"
+                    : "bg-transparent/80 text-white border-transparent"
                   : userAnswer === index
-                  ? "bg-yellow-400/10 text-yellow-400 border-yellow-400/30"
-                  : "bg-card/80 text-white hover:bg-[#404040] border-transparent"
+                  ? "bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30"
+                  : "bg-transparent/80 text-white hover:bg-[#404040] border-transparent"
               }`} onClick={() => handleAnswerSelect(index)} disabled={showResult}>
                 <div className="flex items-center gap-3">
                   <span className="w-6 h-6 rounded-full bg-current/20 flex items-center justify-center text-xs font-bold">
@@ -129,10 +129,10 @@ const RCDTypesQuiz = () => {
           <div className="text-sm text-white">Question {currentQuestion + 1} of {rcdTypesQuizData.length}</div>
           <div className="space-x-2">
             {!showResult && isAnswered && (
-              <Button onClick={handleSubmitAnswer} className="bg-yellow-400 text-black hover:bg-yellow-400">Submit Answer</Button>
+              <Button onClick={handleSubmitAnswer} className="bg-elec-yellow text-black hover:bg-elec-yellow">Submit Answer</Button>
             )}
             {showResult && (
-              <Button onClick={handleNextQuestion} className="bg-yellow-400 text-black hover:bg-yellow-400">
+              <Button onClick={handleNextQuestion} className="bg-elec-yellow text-black hover:bg-elec-yellow">
                 {currentQuestion < rcdTypesQuizData.length - 1 ? 'Next Question' : 'Complete Quiz'}
               </Button>
             )}
@@ -145,22 +145,22 @@ const RCDTypesQuiz = () => {
 
 const Module6Section2 = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
         <Link to="../module-6">
-          <Button variant="ghost" className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md">
+          <Button variant="ghost" className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 6
           </Button>
         </Link>
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <Layers className="h-8 w-8 text-yellow-400" />
+            <Layers className="h-8 w-8 text-elec-yellow" />
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">Types of RCDs and Applications</h1>
           </div>
           <p className="text-sm sm:text-lg lg:text-xl text-white max-w-3xl leading-relaxed">Understanding different RCD types and their specific applications</p>
           <div className="flex gap-4">
-            <Badge variant="secondary" className="bg-yellow-400 text-black">Module 6.2</Badge>
+            <Badge variant="secondary" className="bg-elec-yellow text-black">Module 6.2</Badge>
             <Badge variant="outline" className="border-gray-600 text-white">30 minutes</Badge>
           </div>
         </div>
@@ -177,13 +177,13 @@ const Module6Section2 = () => {
         <div>
           <div className="flex justify-between items-center">
             <Link to="module-6/section-1">
-              <Button variant="outline" className="bg-transparent border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black transition-all duration-200">
+              <Button variant="outline" className="bg-transparent border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black transition-all duration-200">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Previous: RCD Fundamentals
               </Button>
             </Link>
             <Link to="module-6/section-3">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-400 transition-all duration-200">
+              <Button className="bg-elec-yellow text-black hover:bg-elec-yellow transition-all duration-200">
                 Next: Testing Procedures
                 <ArrowLeft className="ml-2 h-4 w-4 rotate-180" />
               </Button>

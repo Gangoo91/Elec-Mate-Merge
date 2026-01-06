@@ -130,7 +130,7 @@ const IndustrySpecificSections = () => {
       <h4 className="font-medium text-white mb-2 text-sm">{section.title}</h4>
       <ul className="space-y-1">
         {section.requirements.map((req: string, idx: number) => (
-          <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
+          <li key={idx} className="text-xs text-white flex items-start gap-2">
             <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
             <span className="line-clamp-2">{req}</span>
           </li>
@@ -140,10 +140,10 @@ const IndustrySpecificSections = () => {
   );
 
   return (
-    <Card className="border-elec-yellow/30 bg-elec-gray">
+    <Card className="border-elec-yellow/30 bg-white/5">
       <CardHeader className="pb-3">
         <CardTitle className="text-elec-yellow text-base sm:text-lg">Industry-Specific Portfolio Sections</CardTitle>
-        <p className="text-xs sm:text-sm text-muted-foreground">
+        <p className="text-xs sm:text-sm text-white">
           Tailor your portfolio content to match your specific area of electrical work
         </p>
       </CardHeader>

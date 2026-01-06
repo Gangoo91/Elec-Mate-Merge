@@ -181,7 +181,7 @@ const TemplatesAndExamples = () => {
       case "Outstanding": return "border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/10 text-green-400";
       case "Good Practice": return "border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 text-blue-400";
       case "Best Practice": return "border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-pink-500/10 text-purple-400";
-      default: return "border-gray-500/30 bg-gradient-to-br from-gray-500/10 to-slate-500/10 text-gray-400";
+      default: return "border-white/20 bg-gradient-to-br from-gray-500/10 to-slate-500/10 text-white";
     }
   };
 
@@ -196,7 +196,7 @@ const TemplatesAndExamples = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Access our comprehensive collection of templates, examples, and resources to help you build 
             a professional portfolio efficiently and effectively.
           </p>
@@ -207,7 +207,7 @@ const TemplatesAndExamples = () => {
       <div className="space-y-4">
         <h3 className="text-xl font-semibold text-white">Portfolio Templates</h3>
         {templates.map((category, categoryIndex) => (
-          <Card key={categoryIndex} className="border-blue-500/20 bg-elec-gray">
+          <Card key={categoryIndex} className="border-blue-500/20 bg-white/5">
             <CardHeader>
               <CardTitle className="text-blue-400 flex items-center gap-2">
                 <Folder className="h-5 w-5" />
@@ -228,7 +228,7 @@ const TemplatesAndExamples = () => {
                       <FileText className="h-5 w-5 text-elec-yellow flex-shrink-0" />
                     </div>
                     
-                    <p className="text-sm text-muted-foreground">{template.description}</p>
+                    <p className="text-sm text-white">{template.description}</p>
                     
                     <div className="flex gap-2">
                       <Button variant="outline" size="sm" className="border-elec-yellow/30">
@@ -271,7 +271,7 @@ const TemplatesAndExamples = () => {
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
-                <p className="text-sm text-muted-foreground">{example.description}</p>
+                <p className="text-sm text-white">{example.description}</p>
                 
                 <div>
                   <h4 className="font-medium text-white mb-2">Key Highlights:</h4>
@@ -279,7 +279,7 @@ const TemplatesAndExamples = () => {
                     {example.highlights.map((highlight, highlightIndex) => (
                       <li key={highlightIndex} className="flex items-start gap-2">
                         <CheckCircle className="h-3 w-3 text-current mt-1 flex-shrink-0" />
-                        <span className="text-xs text-muted-foreground">{highlight}</span>
+                        <span className="text-xs text-white">{highlight}</span>
                       </li>
                     ))}
                   </ul>
@@ -299,7 +299,7 @@ const TemplatesAndExamples = () => {
       <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/10">
         <CardHeader>
           <CardTitle className="text-green-400">Quick Start Guides</CardTitle>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Step-by-step guides to help you get started and maintain momentum
           </p>
         </CardHeader>
@@ -309,13 +309,13 @@ const TemplatesAndExamples = () => {
               <div key={index} className="space-y-3">
                 <div>
                   <h4 className="font-medium text-green-400">{guide.title}</h4>
-                  <p className="text-sm text-muted-foreground">{guide.description}</p>
+                  <p className="text-sm text-white">{guide.description}</p>
                 </div>
                 <ul className="space-y-2">
                   {guide.tasks.map((task, taskIndex) => (
                     <li key={taskIndex} className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-sm text-muted-foreground">{task}</span>
+                      <span className="text-sm text-white">{task}</span>
                     </li>
                   ))}
                 </ul>
@@ -337,19 +337,19 @@ const TemplatesAndExamples = () => {
               <ul className="space-y-2">
                 <li className="flex items-center gap-2">
                   <Video className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm text-muted-foreground">Portfolio Structure Setup</span>
+                  <span className="text-sm text-white">Portfolio Structure Setup</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Video className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm text-muted-foreground">Evidence Photography Techniques</span>
+                  <span className="text-sm text-white">Evidence Photography Techniques</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Video className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm text-muted-foreground">Writing Effective Reflections</span>
+                  <span className="text-sm text-white">Writing Effective Reflections</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Video className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm text-muted-foreground">Assessment Preparation Tips</span>
+                  <span className="text-sm text-white">Assessment Preparation Tips</span>
                 </li>
               </ul>
             </div>
@@ -358,19 +358,19 @@ const TemplatesAndExamples = () => {
               <ul className="space-y-2">
                 <li className="flex items-center gap-2">
                   <FileText className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm text-muted-foreground">Portfolio FAQ Document</span>
+                  <span className="text-sm text-white">Portfolio FAQ Document</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <FileText className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm text-muted-foreground">Troubleshooting Common Issues</span>
+                  <span className="text-sm text-white">Troubleshooting Common Issues</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <FileText className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm text-muted-foreground">Assessment Criteria Explained</span>
+                  <span className="text-sm text-white">Assessment Criteria Explained</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <FileText className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm text-muted-foreground">Industry Standards Reference</span>
+                  <span className="text-sm text-white">Industry Standards Reference</span>
                 </li>
               </ul>
             </div>

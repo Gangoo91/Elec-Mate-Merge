@@ -16,7 +16,10 @@ import BusinessAnalytics from "@/pages/electrician-tools/BusinessAnalytics";
 import FinancialTools from "@/pages/electrician-tools/FinancialTools";
 import CareerProgression from "@/pages/electrician/CareerProgression";
 import AssistantPage from "@/pages/electrician-tools/ai-tools/AssistantPage";
-import VisualAnalysisPage from "@/pages/electrician-tools/ai-tools/VisualAnalysisPage";
+import ComponentIdentifyPage from "@/pages/electrician-tools/ai-tools/ComponentIdentifyPage";
+import WiringInstructionPage from "@/pages/electrician-tools/ai-tools/WiringInstructionPage";
+import FaultDiagnosisPage from "@/pages/electrician-tools/ai-tools/FaultDiagnosisPage";
+import InstallationVerifyPage from "@/pages/electrician-tools/ai-tools/InstallationVerifyPage";
 import ReportWriterPage from "@/pages/electrician-tools/ai-tools/ReportWriterPage";
 import RegulationsPage from "@/pages/electrician-tools/ai-tools/RegulationsPage";
 import CircuitDesignerPage from "@/pages/electrician-tools/ai-tools/CircuitDesignerPage";
@@ -31,10 +34,10 @@ const ElectricianRoutes = () => (
     <Route path="testing-projects" element={<TestingProjects />} />
     <Route path="ai-tooling" element={<AITooling />} />
     <Route path="ai-tooling/assistant" element={<AssistantPage />} />
-    <Route path="ai-tooling/component-identify" element={<VisualAnalysisPage />} />
-    <Route path="ai-tooling/wiring-instruction" element={<VisualAnalysisPage />} />
-    <Route path="ai-tooling/fault-diagnosis" element={<VisualAnalysisPage />} />
-    <Route path="ai-tooling/installation-verify" element={<VisualAnalysisPage />} />
+    <Route path="ai-tooling/component-identify" element={<ComponentIdentifyPage />} />
+    <Route path="ai-tooling/wiring-instruction" element={<WiringInstructionPage />} />
+    <Route path="ai-tooling/fault-diagnosis" element={<FaultDiagnosisPage />} />
+    <Route path="ai-tooling/installation-verify" element={<InstallationVerifyPage />} />
     <Route path="ai-tooling/explainer" element={<ClientExplainerPage />} />
     <Route path="business-management" element={<BusinessManagement />} />
     <Route path="compliance" element={<ComplianceManager />} />

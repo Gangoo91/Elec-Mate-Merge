@@ -330,12 +330,12 @@ const ArcFlashCalculator = () => {
               <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-center">
                 <p className="text-xs text-white/60 mb-1">Arc Flash Boundary</p>
                 <p className="text-xl font-bold text-white font-mono">{Math.round(result.arcFlashBoundary)}mm</p>
-                <p className="text-xs text-white/50">({(result.arcFlashBoundary/1000).toFixed(2)}m)</p>
+                <p className="text-xs text-white/80">({(result.arcFlashBoundary/1000).toFixed(2)}m)</p>
               </div>
               <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-center">
                 <p className="text-xs text-white/60 mb-1">Arcing Current</p>
                 <p className="text-xl font-bold text-white font-mono">{result.arcingCurrent.toFixed(1)} kA</p>
-                <p className="text-xs text-white/50">{result.calculationMethod}</p>
+                <p className="text-xs text-white/80">{result.calculationMethod}</p>
               </div>
             </ResultsGrid>
 
@@ -387,7 +387,7 @@ const ArcFlashCalculator = () => {
                   <span className="text-sm sm:text-base font-medium text-purple-300">What-if Analysis</span>
                 </div>
                 <ChevronDown className={cn(
-                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  "h-4 w-4 text-white/70 transition-transform duration-200",
                   showWhatIf && "rotate-180"
                 )} />
               </CollapsibleTrigger>
@@ -430,7 +430,7 @@ const ArcFlashCalculator = () => {
                       <p className="text-xl font-bold text-purple-400 font-mono">
                         {whatIfResult.incidentEnergy.toFixed(2)} cal/cm²
                       </p>
-                      <p className="text-xs text-white/50">PPE Category {whatIfResult.ppeCategory}</p>
+                      <p className="text-xs text-white/80">PPE Category {whatIfResult.ppeCategory}</p>
                     </div>
                   ) : null;
                 })()}
@@ -449,7 +449,7 @@ const ArcFlashCalculator = () => {
               <span className="text-sm sm:text-base font-medium text-blue-300">Why This Matters</span>
             </div>
             <ChevronDown className={cn(
-              "h-4 w-4 text-white/40 transition-transform duration-200",
+              "h-4 w-4 text-white/70 transition-transform duration-200",
               showGuidance && "rotate-180"
             )} />
           </CollapsibleTrigger>
@@ -472,7 +472,7 @@ const ArcFlashCalculator = () => {
               <span className="text-sm sm:text-base font-medium text-amber-300">Regulations & Standards</span>
             </div>
             <ChevronDown className={cn(
-              "h-4 w-4 text-white/40 transition-transform duration-200",
+              "h-4 w-4 text-white/70 transition-transform duration-200",
               showRegs && "rotate-180"
             )} />
           </CollapsibleTrigger>

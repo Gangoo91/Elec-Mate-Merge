@@ -26,7 +26,7 @@ const QualificationsSection = ({
 }: QualificationsSectionProps) => {
   return (
     <div className="space-y-3">
-      <Label className="flex items-center gap-2 text-sm font-medium text-gray-300">
+      <Label className="flex items-center gap-2 text-sm font-medium text-white/80">
         <Award className="h-4 w-4 text-elec-yellow" />
         Qualifications *
       </Label>
@@ -37,7 +37,7 @@ const QualificationsSection = ({
               id={qual}
               checked={selectedQualifications.includes(qual)}
               onCheckedChange={() => onToggleQualification(qual)}
-              className="border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+              className="border-white/60 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
             />
             <Label htmlFor={qual} className="text-sm text-foreground cursor-pointer leading-tight">
               {qual}

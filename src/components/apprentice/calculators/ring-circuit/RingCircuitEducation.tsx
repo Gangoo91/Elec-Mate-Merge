@@ -6,7 +6,7 @@ import { BookOpen, AlertTriangle, CheckCircle, Zap, Shield, Calculator } from "l
 
 const RingCircuitEducation = () => {
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray mt-6">
+    <Card className="border-elec-yellow/20 bg-white/5 mt-6">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <BookOpen className="h-5 w-5 text-elec-yellow" />
@@ -15,7 +15,7 @@ const RingCircuitEducation = () => {
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="theory" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 lg:grid-cols-6 bg-elec-dark">
+          <TabsList className="grid w-full grid-cols-4 lg:grid-cols-6 bg-white/10">
             <TabsTrigger value="theory" className="text-xs">Theory</TabsTrigger>
             <TabsTrigger value="procedure" className="text-xs">Procedure</TabsTrigger>
             <TabsTrigger value="results" className="text-xs">Results</TabsTrigger>
@@ -26,7 +26,7 @@ const RingCircuitEducation = () => {
 
           <TabsContent value="theory" className="mt-4">
             <div className="space-y-4">
-              <div className="bg-elec-dark/50 rounded-lg p-4">
+              <div className="bg-white/10 rounded-lg p-4">
                 <h3 className="text-lg font-semibold text-elec-yellow mb-3">What is a Ring Final Circuit?</h3>
                 <p className="text-elec-light/80 mb-3">
                   A ring final circuit is a wiring configuration where the live and neutral conductors form a continuous loop, 
@@ -67,7 +67,7 @@ const RingCircuitEducation = () => {
                       <p className="mb-2">
                         R1 + R2 represents the resistance of the live and earth conductors combined. For a ring circuit:
                       </p>
-                      <div className="bg-elec-dark rounded p-3 font-mono text-sm">
+                      <div className="bg-white/10 rounded p-3 font-mono text-sm">
                         R1 + R2 (at midpoint) = (R1 + R2) ÷ 4
                       </div>
                       <p className="mt-2 text-xs">
@@ -81,7 +81,7 @@ const RingCircuitEducation = () => {
                       <p className="mb-2">
                         End-to-end resistance is measured across the entire loop:
                       </p>
-                      <div className="bg-elec-dark rounded p-3 font-mono text-sm">
+                      <div className="bg-white/10 rounded p-3 font-mono text-sm">
                         End-to-End = (R1 + R2) ÷ 2
                       </div>
                       <p className="mt-2 text-xs">
@@ -96,7 +96,7 @@ const RingCircuitEducation = () => {
 
           <TabsContent value="procedure" className="mt-4">
             <div className="space-y-4">
-              <div className="bg-elec-dark/50 rounded-lg p-4">
+              <div className="bg-white/10 rounded-lg p-4">
                 <h3 className="text-lg font-semibold text-elec-yellow mb-3">Step-by-Step Test Procedure</h3>
                 
                 <div className="space-y-4">
@@ -137,7 +137,7 @@ const RingCircuitEducation = () => {
 
           <TabsContent value="results" className="mt-4">
             <div className="space-y-4">
-              <div className="bg-elec-dark/50 rounded-lg p-4">
+              <div className="bg-white/10 rounded-lg p-4">
                 <h3 className="text-lg font-semibold text-elec-yellow mb-3">Interpreting Test Results</h3>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -187,7 +187,7 @@ const RingCircuitEducation = () => {
 
           <TabsContent value="issues" className="mt-4">
             <div className="space-y-4">
-              <div className="bg-elec-dark/50 rounded-lg p-4">
+              <div className="bg-white/10 rounded-lg p-4">
                 <h3 className="text-lg font-semibold text-elec-yellow mb-3">Common Issues & Solutions</h3>
                 
                 <Accordion type="single" collapsible className="w-full">
@@ -270,7 +270,7 @@ const RingCircuitEducation = () => {
 
           <TabsContent value="regulations" className="mt-4">
             <div className="space-y-4">
-              <div className="bg-elec-dark/50 rounded-lg p-4">
+              <div className="bg-white/10 rounded-lg p-4">
                 <h3 className="text-lg font-semibold text-elec-yellow mb-3 flex items-center gap-2">
                   <Shield className="h-5 w-5" />
                   BS 7671 Requirements
@@ -339,7 +339,7 @@ const RingCircuitEducation = () => {
 
           <TabsContent value="practice" className="mt-4">
             <div className="space-y-4">
-              <div className="bg-elec-dark/50 rounded-lg p-4">
+              <div className="bg-white/10 rounded-lg p-4">
                 <h3 className="text-lg font-semibold text-elec-yellow mb-3">Practical Tips & Best Practices</h3>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

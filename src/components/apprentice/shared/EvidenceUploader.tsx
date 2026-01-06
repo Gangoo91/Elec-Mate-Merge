@@ -57,7 +57,7 @@ const getFileIcon = (type: string) => {
   if (type.startsWith('video/')) return <Video className="h-5 w-5 text-purple-400" />;
   if (type.includes('pdf')) return <FileText className="h-5 w-5 text-red-400" />;
   if (type.includes('word') || type.includes('document')) return <FileText className="h-5 w-5 text-blue-500" />;
-  return <File className="h-5 w-5 text-gray-400" />;
+  return <File className="h-5 w-5 text-white" />;
 };
 
 const formatFileSize = (bytes: number) => {
@@ -378,7 +378,7 @@ export const EvidenceUploader = ({
                 <div className="flex items-center gap-3">
                   {/* Thumbnail or Icon */}
                   {file.type.startsWith('image/') && file.url ? (
-                    <div className="w-10 h-10 rounded overflow-hidden bg-elec-gray shrink-0">
+                    <div className="w-10 h-10 rounded overflow-hidden bg-white/5 shrink-0">
                       <img
                         src={file.url}
                         alt={file.name}
@@ -386,7 +386,7 @@ export const EvidenceUploader = ({
                       />
                     </div>
                   ) : (
-                    <div className="w-10 h-10 rounded bg-elec-gray flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded bg-white/5 flex items-center justify-center shrink-0">
                       {getFileIcon(file.type)}
                     </div>
                   )}

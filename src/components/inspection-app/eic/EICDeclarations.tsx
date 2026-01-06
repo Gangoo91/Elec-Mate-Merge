@@ -106,15 +106,15 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs sm:text-sm">
             <span className="font-medium">Declaration Progress:</span>
             <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-              <div className={`flex items-center gap-1.5 ${isDesignerComplete ? 'text-green-600' : 'text-gray-400'}`}>
+              <div className={`flex items-center gap-1.5 ${isDesignerComplete ? 'text-green-600' : 'text-white/70'}`}>
                 <FileCheck className="h-4 w-4" />
                 <span>Designer</span>
               </div>
-              <div className={`flex items-center gap-1.5 ${isConstructorComplete ? 'text-green-600' : 'text-gray-400'}`}>
+              <div className={`flex items-center gap-1.5 ${isConstructorComplete ? 'text-green-600' : 'text-white/70'}`}>
                 <FileCheck className="h-4 w-4" />
                 <span>Constructor</span>
               </div>
-              <div className={`flex items-center gap-1.5 ${isInspectorComplete ? 'text-green-600' : 'text-gray-400'}`}>
+              <div className={`flex items-center gap-1.5 ${isInspectorComplete ? 'text-green-600' : 'text-white/70'}`}>
                 <FileCheck className="h-4 w-4" />
                 <span>Inspector</span>
               </div>
@@ -127,7 +127,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
       <Card>
         <CardHeader>
           <CardTitle className="text-lg font-semibold text-elec-gray flex items-center gap-2">
-            <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${isDesignerComplete ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>
+            <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${isDesignerComplete ? 'bg-green-100 text-green-800' : 'bg-white/5 text-white/70'}`}>
               1
             </span>
             Designer Declaration
@@ -200,7 +200,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
       <Card>
         <CardHeader>
           <CardTitle className="text-lg font-semibold text-elec-gray flex items-center gap-2">
-            <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${isConstructorComplete ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>
+            <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${isConstructorComplete ? 'bg-green-100 text-green-800' : 'bg-white/5 text-white/70'}`}>
               2
             </span>
             Constructor Declaration
@@ -298,7 +298,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
       <Card>
         <CardHeader>
           <CardTitle className="text-lg font-semibold text-elec-gray flex items-center gap-2">
-            <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${isInspectorComplete ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>
+            <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${isInspectorComplete ? 'bg-green-100 text-green-800' : 'bg-white/5 text-white/70'}`}>
               3
             </span>
             Inspector Declaration

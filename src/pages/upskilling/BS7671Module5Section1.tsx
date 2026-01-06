@@ -1,799 +1,416 @@
-import { ArrowLeft, ArrowRight, Settings, CheckCircle, AlertTriangle, Target, Lightbulb, Thermometer } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
-import BS7671EmbeddedQuiz from '@/components/upskilling/BS7671EmbeddedQuiz';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
+import useSEO from "@/hooks/useSEO";
+
+const quickCheckQuestions = [
+  {
+    id: "ip65-meaning",
+    question: "What does IP65 indicate in equipment specification?",
+    options: ["Limited dust ingress, dripping water protection", "Dust tight, protection against water jets from any direction", "Complete dust protection, protection against immersion", "No dust protection, splashing water protection"],
+    correctIndex: 1,
+    explanation: "IP65 means the equipment is dust-tight (6) and protected against water jets from any direction (5), making it suitable for harsh industrial environments."
+  },
+  {
+    id: "temp-rating-why",
+    question: "Why must temperature ratings be considered in equipment selection?",
+    options: ["To comply with colour coding", "To ensure equipment operates safely within thermal limits and doesn't degrade", "To determine voltage rating", "To calculate installation cost"],
+    correctIndex: 1,
+    explanation: "Temperature ratings ensure equipment operates safely within thermal limits, preventing overheating, insulation breakdown, and premature failure."
+  },
+  {
+    id: "under-rated-switchgear",
+    question: "What could happen if switchgear is under-rated for the current load?",
+    options: ["Improved efficiency", "Overheating, contact welding, fire risk, and system failure", "Reduced maintenance", "Better power factor"],
+    correctIndex: 1,
+    explanation: "Under-rated switchgear can overheat, leading to contact welding, arcing, fire risk, and catastrophic system failure due to inability to handle the current safely."
+  }
+];
+
+const faqs = [
+  {
+    question: "What's the relationship between IP rating and installation location?",
+    answer: "IP rating must match environmental conditions: IP20 for indoor dry locations, IP44+ for bathrooms, IP65+ for outdoor/washdown areas, IP67+ for underground applications."
+  },
+  {
+    question: "Why are manufacturer instructions legally important?",
+    answer: "Following manufacturer instructions is a legal requirement under BS 7671. Non-compliance can void warranties, create liability issues, and compromise safety and insurance coverage."
+  },
+  {
+    question: "How do I select equipment for high ambient temperatures?",
+    answer: "Apply derating factors from manufacturer data, or select equipment with higher temperature ratings. Standard ratings assume 30-40°C ambient - higher temperatures require capacity reduction."
+  },
+  {
+    question: "What's the significance of insulation classes?",
+    answer: "Insulation classes (A, B, F, H) indicate maximum continuous operating temperatures: A=105°C, B=130°C, F=155°C, H=180°C. Higher classes suit higher-temperature applications."
+  }
+];
+
+const quizQuestion = {
+  question: "Which regulation in BS 7671 covers equipment suitability?",
+  options: [
+    "Part 3 - Assessment of general characteristics",
+    "Part 5 - Selection and erection of equipment",
+    "Part 4 - Protection for safety",
+    "Part 6 - Inspection and testing"
+  ],
+  correctAnswer: 1,
+  explanation: "Part 5 of BS 7671 covers the selection and erection of equipment, including requirements for suitability, ratings, and environmental considerations."
+};
 
 const BS7671Module5Section1 = () => {
-
-  const quizQuestions = [
-    {
-      id: 1,
-      question: "What does IP65 indicate in equipment specification?",
-      options: [
-        "Dust tight, protection against water jets from any direction",
-        "Limited dust ingress, protection against dripping water",
-        "Complete dust protection, protection against immersion",
-        "No dust protection, protection against splashing water"
-      ],
-      correct: 0,
-      explanation: "IP65 means the equipment is dust-tight (6) and protected against water jets from any direction (5), making it suitable for harsh industrial environments."
-    },
-    {
-      id: 2,
-      question: "Why must temperature ratings be considered in equipment selection?",
-      options: [
-        "To comply with colour coding requirements",
-        "To ensure equipment operates safely within its thermal limits and doesn't degrade prematurely",
-        "To determine the correct voltage rating",
-        "To calculate the installation cost"
-      ],
-      correct: 1,
-      explanation: "Temperature ratings ensure equipment operates safely within thermal limits, preventing overheating, insulation breakdown, and premature failure."
-    },
-    {
-      id: 3,
-      question: "Which regulation in BS 7671 covers equipment suitability?",
-      options: [
-        "Part 3 - Assessment of general characteristics",
-        "Part 5 - Selection and erection of equipment",
-        "Part 4 - Protection for safety",
-        "Part 6 - Inspection and testing"
-      ],
-      correct: 1,
-      explanation: "Part 5 of BS 7671 covers the selection and erection of equipment, including requirements for suitability, ratings, and environmental considerations."
-    },
-    {
-      id: 4,
-      question: "What could happen if switchgear is under-rated for the current load?",
-      options: [
-        "Improved efficiency",
-        "Overheating, contact welding, fire risk, and potential system failure",
-        "Reduced maintenance requirements",
-        "Better power factor correction"
-      ],
-      correct: 1,
-      explanation: "Under-rated switchgear can overheat, leading to contact welding, arcing, fire risk, and catastrophic system failure due to inability to handle the current safely."
-    },
-    {
-      id: 5,
-      question: "What is the role of manufacturer instructions in equipment installation?",
-      options: [
-        "They are optional guidance only",
-        "They provide legal compliance requirements and specific installation parameters for safe operation",
-        "They only apply to warranty coverage",
-        "They are only needed for complex equipment"
-      ],
-      correct: 1,
-      explanation: "Manufacturer instructions provide essential legal compliance requirements and specific installation parameters necessary for safe, reliable operation and regulatory compliance."
-    }
-  ];
+  useSEO({
+    title: "Equipment Ratings and Suitability | BS7671 Module 5.1",
+    description: "Learn about equipment ratings, IP protection, temperature considerations, and suitability assessment for BS 7671 compliant installations."
+  });
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div>
-        <Link to="../bs7671-module-5">
-          <Button
-            variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 5
-          </Button>
-        </Link>
-        
-        <div className="space-y-4 sm:space-y-6">
-          {/* Header */}
-          <div>
-            <div className="flex items-center gap-4 mb-4">
-              <Settings className="h-8 w-8 text-yellow-400" />
-              <div>
-                <h1 className="text-xl sm:text-2xl font-bold text-white">
-                  Equipment Ratings and Suitability for Purpose
-                </h1>
-                <p className="text-white">
-                  Ensuring appropriate equipment selection for safety and performance
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">
-                Module 5.1
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-white">
-                25 minutes
-              </Badge>
-            </div>
-          </div>
-
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Target className="h-6 w-6 text-yellow-400" />
-                Introduction
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <p className="text-base leading-relaxed">
-                When selecting electrical equipment, it's critical to ensure that it is appropriately rated for the environment, system characteristics, and specific tasks. Poor selection can compromise safety and system performance.
-              </p>
-              <p className="text-base leading-relaxed">
-                This section covers the fundamental principles of equipment rating and suitability assessment, ensuring compliance with BS 7671 requirements for safe and reliable installations.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Learning Goals */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Target className="h-6 w-6 text-yellow-400" />
-                Learning Goals
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm">Understand the concept of equipment ratings</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm">Identify how suitability is determined by location and environmental factors</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm">Ensure compliance with BS 7671 for equipment installation</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm">Apply manufacturer requirements and compatibility considerations</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Voltage and Current Ratings */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Settings className="h-6 w-6 text-yellow-400" />
-                Voltage and Current Ratings
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-yellow-400/10 p-4 rounded-lg border border-blue-600/30">
-                <h4 className="text-white font-semibold mb-3">Fundamental Rating Requirements</h4>
-                <p className="text-sm">
-                  Equipment must be rated to match or exceed the supply conditions and operating parameters to ensure safe and reliable operation throughout its expected lifetime.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-white font-semibold text-lg mb-3">Voltage Considerations</h4>
-                  <div className="space-y-3">
-                    <div className="bg-red-600/20 p-3 rounded border border-red-600/40">
-                      <p className="text-red-400 font-semibold text-sm mb-2">Nominal Voltage:</p>
-                      <ul className="text-xs space-y-1">
-                        <li>• Equipment rating must meet or exceed system nominal voltage</li>
-                        <li>• Consider voltage variations (±10% for LV systems)</li>
-                        <li>• Account for voltage rise during light load conditions</li>
-                        <li>• Ensure adequate safety margin</li>
-                      </ul>
-                    </div>
-                    <div className="bg-orange-600/20 p-3 rounded border border-orange-600/40">
-                      <p className="text-orange-400 font-semibold text-sm mb-2">Insulation Voltage:</p>
-                      <ul className="text-xs space-y-1">
-                        <li>• Must withstand system voltage plus overvoltages</li>
-                        <li>• Consider impulse withstand capability</li>
-                        <li>• Lightning and switching surge protection</li>
-                        <li>• Altitude effects on insulation strength</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-white font-semibold text-lg mb-3">Current Considerations</h4>
-                  <div className="space-y-3">
-                    <div className="bg-green-600/20 p-3 rounded border border-green-600/40">
-                      <p className="text-green-400 font-semibold text-sm mb-2">Continuous Current:</p>
-                      <ul className="text-xs space-y-1">
-                        <li>• Normal operating current capacity</li>
-                        <li>• Consider load growth and future expansion</li>
-                        <li>• Temperature effects on current carrying capacity</li>
-                        <li>• Derating factors for installation conditions</li>
-                      </ul>
-                    </div>
-                    <div className="bg-yellow-400/20 p-3 rounded border border-blue-600/40">
-                      <p className="text-yellow-400 font-semibold text-sm mb-2">Short-Circuit Current:</p>
-                      <ul className="text-xs space-y-1">
-                        <li>• Fault current withstand capability</li>
-                        <li>• Breaking capacity for switching devices</li>
-                        <li>• Making capacity for contactors and switches</li>
-                        <li>• Coordination with upstream protection</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-yellow-600/10 p-4 rounded-lg border border-yellow-600/30">
-                <h4 className="text-yellow-400 font-semibold mb-3">Rating Selection Process</h4>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                  <div>
-                    <p className="text-white font-semibold text-sm mb-2">Step 1 - System Analysis:</p>
-                    <ul className="text-xs space-y-1">
-                      <li>• Determine system voltage</li>
-                      <li>• Calculate load currents</li>
-                      <li>• Assess fault levels</li>
-                      <li>• Consider future expansion</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white font-semibold text-sm mb-2">Step 2 - Environmental Review:</p>
-                    <ul className="text-xs space-y-1">
-                      <li>• Temperature conditions</li>
-                      <li>• Altitude effects</li>
-                      <li>• Humidity levels</li>
-                      <li>• Contamination exposure</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white font-semibold text-sm mb-2">Step 3 - Rating Calculation:</p>
-                    <ul className="text-xs space-y-1">
-                      <li>• Apply derating factors</li>
-                      <li>• Include safety margins</li>
-                      <li>• Consider coordination requirements</li>
-                      <li>• Verify fault current capability</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white font-semibold text-sm mb-2">Step 4 - Verification:</p>
-                    <ul className="text-xs space-y-1">
-                      <li>• Check manufacturer specifications</li>
-                      <li>• Verify standard compliance</li>
-                      <li>• Confirm installation requirements</li>
-                      <li>• Document selection rationale</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Temperature Ratings */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Thermometer className="h-6 w-6 text-red-500" />
-                Temperature Ratings
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-red-600/10 p-4 rounded-lg border border-red-600/30">
-                <h4 className="text-white font-semibold mb-3">Critical Temperature Considerations</h4>
-                <p className="text-sm">
-                  Temperature ratings ensure equipment operates safely within thermal limits and doesn't degrade prematurely. Both ambient and operating temperatures must be considered.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-red-400 font-semibold text-lg mb-3">Ambient Temperature</h4>
-                  <div className="space-y-2">
-                    <div className="bg-red-600/20 p-3 rounded border border-red-600/40">
-                      <p className="text-white font-semibold text-sm mb-2">Standard Conditions:</p>
-                      <ul className="text-xs space-y-1">
-                        <li>• Typical rating: -5°C to +40°C</li>
-                        <li>• Some equipment: -25°C to +55°C</li>
-                        <li>• Special applications may vary</li>
-                        <li>• Consider seasonal variations</li>
-                      </ul>
-                    </div>
-                    <div className="bg-orange-600/20 p-3 rounded border border-orange-600/40">
-                      <p className="text-white font-semibold text-sm mb-2">Extreme Conditions:</p>
-                      <ul className="text-xs space-y-1">
-                        <li>• Outdoor installations</li>
-                        <li>• Industrial process areas</li>
-                        <li>• Cold storage facilities</li>
-                        <li>• Hot climates or solar exposure</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-orange-400 font-semibold text-lg mb-3">Operating Temperature</h4>
-                  <div className="space-y-2">
-                    <div className="bg-orange-600/20 p-3 rounded border border-orange-600/40">
-                      <p className="text-white font-semibold text-sm mb-2">Internal Heat Generation:</p>
-                      <ul className="text-xs space-y-1">
-                        <li>• Resistive losses in conductors</li>
-                        <li>• Core losses in transformers</li>
-                        <li>• Switching losses in electronics</li>
-                        <li>• Mechanical friction in motors</li>
-                      </ul>
-                    </div>
-                    <div className="bg-yellow-600/20 p-3 rounded border border-yellow-600/40">
-                      <p className="text-white font-semibold text-sm mb-2">Heat Dissipation:</p>
-                      <ul className="text-xs space-y-1">
-                        <li>• Convection cooling requirements</li>
-                        <li>• Forced air cooling systems</li>
-                        <li>• Heat sink design considerations</li>
-                        <li>• Enclosure ventilation needs</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold text-lg mb-3">Insulation Classes</h4>
-                  <div className="space-y-2">
-                    <div className="bg-green-600/20 p-3 rounded border border-green-600/40">
-                      <p className="text-white font-semibold text-sm mb-2">Standard Classes:</p>
-                      <ul className="text-xs space-y-1">
-                        <li>• Class A: 105°C continuous</li>
-                        <li>• Class B: 130°C continuous</li>
-                        <li>• Class F: 155°C continuous</li>
-                        <li>• Class H: 180°C continuous</li>
-                      </ul>
-                    </div>
-                    <div className="bg-yellow-400/20 p-3 rounded border border-blue-600/40">
-                      <p className="text-white font-semibold text-sm mb-2">Selection Criteria:</p>
-                      <ul className="text-xs space-y-1">
-                        <li>• Expected operating temperature</li>
-                        <li>• Safety margin requirements</li>
-                        <li>• Life expectancy targets</li>
-                        <li>• Maintenance accessibility</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* IP Ratings */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-6 w-6 text-green-500" />
-                Ingress Protection (IP) Ratings
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-green-600/10 p-4 rounded-lg border border-green-600/30">
-                <h4 className="text-white font-semibold mb-3">Understanding Dust and Water Protection</h4>
-                <p className="text-sm">
-                  IP ratings define the level of protection provided by equipment enclosures against solid objects (dust) and liquids (water). Proper selection prevents equipment damage and ensures safety.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-white font-semibold text-lg mb-3">First Digit - Solid Object Protection</h4>
-                  <div className="space-y-2">
-                    <div className="bg-gray-600/20 p-2 rounded border border-gray-600/40 flex justify-between">
-                      <span className="text-white font-semibold text-sm">IP0X:</span>
-                      <span className="text-xs">No protection</span>
-                    </div>
-                    <div className="bg-red-600/20 p-2 rounded border border-red-600/40 flex justify-between">
-                      <span className="text-white font-semibold text-sm">IP1X:</span>
-                      <span className="text-xs">{'>'}50mm objects</span>
-                    </div>
-                    <div className="bg-orange-600/20 p-2 rounded border border-orange-600/40 flex justify-between">
-                      <span className="text-white font-semibold text-sm">IP2X:</span>
-                      <span className="text-xs">{'>'}12.5mm objects</span>
-                    </div>
-                    <div className="bg-yellow-600/20 p-2 rounded border border-yellow-600/40 flex justify-between">
-                      <span className="text-white font-semibold text-sm">IP3X:</span>
-                      <span className="text-xs">{'>'}2.5mm objects</span>
-                    </div>
-                    <div className="bg-green-600/20 p-2 rounded border border-green-600/40 flex justify-between">
-                      <span className="text-white font-semibold text-sm">IP4X:</span>
-                      <span className="text-xs">{'>'}1mm objects</span>
-                    </div>
-                    <div className="bg-yellow-400/20 p-2 rounded border border-blue-600/40 flex justify-between">
-                      <span className="text-white font-semibold text-sm">IP5X:</span>
-                      <span className="text-xs">Dust protected</span>
-                    </div>
-                    <div className="bg-purple-600/20 p-2 rounded border border-purple-600/40 flex justify-between">
-                      <span className="text-white font-semibold text-sm">IP6X:</span>
-                      <span className="text-xs">Dust tight</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-white font-semibold text-lg mb-3">Second Digit - Liquid Protection</h4>
-                  <div className="space-y-2">
-                    <div className="bg-gray-600/20 p-2 rounded border border-gray-600/40 flex justify-between">
-                      <span className="text-white font-semibold text-sm">IPX0:</span>
-                      <span className="text-xs">No protection</span>
-                    </div>
-                    <div className="bg-red-600/20 p-2 rounded border border-red-600/40 flex justify-between">
-                      <span className="text-white font-semibold text-sm">IPX1:</span>
-                      <span className="text-xs">Dripping water</span>
-                    </div>
-                    <div className="bg-orange-600/20 p-2 rounded border border-orange-600/40 flex justify-between">
-                      <span className="text-white font-semibold text-sm">IPX2:</span>
-                      <span className="text-xs">15° tilted dripping</span>
-                    </div>
-                    <div className="bg-yellow-600/20 p-2 rounded border border-yellow-600/40 flex justify-between">
-                      <span className="text-white font-semibold text-sm">IPX3:</span>
-                      <span className="text-xs">Spraying water</span>
-                    </div>
-                    <div className="bg-green-600/20 p-2 rounded border border-green-600/40 flex justify-between">
-                      <span className="text-white font-semibold text-sm">IPX4:</span>
-                      <span className="text-xs">Splashing water</span>
-                    </div>
-                    <div className="bg-yellow-400/20 p-2 rounded border border-blue-600/40 flex justify-between">
-                      <span className="text-white font-semibold text-sm">IPX5:</span>
-                      <span className="text-xs">Water jets</span>
-                    </div>
-                    <div className="bg-purple-600/20 p-2 rounded border border-purple-600/40 flex justify-between">
-                      <span className="text-white font-semibold text-sm">IPX6:</span>
-                      <span className="text-xs">Powerful water jets</span>
-                    </div>
-                    <div className="bg-indigo-600/20 p-2 rounded border border-indigo-600/40 flex justify-between">
-                      <span className="text-white font-semibold text-sm">IPX7:</span>
-                      <span className="text-xs">Temporary immersion</span>
-                    </div>
-                    <div className="bg-pink-600/20 p-2 rounded border border-pink-600/40 flex justify-between">
-                      <span className="text-white font-semibold text-sm">IPX8:</span>
-                      <span className="text-xs">Continuous immersion</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-yellow-400/10 p-4 rounded-lg border border-blue-600/30">
-                <h4 className="text-yellow-400 font-semibold mb-3">Common Applications</h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div>
-                    <p className="text-white font-semibold text-sm mb-2">Indoor Dry Locations:</p>
-                    <ul className="text-xs space-y-1">
-                      <li>• IP20 - Basic finger protection</li>
-                      <li>• IP30 - Tool protection</li>
-                      <li>• Suitable for offices, homes</li>
-                      <li>• Standard consumer units</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white font-semibold text-sm mb-2">Outdoor/Wet Areas:</p>
-                    <ul className="text-xs space-y-1">
-                      <li>• IP44 - Bathroom zones</li>
-                      <li>• IP65 - Outdoor installations</li>
-                      <li>• IP67 - Underground applications</li>
-                      <li>• Swimming pool equipment</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white font-semibold text-sm mb-2">Industrial Environments:</p>
-                    <ul className="text-xs space-y-1">
-                      <li>• IP54 - Dusty conditions</li>
-                      <li>• IP65 - Washdown areas</li>
-                      <li>• IP66 - Marine environments</li>
-                      <li>• IP68 - Submersible applications</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Environmental Exposure */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-6 w-6 text-orange-500" />
-                Environmental Exposure
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-orange-600/10 p-4 rounded-lg border border-orange-600/30">
-                <h4 className="text-white font-semibold mb-3">Comprehensive Environmental Assessment</h4>
-                <p className="text-sm">
-                  Equipment must be suitable for the environmental conditions it will encounter throughout its operational life, including heat, moisture, corrosion, and mechanical stress.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-white font-semibold text-lg mb-3">Physical Environmental Factors</h4>
-                  <div className="space-y-3">
-                    <div className="bg-red-600/20 p-3 rounded border border-red-600/40">
-                      <p className="text-red-400 font-semibold text-sm mb-2">Temperature & Humidity:</p>
-                      <ul className="text-xs space-y-1">
-                        <li>• Ambient temperature ranges</li>
-                        <li>• Humidity levels and condensation risk</li>
-                        <li>• Thermal cycling effects</li>
-                        <li>• Solar radiation exposure</li>
-                      </ul>
-                    </div>
-                    <div className="bg-yellow-400/20 p-3 rounded border border-blue-600/40">
-                      <p className="text-yellow-400 font-semibold text-sm mb-2">Mechanical Stress:</p>
-                      <ul className="text-xs space-y-1">
-                        <li>• Vibration from machinery</li>
-                        <li>• Impact from handling/transport</li>
-                        <li>• Seismic considerations</li>
-                        <li>• Wind loading for outdoor equipment</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-white font-semibold text-lg mb-3">Chemical Environmental Factors</h4>
-                  <div className="space-y-3">
-                    <div className="bg-green-600/20 p-3 rounded border border-green-600/40">
-                      <p className="text-green-400 font-semibold text-sm mb-2">Corrosive Agents:</p>
-                      <ul className="text-xs space-y-1">
-                        <li>• Salt spray in coastal areas</li>
-                        <li>• Industrial chemical exposure</li>
-                        <li>• Acid rain effects</li>
-                        <li>• Cleaning agent compatibility</li>
-                      </ul>
-                    </div>
-                    <div className="bg-purple-600/20 p-3 rounded border border-purple-600/40">
-                      <p className="text-purple-400 font-semibold text-sm mb-2">Contamination:</p>
-                      <ul className="text-xs space-y-1">
-                        <li>• Dust and particulate matter</li>
-                        <li>• Oil and grease exposure</li>
-                        <li>• Biological contamination</li>
-                        <li>• Explosive atmosphere classification</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-card p-4 rounded-lg">
-                <h4 className="text-yellow-400 font-semibold mb-3">Material Selection Considerations</h4>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                  <div>
-                    <p className="text-white font-semibold text-sm mb-2">Metallic Components:</p>
-                    <ul className="text-xs space-y-1">
-                      <li>• Stainless steel grades</li>
-                      <li>• Aluminium alloy selection</li>
-                      <li>• Galvanised steel coating</li>
-                      <li>• Copper and brass considerations</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white font-semibold text-sm mb-2">Polymeric Materials:</p>
-                    <ul className="text-xs space-y-1">
-                      <li>• UV-resistant plastics</li>
-                      <li>• Chemical-resistant compounds</li>
-                      <li>• Temperature-stable polymers</li>
-                      <li>• Fire-retardant materials</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white font-semibold text-sm mb-2">Protective Coatings:</p>
-                    <ul className="text-xs space-y-1">
-                      <li>• Paint systems for outdoor use</li>
-                      <li>• Powder coating durability</li>
-                      <li>• Anodising for aluminium</li>
-                      <li>• Zinc-rich primer systems</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white font-semibold text-sm mb-2">Gaskets and Seals:</p>
-                    <ul className="text-xs space-y-1">
-                      <li>• EPDM rubber compatibility</li>
-                      <li>• Silicone seal durability</li>
-                      <li>• Neoprene chemical resistance</li>
-                      <li>• Viton high-temperature rating</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Manufacturer Instructions and Compatibility */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Settings className="h-6 w-6 text-purple-500" />
-                Manufacturer Instructions and Compatibility
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-6">
-              <div className="bg-purple-600/10 p-4 rounded-lg border border-purple-600/30">
-                <h4 className="text-white font-semibold mb-3">Critical Documentation and System Integration</h4>
-                <p className="text-sm">
-                  Manufacturer instructions provide essential legal compliance requirements, while system compatibility ensures reliable operation across all connected components.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-white font-semibold text-lg mb-3">Manufacturer Documentation</h4>
-                  <div className="space-y-3">
-                    <div className="bg-yellow-400/20 p-3 rounded border border-blue-600/40">
-                      <p className="text-yellow-400 font-semibold text-sm mb-2">Installation Requirements:</p>
-                      <ul className="text-xs space-y-1">
-                        <li>• Mounting orientations and clearances</li>
-                        <li>• Environmental condition limits</li>
-                        <li>• Connection torque specifications</li>
-                        <li>• Earthing and bonding requirements</li>
-                      </ul>
-                    </div>
-                    <div className="bg-green-600/20 p-3 rounded border border-green-600/40">
-                      <p className="text-green-400 font-semibold text-sm mb-2">Operational Parameters:</p>
-                      <ul className="text-xs space-y-1">
-                        <li>• Setting and adjustment procedures</li>
-                        <li>• Performance characteristics</li>
-                        <li>• Coordination with other equipment</li>
-                        <li>• Maintenance schedules and procedures</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-white font-semibold text-lg mb-3">System Compatibility</h4>
-                  <div className="space-y-3">
-                    <div className="bg-orange-600/20 p-3 rounded border border-orange-600/40">
-                      <p className="text-orange-400 font-semibold text-sm mb-2">Electrical Compatibility:</p>
-                      <ul className="text-xs space-y-1">
-                        <li>• Voltage and frequency matching</li>
-                        <li>• Current ratings and characteristics</li>
-                        <li>• Power factor considerations</li>
-                        <li>• Harmonic distortion effects</li>
-                      </ul>
-                    </div>
-                    <div className="bg-red-600/20 p-3 rounded border border-red-600/40">
-                      <p className="text-red-400 font-semibold text-sm mb-2">Physical Compatibility:</p>
-                      <ul className="text-xs space-y-1">
-                        <li>• Dimensional fit and clearances</li>
-                        <li>• Mounting method compatibility</li>
-                        <li>• Cable entry arrangements</li>
-                        <li>• Heat dissipation requirements</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-yellow-600/10 p-4 rounded-lg border border-yellow-600/30">
-                <h4 className="text-yellow-400 font-semibold mb-3">Legal and Compliance Aspects</h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div>
-                    <p className="text-white font-semibold text-sm mb-2">Regulatory Compliance:</p>
-                    <ul className="text-xs space-y-1">
-                      <li>• BS 7671 compliance requirements</li>
-                      <li>• Product standard conformity</li>
-                      <li>• CE marking and declarations</li>
-                      <li>• UKCA marking requirements</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white font-semibold text-sm mb-2">Warranty and Liability:</p>
-                    <ul className="text-xs space-y-1">
-                      <li>• Installation compliance for warranty</li>
-                      <li>• Liability implications of non-compliance</li>
-                      <li>• Insurance requirements</li>
-                      <li>• Professional indemnity considerations</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white font-semibold text-sm mb-2">Documentation Requirements:</p>
-                    <ul className="text-xs space-y-1">
-                      <li>• Installation certificates</li>
-                      <li>• Commissioning records</li>
-                      <li>• Operation and maintenance manuals</li>
-                      <li>• As-built drawings and schedules</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Real World Scenario */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-6 w-6 text-orange-500" />
-                Real World Scenario
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <div className="bg-orange-600/10 p-4 rounded-lg border border-orange-600/30">
-                <h4 className="text-white font-semibold mb-3">Warehouse Socket Outlet Installation</h4>
-                <p className="text-sm mb-3">
-                  You're tasked with installing socket outlets in a warehouse. The environment is damp and may be exposed to occasional water spray from cleaning operations. You must select equipment with appropriate IP rating and confirm the suitability of breakers in the distribution board for connected loads.
-                </p>
-                <div className="bg-card p-3 rounded">
-                  <p className="text-xs text-white mb-2">
-                    <strong>Environmental Assessment:</strong> Damp conditions with occasional water spray requires minimum IP44 rating, but IP65 recommended for cleaning operations.
-                  </p>
-                  <p className="text-xs text-white mb-2">
-                    <strong>Equipment Selection:</strong> Industrial socket outlets with IP65 rating, corrosion-resistant materials, and appropriate current ratings for expected loads.
-                  </p>
-                  <p className="text-xs text-white mb-2">
-                    <strong>Distribution Board:</strong> Verify MCB ratings match socket outlet ratings, confirm fault current capability, and ensure coordination with upstream protection.
-                  </p>
-                  <p className="text-xs text-white">
-                    <strong>Outcome:</strong> Safe, reliable installation suitable for industrial environment with extended service life and minimal maintenance requirements.
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Summary */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-6 w-6 text-green-500" />
-                Summary
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <p className="text-base leading-relaxed">
-                Correctly rated equipment ensures performance, safety, and longevity. Always check voltage, current, environmental suitability, and refer to manufacturer guidelines for compliant installations.
-              </p>
-              <div className="bg-card p-4 rounded-lg">
-                <h4 className="text-yellow-400 font-semibold mb-3">Key Points</h4>
-                <ul className="space-y-2 text-sm">
-                  <li>• Equipment ratings must match or exceed system requirements with appropriate safety margins</li>
-                  <li>• Temperature considerations include both ambient conditions and internal heat generation</li>
-                  <li>• IP ratings provide protection against solid objects and liquids based on environmental exposure</li>
-                  <li>• Environmental factors include temperature, humidity, corrosion, contamination, and mechanical stress</li>
-                  <li>• Manufacturer instructions are legally required and provide essential installation parameters</li>
-                  <li>• System compatibility ensures reliable operation across all connected components</li>
-                  <li>• Proper selection reduces maintenance, extends equipment life, and ensures safety</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Lightbulb className="h-6 w-6 text-yellow-400" />
-                Knowledge Check Quiz
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <p className="text-white">
-                Test your understanding of equipment ratings and suitability.
-              </p>
-              
-              <BS7671EmbeddedQuiz 
-                questions={quizQuestions}
-                title="Equipment Ratings Quiz"
-                description="Test your knowledge of equipment ratings and suitability requirements"
-              />
-            </CardContent>
-          </Card>
-
-          {/* Navigation */}
-          <div className="flex justify-between">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
             <Link to="../bs7671-module-5">
-              <Button variant="outline" className="border-white text-white hover:bg-card">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Module 5
-              </Button>
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
             </Link>
-            <Link to="../bs7671-module-5-section-2">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
+          </Button>
         </div>
       </div>
+
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Page Title */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 5.1</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Equipment Ratings and Suitability
+          </h1>
+          <p className="text-white/80">
+            Ensuring Appropriate Equipment Selection
+          </p>
+        </header>
+
+        {/* Quick Summary */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Voltage:</strong> Rating must exceed system voltage + variations</li>
+              <li><strong>Current:</strong> Match load, fault levels, and future growth</li>
+              <li><strong>IP Rating:</strong> Select for environment (dust/water ingress)</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Equipment labels, data plates, manufacturer specs</li>
+              <li><strong>Use:</strong> Match ratings to application requirements</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Understand voltage, current, and temperature ratings",
+              "Identify how suitability is determined by environment",
+              "Apply IP ratings for equipment protection selection",
+              "Follow manufacturer requirements and compatibility"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1: Voltage and Current */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Voltage and Current Ratings
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Equipment must be rated to match or exceed supply conditions and operating parameters to ensure safe and reliable operation throughout its expected lifetime.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Voltage Considerations</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Nominal:</strong> Rating must meet/exceed system voltage</li>
+                  <li><strong>Variations:</strong> Allow for ±10% on LV systems</li>
+                  <li><strong>Insulation:</strong> Withstand overvoltages and surges</li>
+                  <li><strong>Altitude:</strong> Effects on insulation strength</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Current Considerations</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Continuous:</strong> Normal operating current capacity</li>
+                  <li><strong>Load Growth:</strong> Future expansion allowance</li>
+                  <li><strong>Fault Current:</strong> Breaking and making capacity</li>
+                  <li><strong>Derating:</strong> Temperature and installation effects</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2: Temperature Ratings */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Temperature Ratings
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Temperature ratings ensure equipment operates safely within thermal limits and doesn't degrade prematurely. Both ambient and operating temperatures must be considered.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Ambient Temperature</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Standard:</strong> Typically -5°C to +40°C</li>
+                  <li><strong>Extended:</strong> -25°C to +55°C available</li>
+                  <li><strong>Consider:</strong> Seasonal variations, solar exposure</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Insulation Classes</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Class A:</strong> 105°C continuous</li>
+                  <li><strong>Class B:</strong> 130°C continuous</li>
+                  <li><strong>Class F:</strong> 155°C continuous</li>
+                  <li><strong>Class H:</strong> 180°C continuous</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 3: IP Ratings */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Ingress Protection (IP) Ratings
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              IP ratings define protection levels against solid objects (dust) and liquids (water). Proper selection prevents equipment damage and ensures safety.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">First Digit (Solids)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>IP2X:</strong> Finger protection ({'>'}12.5mm)</li>
+                  <li><strong>IP4X:</strong> Tool protection ({'>'}1mm)</li>
+                  <li><strong>IP5X:</strong> Dust protected</li>
+                  <li><strong>IP6X:</strong> Dust tight</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Second Digit (Liquids)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>IPX4:</strong> Splashing water</li>
+                  <li><strong>IPX5:</strong> Water jets</li>
+                  <li><strong>IPX6:</strong> Powerful jets</li>
+                  <li><strong>IPX7/8:</strong> Immersion</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">IP20</p>
+                <p className="text-white/90 text-xs">Indoor dry locations</p>
+              </div>
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">IP44/IP65</p>
+                <p className="text-white/90 text-xs">Bathrooms/outdoor</p>
+              </div>
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">IP67</p>
+                <p className="text-white/90 text-xs">Underground</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 4: Environmental Exposure */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Environmental Exposure
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Equipment must be suitable for environmental conditions throughout its operational life, including heat, moisture, corrosion, and mechanical stress.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Physical Factors</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Temperature:</strong> Ambient ranges, solar radiation</li>
+                  <li><strong>Humidity:</strong> Condensation risk</li>
+                  <li><strong>Mechanical:</strong> Vibration, impact, wind</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Chemical Factors</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Corrosion:</strong> Salt spray, industrial chemicals</li>
+                  <li><strong>Contamination:</strong> Dust, oil, biological</li>
+                  <li><strong>Materials:</strong> UV-resistant, chemical-resistant</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Section 5: Manufacturer Instructions */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Manufacturer Instructions and Compatibility
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Manufacturer instructions provide essential legal compliance requirements and specific installation parameters necessary for safe, reliable operation and regulatory compliance.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Requirements</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Mounting orientations and clearances</li>
+                  <li>Connection torque specifications</li>
+                  <li>Earthing and bonding requirements</li>
+                  <li>Environmental condition limits</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Compliance Aspects</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>BS 7671 and product standard conformity</li>
+                  <li>CE/UKCA marking requirements</li>
+                  <li>Warranty and liability implications</li>
+                  <li>Documentation and certification</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 6: Real World Scenario */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Real World Scenario
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Warehouse Socket Outlet Installation</p>
+              <p className="text-sm mb-3">
+                You're installing socket outlets in a warehouse with damp conditions and occasional water spray from cleaning operations.
+              </p>
+              <p className="text-sm mb-2">
+                <strong>Assessment:</strong> IP44 minimum, but IP65 recommended for cleaning operations. Corrosion-resistant materials needed.
+              </p>
+              <p className="text-sm mb-2">
+                <strong>Selection:</strong> Industrial socket outlets IP65 rated, appropriate current ratings for expected loads, MCB coordination verified.
+              </p>
+              <p className="text-sm">
+                <strong>Outcome:</strong> Safe, reliable installation suitable for industrial environment with extended service life.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQs */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quick Reference */}
+        <div className="mt-6 p-5 rounded-lg bg-transparent">
+          <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+            <div>
+              <p className="font-medium text-white mb-1">Common IP Ratings</p>
+              <ul className="space-y-0.5">
+                <li>IP20: Indoor dry</li>
+                <li>IP44: Bathroom zones</li>
+                <li>IP65: Outdoor/industrial</li>
+                <li>IP67: Underground</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-medium text-white mb-1">Insulation Classes</p>
+              <ul className="space-y-0.5">
+                <li>Class A: 105°C</li>
+                <li>Class B: 130°C</li>
+                <li>Class F: 155°C</li>
+                <li>Class H: 180°C</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Quiz */}
+        <section className="mb-10">
+          <SingleQuestionQuiz
+            question={quizQuestion.question}
+            options={quizQuestion.options}
+            correctAnswer={quizQuestion.correctAnswer}
+            explanation={quizQuestion.explanation}
+          />
+        </section>
+
+        {/* Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../bs7671-module-5">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module
+            </Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../bs7671-module-5-section-2">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

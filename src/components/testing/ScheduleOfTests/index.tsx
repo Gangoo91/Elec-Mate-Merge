@@ -17,6 +17,7 @@ import { useCircuitState, useAIAnalysis, useBulkOperations } from './hooks';
 // UI Components
 import { ScheduleHeader } from './ScheduleHeader';
 import { CircuitList } from './CircuitList';
+import { ProgressDashboard } from './ProgressDashboard';
 
 // Existing components (will migrate later)
 import EnhancedTestResultDesktopTable from '@/components/inspection-app/EnhancedTestResultDesktopTable';
@@ -125,6 +126,15 @@ export const ScheduleOfTests: React.FC<ScheduleOfTestsProps> = ({
         onShowAnalytics={() => setShowAnalytics(!showAnalytics)}
       />
 
+      {/* Progress Dashboard - Mobile Only */}
+      {useMobileView && circuitState.testResults.length > 0 && (
+        <div className="px-3 pt-3">
+          <ProgressDashboard
+            circuits={circuitState.testResults}
+          />
+        </div>
+      )}
+
       {/* Circuit List */}
       {useMobileView ? (
         viewMode === 'card' ? (
@@ -134,7 +144,7 @@ export const ScheduleOfTests: React.FC<ScheduleOfTestsProps> = ({
             onRemove={circuitState.removeCircuit}
             onBulkUpdate={circuitState.bulkUpdate}
             viewMode={viewMode}
-            className="mt-3"
+            className="mt-3 px-3"
           />
         ) : (
           <div className="w-full mt-3">
@@ -148,8 +158,8 @@ export const ScheduleOfTests: React.FC<ScheduleOfTestsProps> = ({
           </div>
         )
       ) : (
-        <div className="w-full space-y-8 py-6 lg:py-8 px-0 bg-elec-gray border border-primary/30 rounded-xl shadow-lg shadow-black/10">
-          <div data-autofill-section className="mt-6">
+        <div className="w-full space-y-6 py-6 lg:py-8 px-4 lg:px-6 bg-elec-gray border border-primary/30 rounded-xl shadow-lg shadow-black/10">
+          <div data-autofill-section>
             <EnhancedTestResultDesktopTable
               testResults={circuitState.testResults}
               onUpdate={circuitState.updateCircuit}
@@ -181,19 +191,10 @@ export const ScheduleOfTests: React.FC<ScheduleOfTestsProps> = ({
         </div>
       )}
 
-      {/* Mobile Analytics */}
-      {useMobileView && circuitState.testResults.length > 0 && (
-        <div className="border-t p-4 space-y-4">
-          <Button
-            onClick={() => setShowAnalytics(!showAnalytics)}
-            size="sm"
-            variant="outline"
-            className="w-full gap-2 h-11"
-          >
-            <BarChart3 className="h-4 w-4" />
-            Test Results Analytics
-          </Button>
-          {showAnalytics && <TestAnalytics testResults={circuitState.testResults} />}
+      {/* Mobile Analytics - Expandable */}
+      {useMobileView && circuitState.testResults.length > 0 && showAnalytics && (
+        <div className="px-3 py-4 space-y-4">
+          <TestAnalytics testResults={circuitState.testResults} />
         </div>
       )}
 
@@ -217,48 +218,52 @@ const InfoSections: React.FC<{ formData: any; onUpdate: (field: string, value: a
   formData,
   onUpdate,
 }) => (
-  <div className="w-full space-y-6 p-4 lg:p-8 pb-20 lg:pb-4 mt-6 bg-elec-gray rounded-xl border border-primary/30 shadow-lg shadow-black/10">
-    <div className="space-y-3">
-      <h3 className="text-sm sm:text-base font-semibold flex items-center gap-2 px-1">
-        <Wrench className="h-4 w-4 text-elec-yellow" />
-        Test Instrument Information
-      </h3>
-      <div className="bg-background/50 rounded-lg p-3">
-        <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
+  <div className="w-full space-y-6 p-4 lg:p-6 pb-20 lg:pb-6 mt-6 bg-elec-gray rounded-xl border border-primary/30 shadow-lg shadow-black/10">
+    {/* Two-column layout on xl screens */}
+    <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+      {/* Test Instrument Info */}
+      <div className="space-y-3">
+        <h3 className="text-sm sm:text-base font-semibold flex items-center gap-2 px-1">
+          <Wrench className="h-4 w-4 text-elec-yellow" />
+          Test Instrument Information
+        </h3>
+        <div className="bg-background/50 rounded-lg p-4">
+          <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
+        </div>
+      </div>
+
+      {/* Distribution Board Verification */}
+      <div className="space-y-3">
+        <h3 className="text-sm sm:text-base font-semibold flex items-center gap-2 px-1">
+          <Zap className="h-4 w-4 text-elec-yellow" />
+          Distribution Board Verification
+        </h3>
+        <div className="bg-background/50 rounded-lg p-4">
+          <DistributionBoardVerificationSection
+            data={{
+              dbReference: formData.dbReference || '',
+              zdb: formData.zdb || '',
+              ipf: formData.ipf || '',
+              confirmedCorrectPolarity: formData.confirmedCorrectPolarity || false,
+              confirmedPhaseSequence: formData.confirmedPhaseSequence || false,
+              spdOperationalStatus: formData.spdOperationalStatus || false,
+              spdNA: formData.spdNA || false,
+            }}
+            onUpdate={(field, value) => onUpdate(field, value)}
+          />
+        </div>
       </div>
     </div>
 
-    <div className="h-px bg-muted/50" />
+    <div className="h-px bg-muted/30" />
 
-    <div className="space-y-3">
-      <h3 className="text-sm sm:text-base font-semibold flex items-center gap-2 px-1">
-        <Zap className="h-4 w-4 text-elec-yellow" />
-        Distribution Board Verification
-      </h3>
-      <div className="bg-background/50 rounded-lg p-3">
-        <DistributionBoardVerificationSection
-          data={{
-            dbReference: formData.dbReference || '',
-            zdb: formData.zdb || '',
-            ipf: formData.ipf || '',
-            confirmedCorrectPolarity: formData.confirmedCorrectPolarity || false,
-            confirmedPhaseSequence: formData.confirmedPhaseSequence || false,
-            spdOperationalStatus: formData.spdOperationalStatus || false,
-            spdNA: formData.spdNA || false,
-          }}
-          onUpdate={(field, value) => onUpdate(field, value)}
-        />
-      </div>
-    </div>
-
-    <div className="h-px bg-muted/50" />
-
+    {/* Test Method - Full Width */}
     <div className="space-y-3">
       <h3 className="text-sm sm:text-base font-semibold flex items-center gap-2 px-1">
         <FileText className="h-4 w-4 text-elec-yellow" />
         Test Method & Notes
       </h3>
-      <div className="bg-background/50 rounded-lg p-3">
+      <div className="bg-background/50 rounded-lg p-4">
         <TestMethodInfo formData={formData} onUpdate={onUpdate} />
       </div>
     </div>

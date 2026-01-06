@@ -8,13 +8,13 @@ import Module2Section7Quiz from '@/components/upskilling/Module2Section7Quiz';
 
 const Module2Section7 = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="../module-2">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 2
@@ -24,7 +24,7 @@ const Module2Section7 = () => {
         <div className="space-y-3">
           <Badge 
             variant="secondary" 
-            className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold text-sm px-4 py-2 border-0"
+            className="bg-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/50 font-semibold text-sm px-4 py-2 border-0"
           >
             Section 7
           </Badge>
@@ -42,10 +42,10 @@ const Module2Section7 = () => {
         <div className="space-y-4 sm:space-y-6">
           
           {/* Quick Intro */}
-          <Card className="bg-card border-yellow-400/30">
+          <Card className="bg-transparent border-elec-yellow/30">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <CheckSquare className="h-5 w-5 text-yellow-400" />
+                <CheckSquare className="h-5 w-5 text-elec-yellow" />
                 Quick Introduction
               </CardTitle>
             </CardHeader>
@@ -63,10 +63,10 @@ const Module2Section7 = () => {
           </Card>
 
           {/* Learning Outcomes */}
-          <Card className="bg-card border-yellow-400/30">
+          <Card className="bg-transparent border-elec-yellow/30">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <FileText className="h-5 w-5 text-yellow-400" />
+                <FileText className="h-5 w-5 text-elec-yellow" />
                 Learning Outcomes
               </CardTitle>
             </CardHeader>
@@ -74,23 +74,23 @@ const Module2Section7 = () => {
               <p className="mb-4">By the end of this section, you'll be able to:</p>
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   Apply a consistent checklist before testing any installation
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   Ensure all tools, documentation, and site conditions are ready
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   Reduce the chance of errors, missed steps, or unsafe outcomes
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   Identify potential hazards before they become problems
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   Establish proper communication protocols with site personnel
                 </li>
               </ul>
@@ -98,10 +98,10 @@ const Module2Section7 = () => {
           </Card>
 
           {/* Why Pre-Test Preparation Matters */}
-          <Card className="bg-card border-yellow-400/30">
+          <Card className="bg-transparent border-elec-yellow/30">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <BookOpen className="h-5 w-5 text-yellow-400" />
+                <BookOpen className="h-5 w-5 text-elec-yellow" />
                 Why Pre-Test Preparation Matters
               </CardTitle>
             </CardHeader>
@@ -115,28 +115,28 @@ const Module2Section7 = () => {
               <h4 className="text-white font-semibold mt-6 mb-3">Common Consequences of Poor Preparation:</h4>
               <div className="space-y-3">
                 <div>
-                  <h5 className="text-yellow-400 font-medium">Incorrect Test Results</h5>
+                  <h5 className="text-elec-yellow font-medium">Incorrect Test Results</h5>
                   <p className="text-sm text-white">
                     Using damaged test leads or uncalibrated instruments can give false readings, 
                     leading to dangerous installations being passed as safe.
                   </p>
                 </div>
                 <div>
-                  <h5 className="text-yellow-400 font-medium">Equipment Damage</h5>
+                  <h5 className="text-elec-yellow font-medium">Equipment Damage</h5>
                   <p className="text-sm text-white">
                     Testing circuits with connected sensitive equipment can result in expensive 
                     damage to computers, medical equipment, or control systems.
                   </p>
                 </div>
                 <div>
-                  <h5 className="text-yellow-400 font-medium">Personal Injury</h5>
+                  <h5 className="text-elec-yellow font-medium">Personal Injury</h5>
                   <p className="text-sm text-white">
                     Working on live circuits due to inadequate isolation procedures remains 
                     one of the leading causes of electrical accidents.
                   </p>
                 </div>
                 <div>
-                  <h5 className="text-yellow-400 font-medium">Legal Consequences</h5>
+                  <h5 className="text-elec-yellow font-medium">Legal Consequences</h5>
                   <p className="text-sm text-white">
                     Certificates issued based on inadequate testing can result in professional 
                     liability claims and regulatory action.
@@ -156,10 +156,10 @@ const Module2Section7 = () => {
           </Card>
 
           {/* Detailed Pre-Test Checklist */}
-          <Card className="bg-card border-yellow-400/30">
+          <Card className="bg-transparent border-elec-yellow/30">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <ClipboardList className="h-5 w-5 text-yellow-400" />
+                <ClipboardList className="h-5 w-5 text-elec-yellow" />
                 Comprehensive Pre-Test Checklist
               </CardTitle>
             </CardHeader>
@@ -168,7 +168,7 @@ const Module2Section7 = () => {
               <div className="space-y-6">
                 <div>
                   <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
-                    <Shield className="h-4 w-4 text-yellow-400" />
+                    <Shield className="h-4 w-4 text-elec-yellow" />
                     1. Site Assessment and Safety Verification
                   </h4>
                   <div className="ml-6 space-y-2 text-sm">
@@ -192,7 +192,7 @@ const Module2Section7 = () => {
 
                 <div>
                   <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
-                    <FileText className="h-4 w-4 text-yellow-400" />
+                    <FileText className="h-4 w-4 text-elec-yellow" />
                     2. Documentation Review and Risk Assessment
                   </h4>
                   <div className="ml-6 space-y-2 text-sm">
@@ -217,7 +217,7 @@ const Module2Section7 = () => {
 
                 <div>
                   <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
-                    <Settings className="h-4 w-4 text-yellow-400" />
+                    <Settings className="h-4 w-4 text-elec-yellow" />
                     3. Test Equipment Verification
                   </h4>
                   <div className="ml-6 space-y-2 text-sm">
@@ -252,7 +252,7 @@ const Module2Section7 = () => {
 
                 <div>
                   <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
-                    <Zap className="h-4 w-4 text-yellow-400" />
+                    <Zap className="h-4 w-4 text-elec-yellow" />
                     4. Isolation and Lock-Off Procedures
                   </h4>
                   <div className="ml-6 space-y-2 text-sm">
@@ -300,10 +300,10 @@ const Module2Section7 = () => {
           </Card>
 
           {/* Common Preparation Mistakes */}
-          <Card className="bg-card border-yellow-400/30">
+          <Card className="bg-transparent border-elec-yellow/30">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-yellow-400" />
+                <AlertTriangle className="h-5 w-5 text-elec-yellow" />
                 Common Preparation Mistakes to Avoid
               </CardTitle>
             </CardHeader>
@@ -353,10 +353,10 @@ const Module2Section7 = () => {
           </Card>
 
           {/* Professional Best Practices */}
-          <Card className="bg-card border-yellow-400/30">
+          <Card className="bg-transparent border-elec-yellow/30">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Eye className="h-5 w-5 text-yellow-400" />
+                <Eye className="h-5 w-5 text-elec-yellow" />
                 Professional Best Practices
               </CardTitle>
             </CardHeader>
@@ -411,10 +411,10 @@ const Module2Section7 = () => {
           </Card>
 
           {/* Interactive Quiz */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <CheckSquare className="h-5 w-5 text-yellow-400" />
+                <CheckSquare className="h-5 w-5 text-elec-yellow" />
                 Test Your Knowledge
               </CardTitle>
             </CardHeader>
@@ -437,7 +437,7 @@ const Module2Section7 = () => {
             
             <Link to="../module-2">
               <Button
-                className="bg-gradient-to-r from-elec-yellow to-yellow-500 text-black hover:from-yellow-400 hover:to-yellow-600 font-semibold"
+                className="bg-gradient-to-r from-elec-yellow to-yellow-500 text-black hover:from-elec-yellow hover:to-elec-yellow font-semibold"
               >
                 Module 2 Overview
                 <ArrowRight className="ml-2 h-4 w-4" />

@@ -60,7 +60,7 @@ const InspectionAndLimitations = () => {
             </li>
           </ul>
           
-          <div className="p-4 bg-elec-dark/30 border border-elec-yellow/20 rounded-lg text-sm mt-4">
+          <div className="p-4 bg-white/10 border border-elec-yellow/20 rounded-lg text-sm mt-4">
             <p className="font-medium mb-1 text-elec-yellow">Safety First Reminder:</p>
             <p>Always follow the hierarchy of control: elimination, substitution, engineering controls, administrative controls, and only then PPE. Never rely solely on PPE when working with electrical systems.</p>
           </div>

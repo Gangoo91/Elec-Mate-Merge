@@ -56,7 +56,7 @@ const CourseUnitGrid = ({
         return (
           <Card 
             key={unit.id}
-            className={`border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/90 transition-colors cursor-pointer 
+            className={`border-elec-yellow/20 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer 
               ${selectedUnit === unit.id ? 'ring-2 ring-elec-yellow' : ''}`}
             onClick={() => handleUnitClick(unit)}
           >
@@ -66,7 +66,7 @@ const CourseUnitGrid = ({
                 <div className="w-full">
                   <h3 className="font-semibold text-lg mb-1">{unit.title}</h3>
                   <p className="text-sm text-elec-yellow mb-2">{unit.code}</p>
-                  <p className="text-sm text-muted-foreground line-clamp-3 mb-3">{unit.description}</p>
+                  <p className="text-sm text-white line-clamp-3 mb-3">{unit.description}</p>
                   
                   <div className="w-full mt-2">
                     <div className="flex justify-between items-center text-xs mb-1">

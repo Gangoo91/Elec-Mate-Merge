@@ -92,7 +92,7 @@ const SimpleCareerCard = ({
 
       <CardHeader className="flex flex-col items-center justify-center text-center pt-6 pb-3">
         {/* Icon Container */}
-        <div className={`relative mb-4 p-4 rounded-2xl bg-elec-dark/50 border border-white/5 group-hover:scale-110 transition-transform duration-300`}>
+        <div className={`relative mb-4 p-4 rounded-2xl bg-white/10 border border-white/5 group-hover:scale-110 transition-transform duration-300`}>
           <div className={colors.icon}>
             {icon}
           </div>
@@ -108,7 +108,7 @@ const SimpleCareerCard = ({
       {(description || stats) && (
         <CardContent className="pt-0 pb-4 px-4">
           {description && (
-            <p className="text-xs sm:text-sm text-muted-foreground text-center mb-3 line-clamp-2">
+            <p className="text-xs sm:text-sm text-white text-center mb-3 line-clamp-2">
               {description}
             </p>
           )}
@@ -116,9 +116,9 @@ const SimpleCareerCard = ({
           {stats && stats.length > 0 && (
             <div className={`grid ${stats.length === 1 ? 'grid-cols-1' : 'grid-cols-2'} gap-2 mt-3`}>
               {stats.map((stat, index) => (
-                <div key={index} className="bg-elec-dark/30 rounded-lg p-2 text-center">
+                <div key={index} className="bg-white/10 rounded-lg p-2 text-center">
                   <div className={`text-sm font-bold ${colors.icon}`}>{stat.value}</div>
-                  <div className="text-[10px] text-muted-foreground">{stat.label}</div>
+                  <div className="text-[10px] text-white">{stat.label}</div>
                 </div>
               ))}
             </div>

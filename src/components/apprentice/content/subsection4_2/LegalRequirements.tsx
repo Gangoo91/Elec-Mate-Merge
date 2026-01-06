@@ -16,7 +16,7 @@ const LegalRequirements = () => {
           and minimise injuries in construction and maintenance activities.
         </p>
         
-        <div className="bg-elec-dark/50 border-l-4 border-elec-yellow p-4 rounded-r">
+        <div className="bg-white/10 border-l-4 border-elec-yellow p-4 rounded-r">
           <div className="flex items-center gap-2 mb-2">
             <Shield className="h-5 w-5 text-elec-yellow" />
             <h4 className="font-semibold text-elec-yellow">Hierarchy of Control Measures</h4>
@@ -34,7 +34,7 @@ const LegalRequirements = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-          <Card className="bg-elec-dark/50 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20">
             <CardHeader className="pb-2">
               <div className="flex items-center">
                 <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
@@ -55,7 +55,7 @@ const LegalRequirements = () => {
             </CardContent>
           </Card>
           
-          <Card className="bg-elec-dark/50 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20">
             <CardHeader className="pb-2">
               <div className="flex items-center">
                 <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
@@ -78,7 +78,7 @@ const LegalRequirements = () => {
         </div>
         
         <div className="mt-4">
-          <Card className="bg-elec-dark/50 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg font-semibold text-elec-yellow">Risk Assessment Requirements</CardTitle>
             </CardHeader>
@@ -87,28 +87,28 @@ const LegalRequirements = () => {
                 A suitable and sufficient risk assessment must be completed before any work at height in electrical installations:
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="bg-elec-dark/70 p-3 rounded-lg border border-elec-yellow/10">
+                <div className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <h5 className="font-medium text-elec-yellow mb-2 flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Environmental Considerations
                   </h5>
                   <p className="text-sm">Weather conditions, lighting, ventilation, and surface conditions must be assessed</p>
                 </div>
-                <div className="bg-elec-dark/70 p-3 rounded-lg border border-elec-yellow/10">
+                <div className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <h5 className="font-medium text-elec-yellow mb-2 flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Electrical Hazards
                   </h5>
                   <p className="text-sm">Overhead lines, exposed conductors, and energised equipment must be identified</p>
                 </div>
-                <div className="bg-elec-dark/70 p-3 rounded-lg border border-elec-yellow/10">
+                <div className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <h5 className="font-medium text-elec-yellow mb-2 flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Duration and Complexity
                   </h5>
                   <p className="text-sm">Task duration, frequency of access, and tools required need assessment</p>
                 </div>
-                <div className="bg-elec-dark/70 p-3 rounded-lg border border-elec-yellow/10">
+                <div className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <h5 className="font-medium text-elec-yellow mb-2 flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Emergency Procedures

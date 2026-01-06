@@ -14,13 +14,32 @@ interface FlexibleQuizQuestion {
   explanation: string;
 }
 
+// Support both array format and single question format
 interface SingleQuestionQuizProps {
-  questions: FlexibleQuizQuestion[];
-  title: string;
+  // Array format (new)
+  questions?: FlexibleQuizQuestion[];
+  title?: string;
+  // Single question format (legacy)
+  question?: string;
+  options?: string[];
+  correctAnswer?: number;
+  explanation?: string;
 }
 
-const SingleQuestionQuiz = ({ questions, title }: SingleQuestionQuizProps) => {
+const SingleQuestionQuiz = (props: SingleQuestionQuizProps) => {
   const isMobile = useIsMobile();
+
+  // Normalize props: convert single question format to array format
+  const questions: FlexibleQuizQuestion[] = props.questions || (props.question ? [{
+    id: 1,
+    question: props.question,
+    options: props.options || [],
+    correctAnswer: props.correctAnswer,
+    explanation: props.explanation || ''
+  }] : []);
+
+  const title = props.title || 'Section Quiz';
+
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [answered, setAnswered] = useState(false);
@@ -32,6 +51,25 @@ const SingleQuestionQuiz = ({ questions, title }: SingleQuestionQuizProps) => {
   const getCorrectAnswer = (question: FlexibleQuizQuestion): number => {
     return question.correctAnswer !== undefined ? question.correctAnswer : question.correct || 0;
   };
+
+  // Guard against undefined or empty questions array
+  if (!questions || questions.length === 0) {
+    return (
+      <Card className="bg-elec-gray border-transparent">
+        <CardHeader>
+          <CardTitle className="text-xl font-bold text-foreground">{title}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Alert className="bg-[#2a2a2a] border-gray-600">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertDescription className="text-foreground">
+              No quiz questions available. Please check back later.
+            </AlertDescription>
+          </Alert>
+        </CardContent>
+      </Card>
+    );
+  }
 
   const handleOptionSelect = (optionIndex: number) => {
     if (!answered) {

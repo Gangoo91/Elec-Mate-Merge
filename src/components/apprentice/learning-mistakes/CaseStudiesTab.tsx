@@ -120,7 +120,7 @@ const CaseStudiesTab = () => {
                   {caseStudy.category}
                 </Badge>
                 
-                <p className="text-xs text-muted-foreground line-clamp-3">
+                <p className="text-xs text-white line-clamp-3">
                   {caseStudy.scenario}
                 </p>
                 
@@ -144,7 +144,7 @@ const CaseStudiesTab = () => {
       </Card>
 
       {selectedCase && (
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardHeader>
             <CardTitle className="text-elec-yellow">
               {caseStudies.find(c => c.id === selectedCase)?.title}
@@ -159,12 +159,12 @@ const CaseStudiesTab = () => {
                 <div className="space-y-6">
                   <div>
                     <h4 className="font-semibold text-white mb-2">The Scenario</h4>
-                    <p className="text-sm text-muted-foreground">{currentCase.scenario}</p>
+                    <p className="text-sm text-white">{currentCase.scenario}</p>
                   </div>
 
                   <div>
                     <h4 className="font-semibold text-white mb-2">How It Was Discovered</h4>
-                    <p className="text-sm text-muted-foreground">{currentCase.discovery}</p>
+                    <p className="text-sm text-white">{currentCase.discovery}</p>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -175,7 +175,7 @@ const CaseStudiesTab = () => {
                       </h4>
                       <ul className="space-y-1">
                         {currentCase.consequences.map((consequence, index) => (
-                          <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                          <li key={index} className="text-sm text-white flex items-start gap-2">
                             <div className="w-1 h-1 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
                             {consequence}
                           </li>
@@ -190,7 +190,7 @@ const CaseStudiesTab = () => {
                       </h4>
                       <ul className="space-y-1">
                         {currentCase.lessons.map((lesson, index) => (
-                          <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                          <li key={index} className="text-sm text-white flex items-start gap-2">
                             <div className="w-1 h-1 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
                             {lesson}
                           </li>
@@ -201,12 +201,12 @@ const CaseStudiesTab = () => {
 
                   <div>
                     <h4 className="font-semibold text-blue-300 mb-2">Final Outcome</h4>
-                    <p className="text-sm text-muted-foreground">{currentCase.outcome}</p>
+                    <p className="text-sm text-white">{currentCase.outcome}</p>
                   </div>
 
                   <div className="bg-elec-yellow/10 p-4 rounded-lg">
                     <h4 className="font-semibold text-elec-yellow mb-2">Prevention Strategy</h4>
-                    <p className="text-sm text-muted-foreground">{currentCase.prevention}</p>
+                    <p className="text-sm text-white">{currentCase.prevention}</p>
                   </div>
                 </div>
               );

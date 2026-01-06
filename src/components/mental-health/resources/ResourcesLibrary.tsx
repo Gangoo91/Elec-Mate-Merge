@@ -117,18 +117,18 @@ const ResourcesLibrary = () => {
                     <Badge variant="outline" className="border-elec-yellow/40 text-elec-yellow">
                       {resource.type}
                     </Badge>
-                    <span className="text-xs text-muted-foreground">{resource.duration}</span>
+                    <span className="text-xs text-white/80">{resource.duration}</span>
                   </div>
                   <CardTitle className="text-lg mb-2">{resource.title}</CardTitle>
                 </div>
                 <div className="text-right">
                   <div className="text-sm text-elec-yellow">★ {resource.rating}</div>
-                  <div className="text-xs text-muted-foreground">{resource.downloads} downloads</div>
+                  <div className="text-xs text-white/80">{resource.downloads} downloads</div>
                 </div>
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground mb-4">{resource.description}</p>
+              <p className="text-sm text-white/80 mb-4">{resource.description}</p>
               <div className="flex items-center justify-between">
                 <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/40">
                   {resource.difficulty}
@@ -159,7 +159,7 @@ const ResourcesLibrary = () => {
             <div className="border border-elec-yellow/20 rounded-lg p-4 text-center">
               <FileText className="h-8 w-8 text-blue-400 mx-auto mb-3" />
               <h4 className="font-semibold text-foreground mb-2">Guides & Articles</h4>
-              <p className="text-sm text-muted-foreground mb-3">
+              <p className="text-sm text-white/80 mb-3">
                 In-depth written resources covering all aspects of mental health
               </p>
               <div className="text-2xl font-bold text-elec-yellow">20</div>
@@ -168,7 +168,7 @@ const ResourcesLibrary = () => {
             <div className="border border-elec-yellow/20 rounded-lg p-4 text-center">
               <Video className="h-8 w-8 text-green-400 mx-auto mb-3" />
               <h4 className="font-semibold text-foreground mb-2">Video Content</h4>
-              <p className="text-sm text-muted-foreground mb-3">
+              <p className="text-sm text-white/80 mb-3">
                 Educational videos and demonstrations for visual learners
               </p>
               <div className="text-2xl font-bold text-elec-yellow">12</div>
@@ -177,7 +177,7 @@ const ResourcesLibrary = () => {
             <div className="border border-elec-yellow/20 rounded-lg p-4 text-center">
               <Headphones className="h-8 w-8 text-purple-400 mx-auto mb-3" />
               <h4 className="font-semibold text-foreground mb-2">Audio Resources</h4>
-              <p className="text-sm text-muted-foreground mb-3">
+              <p className="text-sm text-white/80 mb-3">
                 Podcasts and guided meditations for on-the-go learning
               </p>
               <div className="text-2xl font-bold text-elec-yellow">8</div>
@@ -196,13 +196,13 @@ const ResourcesLibrary = () => {
             <Button variant="outline" className="h-auto p-4 justify-start">
               <div className="text-left">
                 <div className="font-semibold">Crisis Resources</div>
-                <div className="text-sm text-muted-foreground">Immediate help and emergency contacts</div>
+                <div className="text-sm text-white/80">Immediate help and emergency contacts</div>
               </div>
             </Button>
             <Button variant="outline" className="h-auto p-4 justify-start">
               <div className="text-left">
                 <div className="font-semibold">Interactive Tools</div>
-                <div className="text-sm text-muted-foreground">Mood trackers and self-assessment tools</div>
+                <div className="text-sm text-white/80">Mood trackers and self-assessment tools</div>
               </div>
             </Button>
           </div>

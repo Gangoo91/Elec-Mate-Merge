@@ -143,7 +143,7 @@ const PreventionTab = () => {
               <CardTitle className="text-elec-yellow">Prevention Strategies</CardTitle>
             </div>
             <div className="text-right">
-              <div className="text-sm text-muted-foreground">Progress</div>
+              <div className="text-sm text-white">Progress</div>
               <div className="text-2xl font-bold text-elec-yellow">{calculateProgress()}%</div>
             </div>
           </div>
@@ -158,7 +158,7 @@ const PreventionTab = () => {
                     <IconComponent className="h-6 w-6 text-white" />
                     <div>
                       <h3 className="text-lg font-semibold text-white">{category.category}</h3>
-                      <p className="text-sm text-muted-foreground">{category.description}</p>
+                      <p className="text-sm text-white">{category.description}</p>
                     </div>
                   </div>
                   
@@ -175,7 +175,7 @@ const PreventionTab = () => {
                           <label htmlFor={strategy.id} className="font-medium text-white cursor-pointer block">
                             {strategy.title}
                           </label>
-                          <p className="text-sm text-muted-foreground mt-1">{strategy.description}</p>
+                          <p className="text-sm text-white mt-1">{strategy.description}</p>
                           <Badge variant="outline" className="mt-2 text-xs border-white/20">
                             {strategy.impact}
                           </Badge>
@@ -190,7 +190,7 @@ const PreventionTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <AlertTriangle className="h-6 w-6 text-elec-yellow" />
@@ -205,7 +205,7 @@ const PreventionTab = () => {
                   <h4 className="font-semibold text-white mb-3">{riskCategory.title}</h4>
                   <ul className="space-y-2">
                     {riskCategory.risks.map((risk, riskIndex) => (
-                      <li key={riskIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                      <li key={riskIndex} className="text-sm text-white flex items-start gap-2">
                         <div className="w-1 h-1 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
                         {risk}
                       </li>
@@ -219,7 +219,7 @@ const PreventionTab = () => {
               <h4 className="font-semibold text-white mb-3">Mitigation Strategies</h4>
               <ul className="space-y-2">
                 {mitigationStrategies.map((strategy, index) => (
-                  <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                  <li key={index} className="text-sm text-white flex items-start gap-2">
                     <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
                     {strategy}
                   </li>

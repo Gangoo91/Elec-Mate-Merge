@@ -180,19 +180,19 @@ const AM2Module7Section2 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
+      <div className="border-b border-white/10 bg-card/50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between gap-2">
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-2 sm:p-0 text-sm sm:text-base" asChild>
+            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
               <Link to="..">
                 <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
                 <span className="hidden xs:inline">Back to Module 7</span>
                 <span className="xs:hidden">Back</span>
               </Link>
             </Button>
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-2 sm:p-0 text-sm sm:text-base" asChild>
+            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
               <Link to="../section3">
                 <span className="hidden xs:inline">Module 7 Section 3</span>
                 <span className="xs:hidden">Section 3</span>
@@ -211,10 +211,10 @@ const AM2Module7Section2 = () => {
             <Brain className="w-4 h-4" />
             Module 7 – Section 2
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4 sm:mb-6 leading-tight">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6 leading-tight">
             Coping with Nerves and Pressure
           </h1>
-          <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
+          <p className="text-sm sm:text-base text-white mb-6 sm:mb-8 leading-relaxed">
             Every candidate feels nervous walking into AM2 — it's the industry's benchmark test and there's pressure to pass first time. NET assessors know this and expect you to feel under stress. What they are measuring is not whether you look calm, but whether you can still work safely, methodically, and professionally under pressure.
           </p>
         </div>
@@ -240,16 +240,16 @@ const AM2Module7Section2 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground mb-4">
+            <p className="text-xs sm:text-sm text-white mb-4">
               By the end of this section, you should be able to:
             </p>
-            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
+            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Explain how nerves can affect performance in AM2 and identify the risks if they are not managed
@@ -275,14 +275,14 @@ const AM2Module7Section2 = () => {
         </Card>
 
         {/* Why Nerves Matter */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" />
               1. Why Nerves Matter in AM2
             </h2>
             
-            <p className="text-xs sm:text-sm text-muted-foreground mb-4 leading-relaxed">
+            <p className="text-xs sm:text-sm text-white mb-4 leading-relaxed">
               Nerves create physical and mental reactions that can directly affect your performance:
             </p>
 
@@ -340,14 +340,14 @@ const AM2Module7Section2 = () => {
         />
 
         {/* Strategies to Reduce Nerves Before Exam */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Timer className="w-5 h-5" />
               2. Strategies to Reduce Nerves Before the Exam
             </h2>
             
-            <p className="text-xs sm:text-sm text-muted-foreground mb-6 leading-relaxed">
+            <p className="text-xs sm:text-sm text-white mb-6 leading-relaxed">
               The way you prepare in the days leading up to AM2 will directly influence your stress level on the day.
             </p>
 
@@ -356,8 +356,8 @@ const AM2Module7Section2 = () => {
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
                 <div className="flex-1">
-                  <h5 className="font-medium text-foreground mb-2">Preparation Builds Confidence</h5>
-                  <p className="text-xs sm:text-sm text-muted-foreground mb-3">
+                  <h5 className="font-medium text-white mb-2">Preparation Builds Confidence</h5>
+                  <p className="text-xs sm:text-sm text-white mb-3">
                     Practise safe isolation daily and run through testing procedures until they feel automatic. The more natural the task feels, the less nerves will interfere.
                   </p>
                   <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 rounded p-3 text-xs sm:text-sm">
@@ -376,8 +376,8 @@ const AM2Module7Section2 = () => {
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
                 <div className="flex-1">
-                  <h5 className="font-medium text-foreground mb-2">Sleep and Rest</h5>
-                  <p className="text-xs sm:text-sm text-muted-foreground mb-3">
+                  <h5 className="font-medium text-white mb-2">Sleep and Rest</h5>
+                  <p className="text-xs sm:text-sm text-white mb-3">
                     Avoid last-minute all-night revision. A tired candidate makes more mistakes than a calm, rested one.
                   </p>
                   <div className="bg-green-50 dark:bg-green-950/20 rounded p-3 text-xs sm:text-sm">
@@ -395,8 +395,8 @@ const AM2Module7Section2 = () => {
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold">3</div>
                 <div className="flex-1">
-                  <h5 className="font-medium text-foreground mb-2">Fuel Your Body</h5>
-                  <p className="text-xs sm:text-sm text-muted-foreground mb-3">
+                  <h5 className="font-medium text-white mb-2">Fuel Your Body</h5>
+                  <p className="text-xs sm:text-sm text-white mb-3">
                     Eat a balanced meal before the exam. High sugar or energy drinks can cause shakes and crashes mid-assessment.
                   </p>
                   <div className="bg-purple-50 dark:bg-purple-950/20 rounded p-3 text-xs sm:text-sm">
@@ -415,8 +415,8 @@ const AM2Module7Section2 = () => {
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 bg-orange-600 text-white rounded-full flex items-center justify-center text-sm font-bold">4</div>
                 <div className="flex-1">
-                  <h5 className="font-medium text-foreground mb-2">Plan Your Arrival</h5>
-                  <p className="text-xs sm:text-sm text-muted-foreground mb-3">
+                  <h5 className="font-medium text-white mb-2">Plan Your Arrival</h5>
+                  <p className="text-xs sm:text-sm text-white mb-3">
                     Get to the centre early so you're not rushing, which adds unnecessary stress.
                   </p>
                   <div className="bg-orange-50 dark:bg-orange-950/20 rounded p-3 text-xs sm:text-sm">
@@ -443,14 +443,14 @@ const AM2Module7Section2 = () => {
         />
 
         {/* Techniques During Exam */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Heart className="w-5 h-5" />
               3. Techniques During the Exam
             </h2>
             
-            <p className="text-xs sm:text-sm text-muted-foreground mb-6 leading-relaxed">
+            <p className="text-xs sm:text-sm text-white mb-6 leading-relaxed">
               When nerves hit during AM2, you need quick techniques to keep control.
             </p>
 
@@ -513,14 +513,14 @@ const AM2Module7Section2 = () => {
         </Card>
 
         {/* Assessor Expectations */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Users className="w-5 h-5" />
               4. Assessor Expectations
             </h2>
             
-            <p className="text-xs sm:text-sm text-muted-foreground mb-6 leading-relaxed">
+            <p className="text-xs sm:text-sm text-white mb-6 leading-relaxed">
               NET assessors don't mark nerves — they mark your work. They expect you to:
             </p>
 
@@ -564,7 +564,7 @@ const AM2Module7Section2 = () => {
         />
 
         {/* Practical Guidance */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Wrench className="w-5 h-5" />
@@ -582,23 +582,23 @@ const AM2Module7Section2 = () => {
             </div>
 
             <div className="space-y-4">
-              <h4 className="font-medium text-foreground text-sm sm:text-base">Practical things you can do:</h4>
+              <h4 className="font-medium text-white text-sm sm:text-base">Practical things you can do:</h4>
               
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
                     <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold">1</div>
                     <div>
-                      <h5 className="font-medium text-foreground text-xs sm:text-sm">Mental Checklists</h5>
-                      <p className="text-xs text-muted-foreground">Make checklists in your head: safe isolation steps, test order. Stick to them regardless of nerves.</p>
+                      <h5 className="font-medium text-white text-xs sm:text-sm">Mental Checklists</h5>
+                      <p className="text-xs text-white">Make checklists in your head: safe isolation steps, test order. Stick to them regardless of nerves.</p>
                     </div>
                   </div>
                   
                   <div className="flex items-start gap-3">
                     <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold">2</div>
                     <div>
-                      <h5 className="font-medium text-foreground text-xs sm:text-sm">If You Get Stuck</h5>
-                      <p className="text-xs text-muted-foreground">Don't freeze. Move on, complete another part, and come back later.</p>
+                      <h5 className="font-medium text-white text-xs sm:text-sm">If You Get Stuck</h5>
+                      <p className="text-xs text-white">Don't freeze. Move on, complete another part, and come back later.</p>
                     </div>
                   </div>
                 </div>
@@ -607,16 +607,16 @@ const AM2Module7Section2 = () => {
                   <div className="flex items-start gap-3">
                     <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold">3</div>
                     <div>
-                      <h5 className="font-medium text-foreground text-xs sm:text-sm">Record Results</h5>
-                      <p className="text-xs text-muted-foreground">Write down test results as you go so you don't forget under pressure.</p>
+                      <h5 className="font-medium text-white text-xs sm:text-sm">Record Results</h5>
+                      <p className="text-xs text-white">Write down test results as you go so you don't forget under pressure.</p>
                     </div>
                   </div>
                   
                   <div className="flex items-start gap-3">
                     <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold">4</div>
                     <div>
-                      <h5 className="font-medium text-foreground text-xs sm:text-sm">Stay Hydrated</h5>
-                      <p className="text-xs text-muted-foreground">Dehydration increases stress. Keep water with you throughout the assessment.</p>
+                      <h5 className="font-medium text-white text-xs sm:text-sm">Stay Hydrated</h5>
+                      <p className="text-xs text-white">Dehydration increases stress. Keep water with you throughout the assessment.</p>
                     </div>
                   </div>
                 </div>
@@ -626,7 +626,7 @@ const AM2Module7Section2 = () => {
         </Card>
 
         {/* Real-World Examples */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
@@ -678,7 +678,7 @@ const AM2Module7Section2 = () => {
         </Card>
 
         {/* FAQ Section */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
@@ -687,42 +687,42 @@ const AM2Module7Section2 = () => {
             
             <div className="space-y-4">
               <div className="border-l-4 border-elec-yellow pl-4">
-                <h5 className="font-medium text-foreground text-xs sm:text-sm mb-1">Q1: Will assessors fail me just for looking nervous?</h5>
-                <p className="text-xs text-muted-foreground">No — they only fail you if nerves cause unsafe or incomplete work.</p>
+                <h5 className="font-medium text-white text-xs sm:text-sm mb-1">Q1: Will assessors fail me just for looking nervous?</h5>
+                <p className="text-xs text-white">No — they only fail you if nerves cause unsafe or incomplete work.</p>
               </div>
               
               <div className="border-l-4 border-green-500 pl-4">
-                <h5 className="font-medium text-foreground text-xs sm:text-sm mb-1">Q2: What if I forget steps in testing because of panic?</h5>
-                <p className="text-xs text-muted-foreground">Pause, breathe, reset. Assessors prefer slow but correct over rushed and wrong.</p>
+                <h5 className="font-medium text-white text-xs sm:text-sm mb-1">Q2: What if I forget steps in testing because of panic?</h5>
+                <p className="text-xs text-white">Pause, breathe, reset. Assessors prefer slow but correct over rushed and wrong.</p>
               </div>
               
               <div className="border-l-4 border-purple-500 pl-4">
-                <h5 className="font-medium text-foreground text-xs sm:text-sm mb-1">Q3: Should I copy other candidates' pace?</h5>
-                <p className="text-xs text-muted-foreground">No — focus only on your own work. Comparing speeds adds unnecessary stress.</p>
+                <h5 className="font-medium text-white text-xs sm:text-sm mb-1">Q3: Should I copy other candidates' pace?</h5>
+                <p className="text-xs text-white">No — focus only on your own work. Comparing speeds adds unnecessary stress.</p>
               </div>
               
               <div className="border-l-4 border-orange-500 pl-4">
-                <h5 className="font-medium text-foreground text-xs sm:text-sm mb-1">Q4: Is feeling anxious normal?</h5>
-                <p className="text-xs text-muted-foreground">Yes — every candidate feels it. The difference is how you manage it.</p>
+                <h5 className="font-medium text-white text-xs sm:text-sm mb-1">Q4: Is feeling anxious normal?</h5>
+                <p className="text-xs text-white">Yes — every candidate feels it. The difference is how you manage it.</p>
               </div>
               
               <div className="border-l-4 border-l-red-500 pl-4">
-                <h5 className="font-medium text-foreground text-xs sm:text-sm mb-1">Q5: What's the best way to reduce nerves overall?</h5>
-                <p className="text-xs text-muted-foreground">Consistent practice until procedures become automatic — especially safe isolation and GN3 testing.</p>
+                <h5 className="font-medium text-white text-xs sm:text-sm mb-1">Q5: What's the best way to reduce nerves overall?</h5>
+                <p className="text-xs text-white">Consistent practice until procedures become automatic — especially safe isolation and GN3 testing.</p>
               </div>
             </div>
           </div>
         </Card>
 
         {/* Summary */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Summary
             </h2>
             
-            <p className="text-xs sm:text-sm text-muted-foreground mb-4">
+            <p className="text-xs sm:text-sm text-white mb-4">
               Nerves are normal in AM2, but you must control them. NET wants to see that you can:
             </p>
             
@@ -730,26 +730,26 @@ const AM2Module7Section2 = () => {
               <div className="space-y-2">
                 <div className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
-                  <span className="text-xs sm:text-xs sm:text-sm text-foreground">Stay safe and methodical under pressure</span>
+                  <span className="text-xs sm:text-xs sm:text-sm text-white">Stay safe and methodical under pressure</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
-                  <span className="text-xs sm:text-xs sm:text-sm text-foreground">Use breathing, chunking, and positive self-talk to reset focus</span>
+                  <span className="text-xs sm:text-xs sm:text-sm text-white">Use breathing, chunking, and positive self-talk to reset focus</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
-                  <span className="text-xs sm:text-xs sm:text-sm text-foreground">Avoid rushing or skipping steps due to panic</span>
+                  <span className="text-xs sm:text-xs sm:text-sm text-white">Avoid rushing or skipping steps due to panic</span>
                 </div>
               </div>
               
               <div className="space-y-2">
                 <div className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
-                  <span className="text-xs sm:text-xs sm:text-sm text-foreground">Treat the exam like a professional job handover</span>
+                  <span className="text-xs sm:text-xs sm:text-sm text-white">Treat the exam like a professional job handover</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
-                  <span className="text-xs sm:text-xs sm:text-sm text-foreground">Remember: Safe and steady will pass; rushed and unsafe will fail</span>
+                  <span className="text-xs sm:text-xs sm:text-sm text-white">Remember: Safe and steady will pass; rushed and unsafe will fail</span>
                 </div>
               </div>
             </div>
@@ -759,7 +759,7 @@ const AM2Module7Section2 = () => {
                 <Target className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <h4 className="font-medium text-elec-yellow mb-2">Key Takeaway:</h4>
-                  <p className="text-xs sm:text-xs sm:text-sm text-foreground">
+                  <p className="text-xs sm:text-xs sm:text-sm text-white">
                     NET assessors understand that you will feel nervous. What they're testing is your ability to work safely and professionally despite those nerves — just like you would on a real job site under pressure.
                   </p>
                 </div>
@@ -775,7 +775,7 @@ const AM2Module7Section2 = () => {
         />
 
         {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 border-t border-border/20">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 border-t border-white/10">
           <Button variant="outline" className="w-full sm:w-auto" asChild>
             <Link to="../section1">
               <ArrowLeft className="w-4 h-4 mr-2" />
@@ -784,7 +784,7 @@ const AM2Module7Section2 = () => {
           </Button>
           
           <div className="text-center">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white">
               Module 7 • Section 2 of 4
             </p>
           </div>

@@ -97,7 +97,7 @@ const FundingGuide = () => {
         <h3 className="text-xl font-semibold">Comprehensive Funding Options</h3>
         <div className="space-y-4">
           {fundingOptions.map((option, index) => (
-            <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+            <Card key={index} className="border-elec-yellow/20 bg-white/5">
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
@@ -114,7 +114,7 @@ const FundingGuide = () => {
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
-                <p className="text-sm text-muted-foreground">{option.description}</p>
+                <p className="text-sm text-white">{option.description}</p>
                 
                 <div>
                   <h4 className="text-sm font-medium text-elec-yellow mb-2">Key Benefits:</h4>
@@ -130,13 +130,13 @@ const FundingGuide = () => {
 
                 <div>
                   <h4 className="text-sm font-medium text-elec-yellow mb-2">How to Apply:</h4>
-                  <p className="text-xs text-muted-foreground">{option.howToApply}</p>
+                  <p className="text-xs text-white">{option.howToApply}</p>
                 </div>
 
                 {option.tips && (
                   <div>
                     <h4 className="text-sm font-medium text-elec-yellow mb-2">Tips for Success:</h4>
-                    <ul className="text-xs space-y-1 list-disc list-inside text-muted-foreground">
+                    <ul className="text-xs space-y-1 list-disc list-inside text-white">
                       {option.tips.map((tip, idx) => (
                         <li key={idx}>{tip}</li>
                       ))}
@@ -151,7 +151,7 @@ const FundingGuide = () => {
                       {option.providers.map((provider, idx) => (
                         <div key={idx} className="text-xs">
                           <span className="font-medium">{provider.name}:</span>
-                          <span className="text-muted-foreground ml-1">{provider.description}</span>
+                          <span className="text-white ml-1">{provider.description}</span>
                         </div>
                       ))}
                     </div>
@@ -184,7 +184,7 @@ const FundingGuide = () => {
       </div>
 
       {/* Study Modes and Cost Considerations */}
-      <Card className="border-elec-yellow/20 bg-elec-gray/50">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Clock className="h-5 w-5 text-elec-yellow" />
@@ -194,19 +194,19 @@ const FundingGuide = () => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {studyModes.map((mode, index) => (
-              <div key={index} className="space-y-3 p-3 bg-elec-dark/30 rounded-md">
+              <div key={index} className="space-y-3 p-3 bg-white/10 rounded-md">
                 <h4 className="font-medium text-elec-yellow">{mode.mode}</h4>
                 <div className="space-y-2 text-xs">
                   <div>
-                    <span className="text-muted-foreground">Cost: </span>
+                    <span className="text-white">Cost: </span>
                     <span>{mode.cost}</span>
                   </div>
                   <div>
-                    <span className="text-muted-foreground">Time: </span>
+                    <span className="text-white">Time: </span>
                     <span>{mode.timeCommitment}</span>
                   </div>
                   <div>
-                    <span className="text-muted-foreground">Benefits:</span>
+                    <span className="text-white">Benefits:</span>
                     <ul className="list-disc list-inside mt-1 space-y-0.5">
                       {mode.benefits.map((benefit, idx) => (
                         <li key={idx}>{benefit}</li>
@@ -231,28 +231,28 @@ const FundingGuide = () => {
               <div className="bg-green-500/20 text-green-400 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">1</div>
               <div>
                 <p className="font-medium">Research Your Options</p>
-                <p className="text-xs text-muted-foreground">Use our calculator to understand funding requirements for your chosen course</p>
+                <p className="text-xs text-white">Use our calculator to understand funding requirements for your chosen course</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
               <div className="bg-green-500/20 text-green-400 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">2</div>
               <div>
                 <p className="font-medium">Speak to Your Employer</p>
-                <p className="text-xs text-muted-foreground">Schedule a meeting to discuss potential employer funding and support</p>
+                <p className="text-xs text-white">Schedule a meeting to discuss potential employer funding and support</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
               <div className="bg-green-500/20 text-green-400 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">3</div>
               <div>
                 <p className="font-medium">Apply for Loans/Grants</p>
-                <p className="text-xs text-muted-foreground">Submit applications early - funding approval can take 4-6 weeks</p>
+                <p className="text-xs text-white">Submit applications early - funding approval can take 4-6 weeks</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
               <div className="bg-green-500/20 text-green-400 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">4</div>
               <div>
                 <p className="font-medium">Enrol on Your Course</p>
-                <p className="text-xs text-muted-foreground">Complete enrollment with your chosen provider and confirm funding arrangements</p>
+                <p className="text-xs text-white">Complete enrollment with your chosen provider and confirm funding arrangements</p>
               </div>
             </div>
           </div>

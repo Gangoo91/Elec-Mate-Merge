@@ -103,19 +103,19 @@ const IntelligentInput = ({
           <TooltipProvider delayDuration={200}>
             <Tooltip>
               <TooltipTrigger asChild>
-                <button type="button" className="text-muted-foreground hover:text-gray-300 transition-colors">
+                <button type="button" className="text-muted-foreground hover:text-white/80 transition-colors">
                   <HelpCircle className="h-3.5 w-3.5" />
                 </button>
               </TooltipTrigger>
               <TooltipContent className="max-w-xs bg-card border-border p-3">
                 <div className="space-y-2 text-xs">
-                  {helpText && <p className="text-gray-300">{helpText}</p>}
+                  {helpText && <p className="text-white/80">{helpText}</p>}
                   {regulation && (
                     <p className="text-blue-400 font-medium">{regulation}</p>
                   )}
                   {typicalExample && (
-                    <p className="text-gray-400">
-                      <span className="text-gray-500">Example:</span> {typicalExample}
+                    <p className="text-white/70">
+                      <span className="text-white/60">Example:</span> {typicalExample}
                     </p>
                   )}
                 </div>

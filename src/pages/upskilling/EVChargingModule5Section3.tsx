@@ -1,512 +1,400 @@
-import { ArrowLeft, ArrowRight, Activity, BookOpen, Target, AlertTriangle, CheckCircle, Lightbulb, Monitor, Eye } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { EVChargingModule5Section3Quiz } from '@/components/upskilling/quiz/EVChargingModule5Section3Quiz';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
+import useSEO from "@/hooks/useSEO";
+
+const quickCheckQuestions = [
+  {
+    id: "evcharging-m5s3-check1",
+    question: "What accuracy class is recommended for Dynamic Load Management applications?",
+    options: ["Class 3 (±3%)", "Class 1 (±1%)", "Class 0.1 (±0.1%)", "Class 5 (±5%)"],
+    correctIndex: 1,
+    explanation: "Class 1 (±1%) accuracy is the minimum recommendation for DLM applications. Class 0.5 (±0.5%) is preferred for revenue-grade monitoring and billing applications."
+  },
+  {
+    id: "evcharging-m5s3-check2",
+    question: "What is the primary advantage of split-core CT clamps?",
+    options: ["Higher accuracy", "Lower cost", "Retrofit installation without disconnection", "Smaller physical size"],
+    correctIndex: 2,
+    explanation: "Split-core CTs allow retrofit installation on existing electrical installations without disconnecting or breaking primary circuit connections, making them ideal for upgrading monitoring systems."
+  },
+  {
+    id: "evcharging-m5s3-check3",
+    question: "Why should CT secondary connections never be open-circuited under load?",
+    options: ["It damages the CT permanently", "It causes dangerous high voltages", "It affects accuracy", "It trips the circuit breaker"],
+    correctIndex: 1,
+    explanation: "Open-circuiting CT secondary connections under load creates dangerous high voltages due to the transformer action. The secondary must always have a burden connected when primary current is flowing."
+  }
+];
+
+const faqs = [
+  {
+    question: "How do I select the correct CT clamp ratio for my application?",
+    answer: "Select CT ratio based on maximum expected current: 100:5A for circuits up to 100A, 200:5A up to 200A, etc. Choose the next larger ratio above your maximum current for optimal accuracy and headroom."
+  },
+  {
+    question: "What causes inaccurate CT readings and how can they be corrected?",
+    answer: "Common causes include incorrect CT ratio configuration, poor conductor positioning, electromagnetic interference, and burden mismatch. Corrections involve proper installation, calibration, and shielding of secondary connections."
+  },
+  {
+    question: "How often should CT clamps be calibrated?",
+    answer: "Annual calibration is recommended for revenue-grade applications, with 2-3 yearly calibration acceptable for monitoring-only applications. High-accuracy installations may require 6-monthly verification."
+  },
+  {
+    question: "How can control logic handle communication failures?",
+    answer: "Implement fail-safe modes with predetermined power limits, use watchdog timers for communication monitoring, provide local data buffering, and include manual override capabilities for emergency operation."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+  question: "A 500kVA industrial facility requires EV charging monitoring for 25 charge points. What CT installation approach is most appropriate?",
+  options: [
+    "Single CT on main incomer only",
+    "Split-core Class 1 CTs on main panels with Modbus communication",
+    "Rogowski coils on each individual charger",
+    "Hall effect sensors on the neutral conductor"
+  ],
+  correctAnswer: 1,
+  explanation: "Split-core Class 1 CTs installed on main distribution panels with Modbus communication provides non-intrusive installation, appropriate accuracy for DLM, and standard industrial communication protocols for integration."
+  }
+];
 
 const EVChargingModule5Section3 = () => {
-  useEffect(() => {
-    document.title = 'CT Clamps, Load-Sensing, and Control Logic - EV Charging Module 5 Section 3';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Master current transformer clamps, load-sensing technologies, and control logic for EV charging systems. Covers installation, calibration, and monitoring techniques for optimal load management.');
-    }
-  }, []);
+  useSEO({
+    title: "CT Clamps, Load-Sensing, and Control Logic | EV Charging Module 5.3",
+    description: "Master current transformer clamps, load-sensing technologies, and control logic for EV charging systems."
+  });
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
-        <Link to="../ev-charging-module-5">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 5
+            <Link to="../ev-charging-module-5">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 5
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            <Activity className="h-8 w-8 text-yellow-400" />
-            <Badge 
-              variant="secondary" 
-              className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold text-sm px-3 py-1 border-0"
-            >
-              Module 5 - Section 3
-            </Badge>
+        </div>
+      </div>
+
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Page Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 5.3</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             CT Clamps, Load-Sensing, and Control Logic
           </h1>
-          <p className="text-lg sm:text-xl text-gray-400 max-w-3xl">
+          <p className="text-white/80">
             Monitoring and control technology for advanced load management
           </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>CT Clamps:</strong> Non-intrusive current measurement</li>
+              <li><strong>Accuracy:</strong> Class 1 (±1%) minimum for DLM</li>
+              <li><strong>Control:</strong> Real-time load balancing algorithms</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Clamp-on devices around cables, digital displays</li>
+              <li><strong>Use:</strong> Monitor loads, implement dynamic allocation</li>
+            </ul>
+          </div>
         </div>
-      </header>
 
-      {/* Main Content */}
-      <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="space-y-4 sm:space-y-6">
-          
-          {/* Introduction */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <BookOpen className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Introduction</CardTitle>
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Select and install appropriate CT clamps",
+              "Design load-sensing systems for DLM",
+              "Implement intelligent control logic",
+              "Calibrate monitoring equipment",
+              "Troubleshoot CT and sensing issues",
+              "Integrate monitoring with control systems"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
               </div>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                Current Transformer (CT) clamps and advanced load-sensing technologies form the foundation of intelligent EV charging systems, providing real-time monitoring capabilities essential for Dynamic Load Management (DLM) and system optimisation. These monitoring solutions enable precise measurement of electrical parameters whilst implementing sophisticated control logic.
-              </p>
-              <p>
-                Modern load-sensing systems combine high-accuracy CT clamps, smart metering technology, and advanced signal processing to deliver comprehensive electrical monitoring. The control logic processes this data to make intelligent decisions about power allocation, safety protection, and system optimisation in real-time.
-              </p>
-              <p>
-                This section covers CT clamp selection and installation, load-sensing methodologies, control algorithm implementation, and practical techniques for building robust monitoring systems that ensure safe, efficient, and reliable EV charging operations across diverse electrical installations.
-              </p>
-            </CardContent>
-          </Card>
+            ))}
+          </div>
+        </section>
 
-          {/* Learning Outcomes */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Target className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Learning Outcomes</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <p className="mb-4">Upon completion of this section, you will be able to:</p>
-              <ul className="space-y-2 list-disc list-inside">
-                <li>Select and install appropriate CT clamps for various electrical monitoring applications</li>
-                <li>Design load-sensing systems for accurate real-time power measurement</li>
-                <li>Implement control logic algorithms for intelligent load management</li>
-                <li>Calibrate and commission monitoring equipment for optimal accuracy</li>
-                <li>Troubleshoot common issues with CT clamps and sensing systems</li>
-                <li>Integrate monitoring data with control systems and user interfaces</li>
-              </ul>
-            </CardContent>
-          </Card>
+        <hr className="border-white/5 mb-12" />
 
-          {/* Content Sections */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white">Current Transformer (CT) Clamp Technology</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              
+        {/* Section 1 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            CT Clamp Technology
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Current Transformer clamps provide non-intrusive current measurement through
+              electromagnetic induction, essential for Dynamic Load Management systems.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <h3 className="text-xl font-semibold text-white mb-4">CT Clamp Fundamentals</h3>
-                <div className="space-y-4">
-                  
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-yellow-400 mb-3">Operating Principles</h4>
-                    <div className="space-y-2 text-sm">
-                      <p><strong>Electromagnetic Induction:</strong> Primary current creates magnetic field inducing proportional secondary current</p>
-                      <p><strong>Current Ratio:</strong> Fixed transformation ratio (e.g., 100:5A, 200:5A, 400:5A)</p>
-                      <p><strong>Non-Intrusive Monitoring:</strong> Installation without breaking existing electrical connections</p>
-                      <p><strong>Isolation:</strong> Electrical isolation between primary circuit and monitoring equipment</p>
-                      <p><strong>Linear Response:</strong> Proportional output across full operating range</p>
-                    </div>
-                  </div>
-
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-yellow-400 mb-3">CT Clamp Types and Applications</h4>
-                    <div className="space-y-2 text-sm">
-                      <p><strong>Split-Core CTs:</strong> Retrofit installation on existing installations without disconnection</p>
-                      <p><strong>Solid-Core CTs:</strong> Higher accuracy for new installations with primary cable threading</p>
-                      <p><strong>Rogowski Coils:</strong> Flexible sensors for awkward cable arrangements and large conductors</p>
-                      <p><strong>Hall Effect Sensors:</strong> DC and AC current measurement with digital output</p>
-                      <p><strong>Revenue-Grade CTs:</strong> Class 0.5 or 1.0 accuracy for billing and financial applications</p>
-                    </div>
-                  </div>
-
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-yellow-400 mb-3">Accuracy and Specification Requirements</h4>
-                    <div className="space-y-2 text-sm">
-                      <p><strong>Accuracy Class:</strong> Class 1 (±1%) minimum for DLM, Class 0.5 (±0.5%) for revenue applications</p>
-                      <p><strong>Burden Rating:</strong> Secondary circuit impedance matching for optimal accuracy</p>
-                      <p><strong>Frequency Response:</strong> 50Hz fundamental with harmonic measurement capability</p>
-                      <p><strong>Temperature Stability:</strong> Coefficient &lt;0.1%/°C for consistent performance</p>
-                      <p><strong>Dynamic Range:</strong> Accurate measurement from 1% to 120% of rated current</p>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
-              <div className="bg-card p-4 rounded-lg border border-yellow-400/30">
-                <h4 className="font-semibold text-blue-300 mb-2">🔧 Installation Best Practices</h4>
-                <ul className="text-sm text-blue-200 space-y-1 list-disc list-inside">
-                  <li>Install CTs on all three phases for three-phase monitoring</li>
-                  <li>Ensure proper conductor centralisation within CT aperture</li>
-                  <li>Maintain minimum separation from switching equipment and contactors</li>
-                  <li>Use appropriate cable termination techniques for secondary connections</li>
-                  <li>Label all CT installations with ratio, direction, and circuit identification</li>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Operating Principles</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Induction:</strong> Magnetic field creates secondary current</li>
+                  <li><strong>Ratio:</strong> Fixed transformation (100:5A, 200:5A)</li>
+                  <li><strong>Non-intrusive:</strong> No circuit disconnection needed</li>
+                  <li><strong>Isolation:</strong> Safe monitoring of high currents</li>
                 </ul>
               </div>
-
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white">Load-Sensing Technologies and Methods</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              
               <div>
-                <h3 className="text-xl font-semibold text-white mb-4">Advanced Sensing Techniques</h3>
-                <div className="grid md:grid-cols-2 gap-6">
-                  
-                  <div className="space-y-3">
-                    <h4 className="font-semibold text-yellow-400">Real-Time Power Measurement</h4>
-                    <ul className="space-y-1 text-sm list-disc list-inside">
-                      <li>Instantaneous power calculation (P = V × I × cos φ)</li>
-                      <li>Reactive power monitoring for power factor analysis</li>
-                      <li>Apparent power measurement for capacity planning</li>
-                      <li>Harmonic analysis for power quality assessment</li>
-                      <li>Peak demand recording and trending capabilities</li>
-                    </ul>
-                  </div>
-
-                  <div className="space-y-3">
-                    <h4 className="font-semibold text-yellow-400">Multi-Point Monitoring</h4>
-                    <ul className="space-y-1 text-sm list-disc list-inside">
-                      <li>Main incomer monitoring for total facility load</li>
-                      <li>Sub-circuit monitoring for load disaggregation</li>
-                      <li>Generation monitoring for renewable energy sources</li>
-                      <li>Battery monitoring for storage system integration</li>
-                      <li>Individual load monitoring for detailed analysis</li>
-                    </ul>
-                  </div>
-
-                </div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">CT Types</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Split-core:</strong> Retrofit without disconnection</li>
+                  <li><strong>Solid-core:</strong> Higher accuracy, new installations</li>
+                  <li><strong>Rogowski coils:</strong> Flexible, large conductors</li>
+                  <li><strong>Hall effect:</strong> DC and AC measurement</li>
+                </ul>
               </div>
+            </div>
 
-              <div>
-                <h3 className="text-xl font-semibold text-white mb-4">Smart Metering Integration</h3>
-                <div className="space-y-4">
-                  
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-yellow-400 mb-3">Communication Protocols</h4>
-                    <div className="space-y-2 text-sm">
-                      <p><strong>Modbus RTU/TCP:</strong> Industrial standard for meter communication and data retrieval</p>
-                      <p><strong>M-Bus:</strong> European standard for utility meter reading and control</p>
-                      <p><strong>DNP3:</strong> Distributed Network Protocol for SCADA and utility applications</p>
-                      <p><strong>IEC 61850:</strong> International standard for electrical substation automation</p>
-                      <p><strong>LonWorks:</strong> Building automation and control network protocol</p>
-                    </div>
-                  </div>
-
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-yellow-400 mb-3">Data Acquisition and Processing</h4>
-                    <div className="space-y-2 text-sm">
-                      <p><strong>Sampling Rates:</strong> Minimum 1Hz for load management, 10Hz+ for power quality</p>
-                      <p><strong>Data Buffering:</strong> Local storage for communication redundancy and data integrity</p>
-                      <p><strong>Signal Filtering:</strong> Digital filtering for noise reduction and measurement stability</p>
-                      <p><strong>Calibration:</strong> Automatic offset and gain correction for measurement accuracy</p>
-                      <p><strong>Synchronisation:</strong> Time-stamped data for coordinated multi-point analysis</p>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white">Control Logic and Algorithm Implementation</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              
-              <div>
-                <h3 className="text-xl font-semibold text-white mb-4">Intelligent Control Algorithms</h3>
-                <div className="space-y-4">
-                  
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-yellow-400 mb-3">Load Monitoring and Analysis</h4>
-                    <div className="space-y-2 text-sm">
-                      <p><strong>Baseline Calculation:</strong> Continuous calculation of non-EV electrical loads</p>
-                      <p><strong>Load Forecasting:</strong> Predictive algorithms for anticipated demand changes</p>
-                      <p><strong>Pattern Recognition:</strong> Machine learning for load behaviour identification</p>
-                      <p><strong>Anomaly Detection:</strong> Automatic identification of unusual consumption patterns</p>
-                      <p><strong>Trending Analysis:</strong> Historical data analysis for capacity planning</p>
-                    </div>
-                  </div>
-
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-yellow-400 mb-3">Dynamic Response Logic</h4>
-                    <div className="space-y-2 text-sm">
-                      <p><strong>Real-Time Adjustment:</strong> Sub-second response to load changes and constraints</p>
-                      <p><strong>Hysteresis Control:</strong> Preventing oscillation through intelligent dead-bands</p>
-                      <p><strong>Rate Limiting:</strong> Controlled power ramping to prevent electrical transients</p>
-                      <p><strong>Priority Management:</strong> Hierarchical load shedding and restoration sequences</p>
-                      <p><strong>Safety Interlocks:</strong> Automatic disconnection for overload and fault conditions</p>
-                    </div>
-                  </div>
-
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-yellow-400 mb-3">Optimisation Strategies</h4>
-                    <div className="space-y-2 text-sm">
-                      <p><strong>Linear Programming:</strong> Mathematical optimisation for resource allocation</p>
-                      <p><strong>Genetic Algorithms:</strong> Evolutionary computing for complex optimisation problems</p>
-                      <p><strong>Fuzzy Logic:</strong> Handling uncertainty and imprecise control requirements</p>
-                      <p><strong>Neural Networks:</strong> Learning-based optimisation for adaptive control</p>
-                      <p><strong>Model Predictive Control:</strong> Future state prediction for proactive control</p>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-xl font-semibold text-white mb-4">System Integration and Communication</h3>
-                
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h4 className="font-semibold text-yellow-400 mb-3">Control System Architecture</h4>
-                  <div className="space-y-2 text-sm">
-                    <p><strong>Distributed Control:</strong> Local intelligence with centralised coordination</p>
-                    <p><strong>Redundancy:</strong> Failover mechanisms for critical control functions</p>
-                    <p><strong>Scalability:</strong> Modular architecture supporting system expansion</p>
-                    <p><strong>Interoperability:</strong> Standard protocols for third-party integration</p>
-                    <p><strong>Cybersecurity:</strong> Encrypted communication and access control measures</p>
-                  </div>
-                </div>
-              </div>
-
-            </CardContent>
-          </Card>
-
-          {/* Quick Check */}
-          <Card className="bg-card border-yellow-400/30">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Eye className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Quick Check</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <p className="text-blue-200 font-medium">Test your understanding:</p>
-                <div className="space-y-3">
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <p className="text-white font-medium mb-2">Question: What accuracy class is recommended for DLM applications?</p>
-                    <details className="text-gray-300">
-                      <summary className="cursor-pointer text-yellow-400 hover:text-blue-300">Show Answer</summary>
-                      <p className="mt-2 text-sm">
-                        Class 1 (±1%) accuracy is the minimum recommendation for DLM applications, with Class 0.5 (±0.5%) preferred for revenue-grade monitoring and billing applications.
-                      </p>
-                    </details>
-                  </div>
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <p className="text-white font-medium mb-2">Question: What is the primary advantage of split-core CT clamps?</p>
-                    <details className="text-gray-300">
-                      <summary className="cursor-pointer text-yellow-400 hover:text-blue-300">Show Answer</summary>
-                      <p className="mt-2 text-sm">
-                        Split-core CTs allow retrofit installation on existing electrical installations without disconnecting or breaking primary circuit connections, making them ideal for upgrading monitoring systems.
-                      </p>
-                    </details>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* FAQs */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <AlertTriangle className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Frequently Asked Questions</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              
-              <div className="space-y-4">
-                <details className="bg-card/80 p-4 rounded-lg">
-                  <summary className="cursor-pointer text-yellow-400 font-medium">How do I select the correct CT clamp ratio for my application?</summary>
-                  <div className="mt-3 text-gray-300 text-sm space-y-2">
-                    <p>Select CT ratio based on maximum expected current: 100:5A for circuits up to 100A, 200:5A up to 200A, etc. Choose the next larger ratio above your maximum current for optimal accuracy and headroom.</p>
-                  </div>
-                </details>
-
-                <details className="bg-card/80 p-4 rounded-lg">
-                  <summary className="cursor-pointer text-yellow-400 font-medium">What causes inaccurate CT readings and how can they be corrected?</summary>
-                  <div className="mt-3 text-gray-300 text-sm space-y-2">
-                    <p>Common causes include incorrect CT ratio configuration, poor conductor positioning, electromagnetic interference, and burden mismatch. Corrections involve proper installation, calibration, and shielding of secondary connections.</p>
-                  </div>
-                </details>
-
-                <details className="bg-card/80 p-4 rounded-lg">
-                  <summary className="cursor-pointer text-yellow-400 font-medium">Can CT clamps be installed on existing live electrical systems?</summary>
-                  <div className="mt-3 text-gray-300 text-sm space-y-2">
-                    <p>Split-core CTs can be safely installed on de-energised systems by qualified electricians. Live working requires specialist training, equipment, and safety procedures in accordance with BS 7671 and workplace safety regulations.</p>
-                  </div>
-                </details>
-
-                <details className="bg-card/80 p-4 rounded-lg">
-                  <summary className="cursor-pointer text-yellow-400 font-medium">How often should CT clamps be calibrated?</summary>
-                  <div className="mt-3 text-gray-300 text-sm space-y-2">
-                    <p>Annual calibration is recommended for revenue-grade applications, with 2-3 yearly calibration acceptable for monitoring-only applications. High-accuracy installations may require 6-monthly verification depending on criticality.</p>
-                  </div>
-                </details>
-
-                <details className="bg-card/80 p-4 rounded-lg">
-                  <summary className="cursor-pointer text-yellow-400 font-medium">What communication distance limitations exist for CT monitoring systems?</summary>
-                  <div className="mt-3 text-gray-300 text-sm space-y-2">
-                    <p>Analogue CT signals: 100m maximum with appropriate cable sizing. Digital systems using Modbus RTU: 1km+ with repeaters. Ethernet/TCP communication: unlimited distance with network infrastructure.</p>
-                  </div>
-                </details>
-
-                <details className="bg-card/80 p-4 rounded-lg">
-                  <summary className="cursor-pointer text-yellow-400 font-medium">How do environmental conditions affect CT clamp performance?</summary>
-                  <div className="mt-3 text-gray-300 text-sm space-y-2">
-                    <p>Temperature variations affect accuracy (±0.1%/°C typical), humidity can cause insulation issues, and vibration may affect mechanical connections. Use temperature-compensated CTs and environmental protection where required.</p>
-                  </div>
-                </details>
-
-                <details className="bg-card/80 p-4 rounded-lg">
-                  <summary className="cursor-pointer text-yellow-400 font-medium">What safety considerations apply to CT clamp installations?</summary>
-                  <div className="mt-3 text-gray-300 text-sm space-y-2">
-                    <p>Never open-circuit CT secondary connections under load, ensure proper earthing of secondary circuits, use appropriate PPE during installation, and follow lockout/tagout procedures for safety isolation.</p>
-                  </div>
-                </details>
-
-                <details className="bg-card/80 p-4 rounded-lg">
-                  <summary className="cursor-pointer text-yellow-400 font-medium">How can control logic handle communication failures?</summary>
-                  <div className="mt-3 text-gray-300 text-sm space-y-2">
-                    <p>Implement fail-safe modes with predetermined power limits, use watchdog timers for communication monitoring, provide local data buffering, and include manual override capabilities for emergency operation.</p>
-                  </div>
-                </details>
-
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Real-World Case Studies */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Monitor className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Real-World Case Studies</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              
-              {/* Case Study 1 */}
-              <div className="bg-card/80 p-6 rounded-lg border border-gray-600">
-                <h4 className="text-lg font-semibold text-yellow-400 mb-3">Case Study 1: Industrial Facility Load Monitoring</h4>
-                <div className="text-gray-300 space-y-3">
-                  <p><strong>Challenge:</strong> 500kVA industrial facility requiring comprehensive load monitoring for 25x EV charging points without disrupting production operations.</p>
-                  <p><strong>Solution:</strong> Installed 15x split-core Class 1 CTs on main distribution panels, integrated with Modbus RTU communication network and centralised DLM controller.</p>
-                  <p><strong>Implementation:</strong> Non-intrusive installation during scheduled maintenance window, comprehensive calibration and commissioning, operator training programme.</p>
-                  <p><strong>Results:</strong> ±0.8% measurement accuracy achieved, 99.9% system availability, prevented 8 potential overload events, enabled 40% increase in charging capacity.</p>
-                  <div className="bg-card p-3 rounded border-l-4 border-yellow-400">
-                    <p className="text-blue-200"><strong>Key Learning:</strong> Proper CT selection and installation enables high-accuracy monitoring without operational disruption, providing essential data for intelligent load management.</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Case Study 2 */}
-              <div className="bg-card/80 p-6 rounded-lg border border-gray-600">
-                <h4 className="text-lg font-semibold text-yellow-400 mb-3">Case Study 2: Residential Development Smart Monitoring</h4>
-                <div className="text-gray-300 space-y-3">
-                  <p><strong>Challenge:</strong> 40-unit residential development requiring individual dwelling monitoring and coordinated EV charging load management.</p>
-                  <p><strong>Solution:</strong> Deployed wireless CT monitoring system with mesh network communication, integrated with cloud-based control platform and mobile user interfaces.</p>
-                  <p><strong>Implementation:</strong> Individual dwelling CT installation, wireless gateway deployment, resident mobile app rollout with real-time consumption feedback.</p>
-                  <p><strong>Results:</strong> 15% average energy consumption reduction, improved resident engagement, coordinated charging prevented infrastructure upgrades, 98% system uptime.</p>
-                  <div className="bg-card p-3 rounded border-l-4 border-yellow-400">
-                    <p className="text-blue-200"><strong>Key Learning:</strong> Wireless CT monitoring enables comprehensive coverage in complex installations whilst providing valuable user feedback for behaviour change.</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Case Study 3 */}
-              <div className="bg-card/80 p-6 rounded-lg border border-gray-600">
-                <h4 className="text-lg font-semibold text-yellow-400 mb-3">Case Study 3: Commercial Building Retrofit</h4>
-                <div className="text-gray-300 space-y-3">
-                  <p><strong>Challenge:</strong> 1970s office building retrofit with limited electrical capacity requiring precision monitoring for 30x workplace charging points.</p>
-                  <p><strong>Solution:</strong> High-accuracy Class 0.5 CT installation with advanced signal processing, predictive control algorithms, and building management system integration.</p>
-                  <p><strong>Implementation:</strong> Phased installation approach, existing BMS integration, staff training and change management programme.</p>
-                  <p><strong>Results:</strong> Avoided £150,000 electrical upgrade, 5% improvement in overall building energy efficiency, seamless EV charging integration, enhanced tenant satisfaction.</p>
-                  <div className="bg-card p-3 rounded border-l-4 border-yellow-400">
-                    <p className="text-blue-200"><strong>Key Learning:</strong> Precision monitoring and intelligent control enable maximum utilisation of limited electrical capacity in retrofit applications.</p>
-                  </div>
-                </div>
-              </div>
-
-            </CardContent>
-          </Card>
-
-          {/* Summary */}
-          <Card className="bg-card border-green-500/30">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <CheckCircle className="h-6 w-6 text-green-400" />
-                <CardTitle className="text-white">Section Summary</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-green-200 space-y-4">
-              <p>
-                CT clamps and load-sensing technologies provide the essential measurement foundation for intelligent EV charging systems, enabling real-time monitoring and sophisticated control algorithms that optimise electrical infrastructure utilisation whilst maintaining safety and reliability.
-              </p>
-              <div className="grid md:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <h4 className="font-semibold mb-2 text-green-300">Key Technical Requirements:</h4>
-                  <ul className="space-y-1 list-disc list-inside">
-                    <li>Class 1 accuracy CT clamps for reliable load management applications</li>
-                    <li>Appropriate communication protocols for system integration</li>
-                    <li>Intelligent control algorithms with real-time response capabilities</li>
-                    <li>Redundancy and fail-safe mechanisms for critical applications</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-semibold mb-2 text-green-300">Implementation Benefits:</h4>
-                  <ul className="space-y-1 list-disc list-inside">
-                    <li>Accurate real-time monitoring enables optimal load allocation</li>
-                    <li>Non-intrusive installation minimises disruption and costs</li>
-                    <li>Advanced control logic maximises infrastructure utilisation</li>
-                    <li>Comprehensive monitoring provides valuable operational insights</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Component */}
-          <EVChargingModule5Section3Quiz />
-
-          {/* Navigation */}
-          <div className="flex justify-between items-center pt-8">
-            <Link to="../ev-charging-module-5-section-2">
-              <Button
-                variant="outline"
-                className="border-gray-600 text-gray-300 hover:bg-card/80 hover:text-white"
-              >
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="../ev-charging-module-5-section-4">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-400">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Accuracy Specifications:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Class 1:</strong> ±1% accuracy - minimum for DLM applications</li>
+                <li><strong>Class 0.5:</strong> ±0.5% - revenue-grade monitoring</li>
+                <li><strong>Burden rating:</strong> Match secondary circuit impedance</li>
+                <li><strong>Dynamic range:</strong> 1% to 120% of rated current</li>
+              </ul>
+            </div>
           </div>
+        </section>
 
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Load-Sensing Technologies
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Advanced load-sensing combines CT clamps, smart metering, and digital signal
+              processing to deliver comprehensive real-time electrical monitoring.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Power Measurement</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Real power: P = V × I × cos φ</li>
+                  <li>Reactive power monitoring</li>
+                  <li>Apparent power for capacity</li>
+                  <li>Harmonic analysis for quality</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Multi-Point Monitoring</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Main incomer total load</li>
+                  <li>Sub-circuit disaggregation</li>
+                  <li>Generation monitoring</li>
+                  <li>Individual load analysis</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Communication Protocols:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Modbus RTU/TCP:</strong> Industrial standard meter communication</li>
+                <li><strong>M-Bus:</strong> European utility meter standard</li>
+                <li><strong>DNP3:</strong> SCADA and utility applications</li>
+                <li><strong>IEC 61850:</strong> Substation automation standard</li>
+              </ul>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">1Hz+</p>
+                <p className="text-white/90 text-xs">Load management</p>
+              </div>
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">10Hz+</p>
+                <p className="text-white/90 text-xs">Power quality</p>
+              </div>
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">kHz</p>
+                <p className="text-white/90 text-xs">Transient capture</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 3 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Control Logic and Algorithms
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Intelligent control algorithms process monitoring data to make real-time decisions
+              about power allocation, safety protection, and system optimisation.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Load Monitoring</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Baseline:</strong> Non-EV load calculation</li>
+                  <li><strong>Forecasting:</strong> Predictive demand algorithms</li>
+                  <li><strong>Pattern recognition:</strong> ML load identification</li>
+                  <li><strong>Anomaly detection:</strong> Unusual consumption alerts</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Dynamic Response</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Real-time:</strong> Sub-second response to changes</li>
+                  <li><strong>Hysteresis:</strong> Prevents oscillation</li>
+                  <li><strong>Rate limiting:</strong> Controlled power ramping</li>
+                  <li><strong>Priority:</strong> Hierarchical load shedding</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Optimisation Strategies:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Linear programming:</strong> Mathematical resource allocation</li>
+                <li><strong>Genetic algorithms:</strong> Evolutionary computing for complex problems</li>
+                <li><strong>Fuzzy logic:</strong> Handling uncertainty and imprecise requirements</li>
+                <li><strong>Model predictive:</strong> Future state prediction for proactive control</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">CT Installation Best Practices</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Install CTs on all three phases for three-phase monitoring</li>
+                <li>Ensure proper conductor centralisation within CT aperture</li>
+                <li>Maintain minimum separation from switching equipment</li>
+                <li>Use appropriate cable termination for secondary connections</li>
+                <li>Label all CTs with ratio, direction, and circuit ID</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Safety Critical - Never Do</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Open-circuit secondary:</strong> — creates dangerous high voltages</li>
+                <li><strong>Wrong ratio setting:</strong> — causes incorrect load management</li>
+                <li><strong>Poor conductor position:</strong> — reduces measurement accuracy</li>
+                <li><strong>Missing earth bond:</strong> — safety hazard on CT secondary</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quick Reference */}
+        <div className="mt-6 p-5 rounded-lg bg-transparent">
+          <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+            <div>
+              <p className="font-medium text-white mb-1">CT Selection Guide</p>
+              <ul className="space-y-0.5">
+                <li>Up to 100A: 100:5A ratio</li>
+                <li>Up to 200A: 200:5A ratio</li>
+                <li>Up to 400A: 400:5A ratio</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-medium text-white mb-1">Accuracy Classes</p>
+              <ul className="space-y-0.5">
+                <li>Class 1: DLM applications</li>
+                <li>Class 0.5: Revenue-grade</li>
+                <li>Class 0.2: High precision</li>
+              </ul>
+            </div>
+          </div>
         </div>
-      </main>
+
+        {/* Quiz Section */}
+        <section className="mb-10 mt-12">
+          <SingleQuestionQuiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-5-section-2">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-5-section-4">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

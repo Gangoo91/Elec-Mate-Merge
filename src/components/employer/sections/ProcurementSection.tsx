@@ -7,11 +7,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SectionHeader } from "@/components/employer/SectionHeader";
 import { Skeleton } from "@/components/ui/skeleton";
 import { FloatingActionButton } from "@/components/ui/floating-action-button";
-import { 
-  Package, 
-  Truck, 
-  Store, 
-  Wrench, 
+import { QuickStats, QuickStat } from "@/components/employer/QuickStats";
+import {
+  Package,
+  Truck,
+  Store,
+  Wrench,
   Plus,
   Search,
   ChevronDown,
@@ -101,35 +102,30 @@ export function ProcurementSection() {
       />
 
       {/* Stats */}
-      <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4 md:mx-0 md:px-0">
-        <Card className="bg-info/10 border-info/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <Truck className="h-4 w-4 text-info" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{pendingOrders}</p>
-              <p className="text-xs text-muted-foreground">Pending Orders</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-elec-yellow/10 border-elec-yellow/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <Store className="h-4 w-4 text-elec-yellow" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{suppliers.length}</p>
-              <p className="text-xs text-muted-foreground">Suppliers</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-warning/10 border-warning/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <Wrench className="h-4 w-4 text-warning" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{toolsDuePAT + toolsDueCalibration}</p>
-              <p className="text-xs text-muted-foreground">Tools Due</p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <QuickStats
+        stats={[
+          {
+            icon: Truck,
+            value: pendingOrders,
+            label: "Pending Orders",
+            color: "blue",
+            pulse: pendingOrders > 0,
+          },
+          {
+            icon: Store,
+            value: suppliers.length,
+            label: "Suppliers",
+            color: "yellow",
+          },
+          {
+            icon: Wrench,
+            value: toolsDuePAT + toolsDueCalibration,
+            label: "Tools Due",
+            color: "orange",
+            pulse: (toolsDuePAT + toolsDueCalibration) > 0,
+          },
+        ]}
+      />
 
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">

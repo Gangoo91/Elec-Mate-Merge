@@ -74,7 +74,7 @@ export const AdvancedCalculatorOptions: React.FC<AdvancedOptionsProps> = ({
               onChange={(e) => onAdditionalResistancesChange(parseFloat(e.target.value) || 0)}
               className="bg-muted border-border text-foreground"
             />
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-white/70">
               Include bond conductor resistance, meter tails, etc.
             </p>
           </div>
@@ -136,10 +136,10 @@ export const AdvancedCalculatorOptions: React.FC<AdvancedOptionsProps> = ({
                       <AlertTriangle className="h-4 w-4 text-blue-400" />
                       <span className="text-blue-400 font-semibold text-sm">Temperature Factor</span>
                     </div>
-                    <p className="text-gray-300 text-sm">
+                    <p className="text-white/80 text-sm">
                       Correction factor: <span className="font-bold text-elec-yellow">{correctionFactor}</span>
                     </p>
-                    <p className="text-xs text-gray-400 mt-1">
+                    <p className="text-xs text-white/70 mt-1">
                       Applied to R1+R2 values to account for conductor temperature effects
                     </p>
                   </div>

@@ -353,19 +353,19 @@ const LEDDriverCalculator = () => {
               </h4>
               <div className="grid grid-cols-3 gap-3 text-center">
                 <div>
-                  <p className="text-xs text-white/50 mb-1">Compliance V</p>
+                  <p className="text-xs text-white/80 mb-1">Compliance V</p>
                   <p className="text-lg font-semibold text-cyan-400">
                     {result.recommendations.complianceVoltage.toFixed(1)}V
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs text-white/50 mb-1">Recommended</p>
+                  <p className="text-xs text-white/80 mb-1">Recommended</p>
                   <p className="text-lg font-semibold text-cyan-400">
                     {result.recommendations.recommendedDriverPower.toFixed(1)}W
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs text-white/50 mb-1">Nearest Std</p>
+                  <p className="text-xs text-white/80 mb-1">Nearest Std</p>
                   <p className="text-lg font-semibold text-cyan-400">
                     {result.recommendations.nearestStandardDriver}
                   </p>
@@ -384,7 +384,7 @@ const LEDDriverCalculator = () => {
             {/* Messages */}
             {result.recommendations.messages.length > 0 && (
               <div className="mt-4 p-3 rounded-lg bg-white/5 space-y-2">
-                <p className="text-xs text-white/50 mb-2">
+                <p className="text-xs text-white/80 mb-2">
                   {result.recommendations.connectionGuidance}
                 </p>
                 {result.recommendations.messages.map((msg, idx) => (
@@ -409,7 +409,7 @@ const LEDDriverCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/40 transition-transform duration-200",
+                    "h-4 w-4 text-white/70 transition-transform duration-200",
                     showCalculation && "rotate-180"
                   )}
                 />
@@ -474,7 +474,7 @@ const LEDDriverCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/40 transition-transform duration-200",
+                    "h-4 w-4 text-white/70 transition-transform duration-200",
                     showGuidance && "rotate-180"
                   )}
                 />
@@ -517,7 +517,7 @@ const LEDDriverCalculator = () => {
             </div>
             <ChevronDown
               className={cn(
-                "h-4 w-4 text-white/40 transition-transform duration-200",
+                "h-4 w-4 text-white/70 transition-transform duration-200",
                 showReference && "rotate-180"
               )}
             />

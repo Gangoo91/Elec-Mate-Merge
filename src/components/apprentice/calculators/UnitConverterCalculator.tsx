@@ -299,25 +299,25 @@ const UnitConverterCalculator = () => {
               >
                 {formatValue(result)}
               </div>
-              <p className="text-sm text-white/50 mt-1">
+              <p className="text-sm text-white/80 mt-1">
                 {conversionCategories[category].units[toUnit].name}
               </p>
             </div>
 
             {/* Equation */}
             <div className="py-3 border-b border-white/10">
-              <p className="text-xs text-white/50 mb-1">Calculation</p>
+              <p className="text-xs text-white/80 mb-1">Calculation</p>
               <p className="text-sm text-white/80 font-mono">{equation}</p>
             </div>
 
             {/* Equivalent Units */}
             <div className="pt-3">
-              <p className="text-xs text-white/50 mb-3">Also equals</p>
+              <p className="text-xs text-white/80 mb-3">Also equals</p>
               <div className="grid grid-cols-2 gap-2">
                 {getEquivalentUnits(parseFloat(inputValue) * conversionCategories[category].units[fromUnit].factor).map(({ unit, name, value }) => (
                   <div key={unit} className="p-2 rounded-lg bg-white/5">
                     <div className="text-sm font-mono text-amber-400">{formatValue(value)}</div>
-                    <div className="text-xs text-white/50">{unit}</div>
+                    <div className="text-xs text-white/80">{unit}</div>
                   </div>
                 ))}
               </div>
@@ -333,7 +333,7 @@ const UnitConverterCalculator = () => {
                   <span className="text-sm sm:text-base font-medium text-blue-300">Why This Matters</span>
                 </div>
                 <ChevronDown className={cn(
-                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  "h-4 w-4 text-white/70 transition-transform duration-200",
                   showGuidance && "rotate-180"
                 )} />
               </CollapsibleTrigger>
@@ -362,7 +362,7 @@ const UnitConverterCalculator = () => {
               <span className="text-sm sm:text-base font-medium text-amber-300">Common Conversions</span>
             </div>
             <ChevronDown className={cn(
-              "h-4 w-4 text-white/40 transition-transform duration-200",
+              "h-4 w-4 text-white/70 transition-transform duration-200",
               showReference && "rotate-180"
             )} />
           </CollapsibleTrigger>

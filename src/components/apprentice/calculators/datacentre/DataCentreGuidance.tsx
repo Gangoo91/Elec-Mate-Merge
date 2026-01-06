@@ -76,7 +76,7 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
               <Target className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
               <div className="flex-1">
                 <div className="font-medium text-sm mb-1">Efficiency Status</div>
-                <div className="text-xs text-muted-foreground leading-relaxed">
+                <div className="text-xs text-white leading-relaxed">
                   {results.pue <= 1.3 ? "Excellent efficiency - world-class design" :
                    results.pue <= 1.6 ? "Good efficiency - modern standard" :
                    results.pue <= 2.0 ? "Average efficiency - improvement opportunities" :
@@ -88,7 +88,7 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
               <PoundSterling className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
               <div className="flex-1">
                 <div className="font-medium text-sm mb-1">Cost Impact</div>
-                <div className="text-xs text-muted-foreground leading-relaxed">
+                <div className="text-xs text-white leading-relaxed">
                   Annual energy costs of {formatLargeCurrency(results.annualCost)} represent significant operational expense requiring optimisation
                 </div>
               </div>
@@ -99,7 +99,7 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
               <Gauge className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
               <div className="flex-1">
                 <div className="font-medium text-sm mb-1">Capacity Planning</div>
-                <div className="text-xs text-muted-foreground leading-relaxed">
+                <div className="text-xs text-white leading-relaxed">
                   {results.capacityHeadroom >= 20 ? "Good headroom for growth" :
                    results.capacityHeadroom >= 10 ? "Adequate capacity for near-term" :
                    "Expansion planning required soon"}
@@ -110,7 +110,7 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
               <Leaf className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
               <div className="flex-1">
                 <div className="font-medium text-sm mb-1">Environmental Impact</div>
-                <div className="text-xs text-muted-foreground leading-relaxed">
+                <div className="text-xs text-white leading-relaxed">
                   {formatLargeNumber(results.annualCo2e / 1000)}t CO2e annually - efficiency improvements reduce both costs and carbon footprint
                 </div>
               </div>
@@ -135,15 +135,15 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
             </div>
             <div className="space-y-3 text-sm">
               <div className="flex justify-between items-center">
-                <span className="text-muted-foreground">Total IT load:</span>
+                <span className="text-white">Total IT load:</span>
                 <span className="text-elec-yellow font-medium">{results.totalItLoad.toFixed(0)} kW</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-muted-foreground">Cooling load:</span>
+                <span className="text-white">Cooling load:</span>
                 <span className="text-elec-yellow font-medium">{results.coolingLoad.toFixed(0)} kW</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-muted-foreground">Lights & misc:</span>
+                <span className="text-white">Lights & misc:</span>
                 <span className="text-elec-yellow font-medium">{results.lightsLoad.toFixed(0)} kW</span>
               </div>
               <div className="flex justify-between items-center font-semibold border-t border-border pt-2">
@@ -160,19 +160,19 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
             </div>
             <div className="space-y-3 text-sm">
               <div className="flex justify-between items-center">
-                <span className="text-muted-foreground">UPS capacity:</span>
+                <span className="text-white">UPS capacity:</span>
                 <span className="text-elec-yellow font-medium">{results.upsCapacity.toFixed(0)} kW</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-muted-foreground">Generator:</span>
+                <span className="text-white">Generator:</span>
                 <span className="text-elec-yellow font-medium">{results.generatorCapacity.toFixed(0)} kW</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-muted-foreground">Battery:</span>
+                <span className="text-white">Battery:</span>
                 <span className="text-elec-yellow font-medium">{results.batteryCapacity.toFixed(0)} kWh</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-muted-foreground">Cooling:</span>
+                <span className="text-white">Cooling:</span>
                 <span className="text-elec-yellow font-medium">{results.coolingCapacity.toFixed(0)} kW</span>
               </div>
             </div>
@@ -185,19 +185,19 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
             </div>
             <div className="space-y-3 text-sm">
               <div className="flex justify-between items-center">
-                <span className="text-muted-foreground">PUE:</span>
+                <span className="text-white">PUE:</span>
                 <span className="text-elec-yellow font-medium">{results.pue.toFixed(2)}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-muted-foreground">DCiE:</span>
+                <span className="text-white">DCiE:</span>
                 <span className="text-elec-yellow font-medium">{results.dcie.toFixed(1)}%</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-muted-foreground">Capacity headroom:</span>
+                <span className="text-white">Capacity headroom:</span>
                 <span className="text-elec-yellow font-medium">{results.capacityHeadroom.toFixed(1)}%</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-muted-foreground">Max IT capacity:</span>
+                <span className="text-white">Max IT capacity:</span>
                 <span className="text-elec-yellow font-medium">{results.maxItLoadCapacity.toFixed(0)} kW</span>
               </div>
             </div>
@@ -235,11 +235,11 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
           <div className="flex justify-between items-center py-2">
-            <span className="text-muted-foreground">Estimated capital cost:</span>
+            <span className="text-white">Estimated capital cost:</span>
             <span className="text-elec-yellow font-medium">{formatLargeCurrency(results.estimatedCapitalCost)}</span>
           </div>
           <div className="flex justify-between items-center py-2">
-            <span className="text-muted-foreground">Annual operating cost:</span>
+            <span className="text-white">Annual operating cost:</span>
             <span className="text-elec-yellow font-medium">{formatLargeCurrency(results.annualOperatingCost)}</span>
           </div>
         </div>
@@ -262,7 +262,7 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="font-medium text-sm sm:text-base mb-1">{item.standard}</div>
-                  <div className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{item.message}</div>
+                  <div className="text-xs sm:text-sm text-white leading-relaxed">{item.message}</div>
                 </div>
               </div>
               <div className="flex-shrink-0 self-start sm:self-center">
@@ -291,17 +291,17 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
                 </div>
               </div>
               <div className="space-y-3">
-                <p className="text-sm text-muted-foreground leading-relaxed">{rec.message}</p>
+                <p className="text-sm text-white leading-relaxed">{rec.message}</p>
                 <div className="space-y-2">
                   <div className="flex items-start gap-2">
                     <Target className="h-3 w-3 text-elec-yellow mt-1 flex-shrink-0" />
                     <span className="text-xs text-elec-yellow font-medium">Impact:</span>
-                    <span className="text-xs text-muted-foreground">{rec.impact}</span>
+                    <span className="text-xs text-white">{rec.impact}</span>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
                     <div className="flex items-center gap-2">
                       <Gauge className="h-3 w-3 text-elec-yellow" />
-                      <span className="text-muted-foreground">
+                      <span className="text-white">
                         Difficulty: <span className="text-elec-yellow">
                           {rec.priority === 'high' ? 'Complex' : rec.priority === 'medium' ? 'Moderate' : 'Simple'}
                         </span>
@@ -309,7 +309,7 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
                     </div>
                     <div className="flex items-center gap-2">
                       <Clock className="h-3 w-3 text-elec-yellow" />
-                      <span className="text-muted-foreground">
+                      <span className="text-white">
                         Timeframe: <span className="text-elec-yellow">
                           {rec.priority === 'high' ? '3-6 months' : rec.priority === 'medium' ? '1-3 months' : '2-4 weeks'}
                         </span>
@@ -317,7 +317,7 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
                     </div>
                     <div className="flex items-center gap-2">
                       <PoundSterling className="h-3 w-3 text-elec-yellow" />
-                      <span className="text-muted-foreground">
+                      <span className="text-white">
                         Cost: <span className="text-elec-yellow">
                           {rec.priority === 'high' ? 'High (£50k+)' : rec.priority === 'medium' ? 'Medium (£10-50k)' : 'Low (<£10k)'}
                         </span>
@@ -390,7 +390,7 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
                 <div className="space-y-4">
                   <div className="p-3 border border-border rounded-lg">
                     <div className="font-medium mb-2">PUE (Power Usage Effectiveness)</div>
-                    <div className="text-muted-foreground text-xs mb-2">Total facility power ÷ IT power</div>
+                    <div className="text-white text-xs mb-2">Total facility power ÷ IT power</div>
                     <div className="text-xs text-elec-yellow space-y-1">
                       <div>• 1.0 = Perfect efficiency (impossible)</div>
                       <div>• 1.2-1.5 = Excellent (modern efficient)</div>
@@ -400,14 +400,14 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
                   </div>
                   <div className="p-3 border border-border rounded-lg">
                     <div className="font-medium mb-2">DCiE (Data Centre Infrastructure Efficiency)</div>
-                    <div className="text-muted-foreground text-xs mb-2">IT power ÷ total facility power × 100</div>
+                    <div className="text-white text-xs mb-2">IT power ÷ total facility power × 100</div>
                     <div className="text-xs text-elec-yellow">Inverse of PUE as percentage</div>
                   </div>
                 </div>
                 <div className="space-y-4">
                   <div className="p-3 border border-border rounded-lg">
                     <div className="font-medium mb-2">Capacity Headroom</div>
-                    <div className="text-muted-foreground text-xs mb-2">Available capacity for growth</div>
+                    <div className="text-white text-xs mb-2">Available capacity for growth</div>
                     <div className="text-xs text-elec-yellow space-y-1">
                       <div>• 20%+ = Good planning buffer</div>
                       <div>• 10-20% = Adequate short-term</div>
@@ -416,7 +416,7 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
                   </div>
                   <div className="p-3 border border-border rounded-lg">
                     <div className="font-medium mb-2">Redundancy Levels</div>
-                    <div className="text-muted-foreground text-xs mb-2">Protection against failures</div>
+                    <div className="text-white text-xs mb-2">Protection against failures</div>
                     <div className="text-xs text-elec-yellow space-y-1">
                       <div>• N = No redundancy</div>
                       <div>• N+1 = Single component backup</div>
@@ -441,7 +441,7 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
                     <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                     Infrastructure Sizing Best Practices
                   </div>
-                  <div className="space-y-2 text-muted-foreground pl-4">
+                  <div className="space-y-2 text-white pl-4">
                     <div className="flex items-start gap-2">
                       <span className="w-1 h-1 bg-muted-foreground rounded-full mt-2 flex-shrink-0"></span>
                       <span>Size UPS for peak load plus 15-25% design margin</span>
@@ -465,7 +465,7 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
                     <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                     Efficiency Improvements
                   </div>
-                  <div className="space-y-2 text-muted-foreground pl-4">
+                  <div className="space-y-2 text-white pl-4">
                     <div className="flex items-start gap-2">
                       <span className="w-1 h-1 bg-muted-foreground rounded-full mt-2 flex-shrink-0"></span>
                       <span>Hot/cold aisle containment can improve PUE by 20-30%</span>
@@ -489,7 +489,7 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
                     <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                     Monitoring & Maintenance
                   </div>
-                  <div className="space-y-2 text-muted-foreground pl-4">
+                  <div className="space-y-2 text-white pl-4">
                     <div className="flex items-start gap-2">
                       <span className="w-1 h-1 bg-muted-foreground rounded-full mt-2 flex-shrink-0"></span>
                       <span>Real-time PUE monitoring enables optimisation</span>

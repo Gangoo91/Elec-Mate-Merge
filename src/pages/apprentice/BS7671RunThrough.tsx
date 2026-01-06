@@ -20,7 +20,7 @@ const BS7671RunThrough = () => {
       case "Electrical Testing": return "text-blue-400";
       case "Visual Inspection": return "text-green-400";
       case "Documentation": return "text-purple-400";
-      default: return "text-gray-400";
+      default: return "text-white/60";
     }
   };
 
@@ -49,13 +49,13 @@ const BS7671RunThrough = () => {
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">BS7671 Inspection & Testing Run-Through</h1>
-          <p className="text-muted-foreground">Comprehensive electrical safety testing procedures for apprentices</p>
+          <p className="text-white/70">Comprehensive electrical safety testing procedures for apprentices</p>
         </div>
         <SmartBackButton className="flex-shrink-0" />
       </div>
 
       {/* Enhanced Features Highlight */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Settings className="h-5 w-5 text-elec-yellow" />
@@ -89,7 +89,7 @@ const BS7671RunThrough = () => {
       </Card>
 
       {/* Progress Overview */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <CheckSquare className="h-5 w-5 text-elec-yellow" />
@@ -106,7 +106,7 @@ const BS7671RunThrough = () => {
               <span>{completedSteps.size} of {totalSteps}</span>
             </div>
             <Progress value={progressPercentage} className="h-2" />
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white/70">
               Estimated total time: 3-5 hours (depending on installation complexity)
             </p>
           </div>
@@ -154,7 +154,7 @@ const BS7671RunThrough = () => {
         {enhancedBS7671Steps.map((step) => (
           <Card 
             key={step.id} 
-            className={`border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-colors cursor-pointer ${
+            className={`border-elec-yellow/20 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer ${
               completedSteps.has(step.id) ? 'ring-2 ring-green-500/30' : ''
             }`}
           >
@@ -166,7 +166,7 @@ const BS7671RunThrough = () => {
                   </span>
                   <div className="flex flex-col">
                     {step.title}
-                    <span className="text-xs text-muted-foreground font-normal">
+                    <span className="text-xs text-white/70 font-normal">
                       {getCategoryDescription(step.category)}
                     </span>
                   </div>
@@ -227,7 +227,7 @@ const BS7671RunThrough = () => {
       </div>
 
       {/* Quick Reference Links */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <BookOpen className="h-5 w-5 text-elec-yellow" />

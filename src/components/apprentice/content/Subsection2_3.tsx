@@ -19,7 +19,7 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         
         <h2 className="text-xl font-semibold text-elec-yellow mt-8 mb-4">Waste Management in Electrical Work</h2>
         
-        <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-md p-4 mb-6">
+        <div className="bg-white/10 border border-elec-yellow/20 rounded-md p-4 mb-6">
           <div className="flex items-start gap-3">
             <Trash2 className="h-6 w-6 text-elec-yellow flex-shrink-0 mt-1" />
             <div>
@@ -70,7 +70,7 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         <h2 className="text-xl font-semibold text-elec-yellow mt-8 mb-4">Energy Efficiency and Carbon Reduction</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-md p-4">
+          <div className="bg-white/10 border border-elec-yellow/20 rounded-md p-4">
             <div className="flex items-start gap-3">
               <Lightbulb className="h-6 w-6 text-elec-yellow flex-shrink-0 mt-1" />
               <div>
@@ -119,7 +119,7 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </div>
           </div>
           
-          <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-md p-4">
+          <div className="bg-white/10 border border-elec-yellow/20 rounded-md p-4">
             <div className="flex items-start gap-3">
               <Leaf className="h-6 w-6 text-elec-yellow flex-shrink-0 mt-1" />
               <div>
@@ -158,7 +158,7 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           </div>
         </div>
         
-        <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-md p-4 mb-6">
+        <div className="bg-white/10 border border-elec-yellow/20 rounded-md p-4 mb-6">
           <div className="flex items-start gap-3">
             <BarChart4 className="h-6 w-6 text-elec-yellow flex-shrink-0 mt-1" />
             <div>
@@ -168,28 +168,28 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </p>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="bg-elec-dark/70 p-3 rounded-md">
+                <div className="bg-white/10 p-3 rounded-md">
                   <h4 className="font-medium text-elec-yellow mb-1">Embodied Carbon</h4>
                   <p className="text-sm">
                     The CO₂ emitted during manufacturing, transport, and installation of electrical components.
                     Consider lower-impact alternatives when specifying products.
                   </p>
                 </div>
-                <div className="bg-elec-dark/70 p-3 rounded-md">
+                <div className="bg-white/10 p-3 rounded-md">
                   <h4 className="font-medium text-elec-yellow mb-1">Operational Carbon</h4>
                   <p className="text-sm">
                     The CO₂ emitted during the operational life of electrical systems.
                     Focus on energy efficiency and smart controls to minimize this impact.
                   </p>
                 </div>
-                <div className="bg-elec-dark/70 p-3 rounded-md">
+                <div className="bg-white/10 p-3 rounded-md">
                   <h4 className="font-medium text-elec-yellow mb-1">End-of-Life Carbon</h4>
                   <p className="text-sm">
                     The CO₂ impact of disposal or recycling of electrical components.
                     Proper recycling can significantly reduce this impact.
                   </p>
                 </div>
-                <div className="bg-elec-dark/70 p-3 rounded-md">
+                <div className="bg-white/10 p-3 rounded-md">
                   <h4 className="font-medium text-elec-yellow mb-1">Transport Carbon</h4>
                   <p className="text-sm">
                     The CO₂ from transporting materials and personnel.
@@ -208,7 +208,7 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           reduce the ecological footprint of electrical installations:
         </p>
         
-        <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-md p-4 mb-6">
+        <div className="bg-white/10 border border-elec-yellow/20 rounded-md p-4 mb-6">
           <div className="flex items-start gap-3">
             <Recycle className="h-6 w-6 text-elec-yellow flex-shrink-0 mt-1" />
             <div>
@@ -231,25 +231,25 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               <div className="mt-4 border-t border-elec-yellow/10 pt-3">
                 <h4 className="font-medium text-elec-yellow mb-2">Material Environmental Certifications</h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-                  <div className="bg-elec-dark/70 p-2 rounded-md">
+                  <div className="bg-white/10 p-2 rounded-md">
                     <p className="font-medium">BREEAM Compliance</p>
                     <p className="text-xs mt-1">
                       Materials that meet Building Research Establishment Environmental Assessment Method standards.
                     </p>
                   </div>
-                  <div className="bg-elec-dark/70 p-2 rounded-md">
+                  <div className="bg-white/10 p-2 rounded-md">
                     <p className="font-medium">Environmental Product Declarations (EPD)</p>
                     <p className="text-xs mt-1">
                       Documents that provide verified environmental data for product lifecycles.
                     </p>
                   </div>
-                  <div className="bg-elec-dark/70 p-2 rounded-md">
+                  <div className="bg-white/10 p-2 rounded-md">
                     <p className="font-medium">Cradle to Cradle Certified</p>
                     <p className="text-xs mt-1">
                       Products designed for circular economy with sustainable material flows.
                     </p>
                   </div>
-                  <div className="bg-elec-dark/70 p-2 rounded-md">
+                  <div className="bg-white/10 p-2 rounded-md">
                     <p className="font-medium">RoHS Compliance</p>
                     <p className="text-xs mt-1">
                       Restriction of Hazardous Substances, limiting harmful materials in electrical products.
@@ -280,7 +280,7 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         
         <h2 className="text-xl font-semibold text-elec-yellow mt-8 mb-4">Environmental Regulations and Compliance</h2>
         
-        <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-md p-4 mb-6">
+        <div className="bg-white/10 border border-elec-yellow/20 rounded-md p-4 mb-6">
           <div className="flex items-start gap-3">
             <AlertTriangle className="h-6 w-6 text-elec-yellow flex-shrink-0 mt-1" />
             <div className="space-y-3 text-sm">
@@ -387,7 +387,7 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-md p-4">
+          <div className="bg-white/10 border border-elec-yellow/20 rounded-md p-4">
             <div className="flex items-start gap-3">
               <ClipboardCheck className="h-6 w-6 text-elec-yellow flex-shrink-0 mt-1" />
               <div>
@@ -414,7 +414,7 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </div>
           </div>
           
-          <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-md p-4">
+          <div className="bg-white/10 border border-elec-yellow/20 rounded-md p-4">
             <div className="flex items-start gap-3">
               <Globe className="h-6 w-6 text-elec-yellow flex-shrink-0 mt-1" />
               <div>
@@ -439,7 +439,7 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         
         <h3 className="text-lg font-semibold text-elec-yellow mt-8 mb-3">Practical Implementation Tools</h3>
         
-        <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-md p-4 mb-6">
+        <div className="bg-white/10 border border-elec-yellow/20 rounded-md p-4 mb-6">
           <div className="flex items-start gap-3">
             <Hammer className="h-6 w-6 text-elec-yellow flex-shrink-0 mt-1" />
             <div>
@@ -449,7 +449,7 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </p>
               
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
-                <div className="bg-elec-dark/70 p-3 rounded-md">
+                <div className="bg-white/10 p-3 rounded-md">
                   <h4 className="font-medium text-elec-yellow mb-1">Assessment Tools</h4>
                   <ul className="list-disc pl-4 text-xs space-y-1">
                     <li>Carbon calculators</li>
@@ -458,7 +458,7 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                     <li>Environmental impact assessments</li>
                   </ul>
                 </div>
-                <div className="bg-elec-dark/70 p-3 rounded-md">
+                <div className="bg-white/10 p-3 rounded-md">
                   <h4 className="font-medium text-elec-yellow mb-1">Reference Materials</h4>
                   <ul className="list-disc pl-4 text-xs space-y-1">
                     <li>Sustainable materials guides</li>
@@ -467,7 +467,7 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                     <li>Best practice case studies</li>
                   </ul>
                 </div>
-                <div className="bg-elec-dark/70 p-3 rounded-md">
+                <div className="bg-white/10 p-3 rounded-md">
                   <h4 className="font-medium text-elec-yellow mb-1">Implementation Resources</h4>
                   <ul className="list-disc pl-4 text-xs space-y-1">
                     <li>Site waste management templates</li>
@@ -524,7 +524,7 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           </table>
         </div>
         
-        <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-md p-4 mb-6">
+        <div className="bg-white/10 border border-elec-yellow/20 rounded-md p-4 mb-6">
           <h3 className="font-semibold text-elec-yellow mb-3 text-center">Environmental Considerations Checklist for Electrical Projects</h3>
           <div className="space-y-3">
             <div className="flex items-center gap-2">

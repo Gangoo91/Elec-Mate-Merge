@@ -382,7 +382,7 @@ const R1R2Calculator = () => {
                   <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
                 </div>
                 <ChevronDown className={cn(
-                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  "h-4 w-4 text-white/70 transition-transform duration-200",
                   showGuidance && "rotate-180"
                 )} />
               </CollapsibleTrigger>
@@ -413,7 +413,7 @@ const R1R2Calculator = () => {
                   <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 Regs at a Glance</span>
                 </div>
                 <ChevronDown className={cn(
-                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  "h-4 w-4 text-white/70 transition-transform duration-200",
                   showBsRegs && "rotate-180"
                 )} />
               </CollapsibleTrigger>

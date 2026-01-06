@@ -37,7 +37,7 @@ const ElectricalTheorySection: React.FC<ElectricalTheorySectionProps> = ({
   return (
     <div className="space-y-8 animate-fade-in">
       {/* Section Introduction */}
-      <div className="bg-gradient-to-r from-elec-dark to-elec-dark/80 border border-elec-yellow/30 rounded-lg p-6 shadow-lg relative overflow-hidden">
+      <div className="bg-gradient-to-r from-white/10 to-white/5 border border-elec-yellow/30 rounded-lg p-6 shadow-lg relative overflow-hidden">
         <div className="absolute top-0 right-0 w-32 h-32 opacity-10">
           <FileText className="w-full h-full text-elec-yellow" />
         </div>
@@ -58,11 +58,11 @@ const ElectricalTheorySection: React.FC<ElectricalTheorySectionProps> = ({
           )}
         </div>
         
-        <p className="text-muted-foreground ml-12 mb-6">
+        <p className="text-white ml-12 mb-6">
           {legislationSection.description}
         </p>
         
-        <div className="ml-12 pl-4 border-l-2 border-elec-yellow/30 text-sm text-muted-foreground">
+        <div className="ml-12 pl-4 border-l-2 border-elec-yellow/30 text-sm text-white">
           <p>{legislationSection.content.introduction}</p>
         </div>
       </div>
@@ -76,7 +76,7 @@ const ElectricalTheorySection: React.FC<ElectricalTheorySectionProps> = ({
             <Card 
               key={subsection.id}
               className={`border border-elec-yellow/20 hover:border-elec-yellow/40 transition-all cursor-pointer group ${
-                isSubsectionCompleted ? 'bg-gradient-to-br from-elec-dark to-green-950/30' : 'bg-elec-dark/90'
+                isSubsectionCompleted ? 'bg-gradient-to-br from-elec-dark to-green-950/30' : 'bg-white/10'
               }`}
               onClick={() => handleNavigateToSubsection(subsection.id)}
             >
@@ -92,12 +92,12 @@ const ElectricalTheorySection: React.FC<ElectricalTheorySectionProps> = ({
                 <CardTitle className="text-lg mt-2 group-hover:text-elec-yellow transition-colors">
                   {subsection.title}
                 </CardTitle>
-                <CardDescription className="text-sm text-muted-foreground line-clamp-2">
+                <CardDescription className="text-sm text-white line-clamp-2">
                   {subsection.content}
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
+                <ul className="list-disc list-inside text-sm text-white space-y-1">
                   {subsection.keyPoints.slice(0, 2).map((point, idx) => (
                     <li key={idx} className="truncate">{point}</li>
                   ))}

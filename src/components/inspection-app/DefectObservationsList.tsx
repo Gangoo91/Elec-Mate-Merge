@@ -31,7 +31,7 @@ const DefectObservationsList = ({
 }: DefectObservationsListProps) => {
   if (defectObservations.length === 0) {
     return (
-      <div className="text-center py-8 border-2 border-dashed border-gray-200 rounded-lg">
+      <div className="text-center py-8 border-2 border-dashed border-white/20 rounded-lg">
         <p className="text-muted-foreground mb-2">
           No observations recorded yet
         </p>

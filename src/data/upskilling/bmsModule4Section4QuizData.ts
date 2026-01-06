@@ -128,3 +128,6 @@ export const bmsModule4Section4QuizQuestions: QuizQuestion[] = [
     explanation: "The London office tower case study achieved an 18% reduction in overall energy use through the integrated shading system with BMS coordination."
   }
 ];
+
+// Alias for consistency with component imports
+export const bmsModule4Section4QuizData = bmsModule4Section4QuizQuestions;

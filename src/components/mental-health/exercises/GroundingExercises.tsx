@@ -251,7 +251,7 @@ const GroundingExercises = () => {
             <Anchor className="h-6 w-6 text-purple-400" />
           </div>
           <h2 className="text-xl font-bold text-foreground mb-1">Grounding Exercises</h2>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white/80">
             Techniques to bring you back to the present moment
           </p>
         </div>
@@ -264,7 +264,7 @@ const GroundingExercises = () => {
               Synced to cloud
             </span>
           ) : (
-            <span className="flex items-center gap-1 text-muted-foreground">
+            <span className="flex items-center gap-1 text-white/80">
               <CloudOff className="h-3 w-3" />
               Local only - sign in to sync
             </span>
@@ -309,7 +309,7 @@ const GroundingExercises = () => {
 
         {/* Exercise List */}
         <div className="space-y-2">
-          <h3 className="text-sm font-medium text-muted-foreground">All Exercises</h3>
+          <h3 className="text-sm font-medium text-white/80">All Exercises</h3>
           {exercises.map(exercise => {
             const colors = getColorClasses(exercise.color);
             const Icon = exercise.icon;
@@ -331,9 +331,9 @@ const GroundingExercises = () => {
                         <h4 className="font-medium text-foreground text-sm">{exercise.name}</h4>
                         {isComplete && <CheckCircle className="h-4 w-4 text-green-400" />}
                       </div>
-                      <p className="text-xs text-muted-foreground line-clamp-1">{exercise.description}</p>
+                      <p className="text-xs text-white/80 line-clamp-1">{exercise.description}</p>
                     </div>
-                    <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                    <div className="flex items-center gap-1 text-xs text-white/80">
                       <Clock className="h-3 w-3" />
                       {exercise.duration}
                     </div>
@@ -394,7 +394,7 @@ const GroundingExercises = () => {
             <CardContent className="p-6 text-center">
               <CheckCircle className="h-12 w-12 text-green-400 mx-auto mb-4" />
               <h3 className="text-lg font-bold text-foreground mb-2">Well done!</h3>
-              <p className="text-sm text-muted-foreground mb-4">
+              <p className="text-sm text-white/80 mb-4">
                 You've grounded yourself using all five senses.
                 How do you feel now?
               </p>
@@ -441,7 +441,7 @@ const GroundingExercises = () => {
                 <h3 className="text-2xl font-bold text-foreground mb-2">
                   {currentSense.count} things you can <span className={colors.text}>{currentSense.sense}</span>
                 </h3>
-                <p className="text-sm text-muted-foreground">{currentSense.prompt}</p>
+                <p className="text-sm text-white/80">{currentSense.prompt}</p>
               </CardContent>
             </Card>
 
@@ -473,7 +473,7 @@ const GroundingExercises = () => {
               ))}
             </div>
 
-            <p className="text-center text-sm text-muted-foreground">
+            <p className="text-center text-sm text-white/80">
               Tap each number as you notice something
             </p>
           </>
@@ -502,7 +502,7 @@ const GroundingExercises = () => {
           <Icon className={`h-7 w-7 ${colors.text}`} />
         </div>
         <h2 className="text-xl font-bold text-foreground">{selectedExercise.name}</h2>
-        <p className="text-sm text-muted-foreground">{selectedExercise.description}</p>
+        <p className="text-sm text-white/80">{selectedExercise.description}</p>
       </div>
 
       {/* Progress */}
@@ -566,7 +566,7 @@ const GroundingExercises = () => {
           <CardContent className="p-6 text-center">
             <CheckCircle className="h-12 w-12 text-green-400 mx-auto mb-4" />
             <h3 className="text-lg font-bold text-foreground mb-2">Exercise Complete!</h3>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm text-white/80 mb-4">
               Take a moment to notice how you feel now compared to when you started.
             </p>
             <div className="flex gap-2">
@@ -595,13 +595,13 @@ const GroundingExercises = () => {
       {currentStep < selectedExercise.steps.length && (
         <Card className="border-white/10 bg-white/5">
           <CardContent className="p-3">
-            <p className="text-xs font-medium text-muted-foreground mb-2">All steps</p>
+            <p className="text-xs font-medium text-white/80 mb-2">All steps</p>
             <div className="space-y-1">
               {selectedExercise.steps.map((step, i) => (
                 <div
                   key={i}
                   className={`text-xs flex items-start gap-2 ${
-                    i <= currentStep ? 'text-foreground' : 'text-muted-foreground/50'
+                    i <= currentStep ? 'text-foreground' : 'text-white/80/50'
                   }`}
                 >
                   <span className={i < currentStep ? 'text-green-400' : ''}>{i + 1}.</span>

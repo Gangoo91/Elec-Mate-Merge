@@ -51,7 +51,7 @@ const StepNavigation = ({
               "h-2 rounded-full transition-all duration-300",
               step === currentStep 
                 ? "w-6 bg-elec-yellow" 
-                : "w-2 bg-gray-600",
+                : "w-2 bg-white/20",
               step < currentStep && "bg-green-500"
             )}
           >
@@ -59,7 +59,7 @@ const StepNavigation = ({
         ))}
       </div>
       
-      <div className="text-center text-sm text-muted-foreground">
+      <div className="text-center text-sm text-white">
         Step {currentStep} of {totalSteps} - {Math.round((currentStep / totalSteps) * 100)}% Complete
       </div>
     </div>

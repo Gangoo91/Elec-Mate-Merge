@@ -59,7 +59,7 @@ const CourseTimer = ({
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border-elec-yellow/20 bg-white/5">
       <CardContent className="p-4">
         <InactivityHandler
           isStudying={isStudying}

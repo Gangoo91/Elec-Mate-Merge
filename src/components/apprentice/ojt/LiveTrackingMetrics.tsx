@@ -17,15 +17,15 @@ const MetricCard = ({
   color: string;
   subText?: string;
 }) => (
-  <Card className="border-elec-yellow/20 bg-elec-gray">
+  <Card className="border-elec-yellow/20 bg-white/5">
     <CardContent className="p-6">
       <div className="flex flex-col items-center text-center space-y-3">
         <Icon className={`h-8 w-8 ${color}`} />
         <div className="space-y-1">
-          <p className="text-sm text-muted-foreground">{label}</p>
+          <p className="text-sm text-white">{label}</p>
           <p className={`text-2xl font-bold ${color}`}>{value}</p>
           {subText && (
-            <p className="text-xs text-muted-foreground">{subText}</p>
+            <p className="text-xs text-white">{subText}</p>
           )}
         </div>
       </div>
@@ -42,14 +42,14 @@ const LiveTrackingMetrics = () => {
     return (
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         {[...Array(4)].map((_, i) => (
-          <Card key={i} className="border-elec-yellow/20 bg-elec-gray">
+          <Card key={i} className="border-elec-yellow/20 bg-white/5">
             <CardContent className="p-6">
               <div className="animate-pulse flex flex-col items-center space-y-3">
-                <div className="h-8 w-8 bg-elec-dark rounded"></div>
+                <div className="h-8 w-8 bg-white/10 rounded"></div>
                 <div className="space-y-1 text-center">
-                  <div className="h-4 w-20 bg-elec-dark rounded"></div>
-                  <div className="h-8 w-16 bg-elec-dark rounded"></div>
-                  <div className="h-3 w-24 bg-elec-dark rounded"></div>
+                  <div className="h-4 w-20 bg-white/10 rounded"></div>
+                  <div className="h-8 w-16 bg-white/10 rounded"></div>
+                  <div className="h-3 w-24 bg-white/10 rounded"></div>
                 </div>
               </div>
             </CardContent>

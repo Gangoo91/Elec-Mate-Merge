@@ -302,7 +302,7 @@ const BatteryBackupCalculator = () => {
                 <div key={index} className="flex items-center justify-between p-2 rounded-lg bg-white/5 text-sm">
                   <div className="flex-1 min-w-0">
                     <span className="font-medium text-white block truncate">{load.name}</span>
-                    <span className="text-white/50 text-xs">{load.watts}W • {load.priority}</span>
+                    <span className="text-white/80 text-xs">{load.watts}W • {load.priority}</span>
                   </div>
                   <button
                     onClick={() => removeLoad(index)}
@@ -409,7 +409,7 @@ const BatteryBackupCalculator = () => {
                   <Info className="h-4 w-4 text-blue-400" />
                   <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showGuidance && "rotate-180")} />
+                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showGuidance && "rotate-180")} />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0 space-y-2 text-sm text-blue-200/80">
                 <p><strong className="text-blue-300">Usable Energy:</strong> {results.usableEnergyWh.toFixed(0)}Wh available after accounting for depth of discharge ({(selectedChemistry.recommendedDoD * 100).toFixed(0)}% DoD for {selectedChemistry.name})</p>
@@ -427,7 +427,7 @@ const BatteryBackupCalculator = () => {
                   <BookOpen className="h-4 w-4 text-amber-400" />
                   <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 & Safety</span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showRegs && "rotate-180")} />
+                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showRegs && "rotate-180")} />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0 space-y-2 text-sm text-amber-200/80">
                 <p>• DC current ({results.dcCurrent.toFixed(1)}A) must not exceed cable rating</p>

@@ -330,7 +330,7 @@ const DailyAITipsTab = () => {
       case "Developing": return "bg-blue-500/20 text-blue-400 border-blue-500/50";
       case "Competent": return "bg-purple-500/20 text-purple-400 border-purple-500/50";
       case "Expert": return "bg-orange-500/20 text-orange-400 border-orange-500/50";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/50";
+      default: return "bg-white/10 text-white border-white/50";
     }
   };
 
@@ -346,12 +346,12 @@ const DailyAITipsTab = () => {
               </div>
               <div>
                 <h2 className={`text-lg font-bold ${currentTheme.color}`}>{currentTheme.name}</h2>
-                <p className="text-sm text-muted-foreground">Today's Focus: {currentTheme.focus}</p>
+                <p className="text-sm text-white">Today's Focus: {currentTheme.focus}</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-muted-foreground" />
-              <span className="text-sm text-muted-foreground">
+              <Calendar className="h-4 w-4 text-white" />
+              <span className="text-sm text-white">
                 {today.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' })}
               </span>
             </div>
@@ -372,7 +372,7 @@ const DailyAITipsTab = () => {
                   <span className="text-sm font-medium">Learning Streak</span>
                   <span className="text-lg font-bold text-elec-yellow">{streak} days</span>
                 </div>
-                <p className="text-xs text-muted-foreground">Complete today's tips to keep it going!</p>
+                <p className="text-xs text-white">Complete today's tips to keep it going!</p>
               </div>
             </div>
           </CardContent>
@@ -397,7 +397,7 @@ const DailyAITipsTab = () => {
 
       {/* Main Tip Card */}
       <Card className="border-elec-yellow/30 overflow-hidden">
-        <CardHeader className="pb-3 bg-elec-gray/50">
+        <CardHeader className="pb-3 bg-white/5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Badge variant="outline" className={currentTheme.color}>
@@ -407,7 +407,7 @@ const DailyAITipsTab = () => {
                 {currentTip.difficulty}
               </Badge>
             </div>
-            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+            <div className="flex items-center gap-1 text-sm text-white">
               <span>{currentTipIndex + 1}</span>
               <span>/</span>
               <span>{dailyTips.length}</span>
@@ -419,7 +419,7 @@ const DailyAITipsTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="p-4 space-y-4">
-          <p className="text-muted-foreground leading-relaxed">{currentTip.content}</p>
+          <p className="text-white leading-relaxed">{currentTip.content}</p>
 
           {currentTip.regulation && (
             <div className="flex items-center gap-2 text-sm">
@@ -434,7 +434,7 @@ const DailyAITipsTab = () => {
                 <Sparkles className="h-4 w-4 text-elec-yellow" />
                 <span className="font-medium text-elec-yellow text-sm">Pro Tip</span>
               </div>
-              <p className="text-sm text-muted-foreground">{currentTip.proTip}</p>
+              <p className="text-sm text-white">{currentTip.proTip}</p>
             </div>
           )}
 
@@ -444,7 +444,7 @@ const DailyAITipsTab = () => {
               <Target className="h-4 w-4 text-green-500" />
               <span className="font-medium text-green-400 text-sm">Action Step</span>
             </div>
-            <p className="text-sm text-muted-foreground mb-3">{currentTip.actionStep}</p>
+            <p className="text-sm text-white mb-3">{currentTip.actionStep}</p>
             <Button
               size="sm"
               variant={completedTips.has(currentTip.id) ? "default" : "outline"}
@@ -480,7 +480,7 @@ const DailyAITipsTab = () => {
                       ? 'bg-elec-yellow'
                       : completedTips.has(dailyTips[index].id)
                         ? 'bg-green-500'
-                        : 'bg-elec-gray'
+                        : 'bg-white/5'
                   }`}
                 />
               ))}
@@ -503,7 +503,7 @@ const DailyAITipsTab = () => {
               </div>
               <div>
                 <h3 className="font-bold text-elec-yellow">Daily Tips Complete!</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white">
                   Brilliant work! You've completed all of today's learning tips. Your streak continues!
                 </p>
               </div>
@@ -532,11 +532,11 @@ const DailyAITipsTab = () => {
                     ? 'bg-elec-yellow/20 border border-elec-yellow/50'
                     : isPast
                       ? 'bg-green-500/10 border border-green-500/30'
-                      : 'bg-elec-gray/30 border border-transparent'
+                      : 'bg-white/5 border border-transparent'
                 }`}
               >
-                <theme.icon className={`h-4 w-4 mx-auto mb-1 ${isToday ? theme.color : isPast ? 'text-green-500' : 'text-muted-foreground'}`} />
-                <span className={`text-xs ${isToday ? 'font-medium' : 'text-muted-foreground'}`}>
+                <theme.icon className={`h-4 w-4 mx-auto mb-1 ${isToday ? theme.color : isPast ? 'text-green-500' : 'text-white'}`} />
+                <span className={`text-xs ${isToday ? 'font-medium' : 'text-white'}`}>
                   {['S', 'M', 'T', 'W', 'T', 'F', 'S'][parseInt(day)]}
                 </span>
               </div>

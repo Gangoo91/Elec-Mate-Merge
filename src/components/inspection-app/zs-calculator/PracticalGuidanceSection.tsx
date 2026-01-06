@@ -100,7 +100,7 @@ export const PracticalGuidanceSection: React.FC = () => {
                 </div>
                 <div className="flex-1">
                   <h4 className="text-foreground font-semibold mb-1">{procedure.title}</h4>
-                  <p className="text-gray-300 text-sm mb-2">{procedure.description}</p>
+                  <p className="text-white/80 text-sm mb-2">{procedure.description}</p>
                   <div className="flex items-center gap-2">
                     <AlertTriangle className="h-3 w-3 text-amber-400" />
                     <span className="text-amber-400 text-xs">{procedure.safety}</span>
@@ -131,11 +131,11 @@ export const PracticalGuidanceSection: React.FC = () => {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-6">
                   <div>
-                    <h5 className="text-gray-300 font-medium text-sm mb-2">Common Causes:</h5>
+                    <h5 className="text-white/80 font-medium text-sm mb-2">Common Causes:</h5>
                     <ul className="space-y-1">
                       {item.causes.map((cause, idx) => (
-                        <li key={idx} className="text-gray-400 text-sm flex items-center gap-2">
-                          <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
+                        <li key={idx} className="text-white/70 text-sm flex items-center gap-2">
+                          <div className="w-1 h-1 bg-white/70 rounded-full"></div>
                           {cause}
                         </li>
                       ))}
@@ -143,7 +143,7 @@ export const PracticalGuidanceSection: React.FC = () => {
                   </div>
                   
                   <div>
-                    <h5 className="text-gray-300 font-medium text-sm mb-2">Solutions:</h5>
+                    <h5 className="text-white/80 font-medium text-sm mb-2">Solutions:</h5>
                     <ul className="space-y-1">
                       {item.solutions.map((solution, idx) => (
                         <li key={idx} className="text-green-400 text-sm flex items-center gap-2">
@@ -179,7 +179,7 @@ export const PracticalGuidanceSection: React.FC = () => {
                 <tip.icon className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <h4 className="text-foreground font-semibold text-sm mb-1">{tip.title}</h4>
-                  <p className="text-gray-300 text-sm">{tip.tip}</p>
+                  <p className="text-white/80 text-sm">{tip.tip}</p>
                 </div>
               </div>
             ))}

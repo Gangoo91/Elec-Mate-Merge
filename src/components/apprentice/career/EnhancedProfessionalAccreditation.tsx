@@ -114,7 +114,7 @@ const EnhancedProfessionalAccreditation = () => {
           <Award className="h-6 w-6 text-elec-yellow" />
           Professional Accreditations
         </h2>
-        <p className="text-muted-foreground">
+        <p className="text-white">
           Advance your electrical career with recognised professional accreditations. From industry memberships 
           to specialist certifications, discover the credentials that will enhance your professional standing 
           and open new opportunities.
@@ -141,7 +141,7 @@ const EnhancedProfessionalAccreditation = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            <div className="space-y-2 text-sm text-muted-foreground">
+            <div className="space-y-2 text-sm text-white">
               <p>• <strong className="text-white">Professional Recognition:</strong> Demonstrate your expertise and commitment to industry standards</p>
               <p>• <strong className="text-white">Career Advancement:</strong> Access higher-level positions and increased earning potential</p>
               <p>• <strong className="text-white">Continuous Learning:</strong> Stay current with evolving technologies and regulations</p>
@@ -158,7 +158,7 @@ const EnhancedProfessionalAccreditation = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            <div className="space-y-2 text-sm text-muted-foreground">
+            <div className="space-y-2 text-sm text-white">
               <p>• <strong className="text-white">Assess Your Goals:</strong> Consider your career objectives and specialisation interests</p>
               <p>• <strong className="text-white">Check Requirements:</strong> Ensure you meet the prerequisites for your chosen accreditation</p>
               <p>• <strong className="text-white">Plan Your Investment:</strong> Budget for training costs and ongoing renewal fees</p>
@@ -191,11 +191,11 @@ const EnhancedProfessionalAccreditation = () => {
 
       {/* Empty State */}
       {filteredOptions.length === 0 && (
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardContent className="p-8 text-center">
-            <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <BookOpen className="h-12 w-12 text-white mx-auto mb-4" />
             <h3 className="text-lg font-medium mb-2">No accreditations found</h3>
-            <p className="text-muted-foreground mb-4">
+            <p className="text-white mb-4">
               Try adjusting your search criteria or explore different categories.
             </p>
             <Button variant="outline" onClick={handleReset}>
@@ -206,7 +206,7 @@ const EnhancedProfessionalAccreditation = () => {
       )}
 
       {/* Additional Resources */}
-      <Card className="border-elec-yellow/20 bg-elec-gray/50">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Users className="h-5 w-5 text-elec-yellow" />
@@ -218,7 +218,7 @@ const EnhancedProfessionalAccreditation = () => {
             <h4 className="font-medium mb-3 text-amber-400">Industry Bodies</h4>
             <div className="space-y-3 text-sm">
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Institution of Engineering and Technology (IET)</span>
+                <span className="text-white">Institution of Engineering and Technology (IET)</span>
                 <Button 
                   variant="ghost" 
                   size="sm"
@@ -228,7 +228,7 @@ const EnhancedProfessionalAccreditation = () => {
                 </Button>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Electrical Contractors' Association (ECA)</span>
+                <span className="text-white">Electrical Contractors' Association (ECA)</span>
                 <Button 
                   variant="ghost" 
                   size="sm"
@@ -238,7 +238,7 @@ const EnhancedProfessionalAccreditation = () => {
                 </Button>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">NICEIC</span>
+                <span className="text-white">NICEIC</span>
                 <Button 
                   variant="ghost" 
                   size="sm"
@@ -254,7 +254,7 @@ const EnhancedProfessionalAccreditation = () => {
             <h4 className="font-medium mb-3 text-amber-400">Training Providers</h4>
             <div className="space-y-3 text-sm">
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">CITB Construction Training</span>
+                <span className="text-white">CITB Construction Training</span>
                 <Button 
                   variant="ghost" 
                   size="sm"
@@ -264,7 +264,7 @@ const EnhancedProfessionalAccreditation = () => {
                 </Button>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">IOSH Training Network</span>
+                <span className="text-white">IOSH Training Network</span>
                 <Button 
                   variant="ghost" 
                   size="sm"
@@ -274,8 +274,8 @@ const EnhancedProfessionalAccreditation = () => {
                 </Button>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Local Training Centres</span>
-                <ArrowRight className="h-3 w-3 text-muted-foreground" />
+                <span className="text-white">Local Training Centres</span>
+                <ArrowRight className="h-3 w-3 text-white" />
               </div>
             </div>
           </div>

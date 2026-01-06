@@ -1,8 +1,9 @@
 
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { DropdownTabs, DropdownTab } from "@/components/ui/dropdown-tabs";
-import { Clock, Target, TrendingUp, Award, Construction } from "lucide-react";
+import { Clock, Target, TrendingUp, Award, Construction, ArrowLeft } from "lucide-react";
 import CPDOverview from "./CPDOverview";
 import CPDEntryForm from "./CPDEntryForm";
 import CPDHistory from "./CPDHistory";
@@ -15,7 +16,7 @@ const CPDTracker = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [isMobile, setIsMobile] = useState(false);
   const [showComingSoonBanner, setShowComingSoonBanner] = useState(true);
-  
+
   // Initialize auto-tracking for the CPD tracker
   const { startTracking, stopTracking } = useCPDAutoTracking({
     enabled: true,
@@ -27,13 +28,13 @@ const CPDTracker = () => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkMobile();
     window.addEventListener('resize', checkMobile);
-    
+
     // Start auto-tracking when component mounts
     startTracking('CPD Management', 'CPD Tracker');
-    
+
     return () => {
       window.removeEventListener('resize', checkMobile);
       stopTracking();
@@ -60,35 +61,40 @@ const CPDTracker = () => {
   // Mobile-first responsive design
   if (isMobile) {
     return (
-      <div className="min-h-screen bg-elec-dark">
+      <div className="min-h-screen bg-elec-dark animate-fade-in">
         {/* Header */}
-        <div className="sticky top-0 z-20 bg-elec-dark/95 backdrop-blur-sm border-b border-elec-yellow/20 p-4">
+        <div className="sticky top-0 z-20 bg-gradient-to-r from-elec-gray to-elec-card backdrop-blur-sm border-b border-elec-yellow/20 p-4">
           <div className="flex items-center gap-3">
-            <Clock className="h-6 w-6 text-elec-yellow" />
+            <div className="p-2 rounded-lg bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+              <Clock className="h-5 w-5 text-elec-yellow" />
+            </div>
             <div>
               <h1 className="text-lg font-bold text-white">CPD Tracker</h1>
-              <p className="text-xs text-muted-foreground">Professional Development</p>
+              <p className="text-xs text-white/70">Professional Development</p>
             </div>
           </div>
         </div>
 
         {/* Coming Soon Banner */}
         {showComingSoonBanner && (
-          <div className="mx-4 mt-4 relative bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border-2 border-elec-yellow/40 rounded-lg p-4">
+          <div className="mx-4 mt-4 relative bg-gradient-to-br from-amber-500/15 to-amber-500/5 border border-amber-500/30 rounded-xl p-4 overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
             <button
               onClick={() => setShowComingSoonBanner(false)}
-              className="absolute top-2 right-2 text-muted-foreground hover:text-white transition-colors"
+              className="absolute top-3 right-3 text-white/60 hover:text-white transition-colors p-1"
               aria-label="Dismiss banner"
             >
               ✕
             </button>
-            <div className="flex items-start gap-3 pr-6">
-              <Construction className="h-6 w-6 text-elec-yellow flex-shrink-0 mt-1" />
+            <div className="flex items-start gap-3 pr-6 relative">
+              <div className="p-2 rounded-lg bg-amber-500/20 border border-amber-500/30">
+                <Construction className="h-5 w-5 text-amber-400" />
+              </div>
               <div>
-                <h3 className="text-lg font-bold text-white mb-1">
+                <h3 className="text-base font-bold text-amber-400 mb-1">
                   Coming Soon
                 </h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/80">
                   Enhanced CPD features are currently in development. All existing functionality remains fully accessible below.
                 </p>
               </div>
@@ -99,7 +105,7 @@ const CPDTracker = () => {
         {/* Mobile Content */}
         <div className="p-4">
           {activeTab === "overview" && (
-            <MobileCPDTracker 
+            <MobileCPDTracker
               onAddEntry={handleAddEntry}
               onViewEntry={handleViewEntry}
               onViewHistory={handleViewHistory}
@@ -109,12 +115,15 @@ const CPDTracker = () => {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-white">Add CPD Entry</h2>
-                <button 
+                <Button
+                  variant="ghost"
+                  size="sm"
                   onClick={() => setActiveTab("overview")}
-                  className="text-elec-yellow text-sm"
+                  className="h-10 text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation"
                 >
+                  <ArrowLeft className="h-4 w-4 mr-1" />
                   Back
-                </button>
+                </Button>
               </div>
               <CPDEntryForm />
             </div>
@@ -123,12 +132,15 @@ const CPDTracker = () => {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-white">CPD History</h2>
-                <button 
+                <Button
+                  variant="ghost"
+                  size="sm"
                   onClick={() => setActiveTab("overview")}
-                  className="text-elec-yellow text-sm"
+                  className="h-10 text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation"
                 >
+                  <ArrowLeft className="h-4 w-4 mr-1" />
                   Back
-                </button>
+                </Button>
               </div>
               <CPDHistory />
             </div>
@@ -137,12 +149,15 @@ const CPDTracker = () => {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-white">CPD Goals</h2>
-                <button 
+                <Button
+                  variant="ghost"
+                  size="sm"
                   onClick={() => setActiveTab("overview")}
-                  className="text-elec-yellow text-sm"
+                  className="h-10 text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation"
                 >
+                  <ArrowLeft className="h-4 w-4 mr-1" />
                   Back
-                </button>
+                </Button>
               </div>
               <CPDGoals />
             </div>
@@ -187,41 +202,48 @@ const CPDTracker = () => {
 
   // Desktop layout
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       {/* Header */}
       <div className="text-center space-y-4">
-        <div className="flex items-center justify-center gap-3">
-          <Clock className="h-8 w-8 text-elec-yellow" />
+        <div className="flex items-center justify-center gap-4">
+          <div className="p-3 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+            <Clock className="h-7 w-7 text-elec-yellow" />
+          </div>
           <h1 className="text-3xl font-bold text-white">CPD Tracker</h1>
         </div>
-        <p className="text-muted-foreground max-w-2xl mx-auto">
-          Track your Continuing Professional Development activities and maintain compliance 
+        <p className="text-white/80 max-w-2xl mx-auto">
+          Track your Continuing Professional Development activities and maintain compliance
           with professional body requirements. Set goals, log activities, and monitor your progress.
         </p>
       </div>
 
       {/* Coming Soon Banner */}
       {showComingSoonBanner && (
-        <div className="relative bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border-2 border-elec-yellow/40 rounded-lg p-6">
-          <button
-            onClick={() => setShowComingSoonBanner(false)}
-            className="absolute top-2 right-2 text-muted-foreground hover:text-white transition-colors"
-            aria-label="Dismiss banner"
-          >
-            ✕
-          </button>
-          <div className="flex items-start gap-4 pr-6">
-            <Construction className="h-8 w-8 text-elec-yellow flex-shrink-0 mt-1" />
-            <div>
-              <h3 className="text-xl font-bold text-white mb-1">
-                Coming Soon
-              </h3>
-              <p className="text-base text-muted-foreground">
-                Enhanced CPD features are currently in development. All existing functionality remains fully accessible below.
-              </p>
+        <Card className="bg-gradient-to-br from-amber-500/10 to-amber-500/5 border border-amber-500/30 overflow-hidden relative">
+          <div className="absolute top-0 right-0 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <CardContent className="p-6 relative">
+            <button
+              onClick={() => setShowComingSoonBanner(false)}
+              className="absolute top-4 right-4 text-white/60 hover:text-white transition-colors p-1"
+              aria-label="Dismiss banner"
+            >
+              ✕
+            </button>
+            <div className="flex items-start gap-4 pr-8">
+              <div className="p-2.5 rounded-xl bg-amber-500/20 border border-amber-500/30">
+                <Construction className="h-6 w-6 text-amber-400" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-amber-400 mb-1">
+                  Coming Soon
+                </h3>
+                <p className="text-base text-white/80">
+                  Enhanced CPD features are currently in development. All existing functionality remains fully accessible below.
+                </p>
+              </div>
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       )}
 
       {/* Main Content */}

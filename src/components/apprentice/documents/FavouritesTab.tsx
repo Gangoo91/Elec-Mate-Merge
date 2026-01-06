@@ -93,7 +93,7 @@ const FavouritesTab = () => {
                   <FileText className="h-4 w-4 text-elec-yellow" />
                   <h4 className="font-medium text-white">{doc.name}</h4>
                 </div>
-                <p className="text-sm text-muted-foreground mb-1">{doc.category}</p>
+                <p className="text-sm text-white mb-1">{doc.category}</p>
                 <p className="text-xs text-elec-yellow">Last used {doc.lastUsed}</p>
                 <Button size="sm" className="mt-2 w-full">
                   <Download className="h-3 w-3 mr-1" />
@@ -117,17 +117,17 @@ const FavouritesTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center p-3 border border-blue-500/20 rounded-lg">
               <div className="text-2xl font-bold text-blue-400">{favouriteDocuments.length}</div>
-              <div className="text-sm text-muted-foreground">Favourite Documents</div>
+              <div className="text-sm text-white">Favourite Documents</div>
             </div>
             <div className="text-center p-3 border border-blue-500/20 rounded-lg">
               <div className="text-2xl font-bold text-blue-400">
                 {new Set(favouriteDocuments.map(d => d.category)).size}
               </div>
-              <div className="text-sm text-muted-foreground">Document Categories</div>
+              <div className="text-sm text-white">Document Categories</div>
             </div>
             <div className="text-center p-3 border border-blue-500/20 rounded-lg">
               <div className="text-2xl font-bold text-blue-400">24</div>
-              <div className="text-sm text-muted-foreground">Downloads This Month</div>
+              <div className="text-sm text-white">Downloads This Month</div>
             </div>
           </div>
         </CardContent>
@@ -137,7 +137,7 @@ const FavouritesTab = () => {
       {favouriteDocuments.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {favouriteDocuments.map((document) => (
-            <Card key={document.id} className="border-elec-yellow/20 bg-elec-gray relative">
+            <Card key={document.id} className="border-elec-yellow/20 bg-white/5 relative">
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-2">
@@ -158,7 +158,7 @@ const FavouritesTab = () => {
                 </div>
               </CardHeader>
               <CardContent className="space-y-3">
-                <div className="text-xs text-muted-foreground">
+                <div className="text-xs text-white">
                   <p>Type: {document.type} • Size: {document.size}</p>
                   <p>Added: {new Date(document.dateAdded).toLocaleDateString()}</p>
                   <p>Category: {document.category}</p>
@@ -187,7 +187,7 @@ const FavouritesTab = () => {
             <Star className="h-8 w-8 text-elec-yellow" />
           </div>
           <h3 className="text-xl font-medium mb-2">No favourites yet</h3>
-          <p className="text-muted-foreground mb-4">
+          <p className="text-white mb-4">
             Star your most important documents for quick access
           </p>
           <Button variant="outline">

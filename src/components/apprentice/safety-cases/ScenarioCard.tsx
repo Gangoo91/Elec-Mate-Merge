@@ -3,7 +3,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { HardHat, Clock, AlertTriangle, Building } from "lucide-react";
+import { HardHat, Clock, AlertTriangle, Building, CheckCircle, Play, RotateCcw } from "lucide-react";
 import { SafetyScenario } from "./safetyScenarios";
 
 interface ScenarioCardProps {
@@ -13,10 +13,7 @@ interface ScenarioCardProps {
 }
 
 const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onClick, isCompleted = false }) => {
-  console.log('ScenarioCard - Rendering scenario:', scenario.id, scenario.title);
-
   const handleClick = () => {
-    console.log('ScenarioCard - Card clicked for scenario:', scenario.id);
     try {
       onClick();
     } catch (error) {
@@ -25,7 +22,6 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onClick, isComple
   };
 
   const handleButtonClick = (e: React.MouseEvent) => {
-    console.log('ScenarioCard - Button clicked for scenario:', scenario.id);
     e.stopPropagation();
     try {
       onClick();
@@ -34,52 +30,58 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onClick, isComple
     }
   };
 
-  const getRiskLevelColor = (level: string) => {
+  const getRiskLevelConfig = (level: string) => {
     switch (level) {
-      case "Low": return "bg-green-500/20 text-green-400 border-green-500/30";
-      case "Medium": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
-      case "High": return "bg-orange-500/20 text-orange-400 border-orange-500/30";
-      case "Critical": return "bg-red-500/20 text-red-400 border-red-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+      case "Low": return { bg: 'bg-green-500/10', text: 'text-green-400', border: 'border-green-500/30' };
+      case "Medium": return { bg: 'bg-elec-yellow/10', text: 'text-elec-yellow', border: 'border-elec-yellow/30' };
+      case "High": return { bg: 'bg-orange-500/10', text: 'text-orange-400', border: 'border-orange-500/30' };
+      case "Critical": return { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/30' };
+      default: return { bg: 'bg-white/10', text: 'text-white/70', border: 'border-white/20' };
     }
   };
 
-  const getDifficultyColor = (difficulty: string) => {
+  const getDifficultyConfig = (difficulty: string) => {
     switch (difficulty) {
-      case "Beginner": return "bg-green-500/20 text-green-400 border-green-500/30";
-      case "Intermediate": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
-      case "Advanced": return "bg-red-500/20 text-red-400 border-red-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+      case "Beginner": return { bg: 'bg-green-500/10', text: 'text-green-400', border: 'border-green-500/30' };
+      case "Intermediate": return { bg: 'bg-elec-yellow/10', text: 'text-elec-yellow', border: 'border-elec-yellow/30' };
+      case "Advanced": return { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/30' };
+      default: return { bg: 'bg-white/10', text: 'text-white/70', border: 'border-white/20' };
     }
   };
+
+  const riskConfig = getRiskLevelConfig(scenario.riskLevel);
+  const difficultyConfig = getDifficultyConfig(scenario.difficulty);
 
   return (
-    <Card 
-      className={`border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 cursor-pointer transition-colors relative ${
-        isCompleted ? 'ring-2 ring-green-500/50' : ''
+    <Card
+      className={`bg-gradient-to-br from-white/5 to-elec-card border-white/10 hover:border-white/20 cursor-pointer transition-all overflow-hidden relative ${
+        isCompleted ? 'ring-2 ring-green-500/30' : ''
       }`}
       onClick={handleClick}
     >
+      <div className="absolute top-0 right-0 w-48 h-48 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+
       {isCompleted && (
-        <div className="absolute top-2 right-2">
-          <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
+        <div className="absolute top-3 right-3 z-10">
+          <Badge className="bg-green-500/20 text-green-400 border border-green-500/30">
+            <CheckCircle className="h-3 w-3 mr-1" />
             Completed
           </Badge>
         </div>
       )}
-      
-      <CardHeader className="pb-2">
-        <div className="flex items-center gap-3">
-          <div className="p-2 rounded-full bg-elec-yellow/10">
+
+      <CardHeader className="pb-3 relative">
+        <div className="flex items-start gap-3">
+          <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30 flex-shrink-0">
             <HardHat className="h-5 w-5 text-elec-yellow" />
           </div>
-          <div className="flex-1">
-            <CardTitle className="text-lg">{scenario.title}</CardTitle>
-            <div className="flex items-center gap-2 mt-1">
-              <Badge variant="outline" className="text-muted-foreground text-xs">
+          <div className="flex-1 min-w-0">
+            <CardTitle className="text-lg text-white mb-2">{scenario.title}</CardTitle>
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge className="bg-white/5 text-white/60 border border-white/10 text-xs">
                 {scenario.category}
               </Badge>
-              <Badge className={getRiskLevelColor(scenario.riskLevel)} variant="outline">
+              <Badge className={`${riskConfig.bg} ${riskConfig.text} border ${riskConfig.border} text-xs`}>
                 <AlertTriangle className="h-3 w-3 mr-1" />
                 {scenario.riskLevel}
               </Badge>
@@ -87,23 +89,23 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onClick, isComple
           </div>
         </div>
       </CardHeader>
-      
-      <CardContent className="space-y-3">
-        <CardDescription className="text-elec-light/80 text-sm">
+
+      <CardContent className="space-y-4 relative">
+        <CardDescription className="text-white/70 text-sm leading-relaxed">
           {scenario.description}
         </CardDescription>
-        
+
         <div className="flex flex-wrap gap-2">
-          <Badge className={getDifficultyColor(scenario.difficulty)} variant="outline">
+          <Badge className={`${difficultyConfig.bg} ${difficultyConfig.text} border ${difficultyConfig.border}`}>
             {scenario.difficulty}
           </Badge>
-          
-          <Badge variant="outline" className="text-muted-foreground">
+
+          <Badge className="bg-white/5 text-white/60 border border-white/10">
             <Building className="h-3 w-3 mr-1" />
             {scenario.industry}
           </Badge>
-          
-          <Badge variant="outline" className="text-muted-foreground">
+
+          <Badge className="bg-white/5 text-white/60 border border-white/10">
             <Clock className="h-3 w-3 mr-1" />
             {scenario.duration}
           </Badge>
@@ -112,26 +114,42 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onClick, isComple
         {scenario.tags.length > 0 && (
           <div className="flex flex-wrap gap-1">
             {scenario.tags.slice(0, 3).map((tag) => (
-              <Badge key={tag} variant="secondary" className="text-xs">
+              <Badge
+                key={tag}
+                className="bg-white/10 text-white/80 border border-white/10 text-xs"
+              >
                 {tag}
               </Badge>
             ))}
             {scenario.tags.length > 3 && (
-              <Badge variant="secondary" className="text-xs">
+              <Badge className="bg-white/10 text-white/80 border border-white/10 text-xs">
                 +{scenario.tags.length - 3} more
               </Badge>
             )}
           </div>
         )}
       </CardContent>
-      
-      <CardFooter>
-        <Button 
-          variant="outline" 
-          className="w-full"
+
+      <CardFooter className="pt-2 relative">
+        <Button
+          className={`w-full h-11 font-semibold touch-manipulation active:scale-95 transition-all ${
+            isCompleted
+              ? 'bg-white/10 hover:bg-white/20 text-white border border-white/20'
+              : 'bg-elec-yellow hover:bg-elec-yellow/90 text-black'
+          }`}
           onClick={handleButtonClick}
         >
-          {isCompleted ? "Review Scenario" : "Start Scenario"}
+          {isCompleted ? (
+            <>
+              <RotateCcw className="h-4 w-4 mr-2" />
+              Review Scenario
+            </>
+          ) : (
+            <>
+              <Play className="h-4 w-4 mr-2" />
+              Start Scenario
+            </>
+          )}
         </Button>
       </CardFooter>
     </Card>

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -5,14 +6,15 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { 
-  Star, 
-  CheckCircle, 
-  MapPin, 
-  Clock, 
-  Briefcase, 
-  Heart, 
-  MessageSquare, 
+import { AddTrainingRequestDialog } from "./dialogs/AddTrainingRequestDialog";
+import {
+  Star,
+  CheckCircle,
+  MapPin,
+  Clock,
+  Briefcase,
+  Heart,
+  MessageSquare,
   Calendar,
   Award,
   Shield,
@@ -21,10 +23,13 @@ import {
   Phone,
   TrendingUp,
   FileText,
-  ChevronRight
+  ChevronRight,
+  GraduationCap,
+  Plus
 } from "lucide-react";
 
-export type VerificationTier = 'basic' | 'bronze' | 'silver' | 'gold' | 'platinum';
+// Elec-ID verification tiers aligned with database schema
+export type VerificationTier = 'basic' | 'verified' | 'premium';
 
 export interface SparkReview {
   id: string;
@@ -38,6 +43,13 @@ export interface SparkReview {
 export interface AvailabilitySlot {
   date: string;
   slots: ('morning' | 'afternoon' | 'evening')[];
+}
+
+export interface VerifiedDocument {
+  type: 'ecs_card' | 'qualification' | 'training' | 'cscs' | 'driving_licence' | 'insurance';
+  name: string;
+  verified: boolean;
+  expiryDate?: string;
 }
 
 export interface EnhancedElectrician {
@@ -64,6 +76,10 @@ export interface EnhancedElectrician {
   reviews: SparkReview[];
   availabilitySlots: AvailabilitySlot[];
   coordinates?: { lat: number; lng: number };
+  verifiedDocuments?: VerifiedDocument[];
+  elecIdNumber?: string;
+  verifiedDocsCount?: number;
+  elecIdProfileId?: string; // For hire tracking
 }
 
 interface SparkProfileSheetProps {
@@ -79,12 +95,29 @@ interface SparkProfileSheetProps {
   onAddToLabourBank: () => void;
 }
 
-const tierConfig: Record<VerificationTier, { label: string; color: string; icon: typeof Shield; bg: string }> = {
-  basic: { label: 'Basic', color: 'text-muted-foreground', icon: Shield, bg: 'bg-muted' },
-  bronze: { label: 'Bronze', color: 'text-amber-700', icon: Shield, bg: 'bg-amber-100' },
-  silver: { label: 'Silver', color: 'text-slate-500', icon: Award, bg: 'bg-slate-100' },
-  gold: { label: 'Gold', color: 'text-yellow-600', icon: Award, bg: 'bg-yellow-100' },
-  platinum: { label: 'Platinum', color: 'text-purple-600', icon: Award, bg: 'bg-purple-100' },
+// Elec-ID verification tier configuration
+const tierConfig: Record<VerificationTier, { label: string; color: string; icon: typeof Shield; bg: string; description: string }> = {
+  basic: {
+    label: 'Basic',
+    color: 'text-muted-foreground',
+    icon: Shield,
+    bg: 'bg-muted',
+    description: 'Profile created'
+  },
+  verified: {
+    label: 'Verified',
+    color: 'text-blue-500',
+    icon: Shield,
+    bg: 'bg-blue-100 dark:bg-blue-900/30',
+    description: 'ECS Card + qualification verified'
+  },
+  premium: {
+    label: 'Premium',
+    color: 'text-elec-yellow',
+    icon: Award,
+    bg: 'bg-yellow-100 dark:bg-yellow-900/30',
+    description: 'Fully verified profile'
+  },
 };
 
 export function SparkProfileSheet({
@@ -99,6 +132,8 @@ export function SparkProfileSheet({
   onBook,
   onAddToLabourBank,
 }: SparkProfileSheetProps) {
+  const [trainingDialogOpen, setTrainingDialogOpen] = useState(false);
+
   if (!electrician) return null;
 
   const tier = tierConfig[electrician.verificationTier];
@@ -236,7 +271,20 @@ export function SparkProfileSheet({
 
             {/* Qualifications */}
             <div className="px-4 py-4">
-              <h3 className="font-semibold mb-3">Qualifications</h3>
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="font-semibold">Qualifications & Training</h3>
+                {electrician.elecIdProfileId && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 text-elec-yellow"
+                    onClick={() => setTrainingDialogOpen(true)}
+                  >
+                    <Plus className="h-4 w-4 mr-1" />
+                    Add Training
+                  </Button>
+                )}
+              </div>
               <div className="space-y-2">
                 {electrician.qualifications.map((qual, i) => (
                   <div key={i} className="flex items-center gap-2 text-sm">
@@ -280,9 +328,19 @@ export function SparkProfileSheet({
               )}
             </div>
 
-            {/* Verification Details */}
+            {/* Verification Details - Elec-ID */}
             <div className="px-4 py-4">
-              <h3 className="font-semibold mb-3">Verification Status</h3>
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="font-semibold">Elec-ID Verification</h3>
+                <Badge variant="outline" className={`${tier.bg} ${tier.color} border-0`}>
+                  {tier.label}
+                </Badge>
+              </div>
+              {electrician.elecIdNumber && (
+                <p className="text-xs text-muted-foreground mb-3">
+                  Elec-ID: {electrician.elecIdNumber}
+                </p>
+              )}
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">ECS Card</span>
@@ -302,7 +360,7 @@ export function SparkProfileSheet({
                   <span className="text-sm text-muted-foreground">Qualifications</span>
                   <div className="flex items-center gap-1 text-sm text-success">
                     <CheckCircle className="h-4 w-4" />
-                    {electrician.qualifications.length} Verified
+                    {electrician.verifiedDocsCount || electrician.qualifications.length} Verified
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
@@ -313,6 +371,10 @@ export function SparkProfileSheet({
                   </div>
                 </div>
               </div>
+              {/* Tier Description */}
+              <p className="text-xs text-muted-foreground mt-3 pt-3 border-t border-border">
+                {tier.description}
+              </p>
             </div>
           </div>
         </ScrollArea>
@@ -342,6 +404,17 @@ export function SparkProfileSheet({
             )}
           </div>
         </div>
+
+        {/* Add Training Request Dialog */}
+        <AddTrainingRequestDialog
+          open={trainingDialogOpen}
+          onOpenChange={setTrainingDialogOpen}
+          worker={electrician.elecIdProfileId ? {
+            id: electrician.id,
+            name: electrician.name,
+            elecIdProfileId: electrician.elecIdProfileId,
+          } : null}
+        />
       </SheetContent>
     </Sheet>
   );

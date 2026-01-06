@@ -27,9 +27,9 @@ const Module2Section2_Intro: React.FC = () => {
       <div className="border-b border-white/10 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
-            <Link to="../module2-section2-1">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 2
+              Back to Module 2
             </Link>
           </Button>
         </div>

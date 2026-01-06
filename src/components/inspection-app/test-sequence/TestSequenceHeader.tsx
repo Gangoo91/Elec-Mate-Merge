@@ -27,7 +27,7 @@ const TestSequenceHeader = ({
         <Button 
           variant="outline" 
           onClick={() => navigate(-1)}
-          className="border-border text-gray-300 hover:bg-muted"
+          className="border-border text-white/80 hover:bg-muted"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back
@@ -42,7 +42,7 @@ const TestSequenceHeader = ({
           </div>
           <div>
             <h1 className="text-3xl font-bold text-foreground">Electrical Test Sequence</h1>
-            <p className="text-gray-400 mt-1">
+            <p className="text-white/70 mt-1">
               Complete guide to the correct order for electrical installation testing according to BS7671
             </p>
           </div>
@@ -58,7 +58,7 @@ const TestSequenceHeader = ({
         <Button 
           onClick={onToggleQuickRef}
           variant="outline"
-          className="border-border text-gray-300 hover:bg-muted"
+          className="border-border text-white/80 hover:bg-muted"
         >
           <BookOpen className="h-4 w-4 mr-2" />
           {showQuickRef ? 'Hide' : 'Show'} Quick Reference
@@ -66,7 +66,7 @@ const TestSequenceHeader = ({
         <Button 
           onClick={onToggleChecklist}
           variant="outline"
-          className="border-border text-gray-300 hover:bg-muted"
+          className="border-border text-white/80 hover:bg-muted"
         >
           <CheckSquare className="h-4 w-4 mr-2" />
           Testing Checklist ({checklistCompletion}%)

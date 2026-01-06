@@ -131,80 +131,90 @@ const RegionalCultureTab = () => {
   ];
 
   return (
-    <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Globe className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">UK Regional Workplace Cultures</CardTitle>
-          </div>
+    <div className="space-y-6 animate-fade-in">
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+              <Globe className="h-5 w-5 text-elec-yellow" />
+            </div>
+            UK Regional Workplace Cultures
+          </CardTitle>
         </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">
-            The UK electrical industry varies significantly by region. Understanding local workplace cultures, 
+        <CardContent className="relative">
+          <p className="text-white/70">
+            The UK electrical industry varies significantly by region. Understanding local workplace cultures,
             communication styles, and industry practices will help you adapt and succeed wherever you work.
           </p>
         </CardContent>
       </Card>
 
       <Tabs defaultValue="regions" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="regions">Regional Differences</TabsTrigger>
-          <TabsTrigger value="industries">Industry Sectors</TabsTrigger>
-          <TabsTrigger value="considerations">Cultural Factors</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-3 bg-white/5">
+          <TabsTrigger value="regions" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black">Regional Differences</TabsTrigger>
+          <TabsTrigger value="industries" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black">Industry Sectors</TabsTrigger>
+          <TabsTrigger value="considerations" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black">Cultural Factors</TabsTrigger>
         </TabsList>
 
         <TabsContent value="regions">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
             {regions.map((region, index) => (
-              <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center gap-2">
-                    <MapPin className="h-5 w-5 text-elec-yellow" />
+              <Card key={index} className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10 overflow-hidden relative">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+                <CardHeader className="relative pb-3">
+                  <CardTitle className="text-white flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-elec-yellow/20">
+                      <MapPin className="h-4 w-4 text-elec-yellow" />
+                    </div>
                     {region.name}
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div>
-                      <h4 className="font-medium text-elec-yellow mb-2">Workplace Characteristics:</h4>
-                      <ul className="space-y-1">
-                        {region.characteristics.map((char, idx) => (
-                          <li key={idx} className="text-sm text-muted-foreground">• {char}</li>
-                        ))}
-                      </ul>
+                <CardContent className="space-y-4 relative">
+                  <div className="p-3 rounded-xl bg-white/10 border border-white/5">
+                    <h4 className="font-medium text-elec-yellow mb-2 text-sm">Workplace Characteristics:</h4>
+                    <ul className="space-y-1">
+                      {region.characteristics.map((char, idx) => (
+                        <li key={idx} className="text-sm text-white/60 flex items-start gap-2">
+                          <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-1.5 flex-shrink-0" />
+                          {char}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                    <h4 className="font-medium text-blue-400 mb-2 text-sm">Common Phrases:</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {region.commonPhrases.map((phrase, idx) => (
+                        <Badge key={idx} className="bg-blue-500/10 text-blue-300 border border-blue-500/30 text-xs">
+                          "{phrase}"
+                        </Badge>
+                      ))}
                     </div>
-                    
-                    <div>
-                      <h4 className="font-medium text-blue-400 mb-2">Common Phrases:</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {region.commonPhrases.map((phrase, idx) => (
-                          <Badge key={idx} variant="outline" className="text-xs">
-                            "{phrase}"
-                          </Badge>
-                        ))}
-                      </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-2">
+                    <div className="flex items-center gap-2 p-2 rounded-lg bg-green-500/10 border border-green-500/20">
+                      <Clock className="h-4 w-4 text-green-400" />
+                      <span className="text-sm text-white/70">{region.workingHours}</span>
                     </div>
-                    
-                    <div className="grid grid-cols-1 gap-3 text-sm">
-                      <div className="flex items-center gap-2">
-                        <Clock className="h-4 w-4 text-green-400" />
-                        <span className="text-muted-foreground">{region.workingHours}</span>
-                      </div>
-                      <div className="bg-elec-dark/40 rounded-lg p-2">
-                        <span className="text-xs text-elec-yellow">Break Culture: </span>
-                        <span className="text-xs text-muted-foreground">{region.breakCulture}</span>
-                      </div>
+                    <div className="p-2 rounded-lg bg-white/10 border border-white/5">
+                      <span className="text-xs text-elec-yellow">Break Culture: </span>
+                      <span className="text-xs text-white/60">{region.breakCulture}</span>
                     </div>
-                    
-                    <div>
-                      <h4 className="font-medium text-green-400 mb-2">Key Tips:</h4>
-                      <ul className="space-y-1">
-                        {region.keyTips.map((tip, idx) => (
-                          <li key={idx} className="text-xs text-muted-foreground">• {tip}</li>
-                        ))}
-                      </ul>
-                    </div>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
+                    <h4 className="font-medium text-green-400 mb-2 text-sm">Key Tips:</h4>
+                    <ul className="space-y-1">
+                      {region.keyTips.map((tip, idx) => (
+                        <li key={idx} className="text-xs text-white/70 flex items-start gap-2">
+                          <span className="w-1.5 h-1.5 bg-green-400 rounded-full mt-1 flex-shrink-0" />
+                          {tip}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </CardContent>
               </Card>
@@ -213,28 +223,31 @@ const RegionalCultureTab = () => {
         </TabsContent>
 
         <TabsContent value="industries">
-          <div className="space-y-4">
+          <div className="space-y-4 mt-4">
             {industryDifferences.map((industry, index) => (
-              <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center gap-2">
-                    <Building className="h-5 w-5 text-elec-yellow" />
+              <Card key={index} className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10 overflow-hidden relative">
+                <div className="absolute top-0 right-0 w-48 h-48 bg-purple-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+                <CardHeader className="relative pb-3">
+                  <CardTitle className="text-white flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-purple-500/20">
+                      <Building className="h-4 w-4 text-purple-400" />
+                    </div>
                     {industry.sector}
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="relative">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                      <h4 className="font-medium text-elec-yellow mb-2">Culture:</h4>
-                      <p className="text-sm text-muted-foreground">{industry.culture}</p>
+                    <div className="p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+                      <h4 className="font-medium text-elec-yellow mb-2 text-sm">Culture:</h4>
+                      <p className="text-sm text-white/60">{industry.culture}</p>
                     </div>
-                    <div>
-                      <h4 className="font-medium text-blue-400 mb-2">Communication:</h4>
-                      <p className="text-sm text-muted-foreground">{industry.communication}</p>
+                    <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                      <h4 className="font-medium text-blue-400 mb-2 text-sm">Communication:</h4>
+                      <p className="text-sm text-white/60">{industry.communication}</p>
                     </div>
-                    <div>
-                      <h4 className="font-medium text-orange-400 mb-2">Key Challenges:</h4>
-                      <p className="text-sm text-muted-foreground">{industry.challenges}</p>
+                    <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
+                      <h4 className="font-medium text-orange-400 mb-2 text-sm">Key Challenges:</h4>
+                      <p className="text-sm text-white/60">{industry.challenges}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -244,22 +257,23 @@ const RegionalCultureTab = () => {
         </TabsContent>
 
         <TabsContent value="considerations">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
             {culturalConsiderations.map((consideration, index) => (
-              <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center gap-2">
-                    <Users className="h-5 w-5 text-elec-yellow" />
+              <Card key={index} className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10 overflow-hidden relative">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+                <CardHeader className="relative pb-3">
+                  <CardTitle className="text-white flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-cyan-500/20">
+                      <Users className="h-4 w-4 text-cyan-400" />
+                    </div>
                     {consideration.aspect}
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    <p className="text-sm text-muted-foreground">{consideration.description}</p>
-                    <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
-                      <h4 className="font-medium text-blue-300 mb-1">Guidance:</h4>
-                      <p className="text-sm text-blue-200">{consideration.guidance}</p>
-                    </div>
+                <CardContent className="space-y-3 relative">
+                  <p className="text-sm text-white/60">{consideration.description}</p>
+                  <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                    <h4 className="font-medium text-blue-400 mb-2 text-sm">Guidance:</h4>
+                    <p className="text-sm text-white/70">{consideration.guidance}</p>
                   </div>
                 </CardContent>
               </Card>

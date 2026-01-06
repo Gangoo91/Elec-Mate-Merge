@@ -155,12 +155,12 @@ const AM2Module5Section4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
+      <div className="border-b border-white/10 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between gap-2">
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-2 sm:p-0 text-sm sm:text-base" asChild>
+            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
               <Link to="..">
                 <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
                 <span className="hidden xs:inline">Back to Module 5</span>
@@ -179,13 +179,13 @@ const AM2Module5Section4 = () => {
             <FileText className="w-4 h-4" />
             Module 5 – Section 4
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4 sm:mb-6 leading-tight">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6 leading-tight">
             Proving and Recording Rectification
           </h1>
-          <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
+          <p className="text-sm sm:text-base text-white mb-6 sm:mb-8 leading-relaxed">
             In AM2 fault diagnosis, identifying the fault is only half the task. The assessor also expects you to state how you would rectify it and then how you would prove it safe afterwards.
           </p>
-          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+          <p className="text-sm sm:text-base text-white leading-relaxed">
             Your answers must be clear, precise, and professional — vague phrases like "fix it" or "replace" won't score marks.
           </p>
         </div>
@@ -211,16 +211,16 @@ const AM2Module5Section4 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground mb-4">
+            <p className="text-xs sm:text-sm text-white mb-4">
               By the end of this section, you will be able to:
             </p>
-            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
+            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Clearly describe rectification steps for common AM2 fault types
@@ -246,7 +246,7 @@ const AM2Module5Section4 = () => {
         </Card>
 
         {/* What is Rectification */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Target className="w-5 h-5" />
@@ -254,7 +254,7 @@ const AM2Module5Section4 = () => {
             </h2>
             
             <div className="space-y-6">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Rectification is about stating the practical action needed to restore the circuit to a safe, compliant condition:
               </p>
 
@@ -288,7 +288,7 @@ const AM2Module5Section4 = () => {
         />
 
         {/* Professional Recording */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <FileText className="w-5 h-5" />
@@ -296,16 +296,16 @@ const AM2Module5Section4 = () => {
             </h2>
             
             <div className="space-y-6">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Your answer must be specific and professional. NET assessors want detail that shows you understand both the problem and the solution.
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="border border-red-200 dark:border-red-800/30 rounded-lg p-4">
-                  <h4 className="font-medium text-foreground mb-3 flex items-center gap-2">
+                  <h4 className="font-medium text-white mb-3 flex items-center gap-2">
                     ❌ Incorrect Examples
                   </h4>
-                  <ul className="text-sm text-muted-foreground space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li>• "Fix earth fault"</li>
                     <li>• "Replace it"</li>
                     <li>• "Sort out the problem"</li>
@@ -318,10 +318,10 @@ const AM2Module5Section4 = () => {
                 </div>
 
                 <div className="border border-green-200 dark:border-green-800/30 rounded-lg p-4">
-                  <h4 className="font-medium text-foreground mb-3 flex items-center gap-2">
+                  <h4 className="font-medium text-white mb-3 flex items-center gap-2">
                     ✅ Professional Examples
                   </h4>
-                  <ul className="text-sm text-muted-foreground space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li>• "Reconnect CPC into earth terminal at socket outlet and re-test insulation resistance"</li>
                     <li>• "Replace damaged luminaire with new unit and re-test circuit"</li>
                     <li>• "Remake loose connection at socket terminal and re-test Zs"</li>
@@ -336,7 +336,7 @@ const AM2Module5Section4 = () => {
         </Card>
 
         {/* Examples by Fault Type */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Wrench className="w-5 h-5" />
@@ -404,7 +404,7 @@ const AM2Module5Section4 = () => {
         />
 
         {/* Proving Rectification */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckSquare className="w-5 h-5" />
@@ -412,7 +412,7 @@ const AM2Module5Section4 = () => {
             </h2>
             
             <div className="space-y-6">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 After stating rectification, you must also state how you would prove the circuit safe again:
               </p>
 
@@ -454,7 +454,7 @@ const AM2Module5Section4 = () => {
         </Card>
 
         {/* Assessor Expectations */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Eye className="w-5 h-5" />
@@ -509,7 +509,7 @@ const AM2Module5Section4 = () => {
         />
 
         {/* Advanced Rectification Scenarios */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Settings className="w-5 h-5" />
@@ -586,7 +586,7 @@ const AM2Module5Section4 = () => {
         </Card>
 
         {/* Documentation and Legal Requirements */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <FileText className="w-5 h-5" />
@@ -670,7 +670,7 @@ const AM2Module5Section4 = () => {
         </Card>
 
         {/* Professional Development Through Rectification */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Target className="w-5 h-5" />
@@ -733,7 +733,7 @@ const AM2Module5Section4 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Lightbulb className="w-5 h-5" />
@@ -746,7 +746,7 @@ const AM2Module5Section4 = () => {
                 <p className="text-sm text-green-700 dark:text-green-300 mb-3">
                   <strong>Always phrase rectification as: Action + Location + Re-test</strong>
                 </p>
-                <div className="bg-white dark:bg-card p-3 rounded border">
+                <div className="bg-white dark:bg-transparent p-3 rounded border">
                   <p className="text-sm text-green-700 dark:text-green-300">
                     <strong>Example:</strong> "Reconnect neutral at CU terminal and re-test continuity and polarity."
                   </p>
@@ -781,7 +781,7 @@ const AM2Module5Section4 = () => {
         </Card>
 
         {/* Real-World Examples */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
@@ -845,7 +845,7 @@ const AM2Module5Section4 = () => {
         </Card>
 
         {/* FAQ Section */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Lightbulb className="w-5 h-5" />
@@ -854,11 +854,11 @@ const AM2Module5Section4 = () => {
             
             <div className="space-y-4">
               {faqs.map((faq, index) => (
-                <div key={index} className="border border-border/20 rounded-lg p-3 sm:p-4 bg-card">
-                  <h4 className="font-medium text-foreground mb-2 text-sm sm:text-base">
+                <div key={index} className="border border-white/10 rounded-lg p-3 sm:p-4 ">
+                  <h4 className="font-medium text-white mb-2 text-sm sm:text-base">
                     Q{index + 1}: {faq.question}
                   </h4>
-                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-xs sm:text-sm text-white leading-relaxed">
                     {faq.answer}
                   </p>
                 </div>
@@ -868,7 +868,7 @@ const AM2Module5Section4 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
@@ -899,7 +899,7 @@ const AM2Module5Section4 = () => {
         </Card>
 
         {/* Quiz Section */}
-        <div className="border-t border-border/20 pt-8">
+        <div className="border-t border-white/10 pt-8">
           <Quiz 
             title="Test Your Knowledge: Proving and Recording Rectification"
             questions={quizQuestions}
@@ -907,7 +907,7 @@ const AM2Module5Section4 = () => {
         </div>
 
         {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 border-t border-border/20">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 border-t border-white/10">
           <Button variant="outline" className="w-full sm:w-auto" asChild>
             <Link to="../section3">
               <ChevronLeft className="w-4 h-4 mr-2" />

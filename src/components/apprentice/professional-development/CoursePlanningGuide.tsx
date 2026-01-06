@@ -133,7 +133,7 @@ const CoursePlanningGuide = () => {
   return (
     <div className="space-y-6">
       {/* Planning Steps */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Target className="h-5 w-5 text-elec-yellow" />
@@ -161,7 +161,7 @@ const CoursePlanningGuide = () => {
                       {step.activities.map((activity, activityIndex) => (
                         <div key={activityIndex} className="flex items-start gap-2">
                           <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-xs text-muted-foreground">{activity}</span>
+                          <span className="text-xs text-white">{activity}</span>
                         </div>
                       ))}
                     </div>
@@ -174,7 +174,7 @@ const CoursePlanningGuide = () => {
       </Card>
 
       {/* Funding Options Comparison */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <PoundSterling className="h-5 w-5 text-elec-yellow" />
@@ -188,15 +188,15 @@ const CoursePlanningGuide = () => {
                 <h3 className="font-semibold text-white">{option.title}</h3>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Eligibility:</span>
+                    <span className="text-white">Eligibility:</span>
                     <span className="text-elec-light/80">{option.eligibility}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Coverage:</span>
+                    <span className="text-white">Coverage:</span>
                     <span className="text-elec-light/80">{option.coverage}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Repayment:</span>
+                    <span className="text-white">Repayment:</span>
                     <span className="text-elec-light/80">{option.repayment}</span>
                   </div>
                 </div>
@@ -204,7 +204,7 @@ const CoursePlanningGuide = () => {
                   {option.benefits.map((benefit, benefitIndex) => (
                     <div key={benefitIndex} className="flex items-center gap-2">
                       <CheckCircle className="h-3 w-3 text-green-400" />
-                      <span className="text-xs text-muted-foreground">{benefit}</span>
+                      <span className="text-xs text-white">{benefit}</span>
                     </div>
                   ))}
                 </div>
@@ -215,7 +215,7 @@ const CoursePlanningGuide = () => {
       </Card>
 
       {/* Timing Considerations */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Calendar className="h-5 w-5 text-elec-yellow" />

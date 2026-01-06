@@ -97,7 +97,7 @@ const ExamPreparation = () => {
         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight">
           Examination Preparation
         </h1>
-        <p className="text-sm sm:text-base text-muted-foreground">
+        <p className="text-sm sm:text-base text-white/70">
           Comprehensive preparation resources for electrical qualifications and assessments
         </p>
       </div>
@@ -112,7 +112,7 @@ const ExamPreparation = () => {
               </div>
               <h3 className="text-xs sm:text-sm font-semibold text-foreground">{resource.title}</h3>
             </div>
-            <p className="text-[10px] sm:text-xs text-muted-foreground mb-2 line-clamp-2">{resource.description}</p>
+            <p className="text-[10px] sm:text-xs text-white/70 mb-2 line-clamp-2">{resource.description}</p>
             <span className="text-[10px] sm:text-xs text-primary font-medium">
               {resource.count}
             </span>
@@ -130,10 +130,10 @@ const ExamPreparation = () => {
                 {exam.difficulty}
               </span>
             </div>
-            <p className="text-muted-foreground text-[10px] sm:text-xs mb-2">{exam.description}</p>
+            <p className="text-white/70 text-[10px] sm:text-xs mb-2">{exam.description}</p>
             <div className="flex items-center gap-1 mb-3">
-              <Clock className="h-3 w-3 text-muted-foreground" />
-              <span className="text-[10px] sm:text-xs text-muted-foreground">{exam.duration}</span>
+              <Clock className="h-3 w-3 text-white/60" />
+              <span className="text-[10px] sm:text-xs text-white/60">{exam.duration}</span>
             </div>
 
             <div className="mb-3">
@@ -177,7 +177,7 @@ const ExamPreparation = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div>
             <h4 className="font-semibold text-foreground mb-2 text-xs sm:text-sm">Before the Exam</h4>
-            <ul className="space-y-1.5 text-[10px] sm:text-xs text-muted-foreground">
+            <ul className="space-y-1.5 text-[10px] sm:text-xs text-white/80">
               <li className="flex items-start gap-2">
                 <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
                 Review regulations and standards thoroughly
@@ -198,7 +198,7 @@ const ExamPreparation = () => {
           </div>
           <div>
             <h4 className="font-semibold text-foreground mb-2 text-xs sm:text-sm">During the Exam</h4>
-            <ul className="space-y-1.5 text-[10px] sm:text-xs text-muted-foreground">
+            <ul className="space-y-1.5 text-[10px] sm:text-xs text-white/80">
               <li className="flex items-start gap-2">
                 <AlertCircle className="h-3 w-3 text-yellow-400 mt-0.5 flex-shrink-0" />
                 Read all questions carefully before answering
@@ -219,7 +219,7 @@ const ExamPreparation = () => {
           </div>
           <div>
             <h4 className="font-semibold text-foreground mb-2 text-xs sm:text-sm">Practical Assessments</h4>
-            <ul className="space-y-1.5 text-[10px] sm:text-xs text-muted-foreground">
+            <ul className="space-y-1.5 text-[10px] sm:text-xs text-white/80">
               <li className="flex items-start gap-2">
                 <Target className="h-3 w-3 text-primary mt-0.5 flex-shrink-0" />
                 Follow safe isolation procedures

@@ -1,712 +1,503 @@
-import { ArrowLeft, ArrowRight, Zap, BookOpen, Target, Lightbulb, TrendingUp, Battery, Sun, Wifi } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { EVChargingModule3Section5Quiz } from '@/components/upskilling/quiz/EVChargingModule3Section5Quiz';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
+import useSEO from "@/hooks/useSEO";
+
+const quickCheckQuestions = [
+  {
+    id: "evcharging-m3s5-check1",
+    question: "What percentage of properties are predicted to have 2+ EVs by 2030?",
+    options: ["20%", "30%", "40%", "50%"],
+    correctIndex: 2,
+    explanation: "Statistical analysis predicts 40% of properties will have 2+ EVs by 2030, making dual charging capability essential for future-proof installations."
+  },
+  {
+    id: "evcharging-m3s5-check2",
+    question: "What is Vehicle-to-Grid (V2G) technology?",
+    options: [
+      "One-way charging only",
+      "Bidirectional charging allowing EVs to export power to the grid",
+      "Wireless charging",
+      "Solar panel connection"
+    ],
+    correctIndex: 1,
+    explanation: "V2G enables bidirectional power flow, allowing EVs to export stored energy back to the grid during peak demand, creating revenue opportunities for vehicle owners."
+  },
+  {
+    id: "evcharging-m3s5-check3",
+    question: "What diversity factor applies with smart charging for dual domestic EV charging?",
+    options: ["1.0 (100%)", "0.8 (80%)", "0.6 (60%)", "0.4 (40%)"],
+    correctIndex: 1,
+    explanation: "Smart charging systems enable 0.8 (80%) diversity factor for 1-2 domestic chargers, as dynamic load balancing prevents simultaneous full-power charging."
+  }
+];
+
+const faqs = [
+  {
+    question: "How should I size infrastructure for future expansion?",
+    answer: "Size cable infrastructure for 150% of current requirements. Install larger cables with tapping points, use modular distribution boards, and leave 25% spare capacity in containment. Plan DNO upgrade pathways early."
+  },
+  {
+    question: "What's the benefit of PV integration with EV charging?",
+    answer: "A typical 6kWp residential PV system can provide 60-70% of EV charging energy. This reduces grid demand, lowers charging costs, and provides energy independence. Battery storage enables evening charging from daytime generation."
+  },
+  {
+    question: "When will higher power charging standards become mainstream?",
+    answer: "350kW DC and 22kW AC are expected standard by 2025-2027. 800V vehicle architectures and MW-level charging are projected for 2028-2030. Infrastructure should accommodate these future requirements."
+  },
+  {
+    question: "What revenue opportunities exist for smart EV charging?",
+    answer: "Grid services earn £50-200/MW/hour. Demand response provides £0.10-0.30/kWh. V2G systems can generate £300-600 annual revenue. Time-of-use tariff optimization saves £800-1,200 annually vs day rate charging."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+  question: "A new residential development of 50 homes wants future-proof EV charging. What infrastructure strategy should you recommend?",
+  options: [
+    "Single 7kW charger per home, no expansion planning",
+    "Install the cheapest solution and upgrade later",
+    "Dual EV capability, smart charging, PV-ready, ducted routes for expansion",
+    "Only install rapid chargers in communal areas"
+  ],
+  correctAnswer: 2,
+  explanation: "Future-proofing requires: dual EV capability (40% will have 2+ EVs by 2030), smart charging for load management, PV-ready infrastructure for renewable integration, and ducted cable routes for future upgrades. This maximises long-term value."
+  }
+];
 
 const EVChargingModule3Section5 = () => {
-  useEffect(() => {
-    document.title = 'Future-Proofing Installations - EV Charging Module 3 Section 5';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Learn to design future-proof EV charging installations with dual EV capability, PV integration, smart grid connectivity and expansion planning.');
-    }
-  }, []);
+  useSEO({
+    title: "Future-Proofing Installations | EV Charging Module 3.5",
+    description: "Design future-proof EV charging installations with dual EV capability, PV integration, smart grid connectivity and expansion planning."
+  });
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
-        <Link to="../ev-charging-module-3">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 3
+            <Link to="../ev-charging-module-3">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 3
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            <TrendingUp className="h-8 w-8 text-yellow-400" />
-            <Badge 
-              variant="secondary" 
-              className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold text-sm px-3 py-1 border-0"
-            >
-              Module 3 - Section 5
-            </Badge>
+        </div>
+      </div>
+
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Page Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 3.5</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Future-Proofing Installations
           </h1>
-          <p className="text-lg sm:text-xl text-gray-400 max-w-3xl">
-            Designing EV charging installations for expansion, dual EV capability, PV integration, and smart grid connectivity
+          <p className="text-white/80">
+            Designing for expansion, PV integration, and smart grid
           </p>
-        </div>
-      </header>
+        </header>
 
-      {/* Main Content */}
-      <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="space-y-4 sm:space-y-6">
-          
-          {/* Introduction */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <BookOpen className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Introduction</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                Future-proofing EV charging installations is essential as electric vehicle adoption accelerates and charging technology evolves. This section covers strategies for designing installations that can accommodate multiple EVs, integrate renewable energy sources, and adapt to emerging smart grid technologies.
-              </p>
-              <p>
-                Effective future-proofing requires understanding load growth patterns, renewable energy integration opportunities, and the evolving landscape of charging standards. By implementing scalable infrastructure and smart charging systems, installations can evolve with changing requirements whilst maximising investment value.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Learning Outcomes */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Target className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Learning Outcomes</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <p className="mb-4">Upon completion of this section, you will be able to:</p>
-              <ul className="space-y-2 list-disc list-inside">
-                <li>Plan electrical infrastructure for multiple EV charging scenarios</li>
-                <li>Design dual EV charging systems with intelligent load management</li>
-                <li>Integrate PV solar systems with EV charging infrastructure</li>
-                <li>Implement infrastructure sizing strategies for future expansion</li>
-                <li>Specify smart grid integration capabilities and V2G systems</li>
-                <li>Plan for evolving charging technologies and higher power levels</li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          {/* Load Growth Planning */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-yellow-400" />
-                Load Growth Planning
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-semibold text-yellow-400 mb-2">Anticipating Additional Charging Points</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Statistical analysis: 40% of properties will have 2+ EVs by 2030</li>
-                    <li>Workplace installations: 20% employee uptake rising to 60% by 2035</li>
-                    <li>Infrastructure sizing for 150% of current requirements</li>
-                    <li>Modular expansion points every 25m along cable routes</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold text-yellow-400 mb-2">Diversity Factor Evolution</h4>
-                  <div className="overflow-x-auto">
-                    <table className="w-full border-collapse border border-gray-600 text-sm">
-                      <thead>
-                        <tr className="bg-gray-800">
-                          <th className="border border-gray-600 p-2 text-left">Number of Charge Points</th>
-                          <th className="border border-gray-600 p-2 text-left">Current Factor</th>
-                          <th className="border border-gray-600 p-2 text-left">Smart Charging Factor</th>
-                          <th className="border border-gray-600 p-2 text-left">Future Scenario</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td className="border border-gray-600 p-2">1-2</td>
-                          <td className="border border-gray-600 p-2">1.0</td>
-                          <td className="border border-gray-600 p-2">0.8</td>
-                          <td className="border border-gray-600 p-2">Domestic dual charging</td>
-                        </tr>
-                        <tr>
-                          <td className="border border-gray-600 p-2">3-10</td>
-                          <td className="border border-gray-600 p-2">0.7</td>
-                          <td className="border border-gray-600 p-2">0.5</td>
-                          <td className="border border-gray-600 p-2">Small commercial</td>
-                        </tr>
-                        <tr>
-                          <td className="border border-gray-600 p-2">11-50</td>
-                          <td className="border border-gray-600 p-2">0.5</td>
-                          <td className="border border-gray-600 p-2">0.3</td>
-                          <td className="border border-gray-600 p-2">Workplace/retail</td>
-                        </tr>
-                        <tr>
-                          <td className="border border-gray-600 p-2">50+</td>
-                          <td className="border border-gray-600 p-2">0.3</td>
-                          <td className="border border-gray-600 p-2">0.2</td>
-                          <td className="border border-gray-600 p-2">Fleet/destination</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-yellow-400 mb-2">Demand Forecasting Methods</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Household income correlation with EV adoption rates</li>
-                    <li>Local authority EV strategy alignment</li>
-                    <li>Building use pattern analysis (commuter vs visitor parking)</li>
-                    <li>Grid connection capacity and upgrade pathways</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Dual EV Charging Systems */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Zap className="h-5 w-5 text-green-400" />
-                Dual EV Charging Systems
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-semibold text-green-400 mb-2">Load Balancing Strategies</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Dynamic load balancing: Real-time power allocation between charge points</li>
-                    <li>Sequential charging: Priority-based charging queue management</li>
-                    <li>Time-based balancing: Off-peak scheduling for overnight charging</li>
-                    <li>Grid constraint management: Response to network capacity limitations</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold text-green-400 mb-2">Smart Charging Protocols</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>OCPP (Open Charge Point Protocol) for interoperability</li>
-                    <li>ISO 15118 for plug-and-charge authentication</li>
-                    <li>IEC 61851 safety and control pilot communication</li>
-                    <li>Modbus/Ethernet integration with building management systems</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-green-400 mb-2">Priority Management Systems</h4>
-                  <div className="space-y-3">
-                    <div className="bg-gray-800 p-3 rounded">
-                      <h5 className="font-medium text-green-300 mb-2">Example: Dual 7kW Home Installation</h5>
-                      <ul className="text-sm space-y-1">
-                        <li>• Total capacity: 11kW available (within DNO limit)</li>
-                        <li>• Primary vehicle: Full 7kW when charging alone</li>
-                        <li>• Dual charging: 5.5kW each (dynamic balancing)</li>
-                        <li>• House load priority: EV charging reduces during peak demand</li>
-                        <li>• Off-peak optimisation: Full power available 00:30-05:30</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* PV Integration Strategies */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Sun className="h-5 w-5 text-yellow-400" />
-                PV Integration Strategies
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-semibold text-yellow-400 mb-2">Solar-to-EV Direct Charging</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>DC-coupled systems: Direct DC charging from PV arrays</li>
-                    <li>AC-coupled systems: Grid-tie inverter with smart charging control</li>
-                    <li>Surplus energy diverters: Automatic switching to EV charging</li>
-                    <li>Generation forecasting: Weather-based charging scheduling</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold text-yellow-400 mb-2">Battery Storage Integration</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>AC-coupled battery systems: 5-20kWh domestic storage</li>
-                    <li>DC-coupled systems: Higher efficiency direct charging</li>
-                    <li>Time-shifting strategies: Store solar for evening EV charging</li>
-                    <li>Grid services: Battery arbitrage and frequency response</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-yellow-400 mb-2">System Sizing Examples</h4>
-                  <div className="space-y-3">
-                    <div className="bg-gray-800 p-3 rounded">
-                      <h5 className="font-medium text-yellow-300 mb-2">Residential PV-EV System</h5>
-                      <ul className="text-sm space-y-1">
-                        <li>• PV Array: 6kWp (24 × 250W panels)</li>
-                        <li>• Annual generation: ~5,400kWh</li>
-                        <li>• EV consumption: 3,500kWh/year (12,000 miles)</li>
-                        <li>• Solar charging: 60-70% of EV energy from PV</li>
-                        <li>• Battery storage: 10kWh for evening charging</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-yellow-400 mb-2">Grid-Tie Considerations</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>G98/G99 connection requirements for PV systems</li>
-                    <li>Export limitation and curtailment strategies</li>
-                    <li>DNO notification for combined PV-EV installations</li>
-                    <li>Smart export guarantee (SEG) integration</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Infrastructure Sizing */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Battery className="h-5 w-5 text-purple-400" />
-                Infrastructure Sizing Strategies
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-semibold text-purple-400 mb-2">Oversizing Strategies</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Cable sizing: Install for ultimate load (not initial)</li>
-                    <li>Consumer unit: 25% spare MCB capacity minimum</li>
-                    <li>Main switch: Size for full charging load plus household</li>
-                    <li>DNO connection: Consider upgrade pathways early</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold text-purple-400 mb-2">Spare Capacity Calculations</h4>
-                  <div className="overflow-x-auto">
-                    <table className="w-full border-collapse border border-gray-600 text-sm">
-                      <thead>
-                        <tr className="bg-gray-800">
-                          <th className="border border-gray-600 p-2 text-left">Installation Type</th>
-                          <th className="border border-gray-600 p-2 text-left">Current Load</th>
-                          <th className="border border-gray-600 p-2 text-left">Future Provision</th>
-                          <th className="border border-gray-600 p-2 text-left">Total Capacity</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td className="border border-gray-600 p-2">Single dwelling</td>
-                          <td className="border border-gray-600 p-2">7kW EV + 8kW house</td>
-                          <td className="border border-gray-600 p-2">Second 7kW EV</td>
-                          <td className="border border-gray-600 p-2">22kW supply</td>
-                        </tr>
-                        <tr>
-                          <td className="border border-gray-600 p-2">Commercial 10 spaces</td>
-                          <td className="border border-gray-600 p-2">3 × 7kW points</td>
-                          <td className="border border-gray-600 p-2">10 × 7kW + 2 × 22kW</td>
-                          <td className="border border-gray-600 p-2">150kW capacity</td>
-                        </tr>
-                        <tr>
-                          <td className="border border-gray-600 p-2">Destination charging</td>
-                          <td className="border border-gray-600 p-2">5 × 22kW</td>
-                          <td className="border border-gray-600 p-2">20 × 22kW + 4 × 50kW</td>
-                          <td className="border border-gray-600 p-2">800kW capacity</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-purple-400 mb-2">Modular Expansion Approaches</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Submain cables: Install larger sizes with tapping points</li>
-                    <li>Distribution boards: Modular systems for easy expansion</li>
-                    <li>Earthing systems: Provision for additional earth electrodes</li>
-                    <li>Containment routes: 40% spare capacity for additional cables</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Smart Grid Integration */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Wifi className="h-5 w-5 text-cyan-400" />
-                Smart Grid Integration
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-semibold text-cyan-400 mb-2">Vehicle-to-Grid (V2G) Capabilities</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Bidirectional charging infrastructure: CCS and CHAdeMO compatibility</li>
-                    <li>Grid connection requirements: G98/G99 bidirectional approval</li>
-                    <li>Revenue opportunities: Frequency response (£10-40/MW/hour)</li>
-                    <li>Technical requirements: Reactive power capability ±0.95 power factor</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold text-cyan-400 mb-2">Demand Response Participation</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Automated demand reduction during network constraints</li>
-                    <li>Time-of-use tariff optimization (Economy 7 evolution)</li>
-                    <li>Distribution network operator (DNO) flexibility services</li>
-                    <li>Aggregated response: Virtual power plant participation</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-cyan-400 mb-2">Time-of-Use Optimization</h4>
-                  <div className="space-y-3">
-                    <div className="bg-gray-800 p-3 rounded">
-                      <h5 className="font-medium text-cyan-300 mb-2">Example: Octopus Go Tariff Integration</h5>
-                      <ul className="text-sm space-y-1">
-                        <li>• Off-peak: 00:30-04:30 at 7.5p/kWh</li>
-                        <li>• Day rate: 05:00-00:00 at 30.9p/kWh</li>
-                        <li>• Smart charging: 90% of charging in off-peak window</li>
-                        <li>• Annual saving: £800-1,200 vs day rate charging</li>
-                        <li>• V2G potential: Additional £300-600 revenue</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Technology Evolution */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Lightbulb className="h-5 w-5 text-red-400" />
-                Technology Evolution Planning
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-semibold text-red-400 mb-2">Higher Power Charging Standards</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Current: 7-22kW AC, 50-150kW DC mainstream</li>
-                    <li>2025-2027: 350kW DC, 22kW AC standard for new installations</li>
-                    <li>2028-2030: 800V vehicle architectures, MW-level charging</li>
-                    <li>Infrastructure: 3-phase 400A supplies for commercial sites</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold text-red-400 mb-2">Wireless Charging Readiness</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Ground-mounted inductive charging pads (11-22kW)</li>
-                    <li>Infrastructure requirements: Power electronics housing</li>
-                    <li>Safety considerations: EMF exposure limits (ICNIRP)</li>
-                    <li>Installation preparation: Ducted power feeds to parking areas</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-red-400 mb-2">Autonomous Vehicle Integration</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Automated connection systems: Robotic plug insertion</li>
-                    <li>Communication infrastructure: 5G and V2X protocols</li>
-                    <li>Charging bay design: Precise positioning requirements</li>
-                    <li>Fleet management: Centralized charging optimization</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-red-400 mb-2">Future-Proofing Checklist</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>✓ Cable infrastructure sized for 150% current requirements</li>
-                    <li>✓ Three-phase supply provision for single-phase installations</li>
-                    <li>✓ Communication cable routes to all charge point locations</li>
-                    <li>✓ Space provision for additional switchgear and meters</li>
-                    <li>✓ Grid connection pathway for supply upgrades</li>
-                    <li>✓ PV and battery storage integration readiness</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Comprehensive Design Examples */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Battery className="h-5 w-5 text-indigo-400" />
-                Comprehensive Design Examples
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <div>
-                <h4 className="font-semibold text-indigo-400 mb-3">Case Study 1: Future-Proof Residential Development</h4>
-                <div className="bg-gray-800 p-4 rounded-lg space-y-3">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <h5 className="font-medium text-indigo-300 mb-2">Development Overview</h5>
-                      <ul className="text-sm space-y-1">
-                        <li>• 50 new homes with integrated EV charging</li>
-                        <li>• Phase 1: Single 7kW point per home</li>
-                        <li>• Phase 2: Dual charging capability</li>
-                        <li>• Phase 3: PV integration and storage</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="font-medium text-indigo-300 mb-2">Infrastructure Strategy</h5>
-                      <ul className="text-sm space-y-1">
-                        <li>• 11kV ring main with 4 × 500kVA substations</li>
-                        <li>• Ducted network for future cable upgrades</li>
-                        <li>• Smart meter infrastructure with OCPP backend</li>
-                        <li>• Community energy storage (2MWh)</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-indigo-300 mb-2">Load Management Architecture</h5>
-                    <div className="text-sm space-y-2">
-                      <p><strong>Current Load:</strong> 50 × 7kW = 350kW (with 0.6 diversity = 210kW actual)</p>
-                      <p><strong>Future Load:</strong> 100 × 7kW = 700kW (with smart charging = 300kW peak)</p>
-                      <p><strong>PV Integration:</strong> 50 × 4kWp rooftop = 200kWp total generation</p>
-                      <p><strong>Storage Strategy:</strong> 2MWh community + 50 × 13.5kWh domestic = 2.675MWh total</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-indigo-400 mb-3">Case Study 2: Commercial Office Complex</h4>
-                <div className="bg-gray-800 p-4 rounded-lg space-y-3">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <h5 className="font-medium text-indigo-300 mb-2">Current Requirements</h5>
-                      <ul className="text-sm space-y-1">
-                        <li>• 200 parking spaces for 800 employees</li>
-                        <li>• Phase 1: 40 × 7kW charging points</li>
-                        <li>• EV adoption: 20% staff (160 employees)</li>
-                        <li>• Peak demand: 8AM-6PM weekdays</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="font-medium text-indigo-300 mb-2">Expansion Planning</h5>
-                      <ul className="text-sm space-y-1">
-                        <li>• Phase 2: 100 × 7kW (50% staff by 2027)</li>
-                        <li>• Phase 3: 200 × 11kW (full coverage by 2030)</li>
-                        <li>• Visitor rapid charging: 4 × 50kW</li>
-                        <li>• Fleet charging: 10 × 22kW dedicated</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-indigo-300 mb-2">Renewable Integration Strategy</h5>
-                    <div className="text-sm space-y-2">
-                      <p><strong>Solar Canopy:</strong> 1MWp installation over 50% of parking area</p>
-                      <p><strong>Battery Storage:</strong> 2MWh system for demand shifting and solar storage</p>
-                      <p><strong>Grid Integration:</strong> Peak shaving from 2MW to 1.2MW during charging hours</p>
-                      <p><strong>Smart Charging:</strong> Dynamic load balancing with building HVAC systems</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Economic Considerations */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-yellow-400" />
-                Economic and Financial Planning
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <div>
-                <h4 className="font-semibold text-yellow-400 mb-3">Investment Strategies</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-gray-800 p-3 rounded">
-                    <h5 className="font-medium text-emerald-300 mb-2">Phased Investment Approach</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• Phase 1: Core infrastructure (50% capacity)</li>
-                      <li>• Phase 2: Demand-driven expansion</li>
-                      <li>• Phase 3: Advanced features and integration</li>
-                      <li>• ROI target: 7-10 years for commercial installations</li>
-                    </ul>
-                  </div>
-                  <div className="bg-gray-800 p-3 rounded">
-                    <h5 className="font-medium text-emerald-300 mb-2">Revenue Opportunities</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• Charging fees: £0.30-0.50/kWh typical</li>
-                      <li>• Grid services: £50-200/MW/hour</li>
-                      <li>• Demand response: £0.10-0.30/kWh</li>
-                      <li>• Solar export: £0.05-0.15/kWh (SEG rates)</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-yellow-400 mb-3">Cost-Benefit Analysis Example</h4>
-                <div className="bg-gray-800 p-4 rounded-lg">
-                  <h5 className="font-medium text-emerald-300 mb-2">25-Space Workplace Installation</h5>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                    <div>
-                      <p><strong>Initial Costs:</strong></p>
-                      <ul className="space-y-1">
-                        <li>• Infrastructure: £45,000</li>
-                        <li>• Charge points: £35,000</li>
-                        <li>• Installation: £25,000</li>
-                        <li>• Total: £105,000</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p><strong>Annual Revenue:</strong></p>
-                      <ul className="space-y-1">
-                        <li>• Charging income: £18,000</li>
-                        <li>• Workplace benefit: £8,000</li>
-                        <li>• Grid services: £3,000</li>
-                        <li>• Total: £29,000</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p><strong>Payback Analysis:</strong></p>
-                      <ul className="space-y-1">
-                        <li>• Operating costs: £4,000/year</li>
-                        <li>• Net annual return: £25,000</li>
-                        <li>• Simple payback: 4.2 years</li>
-                        <li>• 10-year NPV: £145,000</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Emerging Technologies */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Wifi className="h-5 w-5 text-violet-400" />
-                Emerging Technology Integration
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <div>
-                <h4 className="font-semibold text-violet-400 mb-3">Ultra-High Power Charging (350kW+)</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <h5 className="font-medium text-violet-300 mb-2">Infrastructure Requirements</h5>
-                    <ul className="text-sm space-y-1 list-disc list-inside">
-                      <li>Liquid-cooled cable systems (400A+ rating)</li>
-                      <li>Dedicated 33kV supply with local transformation</li>
-                      <li>Active cooling systems for power electronics</li>
-                      <li>High-speed communication networks (5G integration)</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-violet-300 mb-2">Vehicle Compatibility</h5>
-                    <ul className="text-sm space-y-1 list-disc list-inside">
-                      <li>800V vehicle architectures (Porsche, Hyundai)</li>
-                      <li>Silicon carbide inverters for efficiency</li>
-                      <li>Thermal management integration</li>
-                      <li>Plug-and-charge authentication (ISO 15118-20)</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              
-              <div>
-                <h4 className="font-semibold text-violet-400 mb-3">Wireless Power Transfer Systems</h4>
-                <div className="space-y-3">
-                  <div className="bg-gray-800 p-3 rounded">
-                    <h5 className="font-medium text-violet-300 mb-2">Static Wireless Charging</h5>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                      <div>
-                        <p><strong>Power Levels:</strong></p>
-                        <ul className="space-y-1">
-                          <li>• Level 1: 3.7kW domestic applications</li>
-                          <li>• Level 2: 11kW commercial/public</li>
-                          <li>• Level 3: 22kW fleet and depot charging</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p><strong>Installation Considerations:</strong></p>
-                        <ul className="space-y-1">
-                          <li>• Ground preparation and coil embedding</li>
-                          <li>• Position accuracy requirements (±50mm)</li>
-                          <li>• EMF shielding and safety compliance</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-violet-400 mb-3">Artificial Intelligence Applications</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-gray-800 p-3 rounded">
-                    <h5 className="font-medium text-violet-300 mb-2">Predictive Analytics</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• Demand forecasting using weather and traffic data</li>
-                      <li>• Equipment failure prediction and maintenance</li>
-                      <li>• User behaviour analysis for optimal pricing</li>
-                      <li>• Grid stability prediction and response</li>
-                    </ul>
-                  </div>
-                  <div className="bg-gray-800 p-3 rounded">
-                    <h5 className="font-medium text-violet-300 mb-2">Optimization Algorithms</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• Multi-objective optimization (cost, time, grid impact)</li>
-                      <li>• Machine learning for charging pattern recognition</li>
-                      <li>• Real-time load balancing with renewable integration</li>
-                      <li>• Dynamic pricing based on grid conditions</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Section */}
-          <EVChargingModule3Section5Quiz />
-
-          {/* Navigation */}
-          <div className="flex justify-between items-center pt-8">
-            <Link to="../ev-charging-module-3-section-4">
-              <Button variant="outline" className="bg-card border-gray-600 text-white hover:bg-gray-700">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="../ev-charging-module-4">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
-                Next Module
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Dual EV:</strong> 40% of homes will have 2+ EVs by 2030</li>
+              <li><strong>V2G:</strong> Bidirectional charging for grid services</li>
+              <li><strong>Sizing:</strong> 150% of current requirements</li>
+            </ul>
           </div>
-
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Spare capacity in containment/CU</li>
+              <li><strong>Use:</strong> Smart charging + PV for future value</li>
+            </ul>
+          </div>
         </div>
-      </main>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Plan infrastructure for multiple EV scenarios",
+              "Design dual EV systems with load management",
+              "Integrate PV solar with EV charging",
+              "Implement smart grid connectivity",
+              "Size for future expansion",
+              "Understand emerging charging technologies"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1 - Load Growth Planning */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Load Growth Planning
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Future-proofing requires anticipating EV adoption growth and planning
+              infrastructure that can accommodate increasing demand.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Adoption Forecasts</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>• 40% properties: 2+ EVs by 2030</li>
+                  <li>• Workplace: 20% → 60% by 2035</li>
+                  <li>• Size for 150% current load</li>
+                  <li>• Expansion points every 25m</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Diversity with Smart Charging</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>1-2 chargers:</strong> 0.8 diversity</li>
+                  <li><strong>3-10:</strong> 0.5 diversity</li>
+                  <li><strong>11-50:</strong> 0.3 diversity</li>
+                  <li><strong>50+:</strong> 0.2 diversity</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Demand Forecasting Factors:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>• Household income correlation with EV adoption</li>
+                <li>• Local authority EV strategy alignment</li>
+                <li>• Building use patterns (commuter vs visitor)</li>
+                <li>• Grid connection capacity and upgrade pathways</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2 - Dual EV & PV Integration */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Dual EV and PV Integration
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Dual EV Load Balancing</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>• Dynamic power allocation</li>
+                  <li>• Sequential charging queues</li>
+                  <li>• Time-based off-peak scheduling</li>
+                  <li>• House load priority management</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">PV-EV Direct Charging</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>• DC-coupled: Direct from PV</li>
+                  <li>• AC-coupled: Via grid-tie inverter</li>
+                  <li>• Surplus diverters: Auto-switch</li>
+                  <li>• Weather-based scheduling</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="p-3 rounded bg-transparent border border-elec-yellow/20">
+              <p className="text-sm font-medium text-elec-yellow mb-2">Example: Residential PV-EV System</p>
+              <ul className="text-xs text-white/90 space-y-1">
+                <li><strong>PV Array:</strong> 6kWp (24 × 250W panels)</li>
+                <li><strong>Annual generation:</strong> ~5,400kWh</li>
+                <li><strong>EV consumption:</strong> 3,500kWh/year (12,000 miles)</li>
+                <li><strong>Solar charging:</strong> 60-70% of EV energy from PV</li>
+                <li><strong>Battery storage:</strong> 10kWh for evening charging</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Grid Connection Considerations</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>• G98/G99 requirements for PV systems</li>
+                <li>• Export limitation and curtailment</li>
+                <li>• DNO notification for combined installations</li>
+                <li>• Smart Export Guarantee (SEG) integration</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 3 - Smart Grid Integration */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Smart Grid and V2G
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Vehicle-to-Grid (V2G)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>• Bidirectional charging</li>
+                  <li>• G98/G99 approval required</li>
+                  <li>• Revenue: £10-40/MW/hour</li>
+                  <li>• ±0.95 power factor capability</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Demand Response</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>• Automated demand reduction</li>
+                  <li>• Time-of-use tariff optimisation</li>
+                  <li>• DNO flexibility services</li>
+                  <li>• Virtual power plant participation</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="p-3 rounded bg-transparent border border-elec-yellow/20">
+              <p className="text-sm font-medium text-elec-yellow mb-2">Example: Octopus Go Integration</p>
+              <ul className="text-xs text-white/90 space-y-1">
+                <li><strong>Off-peak:</strong> 00:30-04:30 at 7.5p/kWh</li>
+                <li><strong>Day rate:</strong> 05:00-00:00 at 30.9p/kWh</li>
+                <li><strong>Smart charging:</strong> 90% in off-peak window</li>
+                <li><strong>Annual saving:</strong> £800-1,200 vs day rate</li>
+                <li><strong>V2G potential:</strong> Additional £300-600 revenue</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Section 4 - Infrastructure Sizing */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Infrastructure Sizing Strategies
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Oversizing Approach</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>• Cable: Install for ultimate load</li>
+                  <li>• CU: 25% spare MCB capacity</li>
+                  <li>• Main switch: Full future load</li>
+                  <li>• DNO: Plan upgrade pathways</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Modular Expansion</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>• Larger submains with tapping points</li>
+                  <li>• Modular distribution boards</li>
+                  <li>• Earth electrode provisions</li>
+                  <li>• 40% spare containment capacity</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="overflow-x-auto my-6">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-white/20">
+                    <th className="text-left p-2 text-elec-yellow">Installation</th>
+                    <th className="text-left p-2 text-elec-yellow">Current</th>
+                    <th className="text-left p-2 text-elec-yellow">Future Provision</th>
+                    <th className="text-left p-2 text-elec-yellow">Capacity</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white/90">
+                  <tr className="border-b border-white/10">
+                    <td className="p-2">Single dwelling</td>
+                    <td className="p-2">7kW + 8kW house</td>
+                    <td className="p-2">Second 7kW EV</td>
+                    <td className="p-2">22kW supply</td>
+                  </tr>
+                  <tr className="border-b border-white/10">
+                    <td className="p-2">Commercial 10 spaces</td>
+                    <td className="p-2">3 × 7kW</td>
+                    <td className="p-2">10 × 7kW + 2 × 22kW</td>
+                    <td className="p-2">150kW</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2">Destination charging</td>
+                    <td className="p-2">5 × 22kW</td>
+                    <td className="p-2">20 × 22kW + 4 × 50kW</td>
+                    <td className="p-2">800kW</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 5 - Emerging Technologies */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Emerging Technologies
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <div className="grid sm:grid-cols-3 gap-4 my-6">
+              <div className="p-3 rounded bg-transparent border border-white/10">
+                <p className="font-medium text-white mb-2">Ultra-High Power</p>
+                <ul className="text-xs text-white/90 space-y-1">
+                  <li>• 350kW+ DC charging</li>
+                  <li>• 800V architectures</li>
+                  <li>• Liquid-cooled cables</li>
+                </ul>
+              </div>
+              <div className="p-3 rounded bg-transparent border border-white/10">
+                <p className="font-medium text-white mb-2">Wireless Charging</p>
+                <ul className="text-xs text-white/90 space-y-1">
+                  <li>• 11-22kW inductive pads</li>
+                  <li>• Position accuracy ±50mm</li>
+                  <li>• EMF compliance (ICNIRP)</li>
+                </ul>
+              </div>
+              <div className="p-3 rounded bg-transparent border border-white/10">
+                <p className="font-medium text-white mb-2">Autonomous EVs</p>
+                <ul className="text-xs text-white/90 space-y-1">
+                  <li>• Robotic plug connection</li>
+                  <li>• 5G/V2X communication</li>
+                  <li>• Fleet optimisation</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Future-Proofing Checklist</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>✓ Cable infrastructure sized 150% current requirements</li>
+                <li>✓ Three-phase provision for single-phase installations</li>
+                <li>✓ Communication cable routes to charge points</li>
+                <li>✓ Space for additional switchgear and meters</li>
+                <li>✓ Grid connection pathway for upgrades</li>
+                <li>✓ PV and battery storage integration ready</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Planning Future-Proof Installations</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Size infrastructure for 150% current requirements</li>
+                <li>Include smart charging capability from the start</li>
+                <li>Plan PV and battery integration pathways</li>
+                <li>Consider V2G-ready equipment selection</li>
+                <li>Document expansion provisions in handover</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>No expansion planning:</strong> — Expensive retrofits required</li>
+                <li><strong>Ignoring smart charging:</strong> — Higher diversity factors possible</li>
+                <li><strong>No PV integration:</strong> — Missed renewable energy opportunities</li>
+                <li><strong>Undersized infrastructure:</strong> — Cannot accommodate second EV</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quick Reference */}
+        <div className="mt-6 p-5 rounded-lg bg-transparent border border-white/10">
+          <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+            <div>
+              <p className="font-medium text-white mb-1">Future Predictions</p>
+              <ul className="space-y-0.5">
+                <li>40% dual EV homes by 2030</li>
+                <li>350kW DC standard by 2027</li>
+                <li>60% workplace adoption by 2035</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-medium text-white mb-1">Revenue Potential</p>
+              <ul className="space-y-0.5">
+                <li>V2G: £300-600/year</li>
+                <li>Off-peak savings: £800-1,200/year</li>
+                <li>Grid services: £50-200/MW/hour</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Quiz Section */}
+        <section className="mb-10 mt-12">
+          <SingleQuestionQuiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-3-section-4">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-4">
+              Next Module
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

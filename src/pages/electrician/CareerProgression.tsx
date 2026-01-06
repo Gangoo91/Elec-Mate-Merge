@@ -1,20 +1,371 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet";
-import { ArrowLeft, GraduationCap } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import SimpleCareerCard from "@/components/electrician/career/SimpleCareerCard";
+import { motion } from "framer-motion";
+import {
+  ArrowLeft,
+  GraduationCap,
+  Compass,
+  BookOpen,
+  Award,
+  ClipboardCheck,
+  Briefcase,
+  ChevronRight,
+  TrendingUp,
+  MapPin,
+  Zap,
+  Battery,
+  Sun,
+  Building2,
+  Cpu,
+  Users,
+  Target,
+  Calendar,
+  Rocket,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import CareerPathways from "@/components/electrician/career/CareerPathways";
 import CareerCourses from "@/components/electrician/career/CareerCourses";
 import EnhancedFurtherEducation from "@/components/electrician/career/EnhancedFurtherEducation";
 import ProfessionalAccreditation from "@/components/electrician/career/ProfessionalAccreditation";
 import CPDTracker from "@/components/electrician/career/CPDTracker";
 import JobVacancies from "@/pages/electrician/JobVacancies";
-import { electricianCareerSections } from "@/components/electrician/career/SectionData";
-import { Briefcase } from "lucide-react";
 import { useLiveMarketData } from "@/hooks/useLiveMarketData";
+import { AnimatedCounter } from "@/components/dashboard/AnimatedCounter";
+
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 300, damping: 24 },
+  },
+};
+
+// Career Section Card Component
+interface CareerCardProps {
+  id: string;
+  title: string;
+  description: string;
+  icon: typeof GraduationCap;
+  color: string;
+  badge?: string;
+  comingSoon?: boolean;
+  onClick: () => void;
+}
+
+function CareerCard({ title, description, icon: Icon, color, badge, comingSoon, onClick }: CareerCardProps) {
+  return (
+    <motion.div
+      variants={itemVariants}
+      whileHover={!comingSoon ? { y: -2, scale: 1.01 } : {}}
+      whileTap={!comingSoon ? { scale: 0.98 } : {}}
+      onClick={!comingSoon ? onClick : undefined}
+      className={cn(
+        "relative glass-premium rounded-xl h-full min-h-[160px] cursor-pointer group overflow-hidden",
+        comingSoon && "opacity-70 cursor-not-allowed"
+      )}
+    >
+      {/* Coming Soon Ribbon */}
+      {comingSoon && (
+        <div className="absolute top-0 right-0 overflow-hidden w-28 h-28 pointer-events-none z-10">
+          <div className="absolute top-5 right-[-28px] w-36 bg-gradient-to-br from-amber-500 to-yellow-600 text-black text-[10px] font-bold py-1 text-center transform rotate-45 shadow-lg">
+            Coming Soon
+          </div>
+        </div>
+      )}
+
+      {/* Badge */}
+      {badge && !comingSoon && (
+        <div className="absolute top-3 right-3 z-10">
+          <span className={cn(
+            "px-2 py-0.5 rounded-full text-[10px] font-medium",
+            color === "purple" && "bg-purple-500/20 text-purple-300",
+            color === "blue" && "bg-blue-500/20 text-blue-300",
+            color === "green" && "bg-green-500/20 text-green-300",
+            color === "yellow" && "bg-elec-yellow/20 text-elec-yellow",
+            color === "orange" && "bg-orange-500/20 text-orange-300",
+          )}>
+            {badge}
+          </span>
+        </div>
+      )}
+
+      <div className="p-5 flex flex-col h-full">
+        <div className={cn(
+          "p-2.5 rounded-lg w-fit mb-4 transition-colors",
+          color === "purple" && "bg-purple-500/10 group-hover:bg-purple-500/20",
+          color === "blue" && "bg-blue-500/10 group-hover:bg-blue-500/20",
+          color === "green" && "bg-green-500/10 group-hover:bg-green-500/20",
+          color === "yellow" && "bg-elec-yellow/10 group-hover:bg-elec-yellow/20",
+          color === "orange" && "bg-orange-500/10 group-hover:bg-orange-500/20",
+        )}>
+          <Icon className={cn(
+            "h-6 w-6",
+            color === "purple" && "text-purple-400",
+            color === "blue" && "text-blue-400",
+            color === "green" && "text-green-400",
+            color === "yellow" && "text-elec-yellow",
+            color === "orange" && "text-orange-400",
+          )} />
+        </div>
+
+        <h3 className={cn(
+          "text-base font-semibold text-white mb-2 transition-colors",
+          !comingSoon && color === "purple" && "group-hover:text-purple-400",
+          !comingSoon && color === "blue" && "group-hover:text-blue-400",
+          !comingSoon && color === "green" && "group-hover:text-green-400",
+          !comingSoon && color === "yellow" && "group-hover:text-elec-yellow",
+          !comingSoon && color === "orange" && "group-hover:text-orange-400",
+        )}>
+          {title}
+        </h3>
+        <p className="text-sm text-white/60 leading-relaxed flex-1">
+          {description}
+        </p>
+
+        {!comingSoon && (
+          <div className="flex items-center gap-1 mt-3 text-white/40 group-hover:text-white/70 transition-colors">
+            <span className="text-xs font-medium">Explore</span>
+            <ChevronRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+          </div>
+        )}
+      </div>
+    </motion.div>
+  );
+}
+
+// Opportunity Card Component
+interface OpportunityCardProps {
+  title: string;
+  description: string;
+  icon: typeof Zap;
+  color: string;
+  rate: string;
+  requirement: string;
+  growth: string;
+}
+
+function OpportunityCard({ title, description, icon: Icon, color, rate, requirement, growth }: OpportunityCardProps) {
+  return (
+    <motion.div
+      variants={itemVariants}
+      whileHover={{ y: -2 }}
+      className="glass-premium rounded-xl p-5 h-full"
+    >
+      <div className="flex items-start gap-3 mb-3">
+        <div className={cn(
+          "p-2 rounded-lg",
+          color === "green" && "bg-green-500/10",
+          color === "blue" && "bg-blue-500/10",
+          color === "purple" && "bg-purple-500/10",
+          color === "orange" && "bg-orange-500/10",
+          color === "red" && "bg-red-500/10",
+          color === "cyan" && "bg-cyan-500/10",
+        )}>
+          <Icon className={cn(
+            "h-5 w-5",
+            color === "green" && "text-green-400",
+            color === "blue" && "text-blue-400",
+            color === "purple" && "text-purple-400",
+            color === "orange" && "text-orange-400",
+            color === "red" && "text-red-400",
+            color === "cyan" && "text-cyan-400",
+          )} />
+        </div>
+        <div className="flex-1">
+          <h4 className={cn(
+            "font-semibold text-base",
+            color === "green" && "text-green-400",
+            color === "blue" && "text-blue-400",
+            color === "purple" && "text-purple-400",
+            color === "orange" && "text-orange-400",
+            color === "red" && "text-red-400",
+            color === "cyan" && "text-cyan-400",
+          )}>
+            {title}
+          </h4>
+        </div>
+      </div>
+
+      <p className="text-sm text-white/70 mb-4 leading-relaxed">
+        {description}
+      </p>
+
+      <div className="space-y-2 text-sm">
+        <div className={cn(
+          "font-medium",
+          color === "green" && "text-green-300",
+          color === "blue" && "text-blue-300",
+          color === "purple" && "text-purple-300",
+          color === "orange" && "text-orange-300",
+          color === "red" && "text-red-300",
+          color === "cyan" && "text-cyan-300",
+        )}>
+          {rate}
+        </div>
+        <div className="text-white/60 text-xs">{requirement}</div>
+        <div className="text-white/40 text-[11px]">{growth}</div>
+      </div>
+    </motion.div>
+  );
+}
+
+// Stats Card Component
+function StatsCard({ label, value, icon: Icon, color }: { label: string; value: string | number; icon: typeof Zap; color: string }) {
+  return (
+    <motion.div
+      variants={itemVariants}
+      className="glass-premium rounded-xl p-4"
+    >
+      <div className="flex items-start justify-between gap-2">
+        <div className={cn(
+          "p-2 rounded-lg",
+          color === "yellow" && "bg-elec-yellow/10",
+          color === "blue" && "bg-blue-500/10",
+          color === "green" && "bg-green-500/10",
+          color === "purple" && "bg-purple-500/10",
+        )}>
+          <Icon className={cn(
+            "h-4 w-4",
+            color === "yellow" && "text-elec-yellow",
+            color === "blue" && "text-blue-400",
+            color === "green" && "text-green-400",
+            color === "purple" && "text-purple-400",
+          )} />
+        </div>
+        <div className="text-right">
+          <div className={cn(
+            "text-xl font-bold",
+            color === "yellow" && "text-elec-yellow",
+            color === "blue" && "text-blue-400",
+            color === "green" && "text-green-400",
+            color === "purple" && "text-purple-400",
+          )}>
+            {value}
+          </div>
+          <p className="text-xs text-white/60 mt-0.5">{label}</p>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+// Section data
+const careerSections = [
+  {
+    id: "pathways",
+    title: "Career Pathways",
+    description: "Explore specialisations from EV charging to data centres",
+    icon: Compass,
+    color: "yellow",
+    badge: "Most Popular",
+  },
+  {
+    id: "courses",
+    title: "Training Courses",
+    description: "Professional qualifications and certifications",
+    icon: BookOpen,
+    color: "blue",
+    badge: "350+ Courses",
+  },
+  {
+    id: "accreditation",
+    title: "Professional Bodies",
+    description: "IET, ECA, NAPIT membership and accreditation",
+    icon: Award,
+    color: "green",
+  },
+  {
+    id: "education",
+    title: "Further Education",
+    description: "HNC, HND, degree pathways and apprenticeships",
+    icon: GraduationCap,
+    color: "purple",
+  },
+  {
+    id: "cpd",
+    title: "CPD Tracker",
+    description: "Track continuing professional development hours",
+    icon: ClipboardCheck,
+    color: "orange",
+    comingSoon: true,
+  },
+  {
+    id: "job-vacancies",
+    title: "Job Vacancies",
+    description: "Browse current electrical opportunities",
+    icon: Briefcase,
+    color: "green",
+  },
+];
+
+const opportunities = [
+  {
+    title: "EV Charging Specialist",
+    description: "Design, install and maintain electric vehicle charging infrastructure",
+    icon: Battery,
+    color: "green",
+    rate: "£280-420/day",
+    requirement: "Required: 2919 + 3 years experience",
+    growth: "Growth: 300% increase over 3 years",
+  },
+  {
+    title: "Data Centre Technician",
+    description: "Support critical AI infrastructure with advanced electrical systems",
+    icon: Cpu,
+    color: "blue",
+    rate: "£320-480/day",
+    requirement: "Required: HV competence + cooling knowledge",
+    growth: "Growth: AI boom driving expansion",
+  },
+  {
+    title: "Heat Pump Engineer",
+    description: "Install renewable heating systems and heat pump technology",
+    icon: Zap,
+    color: "purple",
+    rate: "£250-380/day",
+    requirement: "Required: MCS certification",
+    growth: "Growth: Net Zero targets driving demand",
+  },
+  {
+    title: "Solar PV Installer",
+    description: "Design and install solar systems with battery storage",
+    icon: Sun,
+    color: "orange",
+    rate: "£240-350/day",
+    requirement: "Required: 2399 + MCS accreditation",
+    growth: "Growth: Record installations year on year",
+  },
+  {
+    title: "Smart Building Engineer",
+    description: "Integrate IoT systems and intelligent building automation",
+    icon: Building2,
+    color: "red",
+    rate: "£300-450/day",
+    requirement: "Required: BMS knowledge",
+    growth: "Growth: Smart city initiatives accelerating",
+  },
+  {
+    title: "Project Manager",
+    description: "Lead complex electrical projects from design to commissioning",
+    icon: Users,
+    color: "cyan",
+    rate: "£400-600/day",
+    requirement: "Required: Degree/HNC + 5+ years",
+    growth: "Growth: Infrastructure investment boom",
+  },
+];
 
 const CareerProgression = () => {
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -44,7 +395,7 @@ const CareerProgression = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark">
+    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-dark to-elec-dark/95">
       <Helmet>
         <title>Electrician Career Progression UK | JIB Timeline & CPD</title>
         <meta name="description" content="Explore UK electrician career progression: JIB grades, timelines, prerequisites, day rates, CPD, and pathways. BS 7671 18th Edition compliant." />
@@ -52,410 +403,293 @@ const CareerProgression = () => {
       </Helmet>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 pb-safe">
-        {/* Header */}
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-purple-500/10 border border-purple-500/20">
-              <GraduationCap className="h-6 w-6 sm:h-7 sm:w-7 text-purple-400" />
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Career Progression
-              </h1>
-              <p className="text-sm text-white/60">JIB grades, training & opportunities</p>
-            </div>
-          </div>
+        {/* Back Button Header */}
+        <div className="flex items-center justify-between">
           {!activeSection ? (
-            <SmartBackButton />
+            <Link to="/electrician">
+              <Button variant="ghost" size="sm" className="gap-2 text-white/60 hover:text-white hover:bg-white/10">
+                <ArrowLeft className="h-4 w-4" />
+                Back
+              </Button>
+            </Link>
           ) : (
             <Button
-              variant="outline"
+              variant="ghost"
               size="sm"
               onClick={handleBackToSections}
-              className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
+              className="gap-2 text-white/60 hover:text-white hover:bg-white/10"
             >
               <ArrowLeft className="h-4 w-4" />
               Back to Sections
             </Button>
           )}
-        </header>
+        </div>
 
-        {/* Subtitle - only show when not in a section */}
-        {!activeSection && (
-          <p className="text-white/60 text-center max-w-3xl mx-auto">
-            Comprehensive career development resources for qualified electricians. Explore emerging technologies,
-            strategic career planning tools, and professional growth opportunities.
-          </p>
-        )}
-
-      {activeSection === null ? (
-        <>
-
-
-          {/* Career Sections Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {electricianCareerSections.map((section) => (
-              <Card 
-                key={section.id}
-                className="relative border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/90 transition-all duration-300 cursor-pointer hover-scale group overflow-hidden"
-                onClick={() => setActiveSection(section.id)}
-              >
-                {section.id === "cpd" && (
-                  <div className="absolute top-0 right-0 overflow-hidden w-32 h-32 pointer-events-none z-10">
-                    <div className="absolute top-6 right-[-32px] w-40 bg-gradient-to-br from-amber-500 to-yellow-600 text-black text-xs font-bold py-1 text-center transform rotate-45 shadow-lg">
-                      Coming Soon
-                    </div>
-                  </div>
-                )}
-                <CardContent className="p-6 text-center h-full flex flex-col justify-between">
-                  <div>
-                    <div className="mb-4 flex justify-center">
-                      {section.icon}
-                    </div>
-                    <h3 className="text-lg font-semibold text-white mb-2">{section.title}</h3>
-                    <p className="text-sm text-muted-foreground">{section.description}</p>
-                  </div>
-                  <div className="mt-4 text-xs text-elec-yellow opacity-0 group-hover:opacity-100 transition-opacity">
-                    Click to explore →
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-            
-            {/* Job Vacancies Card */}
-            <Card 
-              className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/90 transition-all duration-300 cursor-pointer hover-scale group"
-              onClick={() => setActiveSection("job-vacancies")}
+        {activeSection === null ? (
+          <>
+            {/* Hero Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              className="relative overflow-hidden bg-elec-gray/50 border border-purple-500/20 rounded-2xl"
             >
-              <CardContent className="p-6 text-center h-full flex flex-col justify-between">
-                <div>
-                  <div className="mb-4 flex justify-center">
-                    <Briefcase className="h-12 w-12 text-elec-yellow opacity-80" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-white mb-2">Job Vacancies</h3>
-                  <p className="text-sm text-muted-foreground">Browse current electrical job opportunities and positions</p>
-                </div>
-                <div className="mt-4 text-xs text-elec-yellow opacity-0 group-hover:opacity-100 transition-opacity">
-                  Click to explore →
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+              {/* Gradient accent line */}
+              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-purple-500 via-purple-400 to-purple-500" />
 
-          {/* Industry Statistics */}
-          <Card className="border-elec-yellow/20 bg-elec-gray mb-6">
-            <CardContent className="p-6">
-              <h3 className="text-xl font-semibold text-elec-yellow mb-6 text-center">Industry Overview</h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-elec-yellow mb-2">
-                    {marketData?.careerpathways || '15'}+
+              <div className="relative z-10 p-5 sm:p-6">
+                <div className="flex items-center gap-4">
+                  <div className="flex-shrink-0 p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
+                    <GraduationCap className="h-8 w-8 text-purple-400" />
                   </div>
-                  <div className="text-sm text-white font-medium">Specialist Pathways</div>
-                  <div className="text-xs text-white/70 mt-1">Available career routes</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-elec-yellow mb-2">
-                    {marketData?.totalCourses || '350'}+
-                  </div>
-                  <div className="text-sm text-white font-medium">Training Courses</div>
-                  <div className="text-xs text-white/70 mt-1">Professional development</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-elec-yellow mb-2">
-                    {marketData?.professionalRange || '£30k-£85k+'}
-                  </div>
-                  <div className="text-sm text-white font-medium">Salary Range</div>
-                  <div className="text-xs text-white/70 mt-1">Current market rates</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-elec-yellow mb-2">18%</div>
-                  <div className="text-sm text-white font-medium">Growth Forecast</div>
-                  <div className="text-xs text-white/70 mt-1">Next 5 years</div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
 
-          {/* High-Demand Career Opportunities */}
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardContent className="p-6">
-              <h3 className="text-xl font-semibold text-elec-yellow mb-6 text-center">
-                🎯 High-Demand Career Opportunities
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div className="bg-elec-dark/50 rounded-lg p-5 border border-green-500/30 hover:border-green-500/50 transition-colors">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-4 h-4 rounded-full bg-green-400"></div>
-                    <h4 className="font-semibold text-green-400 text-lg">EV Charging Specialist</h4>
-                  </div>
-                  <p className="text-white text-sm mb-3 leading-relaxed">
-                    Design, install and maintain electric vehicle charging infrastructure for commercial and residential applications
-                  </p>
-                  <div className="space-y-2 text-sm">
-                    <div className="text-green-300 font-medium">£280-420/day • High demand • Future-proof</div>
-                    <div className="text-white/80">Required: 2919 qualification + 3 years experience</div>
-                    <div className="text-white/60 text-xs">Growth: 300% increase in demand over 3 years</div>
-                  </div>
-                </div>
-                
-                <div className="bg-elec-dark/50 rounded-lg p-5 border border-blue-500/30 hover:border-blue-500/50 transition-colors">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-4 h-4 rounded-full bg-blue-400"></div>
-                    <h4 className="font-semibold text-blue-400 text-lg">Data Centre Technician</h4>
-                  </div>
-                  <p className="text-white text-sm mb-3 leading-relaxed">
-                    Support critical AI infrastructure and cloud computing facilities with advanced electrical systems
-                  </p>
-                  <div className="space-y-2 text-sm">
-                    <div className="text-blue-300 font-medium">£320-480/day • Rapid growth • High tech</div>
-                    <div className="text-white/80">Required: HV competence + cooling systems knowledge</div>
-                    <div className="text-white/60 text-xs">Growth: AI boom driving massive expansion</div>
-                  </div>
-                </div>
-                
-                <div className="bg-elec-dark/50 rounded-lg p-5 border border-purple-500/30 hover:border-purple-500/50 transition-colors">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-4 h-4 rounded-full bg-purple-400"></div>
-                    <h4 className="font-semibold text-purple-400 text-lg">Heat Pump Engineer</h4>
-                  </div>
-                  <p className="text-white text-sm mb-3 leading-relaxed">
-                    Install renewable heating systems and advanced heat pump technology for domestic and commercial use
-                  </p>
-                  <div className="space-y-2 text-sm">
-                    <div className="text-purple-300 font-medium">£250-380/day • Government-backed • Growing</div>
-                    <div className="text-white/80">Required: MCS certification + electrical competence</div>
-                    <div className="text-white/60 text-xs">Growth: Net Zero targets driving demand</div>
-                  </div>
-                </div>
-                
-                <div className="bg-elec-dark/50 rounded-lg p-5 border border-orange-500/30 hover:border-orange-500/50 transition-colors">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-4 h-4 rounded-full bg-orange-400"></div>
-                    <h4 className="font-semibold text-orange-400 text-lg">Solar PV Installer</h4>
-                  </div>
-                  <p className="text-white text-sm mb-3 leading-relaxed">
-                    Design and install solar photovoltaic systems with battery storage and grid connection expertise
-                  </p>
-                  <div className="space-y-2 text-sm">
-                    <div className="text-orange-300 font-medium">£240-350/day • Renewable focus • Expanding</div>
-                    <div className="text-white/80">Required: 2399 qualification + MCS accreditation</div>
-                    <div className="text-white/60 text-xs">Growth: Record installations year on year</div>
-                  </div>
-                </div>
-                
-                <div className="bg-elec-dark/50 rounded-lg p-5 border border-red-500/30 hover:border-red-500/50 transition-colors">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-4 h-4 rounded-full bg-red-400"></div>
-                    <h4 className="font-semibold text-red-400 text-lg">Smart Building Engineer</h4>
-                  </div>
-                  <p className="text-white text-sm mb-3 leading-relaxed">
-                    Integrate IoT systems, BMS controls, and intelligent building automation with electrical installations
-                  </p>
-                  <div className="space-y-2 text-sm">
-                    <div className="text-red-300 font-medium">£300-450/day • Technology focus • Premium</div>
-                    <div className="text-white/80">Required: BMS knowledge + electrical qualification</div>
-                    <div className="text-white/60 text-xs">Growth: Smart city initiatives accelerating</div>
-                  </div>
-                </div>
-                
-                <div className="bg-elec-dark/50 rounded-lg p-5 border border-cyan-500/30 hover:border-cyan-500/50 transition-colors">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-4 h-4 rounded-full bg-cyan-400"></div>
-                    <h4 className="font-semibold text-cyan-400 text-lg">Electrical Project Manager</h4>
-                  </div>
-                  <p className="text-white text-sm mb-3 leading-relaxed">
-                    Lead complex electrical projects from design through commissioning with team management responsibilities
-                  </p>
-                  <div className="space-y-2 text-sm">
-                    <div className="text-cyan-300 font-medium">£400-600/day • Leadership • Strategic</div>
-                    <div className="text-white/80">Required: Degree/HNC + 5+ years experience</div>
-                    <div className="text-white/60 text-xs">Growth: Infrastructure investment boom</div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+                  <div className="flex-1 min-w-0">
+                    <h1 className="text-xl sm:text-2xl font-semibold text-white leading-tight">
+                      Career <span className="text-purple-400">Progression</span>
+                    </h1>
 
-          {/* Professional Development Roadmap */}
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardContent className="p-4 sm:p-6">
-              <h3 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 sm:mb-6 text-center">
-                ⚡ Professional Development Roadmap
-              </h3>
-              
-              {/* Grid with equal height columns and proper dividers */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 md:divide-x md:divide-elec-yellow/10 items-stretch">
-                {/* Column 1: Immediate Actions */}
-                <div className="flex flex-col h-full">
-                  <div className="flex items-center gap-3 mb-4 h-16">
-                    <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                      <span className="text-elec-yellow font-semibold text-sm">1</span>
-                    </div>
-                    <h4 className="font-semibold text-white text-base sm:text-lg leading-tight">Immediate Actions</h4>
-                  </div>
-                  
-                  <div className="flex-1">
-                    <ul aria-label="Immediate actions for career development" className="space-y-3">
-                      <li className="relative pl-4">
-                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-elec-yellow"></span>
-                        <span className="text-white text-sm leading-relaxed">Update CV with latest projects and certifications</span>
-                      </li>
-                      <li className="relative pl-4">
-                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-elec-yellow"></span>
-                        <span className="text-white text-sm leading-relaxed">Research emerging technology training (EV, heat pumps, solar)</span>
-                      </li>
-                      <li className="relative pl-4">
-                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-elec-yellow"></span>
-                        <span className="text-white text-sm leading-relaxed">Join professional networking groups and LinkedIn communities</span>
-                      </li>
-                      <li className="relative pl-4">
-                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-elec-yellow"></span>
-                        <span className="text-white text-sm leading-relaxed">Review current JIB grade and advancement requirements</span>
-                      </li>
-                      <li className="relative pl-4">
-                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-elec-yellow"></span>
-                        <span className="text-white text-sm leading-relaxed">Set up job alerts for specialist roles</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                
-                {/* Column 2: 3-Month Goals */}
-                <div className="flex flex-col h-full md:pl-6">
-                  <div className="flex items-center gap-3 mb-4 h-16">
-                    <div className="w-8 h-8 rounded-full bg-blue-400/20 flex items-center justify-center flex-shrink-0">
-                      <span className="text-blue-400 font-semibold text-sm">2</span>
-                    </div>
-                    <h4 className="font-semibold text-white text-base sm:text-lg leading-tight">3-Month Goals</h4>
-                  </div>
-                  
-                  <div className="flex-1">
-                    <ul aria-label="Three month career development goals" className="space-y-3">
-                      <li className="relative pl-4">
-                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-blue-400"></span>
-                        <span className="text-white text-sm leading-relaxed">Book specialist training courses (2919, 2399, MCS certification)</span>
-                      </li>
-                      <li className="relative pl-4">
-                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-blue-400"></span>
-                        <span className="text-white text-sm leading-relaxed">Attend industry trade shows and networking events</span>
-                      </li>
-                      <li className="relative pl-4">
-                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-blue-400"></span>
-                        <span className="text-white text-sm leading-relaxed">Complete market research on day rates vs salary positions</span>
-                      </li>
-                      <li className="relative pl-4">
-                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-blue-400"></span>
-                        <span className="text-white text-sm leading-relaxed">Apply for professional membership (IET, ECA, NAPIT)</span>
-                      </li>
-                      <li className="relative pl-4">
-                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-blue-400"></span>
-                        <span className="text-white text-sm leading-relaxed">Start building portfolio of specialist work examples</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                
-                {/* Column 3: Long-term Strategy */}
-                <div className="flex flex-col h-full md:pl-6">
-                  <div className="flex items-center gap-3 mb-4 h-16">
-                    <div className="w-8 h-8 rounded-full bg-green-400/20 flex items-center justify-center flex-shrink-0">
-                      <span className="text-green-400 font-semibold text-sm">3</span>
-                    </div>
-                    <h4 className="font-semibold text-white text-base sm:text-lg leading-tight">Long-term Strategy</h4>
-                  </div>
-                  
-                  <div className="flex-1">
-                    <ul aria-label="Long-term career strategy items" className="space-y-3">
-                      <li className="relative pl-4">
-                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-green-400"></span>
-                        <span className="text-white text-sm leading-relaxed">Complete advanced qualifications in chosen specialisation</span>
-                      </li>
-                      <li className="relative pl-4">
-                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-green-400"></span>
-                        <span className="text-white text-sm leading-relaxed">Build reputation as subject matter expert through projects</span>
-                      </li>
-                      <li className="relative pl-4">
-                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-green-400"></span>
-                        <span className="text-white text-sm leading-relaxed">Consider further education (HNC/HND/Degree) if applicable</span>
-                      </li>
-                      <li className="relative pl-4">
-                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-green-400"></span>
-                        <span className="text-white text-sm leading-relaxed">Evaluate contracting vs employment career paths</span>
-                      </li>
-                      <li className="relative pl-4">
-                        <span className="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-green-400"></span>
-                        <span className="text-white text-sm leading-relaxed">Explore business ownership or partnership opportunities</span>
-                      </li>
-                    </ul>
+                    <p className="text-sm text-white/60 mt-1">
+                      JIB grades, professional training & specialist pathways
+                    </p>
                   </div>
                 </div>
               </div>
-            </CardContent>
-          </Card>
-          
-          {/* Industry Insights */}
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardContent className="p-6">
-              <h3 className="text-xl font-semibold text-elec-yellow mb-6 text-center">
-                📊 Current Industry Insights
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-white text-lg flex items-center gap-2">
-                    <span className="text-green-400">↗</span> Market Trends
-                  </h4>
-                  <div className="space-y-3 text-sm">
-                    <div className="flex justify-between items-center p-3 bg-elec-dark/50 rounded-lg">
-                      <span className="text-white">Net Zero Skills Premium</span>
-                      <span className="text-green-400 font-medium">+25%</span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-elec-dark/50 rounded-lg">
-                      <span className="text-white">EV Infrastructure Demand</span>
-                      <span className="text-green-400 font-medium">+300%</span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-elec-dark/50 rounded-lg">
-                      <span className="text-white">Smart Home Integration</span>
-                      <span className="text-blue-400 font-medium">+180%</span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-elec-dark/50 rounded-lg">
-                      <span className="text-white">Data Centre Growth</span>
-                      <span className="text-purple-400 font-medium">+220%</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-white text-lg flex items-center gap-2">
-                    <span className="text-blue-400">💼</span> Regional Opportunities
-                  </h4>
-                  <div className="space-y-3 text-sm">
-                    <div className="flex justify-between items-center p-3 bg-elec-dark/50 rounded-lg">
-                      <span className="text-white">London & South East</span>
-                      <span className="text-elec-yellow font-medium">£350-500/day</span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-elec-dark/50 rounded-lg">
-                      <span className="text-white">Manchester & North West</span>
-                      <span className="text-elec-yellow font-medium">£280-400/day</span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-elec-dark/50 rounded-lg">
-                      <span className="text-white">Scotland (Edinburgh/Glasgow)</span>
-                      <span className="text-elec-yellow font-medium">£300-420/day</span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-elec-dark/50 rounded-lg">
-                      <span className="text-white">Wales & South West</span>
-                      <span className="text-elec-yellow font-medium">£260-380/day</span>
-                    </div>
-                  </div>
-                </div>
+            </motion.div>
+
+            {/* Stats Bar */}
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="grid grid-cols-2 sm:grid-cols-4 gap-3"
+            >
+              <StatsCard
+                label="Specialist Pathways"
+                value={marketData?.careerpathways || "15+"}
+                icon={Compass}
+                color="yellow"
+              />
+              <StatsCard
+                label="Training Courses"
+                value={marketData?.totalCourses || "350+"}
+                icon={BookOpen}
+                color="blue"
+              />
+              <StatsCard
+                label="Salary Range"
+                value={marketData?.professionalRange || "£30k-£85k+"}
+                icon={TrendingUp}
+                color="green"
+              />
+              <StatsCard
+                label="Growth Forecast"
+                value="18%"
+                icon={Rocket}
+                color="purple"
+              />
+            </motion.div>
+
+            {/* Career Sections Grid */}
+            <div>
+              <div className="flex items-center gap-2 px-1 mb-4">
+                <div className="h-1.5 w-1.5 rounded-full bg-purple-400" />
+                <h2 className="text-lg font-semibold text-white">Explore Career Options</h2>
               </div>
-            </CardContent>
-          </Card>
-        </>
+
+              <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+              >
+                {careerSections.map((section) => (
+                  <CareerCard
+                    key={section.id}
+                    {...section}
+                    onClick={() => setActiveSection(section.id)}
+                  />
+                ))}
+              </motion.div>
+            </div>
+
+            {/* High-Demand Opportunities */}
+            <div>
+              <div className="flex items-center gap-2 px-1 mb-4">
+                <div className="h-1.5 w-1.5 rounded-full bg-green-400" />
+                <h2 className="text-lg font-semibold text-white">High-Demand Opportunities</h2>
+              </div>
+
+              <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+              >
+                {opportunities.map((opp, index) => (
+                  <OpportunityCard key={index} {...opp} />
+                ))}
+              </motion.div>
+            </div>
+
+            {/* Development Roadmap */}
+            <div>
+              <div className="flex items-center gap-2 px-1 mb-4">
+                <div className="h-1.5 w-1.5 rounded-full bg-blue-400" />
+                <h2 className="text-lg font-semibold text-white">Development Roadmap</h2>
+              </div>
+
+              <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className="grid grid-cols-1 md:grid-cols-3 gap-4"
+              >
+                {/* Immediate Actions */}
+                <motion.div variants={itemVariants} className="glass-premium rounded-xl p-5">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center">
+                      <Target className="h-4 w-4 text-elec-yellow" />
+                    </div>
+                    <h3 className="font-semibold text-white">Immediate Actions</h3>
+                  </div>
+                  <ul className="space-y-2.5">
+                    {[
+                      "Update CV with latest certifications",
+                      "Research emerging technology training",
+                      "Join professional networking groups",
+                      "Review JIB grade requirements",
+                      "Set up job alerts for specialist roles",
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-white/70">
+                        <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+
+                {/* 3-Month Goals */}
+                <motion.div variants={itemVariants} className="glass-premium rounded-xl p-5">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+                      <Calendar className="h-4 w-4 text-blue-400" />
+                    </div>
+                    <h3 className="font-semibold text-white">3-Month Goals</h3>
+                  </div>
+                  <ul className="space-y-2.5">
+                    {[
+                      "Book specialist training courses",
+                      "Attend industry trade shows",
+                      "Research day rates vs salary",
+                      "Apply for professional membership",
+                      "Build portfolio of specialist work",
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-white/70">
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 flex-shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+
+                {/* Long-term Strategy */}
+                <motion.div variants={itemVariants} className="glass-premium rounded-xl p-5">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
+                      <Rocket className="h-4 w-4 text-green-400" />
+                    </div>
+                    <h3 className="font-semibold text-white">Long-term Strategy</h3>
+                  </div>
+                  <ul className="space-y-2.5">
+                    {[
+                      "Complete advanced qualifications",
+                      "Build subject matter expertise",
+                      "Consider HNC/HND/Degree pathway",
+                      "Evaluate contracting vs employment",
+                      "Explore business ownership",
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-white/70">
+                        <span className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 flex-shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              </motion.div>
+            </div>
+
+            {/* Industry Insights */}
+            <div>
+              <div className="flex items-center gap-2 px-1 mb-4">
+                <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
+                <h2 className="text-lg font-semibold text-white">Industry Insights</h2>
+              </div>
+
+              <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className="grid grid-cols-1 md:grid-cols-2 gap-4"
+              >
+                {/* Market Trends */}
+                <motion.div variants={itemVariants} className="glass-premium rounded-xl p-5">
+                  <div className="flex items-center gap-2 mb-4">
+                    <TrendingUp className="h-5 w-5 text-green-400" />
+                    <h3 className="font-semibold text-white">Market Trends</h3>
+                  </div>
+                  <div className="space-y-3">
+                    {[
+                      { label: "Net Zero Skills Premium", value: "+25%", color: "green" },
+                      { label: "EV Infrastructure Demand", value: "+300%", color: "green" },
+                      { label: "Smart Home Integration", value: "+180%", color: "blue" },
+                      { label: "Data Centre Growth", value: "+220%", color: "purple" },
+                    ].map((item, i) => (
+                      <div key={i} className="flex justify-between items-center p-3 bg-white/5 rounded-lg">
+                        <span className="text-sm text-white/80">{item.label}</span>
+                        <span className={cn(
+                          "font-semibold text-sm",
+                          item.color === "green" && "text-green-400",
+                          item.color === "blue" && "text-blue-400",
+                          item.color === "purple" && "text-purple-400",
+                        )}>
+                          {item.value}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+
+                {/* Regional Rates */}
+                <motion.div variants={itemVariants} className="glass-premium rounded-xl p-5">
+                  <div className="flex items-center gap-2 mb-4">
+                    <MapPin className="h-5 w-5 text-elec-yellow" />
+                    <h3 className="font-semibold text-white">Regional Day Rates</h3>
+                  </div>
+                  <div className="space-y-3">
+                    {[
+                      { region: "London & South East", rate: "£350-500/day" },
+                      { region: "Manchester & North West", rate: "£280-400/day" },
+                      { region: "Scotland", rate: "£300-420/day" },
+                      { region: "Wales & South West", rate: "£260-380/day" },
+                    ].map((item, i) => (
+                      <div key={i} className="flex justify-between items-center p-3 bg-white/5 rounded-lg">
+                        <span className="text-sm text-white/80">{item.region}</span>
+                        <span className="font-semibold text-sm text-elec-yellow">{item.rate}</span>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              </motion.div>
+            </div>
+          </>
         ) : (
-          <div className="space-y-4">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
             {renderSectionContent()}
-          </div>
+          </motion.div>
         )}
       </main>
     </div>

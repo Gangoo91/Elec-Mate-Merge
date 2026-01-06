@@ -3,7 +3,6 @@ import { OverviewSection } from "@/components/employer/sections/OverviewSection"
 import { EmployeesSection } from "@/components/employer/sections/EmployeesSection";
 import { JobsSection } from "@/components/employer/sections/JobsSection";
 import DraggableVoiceAssistant from "@/components/DraggableVoiceAssistant";
-import { MobileBottomNav } from "@/components/employer/MobileBottomNav";
 
 import { SafetyHRSection } from "@/components/employer/sections/SafetyHRSection";
 import { RAMSSection } from "@/components/employer/sections/RAMSSection";
@@ -527,9 +526,6 @@ const EmployerDashboard = () => {
         <CreateOrderDialog open={orderDialogOpen} onOpenChange={setOrderDialogOpen} />
         <CreateSupplierDialog open={supplierDialogOpen} onOpenChange={setSupplierDialogOpen} />
         <PostVacancyDialog open={vacancyDialogOpen} onOpenChange={setVacancyDialogOpen} trigger={null} />
-
-        {/* Mobile Bottom Navigation */}
-        <MobileBottomNav currentSection={activeSection} onNavigate={handleNavigate} />
 
         {/* Draggable Voice Assistant */}
         <DraggableVoiceAssistant onNavigate={handleNavigate} currentSection={activeSection} />

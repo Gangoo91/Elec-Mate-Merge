@@ -8,7 +8,7 @@ const LadderInspection = () => {
       <h3 className="text-xl font-bold text-elec-yellow">Ladder Inspection & Safe Use</h3>
       
       <div className="space-y-4">
-        <div className="bg-elec-dark/50 border-l-4 border-red-500 p-4">
+        <div className="bg-white/10 border-l-4 border-red-500 p-4">
           <div className="flex items-center gap-2 mb-2">
             <AlertTriangle className="h-5 w-5 text-red-500" />
             <h4 className="font-semibold text-elec-yellow">Pre-use Inspection Requirements</h4>

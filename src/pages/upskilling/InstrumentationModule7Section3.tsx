@@ -552,7 +552,7 @@ const InstrumentationModule7Section3 = () => {
                 ],
                 correctAnswer: 1,
                 explanation: "The industry standard power supply voltage for 4-20mA loops is 24VDC ±10% (21.6V to 26.4V) with good voltage regulation and low ripple to ensure reliable transmitter operation."
-              }
+            }
             ]}
             title="Section 3 Knowledge Check"
           />

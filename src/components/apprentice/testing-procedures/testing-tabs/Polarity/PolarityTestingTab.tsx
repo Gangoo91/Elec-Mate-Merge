@@ -7,7 +7,7 @@ const PolarityTestingTab = () => {
       <Card>
         <CardContent className="pt-6">
           <h2 className="text-xl font-semibold">Polarity Testing</h2>
-          <p className="text-sm text-muted-foreground mt-1 mb-4">
+          <p className="text-sm text-white mt-1 mb-4">
             Verifies that all connections are correctly wired and switches/fuses are in the line conductor.
           </p>
           
@@ -19,9 +19,9 @@ const PolarityTestingTab = () => {
             <li>Pay special attention to two-way and intermediate switching arrangements</li>
           </ul>
           
-          <div className="mt-6 bg-gray-800/30 p-4 rounded-md">
+          <div className="mt-6 bg-white/5 border border-white/10 p-4 rounded-md">
             <img src="/placeholder.svg" alt="Polarity Testing Method" className="mx-auto max-h-64" />
-            <p className="text-xs text-center mt-2 text-muted-foreground">
+            <p className="text-xs text-center mt-2 text-white">
               Socket outlet and switch polarity testing diagram
             </p>
           </div>

@@ -84,161 +84,159 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
   const isOtherPurposeRequired = formData.purposeOfInspection === 'other';
 
   return (
-    <Card className="border border-border bg-card overflow-hidden">
+    <Card className="border border-border/30 bg-card overflow-hidden">
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-        <SectionHeader 
-          title="Purpose & Inspection Details" 
+        <SectionHeader
+          title="Purpose & Inspection Details"
           icon={ClipboardList}
           isOpen={isOpen}
           color="blue-500"
         />
         <CollapsibleContent>
-          <CardContent className="p-3 sm:p-4 md:p-6 space-y-3 sm:space-y-4">
-        <div className="space-y-3 sm:space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="purposeOfInspection">Purpose of Inspection *</Label>
-            <Select value={formData.purposeOfInspection || ''} onValueChange={(value) => onUpdate('purposeOfInspection', value)}>
-              <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-blue-500 focus:ring-blue-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                <SelectValue placeholder="Select purpose" />
-              </SelectTrigger>
-              <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                <SelectItem value="periodic">Periodic Inspection</SelectItem>
-                <SelectItem value="change-of-occupancy">Change of Occupancy</SelectItem>
-                <SelectItem value="change-of-use">Change of Use</SelectItem>
-                <SelectItem value="extension">Extension to Installation</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          {isOtherPurposeRequired && (
-            <div className="space-y-2">
-              <Label htmlFor="otherPurpose">Other Purpose *</Label>
-              <Input
-                id="otherPurpose"
-                value={formData.otherPurpose || ''}
-                onChange={(e) => onUpdate('otherPurpose', e.target.value)}
-                placeholder="Please specify the purpose"
-                className="h-11 text-base touch-manipulation border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-              />
-            </div>
-          )}
-        </div>
-
-        <Separator className="my-6" />
-
-        <div className="space-y-4">
-            <h3 className="text-base sm:text-lg font-semibold text-foreground border-b border-border pb-2 flex items-center gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-blue-400"></div>
-            Inspection Dates
-          </h3>
-          <div className="space-y-3 sm:space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="inspectionDate">Date of Inspection *</Label>
-              <div className="flex gap-2">
-                <Input
-                  id="inspectionDate"
-                  type="date"
-                  value={formData.inspectionDate || ''}
-                  onChange={(e) => onUpdate('inspectionDate', e.target.value)}
-                  className="h-11 text-base touch-manipulation flex-1 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                />
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={setTodaysDate}
-                  title="Set today's date"
-                  className="px-3 border-gray-300 hover:border-blue-500 hover:bg-blue-50"
-                >
-                  <Calendar className="h-4 w-4" />
-                </Button>
+          <CardContent className="p-4 space-y-6">
+            {/* Purpose */}
+            <div className="space-y-4">
+              <div className="space-y-1.5">
+                <Label htmlFor="purposeOfInspection">Purpose of Inspection <span className="text-elec-yellow">*</span></Label>
+                <Select value={formData.purposeOfInspection || ''} onValueChange={(value) => onUpdate('purposeOfInspection', value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select purpose" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="periodic">Periodic Inspection</SelectItem>
+                    <SelectItem value="change-of-occupancy">Change of Occupancy</SelectItem>
+                    <SelectItem value="change-of-use">Change of Use</SelectItem>
+                    <SelectItem value="extension">Extension to Installation</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="inspectionInterval">Inspection Interval (Years) *</Label>
-              <Select value={formData.inspectionInterval || ''} onValueChange={(value) => onUpdate('inspectionInterval', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-blue-500 focus:ring-blue-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                  <SelectValue placeholder="Select interval" />
-                </SelectTrigger>
-                <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                  <SelectItem value="1">1 Year</SelectItem>
-                  <SelectItem value="3">3 Years</SelectItem>
-                  <SelectItem value="5">5 Years</SelectItem>
-                  <SelectItem value="10">10 Years</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
-              {formData.description && (
-                <p className="text-xs text-blue-600 mt-1 flex items-center gap-1">
-                  <div className="w-1 h-1 rounded-full bg-blue-400"></div>
-                  Recommended: {getRecommendedInterval(formData.description)} years for this property type
-                </p>
+              {isOtherPurposeRequired && (
+                <div className="space-y-1.5">
+                  <Label htmlFor="otherPurpose">Other Purpose <span className="text-elec-yellow">*</span></Label>
+                  <Input
+                    id="otherPurpose"
+                    value={formData.otherPurpose || ''}
+                    onChange={(e) => onUpdate('otherPurpose', e.target.value)}
+                    placeholder="Please specify the purpose"
+                  />
+                </div>
               )}
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="nextInspectionDate">Next Inspection Date</Label>
-              <div className="flex gap-2">
-                <Input
-                  id="nextInspectionDate"
-                  type="date"
-                  value={formData.nextInspectionDate || ''}
-                  onChange={(e) => onUpdate('nextInspectionDate', e.target.value)}
-                  className="h-11 text-base touch-manipulation flex-1 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                />
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={calculateNextInspectionDate}
-                  title="Auto-calculate based on inspection date and interval"
-                  disabled={!formData.inspectionDate || !formData.inspectionInterval}
-                  className="px-3 border-gray-300 hover:border-blue-500 hover:bg-blue-50 disabled:opacity-50"
-                >
-                  <Calculator className="h-4 w-4" />
-                </Button>
+
+            <Separator className="bg-border/30" />
+
+            {/* Inspection Dates */}
+            <div className="space-y-4">
+              <h3 className="text-sm font-semibold text-foreground/80 uppercase tracking-wide flex items-center gap-2">
+                <div className="w-1 h-1 rounded-full bg-elec-yellow"></div>
+                Inspection Dates
+              </h3>
+              <div className="space-y-4">
+                <div className="space-y-1.5">
+                  <Label htmlFor="inspectionDate">Date of Inspection <span className="text-elec-yellow">*</span></Label>
+                  <div className="flex gap-2">
+                    <Input
+                      id="inspectionDate"
+                      type="date"
+                      value={formData.inspectionDate || ''}
+                      onChange={(e) => onUpdate('inspectionDate', e.target.value)}
+                      className="flex-1"
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon"
+                      onClick={setTodaysDate}
+                      title="Set today's date"
+                    >
+                      <Calendar className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="inspectionInterval">Inspection Interval (Years) <span className="text-elec-yellow">*</span></Label>
+                  <Select value={formData.inspectionInterval || ''} onValueChange={(value) => onUpdate('inspectionInterval', value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select interval" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1">1 Year</SelectItem>
+                      <SelectItem value="3">3 Years</SelectItem>
+                      <SelectItem value="5">5 Years</SelectItem>
+                      <SelectItem value="10">10 Years</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  {formData.description && (
+                    <p className="text-xs text-elec-yellow/80 flex items-center gap-1">
+                      <div className="w-1 h-1 rounded-full bg-elec-yellow"></div>
+                      Recommended: {getRecommendedInterval(formData.description)} years for this property type
+                    </p>
+                  )}
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="nextInspectionDate">Next Inspection Date</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      id="nextInspectionDate"
+                      type="date"
+                      value={formData.nextInspectionDate || ''}
+                      onChange={(e) => onUpdate('nextInspectionDate', e.target.value)}
+                      className="flex-1"
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon"
+                      onClick={calculateNextInspectionDate}
+                      title="Auto-calculate"
+                      disabled={!formData.inspectionDate || !formData.inspectionInterval}
+                    >
+                      <Calculator className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <Separator className="my-6" />
+            <Separator className="bg-border/30" />
 
-        <div className="space-y-4">
-          <h3 className="text-base sm:text-lg font-semibold text-foreground border-b border-border pb-2 flex items-center gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
-            Inspection Scope
-          </h3>
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="extentOfInspection">Extent of Inspection *</Label>
-              <Textarea
-                id="extentOfInspection"
-                value={formData.extentOfInspection || ''}
-                onChange={(e) => onUpdate('extentOfInspection', e.target.value)}
-                placeholder="Describe what areas/circuits/systems were inspected"
-                rows={4}
-                className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-gray-300 focus:border-blue-500"
-              />
-              <p className="text-xs text-muted-foreground mt-1">
-                Include specific areas, circuits, and systems inspected
-              </p>
+            {/* Inspection Scope */}
+            <div className="space-y-4">
+              <h3 className="text-sm font-semibold text-foreground/80 uppercase tracking-wide flex items-center gap-2">
+                <div className="w-1 h-1 rounded-full bg-elec-yellow"></div>
+                Inspection Scope
+              </h3>
+              <div className="space-y-4">
+                <div className="space-y-1.5">
+                  <Label htmlFor="extentOfInspection">Extent of Inspection <span className="text-elec-yellow">*</span></Label>
+                  <Textarea
+                    id="extentOfInspection"
+                    value={formData.extentOfInspection || ''}
+                    onChange={(e) => onUpdate('extentOfInspection', e.target.value)}
+                    placeholder="Describe what areas/circuits/systems were inspected"
+                    rows={4}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Include specific areas, circuits, and systems inspected
+                  </p>
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="limitationsOfInspection">Limitations of Inspection</Label>
+                  <Textarea
+                    id="limitationsOfInspection"
+                    value={formData.limitationsOfInspection || ''}
+                    onChange={(e) => onUpdate('limitationsOfInspection', e.target.value)}
+                    placeholder="Any areas not inspected or limitations encountered"
+                    rows={4}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Note any areas that could not be accessed or inspected
+                  </p>
+                </div>
+              </div>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="limitationsOfInspection">Limitations of Inspection</Label>
-              <Textarea
-                id="limitationsOfInspection"
-                value={formData.limitationsOfInspection || ''}
-                onChange={(e) => onUpdate('limitationsOfInspection', e.target.value)}
-                placeholder="Any areas not inspected or limitations encountered"
-                rows={4}
-                className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-gray-300 focus:border-blue-500"
-              />
-              <p className="text-xs text-muted-foreground mt-1">
-                Note any areas that could not be accessed or inspected
-              </p>
-            </div>
-          </div>
-        </div>
           </CardContent>
         </CollapsibleContent>
       </Collapsible>

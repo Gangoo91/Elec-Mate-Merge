@@ -5,12 +5,12 @@ import BMSMockExam from '@/components/upskilling/BMSMockExam';
 
 const BMSMockExamPage = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       <div className="container mx-auto px-4 py-8">
         {/* Back Button */}
         <div className="mb-6">
           <Link to="../bms-course">
-            <Button variant="ghost" className="text-white hover:text-yellow-400 hover:bg-white/5">
+            <Button variant="ghost" className="text-white hover:text-elec-yellow hover:bg-white/5">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to BMS Course
             </Button>

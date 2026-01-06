@@ -133,7 +133,7 @@ const QuickReferenceTools = () => {
               </CardHeader>
               <CardContent className="pt-0">
                 <div className="flex items-center justify-between">
-                  <Badge variant="outline" className="text-xs text-white/80 border-gray-600">
+                  <Badge variant="outline" className="text-xs text-white/80 border-white/40">
                     {tool.category}
                   </Badge>
                   <Button 

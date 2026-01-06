@@ -64,7 +64,7 @@ const DigitalToolsIntegration = () => {
       case "Free": return "bg-green-500/20 text-green-400 border-green-500/30";
       case "Paid": return "bg-red-500/20 text-red-400 border-red-500/30";
       case "Freemium": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+      default: return "bg-white/10 text-white border-white/30";
     }
   };
 
@@ -74,10 +74,10 @@ const DigitalToolsIntegration = () => {
 
   return (
     <div className="space-y-4">
-      <Card className="border-purple-500/30 bg-elec-gray">
+      <Card className="border-purple-500/30 bg-white/5">
         <CardHeader className="pb-3">
           <CardTitle className="text-purple-400 text-base sm:text-lg">Digital Portfolio Tools</CardTitle>
-          <p className="text-xs sm:text-sm text-muted-foreground">
+          <p className="text-xs sm:text-sm text-white">
             Modern tools to create, organise, and present your portfolio professionally
           </p>
         </CardHeader>
@@ -92,7 +92,7 @@ const DigitalToolsIntegration = () => {
                     </div>
                     <div className="min-w-0">
                       <h4 className="font-medium text-white text-sm truncate">{tool.name}</h4>
-                      <p className="text-xs text-muted-foreground">{tool.category}</p>
+                      <p className="text-xs text-white">{tool.category}</p>
                     </div>
                   </div>
                   <Badge className={`text-xs ${getCostColor(tool.cost)} flex-shrink-0`}>
@@ -100,19 +100,19 @@ const DigitalToolsIntegration = () => {
                   </Badge>
                 </div>
                 
-                <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{tool.description}</p>
+                <p className="text-xs text-white mb-2 line-clamp-2">{tool.description}</p>
                 
                 <div className="mb-2">
                   <span className="text-xs font-medium text-purple-400">Features:</span>
                   <ul className="mt-1 space-y-0.5">
                     {tool.features.slice(0, 2).map((feature, idx) => (
-                      <li key={idx} className="text-xs text-muted-foreground flex items-start gap-1">
+                      <li key={idx} className="text-xs text-white flex items-start gap-1">
                         <span className="text-purple-400 flex-shrink-0">•</span>
                         <span className="line-clamp-1">{feature}</span>
                       </li>
                     ))}
                     {tool.features.length > 2 && (
-                      <li className="text-xs text-muted-foreground text-purple-400">
+                      <li className="text-xs text-white text-purple-400">
                         +{tool.features.length - 2} more features
                       </li>
                     )}
@@ -120,8 +120,8 @@ const DigitalToolsIntegration = () => {
                 </div>
                 
                 <div className="flex items-center gap-2 mb-3">
-                  <Smartphone className="h-3 w-3 text-muted-foreground flex-shrink-0" />
-                  <span className="text-xs text-muted-foreground truncate">
+                  <Smartphone className="h-3 w-3 text-white flex-shrink-0" />
+                  <span className="text-xs text-white truncate">
                     {tool.platform.join(", ")}
                   </span>
                 </div>
@@ -141,12 +141,12 @@ const DigitalToolsIntegration = () => {
         </CardContent>
       </Card>
       
-      <Card className="border-blue-500/30 bg-elec-gray">
+      <Card className="border-blue-500/30 bg-white/5">
         <CardHeader className="pb-3">
           <CardTitle className="font-medium text-blue-400 text-sm">Getting Started Tips</CardTitle>
         </CardHeader>
         <CardContent className="pt-0">
-          <ul className="text-xs sm:text-sm text-muted-foreground space-y-1">
+          <ul className="text-xs sm:text-sm text-white space-y-1">
             <li>• Start with free tools to understand your needs</li>
             <li>• Choose tools that work across your devices</li>
             <li>• Ensure cloud backup for all important files</li>

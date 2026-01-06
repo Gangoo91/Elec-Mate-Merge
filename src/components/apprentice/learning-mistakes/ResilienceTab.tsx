@@ -136,7 +136,7 @@ const ResilienceTab = () => {
             <div className="space-y-6">
               <div className="flex items-center gap-4 mb-6">
                 <Progress value={(currentQuestion / resilienceQuestions.length) * 100} className="flex-1" />
-                <span className="text-sm text-muted-foreground">
+                <span className="text-sm text-white">
                   {currentQuestion + 1} of {resilienceQuestions.length}
                 </span>
               </div>
@@ -168,7 +168,7 @@ const ResilienceTab = () => {
                 <div className={`text-lg ${getResilienceLevel(resilienceScore).color}`}>
                   {getResilienceLevel(resilienceScore).level} Resilience
                 </div>
-                <p className="text-muted-foreground mt-2">
+                <p className="text-white mt-2">
                   {getResilienceLevel(resilienceScore).description}
                 </p>
               </div>
@@ -181,7 +181,7 @@ const ResilienceTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">Building Resilience</CardTitle>
         </CardHeader>
@@ -195,10 +195,10 @@ const ResilienceTab = () => {
                     <IconComponent className="h-5 w-5 text-elec-yellow" />
                     <h4 className="font-semibold text-white">{strategy.title}</h4>
                   </div>
-                  <p className="text-sm text-muted-foreground mb-3">{strategy.description}</p>
+                  <p className="text-sm text-white mb-3">{strategy.description}</p>
                   <ul className="space-y-1">
                     {strategy.techniques.map((technique, techIndex) => (
-                      <li key={techIndex} className="text-xs text-muted-foreground flex items-start gap-2">
+                      <li key={techIndex} className="text-xs text-white flex items-start gap-2">
                         <div className="w-1 h-1 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                         {technique}
                       </li>

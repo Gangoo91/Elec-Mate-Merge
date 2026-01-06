@@ -503,7 +503,7 @@ const InstrumentationModule6Section4 = () => {
                 ],
                 correctAnswer: 1,
                 explanation: "21 CFR Part 11 is the FDA regulation governing electronic records and signatures in pharmaceutical, medical device, and other FDA-regulated industries, ensuring data integrity and security."
-              }
+            }
             ]}
             title="Section 4 Knowledge Check"
           />

@@ -518,7 +518,7 @@ const InstrumentationModule7Section2 = () => {
                 ],
                 correctAnswer: 2,
                 explanation: "Excessive loop loading causes voltage insufficiency where the power supply cannot maintain adequate voltage for proper transmitter operation, resulting in erratic operation, inability to reach 20mA full scale, or complete failure."
-              }
+            }
             ]}
             title="Section 2 Knowledge Check"
           />

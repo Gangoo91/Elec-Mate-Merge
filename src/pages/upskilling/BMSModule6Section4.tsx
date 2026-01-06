@@ -22,13 +22,13 @@ const BMSModule6Section4 = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
         <Link to="../bms-module-6">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 6
@@ -37,7 +37,7 @@ const BMSModule6Section4 = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <Zap className="h-6 w-6 sm:h-8 sm:w-8 text-yellow-400 flex-shrink-0" />
+            <Zap className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow flex-shrink-0" />
             <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight">
               Event Triggers and Auto-Reporting
             </h1>
@@ -46,7 +46,7 @@ const BMSModule6Section4 = () => {
             Automated systems for intelligent building response and comprehensive reporting
           </p>
           <div className="flex flex-wrap gap-2 sm:gap-4">
-            <Badge variant="secondary" className="bg-yellow-400 text-black text-xs sm:text-sm">
+            <Badge variant="secondary" className="bg-elec-yellow text-black text-xs sm:text-sm">
               Module 6.4
             </Badge>
             <Badge variant="outline" className="border-gray-600 text-white text-xs sm:text-sm">
@@ -61,25 +61,25 @@ const BMSModule6Section4 = () => {
         <div className="space-y-4 sm:space-y-6">
           
           {/* Introduction */}
-          <Card className="bg-card border-gray-700">
+          <Card className="bg-transparent border-gray-700">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Info className="h-5 w-5 text-yellow-400" />
+                <Info className="h-5 w-5 text-elec-yellow" />
                 Introduction
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
               <p>
-                Modern Building Management Systems don't just monitor—they <strong className="text-yellow-400">respond intelligently</strong> to changing conditions. Event triggers automate building responses, while auto-reporting ensures stakeholders receive timely, relevant information without manual intervention.
+                Modern Building Management Systems don't just monitor—they <strong className="text-elec-yellow">respond intelligently</strong> to changing conditions. Event triggers automate building responses, while auto-reporting ensures stakeholders receive timely, relevant information without manual intervention.
               </p>
               <p>
-                Event triggers allow buildings to <strong className="text-yellow-400">make smart decisions automatically</strong>: switching to emergency mode when smoke is detected, adjusting HVAC when occupancy changes, or optimising energy use based on time-of-day tariffs.
+                Event triggers allow buildings to <strong className="text-elec-yellow">make smart decisions automatically</strong>: switching to emergency mode when smoke is detected, adjusting HVAC when occupancy changes, or optimising energy use based on time-of-day tariffs.
               </p>
               <p>
                 Auto-reporting transforms raw data into <strong className="text-green-400">actionable information</strong>, delivering energy summaries, maintenance alerts, and performance reports to the right people at the right time.
               </p>
               <div className="grid grid-cols-1 gap-4 mt-6">
-                <div className="p-3 sm:p-4 bg-card border border-gray-600 rounded-lg">
+                <div className="p-3 sm:p-4 bg-transparent border border-gray-600 rounded-lg">
                   <h4 className="font-semibold text-orange-200 mb-2 flex items-center gap-2">
                     <AlertTriangle className="h-4 w-4" />
                     Critical for Electricians
@@ -91,10 +91,10 @@ const BMSModule6Section4 = () => {
           </Card>
 
           {/* Learning Outcomes */}
-          <Card className="bg-card border-gray-700">
+          <Card className="bg-transparent border-gray-700">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Target className="h-5 w-5 text-yellow-400" />
+                <Target className="h-5 w-5 text-elec-yellow" />
                 Learning Outcomes
               </CardTitle>
             </CardHeader>
@@ -122,20 +122,20 @@ const BMSModule6Section4 = () => {
           </Card>
 
           {/* Section 1: Understanding Event Triggers */}
-          <Card className="bg-card border-gray-700">
+          <Card className="bg-transparent border-gray-700">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Play className="h-5 w-5 text-yellow-400" />
+                <Play className="h-5 w-5 text-elec-yellow" />
                 Understanding Event Triggers
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-6">
               <p>
-                Event triggers are the <strong className="text-yellow-400">intelligent decision-making rules</strong> that allow buildings to respond automatically to changing conditions. They monitor specific parameters and execute predefined actions when trigger conditions are met.
+                Event triggers are the <strong className="text-elec-yellow">intelligent decision-making rules</strong> that allow buildings to respond automatically to changing conditions. They monitor specific parameters and execute predefined actions when trigger conditions are met.
               </p>
               
               <p>
-                <strong className="text-yellow-400">Time-based triggers</strong> execute actions according to schedules: switching lights at sunset, starting HVAC before occupancy, or generating weekly energy reports. These provide predictable, routine automation that optimises building operation.
+                <strong className="text-elec-yellow">Time-based triggers</strong> execute actions according to schedules: switching lights at sunset, starting HVAC before occupancy, or generating weekly energy reports. These provide predictable, routine automation that optimises building operation.
               </p>
 
               <p>
@@ -156,17 +156,17 @@ const BMSModule6Section4 = () => {
               </div>
 
               {/* Inline Check 1 */}
-              <div className="bg-card/80 border border-yellow-400/30 rounded-lg p-4">
+              <div className="bg-transparent/80 border border-elec-yellow/30 rounded-lg p-4">
                 <div className="flex items-center gap-2 mb-3">
-                  <Lightbulb className="h-5 w-5 text-yellow-400" />
-                  <span className="font-semibold text-yellow-400">Inline Check</span>
+                  <Lightbulb className="h-5 w-5 text-elec-yellow" />
+                  <span className="font-semibold text-elec-yellow">Inline Check</span>
                 </div>
                 <p className="text-white mb-3">What are the main types of event triggers in building automation?</p>
                 <Button
                   onClick={() => setInlineCheck1(!inlineCheck1)}
                   variant="outline"
                   size="sm"
-                  className="border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black"
+                  className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black"
                 >
                   {inlineCheck1 ? 'Hide Answer' : 'Show Answer'}
                 </Button>
@@ -182,20 +182,20 @@ const BMSModule6Section4 = () => {
           </Card>
 
           {/* Section 2: Auto-Reporting Systems */}
-          <Card className="bg-card border-gray-700">
+          <Card className="bg-transparent border-gray-700">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Database className="h-5 w-5 text-yellow-400" />
+                <Database className="h-5 w-5 text-elec-yellow" />
                 Auto-Reporting Systems
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-6">
               <p>
-                Auto-reporting transforms building data into <strong className="text-yellow-400">meaningful information</strong> delivered automatically to stakeholders. This eliminates manual report generation while ensuring timely access to critical building performance data.
+                Auto-reporting transforms building data into <strong className="text-elec-yellow">meaningful information</strong> delivered automatically to stakeholders. This eliminates manual report generation while ensuring timely access to critical building performance data.
               </p>
               
               <p>
-                <strong className="text-yellow-400">Energy reports</strong> provide consumption analysis, efficiency trends, and cost breakdowns. Daily summaries help facility managers identify unusual usage, while monthly reports support strategic energy management and budget planning.
+                <strong className="text-elec-yellow">Energy reports</strong> provide consumption analysis, efficiency trends, and cost breakdowns. Daily summaries help facility managers identify unusual usage, while monthly reports support strategic energy management and budget planning.
               </p>
 
               <p>
@@ -220,17 +220,17 @@ const BMSModule6Section4 = () => {
               </div>
 
               {/* Inline Check 2 */}
-              <div className="bg-card/80 border border-yellow-400/30 rounded-lg p-4">
+              <div className="bg-transparent/80 border border-elec-yellow/30 rounded-lg p-4">
                 <div className="flex items-center gap-2 mb-3">
-                  <Lightbulb className="h-5 w-5 text-yellow-400" />
-                  <span className="font-semibold text-yellow-400">Inline Check</span>
+                  <Lightbulb className="h-5 w-5 text-elec-yellow" />
+                  <span className="font-semibold text-elec-yellow">Inline Check</span>
                 </div>
                 <p className="text-white mb-3">How do auto-reporting systems benefit building management?</p>
                 <Button
                   onClick={() => setInlineCheck2(!inlineCheck2)}
                   variant="outline"
                   size="sm"
-                  className="border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black"
+                  className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black"
                 >
                   {inlineCheck2 ? 'Hide Answer' : 'Show Answer'}
                 </Button>
@@ -246,20 +246,20 @@ const BMSModule6Section4 = () => {
           </Card>
 
           {/* Section 3: Electrician's Role */}
-          <Card className="bg-card border-gray-700">
+          <Card className="bg-transparent border-gray-700">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Wrench className="h-5 w-5 text-yellow-400" />
+                <Wrench className="h-5 w-5 text-elec-yellow" />
                 Electrician's Role in Automation Support
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-6">
               <p>
-                Reliable automation depends on <strong className="text-yellow-400">accurate, stable data inputs</strong>. Your installation work provides the foundation that allows intelligent building systems to make correct decisions and generate trustworthy reports.
+                Reliable automation depends on <strong className="text-elec-yellow">accurate, stable data inputs</strong>. Your installation work provides the foundation that allows intelligent building systems to make correct decisions and generate trustworthy reports.
               </p>
               
               <p>
-                <strong className="text-yellow-400">Signal integrity</strong> is crucial for trigger reliability. Properly terminated communications cables, appropriate cable separation from power circuits, and correct earthing prevent data corruption that could cause false triggers or missed events.
+                <strong className="text-elec-yellow">Signal integrity</strong> is crucial for trigger reliability. Properly terminated communications cables, appropriate cable separation from power circuits, and correct earthing prevent data corruption that could cause false triggers or missed events.
               </p>
 
               <p>
@@ -279,17 +279,17 @@ const BMSModule6Section4 = () => {
               </p>
 
               {/* Inline Check 3 */}
-              <div className="bg-card/80 border border-yellow-400/30 rounded-lg p-4">
+              <div className="bg-transparent/80 border border-elec-yellow/30 rounded-lg p-4">
                 <div className="flex items-center gap-2 mb-3">
-                  <Lightbulb className="h-5 w-5 text-yellow-400" />
-                  <span className="font-semibold text-yellow-400">Inline Check</span>
+                  <Lightbulb className="h-5 w-5 text-elec-yellow" />
+                  <span className="font-semibold text-elec-yellow">Inline Check</span>
                 </div>
                 <p className="text-white mb-3">Why is signal integrity important for automation systems?</p>
                 <Button
                   onClick={() => setInlineCheck3(!inlineCheck3)}
                   variant="outline"
                   size="sm"
-                  className="border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black"
+                  className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black"
                 >
                   {inlineCheck3 ? 'Hide Answer' : 'Show Answer'}
                 </Button>
@@ -305,17 +305,17 @@ const BMSModule6Section4 = () => {
           </Card>
 
           {/* Best Practices */}
-          <Card className="bg-card border-gray-700">
+          <Card className="bg-transparent border-gray-700">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Settings className="h-5 w-5 text-yellow-400" />
+                <Settings className="h-5 w-5 text-elec-yellow" />
                 Best Practices for Supporting Automation
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
-                  <h4 className="font-semibold text-yellow-400 flex items-center gap-2">
+                  <h4 className="font-semibold text-elec-yellow flex items-center gap-2">
                     <CheckSquare className="h-4 w-4" />
                     Installation Quality
                   </h4>
@@ -370,10 +370,10 @@ const BMSModule6Section4 = () => {
           </Card>
 
           {/* Real World Example */}
-          <Card className="bg-card border-gray-700">
+          <Card className="bg-transparent border-gray-700">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <BookOpen className="h-5 w-5 text-yellow-400" />
+                <BookOpen className="h-5 w-5 text-elec-yellow" />
                 Real World Example
               </CardTitle>
             </CardHeader>
@@ -397,10 +397,10 @@ const BMSModule6Section4 = () => {
           </Card>
 
           {/* FAQ Section */}
-          <Card className="bg-card border-gray-700">
+          <Card className="bg-transparent border-gray-700">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <AlertCircle className="h-5 w-5 text-yellow-400" />
+                <AlertCircle className="h-5 w-5 text-elec-yellow" />
                 Frequently Asked Questions
               </CardTitle>
             </CardHeader>
@@ -430,10 +430,10 @@ const BMSModule6Section4 = () => {
                 <div key={index} className="border border-gray-600 rounded-lg">
                   <button
                     onClick={() => toggleFaq(index)}
-                    className="w-full text-left p-4 flex justify-between items-center hover:bg-card/80 transition-colors"
+                    className="w-full text-left p-4 flex justify-between items-center hover:bg-transparent/80 transition-colors"
                   >
                     <span className="font-medium">{faq.question}</span>
-                    <span className="text-yellow-400">
+                    <span className="text-elec-yellow">
                       {faqOpen.includes(index) ? '−' : '+'}
                     </span>
                   </button>
@@ -448,17 +448,17 @@ const BMSModule6Section4 = () => {
           </Card>
 
           {/* Summary */}
-          <Card className="bg-card border-gray-700">
+          <Card className="bg-transparent border-gray-700">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-yellow-400" />
+                <CheckCircle className="h-5 w-5 text-elec-yellow" />
                 Summary
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h4 className="font-semibold text-yellow-400 mb-3">Key Concepts</h4>
+                  <h4 className="font-semibold text-elec-yellow mb-3">Key Concepts</h4>
                   <ul className="text-sm space-y-2">
                     <li>• Event triggers enable intelligent automated responses to building conditions</li>
                     <li>• Auto-reporting transforms data into actionable information for stakeholders</li>
@@ -476,8 +476,8 @@ const BMSModule6Section4 = () => {
                   </ul>
                 </div>
               </div>
-              <div className="mt-6 p-4 bg-yellow-400/10 border border-yellow-400 rounded-lg">
-                <p className="text-yellow-400 text-sm font-medium">
+              <div className="mt-6 p-4 bg-elec-yellow/10 border border-elec-yellow rounded-lg">
+                <p className="text-elec-yellow text-sm font-medium">
                   <strong>Remember:</strong> Your installation work is the foundation of automation reliability. Proper techniques ensure buildings respond intelligently to changing conditions and provide trustworthy information to building managers.
                 </p>
               </div>
@@ -500,7 +500,7 @@ const BMSModule6Section4 = () => {
             <Link to="../bms-module-6-section-3" className="flex-1 sm:flex-initial">
               <Button 
                 variant="outline" 
-                className="w-full sm:w-auto bg-transparent border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black transition-all duration-200 min-h-[48px] px-4 py-3 text-sm sm:text-base"
+                className="w-full sm:w-auto bg-transparent border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black transition-all duration-200 min-h-[48px] px-4 py-3 text-sm sm:text-base"
               >
                 <ArrowLeft className="mr-2 h-4 w-4 flex-shrink-0" />
                 <span className="truncate">Previous: Dashboards</span>
@@ -508,7 +508,7 @@ const BMSModule6Section4 = () => {
             </Link>
             <Link to="../bms-module-6-section-5" className="flex-1 sm:flex-initial">
               <Button 
-                className="w-full sm:w-auto bg-yellow-400 text-black hover:bg-yellow-400 transition-all duration-200 min-h-[48px] px-4 py-3 text-sm sm:text-base"
+                className="w-full sm:w-auto bg-elec-yellow text-black hover:bg-elec-yellow transition-all duration-200 min-h-[48px] px-4 py-3 text-sm sm:text-base"
               >
                 <span className="truncate">Next: Section 5</span>
                 <ArrowLeft className="ml-2 h-4 w-4 rotate-180 flex-shrink-0" />

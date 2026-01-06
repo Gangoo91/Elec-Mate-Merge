@@ -1,364 +1,482 @@
-import { ArrowLeft, ArrowRight, Shield, BookOpen, Target, AlertTriangle, CheckCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import EVChargingModule6Section4Quiz from '@/components/upskilling/quiz/EVChargingModule6Section4Quiz';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
+import useSEO from "@/hooks/useSEO";
+
+const quickCheckQuestions = [
+  {
+    id: "evcharging-m6s4-check1",
+    question: "What is the maximum operating time for a 30mA RCD at five times rated current (150mA)?",
+    options: ["200ms", "100ms", "40ms", "300ms"],
+    correctIndex: 2,
+    explanation: "At five times rated current (5×IΔn), an RCD must operate within 40ms. This faster trip time ensures rapid disconnection during high fault currents."
+  },
+  {
+    id: "evcharging-m6s4-check2",
+    question: "Which RCD type is required for DC fault detection in Mode 3 EV charging?",
+    options: ["Type AC", "Type A", "Type B", "Type F"],
+    correctIndex: 2,
+    explanation: "Type B RCDs can detect smooth DC residual currents, which can be produced by EV charger electronics. Type A only detects pulsating DC up to 6mA, insufficient for DC charging applications."
+  },
+  {
+    id: "evcharging-m6s4-check3",
+    question: "During RCD testing, what should happen at half-rated current (15mA for a 30mA RCD)?",
+    options: ["Trip within 300ms", "Trip within 40ms", "NOT trip", "Trip after 1 second"],
+    correctIndex: 2,
+    explanation: "At half-rated current (0.5×IΔn), the RCD should NOT trip. This test verifies the RCD won't cause nuisance tripping during normal operation with minor earth leakage."
+  }
+];
+
+const faqs = [
+  {
+    question: "Why do EV chargers need Type B RCDs instead of Type A?",
+    answer: "EV charger electronics (inverters, DC-DC converters) can produce smooth DC fault currents that would saturate a Type A RCD's core, preventing it from tripping. Type B RCDs use different detection technology that remains effective with DC components."
+  },
+  {
+    question: "What causes nuisance tripping on EV charging circuits?",
+    answer: "Common causes include high cumulative earth leakage from EMI filters, capacitive coupling in long cable runs, VFD harmonics, and multiple loads on the same RCD. Individual circuit testing can identify the source."
+  },
+  {
+    question: "How often should RCDs be tested on EV charging installations?",
+    answer: "Manual test button operation should be performed monthly by the user. Full instrument testing is required at initial verification and periodic inspection (typically 1-5 years depending on installation type)."
+  },
+  {
+    question: "Can Type A RCDs ever be used for EV charging?",
+    answer: "Type A RCDs can be used for Mode 1 and Mode 2 charging (domestic socket or ICCB), but Mode 3 dedicated chargepoints require either Type B RCDs or Type A with a 6mA DC detection device built into the charger."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+  question: "An EV charger RCD trips intermittently during charging but passes all standard tests. What is the most likely cause?",
+  options: [
+    "Faulty RCD requiring replacement",
+    "Cumulative earth leakage from charger EMI filters",
+    "Incorrect RCD rating installed",
+    "Vehicle battery fault"
+  ],
+  correctAnswer: 1,
+  explanation: "Intermittent tripping with passing tests often indicates cumulative earth leakage approaching the trip threshold. EV charger EMI filters can contribute 3-5mA leakage per charger. A clamp meter on the earth conductor during charging can confirm this."
+  }
+];
 
 const EVChargingModule6Section4 = () => {
-  useEffect(() => {
-    document.title = 'RCD and Functional Testing - EV Charging Module 6 Section 4';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Learn RCD testing procedures for EV charging installations. Master Type A, Type B, and EV-RCD testing for safe charging systems.');
-    }
-  }, []);
+  useSEO({
+    title: "RCD and Functional Testing | EV Charging Module 6.4",
+    description: "Learn RCD testing procedures for EV charging installations. Master Type A, Type B, and EV-RCD testing for safe charging systems."
+  });
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
-        <Link to="../ev-charging-module-6">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 6
+            <Link to="../ev-charging-module-6">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 6
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            <Shield className="h-8 w-8 text-yellow-400" />
-            <Badge 
-              variant="secondary" 
-              className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold text-sm px-3 py-1 border-0"
-            >
-              Module 6 - Section 4
-            </Badge>
+        </div>
+      </div>
+
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Page Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 6.4</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             RCD and Functional Testing
           </h1>
-          <p className="text-lg sm:text-xl text-gray-400 max-w-3xl">
+          <p className="text-white/80">
             Testing protective devices and EV-specific safety equipment
           </p>
-        </div>
-      </header>
+        </header>
 
-      {/* Main Content */}
-      <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="space-y-4 sm:space-y-6">
-
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <BookOpen className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Introduction</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                Residual Current Devices (RCDs) are critical safety components in EV charging installations, 
-                providing protection against earth faults and ensuring personal safety. This section covers 
-                the testing procedures for different types of RCDs used in EV charging applications, including 
-                standard Type A, specialized Type B, and EV-specific RCDs designed for DC fault detection.
-              </p>
-              
-              <div className="bg-card/80 p-4 rounded-lg">
-                <h4 className="font-semibold text-white mb-2">RCD Testing Fundamentals</h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Type A RCD testing for AC charging applications</li>
-                  <li>• Type B RCD testing for DC fault protection</li>
-                  <li>• EV-specific RCD testing procedures</li>
-                  <li>• Functional testing of charging control systems</li>
-                  <li>• Trip time verification and calibration</li>
-                  <li>• Documentation and test record requirements</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Target className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Learning Outcomes</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <div className="space-y-3">
-                {[
-                  "Understand different RCD types and their applications in EV charging",
-                  "Perform Type A RCD testing procedures and interpret results",
-                  "Execute Type B RCD functional tests for DC fault protection",
-                  "Test EV-specific RCD protection systems",
-                  "Verify DC fault detection capabilities and trip times",
-                  "Understand test current requirements and safety procedures",
-                  "Interpret test results and complete fault diagnosis",
-                  "Complete RCD testing documentation and certification"
-                ].map((outcome, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span>{outcome}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Content/Learning */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Shield className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">RCD Types and Testing Procedures</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              
-              {/* RCD Types */}
-              <div>
-                <h3 className="text-xl font-semibold text-white mb-4">RCD Classifications for EV Charging</h3>
-                <div className="grid md:grid-cols-3 gap-4">
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-white mb-3">Type A RCD</h4>
-                    <ul className="text-sm space-y-1">
-                      <li>• Detects sinusoidal AC residual currents</li>
-                      <li>• Responds to pulsating DC up to 6mA</li>
-                      <li>• Standard for basic AC charging</li>
-                      <li>• Trip current: 30mA typical</li>
-                      <li>• Operating time: ≤300ms</li>
-                    </ul>
-                    <div className="mt-3 p-2 bg-blue-800/50 rounded text-xs text-blue-200">
-                      Applications: Mode 1, Mode 2 charging
-                    </div>
-                  </div>
-                  
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-white mb-3">Type B RCD</h4>
-                    <ul className="text-sm space-y-1">
-                      <li>• All Type A capabilities plus:</li>
-                      <li>• Smooth DC residual currents</li>
-                      <li>• AC up to 1kHz frequency</li>
-                      <li>• DC component up to 10mA</li>
-                      <li>• Essential for DC charging</li>
-                    </ul>
-                    <div className="mt-3 p-2 bg-green-800/50 rounded text-xs text-green-200">
-                      Applications: Mode 3, DC fast charging
-                    </div>
-                  </div>
-                  
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-white mb-3">EV-RCD</h4>
-                    <ul className="text-sm space-y-1">
-                      <li>• Specialized for EV applications</li>
-                      <li>• Enhanced DC fault detection</li>
-                      <li>• Communication capability</li>
-                      <li>• Self-testing functions</li>
-                      <li>• Overcurrent protection</li>
-                    </ul>
-                    <div className="mt-3 p-2 bg-amber-800/50 rounded text-xs text-amber-200">
-                      Applications: Smart charging systems
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Advanced RCD Testing */}
-              <div>
-                <h3 className="text-xl font-semibold text-white mb-4">Advanced RCD Testing Procedures</h3>
-                <div className="space-y-4">
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-white mb-3">Type A RCD Testing Sequence</h4>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <h5 className="font-medium text-yellow-400 mb-2">Test Procedure</h5>
-                        <ol className="text-sm space-y-1">
-                          <li>1. Manual test button operation verification</li>
-                          <li>2. Half-rated current test (15mA for 30mA RCD)</li>
-                          <li>3. Full-rated current test (30mA)</li>
-                          <li>4. Five times rated current test (150mA)</li>
-                          <li>5. Test all phase combinations</li>
-                          <li>6. Record all operating times</li>
-                        </ol>
-                      </div>
-                      <div>
-                        <h5 className="font-medium text-yellow-400 mb-2">Pass Criteria</h5>
-                        <ul className="text-sm space-y-1">
-                          <li>• Half-rated: Should NOT trip</li>
-                          <li>• Full-rated: ≤300ms (general use)</li>
-                          <li>• Full-rated: ≤40ms (socket outlets)</li>
-                          <li>• 5× rated: ≤40ms (all applications)</li>
-                          <li>• Manual test: Must operate correctly</li>
-                          <li>• Reset: Must function properly</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-white mb-3">Type B RCD Advanced Testing</h4>
-                    <div className="grid md:grid-cols-3 gap-4">
-                      <div>
-                        <h5 className="font-medium text-yellow-400 mb-2">AC Testing</h5>
-                        <ul className="text-sm space-y-1">
-                          <li>• Standard Type A test sequence</li>
-                          <li>• 50Hz sinusoidal test current</li>
-                          <li>• All phase combinations</li>
-                          <li>• Operating time verification</li>
-                          <li>• Reset functionality check</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="font-medium text-yellow-400 mb-2">DC Testing</h5>
-                        <ul className="text-sm space-y-1">
-                          <li>• Smooth DC test current application</li>
-                          <li>• 6mA DC threshold verification</li>
-                          <li>• Positive and negative DC testing</li>
-                          <li>• Time delay verification</li>
-                          <li>• Saturation immunity testing</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="font-medium text-yellow-400 mb-2">High-Frequency AC</h5>
-                        <ul className="text-sm space-y-1">
-                          <li>• 1kHz test frequency</li>
-                          <li>• 30mA trip threshold</li>
-                          <li>• Waveform distortion testing</li>
-                          <li>• Response time verification</li>
-                          <li>• Harmonic immunity testing</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-white mb-3">EV-RCD Specific Testing</h4>
-                    <div className="space-y-3">
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div>
-                          <h5 className="font-medium text-yellow-400 mb-2">Communication Testing</h5>
-                          <ul className="text-sm space-y-1">
-                            <li>• MODBUS communication protocol</li>
-                            <li>• Status reporting functionality</li>
-                            <li>• Remote trip and reset commands</li>
-                            <li>• Diagnostic data transmission</li>
-                            <li>• Event logging capabilities</li>
-                          </ul>
-                        </div>
-                        <div>
-                          <h5 className="font-medium text-yellow-400 mb-2">Self-Testing Functions</h5>
-                          <ul className="text-sm space-y-1">
-                            <li>• Automatic periodic self-testing</li>
-                            <li>• Component integrity verification</li>
-                            <li>• Calibration drift detection</li>
-                            <li>• Fault indication systems</li>
-                            <li>• Maintenance scheduling alerts</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Comprehensive Fault Diagnosis */}
-              <div>
-                <h3 className="text-xl font-semibold text-white mb-4">Comprehensive Fault Diagnosis</h3>
-                <div className="space-y-4">
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-white mb-3">Common RCD Faults and Solutions</h4>
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-sm">
-                        <thead>
-                          <tr className="border-b border-gray-600">
-                            <th className="text-left py-2 text-yellow-400">Fault Symptom</th>
-                            <th className="text-left py-2 text-yellow-400">Possible Cause</th>
-                            <th className="text-left py-2 text-yellow-400">Solution</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr className="border-b border-gray-700">
-                            <td className="py-2">RCD won't trip at rated current</td>
-                            <td className="py-2">Parallel earth paths, wiring error</td>
-                            <td className="py-2">Check wiring, eliminate parallel paths</td>
-                          </tr>
-                          <tr className="border-b border-gray-700">
-                            <td className="py-2">Nuisance tripping</td>
-                            <td className="py-2">High earth leakage, interference</td>
-                            <td className="py-2">Measure leakage, check for EMI sources</td>
-                          </tr>
-                          <tr className="border-b border-gray-700">
-                            <td className="py-2">Slow operating time</td>
-                            <td className="py-2">High fault impedance, worn contacts</td>
-                            <td className="py-2">Check Zs values, replace if necessary</td>
-                          </tr>
-                          <tr>
-                            <td className="py-2">Won't reset</td>
-                            <td className="py-2">Persistent fault, mechanical failure</td>
-                            <td className="py-2">Locate fault, check mechanism</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-
-                  <div className="bg-card/80 p-4 rounded-lg">
-                    <h4 className="font-semibold text-white mb-3">Advanced Diagnostic Techniques</h4>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <h5 className="font-medium text-yellow-400 mb-2">Earth Leakage Assessment</h5>
-                        <ul className="text-sm space-y-1">
-                          <li>• Individual circuit leakage measurement</li>
-                          <li>• Cumulative leakage calculation</li>
-                          <li>• Load-dependent leakage analysis</li>
-                          <li>• Frequency spectrum analysis</li>
-                          <li>• Temperature coefficient assessment</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="font-medium text-yellow-400 mb-2">Performance Monitoring</h5>
-                        <ul className="text-sm space-y-1">
-                          <li>• Trip time trend analysis</li>
-                          <li>• Sensitivity drift monitoring</li>
-                          <li>• Contact resistance measurement</li>
-                          <li>• Insulation integrity checking</li>
-                          <li>• Environmental impact assessment</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Section */}
-          <EVChargingModule6Section4Quiz />
-
-          {/* Navigation */}
-          <div className="flex justify-between">
-            <Link to="../ev-charging-module-6-section-3">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="../ev-charging-module-6-section-5">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Type A:</strong> AC faults + pulsating DC up to 6mA</li>
+              <li><strong>Type B:</strong> All Type A + smooth DC detection</li>
+              <li><strong>Trip times:</strong> ≤300ms at IΔn, ≤40ms at 5×IΔn</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Requirements</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Mode 3:</strong> Type B or Type A + DC detection</li>
+              <li><strong>Half-rated test:</strong> Must NOT trip</li>
+              <li><strong>Manual test:</strong> Monthly user operation</li>
+            </ul>
           </div>
         </div>
-      </main>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Understand RCD types for EV charging applications",
+              "Perform Type A RCD testing procedures",
+              "Execute Type B RCD functional tests",
+              "Test EV-specific RCD protection systems",
+              "Verify trip times and pass/fail criteria",
+              "Diagnose common RCD faults on EV circuits"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            RCD Types for EV Charging
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              EV charger electronics can produce different types of fault currents that require
+              appropriate RCD protection. Understanding which RCD type is needed depends on
+              the charging mode and charger design.
+            </p>
+
+            <div className="grid sm:grid-cols-3 gap-4 my-6">
+              <div className="p-3 rounded-lg bg-white/5">
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Type A RCD</p>
+                <ul className="text-xs text-white space-y-1">
+                  <li>• Sinusoidal AC residual currents</li>
+                  <li>• Pulsating DC up to 6mA</li>
+                  <li>• Mode 1/2 charging only</li>
+                  <li>• Trip current: 30mA typical</li>
+                  <li>• Operating time: ≤300ms</li>
+                </ul>
+              </div>
+              <div className="p-3 rounded-lg bg-white/5">
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Type B RCD</p>
+                <ul className="text-xs text-white space-y-1">
+                  <li>• All Type A capabilities plus</li>
+                  <li>• Smooth DC residual currents</li>
+                  <li>• AC up to 1kHz frequency</li>
+                  <li>• Required for Mode 3/DC</li>
+                  <li>• Higher cost justified</li>
+                </ul>
+              </div>
+              <div className="p-3 rounded-lg bg-white/5">
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">EV-RCD</p>
+                <ul className="text-xs text-white space-y-1">
+                  <li>• Specialized EV applications</li>
+                  <li>• Built-in DC 6mA detection</li>
+                  <li>• Communication capability</li>
+                  <li>• Self-testing functions</li>
+                  <li>• Smart charging systems</li>
+                </ul>
+              </div>
+            </div>
+
+            <p>
+              BS 7671 Regulation 722.531.2 requires either a Type B RCD or a Type A RCD
+              combined with equipment providing equivalent DC fault protection (typically
+              built into the charger) for Mode 3 charging installations.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Type A RCD Testing Sequence
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Standard RCD testing follows a specific sequence to verify correct operation
+              at different fault current levels. Each test has specific pass/fail criteria.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Test Sequence</p>
+                <ol className="text-sm text-white space-y-1 ml-4">
+                  <li>1. Manual test button verification</li>
+                  <li>2. Half-rated current (15mA): NO trip</li>
+                  <li>3. Full-rated current (30mA): ≤300ms</li>
+                  <li>4. 5× rated current (150mA): ≤40ms</li>
+                  <li>5. Test 0° and 180° phase angles</li>
+                  <li>6. Record all trip times</li>
+                </ol>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Pass Criteria</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>0.5×IΔn (15mA):</strong> Must NOT trip</li>
+                  <li><strong>1×IΔn (30mA):</strong> ≤300ms general, ≤40ms socket</li>
+                  <li><strong>5×IΔn (150mA):</strong> ≤40ms all applications</li>
+                  <li><strong>Test button:</strong> Must operate correctly</li>
+                  <li><strong>Reset:</strong> Must function properly</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Why test both phase angles?</p>
+              <p className="text-sm text-white/80">
+                RCDs can have slightly different operating characteristics at 0° and 180° of the
+                AC waveform. Testing both angles (using the instrument's phase selector) ensures
+                the RCD operates correctly regardless of when in the cycle the fault occurs.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 3 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Type B RCD Testing
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Type B RCDs require additional testing beyond standard Type A tests to verify
+              their DC fault detection capabilities. Specialist test equipment is required.
+            </p>
+
+            <div className="grid sm:grid-cols-3 gap-4 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">AC Testing</p>
+                <ul className="text-xs text-white space-y-1">
+                  <li>• Standard Type A sequence</li>
+                  <li>• 50Hz sinusoidal current</li>
+                  <li>• All phase combinations</li>
+                  <li>• Trip time verification</li>
+                  <li>• Reset functionality</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">DC Testing</p>
+                <ul className="text-xs text-white space-y-1">
+                  <li>• Smooth DC test current</li>
+                  <li>• 6mA DC threshold check</li>
+                  <li>• +ve and -ve DC polarity</li>
+                  <li>• Trip time verification</li>
+                  <li>• Saturation immunity</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Specialist Tests</p>
+                <ul className="text-xs text-white space-y-1">
+                  <li>• High-frequency AC (1kHz)</li>
+                  <li>• Composite waveforms</li>
+                  <li>• DC offset immunity</li>
+                  <li>• Harmonic response</li>
+                  <li>• Requires Type B tester</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
+              <p className="text-sm font-medium text-red-400 mb-2">Important: Test Equipment</p>
+              <p className="text-sm text-white/80">
+                Standard multifunction testers cannot test Type B RCD DC functions. A dedicated
+                Type B RCD tester is required for full verification. If not available, verify
+                the charger's built-in DC detection device is operational.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Section 4 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Fault Diagnosis
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              RCD problems on EV charging circuits often have specific causes related to
+              the charger electronics and installation environment.
+            </p>
+
+            <div className="my-6 overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-white/20">
+                    <th className="text-left py-2 text-elec-yellow/80 font-medium">Symptom</th>
+                    <th className="text-left py-2 text-elec-yellow/80 font-medium">Likely Cause</th>
+                    <th className="text-left py-2 text-elec-yellow/80 font-medium">Solution</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white/90">
+                  <tr className="border-b border-white/10">
+                    <td className="py-2">Won't trip at rated current</td>
+                    <td className="py-2">Parallel earth paths</td>
+                    <td className="py-2">Check wiring, eliminate parallels</td>
+                  </tr>
+                  <tr className="border-b border-white/10">
+                    <td className="py-2">Nuisance tripping</td>
+                    <td className="py-2">Cumulative leakage, EMI</td>
+                    <td className="py-2">Measure earth leakage, check EMI</td>
+                  </tr>
+                  <tr className="border-b border-white/10">
+                    <td className="py-2">Slow trip time</td>
+                    <td className="py-2">High Zs, worn contacts</td>
+                    <td className="py-2">Check Zs values, replace RCD</td>
+                  </tr>
+                  <tr className="border-b border-white/10">
+                    <td className="py-2">Won't reset</td>
+                    <td className="py-2">Persistent fault, mechanism</td>
+                    <td className="py-2">Locate fault, check mechanism</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2">Trips during charging only</td>
+                    <td className="py-2">DC component, charger fault</td>
+                    <td className="py-2">Verify Type B/DC detection</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Earth Leakage Assessment</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>• Use clamp meter on CPC during charging</li>
+                  <li>• Typical charger leakage: 3-5mA</li>
+                  <li>• 30mA RCD margin: 50% for safety</li>
+                  <li>• Max recommended: 10mA per circuit</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Diagnostic Approach</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>• Instrument test all parameters</li>
+                  <li>• Monitor during live charging</li>
+                  <li>• Check for DC component with scope</li>
+                  <li>• Review installation history</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Testing Best Practice</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Always test at both 0° and 180° phase angles</li>
+                <li>Record the worst-case trip time for documentation</li>
+                <li>Verify Type B function if charger has no DC detection</li>
+                <li>Check earth leakage with charger operating</li>
+                <li>Test manual button monthly — advise customer</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Type A for Mode 3:</strong> — only valid with charger DC detection</li>
+                <li><strong>Ignoring leakage:</strong> — cumulative leakage causes nuisance trips</li>
+                <li><strong>No DC testing:</strong> — Type B requires specialist verification</li>
+                <li><strong>Single phase angle:</strong> — always test both 0° and 180°</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quick Reference */}
+        <div className="mt-6 p-5 rounded-lg bg-transparent">
+          <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+            <div>
+              <p className="font-medium text-white mb-1">Trip Time Limits</p>
+              <ul className="space-y-0.5">
+                <li>0.5×IΔn: Must NOT trip</li>
+                <li>1×IΔn: ≤300ms (≤40ms sockets)</li>
+                <li>5×IΔn: ≤40ms all applications</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-medium text-white mb-1">Mode 3 Requirements</p>
+              <ul className="space-y-0.5">
+                <li>Type B RCD, or</li>
+                <li>Type A + DC 6mA detection device</li>
+                <li>BS 7671 Reg 722.531.2</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Quiz Section */}
+        <section className="mb-10 mt-12">
+          <SingleQuestionQuiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-6-section-3">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-6-section-5">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

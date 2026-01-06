@@ -216,7 +216,7 @@ const SafetyKnowledgeTab = () => {
     const isCompleted = completedTopics.includes(module.id);
     
     return (
-      <Card className={`border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-all duration-200 ${
+      <Card className={`border-elec-yellow/20 bg-white/5 hover:bg-white/5 transition-all duration-200 ${
         isMobile ? 'mb-4' : ''
       } ${isCompleted ? 'ring-2 ring-green-500/30' : ''}`}>
         <CardHeader className={`${isMobile ? 'pb-3' : 'pb-4'}`}>
@@ -246,7 +246,7 @@ const SafetyKnowledgeTab = () => {
               <Badge 
                 key={idx} 
                 variant="outline" 
-                className={`border-elec-yellow/30 text-elec-light bg-elec-dark/50 ${
+                className={`border-elec-yellow/30 text-elec-light bg-white/10 ${
                   isMobile ? 'text-xs px-2 py-1' : 'text-sm'
                 }`}
               >
@@ -266,7 +266,7 @@ const SafetyKnowledgeTab = () => {
             </div>
             <Progress 
               value={module.progress} 
-              className={`bg-elec-dark ${isMobile ? 'h-2' : 'h-3'}`}
+              className={`bg-white/10 ${isMobile ? 'h-2' : 'h-3'}`}
             />
           </div>
           
@@ -319,7 +319,7 @@ const SafetyKnowledgeTab = () => {
 
   const OverviewStats = () => (
     <div className={`grid ${isMobile ? 'grid-cols-2 gap-3' : 'grid-cols-4 gap-6'} mb-6`}>
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className={`${isMobile ? 'p-4' : 'p-6'} text-center`}>
           <div className={`text-elec-yellow font-bold ${isMobile ? 'text-lg' : 'text-2xl'}`}>
             {safetyModules.length}
@@ -330,7 +330,7 @@ const SafetyKnowledgeTab = () => {
         </CardContent>
       </Card>
       
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className={`${isMobile ? 'p-4' : 'p-6'} text-center`}>
           <div className={`text-green-400 font-bold ${isMobile ? 'text-lg' : 'text-2xl'}`}>
             {completedTopics.length}
@@ -341,7 +341,7 @@ const SafetyKnowledgeTab = () => {
         </CardContent>
       </Card>
       
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className={`${isMobile ? 'p-4' : 'p-6'} text-center`}>
           <div className={`text-blue-400 font-bold ${isMobile ? 'text-lg' : 'text-2xl'}`}>
             {Math.round(safetyModules.reduce((acc, mod) => acc + mod.progress, 0) / safetyModules.length)}%
@@ -352,7 +352,7 @@ const SafetyKnowledgeTab = () => {
         </CardContent>
       </Card>
       
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className={`${isMobile ? 'p-4' : 'p-6'} text-center`}>
           <div className={`text-amber-400 font-bold ${isMobile ? 'text-lg' : 'text-2xl'}`}>
             110
@@ -380,7 +380,7 @@ const SafetyKnowledgeTab = () => {
       <OverviewStats />
 
       <Tabs defaultValue="modules" className="w-full">
-        <TabsList className={`grid w-full grid-cols-3 bg-elec-dark border border-elec-yellow/20 ${
+        <TabsList className={`grid w-full grid-cols-3 bg-white/10 border border-elec-yellow/20 ${
           isMobile ? 'h-auto' : ''
         }`}>
           <TabsTrigger 
@@ -598,23 +598,23 @@ const SafetyKnowledgeTab = () => {
               <CardContent className={`space-y-3 ${isMobile ? 'text-sm' : ''}`}>
                 <div className="border-b border-elec-yellow/20 pb-2">
                   <div className="font-medium text-elec-yellow">EAWR 1989</div>
-                  <div className="text-xs text-muted-foreground">Electricity at Work Regulations - Criminal law for electrical safety</div>
+                  <div className="text-xs text-white">Electricity at Work Regulations - Criminal law for electrical safety</div>
                 </div>
                 <div className="border-b border-elec-yellow/20 pb-2">
                   <div className="font-medium text-elec-yellow">BS 7671:2018 +A2:2022</div>
-                  <div className="text-xs text-muted-foreground">18th Edition IET Wiring Regulations - Technical standard</div>
+                  <div className="text-xs text-white">18th Edition IET Wiring Regulations - Technical standard</div>
                 </div>
                 <div className="border-b border-elec-yellow/20 pb-2">
                   <div className="font-medium text-elec-yellow">HASAWA 1974</div>
-                  <div className="text-xs text-muted-foreground">Health & Safety at Work Act - General duties</div>
+                  <div className="text-xs text-white">Health & Safety at Work Act - General duties</div>
                 </div>
                 <div className="border-b border-elec-yellow/20 pb-2">
                   <div className="font-medium text-elec-yellow">CDM 2015</div>
-                  <div className="text-xs text-muted-foreground">Construction Design & Management Regulations</div>
+                  <div className="text-xs text-white">Construction Design & Management Regulations</div>
                 </div>
                 <div>
                   <div className="font-medium text-elec-yellow">Building Regs Part P</div>
-                  <div className="text-xs text-muted-foreground">Electrical safety in dwellings - England & Wales</div>
+                  <div className="text-xs text-white">Electrical safety in dwellings - England & Wales</div>
                 </div>
               </CardContent>
             </Card>
@@ -629,23 +629,23 @@ const SafetyKnowledgeTab = () => {
               <CardContent className={`space-y-3 ${isMobile ? 'text-sm' : ''}`}>
                 <div className="border-b border-cyan-500/20 pb-2">
                   <div className="font-medium text-cyan-400">Class 00 Gloves</div>
-                  <div className="text-xs text-muted-foreground">Max 500V AC / 750V DC - Beige colour</div>
+                  <div className="text-xs text-white">Max 500V AC / 750V DC - Beige colour</div>
                 </div>
                 <div className="border-b border-cyan-500/20 pb-2">
                   <div className="font-medium text-cyan-400">Class 0 Gloves</div>
-                  <div className="text-xs text-muted-foreground">Max 1000V AC / 1500V DC - Red colour</div>
+                  <div className="text-xs text-white">Max 1000V AC / 1500V DC - Red colour</div>
                 </div>
                 <div className="border-b border-cyan-500/20 pb-2">
                   <div className="font-medium text-cyan-400">Class 1 Gloves</div>
-                  <div className="text-xs text-muted-foreground">Max 7500V AC / 11250V DC - White colour</div>
+                  <div className="text-xs text-white">Max 7500V AC / 11250V DC - White colour</div>
                 </div>
                 <div className="border-b border-cyan-500/20 pb-2">
                   <div className="font-medium text-cyan-400">GS38 Test Leads</div>
-                  <div className="text-xs text-muted-foreground">Fused, shrouded, max 4mm exposed tip</div>
+                  <div className="text-xs text-white">Fused, shrouded, max 4mm exposed tip</div>
                 </div>
                 <div>
                   <div className="font-medium text-cyan-400">Arc Flash PPE</div>
-                  <div className="text-xs text-muted-foreground">Rated in cal/cm² - Match to incident energy</div>
+                  <div className="text-xs text-white">Rated in cal/cm² - Match to incident energy</div>
                 </div>
               </CardContent>
             </Card>
@@ -654,7 +654,7 @@ const SafetyKnowledgeTab = () => {
 
         <TabsContent value="resources" className="mt-6">
           <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-2'}`}>
-            <Card className="border-elec-yellow/20 bg-elec-gray">
+            <Card className="border-elec-yellow/20 bg-white/5">
               <CardHeader>
                 <CardTitle className={`text-elec-yellow ${isMobile ? 'text-base' : ''}`}>
                   Safety Documentation
@@ -691,7 +691,7 @@ const SafetyKnowledgeTab = () => {
               </CardContent>
             </Card>
             
-            <Card className="border-elec-yellow/20 bg-elec-gray">
+            <Card className="border-elec-yellow/20 bg-white/5">
               <CardHeader>
                 <CardTitle className={`text-elec-yellow ${isMobile ? 'text-base' : ''}`}>
                   Training Videos

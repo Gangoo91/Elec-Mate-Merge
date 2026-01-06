@@ -56,28 +56,50 @@ const CommunicationSimulator = ({ onBack }: CommunicationSimulatorProps) => {
   };
 
   const scenario = scenarios[currentScenario];
+  const progress = ((currentScenario + 1) / scenarios.length) * 100;
 
   return (
-    <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <MessageSquare className="h-5 w-5 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">
-              Scenario {currentScenario + 1}: {scenario.title}
-            </CardTitle>
+    <div className="space-y-6 animate-fade-in">
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+                <MessageSquare className="h-5 w-5 text-elec-yellow" />
+              </div>
+              <CardTitle className="text-white">
+                Scenario {currentScenario + 1}: {scenario.title}
+              </CardTitle>
+            </div>
+            <span className="text-sm text-white/60">{currentScenario + 1}/{scenarios.length}</span>
+          </div>
+          <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-gradient-to-r from-elec-yellow to-elec-yellow/80 transition-all duration-500 ease-out rounded-full"
+              style={{ width: `${progress}%` }}
+            />
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <p className="text-white">{scenario.situation}</p>
-          
+        <CardContent className="space-y-4 relative">
+          <div className="p-4 rounded-xl bg-white/10 border border-white/10">
+            <p className="text-white/90">{scenario.situation}</p>
+          </div>
+
           <div className="space-y-3">
-            <h4 className="font-medium text-elec-yellow">How would you respond?</h4>
-            <RadioGroup value={selectedResponse} onValueChange={handleResponseSelect}>
+            <h4 className="font-semibold text-elec-yellow">How would you respond?</h4>
+            <RadioGroup value={selectedResponse} onValueChange={handleResponseSelect} className="space-y-2">
               {scenario.responses.map((response) => (
-                <div key={response.id} className="flex items-start space-x-2">
-                  <RadioGroupItem value={response.id} id={response.id} />
-                  <Label htmlFor={response.id} className="flex-1 text-sm text-white cursor-pointer">
+                <div
+                  key={response.id}
+                  className={`flex items-start space-x-3 p-3 rounded-xl border transition-all cursor-pointer ${
+                    selectedResponse === response.id
+                      ? 'bg-elec-yellow/10 border-elec-yellow/40'
+                      : 'bg-white/10 border-white/10 hover:border-white/20'
+                  }`}
+                >
+                  <RadioGroupItem value={response.id} id={response.id} className="mt-0.5" />
+                  <Label htmlFor={response.id} className="flex-1 text-sm text-white/80 cursor-pointer">
                     {response.text}
                   </Label>
                 </div>
@@ -86,19 +108,25 @@ const CommunicationSimulator = ({ onBack }: CommunicationSimulatorProps) => {
           </div>
 
           {showFeedback && selectedResponse && (
-            <div className="mt-4 p-4 border border-elec-yellow/30 rounded-lg">
+            <div className={`mt-4 p-4 rounded-xl ${
+              scenario.responses.find(r => r.id === selectedResponse)?.rating === "excellent"
+                ? 'bg-green-500/10 border border-green-500/30'
+                : 'bg-orange-500/10 border border-orange-500/30'
+            }`}>
               {(() => {
                 const selected = scenario.responses.find(r => r.id === selectedResponse);
                 const isExcellent = selected?.rating === "excellent";
                 return (
-                  <div className="flex items-start gap-2">
-                    <CheckCircle className={`h-5 w-5 mt-0.5 ${isExcellent ? 'text-green-400' : 'text-orange-400'}`} />
+                  <div className="flex items-start gap-3">
+                    <div className={`p-2 rounded-lg ${isExcellent ? 'bg-green-500/20' : 'bg-orange-500/20'}`}>
+                      <CheckCircle className={`h-4 w-4 ${isExcellent ? 'text-green-400' : 'text-orange-400'}`} />
+                    </div>
                     <div>
-                      <h5 className={`font-medium ${isExcellent ? 'text-green-400' : 'text-orange-400'}`}>
+                      <h5 className={`font-semibold ${isExcellent ? 'text-green-400' : 'text-orange-400'}`}>
                         {isExcellent ? "Excellent Response!" : "Consider This Approach:"}
                       </h5>
-                      <p className="text-sm text-muted-foreground mt-1">
-                        {isExcellent 
+                      <p className="text-sm text-white/70 mt-1">
+                        {isExcellent
                           ? "This response shows professionalism, clear communication, and a willingness to learn."
                           : "Try to be more specific and professional. Clear communication builds trust and shows maturity."
                         }
@@ -110,14 +138,20 @@ const CommunicationSimulator = ({ onBack }: CommunicationSimulatorProps) => {
             </div>
           )}
 
-          <div className="flex gap-2 pt-4">
+          <div className="flex flex-wrap gap-2 pt-4">
             {showFeedback && currentScenario < scenarios.length - 1 && (
-              <Button onClick={nextScenario}>Next Scenario</Button>
+              <Button onClick={nextScenario} className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation active:scale-95 transition-all">
+                Next Scenario
+              </Button>
             )}
             {showFeedback && currentScenario === scenarios.length - 1 && (
-              <Button onClick={resetSimulator}>Start Over</Button>
+              <Button onClick={resetSimulator} className="h-11 bg-green-500 hover:bg-green-500/90 text-white touch-manipulation active:scale-95 transition-all">
+                Start Over
+              </Button>
             )}
-            <Button variant="outline" onClick={onBack}>Back to Tools</Button>
+            <Button variant="outline" onClick={onBack} className="h-11 border-white/20 hover:border-elec-yellow/50 hover:bg-elec-yellow/10 touch-manipulation active:scale-95 transition-all">
+              Back to Tools
+            </Button>
           </div>
         </CardContent>
       </Card>

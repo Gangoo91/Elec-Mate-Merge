@@ -1,26 +1,54 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import BackButton from "@/components/common/BackButton";
+import { useState } from "react";
+import { Helmet } from "react-helmet";
+import {
+  TrendingUp,
+  Download,
+  FileSpreadsheet,
+  Copy,
+  Plus,
+  Minus,
+  ChevronDown,
+  Info,
+  Wallet,
+  PiggyBank,
+  Calendar,
+  Settings,
+  BarChart3,
+  Lightbulb,
+  AlertCircle,
+  CheckCircle,
+} from "lucide-react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
-import { TrendingUp, Download, FileSpreadsheet, Copy, Plus, Minus, ChevronDown, Info } from "lucide-react";
 import { useCashFlow } from "@/hooks/use-cash-flow";
 import { CashFlowCharts } from "@/components/electrician/business-development/enhanced-cash-flow/CashFlowCharts";
 import { ScenarioPlanner } from "@/components/electrician/business-development/enhanced-cash-flow/ScenarioPlanner";
 import { FinancialInsights } from "@/components/electrician/business-development/enhanced-cash-flow/FinancialInsights";
 import { FinancialHealthSummary } from "@/components/electrician/business-development/enhanced-cash-flow/FinancialHealthSummary";
 import { QuickStartTemplates } from "@/components/electrician/business-development/enhanced-cash-flow/QuickStartTemplates";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import WhyThisMatters from "@/components/common/WhyThisMatters";
-import { useState } from "react";
-import { Helmet } from "react-helmet";
+import {
+  CalculatorCard,
+  CalculatorInput,
+  CalculatorSelect,
+  CalculatorResult,
+  ResultValue,
+  ResultsGrid,
+  CALCULATOR_CONFIG,
+} from "@/components/calculators/shared";
 
 const CashFlowPlanner = () => {
+  const config = CALCULATOR_CONFIG["business"];
   const { toast } = useToast();
   const {
     state,
@@ -36,46 +64,48 @@ const CashFlowPlanner = () => {
     updateSettings,
     loadTemplate,
     exportToCSV,
-    copySummaryToClipboard
+    copySummaryToClipboard,
   } = useCashFlow();
 
   const [showTemplates, setShowTemplates] = useState(state.incomeStreams.length === 0);
-  const [expandedSections, setExpandedSections] = useState<string[]>(['summary']);
-
-  
-
+  const [showSetup, setShowSetup] = useState(true);
+  const [showCharts, setShowCharts] = useState(false);
+  const [showScenarios, setShowScenarios] = useState(false);
+  const [showInsights, setShowInsights] = useState(false);
+  const [showProjections, setShowProjections] = useState(false);
   const [showAddIncome, setShowAddIncome] = useState(false);
   const [showAddExpense, setShowAddExpense] = useState(false);
+
   const [newIncomeForm, setNewIncomeForm] = useState({
-    name: '',
+    name: "",
     amount: 0,
-    frequency: 'monthly' as const,
+    frequency: "monthly" as const,
     paymentDelayDays: 14,
-    growth: 0.05
+    growth: 0.05,
   });
   const [newExpenseForm, setNewExpenseForm] = useState({
-    name: '',
+    name: "",
     amount: 0,
-    frequency: 'monthly' as const,
+    frequency: "monthly" as const,
     variable: true,
-    growth: 0.03
+    growth: 0.03,
   });
 
   const handleAddIncome = () => {
     if (newIncomeForm.name && newIncomeForm.amount > 0) {
       addIncomeStream(newIncomeForm);
       setNewIncomeForm({
-        name: '',
+        name: "",
         amount: 0,
-        frequency: 'monthly',
+        frequency: "monthly",
         paymentDelayDays: 14,
-        growth: 0.05
+        growth: 0.05,
       });
       setShowAddIncome(false);
       toast({
         title: "Income Stream Added",
         description: `${newIncomeForm.name} has been added to your cash flow model.`,
-        variant: "success"
+        variant: "success",
       });
     }
   };
@@ -84,17 +114,17 @@ const CashFlowPlanner = () => {
     if (newExpenseForm.name && newExpenseForm.amount > 0) {
       addExpenseCategory(newExpenseForm);
       setNewExpenseForm({
-        name: '',
+        name: "",
         amount: 0,
-        frequency: 'monthly',
+        frequency: "monthly",
         variable: true,
-        growth: 0.03
+        growth: 0.03,
       });
       setShowAddExpense(false);
       toast({
         title: "Expense Category Added",
         description: `${newExpenseForm.name} has been added to your cash flow model.`,
-        variant: "success"
+        variant: "success",
       });
     }
   };
@@ -105,7 +135,7 @@ const CashFlowPlanner = () => {
     toast({
       title: "Template Loaded",
       description: "Your cash flow template has been loaded. Review and adjust as needed.",
-      variant: "success"
+      variant: "success",
     });
   };
 
@@ -114,7 +144,7 @@ const CashFlowPlanner = () => {
     toast({
       title: "Exported",
       description: "Cash flow data exported to CSV",
-      variant: "success"
+      variant: "success",
     });
   };
 
@@ -123,70 +153,161 @@ const CashFlowPlanner = () => {
     toast({
       title: "Copied",
       description: "Cash flow summary copied to clipboard",
-      variant: "success"
+      variant: "success",
     });
   };
 
-  const monthWithNegativeBalance = monthlyProjections.findIndex(p => p.cumulativeBalance < 0) + 1;
+  const formatCurrency = (n: number) => {
+    return new Intl.NumberFormat("en-GB", {
+      style: "currency",
+      currency: "GBP",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(n);
+  };
+
+  const monthWithNegativeBalance = monthlyProjections.findIndex((p) => p.cumulativeBalance < 0) + 1;
+
+  const frequencyOptions = [
+    { value: "monthly", label: "Monthly" },
+    { value: "quarterly", label: "Quarterly" },
+    { value: "seasonal", label: "Seasonal" },
+  ];
+
+  const expenseFrequencyOptions = [
+    { value: "monthly", label: "Monthly" },
+    { value: "quarterly", label: "Quarterly" },
+    { value: "annual", label: "Annual" },
+  ];
+
+  const vatQuarterOptions = [
+    { value: "1", label: "Jan/Apr/Jul/Oct" },
+    { value: "2", label: "Feb/May/Aug/Nov" },
+    { value: "3", label: "Mar/Jun/Sep/Dec" },
+  ];
+
+  const vatSchemeOptions = [
+    { value: "standard", label: "Standard" },
+    { value: "flat-rate", label: "Flat Rate" },
+  ];
 
   return (
-    <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 max-w-7xl overflow-x-hidden">
+    <div className="space-y-4">
       <Helmet>
         <title>Cash Flow Planner UK for Electricians | Forecast & Scenarios</title>
-        <meta name="description" content="Plan electrician cash flow with projections, VAT quarters, scenarios and insights. Mobile-first." />
+        <meta
+          name="description"
+          content="Plan electrician cash flow with projections, VAT quarters, scenarios and insights. Mobile-first."
+        />
         <link rel="canonical" href="/electrician/business-development/tools/cash-flow" />
       </Helmet>
-      <div className="flex flex-col items-center justify-center mb-4 sm:mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-elec-light mb-3 sm:mb-4 flex items-center gap-2 sm:gap-3">
-          <TrendingUp className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
-          Advanced Cash Flow Planner
-        </h1>
-        <p className="text-sm sm:text-base text-elec-light/80 text-center max-w-2xl mb-4 sm:mb-6 px-2">
-          Professional cash flow forecasting with scenario planning, industry-specific insights, and real-time what-if analysis.
-        </p>
-        <BackButton customUrl="/electrician/business-development/tools" label="Back to Calculators" />
-      </div>
 
-      <WhyThisMatters
-        points={[
-          "Forecasts peaks/troughs so VAT quarters, tax and payroll never surprise you.",
-          "Prevents cash crunches by planning deposits, delays and emergency buffers.",
-          "Enables confident decisions on hiring, vehicles and marketing."
-        ]}
-      />
+      {/* Header Card */}
+      <CalculatorCard
+        category="business"
+        title="Advanced Cash Flow Planner"
+        description="Professional cash flow forecasting with scenario planning and insights"
+        badge="Planning"
+      >
+        {/* Export Options */}
+        <div className="flex justify-end mb-4">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="h-10 px-4 flex items-center gap-2 rounded-xl bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 transition-colors">
+                <Download className="h-4 w-4" />
+                <span className="hidden sm:inline">Export</span>
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="bg-card border-white/10 w-48">
+              <DropdownMenuItem
+                onClick={handleExportCSV}
+                className="text-white py-3 cursor-pointer focus:bg-white/10"
+              >
+                <FileSpreadsheet className="h-5 w-5 mr-3" />
+                <span>Export to CSV</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={handleCopySummary}
+                className="text-white py-3 cursor-pointer focus:bg-white/10"
+              >
+                <Copy className="h-5 w-5 mr-3" />
+                <span>Copy Summary</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
+        {/* Quick Health Summary */}
+        {state.incomeStreams.length > 0 && (
+          <div className="mb-4">
+            <div
+              className={cn(
+                "flex items-center gap-2 p-3 rounded-xl border",
+                financialMetrics.minBalance >= 0
+                  ? "bg-green-500/10 border-green-500/30"
+                  : "bg-red-500/10 border-red-500/30"
+              )}
+            >
+              {financialMetrics.minBalance >= 0 ? (
+                <CheckCircle className="h-5 w-5 text-green-400" />
+              ) : (
+                <AlertCircle className="h-5 w-5 text-red-400" />
+              )}
+              <span
+                className={cn(
+                  "font-medium text-sm",
+                  financialMetrics.minBalance >= 0 ? "text-green-400" : "text-red-400"
+                )}
+              >
+                {financialMetrics.minBalance >= 0
+                  ? `Healthy - ${financialMetrics.cashRunway} months runway`
+                  : `Warning - Cash flow issues in month ${monthWithNegativeBalance}`}
+              </span>
+            </div>
+          </div>
+        )}
+
+        {/* Quick Stats Grid */}
+        {state.incomeStreams.length > 0 && (
+          <ResultsGrid columns={2}>
+            <ResultValue
+              label="Annual Income"
+              value={formatCurrency(financialMetrics.totalIncome)}
+              category="business"
+              size="sm"
+            />
+            <ResultValue
+              label="Annual Expenses"
+              value={formatCurrency(financialMetrics.totalExpenses)}
+              category="business"
+              size="sm"
+            />
+            <ResultValue
+              label="Net Profit"
+              value={formatCurrency(financialMetrics.netProfit)}
+              category="business"
+              size="sm"
+            />
+            <ResultValue
+              label="Profit Margin"
+              value={`${financialMetrics.profitMargin.toFixed(1)}%`}
+              category="business"
+              size="sm"
+            />
+          </ResultsGrid>
+        )}
+      </CalculatorCard>
 
       {/* Quick Start Templates */}
       {showTemplates && (
-        <div className="mb-6">
+        <div className="mb-4">
           <QuickStartTemplates onLoadTemplate={handleLoadTemplate} />
         </div>
       )}
 
-      {/* Export Options */}
-      <div className="flex justify-end mb-3 sm:mb-4">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="border-elec-yellow/30 text-elec-light min-h-[44px]">
-              <Download className="h-4 w-4 mr-2" />
-              <span className="hidden sm:inline">Export</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="bg-elec-card border-elec-yellow/30 w-48 z-50">
-            <DropdownMenuItem onClick={handleExportCSV} className="text-elec-light py-3 cursor-pointer focus:bg-elec-yellow/10">
-              <FileSpreadsheet className="h-5 w-5 mr-3" />
-              <span className="text-base">Export to CSV</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleCopySummary} className="text-elec-light py-3 cursor-pointer focus:bg-elec-yellow/10">
-              <Copy className="h-5 w-5 mr-3" />
-              <span className="text-base">Copy Summary</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-
-      {/* Financial Health Summary - Always Visible */}
+      {/* Financial Health Summary */}
       {state.incomeStreams.length > 0 && (
-        <div className="mb-4 sm:mb-6">
+        <div className="mb-4">
           <FinancialHealthSummary
             financialMetrics={financialMetrics}
             emergencyFundTarget={state.emergencyFundTarget}
@@ -195,412 +316,428 @@ const CashFlowPlanner = () => {
         </div>
       )}
 
-      {/* Accordion-based Layout */}
-      <Accordion type="multiple" value={expandedSections} onValueChange={setExpandedSections} className="space-y-3 sm:space-y-4">
-        {/* Setup Section */}
-        <AccordionItem value="setup" className="border-elec-yellow/20 bg-elec-card rounded-lg px-3 sm:px-6">
-          <AccordionTrigger className="text-elec-light hover:text-elec-yellow py-4 min-h-[44px] touch-manipulation">
-            <div className="flex items-center gap-2">
-              <Plus className="h-5 w-5" />
-              <span className="text-base sm:text-lg">Setup Your Business</span>
+      {/* Setup Section */}
+      <Collapsible open={showSetup} onOpenChange={setShowSetup}>
+        <div className="calculator-card overflow-hidden" style={{ borderColor: "#60a5fa15" }}>
+          <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+            <div className="flex items-center gap-3">
+              <Plus className="h-4 w-4 text-blue-400" />
+              <span className="text-sm sm:text-base font-medium text-blue-300">
+                Setup Your Business
+              </span>
             </div>
-          </AccordionTrigger>
-          <AccordionContent className="space-y-4 sm:space-y-6 pt-4">
-            <div className="grid gap-4 sm:gap-6 lg:grid-cols-2">
-              {/* Income Streams */}
-              <Card className="border-elec-yellow/20 bg-elec-card p-3 sm:p-4">
-              <CardHeader className="p-0 pb-4">
-                <CardTitle className="text-elec-light text-base sm:text-lg flex items-center justify-between">
-                  Income Streams
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => setShowAddIncome(!showAddIncome)}
-                    className="flex items-center gap-1 sm:gap-2 min-h-[44px] px-2 sm:px-3"
-                  >
-                    <Plus className="h-4 w-4" />
-                    <span className="hidden sm:inline">Add Stream</span>
-                    <span className="sm:hidden">Add</span>
-                  </Button>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3 sm:space-y-4 p-0">
-                {state.incomeStreams.map((stream) => (
-                  <div key={stream.id} className="p-3 sm:p-4 rounded-lg bg-secondary/20 border border-secondary/40">
-                    <div className="flex items-center justify-between mb-3">
-                      <h4 className="font-medium text-elec-light text-sm sm:text-base truncate flex-1 mr-2">{stream.name}</h4>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => removeIncomeStream(stream.id)}
-                        className="text-red-400 hover:text-red-300 min-h-[44px] px-2"
-                      >
-                        <Minus className="h-4 w-4" />
-                      </Button>
-                    </div>
-                    
-                    <div className="grid gap-3 sm:grid-cols-2">
-                      <MobileInput
-                        label="Amount"
-                        value={stream.amount.toString()}
-                        onChange={(e) => updateIncomeStream(stream.id, { amount: parseFloat(e.target.value) || 0 })}
-                        type="number"
-                        unit="£"
-                      />
-                      <MobileSelectWrapper
-                        label="Frequency"
-                        value={stream.frequency}
-                        onValueChange={(value) => updateIncomeStream(stream.id, { frequency: value as any })}
-                        options={[
-                          { value: 'monthly', label: 'Monthly' },
-                          { value: 'quarterly', label: 'Quarterly' },
-                          { value: 'seasonal', label: 'Seasonal' }
-                        ]}
-                      />
-                      <MobileInput
-                        label="Payment Delay"
-                        value={stream.paymentDelayDays.toString()}
-                        onChange={(e) => updateIncomeStream(stream.id, { paymentDelayDays: parseInt(e.target.value) || 0 })}
-                        type="number"
-                        unit="days"
-                        hint="Days between invoice and payment"
-                      />
-                      <MobileInput
-                        label="Annual Growth"
-                        value={(stream.growth * 100).toString()}
-                        onChange={(e) => updateIncomeStream(stream.id, { growth: (parseFloat(e.target.value) || 0) / 100 })}
-                        type="number"
-                        unit="%"
-                        hint="Expected annual growth rate"
-                      />
-                    </div>
-                  </div>
-                ))}
+            <ChevronDown
+              className={cn(
+                "h-4 w-4 text-white/80 transition-transform duration-200",
+                showSetup && "rotate-180"
+              )}
+            />
+          </CollapsibleTrigger>
 
-                {showAddIncome && (
-                  <div className="p-3 sm:p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-                    <h4 className="font-medium text-elec-light text-sm sm:text-base mb-3">Add New Income Stream</h4>
-                    <div className="grid gap-3 sm:grid-cols-2">
-                      <MobileInput
-                        label="Name"
-                        value={newIncomeForm.name}
-                        onChange={(e) => setNewIncomeForm(prev => ({ ...prev, name: e.target.value }))}
-                        hint="e.g., Regular Contracts, Emergency Callouts"
-                      />
-                      <MobileInput
-                        label="Amount"
-                        value={newIncomeForm.amount.toString()}
-                        onChange={(e) => setNewIncomeForm(prev => ({ ...prev, amount: parseFloat(e.target.value) || 0 }))}
-                        type="number"
-                        unit="£"
-                      />
-                      <MobileSelectWrapper
-                        label="Frequency"
-                        value={newIncomeForm.frequency}
-                        onValueChange={(value) => setNewIncomeForm(prev => ({ ...prev, frequency: value as any }))}
-                        options={[
-                          { value: 'monthly', label: 'Monthly' },
-                          { value: 'quarterly', label: 'Quarterly' },
-                          { value: 'seasonal', label: 'Seasonal' }
-                        ]}
-                      />
-                      <MobileInput
-                        label="Payment Delay"
-                        value={newIncomeForm.paymentDelayDays.toString()}
-                        onChange={(e) => setNewIncomeForm(prev => ({ ...prev, paymentDelayDays: parseInt(e.target.value) || 0 }))}
-                        type="number"
-                        unit="days"
-                      />
-                    </div>
-                    <div className="flex gap-2 mt-4">
-                      <Button onClick={handleAddIncome} className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                        Add Income Stream
-                      </Button>
-                      <Button variant="outline" onClick={() => setShowAddIncome(false)}>
-                        Cancel
-                      </Button>
-                    </div>
+          <CollapsibleContent className="p-4 pt-0 space-y-6">
+            {/* Income Streams */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Wallet className="h-4 w-4 text-green-400" />
+                  <span className="text-sm font-medium text-white/80">Income Streams</span>
+                </div>
+                <button
+                  onClick={() => setShowAddIncome(!showAddIncome)}
+                  className="h-10 px-3 flex items-center gap-2 rounded-xl bg-green-500/10 border border-green-500/30 text-green-400 text-sm hover:bg-green-500/20 transition-colors"
+                >
+                  <Plus className="h-4 w-4" />
+                  <span className="hidden sm:inline">Add</span>
+                </button>
+              </div>
+
+              {state.incomeStreams.map((stream) => (
+                <div
+                  key={stream.id}
+                  className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-3"
+                >
+                  <div className="flex items-center justify-between">
+                    <h4 className="font-medium text-white text-sm truncate flex-1 mr-2">
+                      {stream.name}
+                    </h4>
+                    <button
+                      onClick={() => removeIncomeStream(stream.id)}
+                      className="h-8 w-8 flex items-center justify-center rounded-lg text-red-400 hover:bg-red-500/10 transition-colors"
+                    >
+                      <Minus className="h-4 w-4" />
+                    </button>
                   </div>
-                )}
-              </CardContent>
-            </Card>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <CalculatorInput
+                      label="Amount"
+                      unit="£"
+                      type="text"
+                      inputMode="decimal"
+                      value={stream.amount.toString()}
+                      onChange={(val) =>
+                        updateIncomeStream(stream.id, { amount: parseFloat(val) || 0 })
+                      }
+                    />
+                    <CalculatorSelect
+                      label="Frequency"
+                      value={stream.frequency}
+                      onChange={(val) => updateIncomeStream(stream.id, { frequency: val as any })}
+                      options={frequencyOptions}
+                    />
+                    <CalculatorInput
+                      label="Payment Delay"
+                      unit="days"
+                      type="text"
+                      inputMode="numeric"
+                      value={stream.paymentDelayDays.toString()}
+                      onChange={(val) =>
+                        updateIncomeStream(stream.id, { paymentDelayDays: parseInt(val) || 0 })
+                      }
+                    />
+                    <CalculatorInput
+                      label="Annual Growth"
+                      unit="%"
+                      type="text"
+                      inputMode="decimal"
+                      value={(stream.growth * 100).toString()}
+                      onChange={(val) =>
+                        updateIncomeStream(stream.id, { growth: (parseFloat(val) || 0) / 100 })
+                      }
+                    />
+                  </div>
+                </div>
+              ))}
+
+              {showAddIncome && (
+                <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/30 space-y-3">
+                  <h4 className="font-medium text-blue-300 text-sm">Add New Income Stream</h4>
+                  <div className="grid grid-cols-2 gap-3">
+                    <CalculatorInput
+                      label="Name"
+                      type="text"
+                      value={newIncomeForm.name}
+                      onChange={(val) => setNewIncomeForm((prev) => ({ ...prev, name: val }))}
+                      placeholder="e.g., Regular Contracts"
+                    />
+                    <CalculatorInput
+                      label="Amount"
+                      unit="£"
+                      type="text"
+                      inputMode="decimal"
+                      value={newIncomeForm.amount.toString()}
+                      onChange={(val) =>
+                        setNewIncomeForm((prev) => ({ ...prev, amount: parseFloat(val) || 0 }))
+                      }
+                    />
+                    <CalculatorSelect
+                      label="Frequency"
+                      value={newIncomeForm.frequency}
+                      onChange={(val) =>
+                        setNewIncomeForm((prev) => ({ ...prev, frequency: val as any }))
+                      }
+                      options={frequencyOptions}
+                    />
+                    <CalculatorInput
+                      label="Payment Delay"
+                      unit="days"
+                      type="text"
+                      inputMode="numeric"
+                      value={newIncomeForm.paymentDelayDays.toString()}
+                      onChange={(val) =>
+                        setNewIncomeForm((prev) => ({ ...prev, paymentDelayDays: parseInt(val) || 0 }))
+                      }
+                    />
+                  </div>
+                  <div className="flex gap-2 pt-2">
+                    <button
+                      onClick={handleAddIncome}
+                      className="h-10 px-4 rounded-xl font-medium text-sm text-black"
+                      style={{
+                        background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                      }}
+                    >
+                      Add Income
+                    </button>
+                    <button
+                      onClick={() => setShowAddIncome(false)}
+                      className="h-10 px-4 rounded-xl bg-white/5 border border-white/10 text-white/70"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* Expense Categories */}
-            <Card className="border-elec-yellow/20 bg-elec-card p-3 sm:p-4">
-              <CardHeader className="p-0 pb-4">
-                <CardTitle className="text-elec-light text-base sm:text-lg flex items-center justify-between">
-                  Expense Categories
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => setShowAddExpense(!showAddExpense)}
-                    className="flex items-center gap-1 sm:gap-2 min-h-[44px] px-2 sm:px-3"
-                  >
-                    <Plus className="h-4 w-4" />
-                    <span className="hidden sm:inline">Add Category</span>
-                    <span className="sm:hidden">Add</span>
-                  </Button>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3 sm:space-y-4 p-0">
-                {state.expenseCategories.map((category) => (
-                  <div key={category.id} className="p-3 sm:p-4 rounded-lg bg-secondary/20 border border-secondary/40">
-                    <div className="flex items-center justify-between mb-3">
-                      <h4 className="font-medium text-elec-light text-sm sm:text-base truncate flex-1 mr-2">{category.name}</h4>
-                      <div className="flex items-center gap-2 flex-shrink-0">
-                        {category.variable && <Badge variant="yellow" className="text-xs">Variable</Badge>}
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={() => removeExpenseCategory(category.id)}
-                          className="text-red-400 hover:text-red-300 min-h-[44px] px-2"
-                        >
-                          <Minus className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </div>
-                    
-                    <div className="grid gap-3 sm:grid-cols-2">
-                      <MobileInput
-                        label="Amount"
-                        value={category.amount.toString()}
-                        onChange={(e) => updateExpenseCategory(category.id, { amount: parseFloat(e.target.value) || 0 })}
-                        type="number"
-                        unit="£"
-                      />
-                      <MobileSelectWrapper
-                        label="Frequency"
-                        value={category.frequency}
-                        onValueChange={(value) => updateExpenseCategory(category.id, { frequency: value as any })}
-                        options={[
-                          { value: 'monthly', label: 'Monthly' },
-                          { value: 'quarterly', label: 'Quarterly' },
-                          { value: 'annual', label: 'Annual' }
-                        ]}
-                      />
-                      <MobileInput
-                        label="Annual Growth"
-                        value={(category.growth * 100).toString()}
-                        onChange={(e) => updateExpenseCategory(category.id, { growth: (parseFloat(e.target.value) || 0) / 100 })}
-                        type="number"
-                        unit="%"
-                        hint="Expected annual growth rate"
-                      />
-                      {(category.frequency === 'quarterly' || category.frequency === 'annual') && (
-                        <MobileInput
-                          label="Timing (Month)"
-                          value={(category.timing || 1).toString()}
-                          onChange={(e) => updateExpenseCategory(category.id, { timing: parseInt(e.target.value) || 1 })}
-                          type="number"
-                          hint="Month when expense occurs"
-                        />
+            <div className="space-y-4 pt-4 border-t border-white/10">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <PiggyBank className="h-4 w-4 text-red-400" />
+                  <span className="text-sm font-medium text-white/80">Expense Categories</span>
+                </div>
+                <button
+                  onClick={() => setShowAddExpense(!showAddExpense)}
+                  className="h-10 px-3 flex items-center gap-2 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm hover:bg-red-500/20 transition-colors"
+                >
+                  <Plus className="h-4 w-4" />
+                  <span className="hidden sm:inline">Add</span>
+                </button>
+              </div>
+
+              {state.expenseCategories.map((category) => (
+                <div
+                  key={category.id}
+                  className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-3"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <h4 className="font-medium text-white text-sm truncate">{category.name}</h4>
+                      {category.variable && (
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400">
+                          Variable
+                        </span>
                       )}
                     </div>
+                    <button
+                      onClick={() => removeExpenseCategory(category.id)}
+                      className="h-8 w-8 flex items-center justify-center rounded-lg text-red-400 hover:bg-red-500/10 transition-colors"
+                    >
+                      <Minus className="h-4 w-4" />
+                    </button>
                   </div>
-                ))}
 
-                {showAddExpense && (
-                  <div className="p-3 sm:p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-                    <h4 className="font-medium text-elec-light text-sm sm:text-base mb-3">Add New Expense Category</h4>
-                    <div className="grid gap-3 sm:grid-cols-2">
-                      <MobileInput
-                        label="Name"
-                        value={newExpenseForm.name}
-                        onChange={(e) => setNewExpenseForm(prev => ({ ...prev, name: e.target.value }))}
-                        hint="e.g., Tools & Equipment, Van Insurance"
+                  <div className="grid grid-cols-2 gap-3">
+                    <CalculatorInput
+                      label="Amount"
+                      unit="£"
+                      type="text"
+                      inputMode="decimal"
+                      value={category.amount.toString()}
+                      onChange={(val) =>
+                        updateExpenseCategory(category.id, { amount: parseFloat(val) || 0 })
+                      }
+                    />
+                    <CalculatorSelect
+                      label="Frequency"
+                      value={category.frequency}
+                      onChange={(val) =>
+                        updateExpenseCategory(category.id, { frequency: val as any })
+                      }
+                      options={expenseFrequencyOptions}
+                    />
+                    <CalculatorInput
+                      label="Annual Growth"
+                      unit="%"
+                      type="text"
+                      inputMode="decimal"
+                      value={(category.growth * 100).toString()}
+                      onChange={(val) =>
+                        updateExpenseCategory(category.id, { growth: (parseFloat(val) || 0) / 100 })
+                      }
+                    />
+                    {(category.frequency === "quarterly" || category.frequency === "annual") && (
+                      <CalculatorInput
+                        label="Timing (Month)"
+                        type="text"
+                        inputMode="numeric"
+                        value={(category.timing || 1).toString()}
+                        onChange={(val) =>
+                          updateExpenseCategory(category.id, { timing: parseInt(val) || 1 })
+                        }
                       />
-                      <MobileInput
-                        label="Amount"
-                        value={newExpenseForm.amount.toString()}
-                        onChange={(e) => setNewExpenseForm(prev => ({ ...prev, amount: parseFloat(e.target.value) || 0 }))}
-                        type="number"
-                        unit="£"
-                      />
-                      <MobileSelectWrapper
-                        label="Frequency"
-                        value={newExpenseForm.frequency}
-                        onValueChange={(value) => setNewExpenseForm(prev => ({ ...prev, frequency: value as any }))}
-                        options={[
-                          { value: 'monthly', label: 'Monthly' },
-                          { value: 'quarterly', label: 'Quarterly' },
-                          { value: 'annual', label: 'Annual' }
-                        ]}
-                      />
-                    </div>
-                    <div className="flex gap-2 mt-4">
-                      <Button onClick={handleAddExpense} className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                        Add Expense Category
-                      </Button>
-                      <Button variant="outline" onClick={() => setShowAddExpense(false)}>
-                        Cancel
-                      </Button>
-                    </div>
+                    )}
                   </div>
-                )}
-              </CardContent>
-            </Card>
+                </div>
+              ))}
+
+              {showAddExpense && (
+                <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/30 space-y-3">
+                  <h4 className="font-medium text-blue-300 text-sm">Add New Expense Category</h4>
+                  <div className="grid grid-cols-2 gap-3">
+                    <CalculatorInput
+                      label="Name"
+                      type="text"
+                      value={newExpenseForm.name}
+                      onChange={(val) => setNewExpenseForm((prev) => ({ ...prev, name: val }))}
+                      placeholder="e.g., Van Insurance"
+                    />
+                    <CalculatorInput
+                      label="Amount"
+                      unit="£"
+                      type="text"
+                      inputMode="decimal"
+                      value={newExpenseForm.amount.toString()}
+                      onChange={(val) =>
+                        setNewExpenseForm((prev) => ({ ...prev, amount: parseFloat(val) || 0 }))
+                      }
+                    />
+                    <CalculatorSelect
+                      label="Frequency"
+                      value={newExpenseForm.frequency}
+                      onChange={(val) =>
+                        setNewExpenseForm((prev) => ({ ...prev, frequency: val as any }))
+                      }
+                      options={expenseFrequencyOptions}
+                    />
+                  </div>
+                  <div className="flex gap-2 pt-2">
+                    <button
+                      onClick={handleAddExpense}
+                      className="h-10 px-4 rounded-xl font-medium text-sm text-black"
+                      style={{
+                        background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                      }}
+                    >
+                      Add Expense
+                    </button>
+                    <button
+                      onClick={() => setShowAddExpense(false)}
+                      className="h-10 px-4 rounded-xl bg-white/5 border border-white/10 text-white/70"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Settings */}
-          <Card className="border-elec-yellow/20 bg-elec-card p-3 sm:p-6">
-            <CardHeader className="p-0 pb-4">
-              <CardTitle className="text-elec-light text-base sm:text-lg">Settings & Assumptions</CardTitle>
-            </CardHeader>
-            <CardContent className="p-0">
-              {/* Mobile-first grid layout with responsive breakpoints */}
-              <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                
-                {/* Row 1 - Primary Settings */}
-                <div className="space-y-2">
-                  <MobileInput
-                    label="Starting Cash Balance"
-                    value={state.startingBalance.toString()}
-                    onChange={(e) => updateSettings({ startingBalance: parseFloat(e.target.value) || 0 })}
-                    type="number"
-                    unit="£"
-                  />
-                  <p className="text-xs text-muted-foreground">Current cash on hand</p>
-                </div>
+            <div className="space-y-4 pt-4 border-t border-white/10">
+              <div className="flex items-center gap-2">
+                <Settings className="h-4 w-4 text-blue-400" />
+                <span className="text-sm font-medium text-white/80">Settings & Assumptions</span>
+              </div>
 
-                <div className="space-y-2">
-                  <MobileInput
-                    label="Emergency Fund Target"
-                    value={state.emergencyFundTarget.toString()}
-                    onChange={(e) => updateSettings({ emergencyFundTarget: parseFloat(e.target.value) || 0 })}
-                    type="number"
-                    unit="£"
-                  />
-                  <p className="text-xs text-muted-foreground">Target emergency reserve</p>
-                </div>
-
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 mb-1">
-                    <div className="w-1 h-4 bg-elec-yellow rounded-full"></div>
-                    <span className="text-sm font-medium text-white">VAT Quarter</span>
-                  </div>
-                  <MobileSelectWrapper
-                    label=""
-                    value={state.vatQuarter.toString()}
-                    onValueChange={(value) => updateSettings({ vatQuarter: parseInt(value) })}
-                    options={[
-                      { value: '1', label: 'Jan/Apr/Jul/Oct' },
-                      { value: '2', label: 'Feb/May/Aug/Nov' },
-                      { value: '3', label: 'Mar/Jun/Sep/Dec' }
-                    ]}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 mb-1">
-                    <div className="w-1 h-4 bg-elec-yellow rounded-full"></div>
-                    <span className="text-sm font-medium text-white">Active Scenario</span>
-                  </div>
-                  <MobileSelectWrapper
-                    label=""
-                    value={state.selectedScenario}
-                    onValueChange={(value) => updateSettings({ selectedScenario: value })}
-                    options={state.scenarios.map(scenario => ({
-                      value: scenario.id,
-                      label: scenario.name
-                    }))}
-                  />
-                </div>
-
-                {/* Row 2 - Secondary Settings */}
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 mb-1">
-                    <div className="w-1 h-4 bg-elec-yellow rounded-full"></div>
-                    <span className="text-sm font-medium text-white">VAT Scheme</span>
-                  </div>
-                  <MobileSelectWrapper
-                    label=""
-                    value={state.vatScheme}
-                    onValueChange={(value) => updateSettings({ vatScheme: value as any })}
-                    options={[
-                      { value: 'standard', label: 'Standard' },
-                      { value: 'flat-rate', label: 'Flat Rate' }
-                    ]}
-                  />
-                  <p className="text-xs text-muted-foreground">Affects quarterly VAT payment</p>
-                </div>
-
-                <div className="space-y-2">
-                  <MobileInput
-                    label="Bad Debt % of Income"
-                    value={state.badDebtPercent.toString()}
-                    onChange={(e) => updateSettings({ badDebtPercent: parseFloat(e.target.value) || 0 })}
-                    type="number"
+              <div className="grid grid-cols-2 gap-3">
+                <CalculatorInput
+                  label="Starting Balance"
+                  unit="£"
+                  type="text"
+                  inputMode="decimal"
+                  value={state.startingBalance.toString()}
+                  onChange={(val) => updateSettings({ startingBalance: parseFloat(val) || 0 })}
+                  hint="Current cash on hand"
+                />
+                <CalculatorInput
+                  label="Emergency Fund Target"
+                  unit="£"
+                  type="text"
+                  inputMode="decimal"
+                  value={state.emergencyFundTarget.toString()}
+                  onChange={(val) => updateSettings({ emergencyFundTarget: parseFloat(val) || 0 })}
+                  hint="Target emergency reserve"
+                />
+                <CalculatorSelect
+                  label="VAT Quarter"
+                  value={state.vatQuarter.toString()}
+                  onChange={(val) => updateSettings({ vatQuarter: parseInt(val) })}
+                  options={vatQuarterOptions}
+                />
+                <CalculatorSelect
+                  label="Active Scenario"
+                  value={state.selectedScenario}
+                  onChange={(val) => updateSettings({ selectedScenario: val })}
+                  options={state.scenarios.map((s) => ({ value: s.id, label: s.name }))}
+                />
+                <CalculatorSelect
+                  label="VAT Scheme"
+                  value={state.vatScheme}
+                  onChange={(val) => updateSettings({ vatScheme: val as any })}
+                  options={vatSchemeOptions}
+                />
+                <CalculatorInput
+                  label="Bad Debt %"
+                  unit="%"
+                  type="text"
+                  inputMode="decimal"
+                  value={state.badDebtPercent.toString()}
+                  onChange={(val) => updateSettings({ badDebtPercent: parseFloat(val) || 0 })}
+                  hint="Allowance for non-payment"
+                />
+                <CalculatorInput
+                  label="Card Fees %"
+                  unit="%"
+                  type="text"
+                  inputMode="decimal"
+                  value={state.cardFeesPercent.toString()}
+                  onChange={(val) => updateSettings({ cardFeesPercent: parseFloat(val) || 0 })}
+                  hint="Payment processing fees"
+                />
+                <CalculatorInput
+                  label="Monthly Loan Repayments"
+                  unit="£"
+                  type="text"
+                  inputMode="decimal"
+                  value={state.monthlyLoanRepayments.toString()}
+                  onChange={(val) => updateSettings({ monthlyLoanRepayments: parseFloat(val) || 0 })}
+                />
+                {state.vatScheme === "flat-rate" && (
+                  <CalculatorInput
+                    label="Flat Rate %"
                     unit="%"
+                    type="text"
+                    inputMode="decimal"
+                    value={state.flatRatePercent.toString()}
+                    onChange={(val) => updateSettings({ flatRatePercent: parseFloat(val) || 0 })}
+                    hint="Typical 12.5% for services"
                   />
-                  <p className="text-xs text-muted-foreground">Allowance for non-payment</p>
-                </div>
-
-                <div className="space-y-2">
-                  <MobileInput
-                    label="Card Fees % of Income"
-                    value={state.cardFeesPercent.toString()}
-                    onChange={(e) => updateSettings({ cardFeesPercent: parseFloat(e.target.value) || 0 })}
-                    type="number"
-                    unit="%"
-                  />
-                  <p className="text-xs text-muted-foreground">Payment processing fees</p>
-                </div>
-
-                <div className="space-y-2">
-                  <MobileInput
-                    label="Monthly Loan Repayments"
-                    value={state.monthlyLoanRepayments.toString()}
-                    onChange={(e) => updateSettings({ monthlyLoanRepayments: parseFloat(e.target.value) || 0 })}
-                    type="number"
-                    unit="£"
-                  />
-                  <p className="text-xs text-muted-foreground">Simple fixed monthly amount</p>
-                </div>
-
-                {/* Conditional Flat Rate Field */}
-                {state.vatScheme === 'flat-rate' && (
-                  <div className="space-y-2">
-                    <MobileInput
-                      label="Flat Rate %"
-                      value={state.flatRatePercent.toString()}
-                      onChange={(e) => updateSettings({ flatRatePercent: parseFloat(e.target.value) || 0 })}
-                      type="number"
-                      unit="%"
-                    />
-                    <p className="text-xs text-muted-foreground">Typical 12.5% for services</p>
-                  </div>
                 )}
               </div>
-            </CardContent>
-          </Card>
-          </AccordionContent>
-        </AccordionItem>
-
-        {/* Charts Section */}
-        <AccordionItem value="charts" className="border-elec-yellow/20 bg-elec-card rounded-lg px-6">
-          <AccordionTrigger className="text-elec-light hover:text-elec-yellow">
-            <div className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5" />
-              Charts & Visualizations
             </div>
-          </AccordionTrigger>
-          <AccordionContent className="pt-4">
-            <CashFlowCharts 
-              projections={monthlyProjections} 
-              selectedScenario={state.scenarios.find(s => s.id === state.selectedScenario)?.name || 'Realistic'}
+          </CollapsibleContent>
+        </div>
+      </Collapsible>
+
+      {/* Charts Section */}
+      <Collapsible open={showCharts} onOpenChange={setShowCharts}>
+        <div className="calculator-card overflow-hidden" style={{ borderColor: "#60a5fa15" }}>
+          <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+            <div className="flex items-center gap-3">
+              <BarChart3 className="h-4 w-4 text-blue-400" />
+              <span className="text-sm sm:text-base font-medium text-blue-300">
+                Charts & Visualizations
+              </span>
+            </div>
+            <ChevronDown
+              className={cn(
+                "h-4 w-4 text-white/80 transition-transform duration-200",
+                showCharts && "rotate-180"
+              )}
             />
-          </AccordionContent>
-        </AccordionItem>
+          </CollapsibleTrigger>
 
-        {/* Scenarios Section */}
-        <AccordionItem value="scenarios" className="border-elec-yellow/20 bg-elec-card rounded-lg px-6">
-          <AccordionTrigger className="text-elec-light hover:text-elec-yellow">
-            <div className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5" />
-              Scenarios & What-If
+          <CollapsibleContent className="p-4 pt-0">
+            <CashFlowCharts
+              projections={monthlyProjections}
+              selectedScenario={
+                state.scenarios.find((s) => s.id === state.selectedScenario)?.name || "Realistic"
+              }
+            />
+          </CollapsibleContent>
+        </div>
+      </Collapsible>
+
+      {/* Scenarios Section */}
+      <Collapsible open={showScenarios} onOpenChange={setShowScenarios}>
+        <div className="calculator-card overflow-hidden" style={{ borderColor: "#60a5fa15" }}>
+          <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+            <div className="flex items-center gap-3">
+              <TrendingUp className="h-4 w-4 text-blue-400" />
+              <span className="text-sm sm:text-base font-medium text-blue-300">
+                Scenarios & What-If
+              </span>
             </div>
-          </AccordionTrigger>
-          <AccordionContent className="pt-4">
+            <ChevronDown
+              className={cn(
+                "h-4 w-4 text-white/80 transition-transform duration-200",
+                showScenarios && "rotate-180"
+              )}
+            />
+          </CollapsibleTrigger>
+
+          <CollapsibleContent className="p-4 pt-0">
             <ScenarioPlanner
               scenarios={state.scenarios}
               selectedScenario={state.selectedScenario}
@@ -608,119 +745,202 @@ const CashFlowPlanner = () => {
               monthlyProjections={monthlyProjections}
               financialMetrics={financialMetrics}
             />
-          </AccordionContent>
-        </AccordionItem>
+          </CollapsibleContent>
+        </div>
+      </Collapsible>
 
-        {/* Insights Section */}
-        <AccordionItem value="insights" className="border-elec-yellow/20 bg-elec-card rounded-lg px-6">
-          <AccordionTrigger className="text-elec-light hover:text-elec-yellow">
-            <div className="flex items-center gap-2">
-              <Info className="h-5 w-5" />
-              Insights & Recommendations
+      {/* Insights Section */}
+      <Collapsible open={showInsights} onOpenChange={setShowInsights}>
+        <div className="calculator-card overflow-hidden" style={{ borderColor: "#60a5fa15" }}>
+          <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+            <div className="flex items-center gap-3">
+              <Lightbulb className="h-4 w-4 text-amber-400" />
+              <span className="text-sm sm:text-base font-medium text-amber-300">
+                Insights & Recommendations
+              </span>
             </div>
-          </AccordionTrigger>
-          <AccordionContent className="pt-4">
+            <ChevronDown
+              className={cn(
+                "h-4 w-4 text-white/80 transition-transform duration-200",
+                showInsights && "rotate-180"
+              )}
+            />
+          </CollapsibleTrigger>
+
+          <CollapsibleContent className="p-4 pt-0">
             <FinancialInsights
               insights={insights}
               financialMetrics={financialMetrics}
               emergencyFundTarget={state.emergencyFundTarget}
             />
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+          </CollapsibleContent>
+        </div>
+      </Collapsible>
 
-      {/* Monthly Projections - Standalone Card */}
+      {/* Monthly Projections */}
       {state.incomeStreams.length > 0 && (
-        <div className="mt-6">
-          <Card className="border-elec-yellow/20 bg-elec-card">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center justify-between">
-                12-Month Cash Flow Projection
-                <Badge variant="success">
-                  {state.scenarios.find(s => s.id === state.selectedScenario)?.name} Scenario
-                </Badge>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <Collapsible open={showProjections} onOpenChange={setShowProjections}>
+          <div className="calculator-card overflow-hidden" style={{ borderColor: "#60a5fa15" }}>
+            <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+              <div className="flex items-center gap-3">
+                <Calendar className="h-4 w-4 text-blue-400" />
+                <span className="text-sm sm:text-base font-medium text-blue-300">
+                  12-Month Cash Flow Projection
+                </span>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-green-500/20 text-green-400">
+                  {state.scenarios.find((s) => s.id === state.selectedScenario)?.name}
+                </span>
+              </div>
+              <ChevronDown
+                className={cn(
+                  "h-4 w-4 text-white/80 transition-transform duration-200",
+                  showProjections && "rotate-180"
+                )}
+              />
+            </CollapsibleTrigger>
+
+            <CollapsibleContent className="p-4 pt-0">
+              <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
                 {monthlyProjections.map((month, index) => (
-                  <div key={index} className="p-4 rounded-lg bg-secondary/20 border border-secondary/40">
-                    <h4 className="font-semibold text-white mb-3">{month.monthName}</h4>
-                    <div className="space-y-2 text-sm">
+                  <div
+                    key={index}
+                    className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-2"
+                  >
+                    <h4 className="font-semibold text-white text-sm">{month.monthName}</h4>
+                    <div className="space-y-1 text-xs">
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Income:</span>
-                        <span className="text-green-400 font-medium">£{month.income.toFixed(0)}</span>
+                        <span className="text-white">Income:</span>
+                        <span className="text-green-400 font-medium">
+                          {formatCurrency(month.income)}
+                        </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Expenses:</span>
-                        <span className="text-red-400 font-medium">£{month.expenses.toFixed(0)}</span>
+                        <span className="text-white">Expenses:</span>
+                        <span className="text-red-400 font-medium">
+                          {formatCurrency(month.expenses)}
+                        </span>
                       </div>
-                      <div className="flex justify-between border-t border-secondary/40 pt-2">
-                        <span className="text-muted-foreground">Net Flow:</span>
-                        <span className={`font-medium ${month.netFlow >= 0 ? "text-green-400" : "text-red-400"}`}>
-                          £{month.netFlow.toFixed(0)}
+                      <div className="flex justify-between border-t border-white/10 pt-1">
+                        <span className="text-white">Net:</span>
+                        <span
+                          className={cn(
+                            "font-medium",
+                            month.netFlow >= 0 ? "text-green-400" : "text-red-400"
+                          )}
+                        >
+                          {formatCurrency(month.netFlow)}
                         </span>
                       </div>
                       <div className="flex justify-between font-semibold">
                         <span className="text-white">Balance:</span>
-                        <span className={`${month.cumulativeBalance >= 0 ? "text-green-400" : "text-red-400"}`}>
-                          £{month.cumulativeBalance.toFixed(0)}
+                        <span
+                          className={cn(
+                            month.cumulativeBalance >= 0 ? "text-green-400" : "text-red-400"
+                          )}
+                        >
+                          {formatCurrency(month.cumulativeBalance)}
                         </span>
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
-            </CardContent>
-          </Card>
 
-          {/* Annual Summary */}
-          <Card className="border-elec-yellow/20 bg-elec-card">
-            <CardHeader>
-              <CardTitle className="text-white">Annual Financial Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-                <h4 className="font-medium text-green-400 mb-2">Total Income</h4>
-                <p className="text-2xl font-bold text-white">£{financialMetrics.totalIncome.toFixed(0)}</p>
-                <p className="text-sm text-muted-foreground">Avg: £{financialMetrics.avgMonthlyIncome.toFixed(0)}/month</p>
+              {/* Annual Summary */}
+              <div className="mt-6 pt-4 border-t border-white/10">
+                <h4 className="text-white font-medium mb-4">Annual Financial Summary</h4>
+                <div className="grid gap-3 grid-cols-2 lg:grid-cols-4">
+                  <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/30">
+                    <h5 className="text-green-400 text-xs font-medium mb-1">Total Income</h5>
+                    <p className="text-xl font-bold text-white">
+                      {formatCurrency(financialMetrics.totalIncome)}
+                    </p>
+                    <p className="text-xs text-white">
+                      Avg: {formatCurrency(financialMetrics.avgMonthlyIncome)}/mo
+                    </p>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/30">
+                    <h5 className="text-red-400 text-xs font-medium mb-1">Total Expenses</h5>
+                    <p className="text-xl font-bold text-white">
+                      {formatCurrency(financialMetrics.totalExpenses)}
+                    </p>
+                    <p className="text-xs text-white">
+                      Avg: {formatCurrency(financialMetrics.avgMonthlyExpenses)}/mo
+                    </p>
+                  </div>
+
+                  <div
+                    className={cn(
+                      "p-3 rounded-xl border",
+                      financialMetrics.netProfit >= 0
+                        ? "bg-green-500/10 border-green-500/30"
+                        : "bg-red-500/10 border-red-500/30"
+                    )}
+                  >
+                    <h5
+                      className={cn(
+                        "text-xs font-medium mb-1",
+                        financialMetrics.netProfit >= 0 ? "text-green-400" : "text-red-400"
+                      )}
+                    >
+                      Net Profit
+                    </h5>
+                    <p className="text-xl font-bold text-white">
+                      {formatCurrency(financialMetrics.netProfit)}
+                    </p>
+                    <p className="text-xs text-white">
+                      Margin: {financialMetrics.profitMargin.toFixed(1)}%
+                    </p>
+                  </div>
+
+                  <div
+                    className={cn(
+                      "p-3 rounded-xl border",
+                      financialMetrics.minBalance >= 0
+                        ? "bg-green-500/10 border-green-500/30"
+                        : "bg-red-500/10 border-red-500/30"
+                    )}
+                  >
+                    <h5
+                      className={cn(
+                        "text-xs font-medium mb-1",
+                        financialMetrics.minBalance >= 0 ? "text-green-400" : "text-red-400"
+                      )}
+                    >
+                      Min Balance
+                    </h5>
+                    <p className="text-xl font-bold text-white">
+                      {formatCurrency(financialMetrics.minBalance)}
+                    </p>
+                    <p className="text-xs text-white">
+                      Runway: {financialMetrics.cashRunway} months
+                    </p>
+                  </div>
+                </div>
               </div>
-              
-              <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-                <h4 className="font-medium text-red-400 mb-2">Total Expenses</h4>
-                <p className="text-2xl font-bold text-white">£{financialMetrics.totalExpenses.toFixed(0)}</p>
-                <p className="text-sm text-muted-foreground">Avg: £{financialMetrics.avgMonthlyExpenses.toFixed(0)}/month</p>
-              </div>
-              
-              <div className={`p-4 rounded-lg border ${
-                financialMetrics.netProfit >= 0 
-                  ? 'bg-green-500/10 border-green-500/30' 
-                  : 'bg-red-500/10 border-red-500/30'
-              }`}>
-                <h4 className={`font-medium mb-2 ${
-                  financialMetrics.netProfit >= 0 ? 'text-green-400' : 'text-red-400'
-                }`}>
-                  Net Profit
-                </h4>
-                <p className="text-2xl font-bold text-white">£{financialMetrics.netProfit.toFixed(0)}</p>
-                <p className="text-sm text-muted-foreground">Margin: {financialMetrics.profitMargin.toFixed(1)}%</p>
-              </div>
-              
-              <div className={`p-4 rounded-lg border ${
-                financialMetrics.minBalance >= 0 
-                  ? 'bg-green-500/10 border-green-500/30' 
-                  : 'bg-red-500/10 border-red-500/30'
-              }`}>
-                <h4 className={`font-medium mb-2 ${
-                  financialMetrics.minBalance >= 0 ? 'text-green-400' : 'text-red-400'
-                }`}>
-                  Minimum Balance
-                </h4>
-                <p className="text-2xl font-bold text-white">£{financialMetrics.minBalance.toFixed(0)}</p>
-                <p className="text-sm text-muted-foreground">Runway: {financialMetrics.cashRunway} months</p>
-              </div>
-            </CardContent>
-          </Card>
+            </CollapsibleContent>
+          </div>
+        </Collapsible>
+      )}
+
+      {/* Empty State */}
+      {state.incomeStreams.length === 0 && !showTemplates && (
+        <div className="p-6 rounded-xl border border-white/10 bg-white/5 text-center">
+          <Info className="h-10 w-10 text-blue-400 mx-auto mb-3 opacity-50" />
+          <h3 className="text-white text-lg font-semibold mb-2">No Income Streams</h3>
+          <p className="text-white text-sm mb-4">
+            Add income streams and expenses above to see your cash flow projections.
+          </p>
+          <button
+            onClick={() => setShowTemplates(true)}
+            className="h-10 px-4 rounded-xl font-medium text-sm text-black"
+            style={{
+              background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+            }}
+          >
+            Use a Template
+          </button>
         </div>
       )}
     </div>

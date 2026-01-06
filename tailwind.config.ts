@@ -208,6 +208,61 @@ export default {
 					opacity: '1',
 					transform: 'translateY(0) scale(1)'
 				}
+			},
+			// Confetti animations
+			'confetti-fall': {
+				'0%': {
+					transform: 'translateY(0) rotate(0deg)',
+					opacity: '1'
+				},
+				'100%': {
+					transform: 'translateY(100vh) rotate(720deg)',
+					opacity: '0'
+				}
+			},
+			'confetti-spin': {
+				'0%': { transform: 'rotateX(0deg) rotateY(0deg)' },
+				'25%': { transform: 'rotateX(90deg) rotateY(45deg)' },
+				'50%': { transform: 'rotateX(180deg) rotateY(90deg)' },
+				'75%': { transform: 'rotateX(270deg) rotateY(135deg)' },
+				'100%': { transform: 'rotateX(360deg) rotateY(180deg)' }
+			},
+			'burst': {
+				'0%': {
+					transform: 'rotate(var(--rotation)) translateY(0) scaleY(0)',
+					opacity: '1'
+				},
+				'50%': {
+					transform: 'rotate(var(--rotation)) translateY(-80px) scaleY(1)',
+					opacity: '1'
+				},
+				'100%': {
+					transform: 'rotate(var(--rotation)) translateY(-120px) scaleY(0)',
+					opacity: '0'
+				}
+			},
+			'star-burst': {
+				'0%': {
+					transform: 'rotate(var(--angle)) translateX(0)',
+					opacity: '1'
+				},
+				'100%': {
+					transform: 'rotate(var(--angle)) translateX(60px)',
+					opacity: '0'
+				}
+			},
+			'bounce-slow': {
+				'0%, 100%': { transform: 'translateY(0)' },
+				'50%': { transform: 'translateY(-10px)' }
+			},
+			'scale-bounce': {
+				'0%': { transform: 'scale(0)', opacity: '0' },
+				'50%': { transform: 'scale(1.2)', opacity: '1' },
+				'100%': { transform: 'scale(1)', opacity: '1' }
+			},
+			'progress-fill': {
+				'0%': { width: '0%' },
+				'100%': { width: 'var(--progress-width)' }
 			}
 			},
 			animation: {
@@ -219,7 +274,15 @@ export default {
 				'shimmer': 'shimmer 2s linear infinite',
 				'progress-pulse': 'progress-pulse 2s ease-in-out infinite',
 				'slide-up': 'slide-up 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
-				'stagger-fade': 'stagger-fade 0.35s cubic-bezier(0.16, 1, 0.3, 1)'
+				'stagger-fade': 'stagger-fade 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+				// Confetti animations
+				'confetti-fall': 'confetti-fall 3s ease-out forwards',
+				'confetti-spin': 'confetti-spin 1s linear infinite',
+				'burst': 'burst 0.6s ease-out forwards',
+				'star-burst': 'star-burst 1s ease-out forwards',
+				'bounce-slow': 'bounce-slow 2s ease-in-out infinite',
+				'scale-bounce': 'scale-bounce 0.5s ease-out forwards',
+				'progress-fill': 'progress-fill 1s ease-out forwards'
 			}
 		}
 	},

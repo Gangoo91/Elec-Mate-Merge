@@ -175,7 +175,7 @@ const SignatureManagerDialog = ({ onSignatureSelect, trigger }: SignatureManager
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <div className="bg-gray-50 rounded-lg p-4 flex justify-center">
+                      <div className="bg-white/5 rounded-lg p-4 flex justify-center">
                         <img
                           src={signature.signatureData}
                           alt={`Signature: ${signature.name}`}

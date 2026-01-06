@@ -140,7 +140,7 @@ const StudyGroupsTab = () => {
           </div>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground mb-4">
+          <p className="text-white mb-4">
             Join fellow electrical apprentices in structured study groups. Research shows that collaborative learning 
             can improve retention by up to 90% compared to studying alone.
           </p>
@@ -148,29 +148,29 @@ const StudyGroupsTab = () => {
             <div className="text-center p-3 border border-elec-yellow/20 rounded-lg">
               <Users className="h-8 w-8 text-blue-400 mx-auto mb-2" />
               <p className="text-lg font-bold text-white">150+</p>
-              <p className="text-xs text-muted-foreground">Active Groups</p>
+              <p className="text-xs text-white">Active Groups</p>
             </div>
             <div className="text-center p-3 border border-elec-yellow/20 rounded-lg">
               <MessageCircle className="h-8 w-8 text-green-400 mx-auto mb-2" />
               <p className="text-lg font-bold text-white">1,200+</p>
-              <p className="text-xs text-muted-foreground">Members</p>
+              <p className="text-xs text-white">Members</p>
             </div>
             <div className="text-center p-3 border border-elec-yellow/20 rounded-lg">
               <Calendar className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
               <p className="text-lg font-bold text-white">Daily</p>
-              <p className="text-xs text-muted-foreground">Sessions</p>
+              <p className="text-xs text-white">Sessions</p>
             </div>
             <div className="text-center p-3 border border-elec-yellow/20 rounded-lg">
               <Star className="h-8 w-8 text-purple-400 mx-auto mb-2" />
               <p className="text-lg font-bold text-white">4.8/5</p>
-              <p className="text-xs text-muted-foreground">Avg Rating</p>
+              <p className="text-xs text-white">Avg Rating</p>
             </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Active Study Groups */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">Find Your Study Group</CardTitle>
         </CardHeader>
@@ -181,7 +181,7 @@ const StudyGroupsTab = () => {
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <h4 className="font-semibold text-white mb-1">{group.name}</h4>
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-4 text-sm text-white">
                       <span className="flex items-center gap-1">
                         <Users className="h-3 w-3" />
                         {group.members}
@@ -205,7 +205,7 @@ const StudyGroupsTab = () => {
                   </Badge>
                 </div>
                 
-                <p className="text-sm text-muted-foreground mb-3">{group.description}</p>
+                <p className="text-sm text-white mb-3">{group.description}</p>
                 
                 <div className="flex items-center gap-2 mb-3">
                   <Clock className="h-4 w-4 text-elec-yellow" />
@@ -245,10 +245,10 @@ const StudyGroupsTab = () => {
                     <IconComponent className="h-6 w-6 text-green-400" />
                     <h4 className="font-semibold text-white">{benefit.title}</h4>
                   </div>
-                  <p className="text-sm text-muted-foreground mb-3">{benefit.description}</p>
+                  <p className="text-sm text-white mb-3">{benefit.description}</p>
                   <ul className="space-y-1">
                     {benefit.benefits.map((item, itemIndex) => (
-                      <li key={itemIndex} className="text-xs text-muted-foreground flex items-start gap-2">
+                      <li key={itemIndex} className="text-xs text-white flex items-start gap-2">
                         <div className="w-1 h-1 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
                         {item}
                       </li>
@@ -271,7 +271,7 @@ const StudyGroupsTab = () => {
             {virtualStudyTips.map((tip, index) => (
               <div key={index} className="border border-blue-500/20 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-2">{tip.platform}</h4>
-                <p className="text-sm text-muted-foreground mb-3">{tip.description}</p>
+                <p className="text-sm text-white mb-3">{tip.description}</p>
                 <div className="space-y-1">
                   {tip.features.map((feature, featureIndex) => (
                     <div key={featureIndex} className="text-xs text-blue-300 flex items-center gap-2">
@@ -301,12 +301,12 @@ const StudyGroupsTab = () => {
                     {format.duration}
                   </Badge>
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">{format.description}</p>
+                <p className="text-sm text-white mb-3">{format.description}</p>
                 <div className="bg-purple-500/10 rounded-lg p-3">
                   <h5 className="font-medium text-purple-300 mb-2">Typical Structure:</h5>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                     {format.structure.map((step, stepIndex) => (
-                      <div key={stepIndex} className="text-xs text-muted-foreground">
+                      <div key={stepIndex} className="text-xs text-white">
                         <span className="text-purple-400 font-medium">{stepIndex + 1}.</span> {step}
                       </div>
                     ))}
@@ -322,7 +322,7 @@ const StudyGroupsTab = () => {
       <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-orange-500/10">
         <CardContent className="p-6 text-center">
           <h3 className="text-xl font-semibold text-elec-yellow mb-2">Ready to Join a Study Group?</h3>
-          <p className="text-muted-foreground mb-4">
+          <p className="text-white mb-4">
             Connect with fellow apprentices and accelerate your learning through collaborative study.
           </p>
           <div className="flex flex-wrap justify-center gap-2">

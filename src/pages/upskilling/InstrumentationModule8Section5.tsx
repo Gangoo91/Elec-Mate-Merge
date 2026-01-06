@@ -471,7 +471,7 @@ const InstrumentationModule8Section5 = () => {
                 ],
                 correctAnswer: 1,
                 explanation: "Photos and test data provide visual evidence of faults, document repair quality, support warranty claims, and give future technicians actual measurements and visual references for similar problems."
-              }
+            }
             ]}
             title="Section 5 Knowledge Check"
           />

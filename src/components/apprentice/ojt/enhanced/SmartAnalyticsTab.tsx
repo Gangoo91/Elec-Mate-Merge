@@ -29,7 +29,7 @@ const SmartAnalyticsTab = () => {
       case "needs-improvement":
         return <Badge className="bg-orange-600 text-white">Needs Focus</Badge>;
       default:
-        return <Badge className="bg-gray-600 text-white">Average</Badge>;
+        return <Badge className="bg-white/15 text-white">Average</Badge>;
     }
   };
 
@@ -116,7 +116,7 @@ const SmartAnalyticsTab = () => {
       <div className="flex items-center justify-center p-12">
         <div className="text-center">
           <Loader2 className="h-8 w-8 animate-spin text-elec-yellow mx-auto mb-4" />
-          <p className="text-muted-foreground">Loading analytics...</p>
+          <p className="text-white">Loading analytics...</p>
         </div>
       </div>
     );
@@ -126,7 +126,7 @@ const SmartAnalyticsTab = () => {
     return (
       <div className="flex flex-col items-center justify-center p-12">
         <AlertTriangle className="h-8 w-8 text-orange-500 mb-4" />
-        <p className="text-muted-foreground mb-4">{error}</p>
+        <p className="text-white mb-4">{error}</p>
         <Button onClick={refresh} variant="outline" size="sm">
           <RefreshCw className="h-4 w-4 mr-2" />
           Retry
@@ -141,57 +141,57 @@ const SmartAnalyticsTab = () => {
     <div className="space-y-6">
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-        <Card className="bg-elec-gray border-elec-yellow/20">
+        <Card className="bg-white/5 border-elec-yellow/20">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-3 sm:px-6">
             <CardTitle className="text-xs sm:text-sm font-medium">Total Hours</CardTitle>
-            <Clock className="h-4 w-4 text-muted-foreground" />
+            <Clock className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent className="px-3 sm:px-6">
             <div className="text-xl sm:text-2xl font-bold text-elec-yellow">{totalHours.toFixed(1)}h</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white">
               {totalEntries} entries logged
             </p>
           </CardContent>
         </Card>
 
-        <Card className="bg-elec-gray border-elec-yellow/20">
+        <Card className="bg-white/5 border-elec-yellow/20">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-3 sm:px-6">
             <CardTitle className="text-xs sm:text-sm font-medium">This Week</CardTitle>
-            <Zap className="h-4 w-4 text-muted-foreground" />
+            <Zap className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent className="px-3 sm:px-6">
             <div className={`text-xl sm:text-2xl font-bold ${thisWeekHours >= weeklyTarget ? 'text-green-500' : 'text-blue-500'}`}>
               {thisWeekHours.toFixed(1)}h
             </div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white">
               Target: {weeklyTarget}h
             </p>
           </CardContent>
         </Card>
 
-        <Card className="bg-elec-gray border-elec-yellow/20">
+        <Card className="bg-white/5 border-elec-yellow/20">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-3 sm:px-6">
             <CardTitle className="text-xs sm:text-sm font-medium">Progress</CardTitle>
-            <BarChart3 className="h-4 w-4 text-muted-foreground" />
+            <BarChart3 className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent className="px-3 sm:px-6">
             <div className="text-xl sm:text-2xl font-bold text-purple-500">{completionPercentage}%</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white">
               Of OJT complete
             </p>
           </CardContent>
         </Card>
 
-        <Card className="bg-elec-gray border-elec-yellow/20">
+        <Card className="bg-white/5 border-elec-yellow/20">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-3 sm:px-6">
             <CardTitle className="text-xs sm:text-sm font-medium">Est. Completion</CardTitle>
-            <Target className="h-4 w-4 text-muted-foreground" />
+            <Target className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent className="px-3 sm:px-6">
             <div className="text-xl sm:text-2xl font-bold text-amber-500">
               {remainingHours > 0 ? `${monthsToCompletion}mo` : 'Done!'}
             </div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white">
               {remainingHours > 0 ? `${Math.round(remainingHours)}h remaining` : 'Congratulations!'}
             </p>
           </CardContent>
@@ -200,7 +200,7 @@ const SmartAnalyticsTab = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Learning Analytics */}
-        <Card className="bg-elec-gray border-elec-yellow/20">
+        <Card className="bg-white/5 border-elec-yellow/20">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
               <Brain className="h-5 w-5 text-elec-yellow" />
@@ -219,18 +219,18 @@ const SmartAnalyticsTab = () => {
                       </div>
                       <div className="flex items-center gap-2">
                         {getPerformanceBadge(metric.performance)}
-                        <span className="text-xs sm:text-sm text-muted-foreground">{metric.timeSpent}</span>
+                        <span className="text-xs sm:text-sm text-white">{metric.timeSpent}</span>
                       </div>
                     </div>
                     <Progress value={metric.progress} className="h-2" />
-                    <p className="text-xs sm:text-sm text-muted-foreground italic">
+                    <p className="text-xs sm:text-sm text-white italic">
                       {metric.aiInsight}
                     </p>
                   </div>
                 ))}
               </div>
             ) : (
-              <div className="text-center py-8 text-muted-foreground">
+              <div className="text-center py-8 text-white">
                 <Clock className="h-8 w-8 mx-auto mb-3 opacity-50" />
                 <p>No activity logged yet</p>
                 <p className="text-sm mt-1">Start logging your OJT hours to see analytics</p>
@@ -240,7 +240,7 @@ const SmartAnalyticsTab = () => {
         </Card>
 
         {/* Recommendations */}
-        <Card className="bg-elec-gray border-elec-yellow/20">
+        <Card className="bg-white/5 border-elec-yellow/20">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
               <Target className="h-5 w-5 text-elec-yellow" />
@@ -250,7 +250,7 @@ const SmartAnalyticsTab = () => {
           <CardContent>
             <div className="space-y-4">
               {recommendations.map((rec, index) => (
-                <div key={index} className="border border-elec-yellow/20 rounded-lg p-3 sm:p-4 bg-elec-dark/50">
+                <div key={index} className="border border-elec-yellow/20 rounded-lg p-3 sm:p-4 bg-white/10">
                   <div className="flex items-start justify-between mb-2 gap-2">
                     <div className="flex items-center gap-2">
                       {rec.type === "urgent" && <AlertTriangle className="h-4 w-4 text-red-500 shrink-0" />}
@@ -265,7 +265,7 @@ const SmartAnalyticsTab = () => {
                       {rec.type}
                     </Badge>
                   </div>
-                  <p className="text-xs sm:text-sm text-muted-foreground mb-3">{rec.description}</p>
+                  <p className="text-xs sm:text-sm text-white mb-3">{rec.description}</p>
                   <Button size="sm" variant="outline" className="w-full border-elec-yellow/30 hover:bg-elec-yellow/10">
                     {rec.action}
                   </Button>
@@ -278,7 +278,7 @@ const SmartAnalyticsTab = () => {
 
       {/* Refresh Button */}
       <div className="flex justify-center">
-        <Button onClick={refresh} variant="ghost" size="sm" className="text-muted-foreground">
+        <Button onClick={refresh} variant="ghost" size="sm" className="text-white">
           <RefreshCw className="h-4 w-4 mr-2" />
           Refresh Analytics
         </Button>

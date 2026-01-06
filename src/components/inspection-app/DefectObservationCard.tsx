@@ -68,7 +68,7 @@ const DefectObservationCard = ({ defect, reportId, index, onUpdate, onRemove }: 
       case 'medium': return <AlertTriangle className="h-4 w-4 text-orange-500" />;
       case 'low': return <CheckCircle className="h-4 w-4 text-yellow-500" />;
       case 'info': return <FileText className="h-4 w-4 text-blue-500" />;
-      case 'neutral': return <Minus className="h-4 w-4 text-gray-500" />;
+      case 'neutral': return <Minus className="h-4 w-4 text-white/60" />;
       case 'limitation': return <Info className="h-4 w-4 text-purple-500" />;
       default: return <FileText className="h-4 w-4 text-blue-500" />;
     }

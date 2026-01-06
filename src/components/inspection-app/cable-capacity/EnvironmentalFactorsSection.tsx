@@ -40,7 +40,7 @@ export const EnvironmentalFactorsSection = () => {
       case 'standard': return 'bg-yellow-500/10 text-yellow-400 border-yellow-400';
       case 'caution': return 'bg-orange-500/10 text-orange-400 border-orange-400';
       case 'critical': return 'bg-red-500/10 text-red-400 border-red-400';
-      default: return 'bg-gray-500/10 text-gray-400 border-gray-400';
+      default: return 'bg-white/5 text-white/70 border-white/70';
     }
   };
 
@@ -56,7 +56,7 @@ export const EnvironmentalFactorsSection = () => {
         </CardHeader>
         <CardContent>
           <div className="mb-4 p-3 bg-orange-500/10 rounded-lg border border-orange-500/30">
-            <p className="text-sm text-gray-300">
+            <p className="text-sm text-white/80">
               <strong className="text-orange-400">BS 7671 Table 4B1:</strong> Reference temperature is 30°C for cables in air, 20°C for cables in ground.
               These factors apply to the tabulated current-carrying capacities.
             </p>
@@ -75,7 +75,7 @@ export const EnvironmentalFactorsSection = () => {
                 <TableRow key={item.temp}>
                   <TableCell className="text-foreground font-medium">{item.temp}°C</TableCell>
                   <TableCell className="text-elec-yellow font-bold">{item.factor}</TableCell>
-                  <TableCell className="text-gray-300">
+                  <TableCell className="text-white/80">
                     {item.factor > 1 ? '+' : ''}{Math.round((item.factor - 1) * 100)}%
                   </TableCell>
                   <TableCell>
@@ -101,7 +101,7 @@ export const EnvironmentalFactorsSection = () => {
         </CardHeader>
         <CardContent>
           <div className="mb-4 p-3 bg-purple-500/10 rounded-lg border border-purple-500/30">
-            <p className="text-sm text-gray-300">
+            <p className="text-sm text-white/80">
               <strong className="text-purple-400">BS 7671 Table 4C1:</strong> Applies when cables are grouped together and 
               likely to be loaded simultaneously, causing mutual heating effects.
             </p>
@@ -119,7 +119,7 @@ export const EnvironmentalFactorsSection = () => {
                 <TableRow key={item.circuits}>
                   <TableCell className="text-foreground font-medium">{item.circuits}</TableCell>
                   <TableCell className="text-elec-yellow font-bold">{item.factor}</TableCell>
-                  <TableCell className="text-gray-300">{item.description}</TableCell>
+                  <TableCell className="text-white/80">{item.description}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -137,7 +137,7 @@ export const EnvironmentalFactorsSection = () => {
         </CardHeader>
         <CardContent>
           <div className="mb-4 p-3 bg-green-500/10 rounded-lg border border-green-500/30">
-            <p className="text-sm text-gray-300">
+            <p className="text-sm text-white/80">
               <strong className="text-green-400">BS 7671 Section 523:</strong> Cables in contact with or surrounded by 
               thermal insulation require derating due to reduced heat dissipation.
             </p>
@@ -156,7 +156,7 @@ export const EnvironmentalFactorsSection = () => {
                 <TableRow key={item.type}>
                   <TableCell className="text-foreground font-medium">{item.type}</TableCell>
                   <TableCell className="text-elec-yellow font-bold">{item.factor}</TableCell>
-                  <TableCell className="text-gray-300">{item.description}</TableCell>
+                  <TableCell className="text-white/80">{item.description}</TableCell>
                   <TableCell>
                     <Badge variant="outline" className={getStatusColor(item.status)}>
                       {item.factor === 1.00 ? 'None' : `${Math.round((1 - item.factor) * 100)}% reduction`}

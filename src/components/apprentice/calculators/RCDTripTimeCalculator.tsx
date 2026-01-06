@@ -203,7 +203,7 @@ const RCDTripTimeCalculator = () => {
                     <span className="text-sm sm:text-base font-medium text-blue-300">What Do The Results Mean?</span>
                   </div>
                   <ChevronDown className={cn(
-                    "h-4 w-4 text-white/40 transition-transform duration-200",
+                    "h-4 w-4 text-white/70 transition-transform duration-200",
                     showMeaning && "rotate-180"
                   )} />
                 </CollapsibleTrigger>
@@ -239,7 +239,7 @@ const RCDTripTimeCalculator = () => {
                     <span className="text-sm sm:text-base font-medium text-green-300">Understanding RCD Testing</span>
                   </div>
                   <ChevronDown className={cn(
-                    "h-4 w-4 text-white/40 transition-transform duration-200",
+                    "h-4 w-4 text-white/70 transition-transform duration-200",
                     showTesting && "rotate-180"
                   )} />
                 </CollapsibleTrigger>
@@ -281,7 +281,7 @@ const RCDTripTimeCalculator = () => {
                     <span className="text-sm sm:text-base font-medium text-amber-300">Testing Procedures</span>
                   </div>
                   <ChevronDown className={cn(
-                    "h-4 w-4 text-white/40 transition-transform duration-200",
+                    "h-4 w-4 text-white/70 transition-transform duration-200",
                     showProcedures && "rotate-180"
                   )} />
                 </CollapsibleTrigger>
@@ -334,7 +334,7 @@ const RCDTripTimeCalculator = () => {
                     <span className="text-sm sm:text-base font-medium text-red-300">Troubleshooting Failures</span>
                   </div>
                   <ChevronDown className={cn(
-                    "h-4 w-4 text-white/40 transition-transform duration-200",
+                    "h-4 w-4 text-white/70 transition-transform duration-200",
                     showTroubleshooting && "rotate-180"
                   )} />
                 </CollapsibleTrigger>

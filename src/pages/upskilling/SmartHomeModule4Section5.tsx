@@ -20,13 +20,13 @@ import { SmartHomeModule4Section5Quiz } from '@/components/upskilling/smart-home
 
 const SmartHomeModule4Section5 = () => {
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Back Button */}
       <div className="px-8 pt-8">
         <Link to="../smart-home-module-4">
           <Button
             variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+            className="text-foreground hover:bg-transparent hover:text-elec-yellow transition-all duration-200 mb-8 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 4
@@ -37,7 +37,7 @@ const SmartHomeModule4Section5 = () => {
       <div className="container mx-auto px-4 pb-8 space-y-8 module-content">
         {/* Header */}
         <div className="text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-yellow-400/10 text-yellow-400 rounded-full text-sm font-medium">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow rounded-full text-sm font-medium">
             Module 4 - Section 5
           </div>
           <h1 className="text-3xl font-bold text-white">

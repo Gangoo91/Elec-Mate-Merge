@@ -119,38 +119,44 @@ const SiteKnowledgeTab = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <HardHat className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Site Knowledge & Procedures</CardTitle>
+    <div className="space-y-6 animate-fade-in">
+      {/* Hero Section */}
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+              <HardHat className="h-6 w-6 text-elec-yellow" />
+            </div>
+            <CardTitle className="text-2xl text-white">Site Knowledge & Procedures</CardTitle>
           </div>
         </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">
-            Essential knowledge for navigating construction sites, understanding protocols, 
+        <CardContent className="relative">
+          <p className="text-white/70">
+            Essential knowledge for navigating construction sites, understanding protocols,
             and working effectively within site hierarchies and procedures.
           </p>
         </CardContent>
       </Card>
 
+      {/* Site Topics Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {siteTopics.map((topic, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
+          <Card key={index} className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10 hover:border-white/20 transition-all overflow-hidden relative group">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <CardHeader className="relative">
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-full bg-elec-yellow/10">
-                  <topic.icon className="h-5 w-5 text-elec-yellow" />
+                <div className={`p-2.5 rounded-xl ${topic.color.replace('bg-', 'bg-gradient-to-br from-').replace('/20', '/20 to-').replace('text-', '')} border ${topic.color.replace('bg-', 'border-').replace('/20', '/30')}`}>
+                  <topic.icon className={`h-5 w-5 ${topic.color.split(' ')[1]}`} />
                 </div>
                 <CardTitle className="text-white">{topic.title}</CardTitle>
               </div>
             </CardHeader>
-            <CardContent>
-              <ul className="space-y-2">
+            <CardContent className="relative">
+              <ul className="space-y-2.5">
                 {topic.items.map((item, itemIndex) => (
-                  <li key={itemIndex} className="text-sm text-muted-foreground flex items-start gap-2">
-                    <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
+                  <li key={itemIndex} className="text-sm text-white/60 flex items-start gap-2">
+                    <CheckCircle className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                     {item}
                   </li>
                 ))}
@@ -160,29 +166,35 @@ const SiteKnowledgeTab = () => {
         ))}
       </div>
 
-      <Card className="border-blue-500/20 bg-blue-500/10">
-        <CardHeader>
-          <CardTitle className="text-blue-300 flex items-center gap-2">
-            <MapPin className="h-5 w-5" />
+      {/* Site Scenarios */}
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-blue-500/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
+              <MapPin className="h-5 w-5 text-blue-400" />
+            </div>
             Common Site Scenarios
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="relative">
           <div className="space-y-4">
             {siteScenarios.map((scenario, index) => {
               const UrgencyIcon = getUrgencyIcon(scenario.urgency);
               return (
-                <div key={index} className="border border-blue-500/30 rounded-lg p-4">
-                  <div className="flex items-start gap-3 mb-2">
-                    <UrgencyIcon className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
+                <div key={index} className="p-5 rounded-xl bg-blue-500/5 border border-blue-500/20">
+                  <div className="flex items-start gap-3">
+                    <div className={`p-2 rounded-lg ${scenario.urgency === 'high' ? 'bg-red-500/20' : scenario.urgency === 'medium' ? 'bg-yellow-500/20' : 'bg-green-500/20'}`}>
+                      <UrgencyIcon className={`h-4 w-4 ${scenario.urgency === 'high' ? 'text-red-400' : scenario.urgency === 'medium' ? 'text-yellow-400' : 'text-green-400'}`} />
+                    </div>
                     <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <h4 className="font-medium text-white text-sm">{scenario.scenario}</h4>
+                      <div className="flex items-center flex-wrap gap-2 mb-2">
+                        <h4 className="font-semibold text-white">{scenario.scenario}</h4>
                         <Badge className={getUrgencyColor(scenario.urgency)} variant="outline">
                           {scenario.urgency}
                         </Badge>
                       </div>
-                      <p className="text-sm text-blue-300">{scenario.guidance}</p>
+                      <p className="text-sm text-white/70">{scenario.guidance}</p>
                     </div>
                   </div>
                 </div>
@@ -192,24 +204,32 @@ const SiteKnowledgeTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-green-500/20 bg-green-500/10">
-        <CardHeader>
-          <CardTitle className="text-green-300 flex items-center gap-2">
-            <Phone className="h-5 w-5" />
+      {/* Who to Contact */}
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-green-500/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30">
+              <Phone className="h-5 w-5 text-green-400" />
+            </div>
             Who to Contact & When
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="relative">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {siteContacts.map((contact, index) => (
-              <div key={index} className="border border-green-500/30 rounded-lg p-4">
-                <h4 className="font-medium text-white mb-2">{contact.role}</h4>
-                <p className="text-sm text-green-300 mb-2">
-                  <strong>When:</strong> {contact.when}
-                </p>
-                <p className="text-sm text-green-300">
-                  <strong>Approach:</strong> {contact.approach}
-                </p>
+              <div key={index} className="p-5 rounded-xl bg-green-500/5 border border-green-500/20 hover:border-green-500/40 transition-all">
+                <h4 className="font-semibold text-white mb-3">{contact.role}</h4>
+                <div className="space-y-2">
+                  <div>
+                    <span className="text-xs font-medium text-green-400 uppercase tracking-wide">When:</span>
+                    <p className="text-sm text-white/70 mt-1">{contact.when}</p>
+                  </div>
+                  <div>
+                    <span className="text-xs font-medium text-green-400 uppercase tracking-wide">Approach:</span>
+                    <p className="text-sm text-white/70 mt-1">{contact.approach}</p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>

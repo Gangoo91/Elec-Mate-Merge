@@ -164,7 +164,7 @@ export const RegulationDetailSection = () => {
           <CardContent className="space-y-6">
             {/* Description */}
             <div className="bg-muted/50 p-4 rounded-lg border-l-4 border-elec-yellow">
-              <p className="text-gray-300">{reg.description}</p>
+              <p className="text-white/80">{reg.description}</p>
             </div>
 
             {/* Key Points */}
@@ -175,7 +175,7 @@ export const RegulationDetailSection = () => {
               </h4>
               <ul className="space-y-2">
                 {reg.keyPoints.map((point, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-sm text-gray-300">
+                  <li key={idx} className="flex items-start gap-3 text-sm text-white/80">
                     <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0" />
                     {point}
                   </li>
@@ -190,7 +190,7 @@ export const RegulationDetailSection = () => {
                   <Zap className="h-4 w-4" />
                   Practical Application
                 </h4>
-                <p className="text-gray-300 text-sm">{reg.practicalApplication}</p>
+                <p className="text-white/80 text-sm">{reg.practicalApplication}</p>
               </div>
 
               {/* Testing Requirements */}
@@ -201,7 +201,7 @@ export const RegulationDetailSection = () => {
                 </h4>
                 <ul className="space-y-1">
                   {reg.testingRequirements.map((req, idx) => (
-                    <li key={idx} className="text-gray-300 text-sm flex items-start gap-2">
+                    <li key={idx} className="text-white/80 text-sm flex items-start gap-2">
                       <span className="text-blue-400 font-bold">•</span>
                       {req}
                     </li>
@@ -218,7 +218,7 @@ export const RegulationDetailSection = () => {
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {reg.commonIssues.map((issue, idx) => (
-                  <div key={idx} className="flex items-start gap-2 text-sm text-gray-300">
+                  <div key={idx} className="flex items-start gap-2 text-sm text-white/80">
                     <span className="text-amber-400 font-bold">•</span>
                     {issue}
                   </div>

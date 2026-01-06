@@ -26,7 +26,7 @@ const SelectivityGuidance: React.FC<SelectivityGuidanceProps> = ({ result }) => 
       case 'medium': return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
       case 'high': return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
       case 'critical': return 'bg-red-500/20 text-red-400 border-red-500/30';
-      default: return 'bg-elec-gray';
+      default: return 'bg-white/5';
     }
   };
 
@@ -35,14 +35,14 @@ const SelectivityGuidance: React.FC<SelectivityGuidanceProps> = ({ result }) => 
       case 'compliant': return 'bg-green-500/20 text-green-400 border-green-500/30';
       case 'requires-verification': return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
       case 'non-compliant': return 'bg-red-500/20 text-red-400 border-red-500/30';
-      default: return 'bg-elec-gray';
+      default: return 'bg-white/5';
     }
   };
 
   return (
     <div className="space-y-6">
       {/* Status Overview */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Shield className="h-5 w-5 text-elec-yellow" />
@@ -172,7 +172,7 @@ const SelectivityGuidance: React.FC<SelectivityGuidanceProps> = ({ result }) => 
       )}
 
       {/* Recommendations */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Target className="h-5 w-5 text-elec-yellow" />
@@ -273,7 +273,7 @@ const SelectivityGuidance: React.FC<SelectivityGuidanceProps> = ({ result }) => 
       </Card>
 
       {/* Technical Analysis */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-elec-yellow" />

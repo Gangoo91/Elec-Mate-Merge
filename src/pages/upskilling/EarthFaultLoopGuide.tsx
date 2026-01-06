@@ -6,13 +6,13 @@ import { Link } from 'react-router-dom';
 
 const EarthFaultLoopGuide = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="module-8/section-3">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Practical Tests
@@ -21,7 +21,7 @@ const EarthFaultLoopGuide = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <Activity className="h-8 w-8 text-yellow-400" />
+            <Activity className="h-8 w-8 text-elec-yellow" />
             <Badge 
               variant="secondary" 
               className="bg-cyan-600/40 text-cyan-300 hover:bg-cyan-600/50 font-semibold text-sm px-3 py-1 border-0"
@@ -43,18 +43,18 @@ const EarthFaultLoopGuide = () => {
         <div className="max-w-6xl mx-auto space-y-8">
 
           {/* PRACTICAL TESTING PROCEDURES - MOVED TO TOP */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Play className="h-6 w-6 text-yellow-400" />
+                <Play className="h-6 w-6 text-elec-yellow" />
                 How to Test: Complete Step-by-Step Procedures
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-8">
               
               {/* Quick Reference */}
-              <div className="bg-yellow-400/10 border border-yellow-400/30 rounded-lg p-4">
-                <h4 className="text-yellow-400 font-semibold mb-2">Quick Test Summary</h4>
+              <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
+                <h4 className="text-elec-yellow font-semibold mb-2">Quick Test Summary</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                   <div>
                     <p className="text-white font-medium">Ze (External) Test:</p>
@@ -68,9 +68,9 @@ const EarthFaultLoopGuide = () => {
               </div>
 
               {/* Test 1: Ze Measurement - ENHANCED */}
-              <div className="bg-card/80 p-6 rounded-lg border-l-4 border-yellow-400">
+              <div className="bg-transparent/80 p-6 rounded-lg border-l-4 border-elec-yellow">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
-                  <span className="bg-yellow-400 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">1</span>
+                  <span className="bg-elec-yellow text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">1</span>
                   Testing Ze (External Earth Fault Loop Impedance)
                 </h3>
                 
@@ -91,9 +91,9 @@ const EarthFaultLoopGuide = () => {
 
                   {/* Equipment Setup */}
                   <div>
-                    <h4 className="text-yellow-400 font-semibold mb-3">Equipment You Need:</h4>
+                    <h4 className="text-elec-yellow font-semibold mb-3">Equipment You Need:</h4>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                      <div className="bg-yellow-400/10 p-4 rounded">
+                      <div className="bg-elec-yellow/10 p-4 rounded">
                         <h5 className="text-white font-medium mb-2">Test Equipment:</h5>
                         <ul className="text-white text-sm space-y-1">
                           <li>• Earth fault loop impedance tester (BS EN 61557-3)</li>
@@ -102,7 +102,7 @@ const EarthFaultLoopGuide = () => {
                           <li>• Current calibration certificate (within 12 months)</li>
                         </ul>
                       </div>
-                      <div className="bg-yellow-400/10 p-4 rounded">
+                      <div className="bg-elec-yellow/10 p-4 rounded">
                         <h5 className="text-white font-medium mb-2">Safety Equipment:</h5>
                         <ul className="text-white text-sm space-y-1">
                           <li>• Safety helmet with chin strap</li>
@@ -116,12 +116,12 @@ const EarthFaultLoopGuide = () => {
 
                   {/* Step by Step Procedure */}
                   <div>
-                    <h4 className="text-yellow-400 font-semibold mb-3">Step-by-Step Procedure:</h4>
+                    <h4 className="text-elec-yellow font-semibold mb-3">Step-by-Step Procedure:</h4>
                     <div className="space-y-4">
                       
-                      <div className="bg-card p-4 rounded-lg">
+                      <div className="bg-transparent p-4 rounded-lg">
                         <div className="flex items-center gap-3 mb-2">
-                          <span className="bg-yellow-400 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                          <span className="bg-elec-yellow text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">1</span>
                           <h5 className="text-white font-medium">Isolate All Circuits</h5>
                         </div>
                         <ul className="text-white text-sm space-y-1 ml-9">
@@ -133,9 +133,9 @@ const EarthFaultLoopGuide = () => {
                         </ul>
                       </div>
 
-                      <div className="bg-card p-4 rounded-lg">
+                      <div className="bg-transparent p-4 rounded-lg">
                         <div className="flex items-center gap-3 mb-2">
-                          <span className="bg-yellow-400 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                          <span className="bg-elec-yellow text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">2</span>
                           <h5 className="text-white font-medium">Connect Test Equipment</h5>
                         </div>
                         <ul className="text-white text-sm space-y-1 ml-9">
@@ -147,9 +147,9 @@ const EarthFaultLoopGuide = () => {
                         </ul>
                       </div>
 
-                      <div className="bg-card p-4 rounded-lg">
+                      <div className="bg-transparent p-4 rounded-lg">
                         <div className="flex items-center gap-3 mb-2">
-                          <span className="bg-yellow-400 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">3</span>
+                          <span className="bg-elec-yellow text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">3</span>
                           <h5 className="text-white font-medium">Turn ON Main Switch & Test</h5>
                         </div>
                         <ul className="text-white text-sm space-y-1 ml-9">
@@ -161,9 +161,9 @@ const EarthFaultLoopGuide = () => {
                         </ul>
                       </div>
 
-                      <div className="bg-card p-4 rounded-lg">
+                      <div className="bg-transparent p-4 rounded-lg">
                         <div className="flex items-center gap-3 mb-2">
-                          <span className="bg-yellow-400 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">4</span>
+                          <span className="bg-elec-yellow text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">4</span>
                           <h5 className="text-white font-medium">Record & Secure</h5>
                         </div>
                         <ul className="text-white text-sm space-y-1 ml-9">
@@ -199,7 +199,7 @@ const EarthFaultLoopGuide = () => {
               </div>
 
               {/* Test 2: Zs Measurement - ENHANCED */}
-              <div className="bg-card/80 p-6 rounded-lg border-l-4 border-green-500">
+              <div className="bg-transparent/80 p-6 rounded-lg border-l-4 border-green-500">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
                   <span className="bg-green-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">2</span>
                   Testing Zs (Circuit Earth Fault Loop Impedance)
@@ -207,10 +207,10 @@ const EarthFaultLoopGuide = () => {
                 
                 <div className="space-y-6">
                   {/* RCD Consideration */}
-                  <div className="bg-yellow-600/20 p-4 rounded-lg border border-yellow-600/30">
+                  <div className="bg-elec-yellow/20 p-4 rounded-lg border border-elec-yellow/30">
                     <div className="flex items-center gap-2 mb-2">
-                      <AlertTriangle className="h-5 w-5 text-yellow-400" />
-                      <h4 className="text-yellow-400 font-semibold">RCD Protected Circuits</h4>
+                      <AlertTriangle className="h-5 w-5 text-elec-yellow" />
+                      <h4 className="text-elec-yellow font-semibold">RCD Protected Circuits</h4>
                     </div>
                     <p className="text-yellow-200 text-sm">
                       If circuit has RCD protection, you MUST use "no-trip" test mode or the RCD will trip during testing.
@@ -223,7 +223,7 @@ const EarthFaultLoopGuide = () => {
                     <h4 className="text-green-400 font-semibold mb-3">Testing at Socket Outlets - Step by Step:</h4>
                     <div className="space-y-4">
                       
-                      <div className="bg-card p-4 rounded-lg">
+                      <div className="bg-transparent p-4 rounded-lg">
                         <div className="flex items-center gap-3 mb-2">
                           <span className="bg-green-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">1</span>
                           <h5 className="text-white font-medium">Energise the Circuit</h5>
@@ -237,7 +237,7 @@ const EarthFaultLoopGuide = () => {
                         </ul>
                       </div>
 
-                      <div className="bg-card p-4 rounded-lg">
+                      <div className="bg-transparent p-4 rounded-lg">
                         <div className="flex items-center gap-3 mb-2">
                           <span className="bg-green-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">2</span>
                           <h5 className="text-white font-medium">Set Up Test Equipment</h5>
@@ -250,7 +250,7 @@ const EarthFaultLoopGuide = () => {
                         </ul>
                       </div>
 
-                      <div className="bg-card p-4 rounded-lg">
+                      <div className="bg-transparent p-4 rounded-lg">
                         <div className="flex items-center gap-3 mb-2">
                           <span className="bg-green-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">3</span>
                           <h5 className="text-white font-medium">Test at Socket Outlet</h5>
@@ -264,7 +264,7 @@ const EarthFaultLoopGuide = () => {
                         </ul>
                       </div>
 
-                      <div className="bg-card p-4 rounded-lg">
+                      <div className="bg-transparent p-4 rounded-lg">
                         <div className="flex items-center gap-3 mb-2">
                           <span className="bg-green-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">4</span>
                           <h5 className="text-white font-medium">Test Multiple Points</h5>
@@ -302,7 +302,7 @@ const EarthFaultLoopGuide = () => {
               </div>
 
               {/* Test 3: Calculation Method */}
-              <div className="bg-card/80 p-6 rounded-lg border-l-4 border-purple-500">
+              <div className="bg-transparent/80 p-6 rounded-lg border-l-4 border-purple-500">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
                   <span className="bg-purple-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">3</span>
                   Alternative: Calculate Zs = Ze + (R1 + R2)
@@ -315,7 +315,7 @@ const EarthFaultLoopGuide = () => {
                     </p>
                   </div>
 
-                  <div className="bg-card p-4 rounded-lg">
+                  <div className="bg-transparent p-4 rounded-lg">
                     <h4 className="text-purple-400 font-semibold mb-3">Simple Calculation Steps:</h4>
                     <div className="space-y-3">
                       <div className="flex items-center gap-4">
@@ -347,7 +347,7 @@ const EarthFaultLoopGuide = () => {
                     </div>
                   </div>
 
-                  <div className="bg-yellow-600/20 p-3 rounded border-l-4 border-yellow-400">
+                  <div className="bg-elec-yellow/20 p-3 rounded border-l-4 border-elec-yellow">
                     <p className="text-yellow-200 text-sm">
                       <strong>Important:</strong> Calculated values are often slightly higher than measured values. 
                       Both methods are acceptable for BS 7671 compliance.
@@ -357,9 +357,9 @@ const EarthFaultLoopGuide = () => {
               </div>
 
               {/* Quick Results Check */}
-              <div className="bg-card/80 p-6 rounded-lg border-l-4 border-yellow-400">
+              <div className="bg-transparent/80 p-6 rounded-lg border-l-4 border-elec-yellow">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
-                  <Gauge className="h-6 w-6 text-yellow-400" />
+                  <Gauge className="h-6 w-6 text-elec-yellow" />
                   Quick Results Check - Are Your Readings OK?
                 </h3>
                 
@@ -375,8 +375,8 @@ const EarthFaultLoopGuide = () => {
                       <p className="text-white text-sm">Most domestic lighting</p>
                     </div>
                     
-                    <div className="bg-yellow-400/20 p-4 rounded border border-blue-600/30">
-                      <h4 className="text-yellow-400 font-semibold">Socket Circuits</h4>
+                    <div className="bg-elec-yellow/20 p-4 rounded border border-blue-600/30">
+                      <h4 className="text-elec-yellow font-semibold">Socket Circuits</h4>
                       <p className="text-blue-300 text-2xl font-bold">16A = 2.87Ω</p>
                       <p className="text-white text-sm">Radial socket circuits</p>
                     </div>
@@ -406,17 +406,17 @@ const EarthFaultLoopGuide = () => {
           </Card>
 
           {/* Quick Reference Card */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Wrench className="h-6 w-6 text-yellow-400" />
+                <Wrench className="h-6 w-6 text-elec-yellow" />
                 Quick Reference - Testing Summary
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-card/80 p-4 rounded-lg">
-                  <h3 className="text-yellow-400 font-semibold mb-3">Ze Test (External)</h3>
+                <div className="bg-transparent/80 p-4 rounded-lg">
+                  <h3 className="text-elec-yellow font-semibold mb-3">Ze Test (External)</h3>
                   <ul className="text-white text-sm space-y-1">
                     <li>• Location: Main switch area</li>
                     <li>• Connections: Line to Earth</li>
@@ -426,7 +426,7 @@ const EarthFaultLoopGuide = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-card/80 p-4 rounded-lg">
+                <div className="bg-transparent/80 p-4 rounded-lg">
                   <h3 className="text-green-400 font-semibold mb-3">Zs Test (Circuit)</h3>
                   <ul className="text-white text-sm space-y-1">
                     <li>• Location: Socket outlets/end points</li>
@@ -438,8 +438,8 @@ const EarthFaultLoopGuide = () => {
                 </div>
               </div>
               
-              <div className="bg-yellow-400/10 border border-yellow-400/30 rounded-lg p-4 mt-6">
-                <h4 className="text-yellow-400 font-semibold mb-2">Remember: Safety Always Comes First</h4>
+              <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4 mt-6">
+                <h4 className="text-elec-yellow font-semibold mb-2">Remember: Safety Always Comes First</h4>
                 <p className="text-white text-sm">
                   If you're not 100% confident about any aspect of these tests, seek guidance from a qualified supervisor. 
                   These are live electrical tests that require proper training and safety precautions.
@@ -451,18 +451,18 @@ const EarthFaultLoopGuide = () => {
           {/* THEORY SECTIONS MOVED BELOW - Keep existing content but moved down */}
           
           {/* BS7671 Reference Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <BookOpen className="h-6 w-6 text-yellow-400" />
+                <BookOpen className="h-6 w-6 text-elec-yellow" />
                 BS 7671 Requirements & Reference Tables
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="bg-yellow-400/20 p-4 rounded-lg border border-blue-600/30">
+              <div className="bg-elec-yellow/20 p-4 rounded-lg border border-blue-600/30">
                 <div className="flex items-center gap-2 mb-2">
-                  <Info className="h-5 w-5 text-yellow-400" />
-                  <h4 className="text-yellow-400 font-semibold">Where to Find Maximum Zs Values in BS 7671</h4>
+                  <Info className="h-5 w-5 text-elec-yellow" />
+                  <h4 className="text-elec-yellow font-semibold">Where to Find Maximum Zs Values in BS 7671</h4>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
@@ -483,7 +483,7 @@ const EarthFaultLoopGuide = () => {
                     </ul>
                   </div>
                 </div>
-                <div className="bg-yellow-600/20 p-3 rounded mt-3">
+                <div className="bg-elec-yellow/20 p-3 rounded mt-3">
                   <p className="text-yellow-200 text-sm">
                     <strong>Important:</strong> Always use the current edition of BS 7671:2018+A2:2022. Values may change between editions.
                   </p>
@@ -493,25 +493,25 @@ const EarthFaultLoopGuide = () => {
           </Card>
 
           {/* Understanding the Terms */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Info className="h-6 w-6 text-yellow-400" />
+                <Info className="h-6 w-6 text-elec-yellow" />
                 Understanding Ze, Zs, and R1+R2
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-card/80 p-4 rounded-lg">
+                <div className="bg-transparent/80 p-4 rounded-lg">
                   <div className="flex items-center gap-3 mb-2">
-                    <Badge className="bg-yellow-400/40 text-blue-300 border-0 font-mono">Ze</Badge>
+                    <Badge className="bg-elec-yellow/40 text-blue-300 border-0 font-mono">Ze</Badge>
                   </div>
                   <h3 className="text-white font-semibold mb-2">External Impedance</h3>
                   <p className="text-white text-sm mb-2">Impedance of the supply system before your installation</p>
                   <p className="text-green-400 text-sm">Typical: 0.35Ω (PME), 0.8Ω (TN-S)</p>
                 </div>
                 
-                <div className="bg-card/80 p-4 rounded-lg">
+                <div className="bg-transparent/80 p-4 rounded-lg">
                   <div className="flex items-center gap-3 mb-2">
                     <Badge className="bg-green-600/40 text-green-300 border-0 font-mono">Zs</Badge>
                   </div>
@@ -520,7 +520,7 @@ const EarthFaultLoopGuide = () => {
                   <p className="text-green-400 text-sm">Must be less than max permitted values</p>
                 </div>
                 
-                <div className="bg-card/80 p-4 rounded-lg">
+                <div className="bg-transparent/80 p-4 rounded-lg">
                   <div className="flex items-center gap-3 mb-2">
                     <Badge className="bg-purple-600/40 text-purple-300 border-0 font-mono">R1+R2</Badge>
                   </div>
@@ -530,8 +530,8 @@ const EarthFaultLoopGuide = () => {
                 </div>
               </div>
               
-              <div className="bg-yellow-400/20 p-4 rounded border-l-4 border-yellow-400">
-                <h4 className="text-yellow-400 font-semibold mb-2">The Relationship</h4>
+              <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
+                <h4 className="text-elec-yellow font-semibold mb-2">The Relationship</h4>
                 <p className="text-blue-200 text-lg font-mono">Zs = Ze + (R1 + R2)</p>
                 <p className="text-blue-200 text-sm mt-2">
                   Total loop impedance equals external impedance plus circuit impedance.
@@ -541,10 +541,10 @@ const EarthFaultLoopGuide = () => {
           </Card>
 
           {/* Maximum Permitted Values Table */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <Gauge className="h-6 w-6 text-yellow-400" />
+                <Gauge className="h-6 w-6 text-elec-yellow" />
                 Maximum Permitted Zs Values (BS 7671 Table 41.2)
               </CardTitle>
             </CardHeader>
@@ -608,42 +608,42 @@ const EarthFaultLoopGuide = () => {
           </Card>
 
           {/* Why We Test Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-3">
-                <BookOpen className="h-6 w-6 text-yellow-400" />
+                <BookOpen className="h-6 w-6 text-elec-yellow" />
                 Why We Test Earth Fault Loop Impedance
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-card/80 p-4 rounded-lg">
+                <div className="bg-transparent/80 p-4 rounded-lg">
                   <div className="flex items-center gap-3 mb-2">
-                    <Shield className="h-5 w-5 text-yellow-400" />
+                    <Shield className="h-5 w-5 text-elec-yellow" />
                     <h3 className="text-white font-semibold">Safety Critical</h3>
                   </div>
                   <p className="text-white text-sm">Ensures protective devices will operate quickly enough to prevent dangerous touch voltages</p>
                 </div>
                 
-                <div className="bg-card/80 p-4 rounded-lg">
+                <div className="bg-transparent/80 p-4 rounded-lg">
                   <div className="flex items-center gap-3 mb-2">
-                    <CheckCircle className="h-5 w-5 text-yellow-400" />
+                    <CheckCircle className="h-5 w-5 text-elec-yellow" />
                     <h3 className="text-white font-semibold">Legal Requirement</h3>
                   </div>
                   <p className="text-white text-sm">BS 7671 requires earth fault loop impedance to be measured and recorded</p>
                 </div>
                 
-                <div className="bg-card/80 p-4 rounded-lg">
+                <div className="bg-transparent/80 p-4 rounded-lg">
                   <div className="flex items-center gap-3 mb-2">
-                    <Activity className="h-5 w-5 text-yellow-400" />
+                    <Activity className="h-5 w-5 text-elec-yellow" />
                     <h3 className="text-white font-semibold">Protection Coordination</h3>
                   </div>
                   <p className="text-white text-sm">Verifies that Zs values allow protective devices to operate within required times</p>
                 </div>
                 
-                <div className="bg-card/80 p-4 rounded-lg">
+                <div className="bg-transparent/80 p-4 rounded-lg">
                   <div className="flex items-center gap-3 mb-2">
-                    <Zap className="h-5 w-5 text-yellow-400" />
+                    <Zap className="h-5 w-5 text-elec-yellow" />
                     <h3 className="text-white font-semibold">Installation Verification</h3>
                   </div>
                   <p className="text-white text-sm">Confirms the earth fault path is effective and has adequate capacity</p>

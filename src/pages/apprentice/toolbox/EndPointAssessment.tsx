@@ -1,13 +1,24 @@
 
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Award, FileText, ClipboardCheck, MessageSquare, Clock, CheckCircle, AlertTriangle, Star, Target, BookOpen, Lightbulb, AlertCircle } from "lucide-react";
+import { Award, FileText, ClipboardCheck, MessageSquare, Clock, CheckCircle, AlertTriangle, Star, Target, BookOpen, Lightbulb, AlertCircle, Zap, Heart } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const EndPointAssessment = () => {
+  const [activeTab, setActiveTab] = useState("components");
+  const isMobile = useIsMobile();
+
+  const quickStats = [
+    { label: "Components", value: "3", icon: ClipboardCheck, color: "text-blue-400", bg: "from-blue-500/10 to-blue-500/5", border: "border-blue-500/30" },
+    { label: "Assessment", value: "3 Months", icon: Clock, color: "text-green-400", bg: "from-green-500/10 to-green-500/5", border: "border-green-500/30" },
+    { label: "Grade Levels", value: "3", icon: Award, color: "text-elec-yellow", bg: "from-elec-yellow/10 to-elec-yellow/5", border: "border-elec-yellow/30" },
+    { label: "Success Rate", value: "High", icon: Star, color: "text-purple-400", bg: "from-purple-500/10 to-purple-500/5", border: "border-purple-500/30" }
+  ];
+
   const epaComponents = [
     {
       title: "Knowledge Test",
@@ -161,313 +172,504 @@ const EndPointAssessment = () => {
     }
   ];
 
-  return (
-    <div className="space-y-8 animate-fade-in">
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
-        <h1 className="text-3xl font-bold tracking-tight">End Point Assessment Guide</h1>
-        <SmartBackButton />
-      </div>
-
-      {/* Introduction */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Award className="h-5 w-5 text-elec-yellow" />
-            What is End Point Assessment?
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <p className="text-elec-light">
-            End Point Assessment (EPA) is the final stage of your apprenticeship. It's an independent assessment
-            conducted by an End Point Assessment Organisation (EPAO) to confirm you've achieved the
-            Knowledge, Skills, and Behaviours (KSBs) required by the apprenticeship standard.
-          </p>
-          <div className="grid gap-4 md:grid-cols-3">
-            <div className="bg-elec-dark p-4 rounded-lg text-center">
-              <Clock className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
-              <h4 className="font-semibold text-white">Gateway</h4>
-              <p className="text-sm text-muted-foreground">Must pass gateway requirements before EPA</p>
-            </div>
-            <div className="bg-elec-dark p-4 rounded-lg text-center">
-              <Target className="h-8 w-8 text-blue-400 mx-auto mb-2" />
-              <h4 className="font-semibold text-white">Assessment Window</h4>
-              <p className="text-sm text-muted-foreground">Usually 3 months to complete all components</p>
-            </div>
-            <div className="bg-elec-dark p-4 rounded-lg text-center">
-              <Star className="h-8 w-8 text-yellow-400 mx-auto mb-2" />
-              <h4 className="font-semibold text-white">Graded</h4>
-              <p className="text-sm text-muted-foreground">Pass, Merit, or Distinction</p>
-            </div>
+  const renderMobileContent = () => (
+    <MobileAccordion type="single" collapsible defaultValue="components" className="w-full">
+      <MobileAccordionItem value="components">
+        <MobileAccordionTrigger className="text-elec-yellow">
+          <div className="flex items-center gap-2">
+            <ClipboardCheck className="h-5 w-5" />
+            EPA Components
           </div>
-        </CardContent>
-      </Card>
-
-      {/* Main Content Tabs */}
-      <Tabs defaultValue="components" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4">
-          <TabsTrigger value="components">EPA Components</TabsTrigger>
-          <TabsTrigger value="grades">Grading</TabsTrigger>
-          <TabsTrigger value="preparation">Preparation</TabsTrigger>
-          <TabsTrigger value="mistakes">Common Mistakes</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="components" className="mt-6">
-          <div className="space-y-6">
+        </MobileAccordionTrigger>
+        <MobileAccordionContent>
+          <div className="space-y-4">
             {epaComponents.map((component, index) => (
-              <Card key={index} className={`border-${component.color}-500/20 bg-elec-gray`}>
-                <CardHeader>
-                  <div className="flex items-center justify-between flex-wrap gap-4">
-                    <CardTitle className={`flex items-center gap-2 text-${component.color}-400`}>
-                      <component.icon className="h-5 w-5" />
+              <Card key={index} className="bg-white/5 border border-white/10">
+                <CardHeader className="pb-2">
+                  <div className="flex items-center justify-between flex-wrap gap-2">
+                    <CardTitle className="flex items-center gap-2 text-white text-base">
+                      <component.icon className="h-5 w-5 text-elec-yellow" />
                       {component.title}
                     </CardTitle>
-                    <div className="flex gap-2">
-                      <Badge variant="outline">{component.duration}</Badge>
-                      <Badge className={`bg-${component.color}-500/20 text-${component.color}-400`}>
-                        {component.weighting} of final grade
-                      </Badge>
-                    </div>
+                    <Badge variant="outline" className="text-elec-yellow border-elec-yellow/40">
+                      {component.weighting}
+                    </Badge>
                   </div>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <p className="text-elec-light">{component.description}</p>
-                  <div className="bg-elec-dark p-4 rounded-lg">
-                    <h4 className="font-semibold text-white mb-3">Topics Covered:</h4>
-                    <div className="grid gap-2 md:grid-cols-2">
-                      {component.topics.map((topic, tIndex) => (
-                        <div key={tIndex} className="flex items-center gap-2 text-sm">
-                          <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
-                          <span className="text-muted-foreground">{topic}</span>
-                        </div>
-                      ))}
-                    </div>
+                <CardContent className="space-y-3">
+                  <p className="text-white/80 text-sm">{component.description}</p>
+                  <div className="flex gap-2 flex-wrap">
+                    <Badge variant="outline" className="text-white/70">{component.duration}</Badge>
+                    <Badge variant="outline" className="text-white/70">{component.format}</Badge>
                   </div>
                 </CardContent>
               </Card>
             ))}
           </div>
-        </TabsContent>
+        </MobileAccordionContent>
+      </MobileAccordionItem>
 
-        <TabsContent value="grades" className="mt-6">
-          <div className="space-y-6">
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Star className="h-5 w-5 text-elec-yellow" />
-                  Understanding EPA Grades
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-elec-light mb-6">
-                  Your overall EPA grade is determined by your performance across all three assessment
-                  components. Each component must be passed individually, and your overall grade reflects
-                  your combined performance.
-                </p>
-                <div className="space-y-4">
-                  {gradeDescriptors.map((grade, index) => (
-                    <div
-                      key={index}
-                      className={`border border-${grade.color}-500/30 bg-${grade.color}-500/5 rounded-lg p-4`}
-                    >
-                      <div className="flex items-center gap-3 mb-3">
-                        <Badge className={`bg-${grade.color}-500 text-white text-lg px-4 py-1`}>
-                          {grade.grade}
-                        </Badge>
-                        <span className="text-elec-light">{grade.description}</span>
-                      </div>
-                      <div className="grid gap-2 md:grid-cols-2">
-                        {grade.requirements.map((req, rIndex) => (
-                          <div key={rIndex} className="flex items-start gap-2 text-sm">
-                            <CheckCircle className={`h-4 w-4 text-${grade.color}-400 mt-0.5 flex-shrink-0`} />
-                            <span className="text-muted-foreground">{req}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="border-orange-500/20 bg-orange-500/5">
-              <CardHeader>
-                <CardTitle className="text-orange-400 flex items-center gap-2">
-                  <AlertTriangle className="h-5 w-5" />
-                  If You Don't Pass
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-sm text-elec-light">
-                  Don't panic if you don't pass an EPA component. Here's what happens:
-                </p>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-muted-foreground">
-                      You can re-sit individual components you didn't pass
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-muted-foreground">
-                      Your employer and training provider will support additional learning
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-muted-foreground">
-                      Re-sit must be within 3 months of the original assessment
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-muted-foreground">
-                      Maximum grade on re-sit is typically Pass (check with your EPAO)
-                    </span>
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
+      <MobileAccordionItem value="grades">
+        <MobileAccordionTrigger className="text-elec-yellow">
+          <div className="flex items-center gap-2">
+            <Award className="h-5 w-5" />
+            Grading
           </div>
-        </TabsContent>
-
-        <TabsContent value="preparation" className="mt-6">
-          <div className="space-y-6">
-            {preparationTips.map((area, index) => (
-              <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Lightbulb className="h-5 w-5 text-elec-yellow" />
-                    {area.area}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3">
-                    {area.tips.map((tip, tIndex) => (
-                      <li key={tIndex} className="flex items-start gap-3 p-3 bg-elec-dark rounded-lg">
-                        <span className="bg-elec-yellow text-black text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">
-                          {tIndex + 1}
-                        </span>
-                        <span className="text-sm text-elec-light">{tip}</span>
+        </MobileAccordionTrigger>
+        <MobileAccordionContent>
+          <div className="space-y-4">
+            {gradeDescriptors.map((grade, index) => (
+              <Card key={index} className="bg-white/5 border border-white/10">
+                <CardContent className="p-4">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Badge className={`bg-${grade.color}-500 text-white px-3`}>
+                      {grade.grade}
+                    </Badge>
+                    <span className="text-white/80 text-sm">{grade.description}</span>
+                  </div>
+                  <ul className="space-y-2">
+                    {grade.requirements.map((req, rIndex) => (
+                      <li key={rIndex} className="flex items-start gap-2 text-sm">
+                        <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                        <span className="text-white/70">{req}</span>
                       </li>
                     ))}
                   </ul>
                 </CardContent>
               </Card>
             ))}
-
-            <Card className="border-green-500/20 bg-green-500/5">
-              <CardHeader>
-                <CardTitle className="text-green-400 flex items-center gap-2">
-                  <BookOpen className="h-5 w-5" />
-                  Gateway Requirements
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-sm text-elec-light">
-                  Before entering EPA, you must pass the "gateway" - confirmation you're ready for assessment:
-                </p>
-                <div className="grid gap-4 md:grid-cols-2">
-                  <div className="bg-elec-dark p-4 rounded-lg">
-                    <h4 className="font-semibold text-white mb-2">Required Evidence</h4>
-                    <ul className="space-y-1 text-sm text-muted-foreground">
-                      <li>• Completed learning programme</li>
-                      <li>• Level 2 English and Maths (minimum)</li>
-                      <li>• AM2 practical assessment passed</li>
-                      <li>• Portfolio of evidence</li>
-                      <li>• Employer confirmation of readiness</li>
-                    </ul>
-                  </div>
-                  <div className="bg-elec-dark p-4 rounded-lg">
-                    <h4 className="font-semibold text-white mb-2">Gateway Meeting</h4>
-                    <ul className="space-y-1 text-sm text-muted-foreground">
-                      <li>• Meeting with employer and training provider</li>
-                      <li>• Review of all evidence and qualifications</li>
-                      <li>• Confirmation you meet all requirements</li>
-                      <li>• Agree EPA start date with EPAO</li>
-                      <li>• Sign gateway declaration form</li>
-                    </ul>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
           </div>
-        </TabsContent>
+        </MobileAccordionContent>
+      </MobileAccordionItem>
 
-        <TabsContent value="mistakes" className="mt-6">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <AlertCircle className="h-5 w-5 text-elec-yellow" />
-                Common Mistakes to Avoid
+      <MobileAccordionItem value="preparation">
+        <MobileAccordionTrigger className="text-elec-yellow">
+          <div className="flex items-center gap-2">
+            <BookOpen className="h-5 w-5" />
+            Preparation
+          </div>
+        </MobileAccordionTrigger>
+        <MobileAccordionContent>
+          <div className="space-y-4">
+            {preparationTips.map((area, index) => (
+              <Card key={index} className="bg-white/5 border border-white/10">
+                <CardHeader className="pb-2">
+                  <CardTitle className="flex items-center gap-2 text-elec-yellow text-base">
+                    <Lightbulb className="h-5 w-5" />
+                    {area.area}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2">
+                    {area.tips.map((tip, tIndex) => (
+                      <li key={tIndex} className="flex items-start gap-2 p-2 bg-white/5 rounded-lg">
+                        <span className="bg-elec-yellow text-black text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0">
+                          {tIndex + 1}
+                        </span>
+                        <span className="text-sm text-white/80">{tip}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </MobileAccordionContent>
+      </MobileAccordionItem>
+
+      <MobileAccordionItem value="mistakes">
+        <MobileAccordionTrigger className="text-elec-yellow">
+          <div className="flex items-center gap-2">
+            <AlertCircle className="h-5 w-5" />
+            Common Mistakes
+          </div>
+        </MobileAccordionTrigger>
+        <MobileAccordionContent>
+          <div className="space-y-3">
+            {commonMistakes.map((item, index) => (
+              <Card key={index} className="bg-white/5 border border-white/10">
+                <CardContent className="p-4">
+                  <div className="flex items-start gap-2 mb-2">
+                    <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                    <span className="text-red-400 font-medium text-sm">{item.mistake}</span>
+                  </div>
+                  <div className="flex items-start gap-2 p-3 bg-green-500/10 rounded-lg">
+                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                    <span className="text-white/80 text-sm">{item.solution}</span>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </MobileAccordionContent>
+      </MobileAccordionItem>
+    </MobileAccordion>
+  );
+
+  const renderComponentsContent = () => (
+    <div className="space-y-4">
+      {epaComponents.map((component, index) => (
+        <Card key={index} className="bg-white/5 border border-white/10">
+          <CardHeader>
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <CardTitle className="flex items-center gap-2 text-white">
+                <component.icon className="h-5 w-5 text-elec-yellow" />
+                {component.title}
               </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-elec-light mb-6">
-                Learn from others' experiences. These are the most common mistakes apprentices make during EPA
-                and how to avoid them:
-              </p>
-              <MobileAccordion type="single" collapsible className="w-full">
-                {commonMistakes.map((item, index) => (
-                  <MobileAccordionItem key={index} value={`mistake-${index}`}>
-                    <MobileAccordionTrigger className="text-left text-red-400">
-                      <span className="flex items-center gap-2">
-                        <AlertTriangle className="h-4 w-4 flex-shrink-0" />
-                        {item.mistake}
-                      </span>
-                    </MobileAccordionTrigger>
-                    <MobileAccordionContent>
-                      <div className="bg-green-500/10 border border-green-500/20 p-4 rounded-lg">
-                        <div className="flex items-start gap-2">
-                          <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                          <div>
-                            <h4 className="font-semibold text-green-400 mb-1">Solution</h4>
-                            <p className="text-sm text-elec-light">{item.solution}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </MobileAccordionContent>
-                  </MobileAccordionItem>
+              <div className="flex gap-2">
+                <Badge variant="outline" className="text-white/80">{component.duration}</Badge>
+                <Badge className="bg-elec-yellow/20 text-elec-yellow">
+                  {component.weighting} of final grade
+                </Badge>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-white/80">{component.description}</p>
+            <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
+              <h4 className="font-semibold text-white mb-3">Topics Covered:</h4>
+              <div className="grid gap-2 md:grid-cols-2">
+                {component.topics.map((topic, tIndex) => (
+                  <div key={tIndex} className="flex items-center gap-2 text-sm">
+                    <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
+                    <span className="text-white/70">{topic}</span>
+                  </div>
                 ))}
-              </MobileAccordion>
-            </CardContent>
-          </Card>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
 
-          <Card className="border-blue-500/20 bg-blue-500/5 mt-6">
-            <CardHeader>
-              <CardTitle className="text-blue-400 flex items-center gap-2">
-                <Star className="h-5 w-5" />
-                Top Tips from Successful Apprentices
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="bg-elec-dark p-4 rounded-lg">
-                  <p className="text-sm text-elec-light italic mb-2">
-                    "Start your portfolio from day one. It's so much easier to collect evidence as you go
-                    than trying to remember everything at the end."
-                  </p>
-                  <span className="text-xs text-muted-foreground">- Distinction Grade Apprentice</span>
+  const renderGradesContent = () => (
+    <div className="space-y-4">
+      <Card className="bg-white/5 border border-white/10">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-elec-yellow">
+            <Star className="h-5 w-5" />
+            Understanding EPA Grades
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-white/80 mb-6">
+            Your overall EPA grade is determined by your performance across all three assessment
+            components. Each component must be passed individually, and your overall grade reflects
+            your combined performance.
+          </p>
+          <div className="space-y-4">
+            {gradeDescriptors.map((grade, index) => (
+              <div
+                key={index}
+                className="bg-white/5 border border-white/10 rounded-lg p-4 hover:border-white/20 transition-all"
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <Badge className={`bg-${grade.color}-500 text-white text-lg px-4 py-1`}>
+                    {grade.grade}
+                  </Badge>
+                  <span className="text-white/80">{grade.description}</span>
                 </div>
-                <div className="bg-elec-dark p-4 rounded-lg">
-                  <p className="text-sm text-elec-light italic mb-2">
-                    "In the professional discussion, don't just describe what you did - explain why you made
-                    those decisions and what you would do differently next time."
-                  </p>
-                  <span className="text-xs text-muted-foreground">- Merit Grade Apprentice</span>
-                </div>
-                <div className="bg-elec-dark p-4 rounded-lg">
-                  <p className="text-sm text-elec-light italic mb-2">
-                    "The practical assessment isn't about speed. Take your time, work safely, and check
-                    everything twice. Quality beats rushing every time."
-                  </p>
-                  <span className="text-xs text-muted-foreground">- Distinction Grade Apprentice</span>
+                <div className="grid gap-2 md:grid-cols-2">
+                  {grade.requirements.map((req, rIndex) => (
+                    <div key={rIndex} className="flex items-start gap-2 text-sm">
+                      <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                      <span className="text-white/70">{req}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-orange-500/20 bg-gradient-to-br from-orange-500/10 to-orange-500/5">
+        <CardHeader>
+          <CardTitle className="text-orange-400 flex items-center gap-2">
+            <AlertTriangle className="h-5 w-5" />
+            If You Don't Pass
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <p className="text-sm text-white/80">
+            Don't panic if you don't pass an EPA component. Here's what happens:
+          </p>
+          <ul className="space-y-2 text-sm">
+            {[
+              "You can re-sit individual components you didn't pass",
+              "Your employer and training provider will support additional learning",
+              "Re-sit must be within 3 months of the original assessment",
+              "Maximum grade on re-sit is typically Pass (check with your EPAO)"
+            ].map((item, index) => (
+              <li key={index} className="flex items-start gap-2">
+                <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                <span className="text-white/70">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
+    </div>
+  );
+
+  const renderPreparationContent = () => (
+    <div className="space-y-4">
+      {preparationTips.map((area, index) => (
+        <Card key={index} className="bg-white/5 border border-white/10">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-elec-yellow">
+              <Lightbulb className="h-5 w-5" />
+              {area.area}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-3">
+              {area.tips.map((tip, tIndex) => (
+                <li key={tIndex} className="flex items-start gap-3 p-3 bg-white/5 rounded-lg hover:bg-white/8 transition-all">
+                  <span className="bg-elec-yellow text-black text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">
+                    {tIndex + 1}
+                  </span>
+                  <span className="text-sm text-white/80">{tip}</span>
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      ))}
+
+      <Card className="border-green-500/20 bg-gradient-to-br from-green-500/10 to-green-500/5">
+        <CardHeader>
+          <CardTitle className="text-green-400 flex items-center gap-2">
+            <BookOpen className="h-5 w-5" />
+            Gateway Requirements
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <p className="text-sm text-white/80">
+            Before entering EPA, you must pass the "gateway" - confirmation you're ready for assessment:
+          </p>
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
+              <h4 className="font-semibold text-white mb-2">Required Evidence</h4>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li>- Completed learning programme</li>
+                <li>- Level 2 English and Maths (minimum)</li>
+                <li>- AM2 practical assessment passed</li>
+                <li>- Portfolio of evidence</li>
+                <li>- Employer confirmation of readiness</li>
+              </ul>
+            </div>
+            <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
+              <h4 className="font-semibold text-white mb-2">Gateway Meeting</h4>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li>- Meeting with employer and training provider</li>
+                <li>- Review of all evidence and qualifications</li>
+                <li>- Confirmation you meet all requirements</li>
+                <li>- Agree EPA start date with EPAO</li>
+                <li>- Sign gateway declaration form</li>
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+
+  const renderMistakesContent = () => (
+    <div className="space-y-4">
+      <Card className="bg-white/5 border border-white/10">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-elec-yellow">
+            <AlertCircle className="h-5 w-5" />
+            Common Mistakes to Avoid
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-white/80 mb-6">
+            Learn from others' experiences. These are the most common mistakes apprentices make during EPA
+            and how to avoid them:
+          </p>
+          <div className="space-y-3">
+            {commonMistakes.map((item, index) => (
+              <div key={index} className="bg-white/5 border border-white/10 p-4 rounded-lg">
+                <div className="flex items-start gap-2 mb-3">
+                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  <span className="text-red-400 font-medium">{item.mistake}</span>
+                </div>
+                <div className="bg-green-500/10 border border-green-500/20 p-3 rounded-lg">
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <span className="font-semibold text-green-400 text-sm">Solution: </span>
+                      <span className="text-white/80 text-sm">{item.solution}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/10 to-blue-500/5">
+        <CardHeader>
+          <CardTitle className="text-blue-400 flex items-center gap-2">
+            <Star className="h-5 w-5" />
+            Top Tips from Successful Apprentices
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {[
+              { quote: "Start your portfolio from day one. It's so much easier to collect evidence as you go than trying to remember everything at the end.", grade: "Distinction Grade Apprentice" },
+              { quote: "In the professional discussion, don't just describe what you did - explain why you made those decisions and what you would do differently next time.", grade: "Merit Grade Apprentice" },
+              { quote: "The practical assessment isn't about speed. Take your time, work safely, and check everything twice. Quality beats rushing every time.", grade: "Distinction Grade Apprentice" }
+            ].map((tip, index) => (
+              <div key={index} className="bg-white/5 border border-white/10 p-4 rounded-lg">
+                <p className="text-sm text-white/80 italic mb-2">"{tip.quote}"</p>
+                <span className="text-xs text-blue-400">- {tip.grade}</span>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+
+  return (
+    <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8 animate-fade-in px-4 sm:px-6 lg:px-8 pb-20">
+      {/* Hero Header */}
+      <div className="flex flex-col items-center justify-center mb-6 text-center">
+        <div className="p-3 bg-elec-yellow/20 rounded-2xl mb-4">
+          <Award className="h-8 w-8 sm:h-10 sm:w-10 text-elec-yellow" />
+        </div>
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
+          End Point Assessment Guide
+        </h1>
+        <p className="text-white/80 max-w-2xl mb-4 text-sm sm:text-base">
+          Everything you need to know about EPA - the final stage of your apprenticeship. Prepare effectively and achieve your best grade.
+        </p>
+        <SmartBackButton />
+      </div>
+
+      {/* Quick Stats */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+        {quickStats.map((stat, index) => (
+          <Card key={index} className={`${stat.border} bg-gradient-to-br ${stat.bg}`}>
+            <CardContent className="p-4 text-center">
+              <stat.icon className={`h-8 w-8 ${stat.color} mx-auto mb-2`} />
+              <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
+              <p className="text-xs text-white/70">{stat.label}</p>
             </CardContent>
           </Card>
-        </TabsContent>
-      </Tabs>
+        ))}
+      </div>
+
+      {/* Introduction Card */}
+      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-elec-yellow">
+            <Zap className="h-5 w-5" />
+            What is End Point Assessment?
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <p className="text-white/80">
+            End Point Assessment (EPA) is the final stage of your apprenticeship. It's an independent assessment
+            conducted by an End Point Assessment Organisation (EPAO) to confirm you've achieved the
+            Knowledge, Skills, and Behaviours (KSBs) required by the apprenticeship standard.
+          </p>
+          <div className="grid gap-4 md:grid-cols-3">
+            <div className="bg-white/5 border border-white/10 p-4 rounded-lg text-center hover:border-elec-yellow/30 transition-all">
+              <Clock className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
+              <h4 className="font-semibold text-white">Gateway</h4>
+              <p className="text-sm text-white/70">Must pass gateway requirements before EPA</p>
+            </div>
+            <div className="bg-white/5 border border-white/10 p-4 rounded-lg text-center hover:border-blue-500/30 transition-all">
+              <Target className="h-8 w-8 text-blue-400 mx-auto mb-2" />
+              <h4 className="font-semibold text-white">Assessment Window</h4>
+              <p className="text-sm text-white/70">Usually 3 months to complete all components</p>
+            </div>
+            <div className="bg-white/5 border border-white/10 p-4 rounded-lg text-center hover:border-yellow-500/30 transition-all">
+              <Star className="h-8 w-8 text-yellow-400 mx-auto mb-2" />
+              <h4 className="font-semibold text-white">Graded</h4>
+              <p className="text-sm text-white/70">Pass, Merit, or Distinction</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Desktop Tabs / Mobile Accordion */}
+      {isMobile ? (
+        renderMobileContent()
+      ) : (
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-4 h-auto p-1 bg-white/5 border border-white/10">
+            <TabsTrigger value="components" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark py-3 gap-2">
+              <ClipboardCheck className="h-4 w-4" />
+              <span className="hidden sm:inline">Components</span>
+            </TabsTrigger>
+            <TabsTrigger value="grades" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark py-3 gap-2">
+              <Award className="h-4 w-4" />
+              <span className="hidden sm:inline">Grading</span>
+            </TabsTrigger>
+            <TabsTrigger value="preparation" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark py-3 gap-2">
+              <BookOpen className="h-4 w-4" />
+              <span className="hidden sm:inline">Preparation</span>
+            </TabsTrigger>
+            <TabsTrigger value="mistakes" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark py-3 gap-2">
+              <AlertCircle className="h-4 w-4" />
+              <span className="hidden sm:inline">Mistakes</span>
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="components" className="mt-6">
+            {renderComponentsContent()}
+          </TabsContent>
+
+          <TabsContent value="grades" className="mt-6">
+            {renderGradesContent()}
+          </TabsContent>
+
+          <TabsContent value="preparation" className="mt-6">
+            {renderPreparationContent()}
+          </TabsContent>
+
+          <TabsContent value="mistakes" className="mt-6">
+            {renderMistakesContent()}
+          </TabsContent>
+        </Tabs>
+      )}
+
+      {/* Journey Card */}
+      <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/5">
+        <CardHeader>
+          <CardTitle className="text-green-400 flex items-center gap-2">
+            <Heart className="h-5 w-5" />
+            Your EPA Journey
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <p className="text-white/80 leading-relaxed">
+            EPA is the culmination of your apprenticeship journey. It's your opportunity to demonstrate everything you've learned
+            and showcase your skills as a competent electrical professional. With proper preparation and the right mindset,
+            you can achieve your best possible grade.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {[
+              { text: "Prepare thoroughly", icon: BookOpen },
+              { text: "Stay confident", icon: Star },
+              { text: "Trust your training", icon: Award }
+            ].map((tip, index) => (
+              <div key={index} className="flex items-center gap-2 p-3 bg-white/5 border border-white/10 rounded-lg">
+                <tip.icon className="h-4 w-4 text-green-400" />
+                <span className="text-white/90 text-sm">{tip.text}</span>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

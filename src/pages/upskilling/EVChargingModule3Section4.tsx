@@ -1,630 +1,489 @@
-import { ArrowLeft, ArrowRight, Cable, AlertTriangle, CheckCircle, BookOpen, Target, Lightbulb } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { EVChargingModule3Section4Quiz } from '@/components/upskilling/quiz/EVChargingModule3Section4Quiz';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
+import useSEO from "@/hooks/useSEO";
+
+const quickCheckQuestions = [
+  {
+    id: "evcharging-m3s4-check1",
+    question: "What is the minimum burial depth for cables under a driveway?",
+    options: ["300mm", "450mm", "600mm", "750mm"],
+    correctIndex: 2,
+    explanation: "Cables under driveways and roads must be buried at minimum 600mm depth to provide adequate protection from vehicle loads. Under lawns, 450mm is acceptable."
+  },
+  {
+    id: "evcharging-m3s4-check2",
+    question: "What is the maximum fill factor for cables in conduit?",
+    options: ["20%", "40%", "60%", "80%"],
+    correctIndex: 1,
+    explanation: "Maximum 40% fill factor ensures cables can be pulled through without damage and allows for heat dissipation. Higher fill factors make installation difficult and cause thermal issues."
+  },
+  {
+    id: "evcharging-m3s4-check3",
+    question: "What is the minimum bend radius for SWA cable?",
+    options: ["3 × cable diameter", "6 × cable diameter", "8 × cable diameter", "12 × cable diameter"],
+    correctIndex: 1,
+    explanation: "SWA cable requires a minimum 6 × diameter bend radius during installation (8 × when fixed) to prevent damage to the steel wire armour and internal conductors."
+  }
+];
+
+const faqs = [
+  {
+    question: "When should I use SWA cable vs. cable in conduit?",
+    answer: "Use SWA for direct burial or where mechanical protection is needed without additional containment. Use conduit for surface runs requiring protection, where future cable changes may be needed, or when fire-rated containment is required."
+  },
+  {
+    question: "What IP rating is required for outdoor EV charging installations?",
+    answer: "Minimum IP65 is recommended for external installations, providing protection against water jets. IP44 is the absolute minimum for rain protection. Underground or flooded areas may need IP68."
+  },
+  {
+    question: "How do I ensure EMC compliance with cable routing?",
+    answer: "Maintain minimum 300mm separation from data cables unless using shielded cables. Cross power and data cables at 90° only. Use SWA with armour earthed at both ends. Avoid parallel runs with communications cables over 10m."
+  },
+  {
+    question: "What support spacing is required for SWA cable?",
+    answer: "SWA cable requires support every 600mm vertically and 750mm horizontally. Additional support is needed within 150mm of terminations. Hot environments may require closer spacing."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+  question: "You're installing a 7kW charger 25m from the consumer unit via an external wall and underground to a garage. What routing method should you use?",
+  options: [
+    "PVC singles in conduit throughout",
+    "SWA cable clipped to wall, ducted underground, gland entry to garage",
+    "Extension lead from house socket",
+    "XLPE cable buried directly in soil"
+  ],
+  correctAnswer: 1,
+  explanation: "SWA provides mechanical protection for external runs and underground burial. Proper gland entries maintain IP ratings. Ducting underground allows future cable changes. This approach meets BS 7671 for protection, burial depth, and weatherproofing."
+  }
+];
 
 const EVChargingModule3Section4 = () => {
-  useEffect(() => {
-    document.title = 'Cable Routing and Containment - EV Charging Module 3 Section 4';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Learn professional cable routing and containment methods for EV charging installations. Covers BS 7671 requirements, protection methods, and installation techniques.');
-    }
-  }, []);
+  useSEO({
+    title: "Cable Routing and Containment | EV Charging Module 3.4",
+    description: "Learn professional cable routing and containment methods for EV charging installations including BS 7671 requirements and installation techniques."
+  });
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
-        <Link to="../ev-charging-module-3">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 3
+            <Link to="../ev-charging-module-3">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 3
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            <Cable className="h-8 w-8 text-yellow-400" />
-            <Badge 
-              variant="secondary" 
-              className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold text-sm px-3 py-1 border-0"
-            >
-              Module 3 - Section 4
-            </Badge>
+        </div>
+      </div>
+
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Page Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 3.4</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Cable Routing and Containment
           </h1>
-          <p className="text-lg sm:text-xl text-gray-400 max-w-3xl">
-            Professional cable installation practices, containment systems, and BS 7671 compliance for EV charging infrastructure
+          <p className="text-white/80">
+            Professional installation methods for EV charging
           </p>
-        </div>
-      </header>
+        </header>
 
-      {/* Main Content */}
-      <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="space-y-4 sm:space-y-6">
-          
-          {/* Introduction */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <BookOpen className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Introduction</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                Proper cable routing and containment are fundamental to safe, reliable, and compliant EV charging installations. This section covers professional installation methods, BS 7671 requirements, and best practices for cable management systems.
-              </p>
-              <p>
-                Effective cable routing ensures protection from mechanical damage, environmental hazards, and electromagnetic interference whilst maintaining accessibility for inspection and maintenance. Understanding containment systems and their selection criteria is essential for creating installations that meet current standards and facilitate future modifications.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Learning Outcomes */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Target className="h-6 w-6 text-yellow-400" />
-                <CardTitle className="text-white">Learning Outcomes</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <p className="mb-4">Upon completion of this section, you will be able to:</p>
-              <ul className="space-y-2 list-disc list-inside">
-                <li>Select appropriate cable routing methods for different installation environments</li>
-                <li>Specify containment systems meeting fire safety and segregation requirements</li>
-                <li>Apply correct installation techniques including bend radius and support spacing</li>
-                <li>Implement mechanical protection and marking systems</li>
-                <li>Ensure compliance with BS 7671 wiring system requirements</li>
-                <li>Apply best practice guidelines for professional cable management</li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          {/* Cable Routing Methods */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Cable className="h-5 w-5 text-yellow-400" />
-                Cable Routing Methods
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-semibold text-yellow-400 mb-2">Surface Mounting</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Clipped direct (Method C) for internal areas with minimal risk</li>
-                    <li>SWA cable with appropriate clips at 300-400mm centres</li>
-                    <li>Consider expansion/contraction with temperature changes</li>
-                    <li>Minimum 50mm clearance from other services</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold text-yellow-400 mb-2">Underground Burial</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Minimum 450mm depth (600mm under roads/driveways)</li>
-                    <li>Sand bed and covering with warning tape 150mm above</li>
-                    <li>Suitable cable markers at changes of direction</li>
-                    <li>Ducted systems for future cable changes</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-yellow-400 mb-2">Conduit Systems</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Heavy gauge steel/PVC conduit for mechanical protection</li>
-                    <li>Maximum 40% fill factor for cable installation</li>
-                    <li>Inspection boxes at maximum 15m intervals</li>
-                    <li>Proper sealing against moisture ingress</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-yellow-400 mb-2">Cable Tray Systems</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Galvanised steel or aluminium for corrosion resistance</li>
-                    <li>Support spacing: 1.5m for steel, 1.2m for aluminium</li>
-                    <li>Segregation between power and data cables</li>
-                    <li>Cover requirements in public access areas</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Containment System Selection */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-green-400" />
-                Containment System Selection
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-semibold text-green-400 mb-2">Fire-Rated Systems</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>30, 60, or 120-minute fire resistance ratings</li>
-                    <li>Compartmentation requirements for escape routes</li>
-                    <li>Fire-stopping at wall and floor penetrations</li>
-                    <li>Material selection: steel vs plastic considerations</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold text-green-400 mb-2">Segregation Requirements</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>ELV (extra-low voltage) and LV (low voltage) separation</li>
-                    <li>Minimum 100mm separation or metal barrier</li>
-                    <li>Data cable segregation from power circuits</li>
-                    <li>EMC considerations for sensitive equipment</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-green-400 mb-2">IP Rating Selection</h4>
-                  <div className="overflow-x-auto">
-                    <table className="w-full border-collapse border border-gray-600 text-sm">
-                      <thead>
-                        <tr className="bg-gray-800">
-                          <th className="border border-gray-600 p-2 text-left">Environment</th>
-                          <th className="border border-gray-600 p-2 text-left">Minimum IP Rating</th>
-                          <th className="border border-gray-600 p-2 text-left">Typical Application</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td className="border border-gray-600 p-2">Internal dry</td>
-                          <td className="border border-gray-600 p-2">IP2X</td>
-                          <td className="border border-gray-600 p-2">Office/commercial areas</td>
-                        </tr>
-                        <tr>
-                          <td className="border border-gray-600 p-2">Internal wet</td>
-                          <td className="border border-gray-600 p-2">IP54</td>
-                          <td className="border border-gray-600 p-2">Washdown areas</td>
-                        </tr>
-                        <tr>
-                          <td className="border border-gray-600 p-2">External</td>
-                          <td className="border border-gray-600 p-2">IP65</td>
-                          <td className="border border-gray-600 p-2">Outdoor installations</td>
-                        </tr>
-                        <tr>
-                          <td className="border border-gray-600 p-2">Underground</td>
-                          <td className="border border-gray-600 p-2">IP68</td>
-                          <td className="border border-gray-600 p-2">Buried/flooded areas</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Installation Techniques */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-purple-400" />
-                Installation Techniques
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-semibold text-purple-400 mb-2">Bend Radius Requirements</h4>
-                  <div className="overflow-x-auto">
-                    <table className="w-full border-collapse border border-gray-600 text-sm">
-                      <thead>
-                        <tr className="bg-gray-800">
-                          <th className="border border-gray-600 p-2 text-left">Cable Type</th>
-                          <th className="border border-gray-600 p-2 text-left">Minimum Bend Radius</th>
-                          <th className="border border-gray-600 p-2 text-left">Installation</th>
-                          <th className="border border-gray-600 p-2 text-left">Fixed</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td className="border border-gray-600 p-2">PVC Singles</td>
-                          <td className="border border-gray-600 p-2">3 × diameter</td>
-                          <td className="border border-gray-600 p-2">4 × diameter</td>
-                        </tr>
-                        <tr>
-                          <td className="border border-gray-600 p-2">SWA Cable</td>
-                          <td className="border border-gray-600 p-2">6 × diameter</td>
-                          <td className="border border-gray-600 p-2">8 × diameter</td>
-                        </tr>
-                        <tr>
-                          <td className="border border-gray-600 p-2">Flexible Cable</td>
-                          <td className="border border-gray-600 p-2">4 × diameter</td>
-                          <td className="border border-gray-600 p-2">6 × diameter</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold text-purple-400 mb-2">Support Spacing</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>PVC cables: 300mm vertical, 400mm horizontal</li>
-                    <li>SWA cables: 600mm vertical, 750mm horizontal</li>
-                    <li>Increased spacing for higher temperatures</li>
-                    <li>Additional support within 150mm of terminations</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-purple-400 mb-2">Cable Pulling Techniques</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Maximum pulling tension: 50N per mm² conductor</li>
-                    <li>Use pulling eyes for larger cables</li>
-                    <li>Lubrication for long conduit runs</li>
-                    <li>Temperature considerations during installation</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Mechanical Protection */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-orange-400" />
-                Mechanical Protection Methods
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-semibold text-orange-400 mb-2">Impact Protection</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>AG rating for vehicle impact areas (2m height)</li>
-                    <li>Steel barrier posts or concrete bollards</li>
-                    <li>Impact-resistant containment systems</li>
-                    <li>Buried cable protection from excavation</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold text-orange-400 mb-2">Route Marking</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Underground cable markers every 25m</li>
-                    <li>Warning tape 150mm above buried cables</li>
-                    <li>Cable route plans and as-built drawings</li>
-                    <li>GPS coordinates for future reference</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-orange-400 mb-2">Access Provisions</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Joint boxes accessible without damage</li>
-                    <li>Cable removal without structural damage</li>
-                    <li>Maintenance access requirements</li>
-                    <li>Future cable route provisions</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* BS 7671 Requirements */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-red-400" />
-                BS 7671 Compliance Requirements
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-semibold text-red-400 mb-2">Wiring System Selection (Chapter 52)</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Regulation 521.5: External influences assessment</li>
-                    <li>Regulation 522.6: Installation methods and current-carrying capacity</li>
-                    <li>Regulation 522.8: Proximity to other services</li>
-                    <li>Regulation 526: Electrical connections and joints</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold text-red-400 mb-2">External Influences (Appendix 5)</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>AD conditions: Presence of water (AD1-AD8)</li>
-                    <li>AF conditions: Corrosion (AF1-AF4)</li>
-                    <li>AG conditions: Mechanical stress (AG1-AG3)</li>
-                    <li>AH conditions: Vibration (AH1-AH3)</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-red-400 mb-2">Support Requirements (Regulation 522.8.5)</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Cables supported at appropriate intervals</li>
-                    <li>No strain on terminations or joints</li>
-                    <li>Expansion joints for temperature variation</li>
-                    <li>Support material compatibility with cable</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Best Practice Guidelines */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Lightbulb className="h-5 w-5 text-yellow-400" />
-                Best Practice Guidelines
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-semibold text-yellow-400 mb-2">Professional Installation Standards</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Neat, workmanlike installation appearance</li>
-                    <li>Consistent spacing and alignment</li>
-                    <li>Appropriate marking and labelling</li>
-                    <li>Documentation of installation methods</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold text-yellow-400 mb-2">Future Maintenance Access</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Accessible terminations and joints</li>
-                    <li>Cable identification systems</li>
-                    <li>Spare capacity in containment (25% minimum)</li>
-                    <li>Removable covers for inspection points</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-yellow-400 mb-2">Common Installation Issues</h4>
-                  <ul className="space-y-1 list-disc list-inside ml-4">
-                    <li>Insufficient bend radius causing cable damage</li>
-                    <li>Inadequate support leading to cable sag</li>
-                    <li>Poor segregation causing EMC problems</li>
-                    <li>Inadequate protection in vulnerable areas</li>
-                    <li>Missing or incorrect cable marking</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Practical Installation Examples */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Lightbulb className="h-5 w-5 text-indigo-400" />
-                Practical Installation Examples
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <div>
-                <h4 className="font-semibold text-indigo-400 mb-3">Example 1: Domestic Garage Installation</h4>
-                <div className="bg-gray-800 p-4 rounded-lg space-y-3">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <h5 className="font-medium text-indigo-300 mb-2">Installation Requirements</h5>
-                      <ul className="text-sm space-y-1">
-                        <li>• 25m run from consumer unit to charge point</li>
-                        <li>• Route: Through house, external wall, garage</li>
-                        <li>• Cable: 6mm² 3-core SWA (Method D)</li>
-                        <li>• Protection: 32A Type B MCB + 30mA RCD</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="font-medium text-indigo-300 mb-2">Routing Method</h5>
-                      <ul className="text-sm space-y-1">
-                        <li>• Internal: 25mm PVC conduit in wall void</li>
-                        <li>• External: Clipped direct on masonry clips</li>
-                        <li>• Ground level: 50mm impact protection</li>
-                        <li>• Garage entry: Sealed cable gland IP65</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-indigo-300 mb-2">Support Calculations</h5>
-                    <p className="text-sm">
-                      Cable supports: 6mm² SWA requires supports every 750mm horizontal, 600mm vertical. 
-                      Total supports required: 34 clips for 25m run. Additional support within 150mm of terminations.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-indigo-400 mb-3">Example 2: Commercial Car Park Installation</h4>
-                <div className="bg-gray-800 p-4 rounded-lg space-y-3">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <h5 className="font-medium text-indigo-300 mb-2">System Overview</h5>
-                      <ul className="text-sm space-y-1">
-                        <li>• 10 charging bays with expansion to 20</li>
-                        <li>• Underground ducted system</li>
-                        <li>• 150mm HDPE ducts with draw pits</li>
-                        <li>• Future 22kW capability planning</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="font-medium text-indigo-300 mb-2">Cable Specification</h5>
-                      <ul className="text-sm space-y-1">
-                        <li>• Primary: 95mm² 4-core XLPE</li>
-                        <li>• Secondary: 16mm² 4-core SWA per bay</li>
-                        <li>• Data: Cat6 FTP for communications</li>
-                        <li>• Spare: 25% duct capacity for expansion</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-indigo-300 mb-2">Installation Method</h5>
-                    <p className="text-sm">
-                      Main distribution: 150mm duct at 1m depth with concrete surround. Secondary feeds: 100mm ducts 
-                      to individual charge points. Draw pits every 50m for cable pulling. Warning tape and markers throughout.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Common Installation Issues */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-red-400" />
-                Common Installation Issues and Solutions
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-red-400">Cable Routing Problems</h4>
-                  
-                  <div className="bg-gray-800 p-3 rounded">
-                    <h5 className="font-medium text-red-300 mb-2">Issue: Excessive Voltage Drop</h5>
-                    <div className="text-sm space-y-1">
-                      <p><strong>Cause:</strong> Undersized cable for long runs</p>
-                      <p><strong>Solution:</strong> Upsize cable or install local distribution board</p>
-                      <p><strong>Prevention:</strong> Calculate Vd early in design phase</p>
-                    </div>
-                  </div>
-
-                  <div className="bg-gray-800 p-3 rounded">
-                    <h5 className="font-medium text-red-300 mb-2">Issue: Inadequate Mechanical Protection</h5>
-                    <div className="text-sm space-y-1">
-                      <p><strong>Cause:</strong> Exposed cables in vulnerable areas</p>
-                      <p><strong>Solution:</strong> Install impact barriers or reroute cables</p>
-                      <p><strong>Prevention:</strong> Risk assessment during route planning</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-red-400">Containment Issues</h4>
-                  
-                  <div className="bg-gray-800 p-3 rounded">
-                    <h5 className="font-medium text-red-300 mb-2">Issue: Incorrect Segregation</h5>
-                    <div className="text-sm space-y-1">
-                      <p><strong>Cause:</strong> Mixed voltage circuits in same containment</p>
-                      <p><strong>Solution:</strong> Install physical barriers or separate routes</p>
-                      <p><strong>Prevention:</strong> Circuit classification during design</p>
-                    </div>
-                  </div>
-
-                  <div className="bg-gray-800 p-3 rounded">
-                    <h5 className="font-medium text-red-300 mb-2">Issue: Moisture Ingress</h5>
-                    <div className="text-sm space-y-1">
-                      <p><strong>Cause:</strong> Inadequate IP rating for environment</p>
-                      <p><strong>Solution:</strong> Upgrade containment or improve sealing</p>
-                      <p><strong>Prevention:</strong> Environmental assessment (Appendix 5)</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Advanced Techniques */}
-          <Card className="bg-card border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-cyan-400" />
-                Advanced Installation Techniques
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <div>
-                <h4 className="font-semibold text-cyan-400 mb-3">Horizontal Directional Drilling (HDD)</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <h5 className="font-medium text-cyan-300 mb-2">Applications</h5>
-                    <ul className="text-sm space-y-1 list-disc list-inside">
-                      <li>Road crossings without excavation</li>
-                      <li>Landscaped areas preservation</li>
-                      <li>Existing services avoidance</li>
-                      <li>Rock or difficult ground conditions</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-cyan-300 mb-2">Technical Requirements</h5>
-                    <ul className="text-sm space-y-1 list-disc list-inside">
-                      <li>Minimum bend radius: 150 × pipe diameter</li>
-                      <li>Entry/exit angles: 8-12 degrees typical</li>
-                      <li>Duct specification: HDPE SDR11 minimum</li>
-                      <li>Pulling force calculations essential</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-cyan-400 mb-3">EMC and Interference Mitigation</h4>
-                <div className="space-y-3">
-                  <div className="bg-gray-800 p-3 rounded">
-                    <h5 className="font-medium text-cyan-300 mb-2">Power Cable EMC</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• SWA earthing at both ends for low impedance path</li>
-                      <li>• Avoid steel containment parallel runs over 10m</li>
-                      <li>• Cross power and data cables at 90° only</li>
-                      <li>• Minimum 300mm separation for unscreened data</li>
-                    </ul>
-                  </div>
-                  <div className="bg-gray-800 p-3 rounded">
-                    <h5 className="font-medium text-cyan-300 mb-2">Communication Cable Protection</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• FTP (Foiled Twisted Pair) cable minimum for data</li>
-                      <li>• Dedicated data containment systems</li>
-                      <li>• Earthed metallic screens at communication equipment</li>
-                      <li>• Isolation transformers for long data runs</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Section */}
-          <EVChargingModule3Section4Quiz />
-
-          {/* Navigation */}
-          <div className="flex justify-between items-center pt-8">
-            <Link to="../ev-charging-module-3-section-3">
-              <Button variant="outline" className="bg-card border-gray-600 text-white hover:bg-gray-700">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="../ev-charging-module-3-section-5">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Underground:</strong> 600mm under driveways, 450mm lawns</li>
+              <li><strong>Conduit fill:</strong> Maximum 40% capacity</li>
+              <li><strong>SWA bend:</strong> Minimum 6 × cable diameter</li>
+            </ul>
           </div>
-
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Warning tape 150mm above buried cables</li>
+              <li><strong>Use:</strong> Sand bed + tile protection for underground</li>
+            </ul>
+          </div>
         </div>
-      </main>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Select cable routing methods for installations",
+              "Specify containment systems for fire and IP ratings",
+              "Apply bend radius and support spacing",
+              "Implement mechanical protection systems",
+              "Ensure BS 7671 wiring system compliance",
+              "Design for maintenance and future expansion"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1 - Routing Methods */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Cable Routing Methods
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Surface Mounting</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>• SWA clipped at 300-400mm centres</li>
+                  <li>• Minimum 50mm from other services</li>
+                  <li>• Consider thermal expansion</li>
+                  <li>• Impact protection below 2m</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Underground Burial</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>• 450mm lawn, 600mm driveway</li>
+                  <li>• Sand bed and warning tape</li>
+                  <li>• Markers at direction changes</li>
+                  <li>• Duct for future changes</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Conduit Systems</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>• Heavy gauge for protection</li>
+                  <li>• Maximum 40% fill factor</li>
+                  <li>• Inspection boxes every 15m</li>
+                  <li>• Proper sealing for IP rating</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cable Tray Systems</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>• Support: 1.5m steel, 1.2m aluminium</li>
+                  <li>• Segregate power from data</li>
+                  <li>• Covers in public areas</li>
+                  <li>• Galvanised for corrosion</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2 - Containment Selection */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Containment System Selection
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Fire-Rated Systems</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>• 30/60/120 minute ratings</li>
+                  <li>• Compartmentation for escape routes</li>
+                  <li>• Fire-stopping at penetrations</li>
+                  <li>• Material: steel vs plastic</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Segregation Requirements</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>• ELV/LV separation</li>
+                  <li>• Minimum 100mm or metal barrier</li>
+                  <li>• Data cable segregation</li>
+                  <li>• EMC considerations</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="overflow-x-auto my-6">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-white/20">
+                    <th className="text-left p-2 text-elec-yellow">Environment</th>
+                    <th className="text-left p-2 text-elec-yellow">Min IP Rating</th>
+                    <th className="text-left p-2 text-elec-yellow">Application</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white/90">
+                  <tr className="border-b border-white/10">
+                    <td className="p-2">Internal dry</td>
+                    <td className="p-2">IP2X</td>
+                    <td className="p-2">Office/commercial</td>
+                  </tr>
+                  <tr className="border-b border-white/10">
+                    <td className="p-2">Internal wet</td>
+                    <td className="p-2">IP54</td>
+                    <td className="p-2">Washdown areas</td>
+                  </tr>
+                  <tr className="border-b border-white/10">
+                    <td className="p-2">External</td>
+                    <td className="p-2">IP65</td>
+                    <td className="p-2">Outdoor installations</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2">Underground</td>
+                    <td className="p-2">IP68</td>
+                    <td className="p-2">Buried/flooded</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 3 - Installation Techniques */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Installation Techniques
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Bend Radius Requirements</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>PVC Singles:</strong> 3× install, 4× fixed</li>
+                  <li><strong>SWA Cable:</strong> 6× install, 8× fixed</li>
+                  <li><strong>Flexible:</strong> 4× install, 6× fixed</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Support Spacing</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>PVC:</strong> 300mm V, 400mm H</li>
+                  <li><strong>SWA:</strong> 600mm V, 750mm H</li>
+                  <li>Additional 150mm from terminations</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cable Pulling Techniques</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>• Maximum pulling tension: 50N per mm² conductor</li>
+                <li>• Use pulling eyes for larger cables</li>
+                <li>• Lubrication for long conduit runs</li>
+                <li>• Temperature considerations during installation</li>
+              </ul>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
+              <div className="p-3 rounded bg-transparent border border-white/10">
+                <p className="font-medium text-white mb-1">AG1</p>
+                <p className="text-white/90 text-xs">No vehicle access</p>
+              </div>
+              <div className="p-3 rounded bg-transparent border border-white/10">
+                <p className="font-medium text-white mb-1">AG2</p>
+                <p className="text-white/90 text-xs">Light vehicle</p>
+              </div>
+              <div className="p-3 rounded bg-transparent border border-white/10">
+                <p className="font-medium text-white mb-1">AG3</p>
+                <p className="text-white/90 text-xs">Heavy vehicle</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Section 4 - Practical Examples */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Practical Installation Examples
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <div className="grid sm:grid-cols-2 gap-4 my-6">
+              <div className="p-3 rounded bg-transparent border border-white/10">
+                <p className="text-sm font-medium text-white mb-2">Domestic Garage</p>
+                <ul className="text-xs text-white/90 space-y-1">
+                  <li>• 25m run from CU to charge point</li>
+                  <li>• Internal: PVC conduit in wall void</li>
+                  <li>• External: SWA clipped to masonry</li>
+                  <li>• Ground level: 50mm impact protection</li>
+                  <li className="text-elec-yellow">Gland entry: IP65 sealed</li>
+                </ul>
+              </div>
+              <div className="p-3 rounded bg-transparent border border-white/10">
+                <p className="text-sm font-medium text-white mb-2">Commercial Car Park</p>
+                <ul className="text-xs text-white/90 space-y-1">
+                  <li>• 10 charging bays + expansion</li>
+                  <li>• Underground ducted system</li>
+                  <li>• 150mm HDPE with draw pits</li>
+                  <li>• 25% spare duct capacity</li>
+                  <li className="text-elec-yellow">Draw pits every 50m</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="p-4 rounded bg-transparent border border-elec-yellow/20">
+              <p className="text-sm font-medium text-elec-yellow mb-2">Support Calculation Example</p>
+              <p className="text-sm text-white">
+                6mm² SWA cable, 25m horizontal run: 750mm spacing = 34 clips required.
+                Add support within 150mm of each termination = 2 additional clips.
+                Total: 36 cable clips for proper installation.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 5 - BS 7671 Requirements */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            BS 7671 Compliance
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Chapter 52 Requirements</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>• 521.5: External influences assessment</li>
+                  <li>• 522.6: Installation methods</li>
+                  <li>• 522.8: Proximity to services</li>
+                  <li>• 526: Electrical connections</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Appendix 5 Conditions</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>AD:</strong> Water presence (AD1-AD8)</li>
+                  <li><strong>AF:</strong> Corrosion (AF1-AF4)</li>
+                  <li><strong>AG:</strong> Mechanical stress (AG1-AG3)</li>
+                  <li><strong>AH:</strong> Vibration (AH1-AH3)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Planning Routes</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Assess external influences (AD, AF, AG, AH conditions)</li>
+                <li>Plan support spacing from the outset</li>
+                <li>Allow spare capacity for future expansion (25%)</li>
+                <li>Document cable routes on as-built drawings</li>
+                <li>Consider maintenance access for joints and terminations</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Insufficient bend radius:</strong> — Damages cable insulation and armour</li>
+                <li><strong>Missing warning tape:</strong> — Underground cables damaged during excavation</li>
+                <li><strong>Wrong IP rating:</strong> — Water ingress causes failures</li>
+                <li><strong>Poor segregation:</strong> — EMC interference with data cables</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quick Reference */}
+        <div className="mt-6 p-5 rounded-lg bg-transparent border border-white/10">
+          <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+            <div>
+              <p className="font-medium text-white mb-1">Burial Depths</p>
+              <ul className="space-y-0.5">
+                <li>Lawn: 450mm minimum</li>
+                <li>Driveway: 600mm minimum</li>
+                <li>Warning tape: 150mm above</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-medium text-white mb-1">Bend Radius (Installation)</p>
+              <ul className="space-y-0.5">
+                <li>PVC: 3 × diameter</li>
+                <li>SWA: 6 × diameter</li>
+                <li>Flexible: 4 × diameter</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Quiz Section */}
+        <section className="mb-10 mt-12">
+          <SingleQuestionQuiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-3-section-3">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="../ev-charging-module-3-section-5">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

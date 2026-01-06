@@ -156,11 +156,11 @@ const AM2Module7Section1 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
+      <div className="border-b border-white/10 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 7
@@ -176,10 +176,10 @@ const AM2Module7Section1 = () => {
           <Badge variant="secondary" className="bg-elec-yellow text-black font-medium">
             Module 7 – Section 1
           </Badge>
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground">
+          <h1 className="text-3xl md:text-4xl font-bold text-white">
             Knowledge Test Practice
           </h1>
-          <div className="flex items-center gap-4 text-muted-foreground">
+          <div className="flex items-center gap-4 text-white">
             <div className="flex items-center gap-1">
               <Clock className="w-4 h-4" />
               <span className="text-sm">~25 min read</span>
@@ -192,13 +192,13 @@ const AM2Module7Section1 = () => {
         </div>
 
         {/* Critical Warning */}
-        <Card className="border-red-500/50 bg-card">
+        <Card className="border-red-500/50 ">
           <CardContent className="p-6">
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-6 h-6 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <h3 className="font-semibold text-foreground mb-2">Critical Assessment Component</h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <h3 className="font-semibold text-white mb-2">Critical Assessment Component</h3>
+                <p className="text-white leading-relaxed">
                   The knowledge test is typically the first component of AM2 assessment and sets the tone for your entire assessment. Poor performance here can affect confidence and momentum. You must demonstrate thorough understanding of BS 7671, testing procedures, and safety requirements. Inadequate preparation or test-taking strategy will impact your overall AM2 success.
                 </p>
               </div>
@@ -209,9 +209,9 @@ const AM2Module7Section1 = () => {
         {/* Learning Outcomes */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-            <p className="text-muted-foreground mb-4">By the end of this section, you should be able to:</p>
-            <ul className="space-y-2 text-muted-foreground">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+            <p className="text-white mb-4">By the end of this section, you should be able to:</p>
+            <ul className="space-y-2 text-white">
               <li className="flex items-start gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-elec-blue mt-2 flex-shrink-0"></span>
                 Apply effective test-taking strategies and time management techniques
@@ -243,11 +243,11 @@ const AM2Module7Section1 = () => {
         {/* Multiple-Choice Question Banks */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">1. Multiple-Choice Question Banks</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">1. Multiple-Choice Question Banks</h2>
             <div className="space-y-4">
               <div>
-                <h3 className="font-medium text-foreground mb-2">Coverage Areas</h3>
-                <ul className="space-y-1 text-muted-foreground">
+                <h3 className="font-medium text-white mb-2">Coverage Areas</h3>
+                <ul className="space-y-1 text-white">
                   <li>• BS 7671 regulations and requirements</li>
                   <li>• Testing procedures and sequences</li>
                   <li>• Health and safety legislation</li>
@@ -257,8 +257,8 @@ const AM2Module7Section1 = () => {
               </div>
               
               <div>
-                <h3 className="font-medium text-foreground mb-2">Practice Strategy</h3>
-                <ul className="space-y-1 text-muted-foreground">
+                <h3 className="font-medium text-white mb-2">Practice Strategy</h3>
+                <ul className="space-y-1 text-white">
                   <li>• Start with topic-specific question banks</li>
                   <li>• Progress to mixed topic practice</li>
                   <li>• Focus on areas of weakness identified</li>
@@ -266,8 +266,8 @@ const AM2Module7Section1 = () => {
                 </ul>
               </div>
 
-              <div className="bg-card border border-amber-500/20 rounded-lg p-4">
-                <p className="text-sm text-muted-foreground">
+              <div className="bg-transparent border border-amber-500/20 rounded-lg p-4">
+                <p className="text-sm text-white">
                   <strong>Key Point:</strong> Question banks should mirror the AM2 knowledge test format with similar difficulty levels and question styles.
                 </p>
               </div>
@@ -286,11 +286,11 @@ const AM2Module7Section1 = () => {
         {/* Timed Mock Tests */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">2. Timed Mock Tests</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">2. Timed Mock Tests</h2>
             <div className="space-y-4">
               <div>
-                <h3 className="font-medium text-foreground mb-2">Test Conditions</h3>
-                <ul className="space-y-1 text-muted-foreground">
+                <h3 className="font-medium text-white mb-2">Test Conditions</h3>
+                <ul className="space-y-1 text-white">
                   <li>• 60 minutes for 50-60 questions</li>
                   <li>• No reference materials allowed</li>
                   <li>• Simulated exam environment</li>
@@ -299,8 +299,8 @@ const AM2Module7Section1 = () => {
               </div>
               
               <div>
-                <h3 className="font-medium text-foreground mb-2">Benefits</h3>
-                <ul className="space-y-1 text-muted-foreground">
+                <h3 className="font-medium text-white mb-2">Benefits</h3>
+                <ul className="space-y-1 text-white">
                   <li>• Experience time pressure of real test</li>
                   <li>• Identify pacing issues early</li>
                   <li>• Build confidence through practice</li>
@@ -322,11 +322,11 @@ const AM2Module7Section1 = () => {
         {/* Feedback and Explanations */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">3. Feedback and Explanations</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">3. Feedback and Explanations</h2>
             <div className="space-y-4">
               <div>
-                <h3 className="font-medium text-foreground mb-2">Comprehensive Analysis</h3>
-                <ul className="space-y-1 text-muted-foreground">
+                <h3 className="font-medium text-white mb-2">Comprehensive Analysis</h3>
+                <ul className="space-y-1 text-white">
                   <li>• Detailed explanations for correct answers</li>
                   <li>• Common misconceptions highlighted</li>
                   <li>• Reference to specific BS 7671 regulations</li>
@@ -335,8 +335,8 @@ const AM2Module7Section1 = () => {
               </div>
               
               <div>
-                <h3 className="font-medium text-foreground mb-2">Performance Tracking</h3>
-                <ul className="space-y-1 text-muted-foreground">
+                <h3 className="font-medium text-white mb-2">Performance Tracking</h3>
+                <ul className="space-y-1 text-white">
                   <li>• Topic-by-topic performance analysis</li>
                   <li>• Progress tracking over time</li>
                   <li>• Identification of improvement areas</li>
@@ -344,8 +344,8 @@ const AM2Module7Section1 = () => {
                 </ul>
               </div>
 
-              <div className="bg-card border border-green-500/20 rounded-lg p-4">
-                <p className="text-sm text-muted-foreground">
+              <div className="bg-transparent border border-green-500/20 rounded-lg p-4">
+                <p className="text-sm text-white">
                   <strong>Best Practice:</strong> Review explanations even for questions answered correctly to reinforce understanding and identify any gaps.
                 </p>
               </div>
@@ -364,11 +364,11 @@ const AM2Module7Section1 = () => {
         {/* Identifying Knowledge Gaps */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">4. Identifying Knowledge Gaps</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">4. Identifying Knowledge Gaps</h2>
             <div className="space-y-4">
               <div>
-                <h3 className="font-medium text-foreground mb-2">Self-Assessment Techniques</h3>
-                <ul className="space-y-1 text-muted-foreground">
+                <h3 className="font-medium text-white mb-2">Self-Assessment Techniques</h3>
+                <ul className="space-y-1 text-white">
                   <li>• Topic-specific mini tests</li>
                   <li>• Confidence rating for each answer</li>
                   <li>• Error pattern analysis</li>
@@ -377,8 +377,8 @@ const AM2Module7Section1 = () => {
               </div>
               
               <div>
-                <h3 className="font-medium text-foreground mb-2">Common Weak Areas</h3>
-                <ul className="space-y-1 text-muted-foreground">
+                <h3 className="font-medium text-white mb-2">Common Weak Areas</h3>
+                <ul className="space-y-1 text-white">
                   <li>• Maximum demand calculations</li>
                   <li>• Protective device coordination</li>
                   <li>• Testing sequence requirements</li>
@@ -387,8 +387,8 @@ const AM2Module7Section1 = () => {
               </div>
 
               <div>
-                <h3 className="font-medium text-foreground mb-2">Targeted Study Plan</h3>
-                <ul className="space-y-1 text-muted-foreground">
+                <h3 className="font-medium text-white mb-2">Targeted Study Plan</h3>
+                <ul className="space-y-1 text-white">
                   <li>• Focus 70% effort on identified weak areas</li>
                   <li>• Maintain 30% revision of strong areas</li>
                   <li>• Use spaced repetition for retention</li>
@@ -410,11 +410,11 @@ const AM2Module7Section1 = () => {
         {/* Exam Techniques and Strategies */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">5. Exam Techniques and Strategies</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">5. Exam Techniques and Strategies</h2>
             <div className="space-y-4">
               <div>
-                <h3 className="font-medium text-foreground mb-2">Time Management</h3>
-                <ul className="space-y-1 text-muted-foreground">
+                <h3 className="font-medium text-white mb-2">Time Management</h3>
+                <ul className="space-y-1 text-white">
                   <li>• Allocate roughly 1 minute per question</li>
                   <li>• Flag difficult questions for review</li>
                   <li>• Don't spend too long on any single question</li>
@@ -423,8 +423,8 @@ const AM2Module7Section1 = () => {
               </div>
               
               <div>
-                <h3 className="font-medium text-foreground mb-2">Question Approach</h3>
-                <ul className="space-y-1 text-muted-foreground">
+                <h3 className="font-medium text-white mb-2">Question Approach</h3>
+                <ul className="space-y-1 text-white">
                   <li>• Read questions carefully and completely</li>
                   <li>• Identify key words and qualifiers</li>
                   <li>• Use elimination for uncertain answers</li>
@@ -433,8 +433,8 @@ const AM2Module7Section1 = () => {
               </div>
 
               <div>
-                <h3 className="font-medium text-foreground mb-2">Common Pitfalls</h3>
-                <ul className="space-y-1 text-muted-foreground">
+                <h3 className="font-medium text-white mb-2">Common Pitfalls</h3>
+                <ul className="space-y-1 text-white">
                   <li>• Misreading question requirements</li>
                   <li>• Changing correct answers unnecessarily</li>
                   <li>• Running out of time on difficult questions</li>
@@ -442,8 +442,8 @@ const AM2Module7Section1 = () => {
                 </ul>
               </div>
 
-              <div className="bg-card border border-elec-yellow/20 rounded-lg p-4">
-                <p className="text-sm text-muted-foreground">
+              <div className="bg-transparent border border-elec-yellow/20 rounded-lg p-4">
+                <p className="text-sm text-white">
                   <strong>Strategy:</strong> Aim for 65-70% to comfortably pass. Perfect scores aren't necessary - focus on consistent accuracy.
                 </p>
               </div>
@@ -462,14 +462,14 @@ const AM2Module7Section1 = () => {
         {/* Summary */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
             <div className="space-y-4">
-              <p className="text-muted-foreground">
+              <p className="text-white">
                 Effective knowledge test preparation requires a systematic approach combining theoretical study with practical test-taking experience. Success depends on identifying and addressing knowledge gaps while developing confidence through repeated practice under exam conditions.
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-card border border-green-500/20 rounded-lg p-4">
+                <div className="bg-transparent border border-green-500/20 rounded-lg p-4">
                   <h3 className="font-medium text-green-300 mb-2">Key Success Factors</h3>
                   <ul className="space-y-1 text-green-300/80 text-sm">
                     <li>• Regular practice with mock tests</li>
@@ -479,7 +479,7 @@ const AM2Module7Section1 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-card border border-red-500/20 rounded-lg p-4">
+                <div className="bg-transparent border border-red-500/20 rounded-lg p-4">
                   <h3 className="font-medium text-elec-yellow mb-2">Common Failures</h3>
                   <ul className="space-y-1 text-elec-yellow/80 text-sm">
                     <li>• Inadequate practice under time pressure</li>
@@ -496,8 +496,8 @@ const AM2Module7Section1 = () => {
         {/* Quiz */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Knowledge Check Quiz</h2>
-            <p className="text-muted-foreground mb-6">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Knowledge Check Quiz</h2>
+            <p className="text-white mb-6">
               Test your understanding of knowledge test practice strategies with these questions.
             </p>
             <Quiz questions={quizQuestions} />
@@ -505,8 +505,8 @@ const AM2Module7Section1 = () => {
         </Card>
 
         {/* Bottom Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 mt-12 pt-8 border-t border-border/20">
-          <Button variant="outline" className="text-muted-foreground hover:text-foreground w-full sm:w-auto" asChild>
+        <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 mt-12 pt-8 border-t border-white/10">
+          <Button variant="outline" className="text-white hover:text-white w-full sm:w-auto" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 7

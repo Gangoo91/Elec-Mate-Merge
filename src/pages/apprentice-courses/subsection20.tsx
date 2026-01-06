@@ -625,7 +625,7 @@ const Section5_3 = () => {
                     </div>
                     <div className="mt-3 p-2 bg-elec-yellow bg-elec-yellow rounded text-sm">
                       <strong className="text-white">Result:</strong> 
-                      <span className="text-emerald-50"> Full testing sequence would have detected live neutral from emergency circuit.</span>
+                      <span className="text-white"> Full testing sequence would have detected live neutral from emergency circuit.</span>
                     </div>
                   </div>
                 </div>
@@ -648,7 +648,7 @@ const Section5_3 = () => {
                     </div>
                     <div className="mt-3 p-2 bg-elec-yellow bg-elec-yellow rounded text-sm">
                       <strong className="text-white">Result:</strong> 
-                      <span className="text-emerald-50"> Lock-off procedures now include mandatory check-out process before removal.</span>
+                      <span className="text-white"> Lock-off procedures now include mandatory check-out process before removal.</span>
                     </div>
                   </div>
                 </div>
@@ -671,7 +671,7 @@ const Section5_3 = () => {
                     </div>
                     <div className="mt-3 p-2 bg-elec-yellow bg-elec-yellow rounded text-sm">
                       <strong className="text-white">Result:</strong> 
-                      <span className="text-emerald-50"> Now requires isolation of both AC and DC sides, plus specific PV isolation training.</span>
+                      <span className="text-white"> Now requires isolation of both AC and DC sides, plus specific PV isolation training.</span>
                     </div>
                   </div>
                 </div>

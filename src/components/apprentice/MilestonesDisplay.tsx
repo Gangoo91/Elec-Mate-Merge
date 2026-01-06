@@ -22,7 +22,7 @@ export const MilestonesDisplay = ({ className }: MilestonesDisplayProps) => {
   }
   
   return (
-    <Card className={cn("border-elec-yellow/20 bg-elec-gray", className)}>
+    <Card className={cn("border-elec-yellow/20 bg-white/5", className)}>
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2">
           <Trophy className="h-5 w-5 text-elec-yellow" />

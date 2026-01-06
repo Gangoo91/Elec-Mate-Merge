@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
@@ -8,6 +8,7 @@ import { TestResult } from '@/types/testResult';
 import EnhancedTestResultDesktopTable from './EnhancedTestResultDesktopTable';
 import MobileOptimizedTestTable from './mobile/MobileOptimizedTestTable';
 import { MobileHorizontalScrollTable } from './mobile/MobileHorizontalScrollTable';
+import { CircuitList } from './testing/ScheduleOfTests/CircuitList';
 import MobileSmartAutoFill from './mobile/MobileSmartAutoFill';
 import QuickRcdPresets from './QuickRcdPresets';
 import QuickFillRcdPanel from './QuickFillRcdPanel';
@@ -16,6 +17,7 @@ import TestMethodInfo from './TestMethodInfo';
 import TestAnalytics from './TestAnalytics';
 import DistributionBoardVerificationSection from './testing/DistributionBoardVerificationSection';
 import SmartAutoFillPromptDialog from './SmartAutoFillPromptDialog';
+import { ThreePhaseScheduleOfTests } from './eicr/ThreePhaseScheduleOfTests';
 
 import { BoardPhotoCapture } from './testing/BoardPhotoCapture';
 import { SimpleCircuitTable } from './testing/SimpleCircuitTable';
@@ -33,9 +35,10 @@ import { getDefaultBsStandard } from '@/types/protectiveDeviceTypes';
 interface EICRScheduleOfTestsProps {
   formData: any;
   onUpdate: (field: string, value: any) => void;
+  onOpenBoardScan?: () => void;
 }
 
-const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) => {
+const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRScheduleOfTestsProps) => {
   const [testResults, setTestResults] = useState<TestResult[]>([]);
   const [showAnalytics, setShowAnalytics] = useState(false);
   const [showAutoFillPrompt, setShowAutoFillPrompt] = useState(false);
@@ -47,7 +50,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
   const [showTestResultsScan, setShowTestResultsScan] = useState(false);
   const [extractedTestResults, setExtractedTestResults] = useState<any>(null);
   const [showTestResultsReview, setShowTestResultsReview] = useState(false);
-  const [mobileViewType, setMobileViewType] = useState<'table' | 'card'>('table'); // Default to table view
+  const [mobileViewType, setMobileViewType] = useState<'table' | 'card'>('card'); // Default to modern card view
   const [isBulkUpdating, setIsBulkUpdating] = useState(false);
   const [showSmartAutoFillDialog, setShowSmartAutoFillDialog] = useState(false);
   const [showRcdPresetsDialog, setShowRcdPresetsDialog] = useState(false);
@@ -884,9 +887,9 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
       {useMobileView ? (
         <div className="w-full">
           {/* Title Section */}
-          <div className="px-4 py-3 border-b border-border/50 bg-background">
-            <h2 className="text-xl font-bold text-foreground">Schedule of Tests</h2>
-            <span className="text-sm text-muted-foreground">{testResults.length} {testResults.length === 1 ? 'circuit' : 'circuits'}</span>
+          <div className="px-3 py-2 border-b border-border/50 bg-background">
+            <h2 className="text-lg font-bold text-foreground">Schedule of Tests</h2>
+            <span className="text-xs text-muted-foreground">{testResults.length} {testResults.length === 1 ? 'circuit' : 'circuits'}</span>
           </div>
 
           {/* Sticky Toolbar */}
@@ -906,14 +909,15 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
               <div className="w-px h-8 bg-border/50" />
 
               {/* AI Board Scanner - Direct Access */}
-              <Button 
-                variant="outline" 
+              <Button
+                variant="default"
                 size="sm"
-                className="h-9 w-9 p-0 shrink-0 hover:bg-primary/10 hover:border-primary/30 transition-all duration-200"
+                className="h-9 px-3 shrink-0 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
                 title="AI Scan Board"
-                onClick={() => setShowBoardCapture(true)}
+                onClick={() => onOpenBoardScan ? onOpenBoardScan() : setShowBoardCapture(true)}
               >
-                <Camera className="h-4 w-4 text-primary" />
+                <Camera className="h-4 w-4 mr-1.5" />
+                Scan
               </Button>
 
               {/* AI Tools */}
@@ -1011,7 +1015,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
           </div>
 
           {/* Mobile Table - Full Width */}
-          <div className="w-full mt-3">
+          <div className="w-full mt-2">
             {mobileViewType === 'table' ? (
               <MobileHorizontalScrollTable
                 testResults={testResults}
@@ -1021,18 +1025,20 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
                 onBulkFieldUpdate={handleBulkFieldUpdate}
               />
             ) : (
-              <MobileOptimizedTestTable
-                testResults={testResults}
+              <CircuitList
+                circuits={testResults}
                 onUpdate={updateTestResult}
                 onRemove={removeTestResult}
                 onBulkUpdate={handleBulkUpdate}
+                viewMode="card"
+                className="px-2"
               />
             )}
           </div>
 
           {/* Analytics Section */}
           {testResults.length > 0 && (
-            <div className="border-t p-4 space-y-4">
+            <div className="border-t p-3 space-y-3">
               <Button 
                 onClick={() => setShowAnalytics(!showAnalytics)} 
                 size="sm" 
@@ -1062,15 +1068,14 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
             {/* ACTIONS - Better grouped */}
             <div className="flex flex-wrap gap-3 w-full sm:w-auto">
               {/* AI Tools Group */}
-              <div className="flex gap-2 p-2 rounded-lg bg-card/50 border border-elec-blue/30">
-                <Button 
-                  onClick={() => setShowBoardCapture(true)} 
-                  size="sm" 
-                  variant="outline"
-                  className="h-9 text-sm px-4 gap-2 text-foreground bg-background/50 hover:bg-accent hover:text-accent-foreground"
+              <div className="flex gap-2 p-2 rounded-lg bg-card/50 border border-elec-yellow/30">
+                <Button
+                  onClick={() => onOpenBoardScan ? onOpenBoardScan() : setShowBoardCapture(true)}
+                  size="sm"
+                  className="h-9 text-sm px-4 gap-2 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
                 >
                   <Camera className="h-4 w-4" />
-                  Scan Board
+                  AI Board Scan
                 </Button>
                 <Button 
                   onClick={() => setShowTestResultsScan(true)} 
@@ -1167,15 +1172,26 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
         </div>
       )}
 
+      {/* THREE-PHASE ANALYSIS SECTION - Shows when 3P circuits detected */}
+      {(formData.phases === 'three' || formData.phases === '3' || formData.supplyPhases === 'three' || testResults.some(r => r.phaseType === '3P')) && (
+        <div className="w-full mt-6">
+          <ThreePhaseScheduleOfTests
+            testResults={testResults}
+            onUpdateResult={updateTestResult}
+            autoDetect={true}
+          />
+        </div>
+      )}
+
       {/* SHARED INFO SECTIONS - Appears for both mobile and desktop */}
-      <div className="w-full space-y-6 p-4 lg:p-8 pb-20 lg:pb-4 mt-6 bg-elec-gray rounded-xl border border-primary/30 shadow-lg shadow-black/10">
+      <div className="w-full space-y-4 p-3 lg:p-6 pb-20 lg:pb-4 mt-4 bg-elec-gray rounded-xl border border-primary/30 shadow-lg shadow-black/10">
         {/* Test Instrument Information */}
-        <div className="space-y-3">
-          <h3 className="text-sm sm:text-base font-semibold flex items-center gap-2 px-1">
+        <div className="space-y-2">
+          <h3 className="text-sm font-semibold flex items-center gap-2 px-1">
             <Wrench className="h-4 w-4 text-elec-yellow" />
             Test Instrument Information
           </h3>
-          <div className="bg-background/50 rounded-lg p-3">
+          <div className="bg-background/50 rounded-lg p-2">
             <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
           </div>
         </div>
@@ -1183,12 +1199,12 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
         <div className="h-px bg-muted/50" />
 
         {/* Distribution Board Verification */}
-        <div className="space-y-3">
-          <h3 className="text-sm sm:text-base font-semibold flex items-center gap-2 px-1">
+        <div className="space-y-2">
+          <h3 className="text-sm font-semibold flex items-center gap-2 px-1">
             <Zap className="h-4 w-4 text-elec-yellow" />
             Distribution Board Verification
           </h3>
-          <div className="bg-background/50 rounded-lg p-3">
+          <div className="bg-background/50 rounded-lg p-2">
             <DistributionBoardVerificationSection
               data={{
                 dbReference: formData.dbReference || '',
@@ -1207,12 +1223,12 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
         <div className="h-px bg-muted/50" />
 
         {/* Test Method & Notes */}
-        <div className="space-y-3">
-          <h3 className="text-sm sm:text-base font-semibold flex items-center gap-2 px-1">
+        <div className="space-y-2">
+          <h3 className="text-sm font-semibold flex items-center gap-2 px-1">
             <FileText className="h-4 w-4 text-elec-yellow" />
             Test Method & Notes
           </h3>
-          <div className="bg-background/50 rounded-lg p-3">
+          <div className="bg-background/50 rounded-lg p-2">
             <TestMethodInfo formData={formData} onUpdate={onUpdate} />
           </div>
         </div>

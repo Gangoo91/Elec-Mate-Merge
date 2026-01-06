@@ -460,7 +460,7 @@ const InstrumentationModule6Section2 = () => {
                 ],
                 correctAnswer: 2,
                 explanation: "A reference standard is a measurement device with known accuracy, traceable to national standards, used to calibrate other instruments."
-              }
+            }
             ]}
           />
 

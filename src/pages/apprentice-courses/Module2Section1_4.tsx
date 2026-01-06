@@ -512,20 +512,20 @@ const Module2Section1_4 = () => {
         </div>
 
         {/* Navigation */}
-        <div className="flex justify-between mt-8">
-          <Button variant="outline" asChild>
-            <Link to="..">
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../1-3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Units of Measurement
             </Link>
           </Button>
-          <Button asChild>
-            <Link to="..">
-              Next: Mathematical Skills
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../1-5">
+              Next: Multimeters
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
-        </div>
+        </nav>
       </div>
     </div>
   );

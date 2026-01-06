@@ -37,7 +37,7 @@ const SimpleValidationIndicator = ({ validation, calculationType }: SimpleValida
   const status = getValidationStatus();
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border-elec-yellow/20 bg-white/5">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -57,25 +57,25 @@ const SimpleValidationIndicator = ({ validation, calculationType }: SimpleValida
         {/* Safety Factors */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center">
-            <div className="text-sm text-muted-foreground">Temperature</div>
+            <div className="text-sm text-white">Temperature</div>
             <div className="text-lg font-semibold text-elec-yellow">
               {(validation.safetyFactors.temperatureDerating * 100).toFixed(0)}%
             </div>
           </div>
           <div className="text-center">
-            <div className="text-sm text-muted-foreground">Grouping</div>
+            <div className="text-sm text-white">Grouping</div>
             <div className="text-lg font-semibold text-elec-yellow">
               {(validation.safetyFactors.groupingFactor * 100).toFixed(0)}%
             </div>
           </div>
           <div className="text-center">
-            <div className="text-sm text-muted-foreground">Safety Margin</div>
+            <div className="text-sm text-white">Safety Margin</div>
             <div className="text-lg font-semibold text-elec-yellow">
               {(validation.safetyFactors.safetyMargin * 100).toFixed(0)}%
             </div>
           </div>
           <div className="text-center">
-            <div className="text-sm text-muted-foreground">BS 7671</div>
+            <div className="text-sm text-white">BS 7671</div>
             <div className="text-lg font-semibold">
               {validation.complianceChecks.bs7671 ? (
                 <CheckCircle className="h-5 w-5 text-green-500 mx-auto" />

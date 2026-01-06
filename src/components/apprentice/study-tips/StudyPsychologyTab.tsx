@@ -126,7 +126,7 @@ const StudyPsychologyTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Understanding how your mind learns can dramatically improve your study effectiveness. 
             These evidence-based psychological principles will help you master electrical concepts more efficiently and retain information longer.
           </p>
@@ -138,7 +138,7 @@ const StudyPsychologyTab = () => {
         {psychologyTopics.map((topic, index) => {
           const IconComponent = topic.icon;
           return (
-            <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+            <Card key={index} className="border-elec-yellow/20 bg-white/5">
               <CardHeader>
                 <CardTitle className="text-elec-yellow flex items-center gap-3">
                   <div className="p-2 bg-elec-yellow/10 rounded-lg">
@@ -146,13 +146,13 @@ const StudyPsychologyTab = () => {
                   </div>
                   {topic.title}
                 </CardTitle>
-                <p className="text-sm text-muted-foreground">{topic.description}</p>
+                <p className="text-sm text-white">{topic.description}</p>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   <div>
                     <h4 className="font-medium mb-2 text-foreground">Key Principles:</h4>
-                    <ul className="text-sm text-muted-foreground space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       {topic.content.map((point, pointIndex) => (
                         <li key={pointIndex}>• {point}</li>
                       ))}
@@ -186,7 +186,7 @@ const StudyPsychologyTab = () => {
             {techniques.map((technique, index) => (
               <div key={index} className="border border-muted/30 rounded-lg p-4 bg-background/30">
                 <h4 className="font-medium text-foreground mb-2">{technique.title}</h4>
-                <p className="text-sm text-muted-foreground mb-3">{technique.description}</p>
+                <p className="text-sm text-white mb-3">{technique.description}</p>
                 <div className="bg-blue-500/10 border border-blue-500/20 rounded p-3">
                   <p className="text-sm text-blue-300">
                     <strong>For Electrical Training:</strong> {technique.application}
@@ -211,7 +211,7 @@ const StudyPsychologyTab = () => {
             {stressManagement.map((item, index) => (
               <div key={index} className="border border-muted/30 rounded-lg p-4 bg-background/30">
                 <h4 className="font-medium text-foreground mb-2">{item.technique}</h4>
-                <p className="text-sm text-muted-foreground mb-2">{item.description}</p>
+                <p className="text-sm text-white mb-2">{item.description}</p>
                 <div className="flex items-center gap-2 text-xs text-green-400">
                   <Clock className="h-3 w-3" />
                   <span>{item.when}</span>
@@ -231,7 +231,7 @@ const StudyPsychologyTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Remember: Your mindset and approach to learning are just as important as the time you spend studying. 
             By understanding how your brain works and applying these psychological principles, you'll not only learn electrical concepts more effectively 
             but also develop the mental resilience needed for a successful career in the electrical industry. 

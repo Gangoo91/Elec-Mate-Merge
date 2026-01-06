@@ -9,46 +9,46 @@ const subsections = [
     title: "Solar PV principles, components, and installation considerations",
     description: "Photovoltaic technology fundamentals, system components and installation requirements",
     icon: Sun,
-    href: "../level3-module2-section3-3-1",
+    href: "../level3-module2-section3-1",
   },
   {
     number: "3.2", 
     title: "Wind generation (small-scale systems)",
     description: "Small-scale wind turbine systems for residential and commercial applications",
     icon: Wind,
-    href: "../level3-module2-section3-3-2",
+    href: "../level3-module2-section3-2",
   },
   {
     number: "3.3",
     title: "Hydro and microgeneration awareness", 
     description: "Small-scale hydroelectric systems and microgeneration technologies",
     icon: Waves,
-    href: "../level3-module2-section3-3-3",
+    href: "../level3-module2-section3-3",
   },
   {
     number: "3.4",
     title: "Battery storage technologies",
     description: "Energy storage systems, battery technologies and integration with renewable sources",
     icon: Battery,
-    href: "../level3-module2-section3-3-4",
+    href: "../level3-module2-section3-4",
   },
   {
     number: "3.5",
     title: "Inverters and grid connection requirements",
     description: "Power inverter technology and grid connection standards for renewable systems",
     icon: Plug,
-    href: "../level3-module2-section3-3-5",
+    href: "../level3-module2-section3-5",
   },
 ];
 
 const Level3Module2Section3 = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
+      <div className="border-b border-white/10 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
-            <Link to="..">
+          <Button variant="ghost" className="text-white/70 hover:text-white active:text-white p-0 -ml-1" asChild>
+            <Link to="../level3-module2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 2
             </Link>
@@ -57,12 +57,12 @@ const Level3Module2Section3 = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
         <div className="mb-12">
-          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6">
             Section 3: Renewable Energy Systems
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
+          <p className="text-xl text-white/70 max-w-3xl">
             Solar, wind and other renewable energy technologies and their applications
           </p>
         </div>

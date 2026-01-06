@@ -477,7 +477,7 @@ const InstrumentationModule8Section2 = () => {
                 ],
                 correctAnswer: 2,
                 explanation: "A fixed 4mA signal indicates the loop wiring and power are healthy, but the sensor element or transmitter electronics have failed, preventing response to process changes."
-              }
+            }
             ]}
             title="Section 2 Knowledge Check"
           />

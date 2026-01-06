@@ -17,7 +17,7 @@ const LadderTypes = () => {
         
         <div className="pt-4">
           <ResizablePanelGroup direction="horizontal" className="rounded-lg border border-elec-yellow/20">
-            <ResizablePanel defaultSize={33} minSize={20} className="bg-elec-dark/50 p-4 rounded-l-lg">
+            <ResizablePanel defaultSize={33} minSize={20} className="bg-white/10 p-4 rounded-l-lg">
               <h4 className="font-semibold text-elec-yellow mb-3">Fiberglass Ladders</h4>
               <ul className="list-disc pl-5 space-y-1 text-sm">
                 <li><span className="font-medium">Non-conductive</span> - Safe for electrical work</li>
@@ -31,7 +31,7 @@ const LadderTypes = () => {
             
             <ResizableHandle withHandle />
             
-            <ResizablePanel defaultSize={33} minSize={20} className="bg-elec-dark/50 p-4">
+            <ResizablePanel defaultSize={33} minSize={20} className="bg-white/10 p-4">
               <h4 className="font-semibold text-elec-yellow mb-3">Aluminium Ladders</h4>
               <ul className="list-disc pl-5 space-y-1 text-sm">
                 <li><span className="text-red-400 font-medium">Conductive</span> - NOT suitable near live electricity</li>
@@ -45,7 +45,7 @@ const LadderTypes = () => {
             
             <ResizableHandle withHandle />
             
-            <ResizablePanel defaultSize={33} minSize={20} className="bg-elec-dark/50 p-4 rounded-r-lg">
+            <ResizablePanel defaultSize={33} minSize={20} className="bg-white/10 p-4 rounded-r-lg">
               <h4 className="font-semibold text-elec-yellow mb-3">Wooden Ladders</h4>
               <ul className="list-disc pl-5 space-y-1 text-sm">
                 <li>Naturally non-conductive when dry</li>
@@ -60,7 +60,7 @@ const LadderTypes = () => {
         </div>
         
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="bg-elec-dark/50 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg font-semibold text-elec-yellow">Ladder Designs for Electrical Applications</CardTitle>
             </CardHeader>
@@ -90,7 +90,7 @@ const LadderTypes = () => {
             </CardContent>
           </Card>
           
-          <Card className="bg-elec-dark/50 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg font-semibold text-elec-yellow">Classification Standards</CardTitle>
             </CardHeader>
@@ -99,7 +99,7 @@ const LadderTypes = () => {
                 Ladders for professional electrical work must conform to EN 131 Professional standard or 
                 BS 2037 Class 1. These classifications ensure appropriate duty ratings for industrial use.
               </p>
-              <div className="bg-elec-dark/70 p-4 rounded-lg border border-elec-yellow/20">
+              <div className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
                 <h5 className="font-medium text-elec-yellow mb-2">Load Ratings</h5>
                 <ul className="space-y-2 text-sm">
                   <li><span className="font-medium">Class 1 (Industrial):</span> Maximum load - 175kg</li>

@@ -1,261 +1,359 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Plus, FileText, Clock, CheckCircle, TrendingUp, XCircle, Brain } from "lucide-react";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Plus, FileText, Clock, CheckCircle, TrendingUp, XCircle, Send, Search, ArrowLeft, X, RefreshCw } from "lucide-react";
 import RecentQuotesList from "@/components/electrician/quote-builder/RecentQuotesList";
 import { useQuoteStorage } from "@/hooks/useQuoteStorage";
 import FinancialSnapshot from "@/components/electrician/quote-builder/FinancialSnapshot";
 import { EmptyStateGuide } from "@/components/electrician/shared/EmptyStateGuide";
-import React, { useState } from "react";
-import { toast } from "sonner";
+import React, { useState, useMemo, useCallback } from "react";
+import { VoiceFormProvider } from "@/contexts/VoiceFormContext";
+import { ElectricianVoiceAssistant } from "@/components/electrician/ElectricianVoiceAssistant";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
 const QuoteBuilder = () => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [showFinancialSnapshot, setShowFinancialSnapshot] = useState(false);
-  
-  const { 
-    savedQuotes, 
-    deleteQuote, 
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  // Get filter from URL params or default to 'all'
+  const activeFilter = searchParams.get('filter') || 'all';
+
+  const {
+    savedQuotes,
+    deleteQuote,
     updateQuoteStatus,
     sendPaymentReminder,
-    getQuoteStats, 
-    loading, 
-    refreshQuotes 
+    getQuoteStats,
+    loading,
+    refreshQuotes
   } = useQuoteStorage();
-  
+
   const stats = getQuoteStats();
 
-  const handleCardClick = (cardType: string) => {
-    if (cardType === 'monthly') {
-      setShowFinancialSnapshot(true);
-    } else {
-      navigate(`/electrician/quotes?filter=${cardType}`);
+  // Pull to refresh handler
+  const handleRefresh = useCallback(async () => {
+    setIsRefreshing(true);
+    await refreshQuotes();
+    setTimeout(() => setIsRefreshing(false), 500);
+  }, [refreshQuotes]);
+
+  // Filter quotes based on active filter and search
+  const filteredQuotes = useMemo(() => {
+    let filtered = savedQuotes;
+
+    if (activeFilter !== 'all') {
+      filtered = filtered.filter(q => q.status === activeFilter);
+    }
+
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(q =>
+        q.client?.name?.toLowerCase().includes(query) ||
+        q.jobDetails?.title?.toLowerCase().includes(query) ||
+        q.quoteNumber?.toLowerCase().includes(query)
+      );
+    }
+
+    return filtered;
+  }, [savedQuotes, activeFilter, searchQuery]);
+
+  // Voice navigation handler
+  const handleVoiceNavigate = (section: string) => {
+    const sectionLower = section.toLowerCase().replace(/\s+/g, '-');
+    switch (sectionLower) {
+      case 'create':
+      case 'new-quote':
+      case 'new':
+        navigate('/electrician/quote-builder/create');
+        break;
+      case 'pending':
+      case 'sent':
+      case 'approved':
+      case 'rejected':
+        setSearchParams({ filter: sectionLower });
+        break;
+      case 'back':
+      case 'business':
+        navigate('/electrician/business');
+        break;
+      default:
+        navigate(`/electrician/${sectionLower}`);
     }
   };
 
-  const statCards = [
-    {
-      title: "Pending Quotes",
-      value: stats.pending.toString(),
-      icon: Clock,
-      color: "text-elec-yellow",
-      type: "pending"
-    },
-    {
-      title: "Sent Quotes",
-      value: stats.sent.toString(), 
-      icon: FileText,
-      color: "text-blue-400",
-      type: "sent"
-    },
-    {
-      title: "Approved Quotes",
-      value: stats.approved.toString(),
-      icon: CheckCircle,
-      color: "text-green-400",
-      type: "approved"
-    },
-    {
-      title: "Rejected Quotes",
-      value: stats.rejected.toString(),
-      icon: XCircle,
-      color: "text-red-400",
-      type: "rejected"
-    },
-    {
-      title: "This Month",
-      value: `£${stats.monthlyTotal.toLocaleString()}`,
-      icon: TrendingUp,
-      color: "text-elec-yellow",
-      type: "monthly"
-    },
-  ];
+  const handleFilterChange = (filter: string) => {
+    if (filter === 'all') {
+      setSearchParams({});
+    } else {
+      setSearchParams({ filter });
+    }
+  };
 
-  const quickActions = [
-    {
-      title: "New Quote",
-      description: "Create a new electrical quote",
-      icon: Plus,
-      action: "primary",
-    },
-    {
-      title: "Quote Templates",
-      description: "Use pre-built quote templates",
-      icon: FileText,
-      action: "secondary",
-    },
+  const filters = [
+    { id: 'all', label: 'All', count: savedQuotes.length },
+    { id: 'pending', label: 'Pending', count: stats.pending, icon: Clock, color: 'text-amber-400' },
+    { id: 'sent', label: 'Sent', count: stats.sent, icon: Send, color: 'text-blue-400' },
+    { id: 'approved', label: 'Approved', count: stats.approved, icon: CheckCircle, color: 'text-emerald-400' },
+    { id: 'rejected', label: 'Rejected', count: stats.rejected, icon: XCircle, color: 'text-red-400' },
   ];
 
   const canonical = `${window.location.origin}/electrician/quote-builder`;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-elec-dark via-background to-elec-card">
-      <Helmet>
-        <title>Quote Builder for Electricians | Create Professional Quotes</title>
-        <meta
-          name="description"
-          content="Professional quote builder for UK electricians. Create, manage and track electrical quotes with BS 7671 compliant templates and pricing tools."
-        />
-        <link rel="canonical" href={canonical} />
-      </Helmet>
+    <VoiceFormProvider>
+      <div className="min-h-screen bg-background pb-24">
+        <Helmet>
+          <title>Quote Builder | Elec-Mate</title>
+          <meta
+            name="description"
+            content="Professional quote builder for UK electricians. Create, manage and track electrical quotes."
+          />
+          <link rel="canonical" href={canonical} />
+        </Helmet>
 
-      {/* Floating Mobile Back Button */}
-      <div className="fixed top-4 left-4 z-50 md:hidden">
-        <SmartBackButton className="bg-elec-card/90 backdrop-blur-sm border border-elec-yellow/20 shadow-lg" />
-      </div>
-
-      {/* Enhanced Header */}
-      <header className="relative bg-elec-card/90 backdrop-blur-sm border-b border-primary/20">
-        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-        <div className="relative px-4 py-4 md:py-8 space-y-3 md:space-y-6">
-          {/* Breadcrumb Navigation - Hidden on Mobile */}
-          <nav className="hidden md:flex items-center gap-2 text-sm text-muted-foreground">
-            <Link to="/electrician/business" className="hover:text-foreground transition-colors">
-              Business Hub
-            </Link>
-            <span>/</span>
-            <span>Quote Builder</span>
-          </nav>
-
-          {/* Title and Back Button */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 md:gap-4">
-            <div className="space-y-1 md:space-y-2">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
-                Quote Builder
-              </h1>
-              <p className="text-white/80 md:text-white text-sm md:text-lg">
-                Create professional electrical quotes with ease
-              </p>
-            </div>
-            <SmartBackButton className="hidden md:flex shadow-lg" size="lg" />
-          </div>
-        </div>
-      </header>
-
-      <div className="p-4 md:px-6 md:py-8 space-y-6 md:space-y-8 animate-fade-in">
-        <div className="max-w-[1400px] mx-auto px-4 md:px-4">
-          {/* Prominent Create Quote Section */}
-          <section className="text-center space-y-6 md:space-y-6 mb-12 md:mb-12">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Button 
-              onClick={() => navigate('/electrician/quote-builder/create')}
-              size="lg"
-              className="mobile-button-primary w-full md:w-auto px-8 md:px-12 py-4 md:py-6 text-lg md:text-xl font-bold bg-gradient-to-r from-elec-yellow to-elec-yellow/90 hover:from-elec-yellow/90 hover:to-elec-yellow/80 text-elec-dark shadow-2xl hover:shadow-3xl transition-all duration-300 group transform hover:scale-105"
+        {/* Compact Mobile Header */}
+        <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-border/50">
+          <div className="flex items-center h-14 px-4 gap-3">
+            {/* Back Button */}
+            <button
+              onClick={() => navigate('/electrician/business')}
+              className="h-10 w-10 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-95 transition-all -ml-1"
             >
-              <Plus className="mr-2 md:mr-3 h-5 w-5 md:h-6 md:w-6 group-hover:rotate-90 transition-transform duration-300" />
-              Create New Quote
-            </Button>
-            
-            {/* PHASE 4: Quote to AI Planner Flow */}
-            <Button
-              onClick={() => {
-                if (savedQuotes.length === 0) {
-                  toast.error('No quotes available', {
-                    description: 'Create a quote first to use AI Planner'
-                  });
-                  return;
-                }
-                const latestQuote = savedQuotes[0];
-                const sessionId = `quote-context-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-                sessionStorage.setItem(sessionId, JSON.stringify({
-                  quote: latestQuote,
-                  timestamp: new Date().toISOString()
-                }));
-                navigate(`/electrician/ai-planner?quoteSessionId=${sessionId}`);
-                toast.success('Opening AI Planner with quote data');
-              }}
-              size="lg"
-              variant="outline"
-              className="w-full md:w-auto px-6 md:px-8 py-4 md:py-6 text-base md:text-lg border-elec-yellow/30 hover:bg-elec-yellow/10"
-            >
-              <Brain className="mr-2 h-5 w-5" />
-              Get AI Planning Help
-            </Button>
-          </div>
-          <p className="text-sm md:text-lg text-muted-foreground">
-            Professional electrical quotes in minutes
-          </p>
-        </section>
+              <ArrowLeft className="h-5 w-5" />
+            </button>
 
-        <main className="space-y-10 md:space-y-10">
-          {/* Enhanced Stats Dashboard */}
-          <section aria-labelledby="stats-overview" className="space-y-6 md:space-y-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 md:gap-3">
-              <h2 id="stats-overview" className="text-lg md:text-2xl font-bold">Dashboard Overview</h2>
-              <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                Live data
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-4 lg:gap-6">
-              {statCards.map((stat, index) => (
-                <Card 
-                  key={index} 
-                  className="group relative overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] bg-gradient-to-br from-elec-card/80 to-elec-dark/50 cursor-pointer backdrop-blur-sm"
-                  onClick={() => handleCardClick(stat.type)}
+            {/* Title or Search */}
+            {isSearchOpen ? (
+              <div className="flex-1 flex items-center gap-2">
+                <div className="flex-1 relative">
+                  <Input
+                    autoFocus
+                    placeholder="Search quotes..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="h-10 pl-4 pr-10 bg-elec-gray/50 border-0 rounded-full text-sm"
+                  />
+                  {searchQuery && (
+                    <button
+                      onClick={() => setSearchQuery("")}
+                      className="absolute right-3 top-1/2 -translate-y-1/2"
+                    >
+                      <X className="h-4 w-4 text-muted-foreground" />
+                    </button>
+                  )}
+                </div>
+                <button
+                  onClick={() => {
+                    setIsSearchOpen(false);
+                    setSearchQuery("");
+                  }}
+                  className="text-sm text-muted-foreground"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <CardContent className="relative p-3 md:p-6">
-                    <div className="flex items-center justify-between">
-                      <div className="space-y-1 md:space-y-2 flex-1 min-w-0">
-                        <p className="text-[10px] md:text-sm font-medium text-muted-foreground truncate">{stat.title}</p>
-                        <p className="text-xl md:text-3xl font-bold">{stat.value}</p>
-                        <div className="flex items-center gap-2">
-                          <div className="w-full bg-muted rounded-full h-1">
-                            <div className="bg-primary h-1 rounded-full transition-all duration-500" style={{ width: `${Math.min(100, (parseInt(stat.value.replace(/[^\d]/g, '')) || 0) * 20)}%` }}></div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className={`p-1.5 md:p-3 rounded-xl bg-gradient-to-br flex-shrink-0 ml-2 md:ml-3 ${index % 2 === 0 ? 'from-primary/10 to-primary/5' : 'from-accent/10 to-accent/5'}`}>
-                        <stat.icon className={`h-4 w-4 md:h-6 md:w-6 ${stat.color} group-hover:scale-110 transition-transform duration-300`} />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </section>
-
-
-          {/* Enhanced Recent Quotes */}
-          <section aria-labelledby="recent-quotes" className="space-y-6 md:space-y-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 md:gap-3">
-              <h2 id="recent-quotes" className="text-lg md:text-2xl font-bold">Recent Quotes</h2>
-              <Link to="/electrician/quotes">
-                <Button variant="outline" size="sm" className="w-full sm:w-auto">
-                  View All
-                </Button>
-              </Link>
-            </div>
-            {savedQuotes.length === 0 && !loading ? (
-              <div className="mt-8">
-                <EmptyStateGuide 
-                  type="quote" 
-                  onCreateClick={() => navigate('/electrician/quote-builder/create')} 
-                />
+                  Cancel
+                </button>
               </div>
             ) : (
-              <RecentQuotesList 
-                quotes={savedQuotes}
+              <>
+                <h1 className="flex-1 text-lg font-bold">Quotes</h1>
+                <button
+                  onClick={() => setIsSearchOpen(true)}
+                  className="h-10 w-10 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-95 transition-all"
+                >
+                  <Search className="h-5 w-5" />
+                </button>
+                <button
+                  onClick={handleRefresh}
+                  disabled={isRefreshing}
+                  className="h-10 w-10 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-95 transition-all disabled:opacity-50"
+                >
+                  <RefreshCw className={cn("h-5 w-5", isRefreshing && "animate-spin")} />
+                </button>
+              </>
+            )}
+          </div>
+
+          {/* Filter Pills - Horizontal Scroll */}
+          <div className="flex gap-2 px-4 pb-3 overflow-x-auto scrollbar-hide">
+            {filters.map((filter) => (
+              <button
+                key={filter.id}
+                onClick={() => handleFilterChange(filter.id)}
+                className={cn(
+                  "shrink-0 h-9 px-4 rounded-full text-sm font-medium transition-all active:scale-95",
+                  activeFilter === filter.id
+                    ? "bg-elec-yellow text-elec-dark"
+                    : "bg-elec-gray/50 text-foreground hover:bg-elec-gray"
+                )}
+              >
+                {filter.label}
+                <span className={cn(
+                  "ml-1.5",
+                  activeFilter === filter.id ? "text-elec-dark/70" : "text-muted-foreground"
+                )}>
+                  {filter.count}
+                </span>
+              </button>
+            ))}
+          </div>
+        </header>
+
+        {/* Main Content */}
+        <main className="px-4 py-4 space-y-4">
+          {/* Stats Summary - Tappable Cards */}
+          <div className="grid grid-cols-2 gap-3">
+            {/* Monthly Revenue Card */}
+            <Card
+              className="col-span-2 cursor-pointer active:scale-[0.98] transition-transform bg-gradient-to-br from-elec-yellow/15 to-elec-yellow/5 border-elec-yellow/20"
+              onClick={() => setShowFinancialSnapshot(true)}
+            >
+              <CardContent className="p-4 flex items-center gap-4">
+                <div className="h-12 w-12 rounded-2xl bg-elec-yellow/20 flex items-center justify-center">
+                  <TrendingUp className="h-6 w-6 text-elec-yellow" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-xs text-muted-foreground font-medium">This Month</p>
+                  <p className="text-2xl font-bold text-elec-yellow">
+                    £{stats.monthlyTotal.toLocaleString()}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs text-muted-foreground">{stats.approved} approved</p>
+                  <p className="text-xs text-emerald-400">+{stats.sent} sent</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Quick Stats */}
+            <Card
+              className={cn(
+                "cursor-pointer active:scale-[0.98] transition-transform",
+                activeFilter === 'pending' && "ring-2 ring-amber-400"
+              )}
+              onClick={() => handleFilterChange('pending')}
+            >
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <Clock className="h-5 w-5 text-amber-400" />
+                  <span className="text-2xl font-bold">{stats.pending}</span>
+                </div>
+                <p className="text-xs text-muted-foreground">Pending</p>
+              </CardContent>
+            </Card>
+
+            <Card
+              className={cn(
+                "cursor-pointer active:scale-[0.98] transition-transform",
+                activeFilter === 'approved' && "ring-2 ring-emerald-400"
+              )}
+              onClick={() => handleFilterChange('approved')}
+            >
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <CheckCircle className="h-5 w-5 text-emerald-400" />
+                  <span className="text-2xl font-bold">{stats.approved}</span>
+                </div>
+                <p className="text-xs text-muted-foreground">Approved</p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Quotes List */}
+          <section>
+            {/* Section Header */}
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                {activeFilter === 'all' ? 'All Quotes' : `${activeFilter.charAt(0).toUpperCase() + activeFilter.slice(1)} Quotes`}
+              </h2>
+              <span className="text-xs text-muted-foreground">
+                {filteredQuotes.length} {filteredQuotes.length === 1 ? 'quote' : 'quotes'}
+              </span>
+            </div>
+
+            {/* Quote Cards or Empty State */}
+            {loading ? (
+              <div className="space-y-3">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="h-32 bg-elec-gray/30 rounded-xl animate-pulse" />
+                ))}
+              </div>
+            ) : filteredQuotes.length === 0 ? (
+              searchQuery ? (
+                <Card className="bg-elec-gray/20 border-dashed">
+                  <CardContent className="py-10 text-center">
+                    <Search className="h-10 w-10 mx-auto text-muted-foreground/50 mb-3" />
+                    <p className="font-medium">No results found</p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Try a different search term
+                    </p>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="mt-3"
+                      onClick={() => setSearchQuery("")}
+                    >
+                      Clear search
+                    </Button>
+                  </CardContent>
+                </Card>
+              ) : activeFilter === 'all' ? (
+                <EmptyStateGuide
+                  type="quote"
+                  onCreateClick={() => navigate('/electrician/quote-builder/create')}
+                />
+              ) : (
+                <Card className="bg-elec-gray/20 border-dashed">
+                  <CardContent className="py-10 text-center">
+                    <FileText className="h-10 w-10 mx-auto text-muted-foreground/50 mb-3" />
+                    <p className="font-medium">No {activeFilter} quotes</p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Quotes will appear here when {activeFilter}
+                    </p>
+                  </CardContent>
+                </Card>
+              )
+            ) : (
+              <RecentQuotesList
+                quotes={filteredQuotes}
                 onDeleteQuote={deleteQuote}
                 onUpdateQuoteStatus={updateQuoteStatus}
                 onSendPaymentReminder={sendPaymentReminder}
+                showAll
               />
             )}
           </section>
         </main>
-        </div>
-      </div>
 
-      <FinancialSnapshot
-        isOpen={showFinancialSnapshot}
-        onClose={() => setShowFinancialSnapshot(false)}
-        quotes={savedQuotes}
-      />
-    </div>
+        {/* Floating Action Button - New Quote */}
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-30">
+          <Button
+            onClick={() => navigate('/electrician/quote-builder/create')}
+            className="h-14 px-6 rounded-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 shadow-2xl shadow-elec-yellow/30 font-semibold text-base gap-2 active:scale-95 transition-transform"
+          >
+            <Plus className="h-5 w-5" />
+            New Quote
+          </Button>
+        </div>
+
+        {/* Financial Snapshot Modal */}
+        <FinancialSnapshot
+          isOpen={showFinancialSnapshot}
+          onClose={() => setShowFinancialSnapshot(false)}
+          quotes={savedQuotes}
+        />
+
+        {/* Voice Assistant */}
+        <ElectricianVoiceAssistant
+          onNavigate={handleVoiceNavigate}
+          currentSection="quote-builder"
+        />
+      </div>
+    </VoiceFormProvider>
   );
 };
 

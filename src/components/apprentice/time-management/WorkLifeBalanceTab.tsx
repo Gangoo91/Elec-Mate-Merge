@@ -89,7 +89,7 @@ const WorkLifeBalanceTab = () => {
                     <IconComponent className="h-6 w-6 text-white" />
                     <div>
                       <h3 className="text-lg font-semibold text-white">{strategy.title}</h3>
-                      <p className="text-sm text-muted-foreground">{strategy.description}</p>
+                      <p className="text-sm text-white">{strategy.description}</p>
                     </div>
                   </div>
                   
@@ -98,7 +98,7 @@ const WorkLifeBalanceTab = () => {
                       <h4 className="font-medium text-white mb-2">Key Strategies:</h4>
                       <ul className="space-y-2">
                         {strategy.strategies.map((item, itemIndex) => (
-                          <li key={itemIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                          <li key={itemIndex} className="text-sm text-white flex items-start gap-2">
                             <div className="w-1 h-1 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                             {item}
                           </li>
@@ -124,7 +124,7 @@ const WorkLifeBalanceTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Clock className="h-6 w-6 text-elec-yellow" />
@@ -138,17 +138,17 @@ const WorkLifeBalanceTab = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
                     <h4 className="font-semibold text-red-400 mb-2">⚠️ Warning Sign</h4>
-                    <p className="text-sm text-muted-foreground">{item.warning}</p>
+                    <p className="text-sm text-white">{item.warning}</p>
                   </div>
                   
                   <div>
                     <h4 className="font-semibold text-blue-400 mb-2">💡 Solution</h4>
-                    <p className="text-sm text-muted-foreground">{item.solution}</p>
+                    <p className="text-sm text-white">{item.solution}</p>
                   </div>
                   
                   <div>
                     <h4 className="font-semibold text-green-400 mb-2">🎯 Take Action Now</h4>
-                    <p className="text-sm text-muted-foreground">{item.immediateAction}</p>
+                    <p className="text-sm text-white">{item.immediateAction}</p>
                   </div>
                 </div>
               </div>
@@ -157,7 +157,7 @@ const WorkLifeBalanceTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">Weekly Balance Check-In</CardTitle>
         </CardHeader>
@@ -168,19 +168,19 @@ const WorkLifeBalanceTab = () => {
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <div className="w-4 h-4 border border-elec-yellow/40 rounded"></div>
-                  <span className="text-sm text-muted-foreground">Spend quality time with family/friends</span>
+                  <span className="text-sm text-white">Spend quality time with family/friends</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-4 h-4 border border-elec-yellow/40 rounded"></div>
-                  <span className="text-sm text-muted-foreground">Take at least one complete evening off</span>
+                  <span className="text-sm text-white">Take at least one complete evening off</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-4 h-4 border border-elec-yellow/40 rounded"></div>
-                  <span className="text-sm text-muted-foreground">Do something I enjoy for at least 1 hour</span>
+                  <span className="text-sm text-white">Do something I enjoy for at least 1 hour</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-4 h-4 border border-elec-yellow/40 rounded"></div>
-                  <span className="text-sm text-muted-foreground">Get adequate sleep (aim for 7-8 hours)</span>
+                  <span className="text-sm text-white">Get adequate sleep (aim for 7-8 hours)</span>
                 </div>
               </div>
             </div>
@@ -189,20 +189,20 @@ const WorkLifeBalanceTab = () => {
               <h4 className="font-semibold text-white mb-3">Balance Reflection</h4>
               <div className="space-y-3">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Energy levels (1-10):</p>
+                  <p className="text-sm text-white mb-1">Energy levels (1-10):</p>
                   <div className="flex gap-1">
                     {[1,2,3,4,5,6,7,8,9,10].map(num => (
-                      <div key={num} className="w-6 h-6 border border-elec-yellow/40 rounded text-xs flex items-center justify-center text-muted-foreground">
+                      <div key={num} className="w-6 h-6 border border-elec-yellow/40 rounded text-xs flex items-center justify-center text-white">
                         {num}
                       </div>
                     ))}
                   </div>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Relationship satisfaction (1-10):</p>
+                  <p className="text-sm text-white mb-1">Relationship satisfaction (1-10):</p>
                   <div className="flex gap-1">
                     {[1,2,3,4,5,6,7,8,9,10].map(num => (
-                      <div key={num} className="w-6 h-6 border border-elec-yellow/40 rounded text-xs flex items-center justify-center text-muted-foreground">
+                      <div key={num} className="w-6 h-6 border border-elec-yellow/40 rounded text-xs flex items-center justify-center text-white">
                         {num}
                       </div>
                     ))}

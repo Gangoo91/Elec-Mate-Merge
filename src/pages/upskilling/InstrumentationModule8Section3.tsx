@@ -365,7 +365,7 @@ const InstrumentationModule8Section3 = () => {
                 ],
                 correctAnswer: 1,
                 explanation: "Loop-back testing connects the calibrator output to the system input, verifying the complete signal path and end-to-end loop integrity including cables and controller."
-              }
+            }
             ]}
             title="Section 3 Knowledge Check"
           />

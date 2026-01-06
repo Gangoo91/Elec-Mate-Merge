@@ -66,17 +66,17 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
   // Determine row background color based on validation status and regulation compliance
   const getRowBgColor = () => {
     const overallCompliance = getOverallCompliance(validation);
-    
+
     if (overallCompliance === 'error') {
-      return 'bg-red-50/30 hover:bg-red-50/50';
+      return 'bg-red-500/10 hover:bg-red-500/20';
     }
     if (overallCompliance === 'warning') {
-      return 'bg-yellow-50/30 hover:bg-yellow-50/50';
+      return 'bg-amber-500/10 hover:bg-amber-500/20';
     }
     if (result.autoFilled) {
-      return 'bg-blue-50/20 hover:bg-blue-50/30';
+      return 'bg-blue-500/10 hover:bg-blue-500/20';
     }
-    return 'hover:bg-muted/30';
+    return 'bg-card hover:bg-muted/30';
   };
 
   // Get regulation status icon
@@ -144,7 +144,7 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
     } else if (completionPercentage >= 50) {
       return { icon: '⚠️', color: 'text-amber-600', title: `${Math.round(completionPercentage)}% Complete` };
     } else {
-      return { icon: '⭕', color: 'text-gray-400', title: `${Math.round(completionPercentage)}% Complete` };
+      return { icon: '⭕', color: 'text-muted-foreground', title: `${Math.round(completionPercentage)}% Complete` };
     }
   };
 
@@ -152,16 +152,16 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
 
   return (
     <>
-      <TableRow 
+      <TableRow
         data-circuit-id={result.id}
-        className="bg-white hover:bg-neutral-50 border-b border-neutral-300 transition-colors"
+        className={`${getRowBgColor()} border-b border-border/30 transition-colors`}
       >
         {/* Circuit Number - Always visible */}
         <TableCell className="sticky left-0 z-30 bg-black p-0 h-5 align-middle w-20 min-w-[80px] max-w-[80px]">
           <EnhancedValidatedInput
             value={result.circuitDesignation}
             onChange={(value) => onUpdate(result.id, 'circuitDesignation', value)}
-            className="h-4 text-xs text-center px-0 w-full bg-transparent border-0 rounded-none focus-visible:ring-0 focus:bg-blue-50"
+            className="h-4 text-xs text-center px-0 w-full bg-transparent border-0 rounded-none focus-visible:ring-0 focus:bg-blue-500/20"
             disabled={!!result.sourceCircuitId}
           />
         </TableCell>
@@ -174,7 +174,7 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
                 value={result.circuitDescription}
                 onChange={(value) => onUpdate(result.id, 'circuitDescription', value)}
                 placeholder="e.g. Kitchen Ring, Upstairs Lighting"
-                className="h-4 text-xs px-0 w-full bg-transparent border-0 rounded-none focus-visible:ring-0 focus:bg-blue-50"
+                className="h-4 text-xs px-0 w-full bg-transparent border-0 rounded-none focus-visible:ring-0 focus:bg-blue-500/20"
                 disabled={!!result.sourceCircuitId}
               />
             </TableCell>
@@ -246,7 +246,7 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
             variant="ghost"
             size="sm"
             onClick={() => onRemove(result.id)}
-            className="h-5 w-5 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
+            className="h-5 w-5 p-0 text-red-600 hover:text-red-700 hover:bg-red-500/20"
             title="Remove this circuit"
           >
             <Trash2 className="h-3 w-3" />

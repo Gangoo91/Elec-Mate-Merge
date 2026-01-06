@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
 import { useEICRTabs } from '@/hooks/useEICRTabs';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -9,14 +9,15 @@ import { FileText, Search, TestTube, User, FileCheck } from 'lucide-react';
 interface EICRFormTabsProps {
   formData: any;
   onUpdate: (field: string, value: any) => void;
+  onOpenBoardScan?: () => void;
 }
 
-const EICRFormTabs = ({ formData, onUpdate }: EICRFormTabsProps) => {
+const EICRFormTabs = ({ formData, onUpdate, onOpenBoardScan }: EICRFormTabsProps) => {
   const isMobile = useIsMobile();
-  const { 
-    currentTab, 
-    setCurrentTab, 
-    canAccessTab, 
+  const {
+    currentTab,
+    setCurrentTab,
+    canAccessTab,
     navigateNext,
     navigatePrevious,
     currentTabIndex,
@@ -26,8 +27,21 @@ const EICRFormTabs = ({ formData, onUpdate }: EICRFormTabsProps) => {
     getProgressPercentage,
     isCurrentTabComplete,
     currentTabHasRequiredFields,
-    toggleTabComplete
+    toggleTabComplete,
+    hasRequiredFields
   } = useEICRTabs(formData);
+
+  // Build completion status map
+  const completedTabs = useMemo(() => {
+    const completedSections = formData.completedSections || {};
+    return {
+      details: completedSections.details || hasRequiredFields('details'),
+      inspection: completedSections.inspection || false,
+      testing: completedSections.testing || (formData.scheduleOfTests?.length > 0),
+      inspector: completedSections.inspector || hasRequiredFields('inspector'),
+      certificate: completedSections.certificate || hasRequiredFields('certificate')
+    };
+  }, [formData.completedSections, formData.scheduleOfTests, hasRequiredFields]);
 
   const handleTabChange = (value: string) => {
     setCurrentTab(value as any);
@@ -51,7 +65,8 @@ const EICRFormTabs = ({ formData, onUpdate }: EICRFormTabsProps) => {
     getProgressPercentage,
     isCurrentTabComplete,
     currentTabHasRequiredFields,
-    onToggleComplete: handleToggleComplete
+    onToggleComplete: handleToggleComplete,
+    onOpenBoardScan
   };
 
   const smartTabs: SmartTab[] = [
@@ -91,10 +106,12 @@ const EICRFormTabs = ({ formData, onUpdate }: EICRFormTabsProps) => {
     <div className="space-y-2 sm:space-y-4">
       <SmartTabs
         tabs={smartTabs}
-        value={currentTab} 
+        value={currentTab}
         onValueChange={handleTabChange}
         className="w-full"
         breakpoint={4} // Use dropdown when more than 4 tabs
+        completedTabs={completedTabs}
+        showProgress={true}
       />
     </div>
   );

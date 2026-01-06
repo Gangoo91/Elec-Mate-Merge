@@ -113,14 +113,14 @@ const ToolStorage = () => {
           <Package className="h-6 w-6" />
           Tool Storage Solutions
         </h2>
-        <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
+        <p className="text-sm sm:text-base text-white max-w-2xl mx-auto">
           Protect your investment with proper storage. Good organisation improves efficiency and maintains professional standards.
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {storageOptions.map((category, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-dark/50 hover:border-elec-yellow/40 transition-all duration-300">
+          <Card key={index} className="border-elec-yellow/20 bg-white/10 hover:border-elec-yellow/40 transition-all duration-300">
             <CardHeader className="pb-3">
               <CardTitle className="text-lg text-elec-yellow flex items-center gap-2">
                 <category.icon className="h-5 w-5" />
@@ -130,7 +130,7 @@ const ToolStorage = () => {
             
             <CardContent className="space-y-4">
               {category.options.map((option, optionIndex) => (
-                <div key={optionIndex} className="bg-elec-gray/50 border border-elec-yellow/20 rounded-lg p-3 space-y-2">
+                <div key={optionIndex} className="bg-white/5 border border-elec-yellow/20 rounded-lg p-3 space-y-2">
                   <div className="flex items-start justify-between">
                     <h4 className="font-medium text-sm text-white">{option.name}</h4>
                     <Badge variant="outline" className="border-green-500/30 text-green-400 text-xs">
@@ -138,7 +138,7 @@ const ToolStorage = () => {
                     </Badge>
                   </div>
                   
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-white">
                     <strong>Best for:</strong> {option.bestFor}
                   </p>
                   
@@ -163,7 +163,7 @@ const ToolStorage = () => {
       <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="p-4 bg-gradient-to-r from-elec-yellow/5 to-green-500/5 border border-elec-yellow/20 rounded-lg">
           <h3 className="font-medium text-elec-yellow mb-2">📋 Organisation Tips</h3>
-          <ul className="text-sm text-muted-foreground space-y-1">
+          <ul className="text-sm text-white space-y-1">
             <li>• Label storage clearly</li>
             <li>• Keep daily tools accessible</li>
             <li>• Maintain tool inventories</li>
@@ -173,7 +173,7 @@ const ToolStorage = () => {
         
         <div className="p-4 bg-gradient-to-r from-blue-500/5 to-elec-yellow/5 border border-blue-500/20 rounded-lg">
           <h3 className="font-medium text-blue-400 mb-2">🔒 Security Essentials</h3>
-          <ul className="text-sm text-muted-foreground space-y-1">
+          <ul className="text-sm text-white space-y-1">
             <li>• Never leave tools visible in vehicles</li>
             <li>• Use multiple security measures</li>
             <li>• Keep purchase receipts safe</li>
@@ -183,7 +183,7 @@ const ToolStorage = () => {
         
         <div className="p-4 bg-gradient-to-r from-purple-500/5 to-elec-yellow/5 border border-purple-500/20 rounded-lg">
           <h3 className="font-medium text-purple-400 mb-2">💡 Efficiency Tips</h3>
-          <ul className="text-sm text-muted-foreground space-y-1">
+          <ul className="text-sm text-white space-y-1">
             <li>• Foam inserts for organisation</li>
             <li>• Keep spare consumables</li>
             <li>• Clean tools after use</li>

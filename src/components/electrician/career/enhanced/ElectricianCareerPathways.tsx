@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { Target, Brain, TrendingUp, BarChart3, Eye, Clock, Award, MapPin, PoundSterling, GraduationCap, ShieldCheck, Building, Briefcase, Home } from "lucide-react";
+import { motion } from "framer-motion";
+import { Target, Brain, TrendingUp, BarChart3, Eye, Clock, Award, MapPin, PoundSterling, GraduationCap, ShieldCheck, Building, Briefcase, Home, Compass } from "lucide-react";
 import { DropdownTabs, DropdownTab } from "@/components/ui/dropdown-tabs";
 import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
 import EnhancedCareerOverview from "../../../apprentice/career/enhanced/EnhancedCareerOverview";
@@ -615,24 +615,65 @@ const ElectricianCareerPathways = () => {
   ];
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
-      <div className="flex flex-col items-center justify-center mb-4">
-        <h2 className="text-xl sm:text-2xl font-semibold tracking-tight mb-2 flex items-center gap-2">
-          <TrendingUp className="h-6 w-6 text-elec-yellow" />
-          UK Electrical Career Pathways
-        </h2>
-        <p className="text-sm text-muted-foreground text-center max-w-3xl mb-3">
-          Comprehensive career development framework including skills matrices, professional development strategies, 
-          industry insights, and progression pathways for electrical professionals in the UK
-        </p>
-      </div>
+    <div className="space-y-6">
+      {/* Hero Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="relative overflow-hidden bg-elec-gray/50 border border-elec-yellow/20 rounded-2xl"
+      >
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow/60 via-elec-yellow to-elec-yellow/60" />
 
-      <DropdownTabs 
-        tabs={careerPathwaysTabs}
-        defaultValue="overview"
-        placeholder="Select career section"
-        className="w-full"
-      />
+        <div className="p-4 sm:p-6">
+          <div className="flex items-center gap-4">
+            <div className="p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+              <Compass className="h-7 w-7 text-elec-yellow" />
+            </div>
+            <div>
+              <h1 className="text-xl sm:text-2xl font-bold text-white">
+                Career <span className="text-elec-yellow">Pathways</span>
+              </h1>
+              <p className="text-sm text-white/60 mt-1">
+                Skills development, industry insights & progression routes
+              </p>
+            </div>
+          </div>
+
+          {/* Quick Stats */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5">
+            <div className="bg-white/5 rounded-xl p-3 text-center">
+              <div className="text-lg font-bold text-elec-yellow">15+</div>
+              <div className="text-[10px] text-white/50">Specialisations</div>
+            </div>
+            <div className="bg-white/5 rounded-xl p-3 text-center">
+              <div className="text-lg font-bold text-green-400">£85k+</div>
+              <div className="text-[10px] text-white/50">Top Salaries</div>
+            </div>
+            <div className="bg-white/5 rounded-xl p-3 text-center">
+              <div className="text-lg font-bold text-blue-400">UK Wide</div>
+              <div className="text-[10px] text-white/50">Coverage</div>
+            </div>
+            <div className="bg-white/5 rounded-xl p-3 text-center">
+              <div className="text-lg font-bold text-purple-400">JIB</div>
+              <div className="text-[10px] text-white/50">Aligned</div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Tabs Content */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+      >
+        <DropdownTabs
+          tabs={careerPathwaysTabs}
+          defaultValue="overview"
+          placeholder="Select career section"
+          className="w-full"
+        />
+      </motion.div>
     </div>
   );
 };

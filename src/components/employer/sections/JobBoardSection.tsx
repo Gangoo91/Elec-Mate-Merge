@@ -3,14 +3,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { 
-  Kanban, 
-  List, 
-  Search, 
-  MapPin, 
-  Users, 
+import { QuickStats, QuickStat } from "@/components/employer/QuickStats";
+import {
+  Kanban,
+  List,
+  Search,
+  MapPin,
+  Users,
   Calendar,
-  Clock,
   AlertTriangle,
   ChevronRight,
   TrendingUp,
@@ -398,55 +398,34 @@ export function JobBoardSection() {
       </div>
 
       {/* Compact Stats Row - Horizontal Scroll */}
-      <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
-        <Card className="flex-shrink-0 min-w-[115px] bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border-elec-yellow/20 p-2.5">
-          <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-elec-yellow/20">
-              <Kanban className="h-4 w-4 text-elec-yellow" />
-            </div>
-            <div>
-              <p className="text-lg font-bold text-foreground leading-tight">{totalJobs}</p>
-              <p className="text-[10px] text-muted-foreground">Total Jobs</p>
-            </div>
-          </div>
-        </Card>
-
-        <Card className="flex-shrink-0 min-w-[115px] bg-gradient-to-br from-info/10 to-info/5 border-info/20 p-2.5">
-          <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-info/20">
-              <Clock className="h-4 w-4 text-info" />
-            </div>
-            <div>
-              <p className="text-lg font-bold text-foreground leading-tight">{inProgressCount}</p>
-              <p className="text-[10px] text-muted-foreground">In Progress</p>
-            </div>
-          </div>
-        </Card>
-
-        <Card className="flex-shrink-0 min-w-[115px] bg-gradient-to-br from-warning/10 to-warning/5 border-warning/20 p-2.5">
-          <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-warning/20">
-              <AlertTriangle className="h-4 w-4 text-warning" />
-            </div>
-            <div>
-              <p className="text-lg font-bold text-foreground leading-tight">0</p>
-              <p className="text-[10px] text-muted-foreground">Issues</p>
-            </div>
-          </div>
-        </Card>
-
-        <Card className="flex-shrink-0 min-w-[115px] bg-gradient-to-br from-success/10 to-success/5 border-success/20 p-2.5">
-          <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-success/20">
-              <TrendingUp className="h-4 w-4 text-success" />
-            </div>
-            <div>
-              <p className="text-lg font-bold text-success leading-tight">£{(pipelineValue / 1000).toFixed(0)}k</p>
-              <p className="text-[10px] text-muted-foreground">Pipeline</p>
-            </div>
-          </div>
-        </Card>
-      </div>
+      <QuickStats
+        stats={[
+          {
+            icon: Kanban,
+            value: totalJobs,
+            label: "Total Jobs",
+            color: "yellow",
+          },
+          {
+            icon: TrendingUp,
+            value: inProgressCount,
+            label: "In Progress",
+            color: "blue",
+          },
+          {
+            icon: AlertTriangle,
+            value: 0,
+            label: "Issues",
+            color: "orange",
+          },
+          {
+            icon: PoundSterling,
+            value: `£${(pipelineValue / 1000).toFixed(0)}k`,
+            label: "Pipeline",
+            color: "green",
+          },
+        ]}
+      />
 
       {/* Kanban Board - Mobile uses MobileKanban with Pull to Refresh */}
       {viewMode === "kanban" && (

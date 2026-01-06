@@ -83,14 +83,14 @@ const ElectricalSymbols = () => {
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-4 sm:mb-6 px-2">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 sm:mb-4">Electrical Symbols Guide</h1>
-        <p className="text-sm sm:text-base text-muted-foreground text-center max-w-2xl mb-3 sm:mb-4">
+        <p className="text-sm sm:text-base text-white/70 text-center max-w-2xl mb-3 sm:mb-4">
           Learn and reference common electrical symbols used in circuit diagrams and schematics
         </p>
         <SmartBackButton />
       </div>
 
       <div className="relative mb-6">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 h-4 w-4" />
         <Input
           placeholder="Search symbols..."
           value={searchTerm}
@@ -102,7 +102,7 @@ const ElectricalSymbols = () => {
       {searchTerm ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredSymbols.map((symbol, index) => (
-            <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+            <Card key={index} className="border-elec-yellow/20 bg-white/5">
               <CardHeader className="pb-2">
                 <div className="flex items-center gap-3">
                   <div className="text-2xl bg-elec-yellow/10 p-2 rounded">
@@ -112,7 +112,7 @@ const ElectricalSymbols = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">{symbol.description}</p>
+                <p className="text-sm text-white/70">{symbol.description}</p>
               </CardContent>
             </Card>
           ))}
@@ -128,7 +128,7 @@ const ElectricalSymbols = () => {
               content: (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {symbolCategories.basic.map((symbol, index) => (
-                    <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+                    <Card key={index} className="border-elec-yellow/20 bg-white/5">
                       <CardHeader className="pb-2">
                         <div className="flex items-center gap-3">
                           <div className="text-2xl bg-elec-yellow/10 p-2 rounded min-w-[3rem] text-center">
@@ -138,7 +138,7 @@ const ElectricalSymbols = () => {
                         </div>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-sm text-muted-foreground">{symbol.description}</p>
+                        <p className="text-sm text-white/70">{symbol.description}</p>
                       </CardContent>
                     </Card>
                   ))}
@@ -152,7 +152,7 @@ const ElectricalSymbols = () => {
               content: (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {symbolCategories.power.map((symbol, index) => (
-                    <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+                    <Card key={index} className="border-elec-yellow/20 bg-white/5">
                       <CardHeader className="pb-2">
                         <div className="flex items-center gap-3">
                           <div className="text-2xl bg-elec-yellow/10 p-2 rounded min-w-[3rem] text-center">
@@ -162,7 +162,7 @@ const ElectricalSymbols = () => {
                         </div>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-sm text-muted-foreground">{symbol.description}</p>
+                        <p className="text-sm text-white/70">{symbol.description}</p>
                       </CardContent>
                     </Card>
                   ))}
@@ -176,7 +176,7 @@ const ElectricalSymbols = () => {
               content: (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {symbolCategories.switches.map((symbol, index) => (
-                    <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+                    <Card key={index} className="border-elec-yellow/20 bg-white/5">
                       <CardHeader className="pb-2">
                         <div className="flex items-center gap-3">
                           <div className="text-2xl bg-elec-yellow/10 p-2 rounded min-w-[3rem] text-center">
@@ -186,7 +186,7 @@ const ElectricalSymbols = () => {
                         </div>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-sm text-muted-foreground">{symbol.description}</p>
+                        <p className="text-sm text-white/70">{symbol.description}</p>
                       </CardContent>
                     </Card>
                   ))}
@@ -200,7 +200,7 @@ const ElectricalSymbols = () => {
               content: (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {symbolCategories.protection.map((symbol, index) => (
-                    <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+                    <Card key={index} className="border-elec-yellow/20 bg-white/5">
                       <CardHeader className="pb-2">
                         <div className="flex items-center gap-3">
                           <div className="text-2xl bg-elec-yellow/10 p-2 rounded min-w-[3rem] text-center">
@@ -210,7 +210,7 @@ const ElectricalSymbols = () => {
                         </div>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-sm text-muted-foreground">{symbol.description}</p>
+                        <p className="text-sm text-white/70">{symbol.description}</p>
                       </CardContent>
                     </Card>
                   ))}
@@ -224,7 +224,7 @@ const ElectricalSymbols = () => {
               content: (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {symbolCategories.loads.map((symbol, index) => (
-                    <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+                    <Card key={index} className="border-elec-yellow/20 bg-white/5">
                       <CardHeader className="pb-2">
                         <div className="flex items-center gap-3">
                           <div className="text-2xl bg-elec-yellow/10 p-2 rounded min-w-[3rem] text-center">
@@ -234,7 +234,7 @@ const ElectricalSymbols = () => {
                         </div>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-sm text-muted-foreground">{symbol.description}</p>
+                        <p className="text-sm text-white/70">{symbol.description}</p>
                       </CardContent>
                     </Card>
                   ))}
@@ -248,7 +248,7 @@ const ElectricalSymbols = () => {
               content: (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {symbolCategories.measurement.map((symbol, index) => (
-                    <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+                    <Card key={index} className="border-elec-yellow/20 bg-white/5">
                       <CardHeader className="pb-2">
                         <div className="flex items-center gap-3">
                           <div className="text-2xl bg-elec-yellow/10 p-2 rounded min-w-[3rem] text-center">
@@ -258,7 +258,7 @@ const ElectricalSymbols = () => {
                         </div>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-sm text-muted-foreground">{symbol.description}</p>
+                        <p className="text-sm text-white/70">{symbol.description}</p>
                       </CardContent>
                     </Card>
                   ))}
@@ -269,16 +269,16 @@ const ElectricalSymbols = () => {
         />
       )}
 
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
+      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">Common Circuit Examples</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {diagramExamples.map((example, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4 bg-white/5">
                 <h4 className="font-semibold text-white mb-2">{example.title}</h4>
-                <p className="text-sm text-muted-foreground mb-3">{example.description}</p>
+                <p className="text-sm text-white/70 mb-3">{example.description}</p>
                 <div className="space-y-1">
                   <p className="text-xs font-medium">Components:</p>
                   <div className="flex flex-wrap gap-1">

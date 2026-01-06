@@ -220,7 +220,7 @@ const OutdoorTestingGuide = () => {
   return (
     <div className="space-y-6">
       {/* Testing Overview */}
-      <Card className="border-blue-500/30 bg-elec-gray">
+      <Card className="border-blue-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <TestTube className="h-6 w-6 text-blue-400" />
@@ -235,7 +235,7 @@ const OutdoorTestingGuide = () => {
       </Card>
 
       {/* Testing Sequence */}
-      <Card className="border-purple-500/30 bg-elec-gray">
+      <Card className="border-purple-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <CheckCircle className="h-6 w-6 text-purple-400" />
@@ -281,7 +281,7 @@ const OutdoorTestingGuide = () => {
       </Card>
 
       {/* Weather Considerations */}
-      <Card className="border-cyan-500/30 bg-elec-gray">
+      <Card className="border-cyan-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Cloud className="h-6 w-6 text-cyan-400" />
@@ -307,7 +307,7 @@ const OutdoorTestingGuide = () => {
       </Card>
 
       {/* Special Tests */}
-      <Card className="border-yellow-500/30 bg-elec-gray">
+      <Card className="border-yellow-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Zap className="h-6 w-6 text-yellow-400" />
@@ -334,7 +334,7 @@ const OutdoorTestingGuide = () => {
       </Card>
 
       {/* Certification Requirements */}
-      <Card className="border-green-500/30 bg-elec-gray">
+      <Card className="border-green-500/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <FileCheck className="h-6 w-6 text-green-400" />

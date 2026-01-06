@@ -202,7 +202,7 @@ const StudyFundamentalsTab = () => {
           </div>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground mb-4">
+          <p className="text-white mb-4">
             Master the core principles of effective learning. These evidence-based fundamentals form the foundation 
             of successful study practices for electrical apprenticeships and beyond.
           </p>
@@ -210,22 +210,22 @@ const StudyFundamentalsTab = () => {
             <div className="text-center p-3 border border-elec-yellow/20 rounded-lg">
               <Brain className="h-8 w-8 text-blue-400 mx-auto mb-2" />
               <p className="text-lg font-bold text-white">6</p>
-              <p className="text-xs text-muted-foreground">Key Principles</p>
+              <p className="text-xs text-white">Key Principles</p>
             </div>
             <div className="text-center p-3 border border-elec-yellow/20 rounded-lg">
               <Target className="h-8 w-8 text-green-400 mx-auto mb-2" />
               <p className="text-lg font-bold text-white">4</p>
-              <p className="text-xs text-muted-foreground">Study Techniques</p>
+              <p className="text-xs text-white">Study Techniques</p>
             </div>
             <div className="text-center p-3 border border-elec-yellow/20 rounded-lg">
               <Clock className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
               <p className="text-lg font-bold text-white">30min</p>
-              <p className="text-xs text-muted-foreground">Daily Minimum</p>
+              <p className="text-xs text-white">Daily Minimum</p>
             </div>
             <div className="text-center p-3 border border-elec-yellow/20 rounded-lg">
               <CheckCircle className="h-8 w-8 text-purple-400 mx-auto mb-2" />
               <p className="text-lg font-bold text-white">95%</p>
-              <p className="text-xs text-muted-foreground">Success Rate</p>
+              <p className="text-xs text-white">Success Rate</p>
             </div>
           </div>
         </CardContent>
@@ -253,14 +253,14 @@ const StudyFundamentalsTab = () => {
                     </div>
                   </div>
                   
-                  <p className="text-sm text-muted-foreground mb-3">{principle.description}</p>
+                  <p className="text-sm text-white mb-3">{principle.description}</p>
                   
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div>
                       <h5 className="font-medium text-blue-300 mb-2">Implementation Techniques:</h5>
                       <ul className="space-y-1">
                         {principle.techniques.map((technique, techIndex) => (
-                          <li key={techIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                          <li key={techIndex} className="text-sm text-white flex items-start gap-2">
                             <CheckCircle className="h-3 w-3 text-blue-400 mt-1 flex-shrink-0" />
                             {technique}
                           </li>
@@ -270,7 +270,7 @@ const StudyFundamentalsTab = () => {
                     
                     <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
                       <h5 className="font-medium text-blue-400 mb-1">Time Investment</h5>
-                      <p className="text-sm text-muted-foreground">{principle.timeInvestment}</p>
+                      <p className="text-sm text-white">{principle.timeInvestment}</p>
                     </div>
                   </div>
                 </div>
@@ -301,7 +301,7 @@ const StudyFundamentalsTab = () => {
                 </div>
                 <ul className="space-y-2">
                   {env.elements.map((element, elementIndex) => (
-                    <li key={elementIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                    <li key={elementIndex} className="text-sm text-white flex items-start gap-2">
                       <div className="w-1 h-1 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
                       {element}
                     </li>
@@ -314,7 +314,7 @@ const StudyFundamentalsTab = () => {
       </Card>
 
       {/* Study Techniques */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">Core Study Techniques</CardTitle>
         </CardHeader>
@@ -325,7 +325,7 @@ const StudyFundamentalsTab = () => {
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <h4 className="font-semibold text-white mb-1">{technique.technique}</h4>
-                    <p className="text-sm text-muted-foreground">{technique.description}</p>
+                    <p className="text-sm text-white">{technique.description}</p>
                   </div>
                   <Badge variant="outline" className="text-xs border-elec-yellow/30 text-elec-yellow">
                     {technique.timeRequired}
@@ -337,7 +337,7 @@ const StudyFundamentalsTab = () => {
                     <h5 className="font-medium text-elec-yellow mb-2">Step-by-Step Process:</h5>
                     <ol className="space-y-1">
                       {technique.steps.map((step, stepIndex) => (
-                        <li key={stepIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                        <li key={stepIndex} className="text-sm text-white flex items-start gap-2">
                           <span className="text-elec-yellow font-medium">{stepIndex + 1}.</span>
                           {step}
                         </li>
@@ -347,7 +347,7 @@ const StudyFundamentalsTab = () => {
                   
                   <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-3">
                     <h5 className="font-medium text-elec-yellow mb-1">Best Used For:</h5>
-                    <p className="text-sm text-muted-foreground">{technique.bestFor}</p>
+                    <p className="text-sm text-white">{technique.bestFor}</p>
                   </div>
                 </div>
               </div>
@@ -366,10 +366,10 @@ const StudyFundamentalsTab = () => {
             {motivationStrategies.map((strategy, index) => (
               <div key={index} className="border border-purple-500/20 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-2">{strategy.strategy}</h4>
-                <p className="text-sm text-muted-foreground mb-3">{strategy.description}</p>
+                <p className="text-sm text-white mb-3">{strategy.description}</p>
                 <div className="bg-purple-500/10 rounded-lg p-3">
                   <h5 className="font-medium text-purple-300 mb-1">How to Implement:</h5>
-                  <p className="text-xs text-muted-foreground">{strategy.implementation}</p>
+                  <p className="text-xs text-white">{strategy.implementation}</p>
                 </div>
               </div>
             ))}
@@ -391,15 +391,15 @@ const StudyFundamentalsTab = () => {
                   {index < 5 ? (
                     // Weekdays
                     <>
-                      <div className="text-xs text-muted-foreground">
+                      <div className="text-xs text-white">
                         <strong className="text-orange-400">6:30-7:00</strong><br/>
                         Quick review
                       </div>
-                      <div className="text-xs text-muted-foreground">
+                      <div className="text-xs text-white">
                         <strong className="text-orange-400">19:00-20:30</strong><br/>
                         Main study
                       </div>
-                      <div className="text-xs text-muted-foreground">
+                      <div className="text-xs text-white">
                         <strong className="text-orange-400">21:00-21:15</strong><br/>
                         Tomorrow prep
                       </div>
@@ -407,11 +407,11 @@ const StudyFundamentalsTab = () => {
                   ) : index === 5 ? (
                     // Saturday
                     <>
-                      <div className="text-xs text-muted-foreground">
+                      <div className="text-xs text-white">
                         <strong className="text-orange-400">9:00-11:00</strong><br/>
                         Deep study
                       </div>
-                      <div className="text-xs text-muted-foreground">
+                      <div className="text-xs text-white">
                         <strong className="text-orange-400">14:00-15:00</strong><br/>
                         Practice tests
                       </div>
@@ -419,11 +419,11 @@ const StudyFundamentalsTab = () => {
                   ) : (
                     // Sunday
                     <>
-                      <div className="text-xs text-muted-foreground">
+                      <div className="text-xs text-white">
                         <strong className="text-orange-400">10:00-11:00</strong><br/>
                         Week review
                       </div>
-                      <div className="text-xs text-muted-foreground">
+                      <div className="text-xs text-white">
                         <strong className="text-orange-400">15:00-16:00</strong><br/>
                         Next week plan
                       </div>

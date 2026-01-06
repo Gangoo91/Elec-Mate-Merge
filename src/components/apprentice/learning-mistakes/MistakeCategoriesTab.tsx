@@ -133,7 +133,7 @@ const MistakeCategoriesTab = () => {
                     <IconComponent className={`h-6 w-6 ${category.iconColor}`} />
                     <div className="flex-1">
                       <h3 className="text-xl font-semibold text-white">{category.category}</h3>
-                      <p className="text-sm text-muted-foreground">{category.description}</p>
+                      <p className="text-sm text-white">{category.description}</p>
                     </div>
                     <Badge 
                       variant={category.severity === 'Serious' ? 'destructive' : 'outline'}
@@ -150,15 +150,15 @@ const MistakeCategoriesTab = () => {
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 text-sm">
                           <div>
                             <span className="font-medium text-orange-300">Consequence:</span>
-                            <p className="text-muted-foreground">{example.consequence}</p>
+                            <p className="text-white">{example.consequence}</p>
                           </div>
                           <div>
                             <span className="font-medium text-blue-300">Lesson:</span>
-                            <p className="text-muted-foreground">{example.lesson}</p>
+                            <p className="text-white">{example.lesson}</p>
                           </div>
                           <div>
                             <span className="font-medium text-green-300">Recovery:</span>
-                            <p className="text-muted-foreground">{example.recovery}</p>
+                            <p className="text-white">{example.recovery}</p>
                           </div>
                         </div>
                       </div>
@@ -171,7 +171,7 @@ const MistakeCategoriesTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Brain className="h-6 w-6 text-elec-yellow" />
@@ -183,12 +183,12 @@ const MistakeCategoriesTab = () => {
             {commonPatterns.map((pattern, index) => (
               <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-2">{pattern.pattern}</h4>
-                <p className="text-sm text-muted-foreground mb-3">{pattern.description}</p>
+                <p className="text-sm text-white mb-3">{pattern.description}</p>
                 <div>
                   <h5 className="font-medium text-elec-yellow mb-2">Solutions:</h5>
                   <ul className="space-y-1">
                     {pattern.solutions.map((solution, solutionIndex) => (
-                      <li key={solutionIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                      <li key={solutionIndex} className="text-sm text-white flex items-start gap-2">
                         <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
                         {solution}
                       </li>

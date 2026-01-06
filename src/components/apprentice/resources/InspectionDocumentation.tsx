@@ -27,7 +27,7 @@ const InspectionDocumentation = () => {
         
         {/* Content sections */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-elec-dark p-6 rounded-lg border border-elec-yellow/20">
+          <div className="bg-white/10 p-6 rounded-lg border border-elec-yellow/20">
             <h2 className="text-xl font-semibold text-elec-yellow mb-4 flex items-center">
               <ClipboardList className="mr-3 h-5 w-5" /> Standardized Forms
             </h2>
@@ -45,7 +45,7 @@ const InspectionDocumentation = () => {
             </div>
           </div>
           
-          <div className="bg-elec-dark p-6 rounded-lg border border-elec-yellow/20">
+          <div className="bg-white/10 p-6 rounded-lg border border-elec-yellow/20">
             <h2 className="text-xl font-semibold text-elec-yellow mb-4 flex items-center">
               <FileText className="mr-3 h-5 w-5" /> Recording Findings
             </h2>
@@ -63,7 +63,7 @@ const InspectionDocumentation = () => {
             </div>
           </div>
           
-          <div className="bg-elec-dark p-6 rounded-lg border border-elec-yellow/20">
+          <div className="bg-white/10 p-6 rounded-lg border border-elec-yellow/20">
             <h2 className="text-xl font-semibold text-elec-yellow mb-4 flex items-center">
               <FileSearch className="mr-3 h-5 w-5" /> Tracking Corrective Actions
             </h2>
@@ -81,7 +81,7 @@ const InspectionDocumentation = () => {
             </div>
           </div>
           
-          <div className="bg-elec-dark p-6 rounded-lg border border-elec-yellow/20">
+          <div className="bg-white/10 p-6 rounded-lg border border-elec-yellow/20">
             <h2 className="text-xl font-semibold text-elec-yellow mb-4 flex items-center">
               <ChartBar className="mr-3 h-5 w-5" /> Analyzing Trends
             </h2>
@@ -100,7 +100,7 @@ const InspectionDocumentation = () => {
           </div>
         </div>
         
-        <div className="bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-6 mt-8">
+        <div className="bg-white/[0.03] border border-elec-yellow/20 rounded-lg p-6 mt-8">
           <h2 className="text-xl font-semibold text-elec-yellow mb-4">Documentation Best Practices</h2>
           <ul className="list-disc pl-6 space-y-2 text-elec-light/90">
             <li>Keep inspection records for a minimum of three years (or as required by regulations)</li>

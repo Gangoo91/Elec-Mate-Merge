@@ -103,17 +103,17 @@ const EnhancedFurtherEducation = () => {
           </Button>
         </div>
         
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardHeader>
             <CardTitle className="text-2xl">{selectedOption.title}</CardTitle>
             <p className="text-amber-400">{selectedOption.institution}</p>
           </CardHeader>
           <CardContent className="space-y-6">
-            <p className="text-muted-foreground">{selectedOption.description}</p>
+            <p className="text-white">{selectedOption.description}</p>
             
             {/* Detailed information sections would go here */}
             <div className="text-center py-8">
-              <p className="text-muted-foreground">
+              <p className="text-white">
                 Detailed view implementation would continue here with comprehensive information,
                 application forms, funding calculators, etc.
               </p>
@@ -132,7 +132,7 @@ const EnhancedFurtherEducation = () => {
           <GraduationCap className="h-6 w-6 text-elec-yellow" />
           Further Education
         </h2>
-        <p className="text-muted-foreground">
+        <p className="text-white">
           Discover comprehensive educational pathways to advance your career in the electrical industry. 
           From HNC certificates to master's degrees, find the right qualification to achieve your professional goals.
         </p>
@@ -160,7 +160,7 @@ const EnhancedFurtherEducation = () => {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <h3 className="text-lg font-medium">Available Programmes</h3>
-          <span className="text-sm text-muted-foreground">
+          <span className="text-sm text-white">
             ({filteredOptions.length} {filteredOptions.length === 1 ? 'result' : 'results'})
           </span>
         </div>
@@ -179,11 +179,11 @@ const EnhancedFurtherEducation = () => {
 
       {/* Empty State */}
       {filteredOptions.length === 0 && (
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardContent className="p-8 text-center">
-            <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <BookOpen className="h-12 w-12 text-white mx-auto mb-4" />
             <h3 className="text-lg font-medium mb-2">No programmes found</h3>
-            <p className="text-muted-foreground mb-4">
+            <p className="text-white mb-4">
               Try adjusting your search criteria or explore different categories.
             </p>
             <Button variant="outline" onClick={handleReset}>
@@ -194,7 +194,7 @@ const EnhancedFurtherEducation = () => {
       )}
 
       {/* Enhanced Funding Information Card */}
-      <Card className="border-elec-yellow/20 bg-elec-gray/50">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-lg">
             <PoundSterling className="h-5 w-5 text-elec-yellow" />
@@ -207,21 +207,21 @@ const EnhancedFurtherEducation = () => {
             <div className="space-y-3 text-sm">
               <div>
                 <h5 className="font-medium text-white">Advanced Learner Loan (19+)</h5>
-                <p className="text-xs text-muted-foreground mt-1">
+                <p className="text-xs text-white mt-1">
                   Available for Level 3-6 qualifications. No upfront fees, only repay when earning £25,000+. 
                   9% of income above threshold.
                 </p>
               </div>
               <div>
                 <h5 className="font-medium text-white">Student Finance England</h5>
-                <p className="text-xs text-muted-foreground mt-1">
+                <p className="text-xs text-white mt-1">
                   Tuition fee loans up to £9,250 for degrees. Maintenance loans available based on household income. 
                   Repayment at 9% above £27,295.
                 </p>
               </div>
               <div>
                 <h5 className="font-medium text-white">Postgraduate Loan</h5>
-                <p className="text-xs text-muted-foreground mt-1">
+                <p className="text-xs text-white mt-1">
                   Up to £12,167 for Master's study. 6% interest rate. Same repayment terms as undergraduate loans.
                 </p>
               </div>
@@ -232,19 +232,19 @@ const EnhancedFurtherEducation = () => {
             <div className="space-y-3 text-sm">
               <div>
                 <h5 className="font-medium text-white">Apprenticeship Levy</h5>
-                <p className="text-xs text-muted-foreground mt-1">
+                <p className="text-xs text-white mt-1">
                   Large employers (£3M+ payroll) contribute 0.5% to apprenticeship levy. Can fund degree apprenticeships.
                 </p>
               </div>
               <div>
                 <h5 className="font-medium text-white">Professional Body Grants</h5>
-                <p className="text-xs text-muted-foreground mt-1">
+                <p className="text-xs text-white mt-1">
                   IET scholarships (£1,000-£10,000), ECA Educational Trust grants, NECA bursaries for electrical study.
                 </p>
               </div>
               <div>
                 <h5 className="font-medium text-white">Career Development Loans</h5>
-                <p className="text-xs text-muted-foreground mt-1">
+                <p className="text-xs text-white mt-1">
                   Bank loans for vocational training. Government pays interest during study and one month after.
                 </p>
               </div>
@@ -255,22 +255,22 @@ const EnhancedFurtherEducation = () => {
 
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="border-elec-yellow/20 bg-elec-gray/50">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardContent className="p-4 text-center">
             <div className="text-2xl font-bold text-elec-yellow">94%</div>
-            <div className="text-sm text-muted-foreground">Average Employment Rate</div>
+            <div className="text-sm text-white">Average Employment Rate</div>
           </CardContent>
         </Card>
-        <Card className="border-elec-yellow/20 bg-elec-gray/50">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardContent className="p-4 text-center">
             <div className="text-2xl font-bold text-elec-yellow">£12k+</div>
-            <div className="text-sm text-muted-foreground">Average Salary Increase</div>
+            <div className="text-sm text-white">Average Salary Increase</div>
           </CardContent>
         </Card>
-        <Card className="border-elec-yellow/20 bg-elec-gray/50">
+        <Card className="border-elec-yellow/20 bg-white/5">
           <CardContent className="p-4 text-center">
             <div className="text-2xl font-bold text-elec-yellow">78%</div>
-            <div className="text-sm text-muted-foreground">Get Jobs Before Graduating</div>
+            <div className="text-sm text-white">Get Jobs Before Graduating</div>
           </CardContent>
         </Card>
       </div>

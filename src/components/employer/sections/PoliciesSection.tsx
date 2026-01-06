@@ -3,8 +3,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { FeatureTile } from "@/components/employer/FeatureTile";
 import { SectionHeader } from "@/components/employer/SectionHeader";
 import { Input } from "@/components/ui/input";
-import { 
-  BookOpen, 
+import { QuickStats, QuickStat } from "@/components/employer/QuickStats";
+import {
+  BookOpen,
   Shield,
   Zap,
   HardHat,
@@ -68,37 +69,29 @@ export function PoliciesSection() {
       </div>
 
       {/* Quick Stats */}
-      <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4 md:mx-0 md:px-0">
-        <Card className="bg-success/10 border-success/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-success" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{currentPolicies}</p>
-              <p className="text-xs text-muted-foreground">Current</p>
-            </div>
-          </CardContent>
-        </Card>
-        {reviewDue > 0 && (
-          <Card className="bg-warning/10 border-warning/20 shrink-0">
-            <CardContent className="p-3 flex items-center gap-2">
-              <Clock className="h-4 w-4 text-warning" />
-              <div>
-                <p className="text-lg font-bold text-foreground">{reviewDue}</p>
-                <p className="text-xs text-muted-foreground">Review Due</p>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-        <Card className="bg-elec-yellow/10 border-elec-yellow/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <BookOpen className="h-4 w-4 text-elec-yellow" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{totalPolicies}</p>
-              <p className="text-xs text-muted-foreground">Total</p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <QuickStats
+        stats={[
+          {
+            icon: CheckCircle2,
+            value: currentPolicies,
+            label: "Current",
+            color: "green",
+          },
+          ...(reviewDue > 0 ? [{
+            icon: Clock,
+            value: reviewDue,
+            label: "Review Due",
+            color: "yellow" as const,
+            pulse: true,
+          }] : []),
+          {
+            icon: BookOpen,
+            value: totalPolicies,
+            label: "Total",
+            color: "blue",
+          },
+        ]}
+      />
 
       {/* Safety Policies */}
       {safetyPolicies.length > 0 && (

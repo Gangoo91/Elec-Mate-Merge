@@ -72,7 +72,7 @@ const RingCircuitGuidance = () => {
         </CardHeader>
         <CardContent>
           <Accordion type="single" collapsible className="w-full space-y-2">
-            <AccordionItem value="r1-r2" className="border-elec-yellow/20 bg-elec-dark/20 rounded-lg px-4">
+            <AccordionItem value="r1-r2" className="border-elec-yellow/20 bg-white/10 rounded-lg px-4">
               <AccordionTrigger className="text-elec-light hover:text-elec-yellow text-left py-4">
                 R1 + R2 Calculation
               </AccordionTrigger>
@@ -80,7 +80,7 @@ const RingCircuitGuidance = () => {
                 <p className="text-sm sm:text-base leading-relaxed">
                   R1 + R2 represents the resistance of the live and earth conductors combined. For a ring circuit:
                 </p>
-                <div className="bg-elec-dark rounded-lg p-3 sm:p-4 font-mono text-xs sm:text-sm border border-elec-yellow/20">
+                <div className="bg-white/10 rounded-lg p-3 sm:p-4 font-mono text-xs sm:text-sm border border-elec-yellow/20">
                   R1 + R2 (at midpoint) = (End-to-End Live + End-to-End CPC) ÷ 4
                 </div>
                 <p className="text-xs sm:text-sm leading-relaxed">
@@ -89,7 +89,7 @@ const RingCircuitGuidance = () => {
               </AccordionContent>
             </AccordionItem>
             
-            <AccordionItem value="end-to-end" className="border-elec-yellow/20 bg-elec-dark/20 rounded-lg px-4">
+            <AccordionItem value="end-to-end" className="border-elec-yellow/20 bg-white/10 rounded-lg px-4">
               <AccordionTrigger className="text-elec-light hover:text-elec-yellow text-left py-4">
                 End-to-End Resistance
               </AccordionTrigger>
@@ -97,7 +97,7 @@ const RingCircuitGuidance = () => {
                 <p className="text-sm sm:text-base leading-relaxed">
                   End-to-end resistance is measured across the entire loop to confirm continuity:
                 </p>
-                <div className="bg-elec-dark rounded-lg p-3 sm:p-4 font-mono text-xs sm:text-sm border border-elec-yellow/20">
+                <div className="bg-white/10 rounded-lg p-3 sm:p-4 font-mono text-xs sm:text-sm border border-elec-yellow/20">
                   Individual Leg Resistance = End-to-End Reading ÷ 4
                 </div>
                 <p className="text-xs sm:text-sm leading-relaxed">
@@ -106,7 +106,7 @@ const RingCircuitGuidance = () => {
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="cross-connection" className="border-elec-yellow/20 bg-elec-dark/20 rounded-lg px-4">
+            <AccordionItem value="cross-connection" className="border-elec-yellow/20 bg-white/10 rounded-lg px-4">
               <AccordionTrigger className="text-elec-light hover:text-elec-yellow text-left py-4">
                 Cross-Connection Testing
               </AccordionTrigger>
@@ -131,7 +131,7 @@ const RingCircuitGuidance = () => {
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="cable-calculations" className="border-elec-yellow/20 bg-elec-dark/20 rounded-lg px-4">
+            <AccordionItem value="cable-calculations" className="border-elec-yellow/20 bg-white/10 rounded-lg px-4">
               <AccordionTrigger className="text-elec-light hover:text-elec-yellow text-left py-4">
                 Cable Size Impact & Temperature Correction
               </AccordionTrigger>
@@ -139,7 +139,7 @@ const RingCircuitGuidance = () => {
                 <p className="text-sm sm:text-base leading-relaxed">
                   Cable size significantly affects resistance values. Expected resistances at 20°C:
                 </p>
-                <div className="bg-elec-dark rounded-lg p-3 sm:p-4 text-xs sm:text-sm border border-elec-yellow/20 space-y-2">
+                <div className="bg-white/10 rounded-lg p-3 sm:p-4 text-xs sm:text-sm border border-elec-yellow/20 space-y-2">
                   <div><strong>2.5mm² T&E:</strong> Live: 7.41mΩ/m, CPC (1.5mm²): 12.1mΩ/m</div>
                   <div><strong>4.0mm² T&E:</strong> Live: 4.61mΩ/m, CPC (2.5mm²): 7.41mΩ/m</div>
                   <div><strong>6.0mm² T&E:</strong> Live: 3.08mΩ/m, CPC (4.0mm²): 4.61mΩ/m</div>

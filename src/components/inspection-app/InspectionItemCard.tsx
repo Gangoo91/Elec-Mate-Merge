@@ -147,7 +147,7 @@ const InspectionItemCard = ({
                 {sectionItem.clause}
               </Badge>
             ) : (
-              <Badge variant="secondary" className="mt-1 text-sm md:text-xs font-mono px-3 py-1 bg-gray-500/10 border-gray-500/30 text-gray-400">
+              <Badge variant="secondary" className="mt-1 text-sm md:text-xs font-mono px-3 py-1 bg-white/5 border-white/10 text-white/70">
                 No Specific Reg
               </Badge>
             )}

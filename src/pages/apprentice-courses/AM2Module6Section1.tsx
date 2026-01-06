@@ -162,19 +162,19 @@ const AM2Module6Section1 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
+      <div className="border-b border-white/10 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between gap-2">
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-2 sm:p-0 text-sm sm:text-base" asChild>
+            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
               <Link to="..">
                 <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
                 <span className="hidden xs:inline">Back to Module 6</span>
                 <span className="xs:hidden">Back</span>
               </Link>
             </Button>
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-2 sm:p-0 text-sm sm:text-base" asChild>
+            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
               <Link to="../section2">
                 <span className="hidden xs:inline">Module 6 Section 2</span>
                 <span className="xs:hidden">Section 2</span>
@@ -193,13 +193,13 @@ const AM2Module6Section1 = () => {
             <Clock className="w-4 h-4" />
             Module 6 – Section 1
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4 sm:mb-6 leading-tight">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6 leading-tight">
             Format and Structure of the Online Test
           </h1>
-          <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
+          <p className="text-sm sm:text-base text-white mb-6 sm:mb-8 leading-relaxed">
             The AM2 online knowledge test is a computer-based, multiple-choice exam. It assesses your knowledge of electrical regulations, science, and safety, alongside your ability to apply theory to real-world situations. The test lasts 90 minutes and contains 30 questions.
           </p>
-          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+          <p className="text-sm sm:text-base text-white leading-relaxed">
             Understanding the test format is essential for managing your time and answering confidently. Many candidates fail this section not because they don't know the content, but because they mismanage their time or misunderstand the question style.
           </p>
         </div>
@@ -225,16 +225,16 @@ const AM2Module6Section1 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground mb-4">
+            <p className="text-xs sm:text-sm text-white mb-4">
               By the end of this section, you will be able to:
             </p>
-            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
+            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Describe the format of the online AM2 knowledge test, including timing and number of questions
@@ -397,14 +397,14 @@ const AM2Module6Section1 = () => {
         />
 
         {/* Assessor Expectations */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Target className="w-5 h-5" />
               4. Assessor Expectations
             </h2>
             
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm text-white mb-4">
               Assessors don't just want correct answers — they want to see that you:
             </p>
             
@@ -518,7 +518,7 @@ const AM2Module6Section1 = () => {
         />
 
         {/* Real-world Examples */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Eye className="w-5 h-5" />
@@ -551,7 +551,7 @@ const AM2Module6Section1 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <FileText className="w-5 h-5" />
@@ -560,28 +560,28 @@ const AM2Module6Section1 = () => {
             
             <div className="space-y-4">
               <div className="border-l-4 border-elec-yellow/50 pl-4">
-                <h4 className="font-medium text-foreground mb-1">Q1: How many questions are in the knowledge test?</h4>
-                <p className="text-sm text-muted-foreground">A: 30 questions.</p>
+                <h4 className="font-medium text-white mb-1">Q1: How many questions are in the knowledge test?</h4>
+                <p className="text-sm text-white">A: 30 questions.</p>
               </div>
               
               <div className="border-l-4 border-elec-yellow/50 pl-4">
-                <h4 className="font-medium text-foreground mb-1">Q2: How long do I have?</h4>
-                <p className="text-sm text-muted-foreground">A: 90 minutes.</p>
+                <h4 className="font-medium text-white mb-1">Q2: How long do I have?</h4>
+                <p className="text-sm text-white">A: 90 minutes.</p>
               </div>
               
               <div className="border-l-4 border-elec-yellow/50 pl-4">
-                <h4 className="font-medium text-foreground mb-1">Q3: What's the pass mark?</h4>
-                <p className="text-sm text-muted-foreground">A: 60% (18 correct answers out of 30).</p>
+                <h4 className="font-medium text-white mb-1">Q3: What's the pass mark?</h4>
+                <p className="text-sm text-white">A: 60% (18 correct answers out of 30).</p>
               </div>
               
               <div className="border-l-4 border-elec-yellow/50 pl-4">
-                <h4 className="font-medium text-foreground mb-1">Q4: Can I skip and return to questions?</h4>
-                <p className="text-sm text-muted-foreground">A: Yes — flag them in the system.</p>
+                <h4 className="font-medium text-white mb-1">Q4: Can I skip and return to questions?</h4>
+                <p className="text-sm text-white">A: Yes — flag them in the system.</p>
               </div>
               
               <div className="border-l-4 border-elec-yellow/50 pl-4">
-                <h4 className="font-medium text-foreground mb-1">Q5: Are questions only on regs?</h4>
-                <p className="text-sm text-muted-foreground">A: No — they cover regs, science, and safety.</p>
+                <h4 className="font-medium text-white mb-1">Q5: Are questions only on regs?</h4>
+                <p className="text-sm text-white">A: No — they cover regs, science, and safety.</p>
               </div>
             </div>
           </div>
@@ -594,20 +594,20 @@ const AM2Module6Section1 = () => {
               <CheckCircle className="w-5 h-5" />
               Summary
             </h2>
-            <p className="text-sm sm:text-base text-foreground leading-relaxed">
+            <p className="text-sm sm:text-base text-white leading-relaxed">
               The AM2 online knowledge test is a 90-minute, multiple-choice exam with 30 questions covering regs, science, and safety. Success depends not only on knowledge but also on managing your time and answering every question. Assessors expect candidates to work methodically, avoid rushing, and use strategies like flagging tricky questions.
             </p>
           </div>
         </Card>
 
         {/* Quiz Section */}
-        <Card className="bg-card border-elec-yellow/30">
+        <Card className="bg-transparent border-elec-yellow/30">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Zap className="w-5 h-5" />
               10-Question Quiz
             </h2>
-            <p className="text-sm text-muted-foreground mb-6">
+            <p className="text-sm text-white mb-6">
               Test your understanding of the online test format and structure:
             </p>
             <Quiz questions={quizQuestions} />
@@ -615,7 +615,7 @@ const AM2Module6Section1 = () => {
         </Card>
 
         {/* Bottom Navigation */}
-        <div className="flex flex-col sm:flex-row gap-4 pt-8 border-t border-border/20">
+        <div className="flex flex-col sm:flex-row gap-4 pt-8 border-t border-white/10">
           <Button variant="outline" className="flex-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />

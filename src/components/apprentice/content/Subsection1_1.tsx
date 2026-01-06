@@ -25,14 +25,14 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
     <div className="space-y-8">
       <h1 className="text-2xl font-bold text-elec-yellow">Electricity at Work Regulations 1989</h1>
       
-      <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+      <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
         <div className="flex items-start gap-4">
           <div className="bg-elec-yellow/20 p-3 rounded-full">
             <Shield className="h-6 w-6 text-elec-yellow" />
           </div>
           <div>
             <h2 className="text-xl font-semibold text-elec-yellow">Key Information</h2>
-            <p className="text-muted-foreground mt-1">
+            <p className="text-white mt-1">
               The Electricity at Work Regulations 1989 (EWR) came into force on 1 April 1990 and apply to all aspects of 
               the use of electricity in the workplace. They are made under the Health and Safety at Work etc. Act 1974 
               and enforce a high standard of electrical safety in all workplaces.
@@ -41,7 +41,7 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </div>
       </div>
       
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow">Core Principles</CardTitle>
           <CardDescription>The fundamental requirements established by the regulations</CardDescription>
@@ -53,7 +53,7 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             power stations to the smallest portable appliance.
           </p>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Key Requirements:</h3>
             <ul className="list-disc pl-5 space-y-2">
               <li>All electrical systems must be constructed and maintained to prevent danger</li>
@@ -71,7 +71,7 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </CardContent>
       </Card>
       
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow">Regulation 4: Systems, Work Activities and Protective Equipment</CardTitle>
         </CardHeader>
@@ -81,7 +81,7 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             the fundamental safety requirements for all electrical installations and equipment.
           </p>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mb-4">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mb-4">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Requirements for Compliance:</h3>
             <ul className="list-disc pl-5 space-y-2">
               <li>All electrical systems must be of suitable construction</li>
@@ -104,7 +104,7 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </CardContent>
       </Card>
       
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow">Regulation 14: Working on or Near Live Conductors</CardTitle>
         </CardHeader>
@@ -114,7 +114,7 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             particularly relevant for electricians who may need to work with live systems.
           </p>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mb-4">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mb-4">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">The Three Conditions:</h3>
             <p className="mb-2">
               Under Regulation 14, no person shall work on or near any live conductor unless:
@@ -160,7 +160,7 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </CardContent>
       </Card>
       
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow">Competence Requirements (Regulation 16)</CardTitle>
         </CardHeader>
@@ -171,7 +171,7 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           </p>
           
           <div className="grid md:grid-cols-2 gap-4">
-            <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+            <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
               <h3 className="text-lg font-semibold text-elec-yellow mb-2">Technical Knowledge</h3>
               <ul className="list-disc pl-5 space-y-1">
                 <li>Understanding of electrical theory</li>
@@ -182,7 +182,7 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </ul>
             </div>
             
-            <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+            <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20">
               <h3 className="text-lg font-semibold text-elec-yellow mb-2">Experience</h3>
               <ul className="list-disc pl-5 space-y-1">
                 <li>Practical application of technical knowledge</li>
@@ -194,7 +194,7 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </div>
           </div>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mt-4">
+          <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mt-4">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Documentation of Competence:</h3>
             <ul className="list-disc pl-5 space-y-2">
               <li>Formal qualifications (City & Guilds, NVQs, etc.)</li>
@@ -208,7 +208,7 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </CardContent>
       </Card>
       
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow">Legal Enforcement and Penalties</CardTitle>
         </CardHeader>
@@ -236,7 +236,7 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </div>
             <div>
               <h3 className="text-lg font-semibold text-elec-yellow">Case Law</h3>
-              <p className="text-muted-foreground mt-1">
+              <p className="text-white mt-1">
                 Several landmark legal cases have established precedents in the application of the EWR, including 
                 R v HTM Ltd (2006), where a company was fined £175,000 after an employee was fatally electrocuted, 
                 and R v Balfour Beatty Rail Infrastructure Services Ltd (2006), resulting in a £10 million fine.
@@ -246,13 +246,13 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </CardContent>
       </Card>
       
-      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+      <Card className="border-elec-yellow/30 bg-white/10">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow">Guidance and Resources</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid md:grid-cols-2 gap-4">
-            <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 flex flex-col h-full">
+            <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 flex flex-col h-full">
               <div className="flex items-center gap-2 mb-2">
                 <BookOpen className="h-5 w-5 text-elec-yellow" />
                 <h3 className="text-lg font-semibold text-elec-yellow">Official Publications</h3>
@@ -266,7 +266,7 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </ul>
             </div>
             
-            <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 flex flex-col h-full">
+            <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 flex flex-col h-full">
               <div className="flex items-center gap-2 mb-2">
                 <CheckSquare className="h-5 w-5 text-elec-yellow" />
                 <h3 className="text-lg font-semibold text-elec-yellow">Compliance Checklist</h3>

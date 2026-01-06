@@ -30,7 +30,7 @@ const SubsectionNavigation = ({
   const allSubsectionsLink = `/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${parentSectionNumber || sectionId}`;
   
   return (
-    <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 bg-elec-dark/50 border border-elec-yellow/20 rounded-lg p-4">
+    <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 bg-white/10 border border-elec-yellow/20 rounded-lg p-4">
       <div className="w-full sm:w-1/3">
         {prevSubsection && (
           <Button 

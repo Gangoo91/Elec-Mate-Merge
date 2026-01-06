@@ -9,7 +9,7 @@ const Subsection7_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
   return (
     <div className="space-y-6">
       {/* Main header with background */}
-      <div className="bg-elec-dark border border-elec-yellow/30 rounded-lg p-5">
+      <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-5">
         <h2 className="text-2xl md:text-3xl font-bold text-elec-yellow">Preparation and Planning</h2>
         <p className="mt-2 text-elec-light/80">
           Ensuring all tools and equipment are in good condition, selecting appropriate Personal Protective Equipment (PPE), and understanding the task requirements
@@ -32,7 +32,7 @@ const Subsection7_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       
       {/* Content Sections */}
       <div className="grid grid-cols-1 gap-6 mt-6">
-        <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-6">
+        <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-6">
           <h3 className="text-xl font-semibold text-elec-yellow mb-4">Tool and Equipment Inspection</h3>
           <div className="space-y-4">
             <p className="text-elec-light/90">Before beginning any electrical work, thorough inspection of tools and equipment is essential:</p>
@@ -60,7 +60,7 @@ const Subsection7_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                       Remove from service, label as defective, arrange for repair or replacement
                     </td>
                   </tr>
-                  <tr className="bg-elec-gray">
+                  <tr className="bg-white/5">
                     <td className="p-3 border border-elec-yellow/30">Electrical continuity</td>
                     <td className="p-3 border border-elec-yellow/30">
                       <ul className="list-disc pl-4">
@@ -92,7 +92,7 @@ const Subsection7_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           </div>
         </div>
         
-        <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-6">
+        <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-6">
           <h3 className="text-xl font-semibold text-elec-yellow mb-4">PPE Selection and Inspection</h3>
           <div className="space-y-4">
             <p className="text-elec-light/90">Select appropriate PPE based on the specific electrical task:</p>
@@ -114,7 +114,7 @@ const Subsection7_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </li>
             </ul>
             
-            <div className="bg-elec-gray/30 p-3 rounded mt-4">
+            <div className="bg-white/5 p-3 rounded mt-4">
               <p className="text-sm text-elec-light/90">
                 <strong>Inspection tip:</strong> Before each use, inspect PPE for tears, punctures, contamination by conductive materials, and signs of deterioration or ageing. Never use damaged PPE.
               </p>
@@ -122,7 +122,7 @@ const Subsection7_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           </div>
         </div>
       
-        <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-6">
+        <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-6">
           <h3 className="text-xl font-semibold text-elec-yellow mb-4">Task Planning Procedures</h3>
           <div className="space-y-4">
             <p className="text-elec-light/90">
@@ -143,7 +143,7 @@ const Subsection7_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   <li>Consider emergency procedures and escape routes</li>
                 </ol>
                 
-                <div className="bg-elec-gray/30 p-3 rounded mt-4">
+                <div className="bg-white/5 p-3 rounded mt-4">
                   <p className="text-sm text-elec-light/90">
                     <strong>Best practice:</strong> Create a written work plan for complex tasks, detailing step-by-step procedures, responsibilities, and safety measures.
                   </p>
@@ -162,7 +162,7 @@ const Subsection7_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   <li>Keep documentation for installed equipment</li>
                 </ul>
                 
-                <div className="bg-elec-gray/30 p-3 rounded mt-4">
+                <div className="bg-white/5 p-3 rounded mt-4">
                   <p className="text-sm text-elec-light/90">
                     <strong>Documentation tip:</strong> Take photographs of existing installations before modification work to assist with reinstatement if required.
                   </p>
@@ -172,7 +172,7 @@ const Subsection7_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           </div>
         </div>
         
-        <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-6">
+        <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-6">
           <h3 className="text-xl font-semibold text-elec-yellow mb-4">Pre-Work Safety Documentation</h3>
           <div className="space-y-4">
             <p className="text-elec-light/90">
@@ -202,7 +202,7 @@ const Subsection7_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                       </ul>
                     </td>
                   </tr>
-                  <tr className="bg-elec-gray">
+                  <tr className="bg-white/5">
                     <td className="p-3 border border-elec-yellow/30">Method Statement</td>
                     <td className="p-3 border border-elec-yellow/30">
                       Step-by-step procedure for completing work safely
@@ -233,7 +233,7 @@ const Subsection7_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </table>
             </div>
             
-            <div className="bg-elec-gray/50 p-4 rounded-lg my-4">
+            <div className="bg-white/5 p-4 rounded-lg my-4">
               <p className="font-medium text-white">Practical Exercise:</p>
               <p className="text-elec-light/90 mt-2">
                 For the following scenario, create a preparation checklist identifying the required tools, PPE, and key safety considerations:

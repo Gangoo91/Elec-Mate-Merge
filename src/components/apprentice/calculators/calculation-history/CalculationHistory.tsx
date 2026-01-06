@@ -121,7 +121,7 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
   }
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border-elec-yellow/20 bg-white/5">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-sm">
@@ -172,7 +172,7 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
 
           {/* Recent calculations */}
           <div>
-            <h4 className="text-xs font-medium text-muted-foreground mb-2 flex items-center gap-1">
+            <h4 className="text-xs font-medium text-white mb-2 flex items-center gap-1">
               <Clock className="h-3 w-3" />
               Recent
             </h4>
@@ -199,7 +199,7 @@ const HistoryEntry: React.FC<{
   formatInputsDisplay: (inputs: any) => string;
 }> = ({ entry, onRestore, onToggleBookmark, formatInputsDisplay }) => {
   return (
-    <div className="flex items-center justify-between p-2 rounded border border-elec-yellow/10 bg-elec-dark/50">
+    <div className="flex items-center justify-between p-2 rounded border border-elec-yellow/10 bg-white/10">
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1">
           <Badge 
@@ -208,11 +208,11 @@ const HistoryEntry: React.FC<{
           >
             {entry.isValid ? 'Valid' : 'Invalid'}
           </Badge>
-          <span className="text-xs text-muted-foreground">
+          <span className="text-xs text-white">
             {format(entry.timestamp, 'MMM dd, HH:mm')}
           </span>
         </div>
-        <p className="text-xs text-muted-foreground truncate">
+        <p className="text-xs text-white truncate">
           {formatInputsDisplay(entry.inputs)}
         </p>
       </div>

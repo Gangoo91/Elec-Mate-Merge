@@ -13,12 +13,12 @@ import { EmergencyLightingModule5Section6Quiz } from '@/components/upskilling/em
 
 const EmergencyLightingModule5Section6 = () => {
   return (
-    <div className="min-h-screen bg-background text-white">
+    <div className="min-h-screen bg-[#1a1a1a] text-white">
       <div className="px-4 sm:px-8 pt-8 pb-12">
         <Link to="../emergency-lighting-module-5">
           <Button
             variant="ghost"
-            className="text-white hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+            className="text-white hover:bg-transparent hover:text-elec-yellow transition-all duration-200 mb-8 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 5
@@ -28,7 +28,7 @@ const EmergencyLightingModule5Section6 = () => {
         <div className="space-y-6">
           <div>
             <div className="flex items-center gap-4 mb-4">
-              <Handshake className="h-8 w-8 text-yellow-400" />
+              <Handshake className="h-8 w-8 text-elec-yellow" />
               <div>
                 <h1 className="text-3xl sm:text-4xl font-bold text-white">
                   Client Handover Procedure
@@ -39,7 +39,7 @@ const EmergencyLightingModule5Section6 = () => {
               </div>
             </div>
             <div className="flex flex-wrap gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">
+              <Badge variant="secondary" className="bg-elec-yellow text-black">
                 Module 5 - Section 6
               </Badge>
               <Badge variant="outline" className="border-gray-600 text-gray-300">
@@ -63,7 +63,7 @@ const EmergencyLightingModule5Section6 = () => {
             <Link to="../emergency-lighting-module-5-section-5" className="flex-1">
               <Button
                 variant="outline"
-                className="w-full border-gray-600 text-white hover:bg-card hover:text-yellow-400 transition-all duration-200"
+                className="w-full border-gray-600 text-white hover:bg-transparent hover:text-elec-yellow transition-all duration-200"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Previous Section
@@ -71,7 +71,7 @@ const EmergencyLightingModule5Section6 = () => {
             </Link>
             <Link to="../emergency-lighting-module-6" className="flex-1">
               <Button
-                className="w-full bg-yellow-400 text-black hover:bg-yellow-400 transition-all duration-200"
+                className="w-full bg-elec-yellow text-black hover:bg-elec-yellow transition-all duration-200"
               >
                 Complete Module 5
               </Button>

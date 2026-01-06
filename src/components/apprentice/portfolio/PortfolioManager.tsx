@@ -48,56 +48,56 @@ const QuickStats = ({ entries }: { entries: PortfolioEntry[] }) => {
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-      <Card className="bg-elec-gray border-elec-yellow/20">
+      <Card className="bg-white/5 border-elec-yellow/20">
         <CardContent className="p-3 sm:p-4">
           <div className="flex items-center gap-2 sm:gap-3">
             <div className="p-1.5 sm:p-2 bg-blue-500/10 rounded-lg shrink-0">
               <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
             </div>
             <div className="min-w-0">
-              <p className="text-xs text-muted-foreground truncate">Total</p>
+              <p className="text-xs text-white truncate">Total</p>
               <p className="text-lg sm:text-2xl font-bold">{entries.length}</p>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <Card className="bg-elec-gray border-elec-yellow/20">
+      <Card className="bg-white/5 border-elec-yellow/20">
         <CardContent className="p-3 sm:p-4">
           <div className="flex items-center gap-2 sm:gap-3">
             <div className="p-1.5 sm:p-2 bg-green-500/10 rounded-lg shrink-0">
               <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
             </div>
             <div className="min-w-0">
-              <p className="text-xs text-muted-foreground truncate">Complete</p>
+              <p className="text-xs text-white truncate">Complete</p>
               <p className="text-lg sm:text-2xl font-bold">{completed}</p>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <Card className="bg-elec-gray border-elec-yellow/20">
+      <Card className="bg-white/5 border-elec-yellow/20">
         <CardContent className="p-3 sm:p-4">
           <div className="flex items-center gap-2 sm:gap-3">
             <div className="p-1.5 sm:p-2 bg-amber-500/10 rounded-lg shrink-0">
               <Target className="h-4 w-4 sm:h-5 sm:w-5 text-amber-400" />
             </div>
             <div className="min-w-0">
-              <p className="text-xs text-muted-foreground truncate">In Progress</p>
+              <p className="text-xs text-white truncate">In Progress</p>
               <p className="text-lg sm:text-2xl font-bold">{inProgress}</p>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <Card className="bg-elec-gray border-elec-yellow/20">
+      <Card className="bg-white/5 border-elec-yellow/20">
         <CardContent className="p-3 sm:p-4">
           <div className="flex items-center gap-2 sm:gap-3">
             <div className="p-1.5 sm:p-2 bg-elec-yellow/10 rounded-lg shrink-0">
               <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
             </div>
             <div className="min-w-0">
-              <p className="text-xs text-muted-foreground truncate">Hours</p>
+              <p className="text-xs text-white truncate">Hours</p>
               <p className="text-lg sm:text-2xl font-bold">{totalHours}h</p>
             </div>
           </div>
@@ -124,13 +124,13 @@ const ProgressView = ({
   return (
     <div className="space-y-4">
       {/* View Toggle */}
-      <div className="flex gap-2 p-1 bg-elec-gray/50 rounded-lg w-fit">
+      <div className="flex gap-2 p-1 bg-white/5 rounded-lg w-fit">
         <button
           onClick={() => setView('groups')}
           className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
             view === 'groups'
               ? 'bg-elec-yellow text-elec-dark'
-              : 'text-muted-foreground hover:text-white'
+              : 'text-white hover:text-white'
           }`}
         >
           By Group
@@ -140,7 +140,7 @@ const ProgressView = ({
           className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
             view === 'competency'
               ? 'bg-elec-yellow text-elec-dark'
-              : 'text-muted-foreground hover:text-white'
+              : 'text-white hover:text-white'
           }`}
         >
           By Level
@@ -187,7 +187,7 @@ const ResourcesDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col bg-elec-gray border-elec-gray/40">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col bg-white/5 border-elec-gray/40">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             {activeResource ? (
@@ -226,7 +226,7 @@ const ResourcesDialog = ({
                     </div>
                     <div>
                       <p className="font-semibold text-white">{resource.label}</p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-white">
                         {resource.id === 'documentation' && 'Guides and best practices'}
                         {resource.id === 'tools' && 'Integration with digital platforms'}
                         {resource.id === 'industry' && 'Sector-specific content'}
@@ -279,7 +279,7 @@ const PortfolioManager = () => {
       <div className="flex items-center justify-center p-8">
         <div className="text-center">
           <Loader2 className="h-8 w-8 animate-spin text-elec-yellow mx-auto mb-4" />
-          <p className="text-muted-foreground">Loading your portfolio...</p>
+          <p className="text-white">Loading your portfolio...</p>
         </div>
       </div>
     );
@@ -305,7 +305,7 @@ const PortfolioManager = () => {
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="bg-elec-gray border-elec-yellow/20">
+            <DropdownMenuContent align="end" className="bg-white/5 border-elec-yellow/20">
               <DropdownMenuItem
                 onClick={() => {
                   setActiveResource('documentation');

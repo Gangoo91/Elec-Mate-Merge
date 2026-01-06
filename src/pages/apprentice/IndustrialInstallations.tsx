@@ -95,7 +95,7 @@ const IndustrialInstallations = () => {
             Industrial Installations
           </h1>
         </div>
-        <p className="text-muted-foreground text-base md:text-lg max-w-3xl mx-auto mb-6">
+        <p className="text-white/70 text-base md:text-lg max-w-3xl mx-auto mb-6">
           Comprehensive guide to industrial electrical installations including manufacturing facilities, 
           warehouses and heavy-duty electrical systems with enhanced safety protocols.
         </p>
@@ -103,18 +103,18 @@ const IndustrialInstallations = () => {
       </div>
 
       {/* Common Installation Types */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <CheckCircle className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Common Industrial Installation Types</CardTitle>
           </div>
-          <p className="text-muted-foreground">Typical industrial electrical systems and equipment</p>
+          <p className="text-white/70">Typical industrial electrical systems and equipment</p>
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {commonTypes.map((type, index) => (
-              <div key={index} className="bg-elec-dark/40 p-4 rounded-lg">
+              <div key={index} className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 text-white">
                   <Zap className="h-4 w-4 text-elec-yellow" />
                   {type}
@@ -126,22 +126,22 @@ const IndustrialInstallations = () => {
       </Card>
 
       {/* Cable Types & Protection */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Cable className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Industrial Cable Types & Protection</CardTitle>
           </div>
-          <p className="text-muted-foreground">Heavy-duty cable specifications for industrial environments</p>
+          <p className="text-white/70">Heavy-duty cable specifications for industrial environments</p>
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="space-y-4">
             {cableTypes.map((cable, index) => (
-              <div key={index} className="bg-elec-dark/40 p-4 rounded-lg border border-elec-yellow/20">
+              <div key={index} className="bg-white/5 border border-white/10 p-4 rounded-lg border border-elec-yellow/20">
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
                   <div className="flex-1">
                     <h4 className="font-medium text-white text-base mb-1">{cable.application}</h4>
-                    <p className="text-sm text-muted-foreground">{cable.notes}</p>
+                    <p className="text-sm text-white/70">{cable.notes}</p>
                   </div>
                   <div className="flex flex-col sm:flex-row gap-2">
                     <Badge variant="outline" className="border-elec-yellow text-elec-yellow">
@@ -159,22 +159,22 @@ const IndustrialInstallations = () => {
       </Card>
 
       {/* Motor Control Systems */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Settings className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Motor Control Systems</CardTitle>
           </div>
-          <p className="text-muted-foreground">Common motor starting and control methods in industrial applications</p>
+          <p className="text-white/70">Common motor starting and control methods in industrial applications</p>
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="space-y-6">
             {motorControlBasics.map((control, index) => (
-              <div key={index} className="bg-elec-dark/40 p-5 rounded-lg border border-elec-yellow/20">
+              <div key={index} className="bg-white/5 border border-white/10 p-5 rounded-lg border border-elec-yellow/20">
                 <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
                   <div className="flex-1">
                     <h4 className="font-medium text-white text-lg mb-2">{control.type}</h4>
-                    <p className="text-sm text-muted-foreground mb-3">{control.description}</p>
+                    <p className="text-sm text-white/70 mb-3">{control.description}</p>
                     <Badge variant="outline" className="border-blue-500 text-blue-400">
                       {control.application}
                     </Badge>
@@ -183,7 +183,7 @@ const IndustrialInstallations = () => {
                     <h5 className="font-medium text-elec-yellow mb-2">Key Components:</h5>
                     <ul className="space-y-1">
                       {control.components.map((component, compIndex) => (
-                        <li key={compIndex} className="text-sm text-muted-foreground flex items-center gap-2">
+                        <li key={compIndex} className="text-sm text-white/70 flex items-center gap-2">
                           <CheckCircle className="h-3 w-3 text-green-400" />
                           {component}
                         </li>
@@ -204,19 +204,19 @@ const IndustrialInstallations = () => {
             <HardHat className="h-6 w-6 text-red-400" />
             <CardTitle className="text-red-300">Industrial Safety Hazards</CardTitle>
           </div>
-          <p className="text-muted-foreground">Critical safety considerations for industrial environments</p>
+          <p className="text-white/70">Critical safety considerations for industrial environments</p>
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {industrialHazards.map((hazard, index) => (
-              <div key={index} className="bg-elec-dark/40 p-4 rounded-lg border border-red-500/30">
+              <div key={index} className="bg-white/5 border border-white/10 p-4 rounded-lg border border-red-500/30">
                 <div className="flex items-start gap-3">
                   <div className="p-2 rounded-md bg-red-500/20">
                     {hazard.icon}
                   </div>
                   <div>
                     <h4 className="font-medium text-red-300 mb-2">{hazard.title}</h4>
-                    <p className="text-sm text-muted-foreground">{hazard.description}</p>
+                    <p className="text-sm text-white/70">{hazard.description}</p>
                   </div>
                 </div>
               </div>
@@ -226,20 +226,20 @@ const IndustrialInstallations = () => {
       </Card>
 
       {/* Key Standards */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Shield className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Key Standards & Regulations</CardTitle>
           </div>
-          <p className="text-muted-foreground">Essential compliance requirements for industrial installations</p>
+          <p className="text-white/70">Essential compliance requirements for industrial installations</p>
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="space-y-3">
             {keyStandards.map((standard, index) => (
               <div key={index} className="flex items-start gap-3">
                 <Award className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-muted-foreground">{standard}</span>
+                <span className="text-white/70">{standard}</span>
               </div>
             ))}
           </div>
@@ -248,12 +248,12 @@ const IndustrialInstallations = () => {
 
       {/* Detailed Guidance */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="border-elec-yellow/30 bg-elec-gray">
+        <Card className="border-elec-yellow/30 bg-white/5">
           <CardHeader>
             <CardTitle className="text-elec-yellow text-lg">Planning & Design</CardTitle>
           </CardHeader>
           <CardContent className="p-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/70">
               Industrial installations require detailed electrical design calculations including motor starting 
               currents, cable sizing for voltage drop, and discrimination studies. Coordinate with production 
               schedules and plan shutdowns carefully. Consider maintenance access and future expansion requirements.
@@ -261,12 +261,12 @@ const IndustrialInstallations = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/30 bg-elec-gray">
+        <Card className="border-elec-yellow/30 bg-white/5">
           <CardHeader>
             <CardTitle className="text-elec-yellow text-lg">Enhanced Safety Protocols</CardTitle>
           </CardHeader>
           <CardContent className="p-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/70">
               Industrial environments present additional hazards including moving machinery, hazardous substances, 
               and high voltage systems. Implement permit to work systems and ensure all isolation procedures are 
               followed. Use appropriate PPE rated for the environment and voltage levels.
@@ -274,12 +274,12 @@ const IndustrialInstallations = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/30 bg-elec-gray">
+        <Card className="border-elec-yellow/30 bg-white/5">
           <CardHeader>
             <CardTitle className="text-elec-yellow text-lg">Documentation & Commissioning</CardTitle>
           </CardHeader>
           <CardContent className="p-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/70">
               Industrial installations require comprehensive electrical design documentation, including single line 
               diagrams, control circuit drawings, and equipment schedules. Provide detailed commissioning procedures 
               and handover documentation including operation and maintenance manuals.
@@ -298,15 +298,15 @@ const IndustrialInstallations = () => {
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="space-y-3">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/70">
               <strong className="text-orange-300">Machinery Safety (BS EN 60204):</strong> All machinery must comply 
               with machinery safety standards including emergency stop requirements and safety interlocks.
             </p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/70">
               <strong className="text-orange-300">DSEAR Compliance:</strong> Dangerous Substances and Explosive 
               Atmospheres Regulations may apply. Consider ATEX requirements for hazardous areas.
             </p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/70">
               <strong className="text-orange-300">Competency Requirements:</strong> Industrial electrical work requires 
               advanced competency levels and may require additional authorisations for high voltage work.
             </p>

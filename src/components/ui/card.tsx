@@ -13,17 +13,17 @@ import { cn } from "@/lib/utils"
  * - `highlight` Yellow gradient for featured/promoted content
  */
 const cardVariants = cva(
-  "rounded-2xl border shadow-none overflow-hidden transition-all duration-200 touch-manipulation",
+  "rounded-xl border shadow-none overflow-hidden transition-all duration-200 touch-manipulation",
   {
     variants: {
       variant: {
-        default: "bg-[#1e1e1e] border-elec-yellow/20",
-        elevated: "bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20",
-        subtle: "bg-white/5 border-white/10",
-        highlight: "bg-gradient-to-br from-elec-yellow/20 to-orange-500/10 border-elec-yellow/30",
+        default: "bg-card border-border/30",
+        elevated: "bg-gradient-to-br from-elec-gray to-elec-card border-border/30",
+        subtle: "bg-muted/30 border-border/20",
+        highlight: "bg-gradient-to-br from-elec-yellow/10 to-orange-500/5 border-elec-yellow/30",
       },
       interactive: {
-        true: "cursor-pointer hover:border-elec-yellow/40 hover:bg-[#222222] active:scale-[0.98] active:opacity-90",
+        true: "cursor-pointer hover:border-elec-yellow/40 hover:bg-muted/50 active:scale-[0.99] active:opacity-95",
         false: "",
       },
     },
@@ -61,11 +61,11 @@ const CardInteractive = React.forwardRef<
     ref={ref}
     className={cn(
       // Base card styling
-      "rounded-2xl bg-[#1e1e1e] border border-elec-yellow/20",
+      "rounded-xl bg-card border border-border/30",
       "shadow-none overflow-hidden",
       // Interactive states
-      "hover:border-elec-yellow/40 hover:bg-[#222222]",
-      "active:scale-[0.98] active:opacity-90",
+      "hover:border-elec-yellow/40 hover:bg-muted/50",
+      "active:scale-[0.99] active:opacity-95",
       // Transitions
       "transition-all duration-200",
       "touch-manipulation cursor-pointer",

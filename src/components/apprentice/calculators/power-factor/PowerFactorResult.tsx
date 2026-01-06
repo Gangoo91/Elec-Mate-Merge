@@ -17,7 +17,7 @@ const PowerFactorResult = ({ powerFactor }: PowerFactorResultProps) => {
             <div className="text-2xl font-bold text-elec-yellow">{(parseFloat(powerFactor) * 100).toFixed(1)}%</div>
           </div>
           
-          <div className="mt-4 text-sm text-muted-foreground">
+          <div className="mt-4 text-sm text-white">
             {parseFloat(powerFactor) > 0.95 ? (
               <span className="text-green-500">Good power factor (&gt; 0.95)</span>
             ) : parseFloat(powerFactor) > 0.85 ? (

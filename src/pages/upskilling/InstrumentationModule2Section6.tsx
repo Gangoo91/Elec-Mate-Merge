@@ -67,8 +67,7 @@ const InstrumentationModule2Section6 = () => {
       ],
       correct: 1,
       explanation: "Sensor redundancy means installing multiple sensors (usually 2 or 3) to measure the same parameter, so if one fails, the system can continue operating using the backup sensors. This is critical in safety and process-critical applications."
-    }
-  ];
+  }  ];
 
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">

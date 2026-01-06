@@ -190,13 +190,13 @@ const Module2Section1 = () => {
   const percentage = Math.round((score / quizQuestions.length) * 100);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="../module-2">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 2
@@ -206,7 +206,7 @@ const Module2Section1 = () => {
         <div className="space-y-3">
           <Badge 
             variant="secondary" 
-            className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold text-sm px-3 py-1 border-0"
+            className="bg-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/50 font-semibold text-sm px-3 py-1 border-0"
           >
             Section 1
           </Badge>
@@ -224,10 +224,10 @@ const Module2Section1 = () => {
         <div className="space-y-4 sm:space-y-6">
           
           {/* Quick Intro */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <Shield className="h-6 w-6 text-yellow-400" />
+                <Shield className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-white text-xl">Quick Intro</CardTitle>
               </div>
             </CardHeader>
@@ -241,7 +241,7 @@ const Module2Section1 = () => {
           </Card>
 
           {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Learning Outcomes</CardTitle>
             </CardHeader>
@@ -249,23 +249,23 @@ const Module2Section1 = () => {
               <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
               <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Follow the 5-step safe isolation procedure correctly
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Understand GS38 requirements for test equipment safety
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Apply proper notification and communication procedures
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Safely isolate both single-phase and three-phase systems
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Apply proper lock-off and labelling procedures
                 </li>
               </ul>
@@ -273,39 +273,39 @@ const Module2Section1 = () => {
           </Card>
 
           {/* Communication and Notification */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Communication and Notification</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Before Switching Off</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Before Switching Off</h4>
                   <p className="text-white mb-3">
                     Always inform relevant people before isolation:
                   </p>
                   <ul className="text-white space-y-2">
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Building occupants who may be affected by power loss
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Other tradespeople working in the area
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Security systems and alarm monitoring companies
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Site management or duty electrician
                     </li>
                   </ul>
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Critical Systems</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Critical Systems</h4>
                   <p className="text-white">
                     Special consideration must be given to circuits supplying:
                   </p>
@@ -337,62 +337,62 @@ const Module2Section1 = () => {
           </Card>
 
           {/* The 7-Step Safe Isolation Procedure */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">The 7-Step Safe Isolation Procedure</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
-                <div className="border-l-4 border-yellow-400 pl-6 py-3">
-                  <h4 className="text-yellow-400 font-semibold text-lg mb-2">Step 1: Select & Check Test Equipment</h4>
+                <div className="border-l-4 border-elec-yellow pl-6 py-3">
+                  <h4 className="text-elec-yellow font-semibold text-lg mb-2">Step 1: Select & Check Test Equipment</h4>
                   <p className="text-white">
                     Select an approved test lamp or voltage indicator complying with GS38. Ensure it's in good 
                     condition with proper finger guards and test leads.
                   </p>
                 </div>
 
-                <div className="border-l-4 border-yellow-400 pl-6 py-3">
-                  <h4 className="text-yellow-400 font-semibold text-lg mb-2">Step 2: Prove on Known Live Supply</h4>
+                <div className="border-l-4 border-elec-yellow pl-6 py-3">
+                  <h4 className="text-elec-yellow font-semibold text-lg mb-2">Step 2: Prove on Known Live Supply</h4>
                   <p className="text-white">
                     Test your equipment on a known live source (proving unit or known live supply) to ensure 
                     it's working correctly before starting isolation.
                   </p>
                 </div>
 
-                <div className="border-l-4 border-yellow-400 pl-6 py-3">
-                  <h4 className="text-yellow-400 font-semibold text-lg mb-2">Step 3: Identify the Supply</h4>
+                <div className="border-l-4 border-elec-yellow pl-6 py-3">
+                  <h4 className="text-elec-yellow font-semibold text-lg mb-2">Step 3: Identify the Supply</h4>
                   <p className="text-white">
                     Identify the supply and all associated circuits. Check drawings, labels, and circuit charts. 
                     Ensure you understand which circuits may be affected by the isolation.
                   </p>
                 </div>
 
-                <div className="border-l-4 border-yellow-400 pl-6 py-3">
-                  <h4 className="text-yellow-400 font-semibold text-lg mb-2">Step 4: Isolate the Supply</h4>
+                <div className="border-l-4 border-elec-yellow pl-6 py-3">
+                  <h4 className="text-elec-yellow font-semibold text-lg mb-2">Step 4: Isolate the Supply</h4>
                   <p className="text-white">
                     Switch off and disconnect the supply using appropriate isolation devices (main switches, 
                     isolators, circuit breakers, or fuses). Ensure isolation is at all relevant points.
                   </p>
                 </div>
 
-                <div className="border-l-4 border-yellow-400 pl-6 py-3">
-                  <h4 className="text-yellow-400 font-semibold text-lg mb-2">Step 5: Secure the Isolation</h4>
+                <div className="border-l-4 border-elec-yellow pl-6 py-3">
+                  <h4 className="text-elec-yellow font-semibold text-lg mb-2">Step 5: Secure the Isolation</h4>
                   <p className="text-white">
                     Apply locks and warning labels to prevent unauthorised re-energisation. Use appropriate 
                     locking devices and ensure labels include name, date, and contact details.
                   </p>
                 </div>
 
-                <div className="border-l-4 border-yellow-400 pl-6 py-3">
-                  <h4 className="text-yellow-400 font-semibold text-lg mb-2">Step 6: Test the Circuit is Dead</h4>
+                <div className="border-l-4 border-elec-yellow pl-6 py-3">
+                  <h4 className="text-elec-yellow font-semibold text-lg mb-2">Step 6: Test the Circuit is Dead</h4>
                   <p className="text-white">
                     Use your voltage detection equipment to test the circuit is dead. Test between 
                     all live conductors and between live conductors and earth. Use two separate test leads.
                   </p>
                 </div>
 
-                <div className="border-l-4 border-yellow-400 pl-6 py-3">
-                  <h4 className="text-yellow-400 font-semibold text-lg mb-2">Step 7: Prove Test Equipment Again</h4>
+                <div className="border-l-4 border-elec-yellow pl-6 py-3">
+                  <h4 className="text-elec-yellow font-semibold text-lg mb-2">Step 7: Prove Test Equipment Again</h4>
                   <p className="text-white">
                     Re-test your voltage detection equipment on the known live source (proving unit) to ensure 
                     it remained functional throughout the testing process.
@@ -403,57 +403,57 @@ const Module2Section1 = () => {
           </Card>
 
           {/* GS38 Safety Requirements */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">GS38 Safety Requirements for Test Equipment</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Test Lamp Requirements (GS38)</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Test Lamp Requirements (GS38)</h4>
                   <p className="text-white mb-3">
                     HSE Guidance Note GS38 specifies safety requirements for electrical test equipment:
                   </p>
                   <ul className="text-white space-y-2">
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Test lamps must be clearly visible when energised
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Operating voltage should not exceed 50V AC or 120V DC
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Current should be limited to 0.5mA by series resistor
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Lamp should fail to 'safe' condition if damaged
                     </li>
                   </ul>
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Finger Guards and Probe Safety</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Finger Guards and Probe Safety</h4>
                   <p className="text-white mb-3">
                     Test probes must comply with GS38 safety requirements:
                   </p>
                   <ul className="text-white space-y-2">
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Finger guards must be fitted to prevent accidental contact
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Exposed metal tip should not exceed 2mm or be spring-loaded
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Leads must be adequately insulated and in good condition
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Should be clearly marked with voltage rating
                     </li>
                   </ul>
@@ -470,47 +470,47 @@ const Module2Section1 = () => {
           </Card>
 
           {/* Single-Phase Safe Isolation */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Single-Phase Safe Isolation</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Isolation Points</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Isolation Points</h4>
                   <p className="text-white mb-3">
                     Single-phase circuits typically require isolation at:
                   </p>
                   <ul className="text-white space-y-2">
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Main consumer unit MCB or RCBO
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Local isolation switches where fitted
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Equipment isolators or plugs/sockets
                     </li>
                   </ul>
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Testing Requirements</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Testing Requirements</h4>
                   <p className="text-white mb-3">Test between all combinations:</p>
                   <ul className="text-white space-y-2">
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Line to Neutral (L-N)
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Line to Earth (L-E)
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Neutral to Earth (N-E)
                     </li>
                   </ul>
@@ -520,43 +520,43 @@ const Module2Section1 = () => {
           </Card>
 
           {/* Three-Phase Safe Isolation */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Three-Phase Safe Isolation</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Complex Isolation Requirements</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Complex Isolation Requirements</h4>
                   <p className="text-white mb-3">
                     Three-phase systems present additional complexity and require careful consideration of:
                   </p>
                   <ul className="text-white space-y-2">
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Main three-phase isolator or switch disconnector
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Distribution board isolators and MCBs
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Transformer primary and secondary supplies
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Motor control centre isolators
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Sub-distribution and final circuit isolators
                     </li>
                   </ul>
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Critical Safety Point: Earth Probe First</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Critical Safety Point: Earth Probe First</h4>
                   <div className="bg-red-900/20 p-4 rounded-lg mb-4">
                     <p className="text-red-300 font-semibold mb-2">
                       ALWAYS earth your probe before testing any three-phase system!
@@ -569,7 +569,7 @@ const Module2Section1 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Correct Testing Sequence</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Correct Testing Sequence</h4>
                   <p className="text-white mb-3">
                     Follow this specific order when testing three-phase systems for dead:
                   </p>
@@ -587,8 +587,8 @@ const Module2Section1 = () => {
                       </p>
                     </div>
 
-                    <div className="border-l-4 border-yellow-400 pl-4 py-2">
-                      <h5 className="text-yellow-400 font-semibold mb-2">2. Phase-to-Phase Tests (SECOND)</h5>
+                    <div className="border-l-4 border-elec-yellow pl-4 py-2">
+                      <h5 className="text-elec-yellow font-semibold mb-2">2. Phase-to-Phase Tests (SECOND)</h5>
                       <ul className="text-white space-y-1 text-sm">
                         <li>• L1 to L2</li>
                         <li>• L2 to L3</li>
@@ -618,7 +618,7 @@ const Module2Section1 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Special Considerations</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Special Considerations</h4>
                   <ul className="text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <AlertCircle className="h-4 w-4 text-orange-400 mt-1 flex-shrink-0" />
@@ -650,14 +650,14 @@ const Module2Section1 = () => {
           </Card>
 
           {/* Proving Units and Test Equipment */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Proving Units and Test Equipment</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Voltage Detection Devices</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Voltage Detection Devices</h4>
                   <p className="text-white mb-3">
                     Use appropriate voltage detection equipment such as digital voltmeters, test lamps, 
                     or voltage indicators. Equipment must be suitable for the voltage and type of system.
@@ -665,7 +665,7 @@ const Module2Section1 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Proving Units</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Proving Units</h4>
                   <p className="text-white mb-3">
                     Proving units provide a known voltage source to verify test equipment is working. 
                     They must be used before and after every test-for-dead procedure.
@@ -673,18 +673,18 @@ const Module2Section1 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Test Lead Requirements</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Test Lead Requirements</h4>
                   <ul className="text-white space-y-2">
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Use two separate test leads when testing for dead
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Ensure leads are in good condition with no damage
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Check lead continuity before use
                     </li>
                   </ul>
@@ -694,14 +694,14 @@ const Module2Section1 = () => {
           </Card>
 
           {/* Lock-off and Labelling */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Lock-off and Labelling</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Physical Locking</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Physical Locking</h4>
                   <p className="text-white mb-3">
                     Use appropriate locking devices such as padlocks, lockout hasps, or miniature circuit 
                     breaker lockouts. Each person working on the circuit should apply their own lock.
@@ -709,30 +709,30 @@ const Module2Section1 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Warning Labels</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Warning Labels</h4>
                   <p className="text-white mb-3">Labels must include:</p>
                   <ul className="text-white space-y-2">
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Name of the person responsible for the isolation
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Date and time of isolation
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Contact details (phone number)
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                       Clear warning message
                     </li>
                   </ul>
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Multi-Person Working</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Multi-Person Working</h4>
                   <p className="text-white">
                     When multiple people are working on the same circuit, each person must apply their 
                     own lock and label. The circuit can only be re-energised when all locks are removed.
@@ -783,7 +783,7 @@ const Module2Section1 = () => {
           </Card>
 
           {/* Quick Knowledge Checks */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Quick Knowledge Checks</CardTitle>
             </CardHeader>
@@ -791,7 +791,7 @@ const Module2Section1 = () => {
               <div className="space-y-4">
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       What are the 7 steps of safe isolation?
                     </summary>
@@ -809,7 +809,7 @@ const Module2Section1 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       Why test earth-to-phase first on three-phase systems?
                     </summary>
@@ -821,7 +821,7 @@ const Module2Section1 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       What information must be on isolation labels?
                     </summary>
@@ -835,7 +835,7 @@ const Module2Section1 = () => {
           </Card>
 
           {/* Frequently Asked Questions */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Frequently Asked Questions</CardTitle>
             </CardHeader>
@@ -843,7 +843,7 @@ const Module2Section1 = () => {
               <div className="space-y-4">
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       Can I use just one test lead when testing for dead?
                     </summary>
@@ -855,7 +855,7 @@ const Module2Section1 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       Do I need to test the proving unit after every single test?
                     </summary>
@@ -867,7 +867,7 @@ const Module2Section1 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       What if I can't find the right isolator for a circuit?
                     </summary>
@@ -879,7 +879,7 @@ const Module2Section1 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       Can I skip isolation for low voltage work like testing sockets?
                     </summary>
@@ -891,7 +891,7 @@ const Module2Section1 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       What if someone else needs to access the same circuit?
                     </summary>
@@ -903,7 +903,7 @@ const Module2Section1 = () => {
 
                 <div className="border border-gray-600 rounded-lg p-4">
                   <details className="group">
-                    <summary className="cursor-pointer text-yellow-400 font-semibold flex items-center gap-2">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
                       <span className="group-open:rotate-90 transition-transform">▶</span>
                       How long should I keep isolation labels in place?
                     </summary>
@@ -917,22 +917,22 @@ const Module2Section1 = () => {
           </Card>
 
           {/* Practical Exercises */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <Shield className="h-6 w-6 text-yellow-400" />
+                <Shield className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-white text-xl">Practical Exercises</CardTitle>
               </div>
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-3">Exercise 1: Domestic Consumer Unit</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-3">Exercise 1: Domestic Consumer Unit</h4>
                   <p className="text-white mb-3">
                     You need to test the downstairs lighting circuit in a domestic property.
                   </p>
-                  <div className="bg-card/50 p-4 rounded-lg">
-                    <p className="text-yellow-400 font-semibold mb-2">Your task:</p>
+                  <div className="bg-transparent/50 p-4 rounded-lg">
+                    <p className="text-elec-yellow font-semibold mb-2">Your task:</p>
                     <ol className="text-white text-sm space-y-1 list-decimal list-inside">
                       <li>List the 5 steps you must follow</li>
                       <li>Identify what tests you need to perform</li>
@@ -942,12 +942,12 @@ const Module2Section1 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-3">Exercise 2: Three-Phase Motor Testing</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-3">Exercise 2: Three-Phase Motor Testing</h4>
                   <p className="text-white mb-3">
                     You're testing a three-phase motor feed in an industrial setting.
                   </p>
-                  <div className="bg-card/50 p-4 rounded-lg">
-                    <p className="text-yellow-400 font-semibold mb-2">Your task:</p>
+                  <div className="bg-transparent/50 p-4 rounded-lg">
+                    <p className="text-elec-yellow font-semibold mb-2">Your task:</p>
                     <ol className="text-white text-sm space-y-1 list-decimal list-inside">
                       <li>List all possible isolation points you must consider</li>
                       <li>State the correct testing sequence (earth-to-phase first!)</li>
@@ -957,12 +957,12 @@ const Module2Section1 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-3">Exercise 3: Equipment Failure Scenario</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-3">Exercise 3: Equipment Failure Scenario</h4>
                   <p className="text-white mb-3">
                     Your voltage detector isn't working on the proving unit after testing for dead.
                   </p>
-                  <div className="bg-card/50 p-4 rounded-lg">
-                    <p className="text-yellow-400 font-semibold mb-2">Your task:</p>
+                  <div className="bg-transparent/50 p-4 rounded-lg">
+                    <p className="text-elec-yellow font-semibold mb-2">Your task:</p>
                     <p className="text-white text-sm">
                       What immediate actions must you take? Think about the implications 
                       and what this means for your test results.
@@ -974,38 +974,38 @@ const Module2Section1 = () => {
           </Card>
 
           {/* Key Takeaways */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Key Takeaways</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Always notify relevant people before switching off supplies
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Use only GS38 compliant test equipment with finger guards
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Earth the probe first when testing three-phase systems
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Test earth-to-phase before phase-to-phase in three-phase systems
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   The 7-step safe isolation procedure is non-negotiable
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Always use a proving unit before and after testing for dead
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Two separate test leads are required when testing for dead
                 </li>
               </ul>
@@ -1013,10 +1013,10 @@ const Module2Section1 = () => {
           </Card>
 
           {/* Quiz Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <Brain className="h-6 w-6 text-yellow-400" />
+                <Brain className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-white text-xl">Knowledge Check (10 Questions)</CardTitle>
               </div>
             </CardHeader>
@@ -1028,7 +1028,7 @@ const Module2Section1 = () => {
                   </p>
                   <Button 
                     onClick={startQuiz}
-                    className="bg-yellow-400 text-black hover:bg-yellow-400 font-semibold px-8 py-2"
+                    className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-2"
                   >
                     Start Quiz
                   </Button>
@@ -1036,7 +1036,7 @@ const Module2Section1 = () => {
               ) : showResults ? (
                 <div className="space-y-6">
                   <div className="text-center space-y-4">
-                    <div className="text-4xl font-bold text-yellow-400">{percentage}%</div>
+                    <div className="text-4xl font-bold text-elec-yellow">{percentage}%</div>
                     <p className="text-xl text-white">
                       You scored {score} out of {quizQuestions.length}
                     </p>
@@ -1053,7 +1053,7 @@ const Module2Section1 = () => {
                       const userAnswer = selectedAnswers[index];
                       const isCorrect = userAnswer === question.correctAnswer;
                       return (
-                        <div key={question.id} className="bg-card/80 p-4 rounded-lg space-y-2">
+                        <div key={question.id} className="bg-transparent/80 p-4 rounded-lg space-y-2">
                           <div className="flex items-start gap-2">
                             {isCorrect ? (
                               <CheckCircle2 className="h-5 w-5 text-green-500 mt-1 flex-shrink-0" />
@@ -1088,7 +1088,7 @@ const Module2Section1 = () => {
                   <div className="flex justify-center">
                     <Button 
                       onClick={resetQuiz}
-                      className="bg-yellow-400 text-black hover:bg-yellow-400 font-semibold px-6 py-2"
+                      className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-6 py-2"
                     >
                       Retake Quiz
                     </Button>
@@ -1104,7 +1104,7 @@ const Module2Section1 = () => {
                   
                   <div className="w-full bg-gray-700 rounded-full h-2">
                     <div 
-                      className="bg-yellow-400 h-2 rounded-full transition-all duration-300"
+                      className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
                       style={{ width: `${((currentQuestionIndex + 1) / quizQuestions.length) * 100}%` }}
                     ></div>
                   </div>
@@ -1122,8 +1122,8 @@ const Module2Section1 = () => {
                           onClick={() => handleAnswerSelect(index)}
                           className={`w-full text-left p-4 rounded-lg border-2 transition-all duration-200 ${
                             selectedAnswers[currentQuestionIndex] === index
-                              ? 'border-yellow-400 bg-yellow-400/10 text-yellow-400'
-                              : 'border-gray-600 bg-card/80 text-white hover:border-yellow-400/30 hover:bg-yellow-400/10'
+                              ? 'border-elec-yellow bg-elec-yellow/10 text-elec-yellow'
+                              : 'border-gray-600 bg-transparent/80 text-white hover:border-elec-yellow/30 hover:bg-elec-yellow/10'
                           }`}
                         >
                           <span className="font-medium">{String.fromCharCode(65 + index)}.</span> {option}
@@ -1145,7 +1145,7 @@ const Module2Section1 = () => {
                     <Button
                       onClick={handleNext}
                       disabled={selectedAnswers[currentQuestionIndex] === undefined}
-                      className="bg-yellow-400 text-black hover:bg-yellow-400 disabled:opacity-50 disabled:cursor-not-allowed px-6 py-2"
+                      className="bg-elec-yellow text-black hover:bg-elec-yellow disabled:opacity-50 disabled:cursor-not-allowed px-6 py-2"
                     >
                       {currentQuestionIndex === quizQuestions.length - 1 ? 'Finish' : 'Next'}
                     </Button>
@@ -1162,7 +1162,7 @@ const Module2Section1 = () => {
       <div className="px-4 sm:px-6 lg:px-8 pb-8">
         <div className="max-w-4xl mx-auto flex justify-center">
           <Link to="module-2/section-2">
-            <Button className="bg-yellow-400 text-black hover:bg-yellow-400 font-semibold px-8 py-3 text-lg">
+            <Button className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-3 text-lg">
               Next Section: RAMS →
             </Button>
           </Link>

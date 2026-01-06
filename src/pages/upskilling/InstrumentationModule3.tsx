@@ -35,7 +35,7 @@ const InstrumentationModule3 = () => {
       title: "Signal Integrity: Noise, Ground Loops, and Shielding",
       icon: Shield,
       description: "Maintaining signal quality and preventing interference"
-    }
+  }
   ];
 
   return (

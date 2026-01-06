@@ -167,19 +167,19 @@ const AM2Module4Section4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
+      <div className="border-b border-white/10 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between gap-2">
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-2 sm:p-0 text-sm sm:text-base" asChild>
+            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
               <Link to="..">
                 <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
                 <span className="hidden xs:inline">Back to Module 4</span>
                 <span className="xs:hidden">Back</span>
               </Link>
             </Button>
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-2 sm:p-0 text-sm sm:text-base" asChild>
+            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
               <Link to="../section5">
                 <span className="hidden xs:inline">Module 4 Section 5</span>
                 <span className="xs:hidden">Section 5</span>
@@ -198,10 +198,10 @@ const AM2Module4Section4 = () => {
             <Zap className="w-4 h-4" />
             Module 4 – Section 4
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4 sm:mb-6 leading-tight">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6 leading-tight">
             Functional and Operational Testing
           </h1>
-          <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
+          <p className="text-sm sm:text-base text-white mb-6 sm:mb-8 leading-relaxed">
             After insulation resistance, continuity, Zs, and RCD tests, you must carry out functional and operational testing to confirm that the installation performs as intended. This stage ensures that switches, RCDs, protective devices, and equipment operate correctly and safely.
           </p>
         </div>
@@ -227,16 +227,16 @@ const AM2Module4Section4 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
               Learning Outcomes
             </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground mb-4">
+            <p className="text-xs sm:text-sm text-white mb-4">
               By the end of this section, you should be able to:
             </p>
-            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
+            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Perform functional testing of lighting, power, and motor circuits
@@ -262,7 +262,7 @@ const AM2Module4Section4 = () => {
         </Card>
 
         {/* What is Functional Testing */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Settings className="w-5 h-5" />
@@ -318,7 +318,7 @@ const AM2Module4Section4 = () => {
         />
 
         {/* Key Functional Tests in AM2 */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Play className="w-5 h-5" />
@@ -483,7 +483,7 @@ const AM2Module4Section4 = () => {
         />
 
         {/* Assessor Expectations */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Eye className="w-5 h-5" />
@@ -548,7 +548,7 @@ const AM2Module4Section4 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Wrench className="w-5 h-5" />
@@ -687,7 +687,7 @@ const AM2Module4Section4 = () => {
         />
 
         {/* Real-World Examples */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
@@ -748,9 +748,9 @@ const AM2Module4Section4 = () => {
             
             <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-background/50 rounded-lg p-3 sm:p-4">
-                  <h4 className="font-medium text-foreground mb-2 text-sm sm:text-base">Troubleshooting Failed Tests:</h4>
-                  <ul className="text-xs sm:text-sm text-muted-foreground space-y-1">
+                <div className="bg-[#1a1a1a]/50 rounded-lg p-3 sm:p-4">
+                  <h4 className="font-medium text-white mb-2 text-sm sm:text-base">Troubleshooting Failed Tests:</h4>
+                  <ul className="text-xs sm:text-sm text-white space-y-1">
                     <li>• RCD fails to trip: Check test equipment, verify connections</li>
                     <li>• Switch doesn't control lamp: Verify switching wiring</li>
                     <li>• Motor won't start: Check control circuit, overloads</li>
@@ -758,9 +758,9 @@ const AM2Module4Section4 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-background/50 rounded-lg p-3 sm:p-4">
-                  <h4 className="font-medium text-foreground mb-2 text-sm sm:text-base">Professional Documentation:</h4>
-                  <ul className="text-xs sm:text-sm text-muted-foreground space-y-1">
+                <div className="bg-[#1a1a1a]/50 rounded-lg p-3 sm:p-4">
+                  <h4 className="font-medium text-white mb-2 text-sm sm:text-base">Professional Documentation:</h4>
+                  <ul className="text-xs sm:text-sm text-white space-y-1">
                     <li>• Record actual test results, not expected values</li>
                     <li>• Note any deviations or failures clearly</li>
                     <li>• Include environmental conditions if relevant</li>
@@ -771,7 +771,7 @@ const AM2Module4Section4 = () => {
               
               <div className="bg-elec-yellow/10 rounded-lg p-3 sm:p-4">
                 <h4 className="font-medium text-elec-yellow mb-2 text-sm sm:text-base">Industry Best Practices:</h4>
-                <p className="text-xs sm:text-sm text-muted-foreground">
+                <p className="text-xs sm:text-sm text-white">
                   Professional electricians use functional testing to verify that installations will operate safely and reliably 
                   in service. This testing phase often reveals issues that purely electrical tests miss, making it essential 
                   for both AM2 success and real-world competence.
@@ -790,9 +790,9 @@ const AM2Module4Section4 = () => {
             </h2>
             
             <div className="space-y-4">
-              <div className="bg-background/50 rounded-lg p-3 sm:p-4">
-                <h4 className="font-medium text-foreground mb-3 text-sm sm:text-base">Key Takeaways:</h4>
-                <ul className="text-xs sm:text-sm text-muted-foreground space-y-2">
+              <div className="bg-[#1a1a1a]/50 rounded-lg p-3 sm:p-4">
+                <h4 className="font-medium text-white mb-3 text-sm sm:text-base">Key Takeaways:</h4>
+                <ul className="text-xs sm:text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                     <span>Functional and operational testing proves that circuits and devices actually work</span>
@@ -818,7 +818,7 @@ const AM2Module4Section4 = () => {
               
               <div className="bg-elec-yellow/10 rounded-lg p-3 sm:p-4">
                 <h4 className="font-medium text-elec-yellow mb-2 text-sm sm:text-base">Next Steps:</h4>
-                <p className="text-xs sm:text-sm text-muted-foreground">
+                <p className="text-xs sm:text-sm text-white">
                   You have now completed all essential testing procedures for AM2. The next section will cover 
                   final certification completion and handover procedures to complete your assessment successfully.
                 </p>
@@ -828,13 +828,13 @@ const AM2Module4Section4 = () => {
         </Card>
 
         {/* Quiz Section */}
-        <Card className="bg-card border-elec-yellow/30 mb-6 sm:mb-8">
+        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
           <div className="p-4 sm:p-6">
             <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
               <Timer className="w-5 h-5" />
               Test Your Knowledge
             </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground mb-6">
+            <p className="text-xs sm:text-sm text-white mb-6">
               Complete this 10-question quiz to test your understanding of functional and operational testing procedures.
             </p>
             <Quiz questions={quizQuestions} title="Functional and Operational Testing" />

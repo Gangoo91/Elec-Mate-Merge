@@ -618,7 +618,7 @@ const InstrumentationModule7Section7 = () => {
                 ],
                 correctAnswer: 1,
                 explanation: "The systematic approach starts with checking power supply voltage and loop continuity to determine if the fault is in the power supply, wiring, or devices. This prevents unnecessary component replacement."
-              }
+            }
             ]}
             title="Section 7 Knowledge Check"
           />

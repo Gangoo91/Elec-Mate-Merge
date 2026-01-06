@@ -24,7 +24,7 @@ const QuickActionsSection = ({
           variant="outline"
           size="sm"
           onClick={onAutoFillDate}
-          className="border-border text-gray-300 hover:bg-muted"
+          className="border-border text-white/80 hover:bg-muted"
         >
           <RefreshCw className="h-3 w-3 mr-2" />
           Today's Date
@@ -34,7 +34,7 @@ const QuickActionsSection = ({
             variant="outline"
             size="sm"
             onClick={onCopyFromClient}
-            className="border-border text-gray-300 hover:bg-muted"
+            className="border-border text-white/80 hover:bg-muted"
           >
             <Copy className="h-3 w-3 mr-2" />
             Copy Client Name
@@ -45,7 +45,7 @@ const QuickActionsSection = ({
             variant="outline"
             size="sm"
             onClick={onReloadProfile}
-            className="border-border text-gray-300 hover:bg-muted"
+            className="border-border text-white/80 hover:bg-muted"
           >
             <User className="h-3 w-3 mr-2" />
             Reload Profile

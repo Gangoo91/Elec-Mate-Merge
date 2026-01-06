@@ -58,7 +58,7 @@ const FurtherEducation = () => {
     <div className="space-y-6">
       <div className="space-y-4">
         <h2 className="text-2xl font-semibold">Further Education</h2>
-        <p className="text-muted-foreground">
+        <p className="text-white">
           Advancing your academic qualifications can open doors to higher-level positions and specialisations in the electrical industry.
           Below are key educational pathways that can enhance your career prospects and technical expertise.
         </p>
@@ -66,14 +66,14 @@ const FurtherEducation = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {educationOptions.map((option) => (
-          <Card key={option.id} className="border-elec-yellow/20 bg-elec-gray h-full flex flex-col">
+          <Card key={option.id} className="border-elec-yellow/20 bg-white/5 h-full flex flex-col">
             <CardHeader className="pb-2">
               <div className="flex items-start justify-between">
                 <div>
                   <CardTitle className="text-xl">{option.title}</CardTitle>
                   <p className="text-sm text-amber-400">{option.institution}</p>
                 </div>
-                <div className="text-sm bg-elec-dark/30 px-2 py-1 rounded-md inline-block">
+                <div className="text-sm bg-white/10 px-2 py-1 rounded-md inline-block">
                   {option.level}
                 </div>
               </div>
@@ -105,7 +105,7 @@ const FurtherEducation = () => {
                     {option.keyTopics.map((topic, idx) => (
                       <span 
                         key={idx}
-                        className="text-xs bg-elec-dark/60 px-2 py-0.5 rounded"
+                        className="text-xs bg-white/10 px-2 py-0.5 rounded"
                       >
                         {topic}
                       </span>
@@ -128,7 +128,7 @@ const FurtherEducation = () => {
         ))}
       </div>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray/50 p-4">
+      <Card className="border-elec-yellow/20 bg-white/5 p-4">
         <div className="flex gap-3 items-start">
           <GraduationCap className="h-6 w-6 text-elec-yellow mt-1" />
           <div>

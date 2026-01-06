@@ -173,7 +173,7 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
             {sectionItem.clause}
           </Badge>
         ) : (
-          <Badge variant="secondary" className="text-[11px] font-normal font-mono w-fit py-0.5 bg-gray-500/10 border-gray-500/30 text-gray-400">
+          <Badge variant="secondary" className="text-[11px] font-normal font-mono w-fit py-0.5 bg-white/20 border-white/20 text-white/70">
             No Specific Reg
           </Badge>
         )}

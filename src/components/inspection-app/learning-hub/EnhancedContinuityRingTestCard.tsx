@@ -100,24 +100,24 @@ const EnhancedContinuityRingTestCard = () => {
         
         <div className="grid grid-cols-3 gap-4 mb-4">
           <div className="text-center">
-            <div className="border border-gray-500 p-2 rounded mb-2">
+            <div className="border border-white/50 p-2 rounded mb-2">
               <div className="text-foreground text-xs">Socket 1</div>
             </div>
           </div>
           <div className="text-center">
-            <div className="border border-gray-500 p-2 rounded mb-2">
+            <div className="border border-white/50 p-2 rounded mb-2">
               <div className="text-foreground text-xs">Socket 2</div>
             </div>
           </div>
           <div className="text-center">
-            <div className="border border-gray-500 p-2 rounded mb-2">
+            <div className="border border-white/50 p-2 rounded mb-2">
               <div className="text-foreground text-xs">Socket 3</div>
             </div>
           </div>
         </div>
         
         <div className="text-center">
-          <div className="border border-gray-500 p-2 rounded inline-block">
+          <div className="border border-white/50 p-2 rounded inline-block">
             <div className="text-foreground text-xs">Final Socket</div>
           </div>
         </div>

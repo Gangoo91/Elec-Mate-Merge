@@ -80,7 +80,7 @@ const InstrumentationModule4Section4 = () => {
       ],
       correctAnswer: 1,
       explanation: "Always verify that the instrument's voltage, current, and frequency ratings are suitable for the circuit being measured to prevent damage and ensure safety."
-    }
+  }
   ];
 
   function handleAnswerSelect(answerIndex: number) {
@@ -88,58 +88,58 @@ const InstrumentationModule4Section4 = () => {
       ...prev,
       [currentQuestionIndex]: answerIndex
     }));
-  }
+};
 
   function handleNext() {
     if (currentQuestionIndex < quizQuestions.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1);
     } else {
       setShowResults(true);
-    }
-  }
+  };
+};
 
   function handlePrevious() {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(prev => prev - 1);
-    }
-  }
+  };
+};
 
   function calculateScore() {
     let correct = 0;
     quizQuestions.forEach((question, index) => {
       if (selectedAnswers[index] === question.correctAnswer) {
         correct++;
-      }
+    };
     });
     return correct;
-  }
+};
 
   function resetQuiz() {
     setCurrentQuestionIndex(0);
     setSelectedAnswers({});
     setShowResults(false);
     setQuizStarted(false);
-  }
+};
 
   function startQuiz() {
     setQuizStarted(true);
     setCurrentQuestionIndex(0);
     setSelectedAnswers({});
     setShowResults(false);
-  }
+};
 
   const currentQuestion = quizQuestions[currentQuestionIndex];
   const score = calculateScore();
   const percentage = Math.round((score / quizQuestions.length) * 100);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="../instrumentation-module-4">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 4
@@ -148,10 +148,10 @@ const InstrumentationModule4Section4 = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <Gauge className="h-8 w-8 text-yellow-400" />
+            <Gauge className="h-8 w-8 text-elec-yellow" />
             <Badge 
               variant="secondary" 
-              className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold text-sm px-3 py-1 border-0"
+              className="bg-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/50 font-semibold text-sm px-3 py-1 border-0"
             >
               Module 4 - Section 4
             </Badge>
@@ -170,10 +170,10 @@ const InstrumentationModule4Section4 = () => {
         <div className="space-y-4 sm:space-y-6">
           
           {/* Quick Introduction */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <Eye className="h-6 w-6 text-yellow-400" />
+                <Eye className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-white text-xl">Quick Introduction</CardTitle>
               </div>
             </CardHeader>
@@ -185,7 +185,7 @@ const InstrumentationModule4Section4 = () => {
           </Card>
 
           {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Learning Outcomes</CardTitle>
             </CardHeader>
@@ -193,23 +193,23 @@ const InstrumentationModule4Section4 = () => {
               <p className="text-gray-300 mb-4">By the end of this section, you'll be able to:</p>
               <ul className="space-y-2 text-gray-300">
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Understand the function and capabilities of each instrument type</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Select appropriate measurement tools for specific applications</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Use measurement instruments safely and effectively</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Recognise the advantages and limitations of each tool</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Apply proper measurement techniques and best practices</span>
                 </li>
               </ul>
@@ -217,22 +217,22 @@ const InstrumentationModule4Section4 = () => {
           </Card>
 
           {/* Digital Multimeters */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <Settings className="h-5 w-5 text-yellow-400" />
+                <Settings className="h-5 w-5 text-elec-yellow" />
                 Digital Multimeters (DMMs)
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">The Swiss Army Knife of Electrical Measurement</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">The Swiss Army Knife of Electrical Measurement</h4>
                   <p className="text-gray-300 mb-3">
                     Digital multimeters are the most versatile and commonly used electrical test instruments:
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-4">
+                    <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
                       <h5 className="text-blue-200 font-medium mb-2">Basic Functions</h5>
                       <ul className="text-gray-300 text-sm space-y-1">
                         <li>• DC and AC voltage measurement</li>
@@ -256,7 +256,7 @@ const InstrumentationModule4Section4 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Types of Digital Multimeters</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Types of Digital Multimeters</h4>
                   <div className="space-y-3">
                     <div className="bg-purple-600/10 border border-purple-600/20 rounded-lg p-4">
                       <h5 className="text-purple-200 font-medium mb-2">Handheld DMMs</h5>
@@ -282,23 +282,23 @@ const InstrumentationModule4Section4 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Safety Features</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Safety Features</h4>
                   <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4">
                     <ul className="text-gray-300 space-y-2">
                       <li className="flex items-start gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                        <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>Input protection fuses on current ranges</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                        <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>High voltage input protection circuits</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                        <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>CAT ratings for installation safety</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
+                        <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                         <span>Low battery and overload indicators</span>
                       </li>
                     </ul>
@@ -309,17 +309,17 @@ const InstrumentationModule4Section4 = () => {
           </Card>
 
           {/* Clamp Meters */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <Activity className="h-5 w-5 text-yellow-400" />
+                <Activity className="h-5 w-5 text-elec-yellow" />
                 Clamp Meters
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Non-Contact Current Measurement</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Non-Contact Current Measurement</h4>
                   <p className="text-gray-300 mb-3">
                     Clamp meters measure current by detecting the magnetic field around a conductor:
                   </p>
@@ -333,7 +333,7 @@ const InstrumentationModule4Section4 = () => {
                         <li>• Current transformer secondary output</li>
                       </ul>
                     </div>
-                    <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-4">
+                    <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
                       <h5 className="text-blue-200 font-medium mb-2">Key Benefits</h5>
                       <ul className="text-gray-300 text-sm space-y-1">
                         <li>• No circuit interruption required</li>
@@ -346,9 +346,9 @@ const InstrumentationModule4Section4 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Types and Applications</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Types and Applications</h4>
                   <div className="space-y-3">
-                    <div className="bg-yellow-600/10 border border-yellow-600/20 rounded-lg p-4">
+                    <div className="bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg p-4">
                       <h5 className="text-yellow-200 font-medium mb-2">AC Current Clamps</h5>
                       <p className="text-gray-300 text-sm mb-2">Most common type for general electrical work</p>
                       <ul className="text-gray-300 text-sm space-y-1">
@@ -372,7 +372,7 @@ const InstrumentationModule4Section4 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Limitations and Considerations</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Limitations and Considerations</h4>
                   <div className="bg-orange-600/10 border border-orange-600/20 rounded-lg p-4">
                     <ul className="text-gray-300 text-sm space-y-1">
                       <li>• Lower accuracy than series measurement</li>
@@ -388,22 +388,22 @@ const InstrumentationModule4Section4 = () => {
           </Card>
 
           {/* Oscilloscopes */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <Zap className="h-5 w-5 text-yellow-400" />
+                <Zap className="h-5 w-5 text-elec-yellow" />
                 Oscilloscopes
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Visualizing Electrical Signals</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Visualizing Electrical Signals</h4>
                   <p className="text-gray-300 mb-3">
                     Oscilloscopes display voltage waveforms over time, revealing signal characteristics invisible to other instruments:
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-4">
+                    <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
                       <h5 className="text-blue-200 font-medium mb-2">What They Show</h5>
                       <ul className="text-gray-300 text-sm space-y-1">
                         <li>• Signal amplitude and frequency</li>
@@ -427,7 +427,7 @@ const InstrumentationModule4Section4 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Types of Oscilloscopes</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Types of Oscilloscopes</h4>
                   <div className="space-y-3">
                     <div className="bg-purple-600/10 border border-purple-600/20 rounded-lg p-4">
                       <h5 className="text-purple-200 font-medium mb-2">Digital Storage Oscilloscopes (DSO)</h5>
@@ -453,7 +453,7 @@ const InstrumentationModule4Section4 = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Key Specifications</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Key Specifications</h4>
                   <div className="bg-gray-700/50 rounded-lg p-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
@@ -480,13 +480,13 @@ const InstrumentationModule4Section4 = () => {
           </Card>
 
           {/* Tool Selection Guide */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">When to Use Each Tool</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-card/80 rounded-lg p-4 border-l-4 border-yellow-400/30">
+                <div className="bg-transparent/80 rounded-lg p-4 border-l-4 border-elec-yellow/30">
                   <h4 className="text-blue-200 font-medium mb-2">Use DMMs For:</h4>
                   <ul className="text-gray-300 text-sm space-y-1">
                     <li>• Precise DC measurements</li>
@@ -496,7 +496,7 @@ const InstrumentationModule4Section4 = () => {
                     <li>• General troubleshooting</li>
                   </ul>
                 </div>
-                <div className="bg-card/80 rounded-lg p-4 border-l-4 border-green-500/50">
+                <div className="bg-transparent/80 rounded-lg p-4 border-l-4 border-green-500/50">
                   <h4 className="text-green-200 font-medium mb-2">Use Clamp Meters For:</h4>
                   <ul className="text-gray-300 text-sm space-y-1">
                     <li>• Live circuit current measurement</li>
@@ -506,7 +506,7 @@ const InstrumentationModule4Section4 = () => {
                     <li>• Load monitoring</li>
                   </ul>
                 </div>
-                <div className="bg-card/80 rounded-lg p-4 border-l-4 border-purple-500/50">
+                <div className="bg-transparent/80 rounded-lg p-4 border-l-4 border-purple-500/50">
                   <h4 className="text-purple-200 font-medium mb-2">Use Oscilloscopes For:</h4>
                   <ul className="text-gray-300 text-sm space-y-1">
                     <li>• Waveform analysis</li>
@@ -521,7 +521,7 @@ const InstrumentationModule4Section4 = () => {
           </Card>
 
           {/* Best Practices */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Best Practices and Safety</CardTitle>
             </CardHeader>
@@ -549,7 +549,7 @@ const InstrumentationModule4Section4 = () => {
                   </ul>
                 </div>
 
-                <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-4">
+                <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
                   <h4 className="text-blue-200 font-medium mb-2">Maintenance Guidelines</h4>
                   <ul className="text-gray-300 text-sm space-y-1">
                     <li>• Keep instruments clean and dry</li>
@@ -564,14 +564,14 @@ const InstrumentationModule4Section4 = () => {
           </Card>
 
           {/* Real-World Scenario */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Real-World Scenario</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-blue-900/20 border border-yellow-400/30 rounded-lg p-4">
+              <div className="bg-blue-900/20 border border-elec-yellow/30 rounded-lg p-4">
                 <div className="flex items-start gap-3">
-                  <AlertTriangle className="h-5 w-5 text-yellow-400 mt-1 flex-shrink-0" />
+                  <AlertTriangle className="h-5 w-5 text-elec-yellow mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="font-medium text-white mb-2">Motor Starter Troubleshooting</h4>
                     <p className="text-gray-300 leading-relaxed">
@@ -584,7 +584,7 @@ const InstrumentationModule4Section4 = () => {
           </Card>
 
           {/* Summary */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Summary</CardTitle>
             </CardHeader>
@@ -596,10 +596,10 @@ const InstrumentationModule4Section4 = () => {
           </Card>
 
           {/* Interactive Quiz */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <Brain className="h-5 w-5 text-yellow-400" />
+                <Brain className="h-5 w-5 text-elec-yellow" />
                 Knowledge Check Quiz
               </CardTitle>
             </CardHeader>
@@ -611,7 +611,7 @@ const InstrumentationModule4Section4 = () => {
                   </p>
                   <Button 
                     onClick={startQuiz}
-                    className="bg-yellow-400 text-black hover:bg-yellow-600 font-semibold px-8 py-2"
+                    className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-2"
                   >
                     Start Quiz
                   </Button>
@@ -624,7 +624,7 @@ const InstrumentationModule4Section4 = () => {
                     </span>
                     <div className="w-32 bg-gray-700 rounded-full h-2">
                       <div 
-                        className="bg-yellow-400 h-2 rounded-full transition-all duration-300"
+                        className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
                         style={{ width: `${((currentQuestionIndex + 1) / quizQuestions.length) * 100}%` }}
                       ></div>
                     </div>
@@ -639,7 +639,7 @@ const InstrumentationModule4Section4 = () => {
                           onClick={() => handleAnswerSelect(index)}
                           className={`w-full text-left p-3 rounded border transition-colors ${
                             selectedAnswers[currentQuestionIndex] === index
-                              ? 'border-yellow-400 bg-yellow-600/20 text-yellow-400'
+                              ? 'border-elec-yellow bg-elec-yellow/20 text-elec-yellow'
                               : 'border-gray-600 bg-gray-800/50 text-gray-300 hover:border-gray-500'
                           }`}
                         >
@@ -654,14 +654,14 @@ const InstrumentationModule4Section4 = () => {
                       onClick={handlePrevious}
                       disabled={currentQuestionIndex === 0}
                       variant="outline"
-                      className="border-gray-600 text-gray-300 hover:bg-card disabled:opacity-50"
+                      className="border-gray-600 text-gray-300 hover:bg-transparent disabled:opacity-50"
                     >
                       Previous
                     </Button>
                     <Button
                       onClick={handleNext}
                       disabled={selectedAnswers[currentQuestionIndex] === undefined}
-                      className="bg-yellow-400 text-black hover:bg-yellow-600 disabled:opacity-50"
+                      className="bg-elec-yellow text-black hover:bg-elec-yellow disabled:opacity-50"
                     >
                       {currentQuestionIndex === quizQuestions.length - 1 ? 'Finish' : 'Next'}
                     </Button>
@@ -720,7 +720,7 @@ const InstrumentationModule4Section4 = () => {
                   <div className="text-center">
                     <Button 
                       onClick={resetQuiz}
-                      className="bg-yellow-400 text-black hover:bg-yellow-600 font-semibold px-8 py-2"
+                      className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-2"
                     >
                       Retake Quiz
                     </Button>

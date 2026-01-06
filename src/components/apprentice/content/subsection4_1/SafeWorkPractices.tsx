@@ -10,7 +10,7 @@ const SafeWorkPractices = () => {
         <CardTitle className="text-xl font-bold text-elec-yellow">Safe Working Practices with Ladders</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        <div className="bg-elec-dark/50 border-l-4 border-amber-500 p-4 rounded-r">
+        <div className="bg-white/10 border-l-4 border-amber-500 p-4 rounded-r">
           <div className="flex items-center gap-2 mb-2">
             <AlertCircle className="h-5 w-5 text-amber-500" />
             <h4 className="font-semibold text-elec-yellow">Risk Assessment Requirement</h4>
@@ -23,7 +23,7 @@ const SafeWorkPractices = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="bg-elec-dark/50 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20">
             <CardHeader className="pb-2">
               <div className="flex items-center">
                 <HardHat className="h-5 w-5 text-elec-yellow mr-2" />
@@ -52,7 +52,7 @@ const SafeWorkPractices = () => {
             </CardContent>
           </Card>
           
-          <Card className="bg-elec-dark/50 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20">
             <CardHeader className="pb-2">
               <div className="flex items-center">
                 <Shield className="h-5 w-5 text-elec-yellow mr-2" />
@@ -82,7 +82,7 @@ const SafeWorkPractices = () => {
           </Card>
         </div>
         
-        <Card className="bg-elec-dark/50 border border-elec-yellow/20">
+        <Card className="bg-white/10 border border-elec-yellow/20">
           <CardHeader className="pb-2">
             <CardTitle className="text-lg font-semibold text-elec-yellow">Legal Requirements & Alternatives</CardTitle>
           </CardHeader>

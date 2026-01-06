@@ -128,7 +128,7 @@ export function LoadEntry({
             <div className="bg-primary/10 border border-primary/20 rounded p-3">
               <div className="flex items-center gap-2 text-sm">
                 <Zap className="h-4 w-4 text-primary" />
-                <span className="text-muted-foreground">Calculated Power:</span>
+                <span className="text-white">Calculated Power:</span>
                 <span className="font-semibold text-primary">{load.power} kW</span>
               </div>
             </div>

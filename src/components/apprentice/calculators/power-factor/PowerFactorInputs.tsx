@@ -72,7 +72,7 @@ const PowerFactorInputs = ({
               type="text"
               inputMode="decimal"
               placeholder="Enter active power" 
-              className="bg-elec-dark border-elec-yellow/20"
+              className="bg-white/10 border-elec-yellow/20"
               value={activePower}
               onChange={(e) => {
                 setActivePower(e.target.value);
@@ -95,7 +95,7 @@ const PowerFactorInputs = ({
               type="text"
               inputMode="decimal"
               placeholder="Enter apparent power" 
-              className="bg-elec-dark border-elec-yellow/20"
+              className="bg-white/10 border-elec-yellow/20"
               value={apparentPower}
               onChange={(e) => {
                 setApparentPower(e.target.value);
@@ -121,7 +121,7 @@ const PowerFactorInputs = ({
               type="text"
               inputMode="decimal"
               placeholder="Enter active power" 
-              className="bg-elec-dark border-elec-yellow/20"
+              className="bg-white/10 border-elec-yellow/20"
               value={activePower}
               onChange={(e) => {
                 setActivePower(e.target.value);
@@ -143,7 +143,7 @@ const PowerFactorInputs = ({
               type="text"
               inputMode="decimal"
               placeholder="Enter voltage" 
-              className="bg-elec-dark border-elec-yellow/20"
+              className="bg-white/10 border-elec-yellow/20"
               value={voltage}
               onChange={(e) => {
                 setVoltage(e.target.value);
@@ -165,7 +165,7 @@ const PowerFactorInputs = ({
               type="text"
               inputMode="decimal"
               placeholder="Enter current" 
-              className="bg-elec-dark border-elec-yellow/20"
+              className="bg-white/10 border-elec-yellow/20"
               value={current}
               onChange={(e) => {
                 setCurrent(e.target.value);
@@ -190,7 +190,7 @@ const PowerFactorInputs = ({
           type="text"
           inputMode="decimal"
           placeholder="e.g., 0.95" 
-          className="bg-elec-dark border-elec-yellow/20"
+          className="bg-white/10 border-elec-yellow/20"
           value={targetPF}
           onChange={(e) => {
             setTargetPF(e.target.value);

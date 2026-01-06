@@ -56,11 +56,11 @@ const CourseContentSection = ({
       
       return (
         <>
-          <p className="text-muted-foreground mb-4">{beforeSteps}</p>
+          <p className="text-white mb-4">{beforeSteps}</p>
           
-          <div className="my-4 bg-elec-dark/50 border border-elec-yellow/20 rounded-md p-4">
+          <div className="my-4 bg-white/10 border border-elec-yellow/20 rounded-md p-4">
             <h4 className="text-lg font-semibold text-elec-yellow mb-3">The Essential Steps of Safe Isolation:</h4>
-            <ol className="list-decimal pl-5 space-y-2 text-muted-foreground">
+            <ol className="list-decimal pl-5 space-y-2 text-white">
               <li><span className="font-medium text-white">Identify</span> - Correctly identify the circuit or equipment to be worked on</li>
               <li><span className="font-medium text-white">Isolate</span> - Switch off and lock the isolation device</li>
               <li><span className="font-medium text-white">Prove the tester</span> - Test your voltage indicator on a known live source</li>
@@ -71,12 +71,12 @@ const CourseContentSection = ({
             </ol>
           </div>
           
-          <p className="text-muted-foreground mt-3">{afterSteps}</p>
+          <p className="text-white mt-3">{afterSteps}</p>
         </>
       );
     }
     
-    return <p className="text-muted-foreground text-sm md:text-base">{text}</p>;
+    return <p className="text-white text-sm md:text-base">{text}</p>;
   };
   
   return (

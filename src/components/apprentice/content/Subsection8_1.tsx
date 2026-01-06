@@ -21,7 +21,7 @@ const Subsection8_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+          <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
             <h3 className="text-xl font-bold text-elec-yellow flex items-center">
               <ShieldCheck className="h-5 w-5 mr-2" />
               Basic Protection Measures
@@ -58,7 +58,7 @@ const Subsection8_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </div>
           </div>
           
-          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+          <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
             <h3 className="text-xl font-bold text-elec-yellow flex items-center">
               <ShieldAlert className="h-5 w-5 mr-2" />
               Fault Protection Measures
@@ -96,7 +96,7 @@ const Subsection8_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           </div>
         </div>
         
-        <div className="mt-8 bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-6">
+        <div className="mt-8 bg-white/10 border border-elec-yellow/20 rounded-lg p-6">
           <h3 className="text-xl font-bold text-elec-yellow mb-4 flex items-center">
             <ShieldOff className="h-5 w-5 mr-2" />
             Protection Coordination and Testing
@@ -151,7 +151,7 @@ const Subsection8_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </div>
             </div>
             
-            <div className="mt-4 p-4 bg-elec-dark/70 rounded-lg text-sm">
+            <div className="mt-4 p-4 bg-white/10 rounded-lg text-sm">
               <p className="font-medium mb-1 text-elec-yellow">Regulatory Note:</p>
               <p>BS 7671 Chapter 41 details protection against electric shock. Maximum disconnection times for final circuits not exceeding 32A are 0.4 seconds in TN systems and 0.2 seconds in TT systems. For distribution circuits and circuits exceeding 32A, the maximum disconnection time is 5 seconds.</p>
             </div>

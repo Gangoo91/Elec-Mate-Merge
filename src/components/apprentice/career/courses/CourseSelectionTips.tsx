@@ -1,75 +1,98 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Lightbulb, Target, TrendingUp, Award, Clock, PoundSterling, MapPin, Users, BookOpen, Search, Calculator, Shield } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Lightbulb, Target, TrendingUp, Award, Clock, PoundSterling, Users, Search, Calculator, Shield, Sparkles, CheckCircle } from "lucide-react";
 
 const CourseSelectionTips = () => {
   const tips = [
     {
       icon: Target,
       title: "Align with Career Goals",
-      description: "Choose courses that directly support your career progression plans. Consider specialist areas like industrial, commercial, or domestic work. Research salary expectations for each path and match courses to desired outcomes. Speak to professionals in your target field for insider advice."
+      description: "Choose courses that directly support your career progression plans. Consider specialist areas like industrial, commercial, or domestic work. Research salary expectations for each path and match courses to desired outcomes.",
+      color: "blue"
     },
     {
       icon: TrendingUp,
       title: "Future-Proof Your Skills",
-      description: "Prioritise emerging technologies like EV charging (£35-50k annually), smart home systems, renewable energy, and energy storage. These sectors are experiencing 40%+ growth annually. Consider IoT, automation, and sustainable energy courses for maximum future earning potential."
+      description: "Prioritise emerging technologies like EV charging (£35-50k annually), smart home systems, renewable energy, and energy storage. These sectors are experiencing 40%+ growth annually.",
+      color: "green"
     },
     {
       icon: Award,
       title: "Check Accreditations",
-      description: "Ensure courses are recognised by NICEIC, ECA, SELECT, City & Guilds, EAL, or JIB. Verify if the qualification counts towards your JIB grading. Look for courses that include competency assessments and portfolio building. Some employers only recognise specific awarding bodies."
+      description: "Ensure courses are recognised by NICEIC, ECA, SELECT, City & Guilds, EAL, or JIB. Verify if the qualification counts towards your JIB grading. Look for courses that include competency assessments.",
+      color: "purple"
     },
     {
       icon: Clock,
       title: "Consider Timing & Format",
-      description: "Balance course duration with work commitments. Evening classes (6-9pm), weekend intensive courses, or online hybrid learning are available. Block release courses may suit some employers. Factor in travel time to training centres and practical session requirements."
+      description: "Balance course duration with work commitments. Evening classes (6-9pm), weekend intensive courses, or online hybrid learning are available. Block release courses may suit some employers.",
+      color: "orange"
     },
     {
       icon: PoundSterling,
       title: "Funding & Employer Support",
-      description: "Many employers offer funding through apprenticeship levy (£15k+ available). Check for government grants, skills bootcamps, or sector-specific funding. Some courses qualify for career development loans. Negotiate with employers for study leave and expense coverage."
+      description: "Many employers offer funding through apprenticeship levy (£15k+ available). Check for government grants, skills bootcamps, or sector-specific funding. Some courses qualify for career development loans.",
+      color: "emerald"
     },
     {
       icon: Search,
       title: "Research Training Providers",
-      description: "Compare course quality, pass rates, and industry connections. Read reviews from recent students and check employment outcomes. Visit facilities to assess equipment quality. Ask about instructor experience and industry links. Some providers offer job placement assistance."
+      description: "Compare course quality, pass rates, and industry connections. Read reviews from recent students and check employment outcomes. Visit facilities to assess equipment quality.",
+      color: "cyan"
     },
     {
       icon: Calculator,
       title: "Calculate Return on Investment",
-      description: "Compare course costs against potential salary increases. Entry-level courses (£500-2000) can lead to £3-5k salary jumps. Specialist qualifications (£2-5k) often result in £8-15k increases. Factor in travel costs, time off work, and materials when budgeting."
+      description: "Compare course costs against potential salary increases. Entry-level courses (£500-2000) can lead to £3-5k salary jumps. Specialist qualifications (£2-5k) often result in £8-15k increases.",
+      color: "amber"
     },
     {
       icon: Users,
       title: "Network & Learn from Peers",
-      description: "Join course-related forums, LinkedIn groups, and professional associations. Connect with fellow students for study groups and future job opportunities. Many courses include industry networking events. Build relationships with instructors who often have industry connections."
+      description: "Join course-related forums, LinkedIn groups, and professional associations. Connect with fellow students for study groups and future job opportunities. Build relationships with instructors.",
+      color: "pink"
     }
   ];
+
+  const colorMap: Record<string, { border: string; bg: string; icon: string; iconBg: string }> = {
+    blue: { border: "border-blue-500/20", bg: "bg-blue-500/5", icon: "text-blue-400", iconBg: "bg-blue-500/20" },
+    green: { border: "border-green-500/20", bg: "bg-green-500/5", icon: "text-green-400", iconBg: "bg-green-500/20" },
+    purple: { border: "border-purple-500/20", bg: "bg-purple-500/5", icon: "text-purple-400", iconBg: "bg-purple-500/20" },
+    orange: { border: "border-orange-500/20", bg: "bg-orange-500/5", icon: "text-orange-400", iconBg: "bg-orange-500/20" },
+    emerald: { border: "border-emerald-500/20", bg: "bg-emerald-500/5", icon: "text-emerald-400", iconBg: "bg-emerald-500/20" },
+    cyan: { border: "border-cyan-500/20", bg: "bg-cyan-500/5", icon: "text-cyan-400", iconBg: "bg-cyan-500/20" },
+    amber: { border: "border-amber-500/20", bg: "bg-amber-500/5", icon: "text-amber-400", iconBg: "bg-amber-500/20" },
+    pink: { border: "border-pink-500/20", bg: "bg-pink-500/5", icon: "text-pink-400", iconBg: "bg-pink-500/20" }
+  };
 
   const costGuidance = [
     {
       category: "Entry Level (Level 2)",
       cost: "£500 - £2,000",
       duration: "6-12 months",
-      outcome: "Start as trainee, £18-22k salary"
+      outcome: "Start as trainee, £18-22k salary",
+      color: "blue"
     },
     {
       category: "Intermediate (Level 3)",
-      cost: "£1,500 - £4,000", 
+      cost: "£1,500 - £4,000",
       duration: "12-24 months",
-      outcome: "Qualified electrician, £25-35k salary"
+      outcome: "Qualified electrician, £25-35k salary",
+      color: "green"
     },
     {
       category: "Specialist Courses",
       cost: "£800 - £3,000 per course",
       duration: "1-6 months",
-      outcome: "£3-8k salary increase per specialism"
+      outcome: "£3-8k salary increase per specialism",
+      color: "purple"
     }
   ];
 
   const qualityIndicators = [
     "Industry-standard equipment and facilities",
-    "Qualified instructors with recent industry experience", 
+    "Qualified instructors with recent industry experience",
     "High pass rates (80%+ for practical assessments)",
     "Strong employer links and job placement support",
     "Up-to-date curriculum reflecting current regulations",
@@ -77,103 +100,160 @@ const CourseSelectionTips = () => {
   ];
 
   return (
-    <div className="space-y-6 sm:space-y-8">
-      <Card className="border-elec-yellow/20 bg-elec-card">
-        <CardHeader className="pb-4 sm:pb-6">
-          <CardTitle className="flex items-center gap-3 text-xl sm:text-2xl text-white">
-            <Lightbulb className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow" />
+    <div className="space-y-6 animate-fade-in">
+      {/* Tips Section */}
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+              <Lightbulb className="h-5 w-5 text-elec-yellow" />
+            </div>
             Course Selection Tips
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {tips.map((tip, idx) => (
-              <div key={idx} className="p-4 sm:p-5 bg-elec-dark/40 rounded-lg border border-elec-yellow/20 hover:border-elec-yellow/30 transition-colors">
-                <div className="flex items-start gap-3 sm:gap-4">
-                  <tip.icon className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <div className="space-y-2 sm:space-y-3">
-                    <h4 className="font-semibold text-sm sm:text-base text-white">{tip.title}</h4>
-                    <p className="text-xs sm:text-sm text-white leading-relaxed">{tip.description}</p>
+        <CardContent className="relative">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {tips.map((tip, idx) => {
+              const colors = colorMap[tip.color];
+              return (
+                <div
+                  key={idx}
+                  className={`p-4 rounded-xl ${colors.bg} border ${colors.border} hover:border-opacity-50 transition-all`}
+                >
+                  <div className={`p-2 rounded-lg ${colors.iconBg} w-fit mb-3`}>
+                    <tip.icon className={`h-5 w-5 ${colors.icon}`} />
                   </div>
+                  <h4 className="font-semibold text-sm text-white mb-2">{tip.title}</h4>
+                  <p className="text-xs text-white/70 leading-relaxed">{tip.description}</p>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </CardContent>
       </Card>
 
       {/* Cost Guidance Section */}
-      <Card className="border-elec-yellow/20 bg-elec-card">
-        <CardHeader className="pb-4 sm:pb-6">
-          <CardTitle className="flex items-center gap-3 text-lg sm:text-xl text-white">
-            <Calculator className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-green-500/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30">
+              <Calculator className="h-5 w-5 text-green-400" />
+            </div>
             Course Cost Guidance
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {costGuidance.map((item, idx) => (
-              <div key={idx} className="p-4 sm:p-5 bg-elec-dark/30 rounded-lg border border-elec-yellow/10">
-                <div className="space-y-3">
-                  <h4 className="font-semibold text-sm sm:text-base text-elec-yellow">{item.category}</h4>
-                  <div className="space-y-2 text-xs sm:text-sm text-white">
-                    <p><span className="font-medium">Cost:</span> {item.cost}</p>
-                    <p><span className="font-medium">Duration:</span> {item.duration}</p>
-                    <p><span className="font-medium">Outcome:</span> {item.outcome}</p>
+        <CardContent className="relative">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {costGuidance.map((item, idx) => {
+              const colors = colorMap[item.color];
+              return (
+                <div key={idx} className={`p-4 rounded-xl ${colors.bg} border ${colors.border}`}>
+                  <h4 className={`font-semibold text-sm ${colors.icon} mb-3`}>{item.category}</h4>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs text-white/60">Cost:</span>
+                      <span className="text-xs text-white font-medium">{item.cost}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs text-white/60">Duration:</span>
+                      <span className="text-xs text-white font-medium">{item.duration}</span>
+                    </div>
+                    <div className="pt-2 border-t border-white/10">
+                      <span className="text-xs text-green-400">{item.outcome}</span>
+                    </div>
                   </div>
                 </div>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Quality Indicators Section */}
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-purple-500/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/30">
+              <Shield className="h-5 w-5 text-purple-400" />
+            </div>
+            Quality Indicators to Look For
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="relative">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {qualityIndicators.map((indicator, idx) => (
+              <div key={idx} className="flex items-start gap-3 p-3 rounded-xl bg-purple-500/5 border border-purple-500/20">
+                <CheckCircle className="h-4 w-4 text-purple-400 flex-shrink-0 mt-0.5" />
+                <p className="text-sm text-white/80">{indicator}</p>
               </div>
             ))}
           </div>
         </CardContent>
       </Card>
 
-      {/* Quality Indicators Section */}
-      <Card className="border-elec-yellow/20 bg-elec-card">
-        <CardHeader className="pb-4 sm:pb-6">
-          <CardTitle className="flex items-center gap-3 text-lg sm:text-xl text-white">
-            <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
-            Quality Indicators to Look For
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-            {qualityIndicators.map((indicator, idx) => (
-              <div key={idx} className="flex items-start gap-3 p-3 sm:p-4 bg-elec-dark/30 rounded-lg">
-                <div className="w-2 h-2 bg-elec-yellow rounded-full flex-shrink-0 mt-2"></div>
-                <p className="text-xs sm:text-sm text-white leading-relaxed">{indicator}</p>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-        
-      {/* Enhanced Industry Insight */}
-      <Card className="border-elec-yellow/20 bg-elec-card">
-        <CardHeader className="pb-4 sm:pb-6">
-          <CardTitle className="flex items-center gap-3 text-lg sm:text-xl text-elec-yellow">
-            <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6" />
+      {/* Industry Insight Section */}
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-cyan-500/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-cyan-500/20 to-cyan-500/5 border border-cyan-500/30">
+              <TrendingUp className="h-5 w-5 text-cyan-400" />
+            </div>
             Industry Insight & Market Trends
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4 sm:space-y-6">
-          <div className="p-4 sm:p-5 bg-elec-yellow/5 border border-elec-yellow/20 rounded-lg">
-            <h4 className="font-semibold text-sm sm:text-base mb-3 text-elec-yellow">High-Growth Sectors (2025)</h4>
-            <div className="space-y-3 text-xs sm:text-sm text-white">
-              <p><span className="font-medium text-elec-yellow">EV Charging Infrastructure:</span> 65% annual growth, £35-55k salaries for specialists</p>
-              <p><span className="font-medium text-elec-yellow">Renewable Energy Systems:</span> 45% growth, particularly solar and battery storage</p>
-              <p><span className="font-medium text-elec-yellow">Smart Building Technology:</span> 40% growth in commercial and residential sectors</p>
-              <p><span className="font-medium text-elec-yellow">Data Centre Infrastructure:</span> Critical skills shortage, £40-65k for qualified engineers</p>
+        <CardContent className="space-y-4 relative">
+          <div className="p-4 rounded-xl bg-elec-yellow/5 border border-elec-yellow/20">
+            <h4 className="font-semibold text-sm text-elec-yellow mb-3 flex items-center gap-2">
+              <Sparkles className="h-4 w-4" />
+              High-Growth Sectors (2026)
+            </h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="p-3 rounded-lg bg-white/5">
+                <Badge className="bg-green-500/10 text-green-400 border border-green-500/30 text-[10px] mb-2">+65% Growth</Badge>
+                <p className="text-xs text-white font-medium">EV Charging Infrastructure</p>
+                <p className="text-[10px] text-white/60 mt-1">£35-55k for specialists</p>
+              </div>
+              <div className="p-3 rounded-lg bg-white/5">
+                <Badge className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] mb-2">+45% Growth</Badge>
+                <p className="text-xs text-white font-medium">Renewable Energy Systems</p>
+                <p className="text-[10px] text-white/60 mt-1">Solar and battery storage</p>
+              </div>
+              <div className="p-3 rounded-lg bg-white/5">
+                <Badge className="bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[10px] mb-2">+40% Growth</Badge>
+                <p className="text-xs text-white font-medium">Smart Building Technology</p>
+                <p className="text-[10px] text-white/60 mt-1">Commercial and residential</p>
+              </div>
+              <div className="p-3 rounded-lg bg-white/5">
+                <Badge className="bg-purple-500/10 text-purple-400 border border-purple-500/30 text-[10px] mb-2">Critical Shortage</Badge>
+                <p className="text-xs text-white font-medium">Data Centre Infrastructure</p>
+                <p className="text-[10px] text-white/60 mt-1">£40-65k for qualified engineers</p>
+              </div>
             </div>
           </div>
-          
-          <div className="p-4 sm:p-5 bg-elec-dark/30 border border-elec-yellow/10 rounded-lg">
-            <h4 className="font-semibold text-sm sm:text-base mb-3 text-white">Regional Considerations</h4>
-            <div className="space-y-2 text-xs sm:text-sm text-white">
-              <p><span className="font-medium">London & South East:</span> Highest salaries but intense competition and higher course costs</p>
-              <p><span className="font-medium">Industrial North:</span> Strong demand for manufacturing and renewable energy skills</p>
-              <p><span className="font-medium">Scotland:</span> Offshore wind and renewable energy opportunities, government funding available</p>
-              <p><span className="font-medium">Wales:</span> Growing green energy sector with apprenticeship support</p>
+
+          <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+            <h4 className="font-semibold text-sm text-white mb-3">Regional Considerations</h4>
+            <div className="space-y-2 text-xs">
+              <div className="flex items-start gap-2">
+                <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30 text-[10px]">London</Badge>
+                <span className="text-white/70">Highest salaries but intense competition and higher course costs</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <Badge variant="outline" className="bg-green-500/10 text-green-400 border-green-500/30 text-[10px]">North</Badge>
+                <span className="text-white/70">Strong demand for manufacturing and renewable energy skills</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <Badge variant="outline" className="bg-purple-500/10 text-purple-400 border-purple-500/30 text-[10px]">Scotland</Badge>
+                <span className="text-white/70">Offshore wind and renewable energy opportunities, government funding</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <Badge variant="outline" className="bg-emerald-500/10 text-emerald-400 border-emerald-500/30 text-[10px]">Wales</Badge>
+                <span className="text-white/70">Growing green energy sector with apprenticeship support</span>
+              </div>
             </div>
           </div>
         </CardContent>

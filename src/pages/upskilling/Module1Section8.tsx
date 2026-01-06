@@ -246,13 +246,13 @@ const Module1Section8 = () => {
   const percentage = Math.round((score / quizQuestions.length) * 100);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="../module-1">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 1
@@ -262,7 +262,7 @@ const Module1Section8 = () => {
         <div className="space-y-3">
           <Badge 
             variant="secondary" 
-            className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold text-sm px-3 py-1 border-0"
+            className="bg-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/50 font-semibold text-sm px-3 py-1 border-0"
           >
             Section 8
           </Badge>
@@ -280,10 +280,10 @@ const Module1Section8 = () => {
         <div className="space-y-4 sm:space-y-6">
           
           {/* Quick Intro */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <BookOpen className="h-6 w-6 text-yellow-400" />
+                <BookOpen className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-white text-xl">Quick Intro</CardTitle>
               </div>
             </CardHeader>
@@ -296,7 +296,7 @@ const Module1Section8 = () => {
           </Card>
 
           {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Learning Outcomes</CardTitle>
             </CardHeader>
@@ -304,23 +304,23 @@ const Module1Section8 = () => {
               <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
               <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Recognise key industry terms used in testing and inspection
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Understand abbreviations commonly found in BS7671 and on certificates
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Build confidence reading and completing test documents
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Apply terminology correctly in professional communications
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Interpret test results using industry-standard language
                 </li>
               </ul>
@@ -328,7 +328,7 @@ const Module1Section8 = () => {
           </Card>
 
           {/* Core Terms & Definitions */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Essential Terminology Database</CardTitle>
             </CardHeader>
@@ -336,11 +336,11 @@ const Module1Section8 = () => {
               <div className="grid gap-4">
                 {/* Core Testing Terms */}
                 <div className="mb-6">
-                  <h4 className="text-yellow-400 font-semibold text-lg mb-4 border-b border-yellow-400/30 pb-2">Core Testing & Inspection Terms</h4>
+                  <h4 className="text-elec-yellow font-semibold text-lg mb-4 border-b border-elec-yellow/30 pb-2">Core Testing & Inspection Terms</h4>
                   <div className="grid gap-3">
                     {terms.slice(0, 6).map((item, index) => (
-                      <div key={index} className="border-l-4 border-yellow-400 pl-4 py-2 bg-card/50">
-                        <h4 className="text-yellow-400 font-semibold text-lg">{item.term}</h4>
+                      <div key={index} className="border-l-4 border-elec-yellow pl-4 py-2 bg-transparent/50">
+                        <h4 className="text-elec-yellow font-semibold text-lg">{item.term}</h4>
                         <p className="text-white mt-1">{item.definition}</p>
                       </div>
                     ))}
@@ -349,11 +349,11 @@ const Module1Section8 = () => {
 
                 {/* Testing Measurements */}
                 <div className="mb-6">
-                  <h4 className="text-yellow-400 font-semibold text-lg mb-4 border-b border-yellow-400/30 pb-2">Testing Measurements & Values</h4>
+                  <h4 className="text-elec-yellow font-semibold text-lg mb-4 border-b border-elec-yellow/30 pb-2">Testing Measurements & Values</h4>
                   <div className="grid gap-3">
                     {terms.slice(6, 13).map((item, index) => (
-                      <div key={index} className="border-l-4 border-yellow-400 pl-4 py-2 bg-blue-900/10">
-                        <h4 className="text-yellow-400 font-semibold text-lg">{item.term}</h4>
+                      <div key={index} className="border-l-4 border-elec-yellow pl-4 py-2 bg-blue-900/10">
+                        <h4 className="text-elec-yellow font-semibold text-lg">{item.term}</h4>
                         <p className="text-white mt-1">{item.definition}</p>
                       </div>
                     ))}
@@ -420,16 +420,16 @@ const Module1Section8 = () => {
           </Card>
 
           {/* Interactive Learning Section */}
-          <Card className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 border-yellow-400/30">
+          <Card className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 border-elec-yellow/30">
             <CardHeader>
               <CardTitle className="text-white text-xl flex items-center gap-2">
-                <AlertCircle className="h-6 w-6 text-yellow-400" />
+                <AlertCircle className="h-6 w-6 text-elec-yellow" />
                 Interactive Learning Exercises
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-blue-900/40 p-4 rounded-lg border border-yellow-400/30">
+                <div className="bg-blue-900/40 p-4 rounded-lg border border-elec-yellow/30">
                   <h4 className="text-blue-300 font-semibold mb-3">Term Matching Challenge</h4>
                   <p className="text-white text-sm mb-3">Match the abbreviation to its full meaning:</p>
                   <div className="space-y-2 text-sm">
@@ -505,28 +505,28 @@ const Module1Section8 = () => {
           </Card>
 
           {/* Practical Applications */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Real-World Applications</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-4">
-                  <h4 className="text-yellow-400 font-semibold text-lg">Where You'll Encounter These Terms</h4>
+                  <h4 className="text-elec-yellow font-semibold text-lg">Where You'll Encounter These Terms</h4>
                   <div className="space-y-3">
-                    <div className="bg-card/50 p-3 rounded-lg border-l-4 border-yellow-400">
+                    <div className="bg-transparent/50 p-3 rounded-lg border-l-4 border-elec-yellow">
                       <h5 className="text-white font-medium mb-1">BS 7671 Regulations</h5>
                       <p className="text-white text-sm">Technical requirements, test procedures, and compliance criteria reference these terms throughout.</p>
                     </div>
-                    <div className="bg-card/50 p-3 rounded-lg border-l-4 border-yellow-400">
+                    <div className="bg-transparent/50 p-3 rounded-lg border-l-4 border-elec-yellow">
                       <h5 className="text-white font-medium mb-1">Test Certificates</h5>
                       <p className="text-white text-sm">EIC, MEIWC, and EICR forms use abbreviations and technical terms for efficient documentation.</p>
                     </div>
-                    <div className="bg-card/50 p-3 rounded-lg border-l-4 border-green-400">
+                    <div className="bg-transparent/50 p-3 rounded-lg border-l-4 border-green-400">
                       <h5 className="text-white font-medium mb-1">Equipment Manuals</h5>
                       <p className="text-white text-sm">Testing instrument instructions and specifications use industry-standard terminology.</p>
                     </div>
-                    <div className="bg-card/50 p-3 rounded-lg border-l-4 border-purple-400">
+                    <div className="bg-transparent/50 p-3 rounded-lg border-l-4 border-purple-400">
                       <h5 className="text-white font-medium mb-1">Professional Communication</h5>
                       <p className="text-white text-sm">Reports, emails, and discussions with clients and colleagues require precise technical language.</p>
                     </div>
@@ -534,7 +534,7 @@ const Module1Section8 = () => {
                 </div>
 
                 <div className="space-y-4">
-                  <h4 className="text-yellow-400 font-semibold text-lg">Common Misunderstandings</h4>
+                  <h4 className="text-elec-yellow font-semibold text-lg">Common Misunderstandings</h4>
                   <div className="space-y-3">
                     <div className="bg-red-900/20 p-3 rounded-lg border border-red-400/30">
                       <h5 className="text-red-300 font-medium mb-1">❌ "Zs" vs "Ze"</h5>
@@ -559,10 +559,10 @@ const Module1Section8 = () => {
           </Card>
 
           {/* On-the-Job Tip */}
-          <Card className="bg-blue-900/20 border-yellow-400/30">
+          <Card className="bg-blue-900/20 border-elec-yellow/30">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <AlertCircle className="h-6 w-6 text-yellow-400" />
+                <AlertCircle className="h-6 w-6 text-elec-yellow" />
                 <CardTitle className="text-white text-xl">Professional Tips</CardTitle>
               </div>
             </CardHeader>
@@ -593,30 +593,30 @@ const Module1Section8 = () => {
           </Card>
 
           {/* Key Takeaways */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Key Takeaways</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   These terms appear in test reports, wiring diagrams, and exams
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Knowing them saves time, prevents mistakes, and builds confidence
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Bookmark this list for revision and site use
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Proper terminology demonstrates professional competency
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Understanding abbreviations speeds up certificate completion
                 </li>
               </ul>
@@ -624,20 +624,20 @@ const Module1Section8 = () => {
           </Card>
 
           {/* Quick Knowledge Checks */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle2 className="h-6 w-6 text-yellow-400" />
+                <CheckCircle2 className="h-6 w-6 text-elec-yellow" />
                 Quick Knowledge Checks
               </CardTitle>
             </CardHeader>
             <CardContent className="text-white space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-yellow-400/10 p-4 rounded-lg">
+                <div className="bg-elec-yellow/10 p-4 rounded-lg">
                   <h4 className="text-white font-semibold mb-2">Check 1: EICR</h4>
                   <p className="text-sm">What does EICR stand for?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">Electrical Installation Condition Report</p>
                   </details>
                 </div>
@@ -645,7 +645,7 @@ const Module1Section8 = () => {
                   <h4 className="text-white font-semibold mb-2">Check 2: Earth Fault Loop</h4>
                   <p className="text-sm">What does Zs measure?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">Earth Fault Loop Impedance - total impedance from source to fault and back</p>
                   </details>
                 </div>
@@ -653,7 +653,7 @@ const Module1Section8 = () => {
                   <h4 className="text-white font-semibold mb-2">Check 3: CPC</h4>
                   <p className="text-sm">What does CPC stand for?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">Circuit Protective Conductor (the earth wire)</p>
                   </details>
                 </div>
@@ -661,7 +661,7 @@ const Module1Section8 = () => {
                   <h4 className="text-white font-semibold mb-2">Check 4: RCD Function</h4>
                   <p className="text-sm">What causes an RCD to trip?</p>
                   <details className="mt-2">
-                    <summary className="text-yellow-400 cursor-pointer text-sm">Show Answer</summary>
+                    <summary className="text-elec-yellow cursor-pointer text-sm">Show Answer</summary>
                     <p className="text-xs text-white mt-2">Imbalance between line and neutral currents (earth leakage)</p>
                   </details>
                 </div>
@@ -670,10 +670,10 @@ const Module1Section8 = () => {
           </Card>
 
           {/* Frequently Asked Questions */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <AlertCircle className="h-6 w-6 text-yellow-400" />
+                <AlertCircle className="h-6 w-6 text-elec-yellow" />
                 Frequently Asked Questions
               </CardTitle>
             </CardHeader>
@@ -754,7 +754,7 @@ const Module1Section8 = () => {
           </Card>
 
           {/* Quiz Section */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Comprehensive Quiz - 10 Questions</CardTitle>
             </CardHeader>
@@ -769,7 +769,7 @@ const Module1Section8 = () => {
                   </p>
                   <Button 
                     onClick={startQuiz}
-                    className="bg-yellow-400 text-black hover:bg-yellow-400 font-semibold px-8 py-2"
+                    className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-2"
                   >
                     Start Quiz
                   </Button>
@@ -777,7 +777,7 @@ const Module1Section8 = () => {
               ) : showResults ? (
                 <div className="space-y-6">
                   <div className="text-center space-y-4">
-                    <div className="text-4xl font-bold text-yellow-400">{percentage}%</div>
+                    <div className="text-4xl font-bold text-elec-yellow">{percentage}%</div>
                     <p className="text-xl text-white">
                       You scored {score} out of {quizQuestions.length}
                     </p>
@@ -794,7 +794,7 @@ const Module1Section8 = () => {
                       const userAnswer = selectedAnswers[index];
                       const isCorrect = userAnswer === question.correctAnswer;
                       return (
-                        <div key={question.id} className="bg-card/80 p-4 rounded-lg space-y-2">
+                        <div key={question.id} className="bg-transparent/80 p-4 rounded-lg space-y-2">
                           <div className="flex items-start gap-2">
                             {isCorrect ? (
                               <CheckCircle2 className="h-5 w-5 text-green-500 mt-1 flex-shrink-0" />
@@ -829,7 +829,7 @@ const Module1Section8 = () => {
                   <div className="flex justify-center">
                     <Button 
                       onClick={resetQuiz}
-                      className="bg-yellow-400 text-black hover:bg-yellow-400 font-semibold px-6 py-2"
+                      className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-6 py-2"
                     >
                       Retake Quiz
                     </Button>
@@ -845,7 +845,7 @@ const Module1Section8 = () => {
                   
                   <div className="w-full bg-gray-700 rounded-full h-2">
                     <div 
-                      className="bg-yellow-400 h-2 rounded-full transition-all duration-300"
+                      className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
                       style={{ width: `${((currentQuestionIndex + 1) / quizQuestions.length) * 100}%` }}
                     ></div>
                   </div>
@@ -863,8 +863,8 @@ const Module1Section8 = () => {
                           onClick={() => handleAnswerSelect(index)}
                           className={`w-full text-left p-4 rounded-lg border-2 transition-all duration-200 ${
                             selectedAnswers[currentQuestionIndex] === index
-                              ? 'border-yellow-400 bg-yellow-600/20 text-white'
-                              : 'border-gray-600 bg-card/80 text-gray-300 hover:border-gray-500 hover:bg-gray-700'
+                              ? 'border-elec-yellow bg-elec-yellow/20 text-white'
+                              : 'border-gray-600 bg-transparent/80 text-gray-300 hover:border-gray-500 hover:bg-gray-700'
                           }`}
                         >
                           <span className="font-medium mr-3">
@@ -890,7 +890,7 @@ const Module1Section8 = () => {
                     <Button
                       onClick={handleNext}
                       disabled={selectedAnswers[currentQuestionIndex] === undefined}
-                      className="bg-yellow-400 text-black hover:bg-yellow-400 font-semibold disabled:opacity-50"
+                      className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold disabled:opacity-50"
                     >
                       {currentQuestionIndex === quizQuestions.length - 1 ? 'Finish Quiz' : 'Next'}
                     </Button>

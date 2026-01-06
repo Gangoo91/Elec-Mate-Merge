@@ -34,7 +34,7 @@ const CompanyDetailsSection = ({
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2 text-sm font-semibold text-gray-300 border-b border-elec-gray pb-2">
+        <div className="flex items-center gap-2 text-sm font-semibold text-white/80 border-b border-elec-gray pb-2">
           <Building2 className="h-4 w-4 text-elec-yellow" />
           Company/Organisation Details
         </div>
@@ -53,7 +53,7 @@ const CompanyDetailsSection = ({
             variant="outline"
             size="sm"
             onClick={onToggleMode}
-            className="border-elec-gray text-gray-300 hover:bg-elec-gray"
+            className="border-elec-gray text-white/80 hover:bg-elec-gray"
           >
             {companyDetailsMode === 'structured' ? 'Switch to Freeform' : 'Switch to Structured'}
           </Button>
@@ -64,7 +64,7 @@ const CompanyDetailsSection = ({
         <div className="space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="companyName" className="flex items-center gap-2 text-sm font-medium text-gray-300">
+              <Label htmlFor="companyName" className="flex items-center gap-2 text-sm font-medium text-white/80">
                 <Building2 className="h-4 w-4" />
                 Company Name
               </Label>
@@ -73,11 +73,11 @@ const CompanyDetailsSection = ({
                 value={formData.companyName || ''}
                 onChange={(e) => onUpdate('companyName', e.target.value)}
                 placeholder="Company or organisation name"
-                className="bg-muted border-border text-foreground placeholder:text-gray-400 focus:border-elec-yellow focus:ring-elec-yellow"
+                className="bg-muted border-border text-foreground placeholder:text-white/70 focus:border-elec-yellow focus:ring-elec-yellow"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="companyRegistration" className="flex items-center gap-2 text-sm font-medium text-gray-300">
+              <Label htmlFor="companyRegistration" className="flex items-center gap-2 text-sm font-medium text-white/80">
                 <Hash className="h-4 w-4" />
                 Registration Number
               </Label>
@@ -86,13 +86,13 @@ const CompanyDetailsSection = ({
                 value={formData.companyRegistration || ''}
                 onChange={(e) => onUpdate('companyRegistration', e.target.value)}
                 placeholder="Companies House number"
-                className="bg-muted border-border text-foreground placeholder:text-gray-400 focus:border-elec-yellow focus:ring-elec-yellow"
+                className="bg-muted border-border text-foreground placeholder:text-white/70 focus:border-elec-yellow focus:ring-elec-yellow"
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="companyAddress" className="flex items-center gap-2 text-sm font-medium text-gray-300">
+            <Label htmlFor="companyAddress" className="flex items-center gap-2 text-sm font-medium text-white/80">
               <MapPin className="h-4 w-4" />
               Company Address
             </Label>
@@ -102,13 +102,13 @@ const CompanyDetailsSection = ({
               onChange={(e) => onUpdate('companyAddress', e.target.value)}
               placeholder="Full company address including postcode"
               rows={3}
-              className="bg-muted border-border text-foreground placeholder:text-gray-400 focus:border-elec-yellow focus:ring-elec-yellow"
+              className="bg-muted border-border text-foreground placeholder:text-white/70 focus:border-elec-yellow focus:ring-elec-yellow"
             />
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="companyPhone" className="flex items-center gap-2 text-sm font-medium text-gray-300">
+              <Label htmlFor="companyPhone" className="flex items-center gap-2 text-sm font-medium text-white/80">
                 <Phone className="h-4 w-4" />
                 Phone Number
               </Label>
@@ -117,11 +117,11 @@ const CompanyDetailsSection = ({
                 value={formData.companyPhone || ''}
                 onChange={(e) => onUpdate('companyPhone', e.target.value)}
                 placeholder="Company phone number"
-                className="bg-muted border-border text-foreground placeholder:text-gray-400 focus:border-elec-yellow focus:ring-elec-yellow"
+                className="bg-muted border-border text-foreground placeholder:text-white/70 focus:border-elec-yellow focus:ring-elec-yellow"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="companyEmail" className="flex items-center gap-2 text-sm font-medium text-gray-300">
+              <Label htmlFor="companyEmail" className="flex items-center gap-2 text-sm font-medium text-white/80">
                 <Mail className="h-4 w-4" />
                 Email Address
               </Label>
@@ -131,14 +131,14 @@ const CompanyDetailsSection = ({
                 value={formData.companyEmail || ''}
                 onChange={(e) => onUpdate('companyEmail', e.target.value)}
                 placeholder="Company email address"
-                className="bg-muted border-border text-foreground placeholder:text-gray-400 focus:border-elec-yellow focus:ring-elec-yellow"
+                className="bg-muted border-border text-foreground placeholder:text-white/70 focus:border-elec-yellow focus:ring-elec-yellow"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="companyNICEIC" className="flex items-center gap-2 text-sm font-medium text-gray-300">
+              <Label htmlFor="companyNICEIC" className="flex items-center gap-2 text-sm font-medium text-white/80">
                 <CreditCard className="h-4 w-4" />
                 NICEIC/NAPIT Registration
               </Label>
@@ -147,11 +147,11 @@ const CompanyDetailsSection = ({
                 value={formData.companyNICEIC || ''}
                 onChange={(e) => onUpdate('companyNICEIC', e.target.value)}
                 placeholder="NICEIC, NAPIT, or other registration number"
-                className="bg-muted border-border text-foreground placeholder:text-gray-400 focus:border-elec-yellow focus:ring-elec-yellow"
+                className="bg-muted border-border text-foreground placeholder:text-white/70 focus:border-elec-yellow focus:ring-elec-yellow"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="companyInsurance" className="flex items-center gap-2 text-sm font-medium text-gray-300">
+              <Label htmlFor="companyInsurance" className="flex items-center gap-2 text-sm font-medium text-white/80">
                 <Shield className="h-4 w-4" />
                 Insurance Details
               </Label>
@@ -160,14 +160,14 @@ const CompanyDetailsSection = ({
                 value={formData.companyInsurance || ''}
                 onChange={(e) => onUpdate('companyInsurance', e.target.value)}
                 placeholder="Professional indemnity insurance details"
-                className="bg-muted border-border text-foreground placeholder:text-gray-400 focus:border-elec-yellow focus:ring-elec-yellow"
+                className="bg-muted border-border text-foreground placeholder:text-white/70 focus:border-elec-yellow focus:ring-elec-yellow"
               />
             </div>
           </div>
         </div>
       ) : (
         <div className="space-y-2">
-          <Label htmlFor="companyDetails" className="flex items-center gap-2 text-sm font-medium text-gray-300">
+          <Label htmlFor="companyDetails" className="flex items-center gap-2 text-sm font-medium text-white/80">
             <FileText className="h-4 w-4" />
             Company Details (Freeform)
           </Label>
@@ -177,10 +177,10 @@ const CompanyDetailsSection = ({
             onChange={(e) => onUpdate('companyDetails', e.target.value)}
             placeholder="Company name, address, registration details, contact information..."
             rows={8}
-            className="bg-muted border-border text-foreground placeholder:text-gray-400 focus:border-elec-yellow focus:ring-elec-yellow font-mono text-sm"
+            className="bg-muted border-border text-foreground placeholder:text-white/70 focus:border-elec-yellow focus:ring-elec-yellow font-mono text-sm"
           />
           
-          <div className="mt-2 text-xs text-gray-400 bg-muted p-3 rounded-md border border-border">
+          <div className="mt-2 text-xs text-white/70 bg-muted p-3 rounded-md border border-border">
             <div className="flex flex-wrap gap-4">
               <span className="font-medium">Include:</span>
               <span>Company name & address</span>

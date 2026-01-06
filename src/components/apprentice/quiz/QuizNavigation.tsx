@@ -60,7 +60,7 @@ const QuizNavigation = ({
       </div>
       
       {/* Question navigation grid */}
-      <div className="grid grid-cols-10 gap-1 p-2 bg-elec-dark/50 border border-elec-yellow/20 rounded-lg">
+      <div className="grid grid-cols-10 gap-1 p-2 bg-white/10 border border-elec-yellow/20 rounded-lg">
         {questionGroups.map((group, groupIndex) => (
           <div key={groupIndex} className="col-span-10 grid grid-cols-10 gap-1 mb-1 last:mb-0">
             {group.map((index) => {
@@ -74,7 +74,7 @@ const QuizNavigation = ({
                     w-full p-1 rounded text-xs font-medium transition-colors
                     ${isActive ? 'bg-elec-yellow text-elec-dark' : ''}
                     ${!isActive && isAnswered ? 'bg-elec-yellow/30 text-white' : ''}
-                    ${!isActive && !isAnswered ? 'bg-elec-dark hover:bg-elec-yellow/10' : ''}
+                    ${!isActive && !isAnswered ? 'bg-white/10 hover:bg-elec-yellow/10' : ''}
                   `}
                   onClick={() => onNavigate(index)}
                 >

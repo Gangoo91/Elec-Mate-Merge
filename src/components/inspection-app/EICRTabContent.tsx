@@ -5,8 +5,8 @@ import { useOrientation } from '@/hooks/useOrientation';
 import EICRDetails from './EICRDetails';
 import EICRInspectionChecklist from './EICRInspectionChecklist';
 import EICRScheduleOfTests from './EICRScheduleOfTests';
-import EICRSummary from './EICRSummary';
 import EICRInspectorDetails from './EICRInspectorDetails';
+import { EICRCertificateTab } from './certificate-completion/EICRCertificateTab';
 import EICRTabNavigation from './EICRTabNavigation';
 
 interface EICRTabContentProps {
@@ -80,7 +80,7 @@ const EICRTabContent = ({
           onToggle={() => setIsInspectorSectionOpen(!isInspectorSectionOpen)}
         />;
       case 'certificate':
-        return <EICRSummary formData={formData} onUpdate={onUpdate} />;
+        return <EICRCertificateTab formData={formData} onUpdate={onUpdate} />;
       default:
         return null;
     }

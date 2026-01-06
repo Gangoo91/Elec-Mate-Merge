@@ -150,7 +150,7 @@ const TutorReviewSystem = () => {
       <Star
         key={index}
         className={`h-4 w-4 ${
-          index < rating ? 'fill-current text-yellow-500' : 'text-gray-300'
+          index < rating ? 'fill-current text-yellow-500' : 'text-white/80'
         }`}
       />
     ));
@@ -162,7 +162,7 @@ const TutorReviewSystem = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-blue-600">{reviewStats.totalSubmitted}</div>
-            <p className="text-sm text-muted-foreground">Total Submitted</p>
+            <p className="text-sm text-white">Total Submitted</p>
           </div>
         </CardContent>
       </Card>
@@ -171,7 +171,7 @@ const TutorReviewSystem = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-orange-600">{reviewStats.pending}</div>
-            <p className="text-sm text-muted-foreground">Pending Review</p>
+            <p className="text-sm text-white">Pending Review</p>
           </div>
         </CardContent>
       </Card>
@@ -180,7 +180,7 @@ const TutorReviewSystem = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-green-600">{reviewStats.completed}</div>
-            <p className="text-sm text-muted-foreground">Completed</p>
+            <p className="text-sm text-white">Completed</p>
           </div>
         </CardContent>
       </Card>
@@ -189,7 +189,7 @@ const TutorReviewSystem = () => {
         <CardContent className="p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-purple-600">{reviewStats.averageRating}</div>
-            <p className="text-sm text-muted-foreground">Avg. Rating</p>
+            <p className="text-sm text-white">Avg. Rating</p>
           </div>
         </CardContent>
       </Card>
@@ -201,7 +201,7 @@ const TutorReviewSystem = () => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">Tutor Review System</h2>
-          <p className="text-muted-foreground">Track feedback and communicate with your tutors</p>
+          <p className="text-white">Track feedback and communicate with your tutors</p>
         </div>
       </div>
 
@@ -227,7 +227,7 @@ const TutorReviewSystem = () => {
                 <div className="text-center py-8">
                   <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
                   <h3 className="text-lg font-semibold mb-2">All caught up!</h3>
-                  <p className="text-muted-foreground">No items are currently waiting for review.</p>
+                  <p className="text-white">No items are currently waiting for review.</p>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -236,12 +236,12 @@ const TutorReviewSystem = () => {
                       <div className="flex items-center justify-between mb-3">
                         <div>
                           <h3 className="font-semibold">{review.itemTitle}</h3>
-                          <p className="text-sm text-muted-foreground">{review.itemType}</p>
+                          <p className="text-sm text-white">{review.itemType}</p>
                         </div>
                         {getPriorityBadge(review.priority)}
                       </div>
                       
-                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm text-muted-foreground mb-3">
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm text-white mb-3">
                         <div className="flex items-center gap-1">
                           <Calendar className="h-3 w-3" />
                           Submitted: {review.submittedDate}
@@ -283,7 +283,7 @@ const TutorReviewSystem = () => {
                     <div className="flex items-center justify-between mb-4">
                       <div>
                         <h3 className="font-semibold text-lg">{review.itemTitle}</h3>
-                        <p className="text-sm text-muted-foreground">{review.itemType}</p>
+                        <p className="text-sm text-white">{review.itemType}</p>
                       </div>
                       <div className="flex items-center gap-2">
                         {getGradeBadge(review.grade)}
@@ -298,7 +298,7 @@ const TutorReviewSystem = () => {
                       </Avatar>
                       <div>
                         <p className="font-medium">{review.tutor}</p>
-                        <p className="text-sm text-muted-foreground">Reviewed on {review.reviewDate}</p>
+                        <p className="text-sm text-white">Reviewed on {review.reviewDate}</p>
                       </div>
                     </div>
 
@@ -313,7 +313,7 @@ const TutorReviewSystem = () => {
                         <ul className="text-sm space-y-1">
                           {review.suggestions.map((suggestion, index) => (
                             <li key={index} className="flex items-start gap-2">
-                              <span className="text-muted-foreground">•</span>
+                              <span className="text-white">•</span>
                               {suggestion}
                             </li>
                           ))}
@@ -329,7 +329,7 @@ const TutorReviewSystem = () => {
                             <div key={reply.id} className="bg-blue-50 p-3 rounded-lg">
                               <div className="flex justify-between items-start mb-1">
                                 <span className="font-medium text-sm">{reply.author}</span>
-                                <span className="text-xs text-muted-foreground">{reply.timestamp}</span>
+                                <span className="text-xs text-white">{reply.timestamp}</span>
                               </div>
                               <p className="text-sm">{reply.content}</p>
                             </div>
@@ -375,7 +375,7 @@ const TutorReviewSystem = () => {
               <div className="text-center py-8">
                 <MessageSquare className="h-12 w-12 text-blue-500 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold mb-2">Direct Messaging</h3>
-                <p className="text-muted-foreground mb-4">
+                <p className="text-white mb-4">
                   Communicate directly with your tutors about any questions or concerns.
                 </p>
                 <Button>

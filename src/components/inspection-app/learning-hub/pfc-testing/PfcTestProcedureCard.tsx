@@ -29,7 +29,7 @@ const PfcTestProcedureCard = () => {
             </div>
             <Badge className="bg-orange-500/10 text-orange-400 border-orange-400/20 text-xs">Critical Test</Badge>
           </div>
-          <CardDescription className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+          <CardDescription className="text-xs sm:text-sm text-white/80 leading-relaxed">
             Essential testing to verify sufficient fault current for protective device operation - BS 7671 Regulation 612.11
           </CardDescription>
         </CardHeader>
@@ -41,7 +41,7 @@ const PfcTestProcedureCard = () => {
               <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-orange-400" />
               <h4 className="font-semibold text-orange-400 text-sm sm:text-base">Why PFC Testing is Critical</h4>
             </div>
-            <div className="space-y-2 text-xs sm:text-sm text-muted-foreground leading-relaxed">
+            <div className="space-y-2 text-xs sm:text-sm text-white/80 leading-relaxed">
               <p><strong className="text-foreground">Purpose:</strong> Verify adequate fault current to ensure protective devices operate within required disconnection times</p>
               <p><strong className="text-foreground">Risk:</strong> Insufficient PFC can prevent protective devices from operating, creating serious safety hazards</p>
             </div>
@@ -60,7 +60,7 @@ const PfcTestProcedureCard = () => {
                     <Icon className={`h-4 w-4 sm:h-5 sm:w-5 ${step.color} mt-1 shrink-0`} />
                     <div className="flex-1 min-w-0">
                       <h5 className="font-semibold text-foreground text-sm sm:text-base mb-1">{step.title}</h5>
-                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{step.description}</p>
+                      <p className="text-xs sm:text-sm text-white/80 leading-relaxed">{step.description}</p>
                     </div>
                   </div>
                 </div>
@@ -75,7 +75,7 @@ const PfcTestProcedureCard = () => {
                 <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-400" />
                 <h4 className="font-semibold text-yellow-400 text-sm sm:text-base">Test Types</h4>
               </div>
-              <ul className="space-y-2 text-xs sm:text-sm text-muted-foreground">
+              <ul className="space-y-2 text-xs sm:text-sm text-white/80">
                 <li className="flex items-start gap-2">
                   <span className="text-yellow-400 shrink-0">•</span>
                   <span><strong className="text-foreground">Phase-Earth PFC:</strong> Primary measurement</span>
@@ -100,7 +100,7 @@ const PfcTestProcedureCard = () => {
                 <Target className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
                 <h4 className="font-semibold text-green-400 text-sm sm:text-base">Key Requirements</h4>
               </div>
-              <ul className="space-y-2 text-xs sm:text-sm text-muted-foreground">
+              <ul className="space-y-2 text-xs sm:text-sm text-white/80">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 shrink-0">•</span>
                   <span>Must exceed minimum values</span>
@@ -127,7 +127,7 @@ const PfcTestProcedureCard = () => {
               <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
               <h4 className="font-semibold text-red-400 text-sm sm:text-base">Critical Safety Point</h4>
             </div>
-            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+            <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
               PFC testing involves high current measurements. Ensure proper test equipment is used and safety procedures are followed. 
               Low PFC readings indicate potential safety hazards that require immediate investigation and remedial action.
             </p>
@@ -139,7 +139,7 @@ const PfcTestProcedureCard = () => {
               <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
               <h4 className="font-semibold text-blue-400 text-sm sm:text-base">BS 7671 Requirements Summary</h4>
             </div>
-            <ul className="space-y-1.5 text-xs sm:text-sm text-muted-foreground">
+            <ul className="space-y-1.5 text-xs sm:text-sm text-white/80">
               <li className="flex items-start gap-2">
                 <span className="text-blue-400 font-mono shrink-0">612.11:</span>
                 <span>PFC shall be measured at the origin of every circuit</span>

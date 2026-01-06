@@ -47,7 +47,7 @@ const EALLevel2Diploma = () => {
           <h1 className="text-3xl font-bold tracking-tight mb-2">
             <span className="gradient-text">EAL Level 2 Diploma</span>
           </h1>
-          <p className="text-muted-foreground text-sm sm:text-base">
+          <p className="text-white/70 text-sm sm:text-base">
             Diploma in Electrical Installation
           </p>
         </div>
@@ -55,9 +55,9 @@ const EALLevel2Diploma = () => {
       </div>
 
       {/* Course description */}
-      <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-6 mb-8">
+      <div className="bg-white/5 border border-elec-yellow/20 rounded-lg p-6 mb-8">
         <h2 className="text-xl font-semibold mb-2">Course Overview</h2>
-        <p className="text-muted-foreground">
+        <p className="text-white/70">
           The Level 2 Diploma in Electrical Installation is the foundation qualification for anyone looking to become an electrician. 
           This course covers essential knowledge and skills needed to start your career in the electrical industry.
         </p>
@@ -88,7 +88,7 @@ const EALLevel2Diploma = () => {
           return (
             <Card 
               key={unit.id}
-              className="h-full border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 hover:border-elec-yellow/40 transition-all duration-300 cursor-pointer"
+              className="h-full border-elec-yellow/20 bg-white/5 hover:bg-white/10 hover:border-elec-yellow/40 transition-all duration-300 cursor-pointer"
               onClick={() => handleUnitSelect(unit.id)}
             >
               <CardHeader className="flex flex-row items-center gap-4">
@@ -101,7 +101,7 @@ const EALLevel2Diploma = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground mb-4">{unit.description}</p>
+                <p className="text-white/70 mb-4">{unit.description}</p>
                 <div className="flex justify-end">
                   <Button 
                     variant="outline" 

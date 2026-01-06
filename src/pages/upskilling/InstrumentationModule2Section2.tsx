@@ -67,8 +67,7 @@ const InstrumentationModule2Section2 = () => {
       ],
       correct: 2,
       explanation: "Thermocouples have the fastest response time due to their small thermal mass and direct junction construction, making them ideal for rapid temperature changes."
-    }
-  ];
+  }  ];
 
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">

@@ -52,13 +52,13 @@ const Module3 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="../inspection-testing">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Inspection & Testing
@@ -85,19 +85,19 @@ const Module3 = () => {
               
               const cardContent = (
                 <Card 
-                  className="bg-card border-transparent hover:border-yellow-400/30 transition-all duration-300 hover:bg-card/80 cursor-pointer group"
+                  className="bg-transparent border-transparent hover:border-elec-yellow/30 transition-all duration-300 hover:bg-transparent/80 cursor-pointer group"
                 >
                   <CardHeader className="text-center space-y-3 pb-2 p-4">
                     {/* Icon */}
                     <div className="flex justify-center">
-                      <IconComponent className="h-8 w-8 text-yellow-400" strokeWidth={1.5} />
+                      <IconComponent className="h-8 w-8 text-elec-yellow" strokeWidth={1.5} />
                     </div>
                     
                     {/* Section Badge */}
                     <div className="flex justify-center">
                       <Badge 
                         variant="secondary" 
-                        className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold text-xs px-3 py-1 border-0"
+                        className="bg-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/50 font-semibold text-xs px-3 py-1 border-0"
                       >
                         Section {section.id}
                       </Badge>
@@ -106,7 +106,7 @@ const Module3 = () => {
                   
                   <CardContent className="text-center space-y-2 pt-0 p-4">
                     {/* Title */}
-                    <h3 className="text-lg font-semibold text-white leading-tight group-hover:text-yellow-400 transition-colors duration-300">
+                    <h3 className="text-lg font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors duration-300">
                       {section.title}
                     </h3>
                     

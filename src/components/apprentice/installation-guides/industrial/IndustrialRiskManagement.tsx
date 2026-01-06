@@ -588,7 +588,7 @@ const IndustrialRiskManagement = () => {
   return (
     <div className="space-y-6">
       {/* Overview Card */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-white/5">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Shield className="h-6 w-6 text-elec-yellow" />
@@ -612,7 +612,7 @@ const IndustrialRiskManagement = () => {
 
         {/* ATEX/DSEAR Tab */}
         <TabsContent value="atex" className="space-y-4">
-          <Card className="border-red-500/30 bg-elec-gray">
+          <Card className="border-red-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Flame className="h-6 w-6 text-red-400" />
@@ -656,7 +656,7 @@ const IndustrialRiskManagement = () => {
           </Card>
 
           {/* Ex Markings */}
-          <Card className="border-purple-500/30 bg-elec-gray">
+          <Card className="border-purple-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Shield className="h-6 w-6 text-purple-400" />
@@ -762,7 +762,7 @@ const IndustrialRiskManagement = () => {
         {/* Zone Classifications Tab */}
         <TabsContent value="zones" className="space-y-4">
           {/* Gas Zones */}
-          <Card className="border-orange-500/30 bg-elec-gray">
+          <Card className="border-orange-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Wind className="h-6 w-6 text-orange-400" />
@@ -814,7 +814,7 @@ const IndustrialRiskManagement = () => {
           </Card>
 
           {/* Dust Zones */}
-          <Card className="border-yellow-500/30 bg-elec-gray">
+          <Card className="border-yellow-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Factory className="h-6 w-6 text-yellow-400" />
@@ -866,7 +866,7 @@ const IndustrialRiskManagement = () => {
           </Card>
 
           {/* Zone Diagram Description */}
-          <Card className="border-blue-500/30 bg-elec-gray">
+          <Card className="border-blue-500/30 bg-white/5">
             <CardHeader>
               <CardTitle className="text-blue-300">Zone Extent Factors</CardTitle>
             </CardHeader>
@@ -922,7 +922,7 @@ const IndustrialRiskManagement = () => {
         {/* Permits & Isolation Tab */}
         <TabsContent value="permits" className="space-y-4">
           {/* Permit Types */}
-          <Card className="border-blue-500/30 bg-elec-gray">
+          <Card className="border-blue-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <ClipboardList className="h-6 w-6 text-blue-400" />
@@ -955,7 +955,7 @@ const IndustrialRiskManagement = () => {
           </Card>
 
           {/* Permit Stages */}
-          <Card className="border-green-500/30 bg-elec-gray">
+          <Card className="border-green-500/30 bg-white/5">
             <CardHeader>
               <CardTitle className="text-green-300">Permit System Stages</CardTitle>
             </CardHeader>
@@ -985,7 +985,7 @@ const IndustrialRiskManagement = () => {
           </Card>
 
           {/* Safe Isolation */}
-          <Card className="border-orange-500/30 bg-elec-gray">
+          <Card className="border-orange-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Lock className="h-6 w-6 text-orange-400" />
@@ -1140,7 +1140,7 @@ const IndustrialRiskManagement = () => {
         {/* Working at Height & Confined Spaces Tab */}
         <TabsContent value="special" className="space-y-4">
           {/* Working at Height */}
-          <Card className="border-blue-500/30 bg-elec-gray">
+          <Card className="border-blue-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <HardHat className="h-6 w-6 text-blue-400" />
@@ -1210,7 +1210,7 @@ const IndustrialRiskManagement = () => {
           </Card>
 
           {/* Confined Spaces */}
-          <Card className="border-purple-500/30 bg-elec-gray">
+          <Card className="border-purple-500/30 bg-white/5">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Eye className="h-6 w-6 text-purple-400" />

@@ -21,7 +21,7 @@ const Subsection9_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+          <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
             <h3 className="text-xl font-bold text-elec-yellow flex items-center">
               <Search className="h-5 w-5 mr-2" />
               Visual Inspection
@@ -63,7 +63,7 @@ const Subsection9_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </div>
           </div>
           
-          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+          <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
             <h3 className="text-xl font-bold text-elec-yellow flex items-center">
               <Wrench className="h-5 w-5 mr-2" />
               Testing Fundamentals
@@ -107,7 +107,7 @@ const Subsection9_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           </div>
         </div>
         
-        <div className="mt-8 bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-6">
+        <div className="mt-8 bg-white/10 border border-elec-yellow/20 rounded-lg p-6">
           <h3 className="text-xl font-bold text-elec-yellow mb-4 flex items-center">
             <FileClock className="h-5 w-5 mr-2" />
             Documentation and Certification
@@ -162,7 +162,7 @@ const Subsection9_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </div>
             </div>
             
-            <div className="mt-4 p-4 bg-elec-dark/70 rounded-lg text-sm">
+            <div className="mt-4 p-4 bg-white/10 rounded-lg text-sm">
               <p className="font-medium mb-1 text-elec-yellow">Regulatory Note:</p>
               <p>BS 7671 Chapter 61 details inspection requirements, while Chapter 62 covers testing. Certificates must be issued by competent persons and provide a declaration of safety and compliance. Copies must be provided to the person ordering the work, and appropriate information given to the user. Documentation should be retained for future reference.</p>
             </div>

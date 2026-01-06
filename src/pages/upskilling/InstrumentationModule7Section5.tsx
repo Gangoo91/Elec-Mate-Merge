@@ -528,7 +528,7 @@ const InstrumentationModule7Section5 = () => {
                 ],
                 correctAnswer: 1,
                 explanation: "IS circuits must be properly earthed because Zener barriers require a dedicated earth connection to operate correctly and safely clamp voltages. Poor earthing can compromise barrier protection."
-              }
+            }
             ]}
             title="Section 5 Knowledge Check"
           />

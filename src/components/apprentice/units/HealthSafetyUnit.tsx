@@ -46,7 +46,7 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
         {/* Subsections for Section 1 */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
           {/* Legislation and Regulations subsection */}
-          <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
+          <Card className="border-elec-yellow/30 bg-gradient-to-b from-white/5 to-white/5/80 hover:from-white/5/90 hover:to-white/5/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
             <Link 
               to={`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/section/1/subsection/1.1`}
               onClick={handleSectionClick}
@@ -73,7 +73,7 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
           </Card>
           
           {/* Roles and Responsibilities subsection */}
-          <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
+          <Card className="border-elec-yellow/30 bg-gradient-to-b from-white/5 to-white/5/80 hover:from-white/5/90 hover:to-white/5/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
             <Link 
               to={`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/section/1/subsection/1.2`}
               onClick={handleSectionClick}
@@ -100,7 +100,7 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
           </Card>
           
           {/* Risk Assessment subsection */}
-          <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
+          <Card className="border-elec-yellow/30 bg-gradient-to-b from-white/5 to-white/5/80 hover:from-white/5/90 hover:to-white/5/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
             <Link 
               to={`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/section/1/subsection/1.3`}
               onClick={handleSectionClick}
@@ -151,7 +151,7 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
               onClick={handleSectionClick}
               className="block transition-transform hover:scale-102 duration-200 h-full"
             >
-              <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
+              <Card className="border-elec-yellow/30 bg-gradient-to-b from-white/5 to-white/5/80 hover:from-white/5/90 hover:to-white/5/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
                 <CardContent className="flex flex-col p-6 h-full">
                   <div className="flex items-center gap-3">
                     <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
@@ -174,7 +174,7 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
           }}
           className="block transition-transform hover:scale-102 duration-200 h-full"
         >
-          <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
+          <Card className="border-elec-yellow/30 bg-gradient-to-b from-white/5 to-white/5/80 hover:from-white/5/90 hover:to-white/5/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
             <CardContent className="flex flex-col p-6 h-full relative">
               <div className="flex items-center gap-3">
                 <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">

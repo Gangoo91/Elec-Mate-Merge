@@ -50,7 +50,7 @@ const PowerFactorCalculator = () => {
   const config = CALCULATOR_CONFIG['power'];
 
   const getResultStatus = () => {
-    if (powerFactor === null) return { text: "Enter values to calculate", color: "text-white/50" };
+    if (powerFactor === null) return { text: "Enter values to calculate", color: "text-white/80" };
     const pf = parseFloat(powerFactor);
     if (pf >= 0.95) return { text: "Excellent efficiency", color: "text-green-400" };
     if (pf >= 0.85) return { text: "Good efficiency", color: "text-amber-400" };
@@ -256,7 +256,7 @@ const PowerFactorCalculator = () => {
                   <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
                 </div>
                 <ChevronDown className={cn(
-                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  "h-4 w-4 text-white/70 transition-transform duration-200",
                   showGuidance && "rotate-180"
                 )} />
               </CollapsibleTrigger>
@@ -293,7 +293,7 @@ const PowerFactorCalculator = () => {
                   <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 Regs at a Glance</span>
                 </div>
                 <ChevronDown className={cn(
-                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  "h-4 w-4 text-white/70 transition-transform duration-200",
                   showBsRegs && "rotate-180"
                 )} />
               </CollapsibleTrigger>

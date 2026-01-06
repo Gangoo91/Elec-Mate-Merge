@@ -74,7 +74,7 @@ const InstallationGuideTabs = ({
       case "overview":
         return enhancedOverviewComponent || (
           <div className="grid md:grid-cols-2 gap-6">
-            <Card className="border-elec-yellow/20 bg-elec-gray/90 backdrop-blur-sm hover:border-elec-yellow/40 transition-all duration-300 shadow-lg shadow-black/20">
+            <Card className="border-elec-yellow/20 bg-white/5 backdrop-blur-sm hover:border-elec-yellow/40 transition-all duration-300 shadow-lg shadow-black/20">
               <CardHeader>
                 <CardTitle className="text-elec-yellow text-xl">Common Installation Types</CardTitle>
                 <CardDescription className="text-neutral-300">Typical projects you'll encounter in domestic electrical work</CardDescription>
@@ -91,7 +91,7 @@ const InstallationGuideTabs = ({
               </CardContent>
             </Card>
 
-            <Card className="border-elec-yellow/20 bg-elec-gray/90 backdrop-blur-sm hover:border-elec-yellow/40 transition-all duration-300 shadow-lg shadow-black/20">
+            <Card className="border-elec-yellow/20 bg-white/5 backdrop-blur-sm hover:border-elec-yellow/40 transition-all duration-300 shadow-lg shadow-black/20">
               <CardHeader>
                 <CardTitle className="text-elec-yellow text-xl">Safety & Compliance</CardTitle>
                 <CardDescription className="text-neutral-300">Essential safety practices for domestic installations</CardDescription>
@@ -106,7 +106,7 @@ const InstallationGuideTabs = ({
         );
       case "planning":
         return enhancedPlanningComponent || (
-          <Card className="border-elec-yellow/20 bg-elec-gray/90 backdrop-blur-sm hover:border-elec-yellow/40 transition-all duration-300 shadow-lg shadow-black/20">
+          <Card className="border-elec-yellow/20 bg-white/5 backdrop-blur-sm hover:border-elec-yellow/40 transition-all duration-300 shadow-lg shadow-black/20">
             <CardHeader>
               <CardTitle className="text-elec-yellow text-xl">Installation Planning</CardTitle>
               <CardDescription className="text-neutral-300">Comprehensive planning approach for domestic installations</CardDescription>
@@ -120,7 +120,7 @@ const InstallationGuideTabs = ({
         );
       case "circuits":
         return enhancedCircuitComponent || (
-          <Card className="border-elec-yellow/20 bg-elec-gray/90 backdrop-blur-sm hover:border-elec-yellow/40 transition-all duration-300 shadow-lg shadow-black/20">
+          <Card className="border-elec-yellow/20 bg-white/5 backdrop-blur-sm hover:border-elec-yellow/40 transition-all duration-300 shadow-lg shadow-black/20">
             <CardHeader>
               <CardTitle className="text-elec-yellow text-xl">Circuit Design & Cable Selection</CardTitle>
               <CardDescription className="text-neutral-300">Standard circuits and cable specifications for domestic installations</CardDescription>
@@ -153,7 +153,7 @@ const InstallationGuideTabs = ({
         );
       case "testing":
         return enhancedTestingComponent || (
-          <Card className="border-elec-yellow/20 bg-elec-gray/90 backdrop-blur-sm hover:border-elec-yellow/40 transition-all duration-300 shadow-lg shadow-black/20">
+          <Card className="border-elec-yellow/20 bg-white/5 backdrop-blur-sm hover:border-elec-yellow/40 transition-all duration-300 shadow-lg shadow-black/20">
             <CardHeader>
               <CardTitle className="text-elec-yellow text-xl">Testing & Verification</CardTitle>
               <CardDescription className="text-neutral-300">Essential testing procedures for domestic installations</CardDescription>
@@ -175,7 +175,7 @@ const InstallationGuideTabs = ({
       case "compliance":
         return enhancedReferenceComponent ? (
           <div className="space-y-6">
-            <Card className="border-elec-yellow/20 bg-elec-gray/90 backdrop-blur-sm hover:border-elec-yellow/40 transition-all duration-300 shadow-lg shadow-black/20">
+            <Card className="border-elec-yellow/20 bg-white/5 backdrop-blur-sm hover:border-elec-yellow/40 transition-all duration-300 shadow-lg shadow-black/20">
               <CardHeader>
                 <CardTitle className="text-elec-yellow text-xl">Regulatory Compliance</CardTitle>
                 <CardDescription className="text-neutral-300">Legal and regulatory requirements for domestic electrical work</CardDescription>
@@ -189,7 +189,7 @@ const InstallationGuideTabs = ({
             {enhancedReferenceComponent}
           </div>
         ) : (
-          <Card className="border-elec-yellow/20 bg-elec-gray/90 backdrop-blur-sm hover:border-elec-yellow/40 transition-all duration-300 shadow-lg shadow-black/20">
+          <Card className="border-elec-yellow/20 bg-white/5 backdrop-blur-sm hover:border-elec-yellow/40 transition-all duration-300 shadow-lg shadow-black/20">
             <CardHeader>
               <CardTitle className="text-elec-yellow text-xl">Regulatory Compliance</CardTitle>
               <CardDescription className="text-neutral-300">Legal and regulatory requirements for domestic electrical work</CardDescription>
@@ -203,7 +203,7 @@ const InstallationGuideTabs = ({
         );
       case "reference":
         return (
-          <Card className="border-elec-yellow/20 bg-elec-gray/90 backdrop-blur-sm hover:border-elec-yellow/40 transition-all duration-300 shadow-lg shadow-black/20">
+          <Card className="border-elec-yellow/20 bg-white/5 backdrop-blur-sm hover:border-elec-yellow/40 transition-all duration-300 shadow-lg shadow-black/20">
             <CardHeader>
               <CardTitle className="text-elec-yellow text-xl">Key Standards & Regulations</CardTitle>
               <CardDescription className="text-neutral-300">Essential standards and regulations for domestic electrical installations</CardDescription>
@@ -231,7 +231,7 @@ const InstallationGuideTabs = ({
         <div className="flex items-center justify-center gap-4">
           <div className="relative">
             <div className="absolute inset-0 bg-elec-yellow/20 blur-xl rounded-full" />
-            <div className="relative bg-elec-gray/80 p-3 rounded-xl border border-elec-yellow/30">
+            <div className="relative bg-white/5 p-3 rounded-xl border border-elec-yellow/30">
               <Icon className="h-10 w-10 text-elec-yellow" />
             </div>
           </div>
@@ -245,7 +245,7 @@ const InstallationGuideTabs = ({
       <div className="w-full space-y-6">
         <div className="flex justify-center">
           <Select value={activeTab} onValueChange={setActiveTab}>
-            <SelectTrigger className="w-[320px] md:w-[400px] bg-elec-gray border-elec-yellow/30 hover:border-elec-yellow/50 transition-colors text-white h-12 text-base font-medium shadow-lg shadow-black/20">
+            <SelectTrigger className="w-[320px] md:w-[400px] bg-white/5 border-elec-yellow/30 hover:border-elec-yellow/50 transition-colors text-white h-12 text-base font-medium shadow-lg shadow-black/20">
               <SelectValue placeholder="Select section">
                 <div className="flex items-center gap-3">
                   {(() => {
@@ -261,7 +261,7 @@ const InstallationGuideTabs = ({
                 </div>
               </SelectValue>
             </SelectTrigger>
-            <SelectContent className="bg-elec-gray border-elec-yellow/30 shadow-xl shadow-black/30">
+            <SelectContent className="bg-white/5 border-elec-yellow/30 shadow-xl shadow-black/30">
               {tabOptions.map((tab) => {
                 const IconComponent = tab.icon;
                 return (

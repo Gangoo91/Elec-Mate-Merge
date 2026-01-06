@@ -1235,7 +1235,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
                         id="bondingWater"
                         checked={formData.bondingWater}
                         onCheckedChange={(checked) => handleUpdate('bondingWater', checked)}
-                        className="border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+                        className="border-white/50 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
                       />
                       <Label htmlFor="bondingWater" className="text-sm">Water</Label>
                     </div>
@@ -1244,7 +1244,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
                         id="bondingGas"
                         checked={formData.bondingGas}
                         onCheckedChange={(checked) => handleUpdate('bondingGas', checked)}
-                        className="border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+                        className="border-white/50 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
                       />
                       <Label htmlFor="bondingGas" className="text-sm">Gas</Label>
                     </div>
@@ -1253,7 +1253,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
                         id="bondingOil"
                         checked={formData.bondingOil}
                         onCheckedChange={(checked) => handleUpdate('bondingOil', checked)}
-                        className="border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+                        className="border-white/50 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
                       />
                       <Label htmlFor="bondingOil" className="text-sm">Oil</Label>
                     </div>
@@ -1262,7 +1262,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
                         id="bondingStructural"
                         checked={formData.bondingStructural}
                         onCheckedChange={(checked) => handleUpdate('bondingStructural', checked)}
-                        className="border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+                        className="border-white/50 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
                       />
                       <Label htmlFor="bondingStructural" className="text-sm">Structural Steel</Label>
                     </div>
@@ -1271,7 +1271,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
                         id="bondingOther"
                         checked={formData.bondingOther}
                         onCheckedChange={(checked) => handleUpdate('bondingOther', checked)}
-                        className="border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+                        className="border-white/50 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
                       />
                       <Label htmlFor="bondingOther" className="text-sm">Other</Label>
                     </div>

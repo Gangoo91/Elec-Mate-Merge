@@ -1,11 +1,13 @@
 
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Building, Phone, Globe, Mail } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { MapPin, Building, Phone, Globe, Mail, ChevronDown, ChevronUp, Sparkles, Search, ExternalLink } from "lucide-react";
 
 const regionalData = {
   "England": {
+    color: "blue",
     funding: [
       { name: "Advanced Learner Loans", description: "Available for Level 4-6 qualifications", amount: "Full course fees" },
       { name: "Skills Development Fund", description: "For emerging technologies", amount: "Up to £1,000" },
@@ -22,6 +24,7 @@ const regionalData = {
     ]
   },
   "Scotland": {
+    color: "purple",
     funding: [
       { name: "Student Awards Agency Scotland", description: "Higher education funding", amount: "Full fees + bursary" },
       { name: "Individual Learning Account", description: "Skills development", amount: "Up to £500" },
@@ -38,6 +41,7 @@ const regionalData = {
     ]
   },
   "Wales": {
+    color: "green",
     funding: [
       { name: "Student Finance Wales", description: "Higher education support", amount: "Tuition fees + grants" },
       { name: "Working Wales", description: "Skills and employment support", amount: "Free training courses" },
@@ -54,6 +58,7 @@ const regionalData = {
     ]
   },
   "Northern Ireland": {
+    color: "orange",
     funding: [
       { name: "Student Finance NI", description: "Higher education funding", amount: "Tuition fees + maintenance" },
       { name: "Skills Focus", description: "Adult skills training", amount: "Free Level 2-3 courses" },
@@ -102,147 +107,218 @@ const specialistCentres = [
   }
 ];
 
+const colorMap: Record<string, { border: string; bg: string; icon: string; iconBg: string; badge: string; glow: string }> = {
+  blue: {
+    border: "border-blue-500/30",
+    bg: "bg-gradient-to-br from-elec-gray to-blue-950/20",
+    icon: "text-blue-400",
+    iconBg: "bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30",
+    badge: "bg-blue-500/10 text-blue-400 border-blue-500/30",
+    glow: "bg-blue-500/5"
+  },
+  purple: {
+    border: "border-purple-500/30",
+    bg: "bg-gradient-to-br from-elec-gray to-purple-950/20",
+    icon: "text-purple-400",
+    iconBg: "bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/30",
+    badge: "bg-purple-500/10 text-purple-400 border-purple-500/30",
+    glow: "bg-purple-500/5"
+  },
+  green: {
+    border: "border-green-500/30",
+    bg: "bg-gradient-to-br from-elec-gray to-green-950/20",
+    icon: "text-green-400",
+    iconBg: "bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30",
+    badge: "bg-green-500/10 text-green-400 border-green-500/30",
+    glow: "bg-green-500/5"
+  },
+  orange: {
+    border: "border-orange-500/30",
+    bg: "bg-gradient-to-br from-elec-gray to-orange-950/20",
+    icon: "text-orange-400",
+    iconBg: "bg-gradient-to-br from-orange-500/20 to-orange-500/5 border border-orange-500/30",
+    badge: "bg-orange-500/10 text-orange-400 border-orange-500/30",
+    glow: "bg-orange-500/5"
+  }
+};
+
 const RegionalInformation = () => {
+  const [expandedRegion, setExpandedRegion] = useState<string | null>("England");
+
   return (
-    <div className="space-y-6">
-      <div className="text-center space-y-2">
-        <h3 className="text-xl font-semibold">Regional Information & Support</h3>
-        <p className="text-muted-foreground">
-          Find funding options, providers, and contact information specific to your region
-        </p>
+    <div className="space-y-6 animate-fade-in">
+      {/* Hero Section */}
+      <div className="p-4 rounded-xl bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/30 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="relative flex items-start gap-3">
+          <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+            <MapPin className="h-5 w-5 text-elec-yellow" />
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-white mb-1">Regional Information & Support</h3>
+            <p className="text-sm text-white/70">
+              Find funding options, providers, and contact information specific to your region across the UK
+            </p>
+          </div>
+        </div>
       </div>
 
-      <Tabs defaultValue="England" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="England">England</TabsTrigger>
-          <TabsTrigger value="Scotland">Scotland</TabsTrigger>
-          <TabsTrigger value="Wales">Wales</TabsTrigger>
-          <TabsTrigger value="Northern Ireland">N. Ireland</TabsTrigger>
-        </TabsList>
+      {/* Regional Cards */}
+      <div className="space-y-3">
+        {Object.entries(regionalData).map(([region, data]) => {
+          const colors = colorMap[data.color];
+          const isExpanded = expandedRegion === region;
 
-        {Object.entries(regionalData).map(([region, data]) => (
-          <TabsContent key={region} value={region} className="space-y-6">
-            {/* Regional Funding */}
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <MapPin className="h-5 w-5 text-elec-yellow" />
-                  {region} - Available Funding
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {data.funding.map((fund, idx) => (
-                    <div key={idx} className="bg-elec-dark/50 p-4 rounded-md">
-                      <h4 className="font-semibold mb-2">{fund.name}</h4>
-                      <p className="text-sm text-muted-foreground mb-2">{fund.description}</p>
-                      <Badge variant="default">{fund.amount}</Badge>
+          return (
+            <Card
+              key={region}
+              className={`${colors.bg} ${colors.border} border overflow-hidden relative transition-all`}
+            >
+              <div className={`absolute top-0 right-0 w-48 h-48 ${colors.glow} rounded-full blur-3xl -translate-y-1/2 translate-x-1/2`} />
+
+              {/* Header - Always visible */}
+              <CardHeader
+                className="relative cursor-pointer"
+                onClick={() => setExpandedRegion(isExpanded ? null : region)}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className={`p-2.5 rounded-xl ${colors.iconBg}`}>
+                      <MapPin className={`h-5 w-5 ${colors.icon}`} />
                     </div>
-                  ))}
+                    <div>
+                      <CardTitle className="text-lg text-white">{region}</CardTitle>
+                      <p className="text-xs text-white/60 mt-0.5">{data.funding.length} funding options • {data.providers.length} providers</p>
+                    </div>
+                  </div>
+                  <Button variant="ghost" size="sm" className={`${colors.icon}`}>
+                    {isExpanded ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+                  </Button>
                 </div>
-              </CardContent>
-            </Card>
-
-            {/* Regional Providers */}
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Building className="h-5 w-5 text-elec-yellow" />
-                  Education Providers
-                </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {data.providers.map((provider, idx) => (
-                    <div key={idx} className="flex items-start justify-between bg-elec-dark/50 p-4 rounded-md">
-                      <div>
-                        <h4 className="font-semibold">{provider.name}</h4>
-                        <Badge variant="outline" className="mb-2">{provider.type}</Badge>
-                        <div className="flex flex-wrap gap-1">
-                          {provider.specialties.map((specialty, specIdx) => (
-                            <Badge key={specIdx} variant="secondary" className="text-xs">
-                              {specialty}
-                            </Badge>
-                          ))}
+
+              {/* Expanded Content */}
+              {isExpanded && (
+                <CardContent className="space-y-5 relative pt-0 animate-fade-in">
+                  {/* Funding */}
+                  <div>
+                    <h4 className={`font-semibold ${colors.icon} mb-3 text-sm flex items-center gap-2`}>
+                      <Sparkles className="h-4 w-4" />
+                      Available Funding
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                      {data.funding.map((fund, idx) => (
+                        <div key={idx} className="p-3 rounded-xl bg-white/5 border border-white/10">
+                          <h5 className="font-medium text-white text-sm mb-1">{fund.name}</h5>
+                          <p className="text-xs text-white/60 mb-2">{fund.description}</p>
+                          <Badge className={`text-[10px] ${colors.badge}`}>{fund.amount}</Badge>
                         </div>
-                      </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+                  </div>
 
-            {/* Regional Contacts */}
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Phone className="h-5 w-5 text-elec-yellow" />
-                  Key Contacts & Resources
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {data.contacts.map((contact, idx) => (
-                    <div key={idx} className="bg-elec-dark/50 p-4 rounded-md">
-                      <h4 className="font-semibold mb-2">{contact.name}</h4>
-                      <div className="space-y-1 text-sm">
-                        {contact.phone && (
-                          <div className="flex items-center gap-2">
-                            <Phone className="h-4 w-4 text-elec-yellow" />
-                            <span>{contact.phone}</span>
+                  {/* Providers */}
+                  <div>
+                    <h4 className={`font-semibold ${colors.icon} mb-3 text-sm flex items-center gap-2`}>
+                      <Building className="h-4 w-4" />
+                      Education Providers
+                    </h4>
+                    <div className="space-y-2">
+                      {data.providers.map((provider, idx) => (
+                        <div key={idx} className="flex items-start justify-between p-3 rounded-xl bg-white/5 border border-white/10">
+                          <div>
+                            <div className="flex items-center gap-2 mb-1">
+                              <h5 className="font-medium text-white text-sm">{provider.name}</h5>
+                              <Badge variant="outline" className="text-[10px] bg-white/5 text-white/60 border-white/20">
+                                {provider.type}
+                              </Badge>
+                            </div>
+                            <div className="flex flex-wrap gap-1">
+                              {provider.specialties.map((specialty, specIdx) => (
+                                <Badge key={specIdx} className={`text-[10px] ${colors.badge}`}>
+                                  {specialty}
+                                </Badge>
+                              ))}
+                            </div>
                           </div>
-                        )}
-                        {contact.email && (
-                          <div className="flex items-center gap-2">
-                            <Mail className="h-4 w-4 text-elec-yellow" />
-                            <span>{contact.email}</span>
-                          </div>
-                        )}
-                        {contact.website && (
-                          <div className="flex items-center gap-2">
-                            <Globe className="h-4 w-4 text-elec-yellow" />
-                            <span>{contact.website}</span>
-                          </div>
-                        )}
-                      </div>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        ))}
-      </Tabs>
+                  </div>
 
-      {/* Specialist Training Centres */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Building className="h-5 w-5 text-elec-yellow" />
+                  {/* Contacts */}
+                  <div>
+                    <h4 className={`font-semibold ${colors.icon} mb-3 text-sm flex items-center gap-2`}>
+                      <Phone className="h-4 w-4" />
+                      Key Contacts
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {data.contacts.map((contact, idx) => (
+                        <div key={idx} className="p-3 rounded-xl bg-white/5 border border-white/10">
+                          <h5 className="font-medium text-white text-sm mb-2">{contact.name}</h5>
+                          <div className="space-y-1.5 text-xs">
+                            {contact.phone && (
+                              <div className="flex items-center gap-2 text-white/70">
+                                <Phone className={`h-3 w-3 ${colors.icon}`} />
+                                <span>{contact.phone}</span>
+                              </div>
+                            )}
+                            {contact.email && (
+                              <div className="flex items-center gap-2 text-white/70">
+                                <Mail className={`h-3 w-3 ${colors.icon}`} />
+                                <span>{contact.email}</span>
+                              </div>
+                            )}
+                            {contact.website && (
+                              <div className="flex items-center gap-2 text-white/70">
+                                <Globe className={`h-3 w-3 ${colors.icon}`} />
+                                <span>{contact.website}</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              )}
+            </Card>
+          );
+        })}
+      </div>
+
+      {/* UK-Wide Specialist Centres */}
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+              <Building className="h-5 w-5 text-elec-yellow" />
+            </div>
             UK-Wide Specialist Training Centres
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="relative">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {specialistCentres.map((centre, idx) => (
-              <div key={idx} className="bg-elec-dark/50 p-4 rounded-md">
-                <h4 className="font-semibold mb-2">{centre.name}</h4>
+              <div key={idx} className="p-4 rounded-xl bg-white/5 border border-white/10 hover:border-elec-yellow/30 transition-all">
+                <h4 className="font-semibold text-white mb-3">{centre.name}</h4>
                 <div className="space-y-2 text-sm">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 text-white/70">
                     <MapPin className="h-4 w-4 text-elec-yellow" />
                     <span>{centre.locations.join(", ")}</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 text-white/70">
                     <Phone className="h-4 w-4 text-elec-yellow" />
                     <span>{centre.contact}</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 text-white/70">
                     <Globe className="h-4 w-4 text-elec-yellow" />
                     <span>{centre.website}</span>
                   </div>
-                  <div className="flex flex-wrap gap-1 mt-2">
+                  <div className="flex flex-wrap gap-1 mt-3">
                     {centre.specialties.map((specialty, specIdx) => (
-                      <Badge key={specIdx} variant="secondary" className="text-xs">
+                      <Badge key={specIdx} className="bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/30 text-[10px]">
                         {specialty}
                       </Badge>
                     ))}
@@ -255,33 +331,33 @@ const RegionalInformation = () => {
       </Card>
 
       {/* Local Resources Finder */}
-      <Card className="border-green-500/20 bg-green-500/10">
-        <CardHeader>
-          <CardTitle className="text-green-400">Find Local Resources</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-muted-foreground mb-4">
-            Use these tools to find education providers and funding opportunities in your specific area:
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="text-center">
-              <h4 className="font-semibold mb-2">Course Finder</h4>
-              <p className="text-xs text-muted-foreground mb-2">Search for courses by postcode</p>
-              <Badge variant="outline" className="cursor-pointer">Find Courses</Badge>
-            </div>
-            <div className="text-center">
-              <h4 className="font-semibold mb-2">College Locator</h4>
-              <p className="text-xs text-muted-foreground mb-2">Find nearby colleges and training centres</p>
-              <Badge variant="outline" className="cursor-pointer">Locate Colleges</Badge>
-            </div>
-            <div className="text-center">
-              <h4 className="font-semibold mb-2">Advisor Finder</h4>
-              <p className="text-xs text-muted-foreground mb-2">Connect with local career advisors</p>
-              <Badge variant="outline" className="cursor-pointer">Find Advisors</Badge>
+      <div className="p-4 rounded-xl bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/30">
+        <div className="flex items-start gap-3">
+          <div className="p-2 rounded-lg bg-green-500/20">
+            <Search className="h-5 w-5 text-green-400" />
+          </div>
+          <div className="flex-1">
+            <p className="font-medium text-green-400 mb-1">Find Local Resources</p>
+            <p className="text-sm text-white/70 mb-4">
+              Use these tools to find education providers and funding opportunities in your specific area
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <Button variant="outline" className="h-11 border-green-500/30 text-green-400 hover:bg-green-500/10 touch-manipulation active:scale-95 transition-all">
+                <Search className="h-4 w-4 mr-2" />
+                Find Courses
+              </Button>
+              <Button variant="outline" className="h-11 border-green-500/30 text-green-400 hover:bg-green-500/10 touch-manipulation active:scale-95 transition-all">
+                <Building className="h-4 w-4 mr-2" />
+                Locate Colleges
+              </Button>
+              <Button variant="outline" className="h-11 border-green-500/30 text-green-400 hover:bg-green-500/10 touch-manipulation active:scale-95 transition-all">
+                <ExternalLink className="h-4 w-4 mr-2" />
+                Find Advisors
+              </Button>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };

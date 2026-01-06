@@ -62,27 +62,27 @@ const ToolCard = ({ title, icon, description, items, apprenticeTip, ukConsiderat
   ];
 
   return (
-    <Card className="bg-gradient-to-br from-card/50 via-card/30 to-transparent border-border hover:border-elec-yellow/30 hover:shadow-lg transition-all duration-300 rounded-xl overflow-hidden h-full">
+    <Card className="bg-gradient-to-br from-white/8 to-white/2 border-white/10 hover:border-elec-yellow/30 hover:shadow-lg transition-all duration-300 rounded-xl overflow-hidden h-full">
       <CardHeader className="pb-4">
         <div className="flex items-center gap-2 mb-2">
           {icon}
           <div className="flex items-center gap-2">
-            <span className="text-xs text-muted-foreground">RS Components</span>
+            <span className="text-xs text-white/60">RS Components</span>
             <div className="flex items-center gap-1">
               <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-              <span className="text-xs text-muted-foreground">4.5</span>
+              <span className="text-xs text-white/60">4.5</span>
             </div>
           </div>
         </div>
         <CardTitle className="text-elec-yellow text-lg leading-tight">{title}</CardTitle>
-        <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
+        <p className="text-sm text-white/70 leading-relaxed">{description}</p>
       </CardHeader>
-      
+
       <CardContent className="space-y-4">
         {items.map((item, index) => (
           <div key={index} className="space-y-4">
             <div className="flex items-center justify-between">
-              <h4 className="font-medium text-foreground text-sm">{item.name}</h4>
+              <h4 className="font-medium text-white text-sm">{item.name}</h4>
               <Badge variant={getPriorityColor(item.priority)} className="text-xs">
                 {item.priority}
               </Badge>
@@ -91,42 +91,42 @@ const ToolCard = ({ title, icon, description, items, apprenticeTip, ukConsiderat
             {/* 2x2 Information Grid */}
             <div className="grid grid-cols-2 gap-2">
               {getInfoGridData(item).map((info, idx) => (
-                <div key={idx} className="border border-border rounded-lg p-3 space-y-2">
+                <div key={idx} className="border border-white/10 bg-white/5 rounded-lg p-3 space-y-2">
                   <div className="flex items-center gap-2">
                     {info.icon}
-                    <span className="text-xs text-muted-foreground">{info.label}</span>
+                    <span className="text-xs text-white/60">{info.label}</span>
                   </div>
-                  <p className="text-xs font-medium text-foreground">{info.value}</p>
+                  <p className="text-xs font-medium text-white">{info.value}</p>
                 </div>
               ))}
             </div>
 
             {/* Features List */}
             <div className="space-y-2">
-              <h5 className="text-xs font-medium text-muted-foreground">Key Features:</h5>
+              <h5 className="text-xs font-medium text-white/60">Key Features:</h5>
               <div className="space-y-1">
                 {getFeatures(item).map((feature, idx) => (
                   <div key={idx} className="flex items-center gap-2">
                     <Check className="w-3 h-3 text-green-400" />
-                    <span className="text-xs text-muted-foreground">{feature}</span>
+                    <span className="text-xs text-white/70">{feature}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Footer */}
-            <div className="flex items-center justify-between pt-2 border-t border-border">
+            <div className="flex items-center justify-between pt-2 border-t border-white/10">
               <div className="flex flex-col">
                 <span className="text-lg font-bold text-elec-yellow">{item.priceRange}</span>
-                <span className="text-xs text-muted-foreground">inc. VAT</span>
+                <span className="text-xs text-white/60">inc. VAT</span>
               </div>
-              <Button size="sm" className="bg-elec-yellow hover:bg-elec-yellow/90 text-background">
+              <Button size="sm" className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark">
                 View Product
                 <ExternalLink className="w-3 h-3 ml-1" />
               </Button>
             </div>
 
-            {index < items.length - 1 && <div className="border-b border-border/50 pt-4" />}
+            {index < items.length - 1 && <div className="border-b border-white/10 pt-4" />}
           </div>
         ))}
 
@@ -136,7 +136,7 @@ const ToolCard = ({ title, icon, description, items, apprenticeTip, ukConsiderat
             <h6 className="text-xs font-medium text-blue-300 mb-1">Apprentice Tip:</h6>
             <p className="text-xs text-blue-200">{apprenticeTip}</p>
           </div>
-          
+
           <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
             <h6 className="text-xs font-medium text-amber-300 mb-1">UK Consideration:</h6>
             <p className="text-xs text-amber-200">{ukConsideration}</p>

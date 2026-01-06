@@ -117,7 +117,7 @@ const ResourcesTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             A curated collection of essential resources for electrical apprentices and students. 
             These materials cover everything from basic principles to advanced installation techniques.
           </p>
@@ -128,7 +128,7 @@ const ResourcesTab = () => {
         {resourceCategories.map((category, index) => {
           const IconComponent = category.icon;
           return (
-            <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+            <Card key={index} className="border-elec-yellow/20 bg-white/5">
               <CardHeader>
                 <CardTitle className="text-elec-yellow flex items-center gap-3">
                   <div className="p-2 bg-elec-yellow/10 rounded-lg">
@@ -136,7 +136,7 @@ const ResourcesTab = () => {
                   </div>
                   {category.title}
                 </CardTitle>
-                <p className="text-sm text-muted-foreground">{category.description}</p>
+                <p className="text-sm text-white">{category.description}</p>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -145,8 +145,8 @@ const ResourcesTab = () => {
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <h4 className="font-medium text-foreground mb-1">{resource.name}</h4>
-                          <p className="text-sm text-muted-foreground mb-2">{resource.description}</p>
-                          <span className="inline-block px-2 py-1 bg-muted/50 rounded text-xs text-muted-foreground">
+                          <p className="text-sm text-white mb-2">{resource.description}</p>
+                          <span className="inline-block px-2 py-1 bg-muted/50 rounded text-xs text-white">
                             {resource.type}
                           </span>
                         </div>
@@ -183,7 +183,7 @@ const ResourcesTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <h4 className="font-medium mb-2">Effective Resource Management</h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>• Create a personal resource library with bookmarks</li>
                 <li>• Download key reference materials for offline access</li>
                 <li>• Use multiple formats (text, video, interactive) for better understanding</li>
@@ -192,7 +192,7 @@ const ResourcesTab = () => {
             </div>
             <div>
               <h4 className="font-medium mb-2">Quality Assurance</h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>• Always use current edition materials (especially BS 7671)</li>
                 <li>• Verify information from multiple sources</li>
                 <li>• Check for updates to regulations and standards</li>

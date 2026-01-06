@@ -14,7 +14,7 @@ interface RegulationCardProps {
 
 const RegulationCard: React.FC<RegulationCardProps> = ({ regulation, onRelatedClick }) => {
   const partColors = {
-    1: 'bg-gray-500/10 border-gray-500/30 text-gray-400',
+    1: 'bg-white/5 border-white/20 text-white/70',
     4: 'bg-red-500/10 border-red-500/30 text-red-400',
     5: 'bg-blue-500/10 border-blue-500/30 text-blue-400',
     6: 'bg-green-500/10 border-green-500/30 text-green-400',
@@ -30,7 +30,7 @@ const RegulationCard: React.FC<RegulationCardProps> = ({ regulation, onRelatedCl
   const frequencyColors = {
     common: 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400',
     frequent: 'bg-blue-500/10 border-blue-500/30 text-blue-400',
-    occasional: 'bg-gray-500/10 border-gray-500/30 text-gray-400'
+    occasional: 'bg-white/5 border-white/20 text-white/70'
   };
 
   const FrequencyIcon = regulation.frequency === 'common' ? Star : 
@@ -67,7 +67,7 @@ const RegulationCard: React.FC<RegulationCardProps> = ({ regulation, onRelatedCl
               <Button
                 variant="outline"
                 size="sm"
-                className="w-full sm:w-auto border-gray-600 text-foreground hover:bg-gray-700 min-h-[44px] sm:min-h-[36px]"
+                className="w-full sm:w-auto border-white/20 text-foreground hover:bg-white/10 min-h-[44px] sm:min-h-[36px]"
               >
                 <ExternalLink className="h-4 w-4 mr-2" />
                 View Full
@@ -107,7 +107,7 @@ const RegulationCard: React.FC<RegulationCardProps> = ({ regulation, onRelatedCl
                 {/* Main Content */}
                 <div className="p-4 bg-muted rounded-lg border-l-4 border-elec-yellow">
                   <h4 className="font-semibold mb-2 text-elec-yellow">Regulation Content:</h4>
-                  <p className="text-gray-300 leading-relaxed">{regulation.content}</p>
+                  <p className="text-white/80 leading-relaxed">{regulation.content}</p>
                 </div>
                 
                 {/* Apprentice Note */}
@@ -117,7 +117,7 @@ const RegulationCard: React.FC<RegulationCardProps> = ({ regulation, onRelatedCl
                       <Info className="h-4 w-4" />
                       Apprentice Note:
                     </h4>
-                    <p className="text-gray-300">{regulation.apprenticeNote}</p>
+                    <p className="text-white/80">{regulation.apprenticeNote}</p>
                   </div>
                 )}
                 
@@ -128,7 +128,7 @@ const RegulationCard: React.FC<RegulationCardProps> = ({ regulation, onRelatedCl
                       <Zap className="h-4 w-4" />
                       Test Method:
                     </h4>
-                    <p className="text-gray-300">{regulation.testMethod}</p>
+                    <p className="text-white/80">{regulation.testMethod}</p>
                   </div>
                 )}
                 
@@ -139,7 +139,7 @@ const RegulationCard: React.FC<RegulationCardProps> = ({ regulation, onRelatedCl
                       <AlertTriangle className="h-4 w-4" />
                       Safety Tip:
                     </h4>
-                    <p className="text-gray-300">{regulation.safetyTip}</p>
+                    <p className="text-white/80">{regulation.safetyTip}</p>
                   </div>
                 )}
                 
@@ -148,7 +148,7 @@ const RegulationCard: React.FC<RegulationCardProps> = ({ regulation, onRelatedCl
                   <h4 className="font-semibold mb-2 text-foreground/80">Keywords:</h4>
                   <div className="flex flex-wrap gap-2">
                     {regulation.keywords.map((keyword, idx) => (
-                      <Badge key={idx} variant="outline" className="border-gray-600 text-foreground text-xs">
+                      <Badge key={idx} variant="outline" className="border-white/20 text-foreground text-xs">
                         {keyword}
                       </Badge>
                     ))}
@@ -181,26 +181,26 @@ const RegulationCard: React.FC<RegulationCardProps> = ({ regulation, onRelatedCl
       </CardHeader>
       <CardContent className="space-y-3 sm:space-y-4">
         <div className="p-3 sm:p-4 bg-muted rounded-lg border-l-4 border-elec-yellow">
-          <p className="text-gray-100 leading-relaxed text-sm sm:text-base">{regulation.content}</p>
+          <p className="text-white/90 leading-relaxed text-sm sm:text-base">{regulation.content}</p>
         </div>
         
         {/* Compact info display */}
         {regulation.apprenticeNote && (
           <div className="p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
             <p className="text-blue-400 font-semibold text-xs sm:text-sm mb-1">Apprentice Note:</p>
-            <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">{regulation.apprenticeNote}</p>
+            <p className="text-white/80 text-xs sm:text-sm leading-relaxed">{regulation.apprenticeNote}</p>
           </div>
         )}
         
         <div className="flex flex-wrap gap-2">
           <span className="text-xs text-foreground/80 font-semibold">Keywords:</span>
           {regulation.keywords.slice(0, 4).map((keyword, idx) => (
-            <Badge key={idx} variant="outline" className="text-xs border-gray-600 text-foreground">
+            <Badge key={idx} variant="outline" className="text-xs border-white/20 text-foreground">
               {keyword}
             </Badge>
           ))}
           {regulation.keywords.length > 4 && (
-            <Badge variant="outline" className="text-xs border-gray-600 text-foreground/70">
+            <Badge variant="outline" className="text-xs border-white/20 text-foreground/70">
               +{regulation.keywords.length - 4} more
             </Badge>
           )}

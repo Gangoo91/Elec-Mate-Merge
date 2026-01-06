@@ -23,26 +23,31 @@ const CultureModulesTab = () => {
   ];
 
   return (
-    <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <BookOpen className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Interactive Learning Modules</CardTitle>
-          </div>
+    <div className="space-y-6 animate-fade-in">
+      <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <CardHeader className="relative">
+          <CardTitle className="text-white flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
+              <BookOpen className="h-5 w-5 text-elec-yellow" />
+            </div>
+            Interactive Learning Modules
+          </CardTitle>
         </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground mb-4">
-            Comprehensive learning modules covering all aspects of workplace culture in the UK electrical industry. 
+        <CardContent className="relative">
+          <p className="text-white/70 mb-6">
+            Comprehensive learning modules covering all aspects of workplace culture in the UK electrical industry.
             Each module includes practical examples, interactive content, and real-world scenarios.
           </p>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {moduleStats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <stat.icon className="h-6 w-6 text-elec-yellow mx-auto mb-2" />
+              <div key={index} className="text-center p-4 rounded-xl bg-white/10 border border-elec-yellow/20 hover:border-elec-yellow/40 transition-all">
+                <div className="p-3 rounded-xl bg-elec-yellow/10 w-fit mx-auto mb-2">
+                  <stat.icon className="h-5 w-5 text-elec-yellow" />
+                </div>
                 <div className="text-2xl font-bold text-elec-yellow mb-1">{stat.value}</div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
+                <div className="text-sm text-white/60">{stat.label}</div>
               </div>
             ))}
           </div>

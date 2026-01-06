@@ -135,7 +135,7 @@ const ComplianceDashboardTab = () => {
       case 'high': return 'bg-red-100 text-red-800 border-red-200';
       case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
       case 'low': return 'bg-green-100 text-green-800 border-green-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      default: return 'bg-white/5 text-white/90 border-white/20';
     }
   };
 
@@ -144,7 +144,7 @@ const ComplianceDashboardTab = () => {
       case 'completed': return 'bg-green-100 text-green-800 border-green-200';
       case 'in_progress': return 'bg-blue-100 text-blue-800 border-blue-200';
       case 'overdue': return 'bg-red-100 text-red-800 border-red-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      default: return 'bg-white/5 text-white/90 border-white/20';
     }
   };
 
@@ -155,8 +155,8 @@ const ComplianceDashboardTab = () => {
           {[1, 2, 3].map(i => (
             <Card key={i}>
               <CardContent className="p-6">
-                <div className="h-6 bg-gray-300 rounded mb-2"></div>
-                <div className="h-4 bg-gray-200 rounded"></div>
+                <div className="h-6 bg-white/30 rounded mb-2"></div>
+                <div className="h-4 bg-white/20 rounded"></div>
               </CardContent>
             </Card>
           ))}
@@ -180,7 +180,7 @@ const ComplianceDashboardTab = () => {
 
       {/* Progress Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="bg-elec-gray border-elec-yellow/20">
+        <Card className="bg-white/5 border-elec-yellow/20">
           <CardContent className="p-4 flex flex-col items-center justify-center text-center min-h-[120px]">
             <TrendingUp className="h-6 w-6 text-elec-yellow mb-3" />
             <div className="space-y-1">
@@ -191,7 +191,7 @@ const ComplianceDashboardTab = () => {
           </CardContent>
         </Card>
 
-        <Card className="bg-elec-gray border-elec-yellow/20">
+        <Card className="bg-white/5 border-elec-yellow/20">
           <CardContent className="p-4 flex flex-col items-center justify-center text-center min-h-[120px]">
             <CheckCircle className="h-6 w-6 text-green-400 mb-3" />
             <div className="space-y-1">
@@ -202,7 +202,7 @@ const ComplianceDashboardTab = () => {
           </CardContent>
         </Card>
 
-        <Card className="bg-elec-gray border-elec-yellow/20">
+        <Card className="bg-white/5 border-elec-yellow/20">
           <CardContent className="p-4 flex flex-col items-center justify-center text-center min-h-[120px]">
             <Target className="h-6 w-6 text-blue-400 mb-3" />
             <div className="space-y-1">
@@ -217,7 +217,7 @@ const ComplianceDashboardTab = () => {
       </div>
 
       {/* Goals List */}
-      <Card className="bg-elec-gray border-elec-gray/40">
+      <Card className="bg-white/5 border-elec-gray/40">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-elec-light">
             <Target className="h-5 w-5 text-elec-yellow" />
@@ -227,9 +227,9 @@ const ComplianceDashboardTab = () => {
         <CardContent>
           {goals.length === 0 ? (
             <div className="text-center py-8">
-              <Target className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">No goals set yet</p>
-              <p className="text-sm text-muted-foreground mt-2">
+              <Target className="h-12 w-12 text-white mx-auto mb-4" />
+              <p className="text-white">No goals set yet</p>
+              <p className="text-sm text-white mt-2">
                 Set your first goal to start tracking your progress
               </p>
             </div>
@@ -239,7 +239,7 @@ const ComplianceDashboardTab = () => {
                 const progressPercentage = Math.min((goal.current_value / goal.target_value) * 100, 100);
                 
                 return (
-                  <div key={goal.id} className="p-4 bg-elec-gray border border-elec-gray/40 rounded-xl space-y-4">
+                  <div key={goal.id} className="p-4 bg-white/5 border border-elec-gray/40 rounded-xl space-y-4">
                     {/* Mobile-optimized badges - centered at top */}
                     <div className="flex justify-center gap-2">
                       <Badge className={getPriorityColor(goal.priority)}>

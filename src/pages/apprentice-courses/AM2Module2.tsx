@@ -54,11 +54,11 @@ const AM2Module2 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
+      <div className="border-b border-white/10 bg-card/50">
         <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16 py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to AM2 Course
@@ -70,7 +70,7 @@ const AM2Module2 = () => {
       {/* Main Content */}
       <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16 py-12">
         <div className="mb-8">
-          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
             Module 2: Health, Safety and Documentation
           </h1>
         </div>

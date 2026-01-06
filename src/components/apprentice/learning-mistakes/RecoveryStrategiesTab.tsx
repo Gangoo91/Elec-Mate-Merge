@@ -102,14 +102,14 @@ const RecoveryStrategiesTab = () => {
                     </div>
                   </div>
                   
-                  <p className="text-sm text-muted-foreground mb-4">{step.description}</p>
+                  <p className="text-sm text-white mb-4">{step.description}</p>
                   
                   <div className="space-y-3">
                     <div>
                       <h4 className="font-medium text-white mb-2">Key Steps:</h4>
                       <ol className="space-y-2">
                         {step.steps.map((stepItem, stepIndex) => (
-                          <li key={stepIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                          <li key={stepIndex} className="text-sm text-white flex items-start gap-2">
                             <span className="text-elec-yellow font-medium text-xs mt-0.5">{stepIndex + 1}.</span>
                             <span>{stepItem}</span>
                           </li>
@@ -135,7 +135,7 @@ const RecoveryStrategiesTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">Recovery Success Stories</CardTitle>
         </CardHeader>
@@ -144,7 +144,7 @@ const RecoveryStrategiesTab = () => {
             {successStories.map((story, index) => (
               <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-2">{story.title}</h4>
-                <p className="text-sm text-muted-foreground mb-3">{story.description}</p>
+                <p className="text-sm text-white mb-3">{story.description}</p>
                 
                 <div className="flex flex-col gap-2">
                   <Badge className="bg-green-500/20 text-green-400 border-green-500/40 w-fit">

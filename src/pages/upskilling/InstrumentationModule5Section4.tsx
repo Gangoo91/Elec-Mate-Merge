@@ -115,7 +115,7 @@ const InstrumentationModule5Section4 = () => {
       ],
       correctAnswer: 1,
       explanation: "Manual control should be considered during emergencies, equipment failures, major process upsets, or when automatic control is causing unsafe conditions."
-    }
+  }
   ];
 
   function handleAnswerSelect(answerIndex: number) {
@@ -123,58 +123,58 @@ const InstrumentationModule5Section4 = () => {
       ...prev,
       [currentQuestionIndex]: answerIndex
     }));
-  }
+};
 
   function handleNext() {
     if (currentQuestionIndex < quizQuestions.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1);
     } else {
       setShowResults(true);
-    }
-  }
+  };
+};
 
   function handlePrevious() {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(prev => prev - 1);
-    }
-  }
+  };
+};
 
   function calculateScore() {
     let correct = 0;
     quizQuestions.forEach((question, index) => {
       if (selectedAnswers[index] === question.correctAnswer) {
         correct++;
-      }
+    };
     });
     return correct;
-  }
+};
 
   function resetQuiz() {
     setCurrentQuestionIndex(0);
     setSelectedAnswers({});
     setShowResults(false);
     setQuizStarted(false);
-  }
+};
 
   function startQuiz() {
     setQuizStarted(true);
     setCurrentQuestionIndex(0);
     setSelectedAnswers({});
     setShowResults(false);
-  }
+};
 
   const currentQuestion = quizQuestions[currentQuestionIndex];
   const score = calculateScore();
   const percentage = Math.round((score / quizQuestions.length) * 100);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="../instrumentation-module-5">
           <Button
             variant="ghost"
-            className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 5
@@ -183,10 +183,10 @@ const InstrumentationModule5Section4 = () => {
         
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <FileText className="h-8 w-8 text-yellow-400" />
+            <FileText className="h-8 w-8 text-elec-yellow" />
             <Badge 
               variant="secondary" 
-              className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-semibold text-sm px-3 py-1 border-0"
+              className="bg-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/50 font-semibold text-sm px-3 py-1 border-0"
             >
               Module 5 - Section 4
             </Badge>
@@ -205,7 +205,7 @@ const InstrumentationModule5Section4 = () => {
         <div className="space-y-4 sm:space-y-6">
           
           {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Learning Objectives</CardTitle>
             </CardHeader>
@@ -213,19 +213,19 @@ const InstrumentationModule5Section4 = () => {
               <p className="text-gray-300 mb-4">By the end of this section, you'll be able to:</p>
               <ul className="space-y-2 text-gray-300">
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Recognize common control loop faults and their symptoms</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Understand the root causes of hunting, overshoot, and lag</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Learn systematic troubleshooting and corrective actions</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Apply diagnostic techniques using trending and data analysis</span>
                 </li>
               </ul>
@@ -233,16 +233,16 @@ const InstrumentationModule5Section4 = () => {
           </Card>
 
           {/* Hunting (Oscillation) */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <Activity className="h-5 w-5 text-yellow-400" />
+                <Activity className="h-5 w-5 text-elec-yellow" />
                 Hunting (Oscillatory Behavior)
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-2">What is Hunting?</h4>
+                <h4 className="text-elec-yellow font-semibold mb-2">What is Hunting?</h4>
                 <p className="text-gray-300 mb-3">
                   Hunting is continuous oscillatory behavior where the process variable repeatedly cycles above and below the setpoint without settling to a stable value.
                 </p>
@@ -272,7 +272,7 @@ const InstrumentationModule5Section4 = () => {
               </div>
 
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-2">Root Causes of Hunting</h4>
+                <h4 className="text-elec-yellow font-semibold mb-2">Root Causes of Hunting</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-orange-600/10 border border-orange-600/20 rounded-lg p-4">
                     <h5 className="text-orange-200 font-medium mb-2">Tuning-Related Causes</h5>
@@ -283,7 +283,7 @@ const InstrumentationModule5Section4 = () => {
                       <li>• <strong>Wrong Control Action:</strong> Direct vs reverse acting</li>
                     </ul>
                   </div>
-                  <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-4">
+                  <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
                     <h5 className="text-blue-200 font-medium mb-2">Hardware-Related Causes</h5>
                     <ul className="text-gray-300 text-sm space-y-1">
                       <li>• <strong>Actuator Problems:</strong> Sticking, dead band, hysteresis</li>
@@ -296,7 +296,7 @@ const InstrumentationModule5Section4 = () => {
               </div>
 
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-2">Solutions for Hunting</h4>
+                <h4 className="text-elec-yellow font-semibold mb-2">Solutions for Hunting</h4>
                 <div className="space-y-3">
                   <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
                     <h5 className="text-green-200 font-medium mb-2">Immediate Actions</h5>
@@ -327,16 +327,16 @@ const InstrumentationModule5Section4 = () => {
           </Card>
 
           {/* Overshoot */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <TrendingDown className="h-5 w-5 text-yellow-400" />
+                <TrendingDown className="h-5 w-5 text-elec-yellow" />
                 Overshoot Problems
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-2">Understanding Overshoot</h4>
+                <h4 className="text-elec-yellow font-semibold mb-2">Understanding Overshoot</h4>
                 <p className="text-gray-300 mb-3">
                   Overshoot occurs when the process variable exceeds the setpoint before settling, indicating aggressive control action that provides too much correction.
                 </p>
@@ -363,7 +363,7 @@ const InstrumentationModule5Section4 = () => {
               </div>
 
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-2">Causes of Overshoot</h4>
+                <h4 className="text-elec-yellow font-semibold mb-2">Causes of Overshoot</h4>
                 <div className="space-y-3">
                   <div className="bg-orange-600/10 border border-orange-600/20 rounded-lg p-4">
                     <h5 className="text-orange-200 font-medium mb-2">Primary Causes</h5>
@@ -392,7 +392,7 @@ const InstrumentationModule5Section4 = () => {
               </div>
 
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-2">Overshoot Reduction Strategies</h4>
+                <h4 className="text-elec-yellow font-semibold mb-2">Overshoot Reduction Strategies</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
                     <h5 className="text-green-200 font-medium mb-2">Tuning Solutions</h5>
@@ -403,7 +403,7 @@ const InstrumentationModule5Section4 = () => {
                       <li>• <strong>Implement Anti-Windup:</strong> Prevent integral accumulation</li>
                     </ul>
                   </div>
-                  <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-4">
+                  <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
                     <h5 className="text-blue-200 font-medium mb-2">Advanced Techniques</h5>
                     <ul className="text-gray-300 text-sm space-y-1">
                       <li>• <strong>Setpoint Ramping:</strong> Gradual setpoint changes</li>
@@ -418,21 +418,21 @@ const InstrumentationModule5Section4 = () => {
           </Card>
 
           {/* Lag Problems */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <Gauge className="h-5 w-5 text-yellow-400" />
+                <Gauge className="h-5 w-5 text-elec-yellow" />
                 Lag and Slow Response
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-2">Types of Lag</h4>
+                <h4 className="text-elec-yellow font-semibold mb-2">Types of Lag</h4>
                 <p className="text-gray-300 mb-3">
                   Lag represents delays in the control system that slow response and reduce control effectiveness.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-4">
+                  <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
                     <h5 className="text-blue-200 font-medium mb-2">Dead Time (Transport Delay)</h5>
                     <p className="text-gray-300 text-sm mb-2">Time delay before any response is observed</p>
                     <ul className="text-gray-300 text-xs space-y-1">
@@ -456,8 +456,8 @@ const InstrumentationModule5Section4 = () => {
               </div>
 
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-2">Impact of Lag on Control Performance</h4>
-                <div className="bg-yellow-600/10 border border-yellow-600/20 rounded-lg p-4">
+                <h4 className="text-elec-yellow font-semibold mb-2">Impact of Lag on Control Performance</h4>
+                <div className="bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg p-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <h5 className="text-yellow-200 font-medium mb-2">Performance Degradation</h5>
@@ -482,7 +482,7 @@ const InstrumentationModule5Section4 = () => {
               </div>
 
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-2">Strategies for Lag Compensation</h4>
+                <h4 className="text-elec-yellow font-semibold mb-2">Strategies for Lag Compensation</h4>
                 <div className="space-y-3">
                   <div className="bg-purple-600/10 border border-purple-600/20 rounded-lg p-4">
                     <h5 className="text-purple-200 font-medium mb-2">Design Improvements</h5>
@@ -513,15 +513,15 @@ const InstrumentationModule5Section4 = () => {
           </Card>
 
           {/* Systematic Troubleshooting */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Systematic Troubleshooting Approach</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-2">Step-by-Step Diagnostic Process</h4>
+                <h4 className="text-elec-yellow font-semibold mb-2">Step-by-Step Diagnostic Process</h4>
                 <div className="space-y-4">
-                  <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-4">
+                  <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
                     <h5 className="text-blue-200 font-medium mb-2">Phase 1: Data Collection and Analysis</h5>
                     <div className="space-y-3">
                       <div>
@@ -596,7 +596,7 @@ const InstrumentationModule5Section4 = () => {
               </div>
 
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-2">Common Diagnostic Tools</h4>
+                <h4 className="text-elec-yellow font-semibold mb-2">Common Diagnostic Tools</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   <div className="bg-purple-600/10 border border-purple-600/20 rounded-lg p-4">
                     <h5 className="text-purple-200 font-medium mb-2">Trending Software</h5>
@@ -631,13 +631,13 @@ const InstrumentationModule5Section4 = () => {
           </Card>
 
           {/* Preventive Measures */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="text-white text-xl">Preventive Measures and Best Practices</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-2">Maintenance Best Practices</h4>
+                <h4 className="text-elec-yellow font-semibold mb-2">Maintenance Best Practices</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
                     <h5 className="text-green-200 font-medium mb-2">Regular Maintenance Tasks</h5>
@@ -648,7 +648,7 @@ const InstrumentationModule5Section4 = () => {
                       <li>• <strong>Annual:</strong> Complete system audit</li>
                     </ul>
                   </div>
-                  <div className="bg-yellow-400/10 border border-blue-600/20 rounded-lg p-4">
+                  <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
                     <h5 className="text-blue-200 font-medium mb-2">Performance Monitoring</h5>
                     <ul className="text-gray-300 text-sm space-y-1">
                       <li>• Continuous loop performance assessment</li>
@@ -661,8 +661,8 @@ const InstrumentationModule5Section4 = () => {
               </div>
 
               <div>
-                <h4 className="text-yellow-400 font-semibold mb-2">Design Considerations</h4>
-                <div className="bg-yellow-600/10 border border-yellow-600/20 rounded-lg p-4">
+                <h4 className="text-elec-yellow font-semibold mb-2">Design Considerations</h4>
+                <div className="bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg p-4">
                   <h5 className="text-yellow-200 font-medium mb-2">Fault-Tolerant Design Principles</h5>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
@@ -690,17 +690,17 @@ const InstrumentationModule5Section4 = () => {
           </Card>
 
           {/* Real-World Scenario */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <Users className="h-5 w-5 text-yellow-400" />
+                <Users className="h-5 w-5 text-elec-yellow" />
                 <CardTitle className="text-white">Real-World Scenario</CardTitle>
               </div>
             </CardHeader>
             <CardContent className="text-gray-300">
-              <div className="bg-blue-900/20 border border-yellow-400/30 rounded-lg p-4">
+              <div className="bg-blue-900/20 border border-elec-yellow/30 rounded-lg p-4">
                 <div className="flex items-start gap-3">
-                  <AlertTriangle className="h-5 w-5 text-yellow-400 mt-1 flex-shrink-0" />
+                  <AlertTriangle className="h-5 w-5 text-elec-yellow mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="font-medium text-white mb-2">HVAC System Fan Control Problem</h4>
                     <div className="space-y-3">
@@ -724,10 +724,10 @@ const InstrumentationModule5Section4 = () => {
           </Card>
 
           {/* Summary */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <Lightbulb className="h-5 w-5 text-yellow-400" />
+                <Lightbulb className="h-5 w-5 text-elec-yellow" />
                 <CardTitle className="text-white">Summary</CardTitle>
               </div>
             </CardHeader>
@@ -739,10 +739,10 @@ const InstrumentationModule5Section4 = () => {
           </Card>
 
           {/* Interactive Quiz */}
-          <Card className="bg-card border-transparent">
+          <Card className="bg-transparent border-transparent">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <Brain className="h-5 w-5 text-yellow-400" />
+                <Brain className="h-5 w-5 text-elec-yellow" />
                 Knowledge Check Quiz
               </CardTitle>
             </CardHeader>
@@ -754,7 +754,7 @@ const InstrumentationModule5Section4 = () => {
                   </p>
                   <Button 
                     onClick={startQuiz}
-                    className="bg-yellow-400 text-black hover:bg-yellow-600 font-semibold px-8 py-2"
+                    className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-2"
                   >
                     Start Quiz
                   </Button>
@@ -767,7 +767,7 @@ const InstrumentationModule5Section4 = () => {
                     </span>
                     <div className="w-32 bg-gray-700 rounded-full h-2">
                       <div 
-                        className="bg-yellow-400 h-2 rounded-full transition-all duration-300"
+                        className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
                         style={{ width: `${((currentQuestionIndex + 1) / quizQuestions.length) * 100}%` }}
                       ></div>
                     </div>
@@ -782,7 +782,7 @@ const InstrumentationModule5Section4 = () => {
                           onClick={() => handleAnswerSelect(index)}
                           className={`w-full text-left p-3 rounded border transition-colors ${
                             selectedAnswers[currentQuestionIndex] === index
-                              ? 'border-yellow-400 bg-yellow-600/20 text-yellow-400'
+                              ? 'border-elec-yellow bg-elec-yellow/20 text-elec-yellow'
                               : 'border-gray-600 bg-gray-800/50 text-gray-300 hover:border-gray-500'
                           }`}
                         >
@@ -797,14 +797,14 @@ const InstrumentationModule5Section4 = () => {
                       onClick={handlePrevious}
                       disabled={currentQuestionIndex === 0}
                       variant="outline"
-                      className="border-gray-600 text-gray-300 hover:bg-card disabled:opacity-50"
+                      className="border-gray-600 text-gray-300 hover:bg-transparent disabled:opacity-50"
                     >
                       Previous
                     </Button>
                     <Button
                       onClick={handleNext}
                       disabled={selectedAnswers[currentQuestionIndex] === undefined}
-                      className="bg-yellow-400 text-black hover:bg-yellow-600 disabled:opacity-50"
+                      className="bg-elec-yellow text-black hover:bg-elec-yellow disabled:opacity-50"
                     >
                       {currentQuestionIndex === quizQuestions.length - 1 ? 'Finish' : 'Next'}
                     </Button>
@@ -863,7 +863,7 @@ const InstrumentationModule5Section4 = () => {
                   <div className="text-center">
                     <Button 
                       onClick={resetQuiz}
-                      className="bg-yellow-400 text-black hover:bg-yellow-600 font-semibold px-8 py-2"
+                      className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-2"
                     >
                       Retake Quiz
                     </Button>

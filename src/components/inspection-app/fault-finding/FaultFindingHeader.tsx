@@ -12,7 +12,7 @@ const FaultFindingHeader = () => {
         </div>
         <h1 className="text-4xl font-bold text-foreground">Advanced Fault Finding Guide</h1>
       </div>
-      <p className="text-xl text-gray-300 max-w-4xl mx-auto">
+      <p className="text-xl text-white/80 max-w-4xl mx-auto">
         Comprehensive troubleshooting guide with interactive diagnostics and quick reference charts
       </p>
       <div className="flex justify-center gap-2 flex-wrap">

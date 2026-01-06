@@ -54,7 +54,7 @@ const OJTHeader = ({ handleDownloadReport }: OJTHeaderProps) => {
     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div>
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Off the Job Training</h1>
-        <p className="text-sm sm:text-base text-muted-foreground">
+        <p className="text-sm sm:text-base text-white">
           Track, manage and provide evidence for your 20% off-the-job training requirements
         </p>
       </div>

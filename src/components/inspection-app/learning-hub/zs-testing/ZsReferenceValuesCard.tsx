@@ -17,7 +17,7 @@ const ZsReferenceValuesCard = () => (
       </TabsList>
       
       <TabsContent value="mcb" className="space-y-3">
-        <p className="text-xs text-muted-foreground mb-2">Table 41.3 - 0.4s disconnection (final circuits)</p>
+        <p className="text-xs text-white/80 mb-2">Table 41.3 - 0.4s disconnection (final circuits)</p>
         
         <div className="space-y-2">
           <div className="text-xs">
@@ -65,7 +65,7 @@ const ZsReferenceValuesCard = () => (
       </TabsContent>
       
       <TabsContent value="fuse04" className="space-y-3">
-        <p className="text-xs text-muted-foreground mb-2">Table 41.2 - 0.4s disconnection (final circuits)</p>
+        <p className="text-xs text-white/80 mb-2">Table 41.2 - 0.4s disconnection (final circuits)</p>
         
         <div className="space-y-2">
           <div className="text-xs">
@@ -105,7 +105,7 @@ const ZsReferenceValuesCard = () => (
       </TabsContent>
       
       <TabsContent value="fuse5" className="space-y-3">
-        <p className="text-xs text-muted-foreground mb-2">Table 41.4 - 5s disconnection (distribution circuits)</p>
+        <p className="text-xs text-white/80 mb-2">Table 41.4 - 5s disconnection (distribution circuits)</p>
         
         <div className="space-y-2">
           <div className="text-xs">
@@ -145,7 +145,7 @@ const ZsReferenceValuesCard = () => (
       </TabsContent>
     </Tabs>
     
-    <p className="text-xs text-muted-foreground mt-3 border-t border-border/30 pt-2">
+    <p className="text-xs text-white/80 mt-3 border-t border-border/30 pt-2">
       Note: Values include Cmin = 0.95 as per BS 7671 Table Notes
     </p>
   </div>

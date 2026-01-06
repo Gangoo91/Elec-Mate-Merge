@@ -368,7 +368,7 @@ const PowerQualityCalculator = () => {
             {/* Key Metrics */}
             <div className="grid grid-cols-2 gap-3 py-4">
               <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
-                <p className="text-xs text-white/50 mb-1">THDi Current</p>
+                <p className="text-xs text-white/80 mb-1">THDi Current</p>
                 <div
                   className={cn(
                     "text-2xl font-bold",
@@ -383,11 +383,11 @@ const PowerQualityCalculator = () => {
                 >
                   {result.thdiCurrent.toFixed(2)}%
                 </div>
-                <p className="text-xs text-white/40">Limit: 5%</p>
+                <p className="text-xs text-white/70">Limit: 5%</p>
               </div>
 
               <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
-                <p className="text-xs text-white/50 mb-1">RMS Current</p>
+                <p className="text-xs text-white/80 mb-1">RMS Current</p>
                 <div
                   className="text-2xl font-bold bg-clip-text text-transparent"
                   style={{
@@ -396,11 +396,11 @@ const PowerQualityCalculator = () => {
                 >
                   {result.rmsCurrentTotal.toFixed(2)}A
                 </div>
-                <p className="text-xs text-white/40">Total RMS</p>
+                <p className="text-xs text-white/70">Total RMS</p>
               </div>
 
               <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
-                <p className="text-xs text-white/50 mb-1">Crest Factor</p>
+                <p className="text-xs text-white/80 mb-1">Crest Factor</p>
                 <div
                   className={cn(
                     "text-2xl font-bold",
@@ -413,11 +413,11 @@ const PowerQualityCalculator = () => {
                 >
                   {result.crestFactorCurrent.toFixed(2)}
                 </div>
-                <p className="text-xs text-white/40">Typical: 1.41</p>
+                <p className="text-xs text-white/70">Typical: 1.41</p>
               </div>
 
               <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
-                <p className="text-xs text-white/50 mb-1">K-Factor</p>
+                <p className="text-xs text-white/80 mb-1">K-Factor</p>
                 <div
                   className={cn(
                     "text-2xl font-bold",
@@ -432,7 +432,7 @@ const PowerQualityCalculator = () => {
                 >
                   {result.kFactor.toFixed(1)}
                 </div>
-                <p className="text-xs text-white/40">Transformer</p>
+                <p className="text-xs text-white/70">Transformer</p>
               </div>
             </div>
 
@@ -536,7 +536,7 @@ const PowerQualityCalculator = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      "h-4 w-4 text-white/40 transition-transform duration-200",
+                      "h-4 w-4 text-white/70 transition-transform duration-200",
                       showHarmonics && "rotate-180"
                     )}
                   />
@@ -565,7 +565,7 @@ const PowerQualityCalculator = () => {
                           <p className="font-mono text-sm text-white/80">
                             {harmonic.currentPercentage.toFixed(2)}%
                           </p>
-                          <p className="text-xs text-white/40">Limit: {harmonic.limit}%</p>
+                          <p className="text-xs text-white/70">Limit: {harmonic.limit}%</p>
                         </div>
                       </div>
                     ))}
@@ -586,7 +586,7 @@ const PowerQualityCalculator = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      "h-4 w-4 text-white/40 transition-transform duration-200",
+                      "h-4 w-4 text-white/70 transition-transform duration-200",
                       showRecommendations && "rotate-180"
                     )}
                   />
@@ -612,7 +612,7 @@ const PowerQualityCalculator = () => {
               <p className="font-medium text-white/80 mb-3 text-sm">Equipment Impact Assessment</p>
               <div className="grid grid-cols-2 gap-3 text-sm">
                 <div>
-                  <p className="text-white/50 text-xs mb-1">Transformers</p>
+                  <p className="text-white/80 text-xs mb-1">Transformers</p>
                   <p
                     className={cn(
                       "text-xs",
@@ -631,7 +631,7 @@ const PowerQualityCalculator = () => {
                   </p>
                 </div>
                 <div>
-                  <p className="text-white/50 text-xs mb-1">Neutral Conductor</p>
+                  <p className="text-white/80 text-xs mb-1">Neutral Conductor</p>
                   <p
                     className={cn(
                       "text-xs",
@@ -646,7 +646,7 @@ const PowerQualityCalculator = () => {
                   </p>
                 </div>
                 <div>
-                  <p className="text-white/50 text-xs mb-1">Protection Devices</p>
+                  <p className="text-white/80 text-xs mb-1">Protection Devices</p>
                   <p
                     className={cn("text-xs", result.crestFactorCurrent > 2.5 ? "text-orange-400" : "text-green-400")}
                   >
@@ -654,7 +654,7 @@ const PowerQualityCalculator = () => {
                   </p>
                 </div>
                 <div>
-                  <p className="text-white/50 text-xs mb-1">PFC Capacitors</p>
+                  <p className="text-white/80 text-xs mb-1">PFC Capacitors</p>
                   <p className={cn("text-xs", result.thdiCurrent > 8 ? "text-orange-400" : "text-green-400")}>
                     {result.thdiCurrent > 8 ? "Detuned capacitors required" : "Standard capacitors OK"}
                   </p>
@@ -675,7 +675,7 @@ const PowerQualityCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/40 transition-transform duration-200",
+                    "h-4 w-4 text-white/70 transition-transform duration-200",
                     showReference && "rotate-180"
                   )}
                 />
@@ -719,7 +719,7 @@ const PowerQualityCalculator = () => {
                 <BookOpen className="h-4 w-4 text-amber-400" />
                 <span className="text-sm sm:text-base font-medium text-amber-300">Quick Reference</span>
               </div>
-              <ChevronDown className="h-4 w-4 text-white/40 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+              <ChevronDown className="h-4 w-4 text-white/70 transition-transform duration-200 group-data-[state=open]:rotate-180" />
             </CollapsibleTrigger>
 
             <CollapsibleContent className="p-4 pt-0">
