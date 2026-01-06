@@ -92,7 +92,7 @@ const ElectricalHub = () => {
 
   return (
     <div className="min-h-screen mobile-safe-area">
-      <div className="space-y-8 md:space-y-10 animate-fade-in px-4 sm:px-6 md:px-8 pb-8 md:pb-12 max-w-7xl mx-auto">
+      <div className="space-y-8 md:space-y-10 animate-fade-in px-4 sm:px-6 pb-8 md:pb-12">
         {/* Header */}
         <div className="flex flex-col gap-4 pt-4 md:pt-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">

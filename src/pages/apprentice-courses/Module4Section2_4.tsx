@@ -246,11 +246,11 @@ const Module4Section2_4 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2
@@ -264,35 +264,35 @@ const Module4Section2_4 = () => {
         {/* Header (matches Module 4.2.1 style) */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Package className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Package className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 4.2.4
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Avoiding Common Errors in Measurement and Positioning
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Learn to identify and prevent common measurement and positioning errors to ensure accuracy, compliance, and professional results.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Common errors: wrong reference points, reading mistakes, alignment issues.</li>
                 <li>Golden rule: measure twice, cut/drill once for accuracy.</li>
                 <li>Cross-check with second person and verify against drawings.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Error patterns, wrong reference points, alignment issues.</li>
                 <li><strong>Use:</strong> Verification methods, consistent tools, proper lighting.</li>
@@ -303,9 +303,9 @@ const Module4Section2_4 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Identify common measurement and positioning errors in electrical work.</li>
             <li>Understand the causes and consequences of these errors.</li>
             <li>Apply best practices to avoid mistakes.</li>
@@ -315,25 +315,25 @@ const Module4Section2_4 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Common Measurement Errors */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Common Measurement Errors</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Common Measurement Errors</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Understanding typical measurement mistakes helps prevent costly errors:
             </p>
             
             <div className="space-y-4">
               {measurementErrors.map((error, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+                <div key={i} className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                   <div className="flex items-start gap-3 mb-2">
-                    <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
+                    <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">{error.error}</p>
-                      <p className="text-xs sm:text-sm text-foreground mb-2">{error.description}</p>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                      <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">{error.error}</p>
+                      <p className="text-xs sm:text-sm text-white mb-2">{error.description}</p>
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Example:</strong> {error.example} - <strong>Prevention:</strong> {error.prevention}
                       </div>
                     </div>
@@ -345,20 +345,20 @@ const Module4Section2_4 = () => {
 
           {/* Common Positioning Errors */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Common Positioning Errors</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Common Positioning Errors</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Positioning mistakes affect both appearance and compliance:
             </p>
             
             <div className="space-y-4">
               {positioningErrors.map((error, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+                <div key={i} className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
                       <p className="font-semibold text-green-600 dark:text-green-400 mb-1">{error.error}</p>
-                      <p className="text-xs sm:text-sm text-foreground mb-2">{error.description}</p>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2">{error.description}</p>
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Impact:</strong> {error.impact} - <strong>Prevention:</strong> {error.prevention}
                       </div>
                     </div>
@@ -379,20 +379,20 @@ const Module4Section2_4 = () => {
 
           {/* Causes of Errors */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Causes of Errors</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Causes of Errors</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Understanding root causes helps develop effective prevention strategies:
             </p>
             
             <div className="space-y-4">
               {errorCauses.map((cause, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+                <div key={i} className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-1">{cause.cause}</p>
-                      <p className="text-xs sm:text-sm text-foreground mb-2">{cause.description}</p>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                      <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">{cause.cause}</p>
+                      <p className="text-xs sm:text-sm text-white mb-2">{cause.description}</p>
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Consequences:</strong> {cause.consequences.join(', ')} - <strong>Solution:</strong> {cause.solution}
                       </div>
                     </div>
@@ -413,20 +413,20 @@ const Module4Section2_4 = () => {
 
           {/* Best Practices to Avoid Errors */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Best Practices to Avoid Errors</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Best Practices to Avoid Errors</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Proven methods to maintain accuracy and prevent mistakes:
             </p>
             
             <div className="space-y-4">
               {bestPractices.map((practice, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-orange-500 bg-card">
+                <div key={i} className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-orange-600 dark:text-emerald-400 mb-1">{practice.practice}</p>
-                      <p className="text-xs sm:text-sm text-foreground mb-2">{practice.description}</p>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                      <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">{practice.practice}</p>
+                      <p className="text-xs sm:text-sm text-white mb-2">{practice.description}</p>
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Application:</strong> {practice.application} - <strong>Benefit:</strong> {practice.benefit}
                       </div>
                     </div>
@@ -435,9 +435,9 @@ const Module4Section2_4 = () => {
               ))}
             </div>
 
-            <div className="mt-4 p-4 bg-card border border-border/30 rounded-lg">
-              <p className="text-sm font-medium text-foreground mb-1">Additional Tips</p>
-              <p className="text-xs text-foreground">
+            <div className="mt-4 p-4 bg-transparent border border-border/30 rounded-lg">
+              <p className="text-sm font-medium text-white mb-1">Additional Tips</p>
+              <p className="text-xs text-white">
                 Keep drawings nearby and mark off completed checks. Work in pairs for large-scale measurements 
                 to avoid tape sag errors and provide verification.
               </p>
@@ -455,19 +455,19 @@ const Module4Section2_4 = () => {
 
           {/* Cross-Checking and Verification */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <Search className="w-5 h-5" /> Cross-Checking and Verification
             </h3>
             
             <div className="space-y-4">
               {crossCheckingMethods.map((method, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+                <div key={i} className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-red-600 dark:text-emerald-400 mb-1">{method.method}</p>
-                      <p className="text-xs sm:text-sm text-foreground mb-2">{method.description}</p>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                      <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">{method.method}</p>
+                      <p className="text-xs sm:text-sm text-white mb-2">{method.description}</p>
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>When:</strong> {method.when} - <strong>Effectiveness:</strong> {method.effectiveness}
                       </div>
                     </div>
@@ -479,22 +479,22 @@ const Module4Section2_4 = () => {
 
           {/* Consequences of Poor Measurement */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" /> Consequences of Poor Measurement
             </h3>
             
-            <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+            <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
               <div className="flex items-start gap-3 mb-2">
                 <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">!</span>
                 <div className="flex-1">
-                  <p className="font-semibold text-red-600 dark:text-emerald-400 mb-1">Impact of Measurement Errors</p>
-                  <div className="text-xs sm:text-sm text-foreground space-y-2">
+                  <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Impact of Measurement Errors</p>
+                  <div className="text-xs sm:text-sm text-white space-y-2">
                     <p>• <strong>Project delays</strong> due to rework requirements</p>
                     <p>• <strong>Failed inspections</strong> from non-compliance issues</p>
                     <p>• <strong>Increased costs</strong> from material waste and additional labour</p>
                     <p>• <strong>Safety hazards</strong> if equipment is incorrectly positioned</p>
                   </div>
-                  <div className="text-xs text-foreground bg-background/50 p-2 rounded border mt-3">
+                  <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border mt-3">
                     <strong>Prevention is key:</strong> The cost of verification is always less than the cost of correction.
                   </div>
                 </div>
@@ -522,30 +522,30 @@ const Module4Section2_4 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-8 p-6 bg-card border-border/20">
-          <h3 className="font-semibold text-foreground mb-4">Frequently Asked Questions</h3>
+        <Card className="mb-8 p-6 bg-transparent border-white/20">
+          <h3 className="font-semibold text-white mb-4">Frequently Asked Questions</h3>
           <div className="space-y-4">
             <div>
-              <p className="font-medium text-foreground text-sm mb-1">
+              <p className="font-medium text-white text-sm mb-1">
                 Q: If I'm confident in my measuring skills, do I still need to double-check?
               </p>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-white text-sm">
                 A: Yes — confidence is not a substitute for verification, especially on critical dimensions.
               </p>
             </div>
             <div>
-              <p className="font-medium text-foreground text-sm mb-1">
+              <p className="font-medium text-white text-sm mb-1">
                 Q: Can I use different measuring tools on the same job?
               </p>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-white text-sm">
                 A: It's best to stick to one tool type to avoid variations between devices.
               </p>
             </div>
             <div>
-              <p className="font-medium text-foreground text-sm mb-1">
+              <p className="font-medium text-white text-sm mb-1">
                 Q: What should I do if the drawing measurement conflicts with on-site conditions?
               </p>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-white text-sm">
                 A: Confirm with the site supervisor before making adjustments.
               </p>
             </div>
@@ -553,12 +553,12 @@ const Module4Section2_4 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
             <TrendingUp className="w-5 h-5" />
             Summary
           </h3>
-          <p className="text-muted-foreground text-sm">
+          <p className="text-white text-sm">
             Avoiding measurement and positioning errors comes down to preparation, precision, and verification. 
             Consistency in methods, adherence to drawings, and cross-checking will greatly reduce costly mistakes. 
             Remember: measure twice, cut once, and always verify critical measurements before installation.
@@ -569,7 +569,7 @@ const Module4Section2_4 = () => {
         <Quiz questions={quizQuestions} title="Test Your Knowledge: Avoiding Common Errors in Measurement and Positioning" />
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="../2-3">
               <ArrowLeft className="w-4 h-4 mr-2" />

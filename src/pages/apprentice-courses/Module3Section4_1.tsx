@@ -210,13 +210,13 @@ const Module3Section4_1: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -231,32 +231,32 @@ const Module3Section4_1: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Cable className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Cable className="w-6 h-6 text-white" />
             </div>
             <Badge
               variant="outline"
-              className="border-emerald-500/30 text-emerald-400"
+              className="border-elec-yellow/30 text-elec-yellow"
             >
               Section 3.4.1
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Surface vs Concealed Wiring Installations
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Understanding installation methods, advantages, disadvantages and selection criteria for different environments.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Introduction
           </h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Surface: visible on walls/ceilings, faster install, easier access, less aesthetic.</li>
                 <li>Concealed: hidden in walls/ceilings, neater finish, harder to modify, higher cost.</li>
@@ -264,8 +264,8 @@ const Module3Section4_1: React.FC = () => {
                 <li>BS 7671: safe zones mandatory for concealed, access points required.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>
                   <strong>Spot:</strong> Visible trunking/conduit (surface), flush sockets (concealed).
@@ -282,11 +282,11 @@ const Module3Section4_1: React.FC = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Learning outcomes
           </h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Describe the characteristics of surface-mounted and concealed wiring systems.</li>
             <li>Identify the advantages and disadvantages of each method.</li>
             <li>Select the most appropriate installation method for given environments.</li>
@@ -295,17 +295,17 @@ const Module3Section4_1: React.FC = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Surface Wiring */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Settings className="w-5 h-5" /> Surface Wiring Installations
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-2">Description & Methods</p>
                 <div className="space-y-3">
                   <div>
@@ -354,12 +354,12 @@ const Module3Section4_1: React.FC = () => {
 
           {/* Concealed Wiring */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Home className="w-5 h-5" /> Concealed Wiring Installations
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-4 bg-card border border-green-400/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                 <p className="font-medium mb-2">Description & Methods</p>
                 <div className="space-y-3">
                   <div>
@@ -417,13 +417,13 @@ const Module3Section4_1: React.FC = () => {
 
           {/* Selection Factors */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Target className="w-5 h-5" /> Installation Method Selection
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-4 bg-card border border-amber-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
                   <p className="font-medium mb-2">Primary Factors</p>
                   <div className="space-y-3">
                     <div>
@@ -447,7 +447,7 @@ const Module3Section4_1: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Practical Considerations</p>
                   <div className="space-y-3">
                     <div>
@@ -478,12 +478,12 @@ const Module3Section4_1: React.FC = () => {
         </Card>
 
         {/* What this means on site */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Building className="w-5 h-5" /> What this means on site
           </h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2">Installation Planning</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Survey building structure and assess chasing requirements early</li>
@@ -492,7 +492,7 @@ const Module3Section4_1: React.FC = () => {
                 <li>Consider building phasing and access requirements during installation</li>
               </ul>
             </div>
-            <div className="rounded-lg p-4 bg-card border border-green-400/30">
+            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
               <p className="font-medium mb-2">Quality Delivery</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Surface work requires neat, uniform spacing and professional appearance</li>
@@ -505,13 +505,13 @@ const Module3Section4_1: React.FC = () => {
         </Card>
 
         {/* Installation Practices */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Settings className="w-5 h-5" /> Installation Practices
           </h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
+          <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="rounded-lg p-4 bg-card border border-amber-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
                 <p className="font-medium mb-2">Surface Installation Best Practice</p>
                 <ul className="list-disc pl-6 space-y-1">
                   <li>Use appropriate fixings for substrate type and load</li>
@@ -520,7 +520,7 @@ const Module3Section4_1: React.FC = () => {
                   <li>Provide clear labelling and identification systems</li>
                 </ul>
               </div>
-              <div className="rounded-lg p-4 bg-card border border-cyan-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-cyan-400/30">
                 <p className="font-medium mb-2">Concealed Installation Best Practice</p>
                 <ul className="list-disc pl-6 space-y-1">
                   <li>Follow prescribed safe zones or provide mechanical protection</li>
@@ -534,13 +534,13 @@ const Module3Section4_1: React.FC = () => {
         </Card>
 
         {/* Common Mistakes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5 text-emerald-400" /> Common Mistakes
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <AlertTriangle className="w-5 h-5 text-elec-yellow" /> Common Mistakes
           </h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <p className="font-medium mb-2 text-emerald-400">Dangerous Practices</p>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <p className="font-medium mb-2 text-elec-yellow">Dangerous Practices</p>
               <ul className="list-disc pl-6 space-y-1 text-red-200">
                 <li><strong>Ignoring safe zones for concealed wiring</strong> - Risk of cable damage during future work</li>
                 <li><strong>Inadequate mechanical protection</strong> - Cables vulnerable to damage from nails/screws</li>
@@ -548,8 +548,8 @@ const Module3Section4_1: React.FC = () => {
                 <li><strong>Poor documentation</strong> - Cannot locate cables for future work or emergency repairs</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <p className="font-medium mb-2 text-emerald-400">Quality Issues</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <p className="font-medium mb-2 text-elec-yellow">Quality Issues</p>
               <ul className="list-disc pl-6 space-y-1 text-orange-200">
                 <li><strong>Inconsistent surface mounting</strong> - Unprofessional appearance affecting client satisfaction</li>
                 <li><strong>Poor chasing technique</strong> - Structural damage or inadequate cable protection</li>
@@ -561,11 +561,11 @@ const Module3Section4_1: React.FC = () => {
         </Card>
 
         {/* BS 7671 Context */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Shield className="w-5 h-5" /> BS 7671 Context
           </h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
+          <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="rounded-lg p-4 bg-indigo-500/10 border border-indigo-400/30">
               <p className="font-medium mb-2">Safety and Compliance Requirements</p>
               <ul className="list-disc pl-6 space-y-1">
@@ -590,11 +590,11 @@ const Module3Section4_1: React.FC = () => {
         <InlineCheck {...quickCheckQuestions[3]} />
 
         {/* Real-world Scenario */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Factory className="w-5 h-5" /> Real-world Scenario
           </h2>
-          <div className="rounded-lg p-3 sm:p-4 bg-card border border-slate-400/30">
+          <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30">
             <p className="font-medium mb-2">Scenario: School Refurbishment Installation Strategy</p>
             <p className="text-sm mb-4">
               In a school refurbishment, surface-mounted trunking was used in classrooms to reduce cost and allow easy access 
@@ -603,7 +603,7 @@ const Module3Section4_1: React.FC = () => {
             </p>
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
-                <p className="font-medium text-emerald-400 mb-1">Classroom Approach (Surface)</p>
+                <p className="font-medium text-elec-yellow mb-1">Classroom Approach (Surface)</p>
                 <ul className="list-disc pl-4 space-y-1 text-blue-200">
                   <li>Fast installation during school holidays</li>
                   <li>Easy access for frequent technology updates</li>
@@ -625,15 +625,15 @@ const Module3Section4_1: React.FC = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Frequently Asked Questions
           </h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <div key={index}>
-                <p className="font-medium text-foreground mb-1">{faq.q}</p>
-                <p className="text-sm text-muted-foreground">{faq.a}</p>
+                <p className="font-medium text-white mb-1">{faq.q}</p>
+                <p className="text-sm text-white">{faq.a}</p>
                 {index < faqs.length - 1 && <Separator className="mt-4" />}
               </div>
             ))}
@@ -641,16 +641,16 @@ const Module3Section4_1: React.FC = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
             <p>
               Surface wiring is quicker, cheaper, and easier to maintain, but less attractive in finished spaces. 
               Concealed wiring provides a neater look and better protection from damage but is more expensive and harder to modify. 
               The choice depends on environment, budget, aesthetics, and safety requirements.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="rounded-lg p-4 bg-card border border-green-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                 <p className="font-medium text-green-300 mb-2">Key Benefits</p>
                 <ul className="list-disc pl-4 space-y-1 text-green-200">
                   <li>Clear understanding enables appropriate method selection</li>
@@ -659,8 +659,8 @@ const Module3Section4_1: React.FC = () => {
                   <li>Future-proofing considerations reduce long-term costs</li>
                 </ul>
               </div>
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-                <p className="font-medium text-emerald-400 mb-2">Essential Points</p>
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+                <p className="font-medium text-elec-yellow mb-2">Essential Points</p>
                 <ul className="list-disc pl-4 space-y-1 text-blue-200">
                   <li>Environment and use determine appropriate method</li>
                   <li>BS 7671 compliance essential for both approaches</li>
@@ -673,12 +673,12 @@ const Module3Section4_1: React.FC = () => {
         </Card>
 
         {/* Apprentice Do's and Don'ts */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Target className="w-5 h-5" /> Apprentice Do's and Don'ts
           </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-            <div className="rounded-lg p-4 bg-card border border-green-400/30">
+            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
               <p className="font-medium text-green-300 mb-3 flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4" /> DO
               </p>
@@ -691,8 +691,8 @@ const Module3Section4_1: React.FC = () => {
                 <li>✓ Coordinate with other trades on concealed work</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <p className="font-medium text-emerald-400 mb-3 flex items-center gap-2">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <p className="font-medium text-elec-yellow mb-3 flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4" /> DON'T
               </p>
               <ul className="space-y-2 text-sm text-red-200">
@@ -708,11 +708,11 @@ const Module3Section4_1: React.FC = () => {
         </Card>
 
         {/* Pocket Card Quick Reference */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Pocket Card Quick Reference
           </h2>
-          <div className="rounded-lg p-3 sm:p-4 bg-card border border-slate-400/30 text-sm">
+          <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30 text-sm">
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <p className="font-medium mb-2">Surface vs Concealed Selection</p>
@@ -741,9 +741,9 @@ const Module3Section4_1: React.FC = () => {
         </Card>
 
         {/* Key References */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Key References</h2>
-          <div className="text-xs sm:text-sm text-foreground space-y-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Key References</h2>
+          <div className="text-xs sm:text-sm text-white space-y-2">
             <p><strong>BS 7671:</strong> IET Wiring Regulations (18th Edition) - Sections 522, 528, 543</p>
             <p><strong>IET On-Site Guide:</strong> Practical guidance for electrical installations</p>
             <p><strong>Building Regulations:</strong> Part P - Electrical safety in dwellings</p>
@@ -752,8 +752,8 @@ const Module3Section4_1: React.FC = () => {
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Knowledge Check
           </h2>
           <Quiz questions={quizQuestions} />

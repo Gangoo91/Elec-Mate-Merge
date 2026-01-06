@@ -214,11 +214,11 @@ const Module4Section1_5 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 4.1
@@ -232,35 +232,35 @@ const Module4Section1_5 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <HardHat className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <HardHat className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 4.1.5
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Preparing the Work Area
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Master essential work area preparation including access, safety measures, and lighting requirements.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Check physical access and ensure adequate working space.</li>
                 <li>Isolate electrical supplies and establish safety zones.</li>
                 <li>Provide appropriate lighting for all phases of work.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Trip hazards, inadequate lighting, overhead services.</li>
                 <li><strong>Use:</strong> Proper isolation procedures, adequate lighting, barriers.</li>
@@ -271,9 +271,9 @@ const Module4Section1_5 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Assess site access and working space requirements for the task.</li>
             <li>Implement safety measures to protect workers and others on site.</li>
             <li>Provide adequate lighting for safe and accurate installation.</li>
@@ -283,32 +283,32 @@ const Module4Section1_5 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Access Considerations */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Access Considerations</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Access Considerations</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Proper access planning ensures materials, personnel, and equipment can reach the work area safely and efficiently.
               Poor access planning leads to delays, safety hazards, and increased costs.
             </p>
             
             <div className="space-y-4">
               {accessConsiderations.map((access, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+                <div key={i} className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                   <div className="flex items-start gap-3 mb-2">
-                    <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
+                    <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">{access.category}</p>
-                      <p className="text-xs sm:text-sm text-foreground mb-2">{access.description}</p>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border mb-2">
+                      <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">{access.category}</p>
+                      <p className="text-xs sm:text-sm text-white mb-2">{access.description}</p>
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border mb-2">
                         <strong>Factors:</strong> {access.factors}
                       </div>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border mb-2">
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border mb-2">
                         <strong>Considerations:</strong> {access.considerations}
                       </div>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Standards:</strong> {access.standards}
                       </div>
                     </div>
@@ -322,27 +322,27 @@ const Module4Section1_5 = () => {
 
           {/* Safety Preparation */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Safety Preparation</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Safety Preparation</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Safety preparation involves implementing measures to protect workers and others from electrical, physical, 
               and environmental hazards present in the work area.
             </p>
             
             <div className="space-y-4">
               {safetyMeasures.map((safety, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+                <div key={i} className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
                       <p className="font-semibold text-green-600 dark:text-green-400 mb-1">{safety.measure}</p>
-                      <p className="text-xs sm:text-sm text-foreground mb-2">{safety.purpose}</p>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border mb-2">
+                      <p className="text-xs sm:text-sm text-white mb-2">{safety.purpose}</p>
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border mb-2">
                         <strong>Procedure:</strong> {safety.procedure}
                       </div>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border mb-2">
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border mb-2">
                         <strong>Equipment:</strong> {safety.equipment}
                       </div>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Compliance:</strong> {safety.compliance}
                       </div>
                     </div>
@@ -363,27 +363,27 @@ const Module4Section1_5 = () => {
 
           {/* Lighting Requirements */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Lighting Requirements</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Lighting Requirements</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Adequate lighting is essential for safe and accurate electrical work. Insufficient lighting leads to mistakes, 
               accidents, and poor quality installations that may fail inspection.
             </p>
             
             <div className="space-y-4">
               {lightingRequirements.map((lighting, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+                <div key={i} className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-1">{lighting.task}</p>
-                      <p className="text-xs sm:text-sm text-foreground mb-2">Minimum level: {lighting.minLux}</p>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border mb-2">
+                      <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">{lighting.task}</p>
+                      <p className="text-xs sm:text-sm text-white mb-2">Minimum level: {lighting.minLux}</p>
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border mb-2">
                         <strong>Requirements:</strong> {lighting.requirements}
                       </div>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border mb-2">
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border mb-2">
                         <strong>Equipment:</strong> {lighting.equipment}
                       </div>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Positioning:</strong> {lighting.positioning}
                       </div>
                     </div>
@@ -404,34 +404,34 @@ const Module4Section1_5 = () => {
 
           {/* Hazard Identification and Control */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Hazard Identification and Control</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Hazard Identification and Control</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Systematic hazard identification and control is essential before starting any electrical work. 
               This involves surveying the work area and implementing appropriate control measures.
             </p>
             
-            <div className="rounded-lg p-5 border-l-4 border-l-orange-500 bg-card">
-              <h4 className="font-semibold text-orange-600 dark:text-emerald-400 mb-3">Common Hazards and Controls</h4>
-              <div className="grid md:grid-cols-2 gap-4 text-xs text-foreground">
+            <div className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
+              <h4 className="font-semibold text-orange-600 dark:text-elec-yellow mb-3">Common Hazards and Controls</h4>
+              <div className="grid md:grid-cols-2 gap-4 text-xs text-white">
                 <div className="space-y-2">
-                  <div className="bg-background/50 p-2 rounded border">
+                  <div className="bg-[#121212]/50 p-2 rounded border">
                     <strong>Overhead Services:</strong> Survey and mark all overhead cables and pipes
                   </div>
-                  <div className="bg-background/50 p-2 rounded border">
+                  <div className="bg-[#121212]/50 p-2 rounded border">
                     <strong>Sharp Edges:</strong> Use edge protection and appropriate PPE
                   </div>
-                  <div className="bg-background/50 p-2 rounded border">
+                  <div className="bg-[#121212]/50 p-2 rounded border">
                     <strong>Unstable Structures:</strong> Assess and shore up before working
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <div className="bg-background/50 p-2 rounded border">
+                  <div className="bg-[#121212]/50 p-2 rounded border">
                     <strong>Damp Conditions:</strong> Use IP-rated equipment and RCD protection
                   </div>
-                  <div className="bg-background/50 p-2 rounded border">
+                  <div className="bg-[#121212]/50 p-2 rounded border">
                     <strong>Confined Spaces:</strong> Follow confined space procedures
                   </div>
-                  <div className="bg-background/50 p-2 rounded border">
+                  <div className="bg-[#121212]/50 p-2 rounded border">
                     <strong>Asbestos Materials:</strong> Stop work and report to supervisor
                   </div>
                 </div>
@@ -450,15 +450,15 @@ const Module4Section1_5 = () => {
 
           {/* Regulatory Requirements */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Regulatory Requirements</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Regulatory Requirements</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Work area preparation must comply with relevant health and safety legislation and electrical regulations.
             </p>
             
-            <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
-              <h4 className="font-semibold text-red-600 dark:text-emerald-400 mb-3">Key Regulations</h4>
-              <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-xs text-foreground">
-                <div className="bg-background/50 p-3 rounded border">
+            <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
+              <h4 className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Key Regulations</h4>
+              <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-xs text-white">
+                <div className="bg-[#121212]/50 p-3 rounded border">
                   <strong className="block mb-2">Health and Safety at Work Act 1974</strong>
                   <ul className="space-y-1">
                     <li>• Safe working environment</li>
@@ -467,7 +467,7 @@ const Module4Section1_5 = () => {
                     <li>• Information and training</li>
                   </ul>
                 </div>
-                <div className="bg-background/50 p-3 rounded border">
+                <div className="bg-[#121212]/50 p-3 rounded border">
                   <strong className="block mb-2">Work at Height Regulations 2005</strong>
                   <ul className="space-y-1">
                     <li>• Avoid work at height where possible</li>
@@ -476,7 +476,7 @@ const Module4Section1_5 = () => {
                     <li>• Competent person requirements</li>
                   </ul>
                 </div>
-                <div className="bg-background/50 p-3 rounded border">
+                <div className="bg-[#121212]/50 p-3 rounded border">
                   <strong className="block mb-2">Electricity at Work Regulations 1989</strong>
                   <ul className="space-y-1">
                     <li>• Prevent danger from electrical systems</li>
@@ -510,28 +510,28 @@ const Module4Section1_5 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-8 p-6 bg-card">
-          <h3 className="font-semibold text-foreground mb-4">Frequently Asked Questions</h3>
+        <Card className="mb-8 p-6 ">
+          <h3 className="font-semibold text-white mb-4">Frequently Asked Questions</h3>
           <div className="space-y-4 text-sm">
             <div>
-              <p className="font-medium text-foreground mb-1">Q: Is portable lighting always needed?</p>
-              <p className="text-muted-foreground">A: Not if existing lighting is adequate, but temporary lighting should be available for poorly lit areas.</p>
+              <p className="font-medium text-white mb-1">Q: Is portable lighting always needed?</p>
+              <p className="text-white">A: Not if existing lighting is adequate, but temporary lighting should be available for poorly lit areas.</p>
             </div>
             <div>
-              <p className="font-medium text-foreground mb-1">Q: Do I need barriers in domestic settings?</p>
-              <p className="text-muted-foreground">A: If there's any risk to occupants or other trades, barriers or clear marking of the work zone should be used.</p>
+              <p className="font-medium text-white mb-1">Q: Do I need barriers in domestic settings?</p>
+              <p className="text-white">A: If there's any risk to occupants or other trades, barriers or clear marking of the work zone should be used.</p>
             </div>
             <div>
-              <p className="font-medium text-foreground mb-1">Q: Can I work in damp areas without special precautions?</p>
-              <p className="text-muted-foreground">A: No — use equipment with the correct IP rating and wear appropriate PPE.</p>
+              <p className="font-medium text-white mb-1">Q: Can I work in damp areas without special precautions?</p>
+              <p className="text-white">A: No — use equipment with the correct IP rating and wear appropriate PPE.</p>
             </div>
           </div>
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h3 className="font-semibold text-foreground mb-3">Summary</h3>
-          <p className="text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h3 className="font-semibold text-white mb-3">Summary</h3>
+          <p className="text-xs sm:text-sm text-white">
             Preparing the work area ensures safety, efficiency, and quality. Adequate access, safety measures, and lighting 
             must be in place before work starts, in line with health and safety regulations. Proper preparation prevents 
             accidents, improves work quality, and ensures regulatory compliance.

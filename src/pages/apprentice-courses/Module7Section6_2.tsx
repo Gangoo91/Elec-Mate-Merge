@@ -215,11 +215,11 @@ export default function Module7Section6_2() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 7.6
@@ -233,62 +233,62 @@ export default function Module7Section6_2() {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-            <div className="p-1.5 sm:p-2 rounded-lg bg-card">
-              <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
+            <div className="p-1.5 sm:p-2 rounded-lg ">
+              <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 text-xs sm:text-sm">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs sm:text-sm">
               Section 7.6.2
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl lg:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2 leading-tight">
+          <h1 className="text-xl sm:text-2xl lg:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 leading-tight">
             Reporting Faults to Supervisors or Duty Holders
           </h1>
-          <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
+          <p className="text-white text-sm sm:text-base leading-relaxed">
             Prompt, factual reporting to the correct person — with clear documentation and escalation
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-            <Target className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground">Spot it in 30 Seconds</h2>
+            <Target className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 sm:mb-3">In 30 seconds</p>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Identify the duty holder/supervisor for this site/job</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Make safe or isolate if needed; never leave a hazard energised</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Capture circuit ref, board ID, exact location and brief facts</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Prepare to report verbally first; then write it up immediately</span>
                 </li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/20">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/20">
               <p className="font-medium mb-2 sm:mb-3">Spot it / Use it / Check it</p>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Spot:</strong> Vague language ("bit dodgy"), no circuit reference, delayed reporting</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Use:</strong> Standard terminology, circuit/board IDs, time/date, action taken (e.g., isolated)</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Check:</strong> Who you reported to, signatures/time stamps, record stored/issued, escalation logged if required</span>
                 </li>
               </ul>
@@ -297,57 +297,57 @@ export default function Module7Section6_2() {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Introduction</h2>
-          <p className="text-sm sm:text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Introduction</h2>
+          <p className="text-sm sm:text-base text-white mb-4">
             Locating a fault is only valuable if it is properly communicated. Electrical work involves teams, duty holders, and clients, and unless faults are reported promptly and clearly, they may remain unresolved or be misunderstood. Apprentices must learn that reporting faults is a professional duty: it transfers responsibility to those authorised to act and ensures installations remain safe.
           </p>
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Learning Outcomes</h2>
-          <p className="text-sm sm:text-base text-foreground mb-4 sm:mb-6">By the end of this subsection, you should be able to:</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Learning Outcomes</h2>
+          <p className="text-sm sm:text-base text-white mb-4 sm:mb-6">By the end of this subsection, you should be able to:</p>
           
-          <div className="bg-card border border-emerald-500/20 rounded-lg p-4 sm:p-5">
+          <div className="bg-card border border-elec-yellow/20 rounded-lg p-4 sm:p-5">
             <div className="grid gap-3 sm:gap-4">
               <div className="flex items-start gap-3 sm:gap-4 group">
-                <div className="bg-emerald-500/20 rounded-full p-1.5 mt-0.5 flex-shrink-0">
-                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
+                <div className="bg-elec-yellow/20 rounded-full p-1.5 mt-0.5 flex-shrink-0">
+                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow" />
                 </div>
                 <div className="space-y-1">
-                  <span className="text-sm sm:text-base font-medium text-foreground block">Explain why reporting is essential</span>
-                  <span className="text-xs sm:text-sm text-muted-foreground">Understand legal obligations and safety implications</span>
+                  <span className="text-sm sm:text-base font-medium text-white block">Explain why reporting is essential</span>
+                  <span className="text-xs sm:text-sm text-white">Understand legal obligations and safety implications</span>
                 </div>
               </div>
               
               <div className="flex items-start gap-3 sm:gap-4 group">
-                <div className="bg-emerald-500/20 rounded-full p-1.5 mt-0.5 flex-shrink-0">
-                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
+                <div className="bg-elec-yellow/20 rounded-full p-1.5 mt-0.5 flex-shrink-0">
+                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow" />
                 </div>
                 <div className="space-y-1">
-                  <span className="text-sm sm:text-base font-medium text-foreground block">Describe the steps to follow when reporting faults</span>
-                  <span className="text-xs sm:text-sm text-muted-foreground">Master the systematic approach to fault reporting</span>
+                  <span className="text-sm sm:text-base font-medium text-white block">Describe the steps to follow when reporting faults</span>
+                  <span className="text-xs sm:text-sm text-white">Master the systematic approach to fault reporting</span>
                 </div>
               </div>
               
               <div className="flex items-start gap-3 sm:gap-4 group">
-                <div className="bg-emerald-500/20 rounded-full p-1.5 mt-0.5 flex-shrink-0">
-                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
+                <div className="bg-elec-yellow/20 rounded-full p-1.5 mt-0.5 flex-shrink-0">
+                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow" />
                 </div>
                 <div className="space-y-1">
-                  <span className="text-sm sm:text-base font-medium text-foreground block">Identify who to report to</span>
-                  <span className="text-xs sm:text-sm text-muted-foreground">Recognise duty holders and reporting hierarchies</span>
+                  <span className="text-sm sm:text-base font-medium text-white block">Identify who to report to</span>
+                  <span className="text-xs sm:text-sm text-white">Recognise duty holders and reporting hierarchies</span>
                 </div>
               </div>
               
               <div className="flex items-start gap-3 sm:gap-4 group">
-                <div className="bg-emerald-500/20 rounded-full p-1.5 mt-0.5 flex-shrink-0">
-                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
+                <div className="bg-elec-yellow/20 rounded-full p-1.5 mt-0.5 flex-shrink-0">
+                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow" />
                 </div>
                 <div className="space-y-1">
-                  <span className="text-sm sm:text-base font-medium text-foreground block">Maintain professionalism throughout the process</span>
-                  <span className="text-xs sm:text-sm text-muted-foreground">Use clear, factual language and proper documentation</span>
+                  <span className="text-sm sm:text-base font-medium text-white block">Maintain professionalism throughout the process</span>
+                  <span className="text-xs sm:text-sm text-white">Use clear, factual language and proper documentation</span>
                 </div>
               </div>
             </div>
@@ -355,23 +355,23 @@ export default function Module7Section6_2() {
         </Card>
 
         {/* Content / Learning */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4 sm:mb-6">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6">Content / Learning</h2>
           
           {/* Section 1 */}
-          <div className="border-l-4 border-l-emerald-500 bg-card pl-4 sm:pl-6 pr-3 sm:pr-4 py-3 sm:py-4 mb-4 sm:mb-6">
-            <h3 className="text-sm sm:text-base font-semibold text-foreground mb-2 sm:mb-3">1. The Importance of Prompt Reporting</h3>
+          <div className="border-l-4 border-l-elec-yellow pl-4 sm:pl-6 pr-3 sm:pr-4 py-3 sm:py-4 mb-4 sm:mb-6">
+            <h3 className="text-sm sm:text-base font-semibold text-white mb-2 sm:mb-3">1. The Importance of Prompt Reporting</h3>
             <div className="prose prose-invert max-w-none">
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <p className="text-white leading-relaxed mb-4">
                 Faults must always be reported as soon as they are identified. Even something that appears minor — such as a socket faceplate showing slight discolouration — could indicate overheating and become a fire risk if ignored. Prompt reporting ensures that faults are addressed before they escalate.
               </p>
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <p className="text-white leading-relaxed mb-4">
                 Delay not only increases risk but can also place legal responsibility on the electrician who noticed the problem but failed to act. Under the Electricity at Work Regulations 1989, all persons have a duty to prevent danger. If you observe a fault and fail to report it, you could be held liable for any resulting injury or damage.
               </p>
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <p className="text-white leading-relaxed mb-4">
                 <strong>Examples of faults requiring immediate reporting:</strong>
               </p>
-              <ul className="text-muted-foreground leading-relaxed mb-4 space-y-2">
+              <ul className="text-white leading-relaxed mb-4 space-y-2">
                 <li>• Damaged cables or conductors exposing live parts</li>
                 <li>• Socket outlets showing signs of overheating (scorching, discolouration)</li>
                 <li>• Loose connections causing arcing or sparking</li>
@@ -380,7 +380,7 @@ export default function Module7Section6_2() {
                 <li>• Earth fault loop impedance values exceeding maximum permitted</li>
                 <li>• Missing or damaged protective barriers</li>
               </ul>
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <p className="text-white leading-relaxed mb-4">
                 Remember: what appears minor today could become a major incident tomorrow. Professional electricians report everything, no matter how insignificant it may seem.
               </p>
             </div>
@@ -391,26 +391,26 @@ export default function Module7Section6_2() {
           </div>
 
           {/* Section 2 */}
-          <div className="border-l-4 border-l-green-500 bg-card pl-4 sm:pl-6 pr-3 sm:pr-4 py-3 sm:py-4 mb-4 sm:mb-6">
-            <h3 className="text-sm sm:text-base font-semibold text-foreground mb-2 sm:mb-3">2. Identifying the Correct Person to Report To</h3>
+          <div className="border-l-4 border-l-green-500 pl-4 sm:pl-6 pr-3 sm:pr-4 py-3 sm:py-4 mb-4 sm:mb-6">
+            <h3 className="text-sm sm:text-base font-semibold text-white mb-2 sm:mb-3">2. Identifying the Correct Person to Report To</h3>
             <div className="prose prose-invert max-w-none">
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <p className="text-white leading-relaxed mb-4">
                 It is not enough to notice a fault; the electrician must know who to report it to. The reporting structure depends on the type of installation and work environment. Clear understanding of the chain of responsibility prevents delays and ensures accountability.
               </p>
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <p className="text-white leading-relaxed mb-4">
                 <strong>Common reporting structures:</strong>
               </p>
-              <ul className="text-muted-foreground leading-relaxed mb-4 space-y-2">
+              <ul className="text-white leading-relaxed mb-4 space-y-2">
                 <li>• <strong>Construction sites:</strong> Site supervisor, site manager, or electrical contractor</li>
                 <li>• <strong>Commercial premises:</strong> Facilities manager, building services manager, or appointed duty holder</li>
                 <li>• <strong>Rental properties:</strong> Landlord, letting agent, or property management company</li>
                 <li>• <strong>Industrial facilities:</strong> Maintenance manager, plant engineer, or safety officer</li>
                 <li>• <strong>Public buildings:</strong> Estates manager, technical services, or designated responsible person</li>
               </ul>
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <p className="text-white leading-relaxed mb-4">
                 If unsure who to report to, ask your immediate supervisor. Never assume someone else will handle it. The duty holder is the person with legal responsibility for electrical safety in that particular premises or installation.
               </p>
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <p className="text-white leading-relaxed mb-4">
                 <strong>Key principle:</strong> Report upwards in the hierarchy. An apprentice reports to their supervisor, who may then escalate to the duty holder or client as appropriate.
               </p>
             </div>
@@ -421,39 +421,39 @@ export default function Module7Section6_2() {
           </div>
 
           {/* Section 3 */}
-          <div className="border-l-4 border-l-amber-500 bg-card pl-4 sm:pl-6 pr-3 sm:pr-4 py-3 sm:py-4 mb-4 sm:mb-6">
-            <h3 className="text-sm sm:text-base font-semibold text-foreground mb-2 sm:mb-3">3. Communicating Clearly and Professionally</h3>
+          <div className="border-l-4 border-l-amber-500 pl-4 sm:pl-6 pr-3 sm:pr-4 py-3 sm:py-4 mb-4 sm:mb-6">
+            <h3 className="text-sm sm:text-base font-semibold text-white mb-2 sm:mb-3">3. Communicating Clearly and Professionally</h3>
             <div className="prose prose-invert max-w-none">
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <p className="text-white leading-relaxed mb-4">
                 Reports must be factual, specific, and free from vague or casual language. Professional communication ensures the fault is understood correctly and action can be taken promptly.
               </p>
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <p className="text-white leading-relaxed mb-4">
                 <strong>Avoid vague language:</strong>
               </p>
-              <ul className="text-muted-foreground leading-relaxed mb-4 space-y-1">
+              <ul className="text-white leading-relaxed mb-4 space-y-1">
                 <li>• "The socket's dodgy" ❌</li>
                 <li>• "Something's not right" ❌</li>
                 <li>• "It looks a bit iffy" ❌</li>
                 <li>• "There's a problem somewhere" ❌</li>
               </ul>
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <p className="text-white leading-relaxed mb-4">
                 <strong>Use professional, specific language:</strong>
               </p>
               <div className="bg-card border border-amber-500/20 rounded-lg p-4 mb-4">
-                <p className="text-foreground font-medium mb-2">Example professional report:</p>
-                <p className="text-muted-foreground text-sm">"Circuit 2 (ring final) — socket in living room shows signs of overheating at the neutral terminal. Circuit isolated and labelled 'DO NOT USE'. Requires investigation and repair by competent electrician before re-energising."</p>
+                <p className="text-white font-medium mb-2">Example professional report:</p>
+                <p className="text-white text-sm">"Circuit 2 (ring final) — socket in living room shows signs of overheating at the neutral terminal. Circuit isolated and labelled 'DO NOT USE'. Requires investigation and repair by competent electrician before re-energising."</p>
               </div>
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <p className="text-white leading-relaxed mb-4">
                 <strong>Essential elements of clear reporting:</strong>
               </p>
-              <ul className="text-muted-foreground leading-relaxed mb-4 space-y-2">
+              <ul className="text-white leading-relaxed mb-4 space-y-2">
                 <li>• Circuit identification (number, type, board reference)</li>
                 <li>• Exact location (room, floor, building section)</li>
                 <li>• Specific observation (what you saw, measured, or detected)</li>
                 <li>• Action taken (isolated, labelled, made safe)</li>
                 <li>• Recommendation (further investigation, immediate repair, replacement)</li>
               </ul>
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <p className="text-white leading-relaxed mb-4">
                 Both verbal and written reporting are important: verbal provides immediate communication, written creates a permanent record for legal compliance and future reference.
               </p>
             </div>
@@ -464,16 +464,16 @@ export default function Module7Section6_2() {
           </div>
 
           {/* Section 4 */}
-          <div className="border-l-4 border-l-purple-500 bg-card pl-4 sm:pl-6 pr-3 sm:pr-4 py-3 sm:py-4 mb-4 sm:mb-6">
-            <h3 className="text-sm sm:text-base font-semibold text-foreground mb-2 sm:mb-3">4. Documenting and Transferring Responsibility</h3>
+          <div className="border-l-4 border-l-purple-500 pl-4 sm:pl-6 pr-3 sm:pr-4 py-3 sm:py-4 mb-4 sm:mb-6">
+            <h3 className="text-sm sm:text-base font-semibold text-white mb-2 sm:mb-3">4. Documenting and Transferring Responsibility</h3>
             <div className="prose prose-invert max-w-none">
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <p className="text-white leading-relaxed mb-4">
                 Accurate documentation ensures that responsibility for the fault is formally passed to the supervisor or duty holder. This protects the apprentice legally and ensures no fault goes unaddressed.
               </p>
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <p className="text-white leading-relaxed mb-4">
                 <strong>Essential documentation requirements:</strong>
               </p>
-              <ul className="text-muted-foreground leading-relaxed mb-4 space-y-2">
+              <ul className="text-white leading-relaxed mb-4 space-y-2">
                 <li>• <strong>Date and time:</strong> When the fault was discovered</li>
                 <li>• <strong>Location:</strong> Precise details (building, floor, room, specific equipment)</li>
                 <li>• <strong>Circuit reference:</strong> Board designation and circuit number</li>
@@ -483,20 +483,20 @@ export default function Module7Section6_2() {
                 <li>• <strong>Signature:</strong> Your name and signature</li>
                 <li>• <strong>Recommendation:</strong> Required follow-up action</li>
               </ul>
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <p className="text-white leading-relaxed mb-4">
                 <strong>Documentation methods:</strong>
               </p>
-              <ul className="text-muted-foreground leading-relaxed mb-4 space-y-2">
+              <ul className="text-white leading-relaxed mb-4 space-y-2">
                 <li>• Formal fault report forms</li>
                 <li>• Site diary entries</li>
                 <li>• Test sheet annotations</li>
                 <li>• Digital reporting systems</li>
                 <li>• Email notifications with read receipts</li>
               </ul>
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <p className="text-white leading-relaxed mb-4">
                 <strong>Legal protection:</strong> Proper documentation demonstrates that you fulfilled your duty of care under the Electricity at Work Regulations 1989. It transfers responsibility to the appropriate person while protecting you from potential liability.
               </p>
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <p className="text-white leading-relaxed mb-4">
                 <strong>Important:</strong> Once reported, apprentices must not attempt to rectify faults unless specifically authorised and competent to do so. Follow your supervisor's instructions and company procedures.
               </p>
             </div>
@@ -508,16 +508,16 @@ export default function Module7Section6_2() {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Practical Guidance</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Practical Guidance</h2>
           <div className="prose prose-invert max-w-none">
-            <p className="text-sm sm:text-base text-foreground mb-4">
+            <p className="text-sm sm:text-base text-white mb-4">
               Apprentices should adopt a systematic approach to fault reporting that ensures nothing is missed and responsibility is properly transferred:
             </p>
             
-            <div className="bg-card border border-emerald-500/20 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6">
-              <h3 className="font-medium text-foreground mb-2 sm:mb-3 text-sm sm:text-base">Step-by-Step Reporting Process</h3>
-              <ol className="space-y-2 sm:space-y-3 text-xs sm:text-sm lg:text-base text-foreground">
+            <div className="bg-card border border-elec-yellow/20 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6">
+              <h3 className="font-medium text-white mb-2 sm:mb-3 text-sm sm:text-base">Step-by-Step Reporting Process</h3>
+              <ol className="space-y-2 sm:space-y-3 text-xs sm:text-sm lg:text-base text-white">
                 <li><strong>1. Make Safe:</strong> Isolate circuits if dangerous, apply locks/labels, prevent access to live parts</li>
                 <li><strong>2. Assess Urgency:</strong> Determine if immediate evacuation or emergency services are needed</li>
                 <li><strong>3. Gather Information:</strong> Note circuit references, exact location, what you observed</li>
@@ -529,8 +529,8 @@ export default function Module7Section6_2() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
               <div className="bg-card border border-amber-500/20 rounded-lg p-3 sm:p-4">
-                <h3 className="font-medium text-foreground mb-2 sm:mb-3 text-sm sm:text-base">Essential Tools & Materials</h3>
-                <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-muted-foreground">
+                <h3 className="font-medium text-white mb-2 sm:mb-3 text-sm sm:text-base">Essential Tools & Materials</h3>
+                <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-white">
                   <li>• Company fault report forms</li>
                   <li>• Warning labels and isolation locks</li>
                   <li>• Camera/phone for photographic evidence</li>
@@ -540,8 +540,8 @@ export default function Module7Section6_2() {
               </div>
               
               <div className="bg-card border border-green-500/20 rounded-lg p-3 sm:p-4">
-                <h3 className="font-medium text-foreground mb-2 sm:mb-3 text-sm sm:text-base">Professional Language Examples</h3>
-                <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-muted-foreground">
+                <h3 className="font-medium text-white mb-2 sm:mb-3 text-sm sm:text-base">Professional Language Examples</h3>
+                <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-white">
                   <li>• "Circuit isolated due to..."</li>
                   <li>• "Insulation resistance below 1MΩ"</li>
                   <li>• "Evidence of overheating observed"</li>
@@ -552,8 +552,8 @@ export default function Module7Section6_2() {
             </div>
 
             <div className="bg-card border border-purple-500/20 rounded-lg p-3 sm:p-4">
-              <h3 className="font-medium text-foreground mb-2 sm:mb-3 text-sm sm:text-base">Key Reminders</h3>
-              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-muted-foreground">
+              <h3 className="font-medium text-white mb-2 sm:mb-3 text-sm sm:text-base">Key Reminders</h3>
+              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-white">
                 <li>• Never assume someone else will report the fault</li>
                 <li>• Don't attempt repairs beyond your competence level</li>
                 <li>• Keep copies of all written reports for your records</li>
@@ -565,18 +565,18 @@ export default function Module7Section6_2() {
         </Card>
 
         {/* Real-World Applications */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4 sm:mb-6">Real-World Applications</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6">Real-World Applications</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
             <div className="space-y-3 sm:space-y-4">
-              <h3 className="font-medium text-foreground text-sm sm:text-base">Poor Practice</h3>
+              <h3 className="font-medium text-white text-sm sm:text-base">Poor Practice</h3>
               <div className="bg-card border border-red-500/20 rounded-lg p-3 sm:p-4">
-                <p className="text-xs sm:text-sm text-muted-foreground mb-3 leading-relaxed">
+                <p className="text-xs sm:text-sm text-white mb-3 leading-relaxed">
                   On a commercial refurbishment project, an apprentice noticed scorching on a socket but only mentioned it casually to another colleague. Because it was not formally reported, no action was taken. Weeks later, the socket overheated and caused a small fire. Investigators found the defect had been observed earlier but not reported, leading to reputational and financial damage for the contractor.
                 </p>
                 <div className="bg-card rounded p-2 sm:p-3">
-                  <h4 className="font-medium text-xs sm:text-xs sm:text-sm text-foreground mb-1 sm:mb-2">Key Issues:</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                  <h4 className="font-medium text-xs sm:text-xs sm:text-sm text-white mb-1 sm:mb-2">Key Issues:</h4>
+                  <ul className="text-xs text-white space-y-1">
                     <li>• No formal reporting</li>
                     <li>• No documentation</li>
                     <li>• No responsibility transfer</li>
@@ -586,14 +586,14 @@ export default function Module7Section6_2() {
             </div>
             
             <div className="space-y-3 sm:space-y-4">
-              <h3 className="font-medium text-foreground text-sm sm:text-base">Good Practice</h3>
+              <h3 className="font-medium text-white text-sm sm:text-base">Good Practice</h3>
               <div className="bg-card border border-green-500/20 rounded-lg p-3 sm:p-4">
-                <p className="text-xs sm:text-sm text-muted-foreground mb-3 leading-relaxed">
+                <p className="text-xs sm:text-sm text-white mb-3 leading-relaxed">
                   An apprentice testing a school installation recorded an insulation resistance reading below the required 1 MΩ. He immediately informed his supervisor, who isolated the circuit, documented the fault, and arranged for it to be rectified before handover. This prevented the energisation of a dangerous circuit and demonstrated the value of prompt, professional reporting.
                 </p>
                 <div className="bg-card rounded p-2 sm:p-3">
-                  <h4 className="font-medium text-xs sm:text-xs sm:text-sm text-foreground mb-1 sm:mb-2">Key Strengths:</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                  <h4 className="font-medium text-xs sm:text-xs sm:text-sm text-white mb-1 sm:mb-2">Key Strengths:</h4>
+                  <ul className="text-xs text-white space-y-1">
                     <li>• Prompt escalation</li>
                     <li>• Immediate isolation</li>
                     <li>• Clear documentation</li>
@@ -606,13 +606,13 @@ export default function Module7Section6_2() {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg font-semibold text-foreground mb-6">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg font-semibold text-white mb-6">Frequently Asked Questions</h2>
           <div className="space-y-6">
             {faqs.map((faq, index) => (
               <div key={index}>
-                <h3 className="font-medium text-foreground mb-2">{faq.question}</h3>
-                <p className="text-muted-foreground">{faq.answer}</p>
+                <h3 className="font-medium text-white mb-2">{faq.question}</h3>
+                <p className="text-white">{faq.answer}</p>
                 {index < faqs.length - 1 && <Separator className="mt-4" />}
               </div>
             ))}
@@ -620,34 +620,34 @@ export default function Module7Section6_2() {
         </Card>
 
         {/* Key Takeaways */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg font-semibold text-foreground mb-4">Key Takeaways</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg font-semibold text-white mb-4">Key Takeaways</h2>
           <div className="grid gap-4">
             <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
-              <span className="text-muted-foreground">Report faults immediately — small signs can indicate serious risk</span>
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <span className="text-white">Report faults immediately — small signs can indicate serious risk</span>
             </div>
             <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
-              <span className="text-muted-foreground">Always report to the correct person (supervisor/duty holder) and transfer responsibility</span>
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <span className="text-white">Always report to the correct person (supervisor/duty holder) and transfer responsibility</span>
             </div>
             <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
-              <span className="text-muted-foreground">Use clear, factual language with circuit/board IDs, location, and action taken</span>
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <span className="text-white">Use clear, factual language with circuit/board IDs, location, and action taken</span>
             </div>
             <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
-              <span className="text-muted-foreground">Document both verbal and written reporting for traceability and compliance (BS 7671, EAWR 1989)</span>
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <span className="text-white">Document both verbal and written reporting for traceability and compliance (BS 7671, EAWR 1989)</span>
             </div>
             <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
-              <span className="text-muted-foreground">Do not attempt repairs beyond your competence or without authorisation</span>
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <span className="text-white">Do not attempt repairs beyond your competence or without authorisation</span>
             </div>
           </div>
         </Card>
 
         {/* Test Your Knowledge */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <Quiz questions={quizQuestions} title="Test Your Knowledge: Reporting Faults to Supervisors or Duty Holders" />
         </Card>
 

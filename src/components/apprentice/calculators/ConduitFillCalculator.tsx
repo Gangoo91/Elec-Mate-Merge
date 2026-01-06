@@ -1,20 +1,36 @@
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Calculator, Info, AlertTriangle, CheckCircle2, RotateCcw } from "lucide-react";
+import { Calculator, Info, AlertTriangle, CheckCircle2, BookOpen, ChevronDown } from "lucide-react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { cn } from "@/lib/utils";
+import {
+  CalculatorCard,
+  CalculatorInputGrid,
+  CalculatorInput,
+  CalculatorSelect,
+  CalculatorActions,
+  CalculatorResult,
+  ResultValue,
+  ResultsGrid,
+  CALCULATOR_CONFIG,
+} from "@/components/calculators/shared";
 
 const ConduitFillCalculator = () => {
+  const config = CALCULATOR_CONFIG['cable'];
+
   const [conduitSize, setConduitSize] = useState("");
   const [conduitMaterial, setConduitMaterial] = useState("pvc");
   const [cableSize, setCableSize] = useState("");
   const [cableQuantity, setCableQuantity] = useState("");
   const [installationType, setInstallationType] = useState("straight");
   const [fillTarget, setFillTarget] = useState("40");
+  const [showGuidance, setShowGuidance] = useState(false);
+  const [showRegs, setShowRegs] = useState(false);
+  const [showFormula, setShowFormula] = useState(false);
   const [result, setResult] = useState<{
     fillPercentage: number;
     maxCables: number;
@@ -75,17 +91,17 @@ const ConduitFillCalculator = () => {
     const cableArea = Math.PI * Math.pow(cable.diameter / 2, 2);
     const totalCableArea = cableArea * quantity;
     const fillPercentage = (totalCableArea / conduit.area) * 100;
-    
+
     // Determine actual fill target based on installation and cable count
     let actualFillTarget = targetFill;
     if (quantity === 1) actualFillTarget = 53;
     else if (quantity === 2) actualFillTarget = 31;
     else if (installationType === "bends") actualFillTarget = Math.min(targetFill, 35);
-    
+
     // Calculate maximum cables that can fit
     const maxFillArea = conduit.area * (actualFillTarget / 100);
     const maxCables = Math.floor(maxFillArea / cableArea);
-    
+
     const suitable = fillPercentage <= actualFillTarget;
 
     // Calculate approximate pulling tension (simplified)
@@ -131,269 +147,301 @@ const ConduitFillCalculator = () => {
     setResult(null);
   };
 
+  const hasValidInputs = () => {
+    return conduitSize && cableSize && cableQuantity;
+  };
+
+  // Build select options
+  const conduitSizeOptions = [
+    { value: "16", label: "16mm" },
+    { value: "20", label: "20mm" },
+    { value: "25", label: "25mm" },
+    { value: "32", label: "32mm" },
+    { value: "40", label: "40mm" },
+    { value: "50", label: "50mm" },
+    { value: "63", label: "63mm" },
+    { value: "75", label: "75mm" },
+    { value: "100", label: "100mm" },
+  ];
+
+  const cableSizeOptions = [
+    { value: "1.0", label: "1.0mm²" },
+    { value: "1.5", label: "1.5mm²" },
+    { value: "2.5", label: "2.5mm²" },
+    { value: "4.0", label: "4.0mm²" },
+    { value: "6.0", label: "6.0mm²" },
+    { value: "10.0", label: "10.0mm²" },
+    { value: "16.0", label: "16.0mm²" },
+    { value: "25.0", label: "25.0mm²" },
+    { value: "35.0", label: "35.0mm²" },
+  ];
+
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
-      <CardHeader>
-        <div className="flex items-center gap-2">
-          <Calculator className="h-5 w-5 text-primary" />
-          <div>
-            <CardTitle>Conduit Fill Calculator</CardTitle>
-            <CardDescription className="mt-1">
-              Calculate conduit fill percentage with BS EN 61386-1 compliance and practical installation guidance.
-            </CardDescription>
-          </div>
-          <Badge variant="outline" className="ml-auto">
-            BS EN 61386-1
-          </Badge>
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Input Section */}
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <MobileSelect value={conduitMaterial} onValueChange={setConduitMaterial}>
-                <MobileSelectTrigger label="Conduit Material">
-                  <MobileSelectValue placeholder="Select material" />
-                </MobileSelectTrigger>
-                <MobileSelectContent>
-                  <MobileSelectItem value="pvc">PVC</MobileSelectItem>
-                  <MobileSelectItem value="steel">Steel</MobileSelectItem>
-                </MobileSelectContent>
-              </MobileSelect>
+    <div className="space-y-4">
+      <CalculatorCard
+        category="cable"
+        title="Conduit Fill Calculator"
+        description="Calculate fill percentage with BS EN 61386-1 compliance"
+        badge="BS EN 61386-1"
+      >
+        <CalculatorInputGrid columns={2}>
+          <CalculatorSelect
+            label="Conduit Material"
+            value={conduitMaterial}
+            onChange={setConduitMaterial}
+            options={[
+              { value: "pvc", label: "PVC" },
+              { value: "steel", label: "Steel" },
+            ]}
+          />
+          <CalculatorSelect
+            label="Conduit Size"
+            value={conduitSize}
+            onChange={setConduitSize}
+            options={conduitSizeOptions}
+            placeholder="Select size"
+          />
+        </CalculatorInputGrid>
 
-              <MobileSelect value={conduitSize} onValueChange={setConduitSize}>
-                <MobileSelectTrigger label="Conduit Size (mm)">
-                  <MobileSelectValue placeholder="Select size" />
-                </MobileSelectTrigger>
-                <MobileSelectContent>
-                  <MobileSelectItem value="16">16mm</MobileSelectItem>
-                  <MobileSelectItem value="20">20mm</MobileSelectItem>
-                  <MobileSelectItem value="25">25mm</MobileSelectItem>
-                  <MobileSelectItem value="32">32mm</MobileSelectItem>
-                  <MobileSelectItem value="40">40mm</MobileSelectItem>
-                  <MobileSelectItem value="50">50mm</MobileSelectItem>
-                  <MobileSelectItem value="63">63mm</MobileSelectItem>
-                  <MobileSelectItem value="75">75mm</MobileSelectItem>
-                  <MobileSelectItem value="100">100mm</MobileSelectItem>
-                </MobileSelectContent>
-              </MobileSelect>
-            </div>
+        <CalculatorInputGrid columns={2}>
+          <CalculatorSelect
+            label="Cable Size"
+            value={cableSize}
+            onChange={setCableSize}
+            options={cableSizeOptions}
+            placeholder="Select cable size"
+          />
+          <CalculatorInput
+            label="Number of Cables"
+            type="text"
+            inputMode="numeric"
+            value={cableQuantity}
+            onChange={setCableQuantity}
+            placeholder="Enter quantity"
+          />
+        </CalculatorInputGrid>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <MobileSelect value={cableSize} onValueChange={setCableSize}>
-                <MobileSelectTrigger label="Cable Size (mm²)">
-                  <MobileSelectValue placeholder="Select cable size" />
-                </MobileSelectTrigger>
-                <MobileSelectContent>
-                  <MobileSelectItem value="1.0">1.0mm²</MobileSelectItem>
-                  <MobileSelectItem value="1.5">1.5mm²</MobileSelectItem>
-                  <MobileSelectItem value="2.5">2.5mm²</MobileSelectItem>
-                  <MobileSelectItem value="4.0">4.0mm²</MobileSelectItem>
-                  <MobileSelectItem value="6.0">6.0mm²</MobileSelectItem>
-                  <MobileSelectItem value="10.0">10.0mm²</MobileSelectItem>
-                  <MobileSelectItem value="16.0">16.0mm²</MobileSelectItem>
-                  <MobileSelectItem value="25.0">25.0mm²</MobileSelectItem>
-                  <MobileSelectItem value="35.0">35.0mm²</MobileSelectItem>
-                </MobileSelectContent>
-              </MobileSelect>
+        <CalculatorInputGrid columns={2}>
+          <CalculatorSelect
+            label="Installation Type"
+            value={installationType}
+            onChange={setInstallationType}
+            options={[
+              { value: "straight", label: "Straight Run" },
+              { value: "bends", label: "With Bends" },
+            ]}
+          />
+          <CalculatorSelect
+            label="Fill Target"
+            value={fillTarget}
+            onChange={setFillTarget}
+            options={[
+              { value: "30", label: "30% (Conservative)" },
+              { value: "40", label: "40% (Standard)" },
+              { value: "50", label: "50% (Maximum)" },
+            ]}
+          />
+        </CalculatorInputGrid>
 
-              <MobileInput
-                label="Number of Cables"
-                type="number"
-                min="1"
-                value={cableQuantity}
-                onChange={(e) => setCableQuantity(e.target.value)}
-                placeholder="Enter quantity"
-              />
-            </div>
+        <CalculatorActions
+          category="cable"
+          onCalculate={calculateConduitFill}
+          onReset={resetCalculator}
+          isDisabled={!hasValidInputs()}
+        />
+      </CalculatorCard>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <MobileSelect value={installationType} onValueChange={setInstallationType}>
-                <MobileSelectTrigger label="Installation Type">
-                  <MobileSelectValue />
-                </MobileSelectTrigger>
-                <MobileSelectContent>
-                  <MobileSelectItem value="straight">Straight Run</MobileSelectItem>
-                  <MobileSelectItem value="bends">With Bends</MobileSelectItem>
-                </MobileSelectContent>
-              </MobileSelect>
-
-              <MobileSelect value={fillTarget} onValueChange={setFillTarget}>
-                <MobileSelectTrigger label="Fill Target (%)">
-                  <MobileSelectValue />
-                </MobileSelectTrigger>
-                <MobileSelectContent>
-                  <MobileSelectItem value="30">30% (Conservative)</MobileSelectItem>
-                  <MobileSelectItem value="40">40% (Standard)</MobileSelectItem>
-                  <MobileSelectItem value="50">50% (Maximum)</MobileSelectItem>
-                </MobileSelectContent>
-              </MobileSelect>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-3">
-              <MobileButton 
-                onClick={calculateConduitFill} 
-                variant="elec"
-                disabled={!conduitSize || !cableSize || !cableQuantity}
-                icon={<Calculator className="h-5 w-5" />}
-                className="flex-1 min-h-[48px]"
-              >
-                Calculate
-              </MobileButton>
-              <MobileButton variant="elec-outline" onClick={resetCalculator} className="min-h-[48px]">
-                <RotateCcw className="h-5 w-5" />
-              </MobileButton>
-            </div>
-          </div>
-
-          {/* Result Section */}
-          <div className="space-y-4">
-            <div className="bg-muted/50 rounded-lg p-6 min-h-[300px]">
-              {result ? (
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2 mb-4">
-                    {result.suitable ? (
-                      <CheckCircle2 className="h-5 w-5 text-green-500" />
-                    ) : (
-                      <AlertTriangle className="h-5 w-5 text-red-500" />
-                    )}
-                    <h3 className="text-lg font-semibold">Fill Analysis</h3>
-                  </div>
-                  
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-1">
-                      <p className="text-sm text-muted-foreground">Fill Percentage</p>
-                      <p className="text-2xl font-bold text-primary">{result.fillPercentage}%</p>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-sm text-muted-foreground">Target Fill</p>
-                      <p className="text-xl font-semibold">{result.actualFillTarget}%</p>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-sm text-muted-foreground">Max Cables</p>
-                      <p className="text-xl font-semibold">{result.maxCables}</p>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-sm text-muted-foreground">Bend Radius</p>
-                      <p className="text-xl font-semibold">{result.bendRadius}mm</p>
-                    </div>
-                  </div>
-
-                  <div className={`p-3 rounded border ${
-                    result.suitable 
-                      ? 'bg-green-500/10 border-green-500/30 text-green-300' 
-                      : 'bg-red-500/10 border-red-500/30 text-red-300'
-                  }`}>
-                    <p className="text-sm font-medium">
-                      {result.suitable ? '✓ Suitable Installation' : '✗ Exceeds Fill Limit'}
-                    </p>
-                  </div>
-
-                  <div className="text-sm text-muted-foreground">
-                    <p>Current cables: {cableQuantity}</p>
-                    <p>Pull tension: ~{result.pullTension}N</p>
-                  </div>
-
-                  {/* How It Worked Out */}
-                  {conduitSize && cableSize && cableQuantity && (
-                    <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4 space-y-3">
-                      <div className="flex items-center gap-2 text-purple-200 font-semibold">
-                        <Calculator className="h-4 w-4 text-purple-400" />
-                        How It Worked Out
-                      </div>
-                      <div className="text-sm font-mono text-purple-300 space-y-2">
-                        <div className="text-xs text-purple-400">Step 1: Cable cross-sectional area</div>
-                        <div>A = π × (d/2)²</div>
-                        <div>A = π × ({cableData[cableSize as keyof typeof cableData].diameter/2})²</div>
-                        <div>A = <span className="text-purple-200 font-bold">{(Math.PI * Math.pow(cableData[cableSize as keyof typeof cableData].diameter / 2, 2)).toFixed(1)}mm²</span></div>
-
-                        <div className="pt-2 border-t border-purple-500/20 text-xs text-purple-400">Step 2: Total cable area</div>
-                        <div>Total = A × qty = {(Math.PI * Math.pow(cableData[cableSize as keyof typeof cableData].diameter / 2, 2)).toFixed(1)} × {cableQuantity}</div>
-                        <div>Total = <span className="text-purple-200 font-bold">{(Math.PI * Math.pow(cableData[cableSize as keyof typeof cableData].diameter / 2, 2) * parseInt(cableQuantity)).toFixed(1)}mm²</span></div>
-
-                        <div className="pt-2 border-t border-purple-500/20 text-xs text-purple-400">Step 3: Fill percentage</div>
-                        <div>Fill = (Cable Area ÷ Conduit Area) × 100</div>
-                        <div>Fill = ({(Math.PI * Math.pow(cableData[cableSize as keyof typeof cableData].diameter / 2, 2) * parseInt(cableQuantity)).toFixed(1)} ÷ {conduitData[conduitMaterial as keyof typeof conduitData][conduitSize as keyof typeof conduitData[keyof typeof conduitData]].area}) × 100</div>
-                        <div>Fill = <span className="text-purple-200 font-bold">{result.fillPercentage}%</span></div>
-                      </div>
-                    </div>
-                  )}
-
-                  {result.warnings.length > 0 && (
-                    <Alert className="border-orange-500/20 bg-orange-500/10">
-                      <AlertTriangle className="h-4 w-4 text-orange-500" />
-                      <AlertDescription className="text-orange-200">
-                        <div className="space-y-1">
-                          {result.warnings.map((warning, index) => (
-                            <div key={index}>• {warning}</div>
-                          ))}
-                        </div>
-                      </AlertDescription>
-                    </Alert>
-                  )}
-                </div>
+      {result && (
+        <div className="space-y-4 animate-fade-in">
+          <CalculatorResult category="cable">
+            {/* Status Header */}
+            <div className="flex items-center gap-2 pb-3 border-b border-white/10">
+              {result.suitable ? (
+                <CheckCircle2 className="h-5 w-5 text-green-400" />
               ) : (
-                <div className="flex items-center justify-center h-full text-muted-foreground">
-                  <div className="text-center">
-                    <Calculator className="h-12 w-12 mx-auto mb-3 opacity-50" />
-                    <p>Select parameters to calculate fill</p>
-                  </div>
-                </div>
+                <AlertTriangle className="h-5 w-5 text-red-400" />
               )}
+              <span className="font-semibold text-white">
+                {result.suitable ? 'Suitable Installation' : 'Exceeds Fill Limit'}
+              </span>
             </div>
 
-            {/* What This Means Panel */}
-            <Alert className="border-blue-500/20 bg-blue-500/10">
-              <Info className="h-4 w-4 text-blue-500" />
-              <AlertDescription className="text-blue-200">
-                <div className="space-y-2">
-                  <p className="font-medium">What This Means:</p>
-                  <ul className="text-sm space-y-1">
-                    <li>• Fill percentage affects cable pulling difficulty and heat dissipation</li>
-                    <li>• High fill causes cables to jam during pulling and overheat</li>
-                    <li>• Proper fill allows easier maintenance and future installations</li>
-                    <li>• Consider pull tension and lubrication for difficult pulls</li>
-                  </ul>
-                </div>
-              </AlertDescription>
-            </Alert>
+            {/* Main Result */}
+            <div className="text-center py-3">
+              <p className="text-sm text-white/60 mb-1">Fill Percentage</p>
+              <div
+                className="text-4xl font-bold bg-clip-text text-transparent"
+                style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}
+              >
+                {result.fillPercentage}%
+              </div>
+              <Badge
+                variant="outline"
+                className={cn(
+                  "mt-2",
+                  result.suitable ? "text-green-400 border-green-400/50" : "text-red-400 border-red-400/50"
+                )}
+              >
+                Target: {result.actualFillTarget}%
+              </Badge>
+            </div>
 
-            {/* Practical Guidance */}
-            <Alert className="border-amber-500/20 bg-amber-500/10">
-              <Info className="h-4 w-4 text-amber-500" />
-              <AlertDescription className="text-amber-200">
-                <div className="space-y-2">
-                  <p className="font-medium">Practical Guidance:</p>
-                  <ul className="text-sm space-y-1">
-                    <li>• Use cable pulling lubricant for high fill runs</li>
-                    <li>• Install draw strings for future cable additions</li>
-                    <li>• Consider larger conduit for cable grouping derating</li>
-                    <li>• Plan cable routes to minimise sharp bends</li>
-                  </ul>
-                </div>
-              </AlertDescription>
-            </Alert>
+            {/* Result Details */}
+            <ResultsGrid columns={2}>
+              <ResultValue
+                label="Max Cables"
+                value={result.maxCables.toString()}
+                category="cable"
+                size="sm"
+              />
+              <ResultValue
+                label="Bend Radius"
+                value={result.bendRadius.toString()}
+                unit="mm"
+                category="cable"
+                size="sm"
+              />
+              <ResultValue
+                label="Current Cables"
+                value={cableQuantity}
+                category="cable"
+                size="sm"
+              />
+              <ResultValue
+                label="Pull Tension"
+                value={`~${result.pullTension}`}
+                unit="N"
+                category="cable"
+                size="sm"
+              />
+            </ResultsGrid>
 
-            {/* Regs at a Glance */}
-            <Alert className="border-green-500/20 bg-green-500/10">
-              <Info className="h-4 w-4 text-green-500" />
-              <AlertDescription className="text-green-200">
-                <div className="space-y-2">
-                  <p className="font-medium">Regs at a Glance:</p>
-                  <ul className="text-sm space-y-1">
-                    <li>• BS EN 61386-1: Conduit systems for cable management</li>
-                    <li>• 53% max fill for 1 cable, 31% for 2 cables</li>
-                    <li>• 40% max fill for 3+ cables in straight runs</li>
-                    <li>• Reduce to 35% for runs with multiple bends</li>
-                  </ul>
+            {/* Warnings */}
+            {result.warnings.length > 0 && (
+              <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/30 mt-3">
+                <div className="flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
+                  <div className="space-y-1 text-sm text-orange-200">
+                    {result.warnings.map((warning, index) => (
+                      <p key={index}>{warning}</p>
+                    ))}
+                  </div>
                 </div>
-              </AlertDescription>
-            </Alert>
-          </div>
+              </div>
+            )}
+          </CalculatorResult>
+
+          {/* How It Worked Out - Collapsible */}
+          {conduitSize && cableSize && cableQuantity && (
+            <Collapsible open={showFormula} onOpenChange={setShowFormula}>
+              <div className="calculator-card overflow-hidden" style={{ borderColor: '#a78bfa15' }}>
+                <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                  <div className="flex items-center gap-3">
+                    <Calculator className="h-4 w-4 text-purple-400" />
+                    <span className="text-sm sm:text-base font-medium text-purple-300">How It Worked Out</span>
+                  </div>
+                  <ChevronDown className={cn(
+                    "h-4 w-4 text-white/40 transition-transform duration-200",
+                    showFormula && "rotate-180"
+                  )} />
+                </CollapsibleTrigger>
+
+                <CollapsibleContent className="p-4 pt-0">
+                  <div className="text-sm font-mono text-purple-300 space-y-3">
+                    <div>
+                      <div className="text-xs text-purple-400 mb-1">Step 1: Cable cross-sectional area</div>
+                      <div>A = π × (d/2)²</div>
+                      <div>A = π × ({cableData[cableSize as keyof typeof cableData].diameter/2})²</div>
+                      <div className="text-purple-200 font-bold">A = {(Math.PI * Math.pow(cableData[cableSize as keyof typeof cableData].diameter / 2, 2)).toFixed(1)}mm²</div>
+                    </div>
+
+                    <div className="pt-2 border-t border-purple-500/20">
+                      <div className="text-xs text-purple-400 mb-1">Step 2: Total cable area</div>
+                      <div>Total = A × qty = {(Math.PI * Math.pow(cableData[cableSize as keyof typeof cableData].diameter / 2, 2)).toFixed(1)} × {cableQuantity}</div>
+                      <div className="text-purple-200 font-bold">Total = {(Math.PI * Math.pow(cableData[cableSize as keyof typeof cableData].diameter / 2, 2) * parseInt(cableQuantity)).toFixed(1)}mm²</div>
+                    </div>
+
+                    <div className="pt-2 border-t border-purple-500/20">
+                      <div className="text-xs text-purple-400 mb-1">Step 3: Fill percentage</div>
+                      <div>Fill = (Cable Area ÷ Conduit Area) × 100</div>
+                      <div>Fill = ({(Math.PI * Math.pow(cableData[cableSize as keyof typeof cableData].diameter / 2, 2) * parseInt(cableQuantity)).toFixed(1)} ÷ {conduitData[conduitMaterial as keyof typeof conduitData][conduitSize as keyof typeof conduitData[keyof typeof conduitData]].area}) × 100</div>
+                      <div className="text-purple-200 font-bold">Fill = {result.fillPercentage}%</div>
+                    </div>
+                  </div>
+                </CollapsibleContent>
+              </div>
+            </Collapsible>
+          )}
+
+          {/* What This Means - Collapsible */}
+          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
+              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                <div className="flex items-center gap-3">
+                  <Info className="h-4 w-4 text-blue-400" />
+                  <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
+                </div>
+                <ChevronDown className={cn(
+                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  showGuidance && "rotate-180"
+                )} />
+              </CollapsibleTrigger>
+
+              <CollapsibleContent className="p-4 pt-0 space-y-2">
+                <p className="text-sm text-blue-200/80">
+                  <strong className="text-blue-300">Fill percentage</strong> affects cable pulling difficulty and heat dissipation.
+                </p>
+                <p className="text-sm text-blue-200/80">
+                  <strong className="text-blue-300">High fill</strong> causes cables to jam during pulling and overheat in operation.
+                </p>
+                <p className="text-sm text-blue-200/80">
+                  <strong className="text-blue-300">Proper fill</strong> allows easier maintenance and future cable additions.
+                </p>
+                <p className="text-sm text-blue-200/80">
+                  <strong className="text-blue-300">Pull tension</strong> indicates if cable lubricant may be needed.
+                </p>
+              </CollapsibleContent>
+            </div>
+          </Collapsible>
+
+          {/* BS EN 61386-1 Guidance - Collapsible */}
+          <Collapsible open={showRegs} onOpenChange={setShowRegs}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
+              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                <div className="flex items-center gap-3">
+                  <BookOpen className="h-4 w-4 text-amber-400" />
+                  <span className="text-sm sm:text-base font-medium text-amber-300">Regs at a Glance</span>
+                </div>
+                <ChevronDown className={cn(
+                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  showRegs && "rotate-180"
+                )} />
+              </CollapsibleTrigger>
+
+              <CollapsibleContent className="p-4 pt-0">
+                <div className="space-y-2 text-sm text-amber-200/80">
+                  <p><strong className="text-amber-300">BS EN 61386-1:</strong> Conduit systems for cable management</p>
+                  <p><strong className="text-amber-300">1 cable:</strong> 53% maximum fill</p>
+                  <p><strong className="text-amber-300">2 cables:</strong> 31% maximum fill</p>
+                  <p><strong className="text-amber-300">3+ cables:</strong> 40% max for straight runs</p>
+                  <p><strong className="text-amber-300">With bends:</strong> Reduce to 35% maximum</p>
+                </div>
+              </CollapsibleContent>
+            </div>
+          </Collapsible>
         </div>
-      </CardContent>
-    </Card>
+      )}
+
+      {/* Formula Reference */}
+      <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+        <div className="flex items-start gap-2">
+          <Info className="h-4 w-4 text-emerald-400 mt-0.5 shrink-0" />
+          <p className="text-sm text-emerald-200">
+            <strong>Fill %</strong> = (Total Cable Area ÷ Conduit Area) × 100. Lower fill = easier installation.
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };
 

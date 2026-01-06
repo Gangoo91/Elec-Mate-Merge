@@ -179,7 +179,7 @@ const Module1Section5_4 = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-border/20 sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
             <Link to="..">
@@ -195,7 +195,7 @@ const Module1Section5_4 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
+            <div className="p-2 rounded-lg ">
               <HardHat className="w-6 h-6 text-foreground" />
             </div>
             <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
@@ -211,7 +211,7 @@ const Module1Section5_4 = () => {
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
             <div className="rounded-lg p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
@@ -234,7 +234,7 @@ const Module1Section5_4 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
           <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
             <li>Understand the importance and legal requirements for site safety procedures.</li>
@@ -246,7 +246,7 @@ const Module1Section5_4 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
 
           {/* Site Induction Section */}
@@ -257,7 +257,7 @@ const Module1Section5_4 = () => {
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
@@ -310,7 +310,7 @@ const Module1Section5_4 = () => {
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
@@ -370,7 +370,7 @@ const Module1Section5_4 = () => {
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
@@ -446,11 +446,11 @@ const Module1Section5_4 = () => {
         </Card>
 
         {/* Permit to Work Systems */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Permit to Work Systems</h2>
           
           <div className="space-y-4">
-            <div className="rounded-lg p-5 border-l-4 border-l-orange-500 bg-card">
+            <div className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
               <div className="flex items-start gap-3 mb-2">
                 <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                 <div className="flex-1">
@@ -494,7 +494,7 @@ const Module1Section5_4 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
@@ -512,7 +512,7 @@ const Module1Section5_4 = () => {
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Recap</h2>
           <p className="text-base text-foreground mb-4">In this section, you learned about:</p>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
@@ -524,7 +524,7 @@ const Module1Section5_4 = () => {
                 <li>Emergency procedures and incident reporting protocols</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card">
+            <div className="rounded-lg p-3 sm:p-4 ">
               <p className="font-medium text-foreground mb-2">Key takeaway:</p>
               <p className="text-base text-foreground">
                 Site safety procedures are not just paperwork - they are essential systems that protect lives and 

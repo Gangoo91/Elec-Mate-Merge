@@ -1,7 +1,5 @@
-import { ArrowLeft, Zap, CheckCircle, Battery, Power, Lightbulb } from "lucide-react";
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -56,7 +54,7 @@ const quizQuestions = [
     question: "What is electricity?",
     options: [
       "A form of energy created by the movement of electrons",
-      "A type of metal conductor", 
+      "A type of metal conductor",
       "A measurement tool",
       "A safety device"
     ],
@@ -69,7 +67,7 @@ const quizQuestions = [
     options: [
       "Protons",
       "Neutrons",
-      "Electrons", 
+      "Electrons",
       "Atoms"
     ],
     correctAnswer: 2,
@@ -104,7 +102,7 @@ const quizQuestions = [
     question: "What does AC stand for?",
     options: [
       "Alternating Current",
-      "Automatic Current", 
+      "Automatic Current",
       "Active Current",
       "Available Current"
     ],
@@ -117,7 +115,7 @@ const quizQuestions = [
     options: [
       "110V",
       "230V",
-      "240V", 
+      "240V",
       "400V"
     ],
     correctAnswer: 1,
@@ -204,411 +202,335 @@ const Module2Section1_1 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
-            <Link to="..">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 2.1
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <Zap className="h-8 w-8 text-emerald-400" />
-            <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
-                Module 2.1.1
-              </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
-                What is Electricity?
-              </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
-                Learn the fundamentals of electricity for apprentice electricians
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Definition:</strong> Electricity is the flow of electric charge through a circuit.</li>
-                <li><strong>Power:</strong> Used to make lights, motors, heaters, and all electrical devices work.</li>
-                <li><strong>Sources:</strong> Power stations, batteries, solar panels, generators.</li>
-                <li><strong>Safety:</strong> Can be dangerous - proper training and procedures essential.</li>
-                <li><strong>Applications:</strong> Powers everything from mobile phones to factory machinery.</li>
-              </ul>
-            </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Live circuits, electrical energy flow, powered devices, circuit components.</li>
-                <li><strong>Use:</strong> Understanding circuits, fault finding, safe installation practices.</li>
-                <li><strong>Apply:</strong> Circuit design, material selection, electrical safety procedures.</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
-
-        {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
-          <ul className="space-y-3 text-foreground">
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
-              <span>Define electricity and explain how it works in simple terms</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
-              <span>Identify different sources of electrical energy and their applications</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
-              <span>Understand the fundamental difference between AC and DC electricity</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
-              <span>Explain what makes a complete electrical circuit and why it's important</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
-              <span>Relate electrical theory to practical installation work scenarios</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
-              <span>Recognise electrical safety hazards and understand basic protection principles</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
-              <span>Apply basic electrical knowledge to troubleshoot simple circuit problems</span>
-            </li>
-          </ul>
-        </Card>
-
-        {/* Section 1: What is Electricity */}
-        <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
-              What is Electricity?
-            </h2>
-            <div className="space-y-4 text-foreground">
-              <p>
-                Electricity is a form of energy created by the movement of tiny particles called electrons. 
-                These particles carry an electric charge, and when they move along a conductor (like copper wire), 
-                we call that electric current.
-              </p>
-              
-              <div className="space-y-4">
-                <div>
-                  <p className="font-bold">Think of electricity like water:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Water flows through pipes - electricity flows through wires</li>
-                    <li>Water pressure pushes water - voltage pushes electrons</li>
-                    <li>Amount of water flowing - amount of current flowing</li>
-                    <li>Water does work (turns a water wheel) - electricity does work (lights a bulb)</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">Key facts about electricity:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>You can't see electricity, but you can see what it does</li>
-                    <li>It travels at nearly the speed of light</li>
-                    <li>It always needs a complete path (circuit) to flow</li>
-                    <li>It can be stored (in batteries) or generated when needed</li>
-                    <li>It can be converted into heat, light, movement, or sound</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Sources of Electricity */}
-        <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
-              Sources of Electricity
-            </h2>
-            <div className="space-y-4 text-foreground">
-              <p>
-                Electricity can be produced in several ways. As an electrician, you'll work with electricity from different sources:
-              </p>
-              
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="space-y-3">
-                  <h4 className="font-bold text-emerald-400">AC Sources (Alternating Current)</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li><strong>Mains supply:</strong> 230V from power stations via National Grid</li>
-                    <li><strong>Generators:</strong> Emergency backup power for buildings</li>
-                    <li><strong>Solar inverters:</strong> Convert DC from panels to AC for use</li>
-                    <li><strong>Wind turbines:</strong> Generate AC from wind power</li>
-                  </ul>
-                </div>
-                
-                <div className="space-y-3">
-                  <h4 className="font-bold text-emerald-400">DC Sources (Direct Current)</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li><strong>Batteries:</strong> Car batteries (12V), AA cells (1.5V)</li>
-                    <li><strong>Solar panels:</strong> Direct DC output from sunlight</li>
-                    <li><strong>DC power supplies:</strong> Convert mains AC to DC</li>
-                    <li><strong>Emergency lighting:</strong> Battery backup systems</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: AC vs DC */}
-        <div className="mb-8">
-          <div className="border-l-4 border-purple-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
-              AC vs DC - What's the Difference?
-            </h2>
-            <div className="space-y-4 text-foreground">
-              <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-                <div className="space-y-3">
-                  <h4 className="font-bold text-emerald-400">AC (Alternating Current)</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Changes direction 50 times per second (50Hz in UK)</li>
-                    <li>Easy to transform to different voltages</li>
-                    <li>Used for mains electricity supply</li>
-                    <li>Can travel long distances efficiently</li>
-                    <li>Powers most household appliances</li>
-                  </ul>
-                </div>
-                
-                <div className="space-y-3">
-                  <h4 className="font-bold text-emerald-400">DC (Direct Current)</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Flows in one direction only</li>
-                    <li>Steady, constant voltage</li>
-                    <li>Used in batteries and electronics</li>
-                    <li>Good for low voltage applications</li>
-                    <li>Essential for charging devices</li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
-                <p className="text-yellow-300">
-                  <strong>Practical Example:</strong> Your mobile phone charger converts 230V AC from the wall socket 
-                  into low voltage DC to charge the battery. Most electronic devices need DC to work properly.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Complete Circuits */}
-        <div className="mb-8">
-          <div className="border-l-4 border-red-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">4</span>
-              Complete Circuits - Why Electricity Needs a Path
-            </h2>
-            <div className="space-y-4 text-foreground">
-              <p>
-                For electricity to work, it must flow in a complete circuit. Think of it like a running track - 
-                you need a complete loop to go around.
-              </p>
-              
-              <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-                <div className="bg-card border border-border/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-emerald-400 mb-2">1. Source</h4>
-                  <p className="text-sm text-blue-200">Provides the electrical energy - battery, power station, generator</p>
-                </div>
-                <div className="bg-card border border-green-400/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-green-300 mb-2">2. Load</h4>
-                  <p className="text-sm text-green-200">Uses the electrical energy - lamp, motor, heater, TV</p>
-                </div>
-                <div className="bg-card border border-border/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-emerald-400 mb-2">3. Path</h4>
-                  <p className="text-sm text-purple-200">Allows current to flow - wires, cables, connections</p>
-                </div>
-              </div>
-              
-              <div className="bg-card border border-border/30 p-4 rounded-lg">
-                <p className="text-emerald-400">
-                  <strong>Remember:</strong> If any part of the circuit is broken, electricity can't flow and nothing works. 
-                  This is why loose connections, damaged cables, or blown fuses stop things working.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Practical Guidance for Apprentices</h2>
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-lg font-semibold text-foreground mb-3">On Site Application</h3>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="bg-card border border-border/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-emerald-400 mb-2">When Installing Circuits</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-blue-200">
-                    <li>Remember electricity needs a complete path to work</li>
-                    <li>Check all connections are secure to maintain the circuit</li>
-                    <li>Consider what type of load you're connecting (resistive, inductive)</li>
-                    <li>Match cable size to the expected current flow</li>
-                  </ul>
-                </div>
-                <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-emerald-400 mb-2">When Fault Finding</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-emerald-400/80">
-                    <li>Look for breaks in the circuit path first</li>
-                    <li>Check if the power source is actually providing electricity</li>
-                    <li>Test loads separately to isolate the problem</li>
-                    <li>Use your understanding of current flow to trace faults</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            
-            <div>
-              <h3 className="text-lg font-semibold text-foreground mb-3">Common Mistakes to Avoid</h3>
-              <div className="bg-card border border-border/30 p-4 rounded-lg">
-                <ul className="list-disc pl-4 space-y-2 text-sm text-red-200">
-                  <li><strong>Assuming circuits are dead:</strong> Always test with a proper voltage indicator</li>
-                  <li><strong>Ignoring load types:</strong> Motors draw more current when starting than when running</li>
-                  <li><strong>Poor connections:</strong> Loose connections create resistance, heat, and potential fire risks</li>
-                  <li><strong>Wrong cable sizes:</strong> Undersized cables can overheat; oversized cables waste money</li>
-                  <li><strong>Mixing AC and DC:</strong> Some equipment only works with specific supply types</li>
-                </ul>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-lg font-semibold text-foreground mb-3">Building Your Understanding</h3>
-              <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
-                <ul className="list-disc pl-4 space-y-2 text-sm text-emerald-400/80">
-                  <li><strong>Start simple:</strong> Master basic circuits before moving to complex installations</li>
-                  <li><strong>Ask questions:</strong> If you don't understand why something works, ask your supervisor</li>
-                  <li><strong>Practice with meters:</strong> Get comfortable measuring voltage, current, and resistance</li>
-                  <li><strong>Think safety first:</strong> Every electrical job has potential hazards - identify them early</li>
-                  <li><strong>Learn from experience:</strong> Each job teaches you something new about how electricity behaves</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        {/* FAQs */}
-        <Card className="mb-8 p-0 bg-card border-border/20 bg-none shadow-none overflow-hidden">
-          <div className="p-6 border-b border-border/20">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Frequently Asked Questions</h2>
-          </div>
-          <div className="divide-y divide-border/20">
-            {faqs.map((faq, index) => (
-              <div key={index} className="p-6">
-                <h3 className="font-semibold text-foreground mb-2">{faq.question}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </Card>
-
-        {/* Pocket Cards */}
-        <div className="mb-8 space-y-6">
-          <UnitsPocketCard />
-          
-          <Card className="p-6 bg-card border-border/20 bg-none shadow-none">
-            <div className="mb-4">
-              <h2 className="text-lg sm:text-xl font-semibold text-foreground">Quick Reference Card</h2>
-            </div>
-            <p className="text-sm text-muted-foreground mb-4">
-              Essential electricity facts for apprentice electricians
-            </p>
-            <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
-              <div className="space-y-3">
-                <div>
-                  <h4 className="font-semibold text-foreground">Basic Facts</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-muted-foreground">
-                    <li>Electricity = flow of electrons</li>
-                    <li>UK mains = 230V AC, 50Hz</li>
-                    <li>Complete circuit needed</li>
-                    <li>AC changes direction, DC flows one way</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-foreground">Common Sources</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-muted-foreground">
-                    <li>Mains supply (AC)</li>
-                    <li>Batteries (DC)</li>
-                    <li>Solar panels (DC)</li>
-                    <li>Generators (AC)</li>
-                  </ul>
-                </div>
-              </div>
-              <div className="space-y-3">
-                <div>
-                  <h4 className="font-semibold text-foreground">Safety Points</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-muted-foreground">
-                    <li>Always assume circuits are live</li>
-                    <li>Use proper PPE</li>
-                    <li>Follow isolation procedures</li>
-                    <li>Test before you touch</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-foreground">Circuit Components</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-muted-foreground">
-                    <li>Source (power supply)</li>
-                    <li>Load (device using power)</li>
-                    <li>Path (wires and connections)</li>
-                    <li>Control (switches, protection)</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </Card>
-        </div>
-
-        {/* Quiz */}
-        <Quiz 
-          title="Test Your Knowledge: What is Electricity?"
-          questions={quizQuestions}
-        />
-
-        {/* Navigation */}
-        <div className="flex justify-between items-center mt-12 pt-8 border-t border-border/20">
-          <Button variant="outline" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/5 sticky top-0 z-50 bg-[#1a1a1a] backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-3">
+          <Button variant="ghost" size="sm" className="text-white/70 hover:text-white -ml-2" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
           </Button>
-          <Button asChild>
+        </div>
+      </div>
+
+      {/* Main Content - Full width, minimal padding */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+
+        {/* Centered Title */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 2.1.1</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            What is Electricity?
+          </h1>
+          <p className="text-white/80">
+            The fundamentals every apprentice electrician needs to know
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes - Keep these, they're useful */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Definition:</strong> Flow of electric charge through a circuit</li>
+              <li><strong>Power:</strong> Makes lights, motors, heaters work</li>
+              <li><strong>Sources:</strong> Power stations, batteries, solar panels</li>
+              <li><strong>Safety:</strong> Dangerous - proper training essential</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Live circuits, powered devices, circuit components</li>
+              <li><strong>Use:</strong> Fault finding, safe installation practices</li>
+              <li><strong>Apply:</strong> Circuit design, material selection</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes - Simple list */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Define electricity and explain how it works",
+              "Identify different sources of electrical energy",
+              "Understand the difference between AC and DC",
+              "Explain what makes a complete electrical circuit",
+              "Relate theory to practical installation work",
+              "Recognise electrical safety hazards"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1: What is Electricity */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            What is Electricity?
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Electricity is a form of energy created by the movement of tiny particles called electrons.
+              These particles carry an electric charge, and when they move along a conductor (like copper wire),
+              we call that electric current.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Think of electricity like water:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Water flows through pipes — electricity flows through wires</li>
+                <li>Water pressure pushes water — voltage pushes electrons</li>
+                <li>Amount of water flowing — amount of current flowing</li>
+                <li>Water turns a wheel — electricity lights a bulb</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Key facts:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>You can't see electricity, but you can see what it does</li>
+                <li>It travels at nearly the speed of light</li>
+                <li>It always needs a complete path (circuit) to flow</li>
+                <li>It can be stored in batteries or generated when needed</li>
+                <li>It can be converted into heat, light, movement, or sound</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2: Sources of Electricity */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Sources of Electricity
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Electricity can be produced in several ways. As an electrician, you'll work with electricity from different sources:
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">AC Sources (Alternating Current)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Mains supply:</strong> 230V from power stations</li>
+                  <li><strong>Generators:</strong> Emergency backup power</li>
+                  <li><strong>Solar inverters:</strong> Convert DC from panels to AC</li>
+                  <li><strong>Wind turbines:</strong> Generate AC from wind</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">DC Sources (Direct Current)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Batteries:</strong> Car batteries (12V), AA cells (1.5V)</li>
+                  <li><strong>Solar panels:</strong> Direct DC output</li>
+                  <li><strong>DC power supplies:</strong> Convert AC to DC</li>
+                  <li><strong>Emergency lighting:</strong> Battery backup systems</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 3: AC vs DC */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            AC vs DC — What's the Difference?
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-white mb-2">AC (Alternating Current)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Changes direction 50 times per second (50Hz UK)</li>
+                  <li>Easy to transform to different voltages</li>
+                  <li>Used for mains electricity supply</li>
+                  <li>Can travel long distances efficiently</li>
+                  <li>Powers most household appliances</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-white mb-2">DC (Direct Current)</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Flows in one direction only</li>
+                  <li>Steady, constant voltage</li>
+                  <li>Used in batteries and electronics</li>
+                  <li>Good for low voltage applications</li>
+                  <li>Essential for charging devices</li>
+                </ul>
+              </div>
+            </div>
+
+            <p className="text-sm text-white/90 italic">
+              <strong>Example:</strong> Your phone charger converts 230V AC from the wall socket
+              into low voltage DC to charge the battery.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Section 4: Complete Circuits */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Complete Circuits
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              For electricity to work, it must flow in a complete circuit. Think of it like a running track —
+              you need a complete loop to go around.
+            </p>
+
+            <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">1. Source</p>
+                <p className="text-white/90 text-xs">Battery, power station, generator</p>
+              </div>
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">2. Load</p>
+                <p className="text-white/90 text-xs">Lamp, motor, heater, TV</p>
+              </div>
+              <div className="p-3 rounded bg-transparent">
+                <p className="font-medium text-white mb-1">3. Path</p>
+                <p className="text-white/90 text-xs">Wires, cables, connections</p>
+              </div>
+            </div>
+
+            <p className="text-sm text-elec-yellow/70">
+              <strong>Remember:</strong> If any part of the circuit is broken, electricity can't flow and nothing works.
+              This is why loose connections, damaged cables, or blown fuses stop things working.
+            </p>
+          </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-white/5 my-12" />
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Installing Circuits</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Remember electricity needs a complete path to work</li>
+                <li>Check all connections are secure</li>
+                <li>Consider what type of load you're connecting</li>
+                <li>Match cable size to the expected current flow</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Fault Finding</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Look for breaks in the circuit path first</li>
+                <li>Check if the power source is providing electricity</li>
+                <li>Test loads separately to isolate the problem</li>
+                <li>Use your understanding of current flow to trace faults</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Assuming circuits are dead</strong> — always test first</li>
+                <li><strong>Ignoring load types</strong> — motors draw more current on startup</li>
+                <li><strong>Poor connections</strong> — create resistance, heat, and fire risks</li>
+                <li><strong>Wrong cable sizes</strong> — undersized cables overheat</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQs */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-white/5 my-12" />
+
+        {/* Reference Cards */}
+        <section className="mb-10">
+          <UnitsPocketCard />
+
+          <div className="mt-6 p-5 rounded-lg bg-transparent">
+            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+              <div>
+                <p className="font-medium text-white mb-1">Basic Facts</p>
+                <ul className="space-y-0.5">
+                  <li>Electricity = flow of electrons</li>
+                  <li>UK mains = 230V AC, 50Hz</li>
+                  <li>Complete circuit needed</li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-medium text-white mb-1">Safety</p>
+                <ul className="space-y-0.5">
+                  <li>Always assume circuits are live</li>
+                  <li>Use proper PPE</li>
+                  <li>Test before you touch</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Quiz */}
+        <section className="mb-10">
+          <Quiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Navigation */}
+        <nav className="flex justify-between items-center pt-8 border-t border-white/5">
+          <Button variant="ghost" size="sm" asChild>
             <Link to="..">
-              Next
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
+          <Button size="sm" asChild>
+            <Link to="../1-2">
+              Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
-        </div>
-      </div>
+        </nav>
+
+      </article>
     </div>
   );
 };

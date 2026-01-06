@@ -1,15 +1,29 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { Battery, Sun, Zap, AlertTriangle, CheckCircle2, Info, Settings, Lightbulb, Calculator, RotateCcw } from "lucide-react";
+import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Sun, Battery, Zap, Info, AlertTriangle, CheckCircle2, BookOpen, ChevronDown, Settings } from "lucide-react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { cn } from "@/lib/utils";
+import {
+  CalculatorCard,
+  CalculatorInputGrid,
+  CalculatorInput,
+  CalculatorSelect,
+  CalculatorActions,
+  CalculatorResult,
+  ResultValue,
+  ResultsGrid,
+  CALCULATOR_CONFIG,
+} from "@/components/calculators/shared";
 import { OFFGRID_PRESETS, getPresetByName } from "@/lib/offgrid-presets";
 import { calculateOffGridSystem, OffGridResult } from "@/lib/offgrid-calculations";
-import InfoBox from "@/components/common/InfoBox";
-import WhyThisMatters from "@/components/common/WhyThisMatters";
 
 export function OffGridSystemCalculator() {
+  const config = CALCULATOR_CONFIG['renewable'];
+
   const [selectedPreset, setSelectedPreset] = useState('');
   const [dailyConsumption, setDailyConsumption] = useState('');
   const [peakSunHours, setPeakSunHours] = useState('3.5');
@@ -21,22 +35,14 @@ export function OffGridSystemCalculator() {
   const [batteryType, setBatteryType] = useState('lithium');
   const [depthOfDischarge, setDepthOfDischarge] = useState('80');
   const [systemEfficiency, setSystemEfficiency] = useState('85');
+
+  const [showGuidance, setShowGuidance] = useState(false);
+  const [showRegs, setShowRegs] = useState(false);
+  const [showCost, setShowCost] = useState(false);
   const [result, setResult] = useState<OffGridResult | null>(null);
 
   const presetOptions = OFFGRID_PRESETS.map(preset => ({ value: preset.name, label: preset.name }));
 
-  const voltageOptions = [
-    { value: '12', label: '12V DC (Small systems)' },
-    { value: '24', label: '24V DC (Medium systems)' },
-    { value: '48', label: '48V DC (Large systems)' }
-  ];
-
-  const batteryOptions = [
-    { value: 'lithium', label: 'Lithium LiFePO4 (Recommended)' },
-    { value: 'agm', label: 'AGM Deep Cycle (Budget)' }
-  ];
-
-  // Handle preset selection
   const handlePresetChange = (presetName: string) => {
     setSelectedPreset(presetName);
     if (presetName) {
@@ -98,401 +104,287 @@ export function OffGridSystemCalculator() {
     setResult(null);
   };
 
-  const getSystemRatingColor = (rating: string) => {
+  const hasValidInputs = () => dailyConsumption && systemVoltage;
+  const selectedPresetData = selectedPreset ? getPresetByName(selectedPreset) : null;
+
+  const getRatingColor = (rating: string) => {
     switch (rating) {
-      case 'excellent': return 'text-elec-green';
-      case 'good': return 'text-elec-yellow';
-      case 'adequate': return 'text-elec-light';
-      case 'marginal': return 'text-elec-orange';
-      case 'inadequate': return 'text-destructive';
-      default: return 'text-elec-light';
+      case 'excellent': return 'text-green-400';
+      case 'good': return 'text-emerald-400';
+      case 'adequate': return 'text-amber-400';
+      default: return 'text-red-400';
     }
   };
 
-  const selectedPresetData = selectedPreset ? getPresetByName(selectedPreset) : null;
-
   return (
-    <div className="w-full space-y-6">
-      <Card className="bg-elec-card border-elec-yellow/20">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-elec-light flex items-center gap-3">
-            <Sun className="h-6 w-6 text-elec-yellow" />
-            Off-Grid System Designer
-          </CardTitle>
-          <CardDescription className="text-elec-light/80">
-            Design a complete off-grid solar system with live calculations and UK-focused guidance
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          {/* Quick Start Presets */}
-          <div className="space-y-3">
-            <MobileSelectWrapper
-              label="Quick Start Presets"
-              placeholder="Choose a preset or custom configuration"
-              value={selectedPreset}
-              onValueChange={handlePresetChange}
-              options={presetOptions}
-              hint="Select a common scenario to auto-fill typical values"
-            />
-            
-            {selectedPresetData && (
-              <div className="p-3 bg-elec-dark/30 rounded-lg border border-elec-yellow/20">
-                <p className="text-sm text-elec-light/90 mb-1 font-medium">{selectedPresetData.description}</p>
-                <p className="text-xs text-elec-light/70">{selectedPresetData.scenario}</p>
+    <div className="space-y-4">
+      <CalculatorCard
+        category="renewable"
+        title="Off-Grid System Designer"
+        description="Complete off-grid solar system with UK-focused guidance"
+        badge="BS 7671"
+      >
+        <CalculatorSelect
+          label="Quick Start Preset"
+          value={selectedPreset}
+          onChange={handlePresetChange}
+          options={presetOptions}
+          placeholder="Choose a preset or custom"
+          hint="Auto-fill typical values"
+        />
+
+        {selectedPresetData && (
+          <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
+            <p className="text-sm text-green-200 font-medium">{selectedPresetData.description}</p>
+            <p className="text-xs text-green-200/70 mt-1">{selectedPresetData.scenario}</p>
+          </div>
+        )}
+
+        <CalculatorInputGrid columns={2}>
+          <CalculatorInput
+            label="Daily Consumption"
+            unit="kWh"
+            type="text"
+            inputMode="decimal"
+            value={dailyConsumption}
+            onChange={setDailyConsumption}
+            placeholder="e.g., 5"
+            hint="Include all appliances"
+          />
+          <CalculatorInput
+            label="Peak Sun Hours"
+            unit="hrs/day"
+            type="text"
+            inputMode="decimal"
+            value={peakSunHours}
+            onChange={setPeakSunHours}
+            placeholder="3.5"
+            hint="UK: 2.5-4.5 hrs"
+          />
+        </CalculatorInputGrid>
+
+        <CalculatorInputGrid columns={2}>
+          <CalculatorInput
+            label="Backup Days"
+            unit="days"
+            type="text"
+            inputMode="numeric"
+            value={autonomyDays}
+            onChange={setAutonomyDays}
+            placeholder="3"
+            hint="Days without solar"
+          />
+          <CalculatorSelect
+            label="System Voltage"
+            value={systemVoltage}
+            onChange={setSystemVoltage}
+            options={[
+              { value: '12', label: '12V DC (Small)' },
+              { value: '24', label: '24V DC (Medium)' },
+              { value: '48', label: '48V DC (Large)' },
+            ]}
+            placeholder="Select voltage"
+          />
+        </CalculatorInputGrid>
+
+        <CalculatorInputGrid columns={2}>
+          <CalculatorInput
+            label="Panel Wattage"
+            unit="W"
+            type="text"
+            inputMode="numeric"
+            value={panelWattage}
+            onChange={setPanelWattage}
+            placeholder="400"
+          />
+          <CalculatorSelect
+            label="Battery Type"
+            value={batteryType}
+            onChange={setBatteryType}
+            options={[
+              { value: 'lithium', label: 'LiFePO4 (Recommended)' },
+              { value: 'agm', label: 'AGM Deep Cycle' },
+            ]}
+          />
+        </CalculatorInputGrid>
+
+        <CalculatorInputGrid columns={2}>
+          <CalculatorInput
+            label="Battery Capacity"
+            unit="Ah"
+            type="text"
+            inputMode="numeric"
+            value={batteryCapacity}
+            onChange={setBatteryCapacity}
+            placeholder="100"
+          />
+          <CalculatorInput
+            label="Depth of Discharge"
+            unit="%"
+            type="text"
+            inputMode="numeric"
+            value={depthOfDischarge}
+            onChange={setDepthOfDischarge}
+            placeholder="80"
+            hint="LiFePO4: 80%, AGM: 50%"
+          />
+        </CalculatorInputGrid>
+
+        <CalculatorActions
+          category="renewable"
+          onCalculate={calculateSystem}
+          onReset={reset}
+          isDisabled={!hasValidInputs()}
+          calculateLabel="Design System"
+        />
+      </CalculatorCard>
+
+      {result && (
+        <div className="space-y-4 animate-fade-in">
+          <CalculatorResult category="renewable">
+            <div className="flex items-center justify-between pb-3 border-b border-white/10">
+              <span className="text-sm text-white/60">System Design</span>
+              <Badge variant="outline" className={getRatingColor(result.systemRating)}>
+                {result.systemRating.charAt(0).toUpperCase() + result.systemRating.slice(1)} System
+              </Badge>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 py-4">
+              <div className="text-center p-3 rounded-lg bg-white/5">
+                <Sun className="h-5 w-5 mx-auto mb-1 text-amber-400" />
+                <p className="text-xs text-white/60">Solar Array</p>
+                <p className="text-xl font-bold text-green-400">{(result.numberOfPanels * parseFloat(panelWattage) / 1000).toFixed(1)}kW</p>
+                <p className="text-xs text-white/60">{result.numberOfPanels} × {panelWattage}W</p>
+              </div>
+              <div className="text-center p-3 rounded-lg bg-white/5">
+                <Battery className="h-5 w-5 mx-auto mb-1 text-blue-400" />
+                <p className="text-xs text-white/60">Battery Bank</p>
+                <p className="text-xl font-bold text-green-400">{(result.numberOfBatteries * parseFloat(batteryCapacity) * parseFloat(depthOfDischarge) / 100).toFixed(0)}Ah</p>
+                <p className="text-xs text-white/60">{result.numberOfBatteries} × {batteryCapacity}Ah</p>
+              </div>
+            </div>
+
+            <ResultsGrid columns={2}>
+              <ResultValue label="Daily Balance" value={result.dailyEnergyBalance >= 0 ? `+${result.dailyEnergyBalance.toFixed(1)}` : result.dailyEnergyBalance.toFixed(1)} unit="kWh" category="renewable" size="sm" />
+              <ResultValue label="System Cost" value={`£${result.systemCost.toFixed(0)}`} category="renewable" size="sm" />
+              <ResultValue label="Inverter" value={result.inverterSize.toFixed(1)} unit="kW" category="renewable" size="sm" />
+              <ResultValue label="Charge Controller" value={result.chargeControllerSize.toFixed(0)} unit="A MPPT" category="renewable" size="sm" />
+            </ResultsGrid>
+
+            {result.dailyEnergyBalance < 0 && (
+              <div className="mt-3 p-3 rounded-xl bg-red-500/10 border border-red-500/30">
+                <div className="flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 shrink-0" />
+                  <p className="text-sm text-red-200">
+                    Daily deficit of {Math.abs(result.dailyEnergyBalance).toFixed(1)}kWh - increase panels or reduce consumption.
+                  </p>
+                </div>
               </div>
             )}
-          </div>
+          </CalculatorResult>
 
-          {/* Core System Requirements */}
-          <div className="space-y-4">
-            <h3 className="text-base font-semibold text-elec-light flex items-center gap-2">
-              <Settings className="h-4 w-4 text-elec-yellow" />
-              Core Requirements
-            </h3>
-            
-            <div className="space-y-4">
-              <MobileInputWrapper
-                type="number"
-                label="Daily Energy Consumption"
-                placeholder="Enter daily consumption"
-                value={dailyConsumption}
-                onChange={setDailyConsumption}
-                unit="kWh"
-                step="0.1"
-                hint="Include all appliances, lighting, and devices you'll use daily"
-                icon={<Zap className="h-4 w-4" />}
-              />
-              
-              <MobileInputWrapper
-                type="number"
-                label="Peak Sun Hours"
-                placeholder="UK average: 3-4 hrs"
-                value={peakSunHours}
-                onChange={setPeakSunHours}
-                unit="hrs/day"
-                step="0.1"
-                hint="UK varies from 2.5hrs (winter) to 4.5hrs (summer) - use conservative estimate"
-                icon={<Sun className="h-4 w-4" />}
-              />
-              
-              <MobileInputWrapper
-                type="number"
-                label="Backup Days (Autonomy)"
-                placeholder="Recommended: 3-5 days"
-                value={autonomyDays}
-                onChange={setAutonomyDays}
-                unit="days"
-                step="1"
-                hint="How many days the system should run without solar input"
-                icon={<Battery className="h-4 w-4" />}
-              />
-            </div>
-          </div>
-
-          {/* System Configuration */}
-          <div className="space-y-4">
-            <h3 className="text-base font-semibold text-elec-light flex items-center gap-2">
-              <Settings className="h-4 w-4 text-elec-yellow" />
-              System Configuration
-            </h3>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <MobileSelectWrapper
-                label="System Voltage"
-                placeholder="Select system voltage"
-                value={systemVoltage}
-                onValueChange={setSystemVoltage}
-                options={voltageOptions}
-                hint="Higher voltage = better efficiency for larger systems"
-              />
-              
-              <MobileSelectWrapper
-                label="Battery Type"
-                placeholder="Select battery type"
-                value={batteryType}
-                onValueChange={setBatteryType}
-                options={batteryOptions}
-                hint="LiFePO4 costs more but lasts longer and deeper discharge"
-              />
-              
-              <MobileInputWrapper
-                type="number"
-                label="Solar Panel Wattage"
-                placeholder="Typical: 300-450W"
-                value={panelWattage}
-                onChange={setPanelWattage}
-                unit="W"
-                step="10"
-                hint="Individual panel rating - larger panels are more efficient"
-              />
-              
-              <MobileInputWrapper
-                type="number"
-                label="Battery Capacity"
-                placeholder="Typical: 100-200Ah"
-                value={batteryCapacity}
-                onChange={setBatteryCapacity}
-                unit="Ah"
-                step="10"
-                hint="Individual battery capacity - will calculate how many needed"
-              />
-              
-              <MobileInputWrapper
-                type="number"
-                label="Battery Voltage"
-                placeholder="Common: 12V"
-                value={batteryVoltage}
-                onChange={setBatteryVoltage}
-                unit="V"
-                step="1"
-                hint="Individual battery voltage - typically 12V"
-              />
-              
-              <MobileInputWrapper
-                type="number"
-                label="Depth of Discharge"
-                placeholder="LiFePO4: 80%, AGM: 50%"
-                value={depthOfDischarge}
-                onChange={setDepthOfDischarge}
-                unit="%"
-                step="5"
-                hint="How much battery capacity you can safely use"
-              />
-            </div>
-          </div>
-
-          {/* Advanced Settings */}
-          <div className="space-y-3">
-            <MobileInputWrapper
-              type="number"
-              label="System Efficiency"
-              placeholder="Typical: 80-90%"
-              value={systemEfficiency}
-              onChange={setSystemEfficiency}
-              unit="%"
-              step="1"
-              hint="Accounts for inverter losses, wiring losses, and battery efficiency"
-            />
-          </div>
-
-          <div className="flex gap-3">
-            <MobileButton 
-              onClick={calculateSystem} 
-              variant="elec" 
-              size="wide"
-              className="flex-1"
-            >
-              <Calculator className="h-4 w-4" />
-              Calculate System
-            </MobileButton>
-            <MobileButton 
-              onClick={reset} 
-              variant="outline" 
-              size="default"
-              className="px-4"
-            >
-              <RotateCcw className="h-4 w-4" />
-            </MobileButton>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Live Results */}
-      {result && (
-        <div className="space-y-4">
-          {/* System Rating & Overview */}
-          <Card className="bg-elec-card border-elec-yellow/20">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-elec-light flex items-center justify-between">
-                <span>System Design Results</span>
-                <span className={`text-sm font-medium capitalize ${getSystemRatingColor(result.systemRating)}`}>
-                  {result.systemRating} System
-                </span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {/* Key Metrics - Mobile Stacked Layout */}
-              <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 bg-elec-dark/30 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <Sun className="h-5 w-5 text-elec-yellow" />
-                    <div>
-                      <p className="text-sm font-medium text-elec-light">Solar Array</p>
-                      <p className="text-xs text-elec-light/70">{result.numberOfPanels} × {panelWattage}W panels</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-lg font-bold text-elec-yellow">{(result.numberOfPanels * parseFloat(panelWattage) / 1000).toFixed(1)}kW</p>
-                    <p className="text-xs text-elec-light/70">Total capacity</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between p-3 bg-elec-dark/30 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <Battery className="h-5 w-5 text-elec-yellow" />
-                    <div>
-                      <p className="text-sm font-medium text-elec-light">Battery Bank</p>
-                      <p className="text-xs text-elec-light/70">{result.numberOfBatteries} × {batteryCapacity}Ah batteries</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-lg font-bold text-elec-yellow">{(result.numberOfBatteries * parseFloat(batteryCapacity) * parseFloat(depthOfDischarge) / 100).toFixed(0)}Ah</p>
-                    <p className="text-xs text-elec-light/70">Usable capacity</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between p-3 bg-elec-dark/30 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <Zap className="h-5 w-5 text-elec-yellow" />
-                    <div>
-                      <p className="text-sm font-medium text-elec-light">Daily Balance</p>
-                      <p className="text-xs text-elec-light/70">Generation vs consumption</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className={`text-lg font-bold ${result.dailyEnergyBalance >= 0 ? 'text-elec-green' : 'text-destructive'}`}>
-                      {result.dailyEnergyBalance >= 0 ? '+' : ''}{result.dailyEnergyBalance.toFixed(1)}kWh
-                    </p>
-                    <p className="text-xs text-elec-light/70">Daily surplus/deficit</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between p-3 bg-elec-dark/30 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <Info className="h-5 w-5 text-elec-yellow" />
-                    <div>
-                      <p className="text-sm font-medium text-elec-light">System Cost</p>
-                      <p className="text-xs text-elec-light/70">Including VAT & installation</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-lg font-bold text-elec-yellow">£{result.systemCost.toFixed(0)}</p>
-                    <p className="text-xs text-elec-light/70">Total investment</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Additional Components */}
-              <div className="grid grid-cols-2 gap-3 text-sm">
-                <div className="text-center p-2 bg-elec-dark/20 rounded">
-                  <p className="font-medium text-elec-light">Inverter</p>
-                  <p className="text-elec-yellow">{result.inverterSize.toFixed(1)}kW</p>
-                </div>
-                <div className="text-center p-2 bg-elec-dark/20 rounded">
-                  <p className="font-medium text-elec-light">Charge Controller</p>
-                  <p className="text-elec-yellow">{result.chargeControllerSize.toFixed(0)}A MPPT</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Cost Breakdown */}
-          <Card className="bg-elec-card border-elec-yellow/20">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-elec-light text-base">Detailed Cost Breakdown</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-elec-light/80">Solar panels</span>
-                  <span className="text-elec-light">£{result.costBreakdown.panels.toFixed(0)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-elec-light/80">Batteries ({batteryType})</span>
-                  <span className="text-elec-light">£{result.costBreakdown.batteries.toFixed(0)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-elec-light/80">Inverter</span>
-                  <span className="text-elec-light">£{result.costBreakdown.inverter.toFixed(0)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-elec-light/80">Charge controller</span>
-                  <span className="text-elec-light">£{result.costBreakdown.chargeController.toFixed(0)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-elec-light/80">Wiring & electrical</span>
-                  <span className="text-elec-light">£{result.costBreakdown.wiring.toFixed(0)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-elec-light/80">Mounting & hardware</span>
-                  <span className="text-elec-light">£{result.costBreakdown.mounting.toFixed(0)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-elec-light/80">Professional installation</span>
-                  <span className="text-elec-light">£{result.costBreakdown.installation.toFixed(0)}</span>
-                </div>
-                <div className="flex justify-between border-t border-elec-gray/30 pt-2 font-semibold">
-                  <span className="text-elec-light">Total (inc. VAT)</span>
-                  <span className="text-elec-yellow">£{result.costBreakdown.total.toFixed(0)}</span>
-                </div>
-              </div>
-              <p className="text-xs text-elec-light/60 mt-3">
-                *Prices include 5% VAT (reduced rate for solar). Costs may vary by supplier and location.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Warnings */}
           {result.warnings.length > 0 && (
-            <InfoBox
-              title="System Warnings"
-              icon={<AlertTriangle className="h-5 w-5 text-elec-orange" />}
-              points={result.warnings}
-              className="border-elec-orange/30"
-            />
+            <div className="p-4 rounded-xl bg-orange-500/10 border border-orange-500/30">
+              <div className="flex items-start gap-2 mb-2">
+                <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
+                <span className="text-sm font-medium text-orange-300">Warnings</span>
+              </div>
+              <ul className="space-y-1 ml-6">
+                {result.warnings.map((warning, i) => (
+                  <li key={i} className="text-sm text-orange-200">{warning}</li>
+                ))}
+              </ul>
+            </div>
           )}
 
-          {/* Recommendations */}
           {result.recommendations.length > 0 && (
-            <InfoBox
-              title="System Recommendations"
-              icon={<CheckCircle2 className="h-5 w-5 text-elec-green" />}
-              points={result.recommendations}
-              className="border-elec-green/30"
-            />
+            <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/30">
+              <div className="flex items-start gap-2 mb-2">
+                <CheckCircle2 className="h-4 w-4 text-green-400 mt-0.5 shrink-0" />
+                <span className="text-sm font-medium text-green-300">Recommendations</span>
+              </div>
+              <ul className="space-y-1 ml-6">
+                {result.recommendations.map((rec, i) => (
+                  <li key={i} className="text-sm text-green-200">{rec}</li>
+                ))}
+              </ul>
+            </div>
           )}
+
+          <Collapsible open={showCost} onOpenChange={setShowCost}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#a78bfa15' }}>
+              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                <div className="flex items-center gap-3">
+                  <Settings className="h-4 w-4 text-purple-400" />
+                  <span className="text-sm sm:text-base font-medium text-purple-300">Cost Breakdown</span>
+                </div>
+                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showCost && "rotate-180")} />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="p-4 pt-0">
+                <div className="space-y-2 text-sm">
+                  {Object.entries(result.costBreakdown).filter(([key]) => key !== 'total').map(([key, value]) => (
+                    <div key={key} className="flex justify-between">
+                      <span className="text-white/60 capitalize">{key.replace(/([A-Z])/g, ' $1')}</span>
+                      <span className="text-white">£{(value as number).toFixed(0)}</span>
+                    </div>
+                  ))}
+                  <div className="flex justify-between pt-2 border-t border-white/10 font-semibold">
+                    <span className="text-white">Total (inc. VAT)</span>
+                    <span className="text-green-400">£{result.costBreakdown.total.toFixed(0)}</span>
+                  </div>
+                </div>
+              </CollapsibleContent>
+            </div>
+          </Collapsible>
+
+          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
+              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                <div className="flex items-center gap-3">
+                  <Info className="h-4 w-4 text-blue-400" />
+                  <span className="text-sm sm:text-base font-medium text-blue-300">Installation Guidance</span>
+                </div>
+                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showGuidance && "rotate-180")} />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="p-4 pt-0 space-y-2">
+                <p className="text-sm text-blue-200/80">Planning permission generally not needed for roof-mounted panels</p>
+                <p className="text-sm text-blue-200/80">Ground-mounted systems over 9m² may need planning consent</p>
+                <p className="text-sm text-blue-200/80">Battery storage must comply with fire safety regulations</p>
+                <p className="text-sm text-blue-200/80">Maintain 1.5m clearance from boundaries for fire access</p>
+              </CollapsibleContent>
+            </div>
+          </Collapsible>
+
+          <Collapsible open={showRegs} onOpenChange={setShowRegs}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
+              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                <div className="flex items-center gap-3">
+                  <BookOpen className="h-4 w-4 text-amber-400" />
+                  <span className="text-sm sm:text-base font-medium text-amber-300">Standards & Regulations</span>
+                </div>
+                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showRegs && "rotate-180")} />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="p-4 pt-0">
+                <div className="space-y-2 text-sm text-amber-200/80">
+                  <p><strong className="text-amber-300">BS 7671:</strong> Wiring regulations apply to all DC and AC circuits</p>
+                  <p><strong className="text-amber-300">Building Regs Part P:</strong> Notification required for electrical work</p>
+                  <p><strong className="text-amber-300">BS EN 62446:</strong> Testing and commissioning standards for PV</p>
+                  <p><strong className="text-amber-300">MCS:</strong> Recommended for quality assurance</p>
+                </div>
+              </CollapsibleContent>
+            </div>
+          </Collapsible>
         </div>
       )}
 
-      {/* Why This Matters */}
-      <WhyThisMatters
-        points={[
-          "Off-grid systems provide energy independence from the national grid",
-          "Proper sizing prevents expensive over-specification or inadequate performance",
-          "Battery autonomy ensures power during extended cloudy periods",
-          "Professional installation ensures safety and Building Regulations compliance",
-          "UK planning permission may be required for ground-mounted arrays over 9m²"
-        ]}
-      />
-
-      {/* Practical Guidance */}
-      <InfoBox
-        title="UK Installation Guidance"
-        icon={<Info className="h-5 w-5 text-elec-blue" />}
-        points={[
-          "Building Regulations Part P applies to all electrical work - use qualified electrician",
-          "Planning permission generally not needed for roof-mounted panels on existing buildings",
-          "Ground-mounted systems may need planning consent if over 9m² or in protected areas",
-          "Consider G-Code requirements if grid-tie backup is planned for future",
-          "Maintain 1.5m clearance from boundaries for fire safety access",
-          "Battery storage must comply with fire safety regulations (especially lithium)"
-        ]}
-      />
-
-      {/* Regulatory Notes */}
-      <InfoBox
-        title="Standards & Regulations"
-        icon={<Lightbulb className="h-5 w-5 text-elec-yellow" />}
-        points={[
-          "BS 7671 (18th Edition) wiring regulations apply to all DC and AC circuits",
-          "MCS installation standards recommended for quality assurance",
-          "BS EN 62446 testing and commissioning standards for PV systems",
-          "Building Regulations Part P notification required for electrical work",
-          "Consider future grid connection - install G99 compliant equipment",
-          "Regular PAT testing recommended for portable equipment connected to system"
-        ]}
-        as="section"
-      />
+      <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
+        <div className="flex items-start gap-2">
+          <Info className="h-4 w-4 text-green-400 mt-0.5 shrink-0" />
+          <p className="text-sm text-green-200">
+            <strong>Off-grid sizing:</strong> Allow 20-30% margin for UK weather variability. LiFePO4 batteries offer 80% DoD vs 50% for AGM.
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

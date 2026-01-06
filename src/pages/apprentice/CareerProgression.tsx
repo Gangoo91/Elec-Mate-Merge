@@ -271,7 +271,8 @@ const CareerProgression = () => {
                   </Button>
                   <Button
                     size="sm"
-                    className="flex-1 sm:flex-initial bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+                    variant="accent"
+                    className="flex-1 sm:flex-initial"
                     onClick={() => setActiveSection("courses")}
                   >
                     Find Courses

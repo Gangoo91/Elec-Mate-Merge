@@ -1,21 +1,33 @@
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
-import { Separator } from "@/components/ui/separator";
-import { Car, Calculator, RotateCcw, Plus, Trash2, Info, Zap } from "lucide-react";
-import { ResultCard } from "@/components/ui/result-card";
+import { Badge } from "@/components/ui/badge";
+import { Car, Info, BookOpen, ChevronDown, AlertTriangle, Plus, Trash2, Zap } from "lucide-react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { cn } from "@/lib/utils";
+import {
+  CalculatorCard,
+  CalculatorInputGrid,
+  CalculatorInput,
+  CalculatorSelect,
+  CalculatorActions,
+  CalculatorResult,
+  ResultValue,
+  ResultsGrid,
+  CALCULATOR_CONFIG,
+} from "@/components/calculators/shared";
 import { useToast } from "@/hooks/use-toast";
 import { calculateEVSELoad, type ChargingPoint, type CalculationInputs, type CalculationResult } from "@/lib/evse-calculations";
 import { CHARGER_TYPES, EARTHING_SYSTEMS, DIVERSITY_FACTORS } from "@/lib/ev-constants";
 
 const EVSELoadCalculator = () => {
+  const config = CALCULATOR_CONFIG['ev_storage'];
   const { toast } = useToast();
-  
-  // Form state
+
   const [chargingPoints, setChargingPoints] = useState<ChargingPoint[]>([]);
-  const [quantityInputs, setQuantityInputs] = useState<string[]>([]); // Buffer for quantity editing
+  const [quantityInputs, setQuantityInputs] = useState<string[]>([]);
   const [supplyVoltage, setSupplyVoltage] = useState('415');
   const [earthingSystem, setEarthingSystem] = useState('tn-c-s');
   const [availableCapacity, setAvailableCapacity] = useState('100');
@@ -24,18 +36,33 @@ const EVSELoadCalculator = () => {
   const [powerFactor, setPowerFactor] = useState('0.95');
   const [result, setResult] = useState<CalculationResult | null>(null);
 
+  const [showRegs, setShowRegs] = useState(false);
+  const [showGuidance, setShowGuidance] = useState(false);
+
+  const chargerOptions = Object.entries(CHARGER_TYPES).map(([key, charger]) => ({
+    value: key,
+    label: charger.label
+  }));
+
+  const earthingOptions = Object.entries(EARTHING_SYSTEMS).map(([key, system]) => ({
+    value: key,
+    label: system.label
+  }));
+
+  const diversityOptions = Object.entries(DIVERSITY_FACTORS).map(([key, factor]) => ({
+    value: key,
+    label: `${factor.label} (${(factor.value * 100).toFixed(0)}%)`
+  }));
+
   const addChargingPoint = () => {
-    const newPoint: ChargingPoint = {
-      chargerType: '7kw-ac', // Fixed to match actual key
-      quantity: 1
-    };
+    const newPoint: ChargingPoint = { chargerType: '7kw-ac', quantity: 1 };
     setChargingPoints([...chargingPoints, newPoint]);
-    setQuantityInputs([...quantityInputs, '1']); // Add corresponding quantity input
+    setQuantityInputs([...quantityInputs, '1']);
   };
 
   const removeChargingPoint = (index: number) => {
     setChargingPoints(chargingPoints.filter((_, i) => i !== index));
-    setQuantityInputs(quantityInputs.filter((_, i) => i !== index)); // Remove corresponding quantity input
+    setQuantityInputs(quantityInputs.filter((_, i) => i !== index));
   };
 
   const updateChargingPoint = (index: number, field: keyof ChargingPoint, value: string | number) => {
@@ -46,11 +73,7 @@ const EVSELoadCalculator = () => {
 
   const handleCalculate = () => {
     if (chargingPoints.length === 0) {
-      toast({
-        title: "No Charging Points",
-        description: "Please add at least one charging point before calculating.",
-        variant: "destructive"
-      });
+      toast({ title: "No Charging Points", description: "Add at least one charging point.", variant: "destructive" });
       return;
     }
 
@@ -63,27 +86,18 @@ const EVSELoadCalculator = () => {
       diversityScenario,
       powerFactor: parseFloat(powerFactor)
     };
-    
+
     try {
       const calculations = calculateEVSELoad(inputs);
       setResult(calculations);
-      toast({
-        title: "Calculation Complete",
-        description: "EVSE load calculations have been completed successfully."
-      });
     } catch (error) {
-      console.error('Calculation error:', error);
-      toast({
-        title: "Calculation Error",
-        description: error instanceof Error ? error.message : "An error occurred during calculation.",
-        variant: "destructive"
-      });
+      toast({ title: "Calculation Error", description: error instanceof Error ? error.message : "An error occurred.", variant: "destructive" });
     }
   };
 
   const reset = () => {
     setChargingPoints([]);
-    setQuantityInputs([]); // Reset quantity inputs buffer
+    setQuantityInputs([]);
     setSupplyVoltage('415');
     setEarthingSystem('tn-c-s');
     setAvailableCapacity('100');
@@ -93,322 +107,271 @@ const EVSELoadCalculator = () => {
     setResult(null);
   };
 
+  const getTotalPoints = () => chargingPoints.reduce((sum, cp) => sum + cp.quantity, 0);
+
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
-      <CardHeader>
-        <div className="flex items-center gap-2">
-          <Car className="h-5 w-5 text-elec-yellow" />
-          <CardTitle>EVSE Load Calculator</CardTitle>
-        </div>
-        <CardDescription>
-          Calculate electrical load and infrastructure requirements for Electric Vehicle Supply Equipment installations.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="p-4 lg:p-6">
-        <div className="space-y-6">
-          {/* Charging Points Section */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium text-elec-yellow flex items-center gap-2">
-              <Car className="h-5 w-5" />
-              Charging Points
-            </h3>
-            
-            <MobileButton 
-              onClick={addChargingPoint}
-              variant="elec"
-              icon={<Plus className="h-4 w-4" />}
-              className="w-full"
-            >
-              Add Charging Point
-            </MobileButton>
+    <div className="space-y-4">
+      <CalculatorCard
+        category="ev_storage"
+        title="EVSE Load Calculator"
+        description="Calculate electrical load and infrastructure requirements"
+        badge="BS 7671"
+      >
+        {/* Charging Points Section */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-medium text-white/80">Charging Points</p>
+            <Badge variant="outline" className="text-blue-400 border-blue-400/50">
+              {getTotalPoints()} point{getTotalPoints() !== 1 ? 's' : ''}
+            </Badge>
+          </div>
 
-            {chargingPoints.length > 0 && (
-              <div className="space-y-3">
-                {chargingPoints.map((point, index) => (
-                  <div key={index} className="bg-elec-dark/50 p-3 rounded-lg space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">Point {index + 1}</span>
-                      <MobileButton
-                        variant="elec-outline"
-                        size="sm"
-                        onClick={() => removeChargingPoint(index)}
-                      >
-                        <Trash2 className="h-3 w-3" />
-                      </MobileButton>
-                    </div>
-                    
-                    <MobileSelect 
-                      value={point.chargerType} 
-                      onValueChange={(value) => updateChargingPoint(index, 'chargerType', value)}
+          <button
+            onClick={addChargingPoint}
+            className="w-full p-3 rounded-xl bg-white/5 border border-white/10 hover:border-blue-500/50 hover:bg-blue-500/10 transition-colors flex items-center justify-center gap-2"
+          >
+            <Plus className="h-4 w-4 text-blue-400" />
+            <span className="text-sm font-medium text-white">Add Charging Point</span>
+          </button>
+
+          {chargingPoints.length > 0 && (
+            <div className="space-y-2">
+              {chargingPoints.map((point, index) => (
+                <div key={index} className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-white">Point {index + 1}</span>
+                    <button
+                      onClick={() => removeChargingPoint(index)}
+                      className="p-1.5 rounded-lg bg-red-500/20 hover:bg-red-500/30 transition-colors"
                     >
-                      <MobileSelectTrigger label="Charger Type">
-                        <MobileSelectValue />
-                      </MobileSelectTrigger>
-                      <MobileSelectContent>
-                        {Object.entries(CHARGER_TYPES).map(([key, charger]) => (
-                          <MobileSelectItem key={key} value={key}>
-                            {charger.label}
-                          </MobileSelectItem>
-                        ))}
-                      </MobileSelectContent>
-                    </MobileSelect>
-
-                    <MobileInput
+                      <Trash2 className="h-3.5 w-3.5 text-red-400" />
+                    </button>
+                  </div>
+                  <CalculatorInputGrid columns={2}>
+                    <CalculatorSelect
+                      label="Charger Type"
+                      value={point.chargerType}
+                      onChange={(value) => updateChargingPoint(index, 'chargerType', value)}
+                      options={chargerOptions}
+                    />
+                    <CalculatorInput
                       label="Quantity"
                       type="text"
                       inputMode="numeric"
-                      pattern="[0-9]*"
                       value={quantityInputs[index] ?? ''}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        // Allow only numeric characters
+                      onChange={(value) => {
                         if (value === '' || /^[0-9]+$/.test(value)) {
                           const updatedInputs = [...quantityInputs];
                           updatedInputs[index] = value;
                           setQuantityInputs(updatedInputs);
-                          
-                          // Update charging point if valid number
                           if (value !== '' && parseInt(value) > 0) {
                             updateChargingPoint(index, 'quantity', parseInt(value));
                           }
                         }
                       }}
-                      onBlur={() => {
-                        const value = quantityInputs[index] || '';
-                        if (value === '' || parseInt(value) < 1) {
-                          const updatedInputs = [...quantityInputs];
-                          updatedInputs[index] = '1';
-                          setQuantityInputs(updatedInputs);
-                          updateChargingPoint(index, 'quantity', 1);
-                          toast({
-                            title: "Quantity Reset",
-                            description: "Quantity must be at least 1, reset to 1",
-                            variant: "default"
-                          });
-                        }
-                      }}
                       placeholder="1"
                     />
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          <Separator />
-
-          {/* Supply Details Section */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium text-elec-yellow flex items-center gap-2">
-              <Zap className="h-5 w-5" />
-              Supply & Installation Details
-            </h3>
-            
-            <div className="space-y-3">
-              <MobileInput
-                label="Supply Voltage"
-                type="text"
-                inputMode="decimal"
-                value={supplyVoltage ?? ''}
-                onChange={(e) => setSupplyVoltage(e.target.value)}
-                placeholder="415"
-                unit="V"
-              />
-
-              <MobileInput
-                label="Available Capacity"
-                type="text"
-                inputMode="decimal"
-                value={availableCapacity ?? ''}
-                onChange={(e) => setAvailableCapacity(e.target.value)}
-                placeholder="100"
-                unit="kW"
-              />
-
-              <MobileSelect value={earthingSystem} onValueChange={setEarthingSystem}>
-                <MobileSelectTrigger label="Earthing System">
-                  <MobileSelectValue />
-                </MobileSelectTrigger>
-                <MobileSelectContent>
-                  {Object.entries(EARTHING_SYSTEMS).map(([key, system]) => (
-                    <MobileSelectItem key={key} value={key}>
-                      {system.label}
-                    </MobileSelectItem>
-                  ))}
-                </MobileSelectContent>
-              </MobileSelect>
-
-              <div className="grid grid-cols-2 gap-3">
-                <MobileInput
-                  label="Cable Length"
-                  type="text"
-                  inputMode="decimal"
-                  value={cableLength ?? ''}
-                  onChange={(e) => setCableLength(e.target.value)}
-                  placeholder="50"
-                  unit="m"
-                />
-
-                <MobileInput
-                  label="Power Factor"
-                  type="text"
-                  inputMode="decimal"
-                  step="0.01"
-                  min="0.8"
-                  max="1"
-                  value={powerFactor ?? ''}
-                  onChange={(e) => setPowerFactor(e.target.value)}
-                  placeholder="0.95"
-                />
-              </div>
-
-              <MobileSelect value={diversityScenario} onValueChange={setDiversityScenario}>
-                <MobileSelectTrigger label="Diversity Scenario">
-                  <MobileSelectValue />
-                </MobileSelectTrigger>
-                <MobileSelectContent>
-                  {Object.entries(DIVERSITY_FACTORS).map(([key, factor]) => (
-                    <MobileSelectItem key={key} value={key}>
-                      {factor.label} ({(factor.value * 100).toFixed(0)}%)
-                    </MobileSelectItem>
-                  ))}
-                </MobileSelectContent>
-              </MobileSelect>
-            </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex gap-2">
-            <MobileButton 
-              onClick={handleCalculate}
-              variant="elec"
-              disabled={chargingPoints.length === 0}
-              icon={<Calculator className="h-4 w-4" />}
-              className="flex-1"
-            >
-              Calculate Load
-            </MobileButton>
-            <MobileButton variant="elec-outline" onClick={reset}>
-              <RotateCcw className="h-4 w-4" />
-            </MobileButton>
-          </div>
-
-          {/* Results Section */}
-          {result && (
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-elec-yellow">Results</h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <ResultCard
-                  title="Total Nominal Power"
-                  value={result.totalNominalPower}
-                  unit="kW"
-                  subtitle="Connected load without diversity"
-                />
-                
-                <ResultCard
-                  title="Total Diversified Load"
-                  value={result.totalDiversifiedLoad}
-                  unit="kW"
-                  subtitle="Load with diversity factor applied"
-                />
-                
-                <ResultCard
-                  title="Design Current"
-                  value={result.designCurrent}
-                  unit="A"
-                  subtitle="Per phase current requirement"
-                />
-                
-                <ResultCard
-                  title="Cable Size"
-                  value={result.selectedCable || "Not determined"}
-                  subtitle="Minimum conductor size"
-                />
-                
-                <ResultCard
-                  title="Protection Device"
-                  value={result.selectedProtection || "Not determined"}
-                  subtitle="Required protection"
-                />
-                
-                <ResultCard
-                  title="Voltage Drop"
-                  value={result.voltageDropPercent}
-                  unit="%"
-                  subtitle="At maximum load"
-                  status={result.voltageDropPercent <= 5 ? "success" : "error"}
-                />
-                
-                <ResultCard
-                  title="Available Headroom"
-                  value={result.headroom}
-                  unit="A"
-                  subtitle="Remaining capacity"
-                  status={result.headroom > 0 ? "success" : "warning"}
-                />
-              </div>
-
-              {/* Enhanced Feedback Section */}
-              <div className="space-y-4">
-                {/* Recommendations */}
-                {result.recommendations.length > 0 && (
-                  <div className="space-y-2">
-                    <h4 className="font-medium text-elec-yellow">Recommendations</h4>
-                    <div className="bg-elec-dark/30 p-3 rounded-lg">
-                      <ul className="space-y-1 text-sm">
-                        {result.recommendations.map((rec: string, index: number) => (
-                          <li key={index} className="flex items-start gap-2">
-                            <Info className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                            {rec}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                )}
-
-                {/* Why This Matters */}
-                <div className="space-y-2">
-                  <h4 className="font-medium text-elec-yellow">Why This Matters</h4>
-                  <div className="bg-elec-dark/30 p-3 rounded-lg text-sm space-y-2">
-                    <p><strong>Design Current:</strong> Determines cable sizing and protection device rating. Too low = potential overload, too high = oversized installation.</p>
-                    <p><strong>Voltage Drop:</strong> Must stay below 5% (BS 7671). Excessive drop causes inefficient charging and potential equipment damage.</p>
-                    <p><strong>Diversity Factor:</strong> Accounts for realistic usage patterns. Multiple chargers rarely operate at full load simultaneously.</p>
-                    {result.headroom < 10 && (
-                      <p className="text-orange-400"><strong>Low Headroom Warning:</strong> Consider future expansion needs and load growth.</p>
-                    )}
-                  </div>
+                  </CalculatorInputGrid>
                 </div>
-
-                {/* Regulations & Guidance */}
-                <div className="space-y-2">
-                  <h4 className="font-medium text-elec-yellow">Regulations & Guidance</h4>
-                  <div className="bg-elec-dark/30 p-3 rounded-lg text-sm space-y-2">
-                    <p><strong>BS 7671 (18th Edition):</strong> Section 722 covers EV charging installations. RCD protection mandatory (30mA Type A minimum).</p>
-                    <p><strong>IET Code of Practice:</strong> Provides specific guidance on EV supply equipment installation and earthing arrangements.</p>
-                    <p><strong>Earthing System:</strong> {EARTHING_SYSTEMS[earthingSystem]?.description} - {EARTHING_SYSTEMS[earthingSystem]?.considerations}</p>
-                    {result.compliance.voltageDrop === false && (
-                      <p className="text-red-400"><strong>Voltage Drop Compliance:</strong> Exceeds 5% limit. Consider larger cable or reduced cable length.</p>
-                    )}
-                    {result.selectedProtection?.includes('DC') && (
-                      <p className="text-blue-400"><strong>DC Protection:</strong> Required for installations &gt;32A. Consult manufacturer specifications.</p>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {!result && chargingPoints.length === 0 && (
-            <div className="text-center py-8 text-muted-foreground">
-              <Car className="h-12 w-12 mx-auto mb-4 opacity-50" />
-              <p>Add charging points to calculate EVSE load requirements</p>
+              ))}
             </div>
           )}
         </div>
-      </CardContent>
-    </Card>
+
+        {/* Supply Details */}
+        <div className="space-y-3">
+          <p className="text-sm font-medium text-white/80">Supply & Installation</p>
+          <CalculatorInputGrid columns={2}>
+            <CalculatorInput
+              label="Supply Voltage"
+              unit="V"
+              type="text"
+              inputMode="decimal"
+              value={supplyVoltage}
+              onChange={setSupplyVoltage}
+              placeholder="415"
+            />
+            <CalculatorInput
+              label="Available Capacity"
+              unit="kW"
+              type="text"
+              inputMode="decimal"
+              value={availableCapacity}
+              onChange={setAvailableCapacity}
+              placeholder="100"
+            />
+            <CalculatorSelect
+              label="Earthing System"
+              value={earthingSystem}
+              onChange={setEarthingSystem}
+              options={earthingOptions}
+            />
+            <CalculatorSelect
+              label="Diversity Scenario"
+              value={diversityScenario}
+              onChange={setDiversityScenario}
+              options={diversityOptions}
+            />
+            <CalculatorInput
+              label="Cable Length"
+              unit="m"
+              type="text"
+              inputMode="decimal"
+              value={cableLength}
+              onChange={setCableLength}
+              placeholder="50"
+            />
+            <CalculatorInput
+              label="Power Factor"
+              type="text"
+              inputMode="decimal"
+              value={powerFactor}
+              onChange={setPowerFactor}
+              placeholder="0.95"
+            />
+          </CalculatorInputGrid>
+        </div>
+
+        <CalculatorActions
+          category="ev_storage"
+          onCalculate={handleCalculate}
+          onReset={reset}
+          isDisabled={chargingPoints.length === 0}
+          calculateLabel="Calculate Load"
+        />
+      </CalculatorCard>
+
+      {result && (
+        <div className="space-y-4 animate-fade-in">
+          {/* Main Results */}
+          <CalculatorResult category="ev_storage">
+            <div className="flex items-center justify-between pb-3 border-b border-white/10">
+              <span className="text-sm text-white/60">EVSE Load Analysis</span>
+              <Badge variant="outline" className={cn(
+                result.compliance.voltageDrop ? "text-green-400 border-green-400/50" : "text-red-400 border-red-400/50"
+              )}>
+                {result.compliance.voltageDrop ? "Compliant" : "Review Required"}
+              </Badge>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 py-4">
+              <div className="text-center">
+                <p className="text-sm text-white/60 mb-1">Diversified Load</p>
+                <div className="text-3xl font-bold bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}>
+                  {result.totalDiversifiedLoad.toFixed(1)}
+                </div>
+                <p className="text-xs text-white/50">kW</p>
+              </div>
+              <div className="text-center">
+                <p className="text-sm text-white/60 mb-1">Design Current</p>
+                <div className="text-3xl font-bold bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}>
+                  {result.designCurrent.toFixed(0)}
+                </div>
+                <p className="text-xs text-white/50">A</p>
+              </div>
+            </div>
+
+            <ResultsGrid columns={2}>
+              <ResultValue label="Nominal Load" value={result.totalNominalPower.toFixed(0)} unit="kW" category="ev_storage" size="sm" />
+              <ResultValue label="Voltage Drop" value={result.voltageDropPercent.toFixed(1)} unit="%" category="ev_storage" size="sm" />
+              <ResultValue label="Cable Size" value={result.selectedCable || "TBD"} category="ev_storage" size="sm" />
+              <ResultValue label="Protection" value={result.selectedProtection || "TBD"} category="ev_storage" size="sm" />
+            </ResultsGrid>
+
+            <div className="mt-4 p-3 rounded-lg bg-white/5">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-white/60">Headroom Available</span>
+                <span className={cn("text-lg font-bold", result.headroom > 10 ? "text-green-400" : result.headroom > 0 ? "text-amber-400" : "text-red-400")}>
+                  {result.headroom.toFixed(0)}A
+                </span>
+              </div>
+            </div>
+          </CalculatorResult>
+
+          {/* Recommendations */}
+          {result.recommendations.length > 0 && (
+            <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/30">
+              <div className="flex items-center gap-2 mb-2">
+                <Info className="h-4 w-4 text-blue-400" />
+                <p className="text-sm font-medium text-blue-300">Recommendations</p>
+              </div>
+              <ul className="space-y-1 text-sm text-blue-200/80">
+                {result.recommendations.map((rec, idx) => (
+                  <li key={idx}>• {rec}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Low Headroom Warning */}
+          {result.headroom < 10 && (
+            <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/30">
+              <div className="flex items-start gap-2">
+                <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
+                <p className="text-sm text-orange-200">
+                  <strong>Low Headroom:</strong> Consider future expansion and load growth requirements.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* What This Means */}
+          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
+              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                <div className="flex items-center gap-3">
+                  <Info className="h-4 w-4 text-blue-400" />
+                  <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
+                </div>
+                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showGuidance && "rotate-180")} />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="p-4 pt-0 space-y-2 text-sm text-blue-200/80">
+                <p><strong className="text-blue-300">Design Current:</strong> Determines cable sizing and protection device rating. {result.designCurrent > 100 ? "High current - consider 3-phase supply." : "Standard residential/commercial load."}</p>
+                <p><strong className="text-blue-300">Voltage Drop:</strong> Must stay below 5% (BS 7671). {result.voltageDropPercent > 5 ? "EXCESSIVE - increase cable size or reduce run length." : "Within acceptable limits."}</p>
+                <p><strong className="text-blue-300">Diversity Factor:</strong> Accounts for realistic usage patterns. Multiple chargers rarely operate at full load simultaneously.</p>
+              </CollapsibleContent>
+            </div>
+          </Collapsible>
+
+          {/* BS 7671 Regulations */}
+          <Collapsible open={showRegs} onOpenChange={setShowRegs}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
+              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                <div className="flex items-center gap-3">
+                  <BookOpen className="h-4 w-4 text-amber-400" />
+                  <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 Requirements</span>
+                </div>
+                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showRegs && "rotate-180")} />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="p-4 pt-0 space-y-2 text-sm text-amber-200/80">
+                <p><strong className="text-amber-300">Section 722:</strong> EV charging installations - RCD protection mandatory (30mA Type A minimum)</p>
+                <p><strong className="text-amber-300">IET Code of Practice:</strong> EV supply equipment installation and earthing arrangements</p>
+                <p><strong className="text-amber-300">Earthing:</strong> {EARTHING_SYSTEMS[earthingSystem as keyof typeof EARTHING_SYSTEMS]?.description}</p>
+                {result.selectedProtection?.includes('DC') && (
+                  <p className="text-blue-300"><strong>DC Protection:</strong> Required for installations &gt;32A. Consult manufacturer specifications.</p>
+                )}
+              </CollapsibleContent>
+            </div>
+          </Collapsible>
+        </div>
+      )}
+
+      {!result && chargingPoints.length === 0 && (
+        <div className="p-6 rounded-xl bg-white/5 border border-white/10 text-center">
+          <Car className="h-10 w-10 mx-auto mb-3 text-white/30" />
+          <p className="text-sm text-white/50">Add charging points to calculate EVSE load requirements</p>
+        </div>
+      )}
+
+      <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
+        <div className="flex items-start gap-2">
+          <Zap className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
+          <p className="text-sm text-blue-200">
+            <strong>Professional design required.</strong> Verify calculations with supply authority for commercial installations.
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };
 

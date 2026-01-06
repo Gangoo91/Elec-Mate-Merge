@@ -1,11 +1,38 @@
 import VisualAnalysisRedesigned from "@/components/electrician-tools/ai-tools/VisualAnalysisRedesigned";
-import { ArrowLeft, Camera } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link, useParams } from "react-router-dom";
+import { ArrowLeft, Camera, Search, Wrench, AlertTriangle, CheckCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { AnalysisMode } from "@/components/electrician-tools/ai-tools/ModeSelector";
 
+// Mode configuration for dynamic page title/icon
+const modeConfig: Record<string, { title: string; subtitle: string; icon: typeof Camera; gradient: string }> = {
+  'component-identify': {
+    title: 'Component Identification',
+    subtitle: 'Identify specs & BS 7671 requirements',
+    icon: Search,
+    gradient: 'from-blue-500/20 to-blue-500/10'
+  },
+  'wiring-instruction': {
+    title: 'Wiring Instructions',
+    subtitle: 'Step-by-step UK wiring guide',
+    icon: Wrench,
+    gradient: 'from-emerald-500/20 to-green-500/10'
+  },
+  'fault-diagnosis': {
+    title: 'Fault Diagnosis',
+    subtitle: 'Identify issues & rectification steps',
+    icon: AlertTriangle,
+    gradient: 'from-orange-500/20 to-red-500/10'
+  },
+  'installation-verify': {
+    title: 'Installation Verification',
+    subtitle: 'BS 7671 compliance check',
+    icon: CheckCircle,
+    gradient: 'from-cyan-500/20 to-teal-500/10'
+  }
+};
+
 const VisualAnalysisPage = () => {
-  const params = useParams();
+  const navigate = useNavigate();
   const pathSegments = window.location.pathname.split('/');
   const modeParam = pathSegments[pathSegments.length - 1];
 
@@ -18,34 +45,35 @@ const VisualAnalysisPage = () => {
   };
 
   const mode = modeMap[modeParam] || 'fault_diagnosis';
+  const config = modeConfig[modeParam] || modeConfig['fault-diagnosis'];
+  const IconComponent = config.icon;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark">
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 pb-safe">
-        {/* Header */}
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/20">
-              <Camera className="h-6 w-6 sm:h-7 sm:w-7 text-rose-400" />
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Visual Analysis
-              </h1>
-              <p className="text-sm text-white/60">AI-powered image analysis</p>
-            </div>
+    <div className="min-h-screen bg-background pb-24">
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
+        <div className="px-4 py-3">
+          <button
+            onClick={() => navigate('/electrician-tools/ai-tooling')}
+            className="flex items-center gap-2 text-white active:opacity-70 transition-opacity touch-manipulation"
+          >
+            <ArrowLeft className="h-5 w-5" />
+            <span className="text-sm font-medium">AI Tools</span>
+          </button>
+        </div>
+      </div>
+
+      <main className="px-4 py-4 space-y-5">
+        {/* Hero Header */}
+        <div className="flex items-center gap-3">
+          <div className={`p-3 rounded-xl bg-gradient-to-br ${config.gradient} border border-white/10`}>
+            <IconComponent className="h-6 w-6 text-white" />
           </div>
-          <Link to="/electrician-tools/ai-tooling">
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to AI Tools
-            </Button>
-          </Link>
-        </header>
+          <div>
+            <h1 className="text-xl font-bold text-white">{config.title}</h1>
+            <p className="text-sm text-white/50">{config.subtitle}</p>
+          </div>
+        </div>
 
         {/* Content */}
         <VisualAnalysisRedesigned initialMode={mode} />

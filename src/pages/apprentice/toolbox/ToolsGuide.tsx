@@ -1,5 +1,5 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -24,7 +24,7 @@ const ToolsGuide = () => {
         <p className="text-muted-foreground text-center max-w-2xl mb-4">
           Comprehensive guidance for building your professional electrician toolkit - from essential tools to smart purchasing decisions and quality assessment
         </p>
-        <BackButton customUrl="/apprentice/on-job-tools" label="Back to On-Job Tools" />
+        <SmartBackButton />
       </div>
 
       <Alert className="border-blue-500/50 bg-blue-500/10">

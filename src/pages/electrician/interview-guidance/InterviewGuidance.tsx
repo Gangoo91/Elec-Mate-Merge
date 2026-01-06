@@ -1,16 +1,15 @@
-import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
-import { 
-  MessageCircle, 
-  FileText, 
-  Users, 
-  Lightbulb, 
-  HandHeart, 
-  AlertTriangle, 
-  CheckCircle2, 
-  Clock, 
+import {
+  MessageCircle,
+  FileText,
+  Users,
+  Lightbulb,
+  HandHeart,
+  AlertTriangle,
+  CheckCircle2,
+  Clock,
   Target,
   Award,
   User,
@@ -20,11 +19,9 @@ import {
   Calendar,
   TrendingUp,
   Shield,
-  Zap,
-  ArrowLeft
+  Zap
 } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 
 export default function InterviewGuidance() {
   const interviewGuides = [
@@ -366,12 +363,7 @@ export default function InterviewGuidance() {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center gap-2">
-        <Link to="/electrician/job-vacancies">
-          <Button variant="ghost" size="sm" className="gap-1">
-            <ArrowLeft className="h-4 w-4" />
-            <span>Back</span>
-          </Button>
-        </Link>
+        <SmartBackButton />
         <div className="flex items-center gap-3">
           <MessageCircle className="h-6 w-6 text-elec-yellow" />
           <h1 className="text-2xl font-bold">Interview Guidance</h1>

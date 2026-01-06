@@ -151,11 +151,11 @@ const Module3Section1_3: React.FC = () => {
   } as const;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.1
@@ -168,29 +168,29 @@ const Module3Section1_3: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Shield className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Shield className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">Section 3.1.3</Badge>
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">Section 3.1.3</Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">Singles in Conduit or Trunking</h1>
-          <p className="text-muted-foreground">Understanding single-core cable systems in protective containment for commercial and industrial applications.</p>
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">Singles in Conduit or Trunking</h1>
+          <p className="text-white">Understanding single-core cable systems in protective containment for commercial and industrial applications.</p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Individual cables (L, N, E) run through protective conduit or trunking for mechanical protection.</li>
                 <li>Steel conduit offers maximum protection; PVC conduit is cost-effective; trunking allows easy access.</li>
                 <li>Excellent for commercial/industrial where cables need protection and future modifications.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Individual insulated cables within protective metal or plastic containment.</li>
                 <li><strong>Use:</strong> Commercial buildings, workshops, areas needing mechanical protection or easy access.</li>
@@ -201,9 +201,9 @@ const Module3Section1_3: React.FC = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Describe the construction of a singles-in-conduit or trunking wiring system.</li>
             <li>Identify the differences between PVC and steel containment systems.</li>
             <li>Select appropriate applications for singles in conduit or trunking installations.</li>
@@ -214,17 +214,17 @@ const Module3Section1_3: React.FC = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* System Components */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2"><Wrench className="w-5 h-5" /> Components of the System</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><Wrench className="w-5 h-5" /> Components of the System</h3>
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <p><strong>Description:</strong> Single-core cables run individually through protective containment, providing excellent mechanical protection and installation flexibility.</p>
               
               <div className="space-y-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Single-Core Cables</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>Construction:</strong> Individual PVC-insulated copper conductors</li>
@@ -236,7 +236,7 @@ const Module3Section1_3: React.FC = () => {
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-                  <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                  <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                     <p className="font-medium mb-2">PVC Conduit</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Lightweight and non-corrosive</li>
@@ -246,7 +246,7 @@ const Module3Section1_3: React.FC = () => {
                       <li>Requires separate earth conductor</li>
                     </ul>
                   </div>
-                  <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                     <p className="font-medium mb-2">Steel Conduit</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Superior mechanical protection</li>
@@ -256,7 +256,7 @@ const Module3Section1_3: React.FC = () => {
                       <li>Higher material and labour costs</li>
                     </ul>
                   </div>
-                  <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                     <p className="font-medium mb-2">Trunking Systems</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Rectangular cross-section</li>
@@ -282,10 +282,10 @@ const Module3Section1_3: React.FC = () => {
 
           {/* Advantages and Applications */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2"><CheckCircle2 className="w-5 h-5" /> Advantages and Applications</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><CheckCircle2 className="w-5 h-5" /> Advantages and Applications</h3>
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                   <p className="font-medium mb-2">Key Advantages</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Excellent mechanical protection, especially steel conduit</li>
@@ -296,7 +296,7 @@ const Module3Section1_3: React.FC = () => {
                     <li>Good fire resistance properties</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-4 bg-card border border-amber-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
                   <p className="font-medium mb-2">Limitations</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Slower installation compared to surface methods</li>
@@ -340,14 +340,14 @@ const Module3Section1_3: React.FC = () => {
 
           {/* Installation Best Practices */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2"><Settings className="w-5 h-5" /> Installation Best Practices</h3>
-            <div className="space-y-6 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><Settings className="w-5 h-5" /> Installation Best Practices</h3>
+            <div className="space-y-6 text-xs sm:text-sm text-white">
               
               {/* Planning and Routing */}
               <div className="space-y-4">
-                <h4 className="font-medium text-foreground">Planning and Routing</h4>
+                <h4 className="font-medium text-white">Planning and Routing</h4>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                     <p className="font-medium mb-2">Route Planning</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Minimise the number of bends in long runs</li>
@@ -357,7 +357,7 @@ const Module3Section1_3: React.FC = () => {
                       <li>Maintain minimum bending radii for containment</li>
                     </ul>
                   </div>
-                  <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                  <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                     <p className="font-medium mb-2">Support Requirements</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li><strong>PVC conduit:</strong> Support every 750mm (20mm), 1m (25mm+)</li>
@@ -372,12 +372,12 @@ const Module3Section1_3: React.FC = () => {
 
               {/* Cable Fill Calculations */}
               <div className="space-y-4">
-                <h4 className="font-medium text-foreground flex items-center gap-2">
+                <h4 className="font-medium text-white flex items-center gap-2">
                   <Calculator className="w-4 h-4" />
                   Cable Fill Calculations
                 </h4>
                 <div className="space-y-3">
-                  <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                     <p className="font-medium mb-2">Fill Capacity Guidelines</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li><strong>General rule:</strong> Maximum 45% fill of internal cross-sectional area</li>
@@ -388,7 +388,7 @@ const Module3Section1_3: React.FC = () => {
                     </ul>
                   </div>
 
-                  <div className="rounded-lg p-4 bg-card border border-cyan-400/30">
+                  <div className="rounded-lg p-4 bg-transparent border border-cyan-400/30">
                     <p className="font-medium mb-2">Practical Fill Example</p>
                     <p className="mb-2">50mm × 50mm trunking (internal area = 2500mm²):</p>
                     <ul className="list-disc pl-4 space-y-1">
@@ -403,12 +403,12 @@ const Module3Section1_3: React.FC = () => {
 
               {/* Cable Pulling Techniques */}
               <div className="space-y-4">
-                <h4 className="font-medium text-foreground flex items-center gap-2">
+                <h4 className="font-medium text-white flex items-center gap-2">
                   <Cable className="w-4 h-4" />
                   Cable Pulling Techniques
                 </h4>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                     <p className="font-medium mb-2">Preparation and Tools</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li><strong>Draw tape:</strong> Use proper electrical draw tape</li>
@@ -448,9 +448,9 @@ const Module3Section1_3: React.FC = () => {
 
               {/* Termination and Testing */}
               <div className="space-y-4">
-                <h4 className="font-medium text-foreground">Termination and Testing</h4>
+                <h4 className="font-medium text-white">Termination and Testing</h4>
                 <div className="space-y-3">
-                  <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                  <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                     <p className="font-medium mb-2">Termination Requirements</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Use appropriate cable glands for containment entry</li>
@@ -461,7 +461,7 @@ const Module3Section1_3: React.FC = () => {
                     </ul>
                   </div>
 
-                  <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                     <p className="font-medium mb-2">Testing Requirements</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li><strong>Continuity:</strong> Test all conductors end-to-end</li>
@@ -478,11 +478,11 @@ const Module3Section1_3: React.FC = () => {
         </Card>
 
         {/* Real-world scenario */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-world scenario: Manufacturing Plant Upgrade</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <div className="flex items-start gap-3 bg-card border-l-4 border-emerald-400 p-4 rounded">
-              <Factory className="w-5 h-5 text-emerald-400 mt-0.5" />
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-world scenario: Manufacturing Plant Upgrade</h2>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <div className="flex items-start gap-3 border-l-4 border-emerald-400 p-4 rounded">
+              <Factory className="w-5 h-5 text-elec-yellow mt-0.5" />
               <div>
                 <p className="font-medium mb-2">The Challenge</p>
                 <p>A manufacturing plant needed to replace aging surface-wiring that was frequently damaged by machinery operations:</p>
@@ -499,7 +499,7 @@ const Module3Section1_3: React.FC = () => {
             <div className="space-y-3">
               <p className="font-medium">Singles in Steel Conduit Solution:</p>
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                   <p className="font-medium mb-2">System Selection</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>Steel conduit:</strong> 25mm and 32mm heavy gauge</li>
@@ -508,7 +508,7 @@ const Module3Section1_3: React.FC = () => {
                     <li><strong>Protection:</strong> Steel conduit acts as additional earth path</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Installation Benefits</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>Impact resistance:</strong> Withstands machinery contact</li>
@@ -520,7 +520,7 @@ const Module3Section1_3: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-background/20 border-l-4 border-emerald-500 p-4 rounded">
+            <div className="bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded">
               <p className="font-medium mb-2">Results and Benefits:</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Zero electrical damage incidents in first 18 months</li>
@@ -534,10 +534,10 @@ const Module3Section1_3: React.FC = () => {
         </Card>
 
         {/* Common mistakes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Common Mistakes and How to Avoid Them</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Common Mistakes and How to Avoid Them</h2>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 flex items-center gap-2"><AlertTriangle className="w-4 h-4" /> Installation Errors</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li><strong>Wrong:</strong> Exceeding cable fill capacity in containment</li>
@@ -547,7 +547,7 @@ const Module3Section1_3: React.FC = () => {
               </ul>
             </div>
 
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 flex items-center gap-2"><AlertTriangle className="w-4 h-4" /> Cable Pulling Mistakes</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li><strong>Wrong:</strong> Pulling cables around sharp bends without guides</li>
@@ -557,7 +557,7 @@ const Module3Section1_3: React.FC = () => {
               </ul>
             </div>
 
-            <div className="rounded-lg p-4 bg-emerald-500/10 border border-emerald-500/30">
+            <div className="rounded-lg p-4 bg-elec-yellow/10 border border-elec-yellow/30">
               <p className="font-medium mb-2 flex items-center gap-2"><CheckCircle2 className="w-4 h-4" /> Best Practice Tips</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li>Always test earth continuity in steel conduit systems</li>
@@ -571,10 +571,10 @@ const Module3Section1_3: React.FC = () => {
         </Card>
 
         {/* BS 7671 Context */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">BS 7671 Context and Compliance</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">BS 7671 Context and Compliance</h2>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2">Cable Selection and Installation (Chapter 52)</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li>Singles must be contained in appropriate enclosures</li>
@@ -584,7 +584,7 @@ const Module3Section1_3: React.FC = () => {
               </ul>
             </div>
 
-            <div className="rounded-lg p-4 bg-card border border-green-400/30">
+            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
               <p className="font-medium mb-2">Support and Fixing (Section 522)</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li>Containment must be adequately supported at prescribed intervals</li>
@@ -594,7 +594,7 @@ const Module3Section1_3: React.FC = () => {
               </ul>
             </div>
 
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2">Earthing and Bonding (Chapter 54)</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li>Steel conduit can form part of the earthing system when properly bonded</li>
@@ -604,29 +604,29 @@ const Module3Section1_3: React.FC = () => {
               </ul>
             </div>
 
-            <div className="flex items-start gap-3 bg-background/20 border-l-4 border-emerald-500 p-4 rounded mt-4" role="alert">
-              <AlertTriangle className="w-5 h-5 text-emerald-400 mt-0.5" />
-              <p className="text-foreground">Isolate, lock-off and prove dead before work. Follow manufacturer instructions and BS 7671 requirements for all singles installations.</p>
+            <div className="flex items-start gap-3 bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded mt-4" role="alert">
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5" />
+              <p className="text-white">Isolate, lock-off and prove dead before work. Follow manufacturer instructions and BS 7671 requirements for all singles installations.</p>
             </div>
           </div>
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">FAQs</h2>
-          <ul className="space-y-3 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
+          <ul className="space-y-3 text-xs sm:text-sm text-white">
             {faqs.map((f, i) => (
-              <li key={i} className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
+              <li key={i} className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
                 <p className="font-medium mb-1">{f.q}</p>
-                <p className="text-muted-foreground">{f.a}</p>
+                <p className="text-white">{f.a}</p>
               </li>
             ))}
           </ul>
         </Card>
 
         {/* Quick Knowledge Check */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quick Knowledge Check</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick Knowledge Check</h2>
           <div className="space-y-6">
             {quickCheckQuestions.map((q, index) => (
               <InlineCheck
@@ -642,13 +642,13 @@ const Module3Section1_3: React.FC = () => {
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-16 p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Section Quiz</h2>
+        <Card className="mb-16 p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Section Quiz</h2>
           <Quiz questions={quizQuestions as any} title="Singles in Conduit and Trunking Knowledge Check" />
         </Card>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="../1-2">
               <ArrowLeft className="w-4 h-4 mr-2" />

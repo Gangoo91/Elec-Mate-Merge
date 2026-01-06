@@ -270,11 +270,11 @@ const Module5Section4_4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 4
@@ -288,38 +288,38 @@ const Module5Section4_4 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Recycle className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Recycle className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 5.4.4
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Managing Wastage and Shortages
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Master material management strategies to minimise wastage, prevent shortages, and promote sustainable practices in electrical installations.
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-6">
-            <Target className="w-6 h-6 text-foreground" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Introduction</h2>
+            <Target className="w-6 h-6 text-white" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Introduction</h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Plan accurately to prevent both wastage and shortages.</li>
                 <li>Store materials properly to prevent damage and loss.</li>
                 <li>Monitor stock levels daily and implement sustainable practices.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Over-ordering, poor storage, or material shortages affecting work.</li>
                 <li><strong>Use:</strong> Stock logs, proper storage systems, and waste reduction strategies.</li>
@@ -330,42 +330,42 @@ const Module5Section4_4 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this subsection, you will be able to:</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-white mb-4">By the end of this subsection, you will be able to:</p>
           
           <div className="grid md:grid-cols-2 gap-4 mb-6">
             <div className="space-y-3">
-              <h4 className="font-medium text-foreground">Wastage Management</h4>
-              <ul className="space-y-2 text-muted-foreground text-sm">
+              <h4 className="font-medium text-white">Wastage Management</h4>
+              <ul className="space-y-2 text-white text-sm">
                 <li className="flex items-start">
-                  <span className="text-emerald-400 mr-2 font-bold">•</span>
+                  <span className="text-elec-yellow mr-2 font-bold">•</span>
                   Identify causes of material wastage in electrical installation
                 </li>
                 <li className="flex items-start">
-                  <span className="text-emerald-400 mr-2 font-bold">•</span>
+                  <span className="text-elec-yellow mr-2 font-bold">•</span>
                   Apply strategies to minimise wastage through proper planning and handling
                 </li>
                 <li className="flex items-start">
-                  <span className="text-emerald-400 mr-2 font-bold">•</span>
+                  <span className="text-elec-yellow mr-2 font-bold">•</span>
                   Promote sustainable working practices in electrical installation
                 </li>
               </ul>
             </div>
             
             <div className="space-y-3">
-              <h4 className="font-medium text-foreground">Shortage Prevention</h4>
-              <ul className="space-y-2 text-muted-foreground text-sm">
+              <h4 className="font-medium text-white">Shortage Prevention</h4>
+              <ul className="space-y-2 text-white text-sm">
                 <li className="flex items-start">
-                  <span className="text-emerald-400 mr-2 font-bold">•</span>
+                  <span className="text-elec-yellow mr-2 font-bold">•</span>
                   Recognise the impact of shortages on project timelines and budgets
                 </li>
                 <li className="flex items-start">
-                  <span className="text-emerald-400 mr-2 font-bold">•</span>
+                  <span className="text-elec-yellow mr-2 font-bold">•</span>
                   Implement systems for monitoring and managing stock
                 </li>
                 <li className="flex items-start">
-                  <span className="text-emerald-400 mr-2 font-bold">•</span>
+                  <span className="text-elec-yellow mr-2 font-bold">•</span>
                   Coordinate with suppliers to prevent delivery delays
                 </li>
               </ul>
@@ -373,33 +373,33 @@ const Module5Section4_4 = () => {
           </div>
           
           <div className="bg-amber-50 dark:bg-amber-900/20 p-3 rounded border border-amber-200 dark:border-amber-800">
-            <p className="text-xs sm:text-sm text-foreground">
+            <p className="text-xs sm:text-sm text-white">
               <strong>Impact on Business:</strong> Effective material management reduces project costs by 10-15% and improves sustainability through waste reduction and recycling practices.
             </p>
           </div>
         </Card>
 
         {/* Learning Point 1: Causes of Wastage */}
-        <Card className="mb-6 p-6 bg-card border-border/20">
+        <Card className="mb-6 p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-4">
-            <CheckCircle className="w-6 h-6 text-emerald-400" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Learning Point 1: Causes of Wastage</h2>
+            <CheckCircle className="w-6 h-6 text-elec-yellow" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Learning Point 1: Causes of Wastage</h2>
           </div>
           
-          <p className="text-base text-foreground mb-4">
+          <p className="text-base text-white mb-4">
             Material wastage is a significant cost driver in electrical projects. Understanding the common causes helps implement effective prevention strategies and maintain project profitability.
           </p>
           
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 mb-6">
             <div className="space-y-4">
-              <h3 className="text-lg font-medium text-foreground">Common Wastage Causes</h3>
+              <h3 className="text-lg font-medium text-white">Common Wastage Causes</h3>
               
               <div className="p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
-                <p className="font-medium text-red-700 dark:text-emerald-400 mb-2">Over-ordering Materials</p>
-                <p className="text-xs sm:text-sm text-foreground mb-2">
+                <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Over-ordering Materials</p>
+                <p className="text-xs sm:text-sm text-white mb-2">
                   Ordering excessive quantities due to poor planning or fear of shortages.
                 </p>
-                <ul className="text-xs sm:text-sm text-foreground list-disc pl-4">
+                <ul className="text-xs sm:text-sm text-white list-disc pl-4">
                   <li>Inaccurate quantity calculations</li>
                   <li>Excessive safety margins</li>
                   <li>Poor communication with planning team</li>
@@ -407,11 +407,11 @@ const Module5Section4_4 = () => {
               </div>
               
               <div className="p-4 rounded-lg bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800">
-                <p className="font-medium text-orange-700 dark:text-emerald-400 mb-2">Poor Storage Conditions</p>
-                <p className="text-xs sm:text-sm text-foreground mb-2">
+                <p className="font-medium text-orange-700 dark:text-elec-yellow mb-2">Poor Storage Conditions</p>
+                <p className="text-xs sm:text-sm text-white mb-2">
                   Improper storage leading to material damage and deterioration.
                 </p>
-                <ul className="text-xs sm:text-sm text-foreground list-disc pl-4">
+                <ul className="text-xs sm:text-sm text-white list-disc pl-4">
                   <li>Damp conditions damaging cables</li>
                   <li>UV exposure degrading materials</li>
                   <li>Physical damage from poor handling</li>
@@ -420,11 +420,11 @@ const Module5Section4_4 = () => {
             </div>
             
             <div className="space-y-4">
-              <h3 className="text-lg font-medium text-foreground">Installation Errors</h3>
+              <h3 className="text-lg font-medium text-white">Installation Errors</h3>
               
               <div className="p-4 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
                 <p className="font-medium text-amber-700 dark:text-amber-400 mb-2">Measuring and Cutting Errors</p>
-                <ul className="text-xs sm:text-sm text-foreground list-disc pl-4 space-y-1">
+                <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Incorrect measurements leading to unusable pieces</li>
                   <li>Poor cutting techniques causing damage</li>
                   <li>Not allowing for termination lengths</li>
@@ -433,8 +433,8 @@ const Module5Section4_4 = () => {
               </div>
               
               <div className="p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800">
-                <p className="font-medium text-purple-700 dark:text-emerald-400 mb-2">Transport and Handling</p>
-                <ul className="text-xs sm:text-sm text-foreground list-disc pl-4 space-y-1">
+                <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Transport and Handling</p>
+                <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Damage during site transport</li>
                   <li>Improper lifting and moving techniques</li>
                   <li>Inadequate protection during installation</li>
@@ -446,10 +446,10 @@ const Module5Section4_4 = () => {
           
           <div className="bg-emerald-50 dark:bg-blue-900/20 p-4 rounded border border-blue-200 dark:border-blue-800">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-emerald-400 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2">Cost Impact</p>
-                <p className="text-xs sm:text-sm text-foreground">
+                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Cost Impact</p>
+                <p className="text-xs sm:text-sm text-white">
                   Material wastage typically accounts for 5-10% of total project costs. Effective management can reduce this to 2-3%, providing significant savings on larger projects.
                 </p>
               </div>
@@ -458,9 +458,9 @@ const Module5Section4_4 = () => {
         </Card>
 
         {/* Quick Check for Learning Point 1 */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Quick Check - Causes of Wastage</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">Quick Check - Causes of Wastage</h3>
             <InlineCheck
               id="wastage-causes-check"
               question={quickCheckQuestions[0].question}
@@ -472,26 +472,26 @@ const Module5Section4_4 = () => {
         </Card>
 
         {/* Learning Point 2: Causes of Shortages */}
-        <Card className="mb-6 p-6 bg-card border-border/20">
+        <Card className="mb-6 p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-4">
-            <CheckCircle className="w-6 h-6 text-emerald-400" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Learning Point 2: Causes of Shortages</h2>
+            <CheckCircle className="w-6 h-6 text-elec-yellow" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Learning Point 2: Causes of Shortages</h2>
           </div>
           
-          <p className="text-base text-foreground mb-4">
+          <p className="text-base text-white mb-4">
             Material shortages can halt work completely, causing costly delays and affecting project schedules. Understanding shortage causes enables better planning and prevention strategies.
           </p>
           
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 mb-6">
             <div className="space-y-4">
-              <h3 className="text-lg font-medium text-foreground">Planning Issues</h3>
+              <h3 className="text-lg font-medium text-white">Planning Issues</h3>
               
               <div className="p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
-                <p className="font-medium text-red-700 dark:text-emerald-400 mb-2">Underestimating Requirements</p>
-                <p className="text-xs sm:text-sm text-foreground mb-2">
+                <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Underestimating Requirements</p>
+                <p className="text-xs sm:text-sm text-white mb-2">
                   Insufficient material orders due to poor planning or calculation errors.
                 </p>
-                <ul className="text-xs sm:text-sm text-foreground list-disc pl-4">
+                <ul className="text-xs sm:text-sm text-white list-disc pl-4">
                   <li>Incomplete drawing reviews</li>
                   <li>Missing allowances for testing</li>
                   <li>Underestimating cable routes</li>
@@ -500,11 +500,11 @@ const Module5Section4_4 = () => {
               </div>
               
               <div className="p-4 rounded-lg bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800">
-                <p className="font-medium text-orange-700 dark:text-emerald-400 mb-2">Communication Failures</p>
-                <p className="text-xs sm:text-sm text-foreground mb-2">
+                <p className="font-medium text-orange-700 dark:text-elec-yellow mb-2">Communication Failures</p>
+                <p className="text-xs sm:text-sm text-white mb-2">
                   Poor coordination between teams leading to missed requirements.
                 </p>
-                <ul className="text-xs sm:text-sm text-foreground list-disc pl-4">
+                <ul className="text-xs sm:text-sm text-white list-disc pl-4">
                   <li>Site team and stores miscommunication</li>
                   <li>Design changes not communicated</li>
                   <li>Delivery schedule conflicts</li>
@@ -513,11 +513,11 @@ const Module5Section4_4 = () => {
             </div>
             
             <div className="space-y-4">
-              <h3 className="text-lg font-medium text-foreground">External Factors</h3>
+              <h3 className="text-lg font-medium text-white">External Factors</h3>
               
               <div className="p-4 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
                 <p className="font-medium text-amber-700 dark:text-amber-400 mb-2">Supplier Delays</p>
-                <ul className="text-xs sm:text-sm text-foreground list-disc pl-4 space-y-1">
+                <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Manufacturing delays for specialist items</li>
                   <li>Transport and logistics problems</li>
                   <li>Stock availability issues</li>
@@ -526,8 +526,8 @@ const Module5Section4_4 = () => {
               </div>
               
               <div className="p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800">
-                <p className="font-medium text-purple-700 dark:text-emerald-400 mb-2">Site Issues</p>
-                <ul className="text-xs sm:text-sm text-foreground list-disc pl-4 space-y-1">
+                <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Site Issues</p>
+                <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Theft or misplacement of materials</li>
                   <li>Damage requiring replacement</li>
                   <li>Unexpected site conditions</li>
@@ -539,10 +539,10 @@ const Module5Section4_4 = () => {
           
           <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded border border-red-200 dark:border-red-800">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-red-700 dark:text-emerald-400 mb-2">Impact of Shortages</p>
-                <p className="text-xs sm:text-sm text-foreground">
+                <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Impact of Shortages</p>
+                <p className="text-xs sm:text-sm text-white">
                   Material shortages can delay projects by days or weeks, incurring penalty costs and affecting team productivity. Emergency procurement often costs 20-30% more than planned orders.
                 </p>
               </div>
@@ -551,9 +551,9 @@ const Module5Section4_4 = () => {
         </Card>
 
         {/* Quick Check for Learning Point 2 */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Quick Check - Causes of Shortages</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">Quick Check - Causes of Shortages</h3>
             <InlineCheck
               id="shortage-causes-check"
               question={quickCheckQuestions[1].question}
@@ -565,23 +565,23 @@ const Module5Section4_4 = () => {
         </Card>
 
         {/* Learning Point 3: Effects of Wastage and Shortages */}
-        <Card className="mb-6 p-6 bg-card border-border/20">
+        <Card className="mb-6 p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-4">
-            <CheckCircle className="w-6 h-6 text-emerald-400" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Learning Point 3: Effects of Wastage and Shortages</h2>
+            <CheckCircle className="w-6 h-6 text-elec-yellow" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Learning Point 3: Effects of Wastage and Shortages</h2>
           </div>
           
-          <p className="text-base text-foreground mb-4">
+          <p className="text-base text-white mb-4">
             Both wastage and shortages have significant impacts on project success, affecting costs, timelines, safety, and environmental sustainability. Understanding these effects motivates better material management practices.
           </p>
           
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 mb-6">
             <div className="space-y-4">
-              <h3 className="text-lg font-medium text-foreground">Financial Impact</h3>
+              <h3 className="text-lg font-medium text-white">Financial Impact</h3>
               
               <div className="p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 h-fit">
-                <p className="font-medium text-red-700 dark:text-emerald-400 mb-2">Increased Project Costs</p>
-                <ul className="text-xs sm:text-sm text-foreground list-disc pl-4 space-y-1">
+                <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Increased Project Costs</p>
+                <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Direct cost of wasted materials</li>
                   <li>Emergency procurement at premium prices</li>
                   <li>Labour costs during delays</li>
@@ -591,8 +591,8 @@ const Module5Section4_4 = () => {
               </div>
               
               <div className="p-4 rounded-lg bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 h-fit">
-                <p className="font-medium text-orange-700 dark:text-emerald-400 mb-2">Timeline Impact</p>
-                <ul className="text-xs sm:text-sm text-foreground list-disc pl-4 space-y-1">
+                <p className="font-medium text-orange-700 dark:text-elec-yellow mb-2">Timeline Impact</p>
+                <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Work delays while waiting for replacements</li>
                   <li>Rescheduling of other trades</li>
                   <li>Penalty clauses for late completion</li>
@@ -602,11 +602,11 @@ const Module5Section4_4 = () => {
             </div>
             
             <div className="space-y-4">
-              <h3 className="text-lg font-medium text-foreground">Quality and Safety</h3>
+              <h3 className="text-lg font-medium text-white">Quality and Safety</h3>
               
               <div className="p-4 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 h-fit">
                 <p className="font-medium text-amber-700 dark:text-amber-400 mb-2">Safety Concerns</p>
-                <ul className="text-xs sm:text-sm text-foreground list-disc pl-4 space-y-1">
+                <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Risk of using damaged materials</li>
                   <li>Pressure to use inappropriate alternatives</li>
                   <li>Rushed installations due to delays</li>
@@ -616,7 +616,7 @@ const Module5Section4_4 = () => {
               
               <div className="p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 h-fit">
                 <p className="font-medium text-green-700 dark:text-green-400 mb-2">Environmental Impact</p>
-                <ul className="text-xs sm:text-sm text-foreground list-disc pl-4 space-y-1">
+                <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Unnecessary waste going to landfill</li>
                   <li>Additional carbon footprint from waste</li>
                   <li>Resource depletion from over-consumption</li>
@@ -628,10 +628,10 @@ const Module5Section4_4 = () => {
           
           <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded border border-purple-200 dark:border-purple-800">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-purple-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-purple-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-purple-700 dark:text-emerald-400 mb-2">Business Reputation</p>
-                <p className="text-xs sm:text-sm text-foreground">
+                <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Business Reputation</p>
+                <p className="text-xs sm:text-sm text-white">
                   Poor material management affects client relationships, subcontractor partnerships, and company reputation. Environmental responsibility is increasingly important for winning contracts.
                 </p>
               </div>
@@ -640,9 +640,9 @@ const Module5Section4_4 = () => {
         </Card>
 
         {/* Quick Check for Learning Point 3 */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Quick Check - Effects of Wastage and Shortages</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">Quick Check - Effects of Wastage and Shortages</h3>
             <InlineCheck
               id="effects-check"
               question={quickCheckQuestions[2].question}
@@ -654,26 +654,26 @@ const Module5Section4_4 = () => {
         </Card>
 
         {/* Learning Point 4: Strategies to Reduce Wastage */}
-        <Card className="mb-6 p-6 bg-card border-border/20">
+        <Card className="mb-6 p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-4">
-            <CheckCircle className="w-6 h-6 text-emerald-400" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Learning Point 4: Strategies to Reduce Wastage</h2>
+            <CheckCircle className="w-6 h-6 text-elec-yellow" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Learning Point 4: Strategies to Reduce Wastage</h2>
           </div>
           
-          <p className="text-base text-foreground mb-4">
+          <p className="text-base text-white mb-4">
             Implementing effective wastage reduction strategies requires systematic approaches to planning, handling, storage, and team training. These strategies deliver immediate cost savings and environmental benefits.
           </p>
           
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 mb-6">
             <div className="space-y-4">
-              <h3 className="text-lg font-medium text-foreground">Planning and Measurement</h3>
+              <h3 className="text-lg font-medium text-white">Planning and Measurement</h3>
               
               <div className="p-4 rounded-lg bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 h-fit">
-                <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2">Measure and Cut Carefully</p>
-                <p className="text-xs sm:text-sm text-foreground mb-2">
+                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Measure and Cut Carefully</p>
+                <p className="text-xs sm:text-sm text-white mb-2">
                   Accurate measurement and cutting techniques prevent costly errors.
                 </p>
-                <ul className="text-xs sm:text-sm text-foreground list-disc pl-4">
+                <ul className="text-xs sm:text-sm text-white list-disc pl-4">
                   <li>Use proper measuring tools and techniques</li>
                   <li>Double-check measurements before cutting</li>
                   <li>Allow for termination and connection lengths</li>
@@ -683,10 +683,10 @@ const Module5Section4_4 = () => {
               
               <div className="p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 h-fit">
                 <p className="font-medium text-green-700 dark:text-green-400 mb-2">Proper Storage</p>
-                <p className="text-xs sm:text-sm text-foreground mb-2">
+                <p className="text-xs sm:text-sm text-white mb-2">
                   Protect materials from damage through appropriate storage conditions.
                 </p>
-                <ul className="text-xs sm:text-sm text-foreground list-disc pl-4">
+                <ul className="text-xs sm:text-sm text-white list-disc pl-4">
                   <li>Dry, secure, ventilated storage areas</li>
                   <li>Pallets and racking for organisation</li>
                   <li>Protection from weather and UV</li>
@@ -696,11 +696,11 @@ const Module5Section4_4 = () => {
             </div>
             
             <div className="space-y-4">
-              <h3 className="text-lg font-medium text-foreground">Reuse and Training</h3>
+              <h3 className="text-lg font-medium text-white">Reuse and Training</h3>
               
               <div className="p-4 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 h-fit">
                 <p className="font-medium text-amber-700 dark:text-amber-400 mb-2">Reuse Offcuts</p>
-                <ul className="text-xs sm:text-sm text-foreground list-disc pl-4 space-y-1">
+                <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Keep offcuts in organised storage for future use</li>
                   <li>Label offcuts with length and specification</li>
                   <li>Use offcuts for short runs and connections</li>
@@ -709,8 +709,8 @@ const Module5Section4_4 = () => {
               </div>
               
               <div className="p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 h-fit">
-                <p className="font-medium text-purple-700 dark:text-emerald-400 mb-2">Staff Training</p>
-                <ul className="text-xs sm:text-sm text-foreground list-disc pl-4 space-y-1">
+                <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Staff Training</p>
+                <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Correct handling and installation techniques</li>
                   <li>Measurement and cutting best practices</li>
                   <li>Waste awareness and reduction mindset</li>
@@ -725,7 +725,7 @@ const Module5Section4_4 = () => {
               <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
               <div>
                 <p className="font-medium text-green-700 dark:text-green-400 mb-2">Success Metric</p>
-                <p className="text-xs sm:text-sm text-foreground">
+                <p className="text-xs sm:text-sm text-white">
                   Well-implemented waste reduction strategies can reduce material waste from 8-10% to 2-3% of total material costs, providing significant savings on medium to large projects.
                 </p>
               </div>
@@ -734,9 +734,9 @@ const Module5Section4_4 = () => {
         </Card>
 
         {/* Quick Check for Learning Point 4 */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Quick Check - Waste Reduction Strategies</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">Quick Check - Waste Reduction Strategies</h3>
             <InlineCheck
               id="waste-reduction-check"
               question={quickCheckQuestions[3].question}
@@ -748,26 +748,26 @@ const Module5Section4_4 = () => {
         </Card>
 
         {/* Learning Point 5: Strategies to Prevent Shortages */}
-        <Card className="mb-6 p-6 bg-card border-border/20">
+        <Card className="mb-6 p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-4">
-            <CheckCircle className="w-6 h-6 text-emerald-400" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Learning Point 5: Strategies to Prevent Shortages</h2>
+            <CheckCircle className="w-6 h-6 text-elec-yellow" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Learning Point 5: Strategies to Prevent Shortages</h2>
           </div>
           
-          <p className="text-base text-foreground mb-4">
+          <p className="text-base text-white mb-4">
             Preventing material shortages requires proactive planning, systematic monitoring, and strong supplier relationships. These strategies ensure continuous work flow and prevent costly delays.
           </p>
           
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 mb-6">
             <div className="space-y-4">
-              <h3 className="text-lg font-medium text-foreground">Planning and Estimation</h3>
+              <h3 className="text-lg font-medium text-white">Planning and Estimation</h3>
               
               <div className="p-4 rounded-lg bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 h-fit">
-                <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2">Accurate Estimation</p>
-                <p className="text-xs sm:text-sm text-foreground mb-2">
+                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Accurate Estimation</p>
+                <p className="text-xs sm:text-sm text-white mb-2">
                   Thorough planning during the estimation stage prevents shortages.
                 </p>
-                <ul className="text-xs sm:text-sm text-foreground list-disc pl-4">
+                <ul className="text-xs sm:text-sm text-white list-disc pl-4">
                   <li>Detailed review of drawings and specifications</li>
                   <li>Include allowances for testing and commissioning</li>
                   <li>Account for waste factors and cutting losses</li>
@@ -777,10 +777,10 @@ const Module5Section4_4 = () => {
               
               <div className="p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 h-fit">
                 <p className="font-medium text-green-700 dark:text-green-400 mb-2">Stock Monitoring</p>
-                <p className="text-xs sm:text-sm text-foreground mb-2">
+                <p className="text-xs sm:text-sm text-white mb-2">
                   Regular monitoring prevents unexpected shortages.
                 </p>
-                <ul className="text-xs sm:text-sm text-foreground list-disc pl-4">
+                <ul className="text-xs sm:text-sm text-white list-disc pl-4">
                   <li>Keep a stock log updated daily</li>
                   <li>Set reorder points for critical items</li>
                   <li>Track usage rates and consumption patterns</li>
@@ -790,11 +790,11 @@ const Module5Section4_4 = () => {
             </div>
             
             <div className="space-y-4">
-              <h3 className="text-lg font-medium text-foreground">Supplier Management</h3>
+              <h3 className="text-lg font-medium text-white">Supplier Management</h3>
               
               <div className="p-4 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 h-fit">
                 <p className="font-medium text-amber-700 dark:text-amber-400 mb-2">Supplier Coordination</p>
-                <ul className="text-xs sm:text-sm text-foreground list-disc pl-4 space-y-1">
+                <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Establish clear delivery schedules</li>
                   <li>Understand lead times for different items</li>
                   <li>Maintain backup supplier relationships</li>
@@ -803,8 +803,8 @@ const Module5Section4_4 = () => {
               </div>
               
               <div className="p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 h-fit">
-                <p className="font-medium text-purple-700 dark:text-emerald-400 mb-2">Buffer Stock Strategy</p>
-                <ul className="text-xs sm:text-sm text-foreground list-disc pl-4 space-y-1">
+                <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Buffer Stock Strategy</p>
+                <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Hold small buffer stock of critical items</li>
                   <li>Focus on items with long lead times</li>
                   <li>Balance shortage risk with storage costs</li>
@@ -816,10 +816,10 @@ const Module5Section4_4 = () => {
           
           <div className="bg-emerald-50 dark:bg-blue-900/20 p-4 rounded border border-blue-200 dark:border-blue-800">
             <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-emerald-400 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2">Best Practice</p>
-                <p className="text-xs sm:text-sm text-foreground">
+                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Best Practice</p>
+                <p className="text-xs sm:text-sm text-white">
                   Implement weekly material planning meetings with the site team to review upcoming requirements, check stock levels, and coordinate deliveries. This prevents most shortage-related delays.
                 </p>
               </div>
@@ -828,9 +828,9 @@ const Module5Section4_4 = () => {
         </Card>
 
         {/* Quick Check for Learning Point 5 */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Quick Check - Shortage Prevention</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">Quick Check - Shortage Prevention</h3>
             <InlineCheck
               id="shortage-prevention-check"
               question={quickCheckQuestions[4].question}
@@ -842,26 +842,26 @@ const Module5Section4_4 = () => {
         </Card>
 
         {/* Learning Point 6: Sustainable Practices */}
-        <Card className="mb-6 p-6 bg-card border-border/20">
+        <Card className="mb-6 p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-4">
-            <CheckCircle className="w-6 h-6 text-emerald-400" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Learning Point 6: Sustainable Practices</h2>
+            <CheckCircle className="w-6 h-6 text-elec-yellow" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Learning Point 6: Sustainable Practices</h2>
           </div>
           
-          <p className="text-base text-foreground mb-4">
+          <p className="text-base text-white mb-4">
             Sustainable material management reduces environmental impact while often providing cost benefits. Modern electrical contractors increasingly focus on sustainability to meet client requirements and environmental regulations.
           </p>
           
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 mb-6">
             <div className="space-y-4">
-              <h3 className="text-lg font-medium text-foreground">Recycling and Reuse</h3>
+              <h3 className="text-lg font-medium text-white">Recycling and Reuse</h3>
               
               <div className="p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 h-fit">
                 <p className="font-medium text-green-700 dark:text-green-400 mb-2">Material Recycling</p>
-                <p className="text-xs sm:text-sm text-foreground mb-2">
+                <p className="text-xs sm:text-sm text-white mb-2">
                   Separate and recycle materials to reduce environmental impact.
                 </p>
-                <ul className="text-xs sm:text-sm text-foreground list-disc pl-4">
+                <ul className="text-xs sm:text-sm text-white list-disc pl-4">
                   <li>Copper and aluminium cable offcuts</li>
                   <li>Steel and aluminium trunking and conduit</li>
                   <li>Plastic cable drums and packaging</li>
@@ -870,11 +870,11 @@ const Module5Section4_4 = () => {
               </div>
               
               <div className="p-4 rounded-lg bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 h-fit">
-                <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2">Return Policies</p>
-                <p className="text-xs sm:text-sm text-foreground mb-2">
+                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Return Policies</p>
+                <p className="text-xs sm:text-sm text-white mb-2">
                   Work with suppliers to return unused materials.
                 </p>
-                <ul className="text-xs sm:text-sm text-foreground list-disc pl-4">
+                <ul className="text-xs sm:text-sm text-white list-disc pl-4">
                   <li>Negotiate return agreements with suppliers</li>
                   <li>Maintain original packaging where possible</li>
                   <li>Process returns promptly to avoid restocking fees</li>
@@ -884,11 +884,11 @@ const Module5Section4_4 = () => {
             </div>
             
             <div className="space-y-4">
-              <h3 className="text-lg font-medium text-foreground">Waste Reduction</h3>
+              <h3 className="text-lg font-medium text-white">Waste Reduction</h3>
               
               <div className="p-4 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 h-fit">
                 <p className="font-medium text-amber-700 dark:text-amber-400 mb-2">Packaging Reduction</p>
-                <ul className="text-xs sm:text-sm text-foreground list-disc pl-4 space-y-1">
+                <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Bulk ordering to reduce packaging waste</li>
                   <li>Reusable packaging systems with suppliers</li>
                   <li>Minimise single-use packaging materials</li>
@@ -897,8 +897,8 @@ const Module5Section4_4 = () => {
               </div>
               
               <div className="p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 h-fit">
-                <p className="font-medium text-purple-700 dark:text-emerald-400 mb-2">Digital Documentation</p>
-                <ul className="text-xs sm:text-sm text-foreground list-disc pl-4 space-y-1">
+                <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Digital Documentation</p>
+                <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                   <li>Electronic delivery notes and invoices</li>
                   <li>Digital stock management systems</li>
                   <li>Paperless material tracking</li>
@@ -913,7 +913,7 @@ const Module5Section4_4 = () => {
               <Recycle className="w-5 h-5 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
               <div>
                 <p className="font-medium text-green-700 dark:text-green-400 mb-2">Business Advantage</p>
-                <p className="text-xs sm:text-sm text-foreground">
+                <p className="text-xs sm:text-sm text-white">
                   Many clients now require sustainability credentials for major contracts. Demonstrating effective waste management and recycling practices can provide competitive advantages in tendering.
                 </p>
               </div>
@@ -922,9 +922,9 @@ const Module5Section4_4 = () => {
         </Card>
 
         {/* Quick Check for Learning Point 6 */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Quick Check - Sustainable Practices</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">Quick Check - Sustainable Practices</h3>
             <InlineCheck
               id="sustainable-practices-check"
               question={quickCheckQuestions[5].question}
@@ -936,22 +936,22 @@ const Module5Section4_4 = () => {
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">Real-World Example</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Real-World Example</h2>
           
           <div className="border border-border/30 rounded-lg p-4">
-            <h3 className="text-lg font-semibold text-foreground mb-3">Housing Project Material Damage</h3>
+            <h3 className="text-lg font-semibold text-white mb-3">Housing Project Material Damage</h3>
             
             <div className="grid md:grid-cols-2 gap-4 mb-4">
               <div className="space-y-3">
-                <h4 className="font-medium text-foreground">The Problem:</h4>
-                <p className="text-sm text-muted-foreground">
+                <h4 className="font-medium text-white">The Problem:</h4>
+                <p className="text-sm text-white">
                   On a 50-unit housing project, cable reels were stored in an uncovered area during autumn. Heavy rain and humidity caused moisture ingress into several cable drums, making the cables unsafe for installation.
                 </p>
                 
                 <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                  <p className="text-sm font-medium text-red-700 dark:text-emerald-400 mb-1">Consequences:</p>
-                  <ul className="text-xs sm:text-sm text-foreground list-disc pl-4">
+                  <p className="text-sm font-medium text-red-700 dark:text-elec-yellow mb-1">Consequences:</p>
+                  <ul className="text-xs sm:text-sm text-white list-disc pl-4">
                     <li>£12,000 worth of cable unusable</li>
                     <li>2-week project delay</li>
                     <li>Emergency procurement at 25% premium</li>
@@ -961,14 +961,14 @@ const Module5Section4_4 = () => {
               </div>
               
               <div className="space-y-3">
-                <h4 className="font-medium text-foreground">The Solution:</h4>
-                <p className="text-sm text-muted-foreground">
+                <h4 className="font-medium text-white">The Solution:</h4>
+                <p className="text-sm text-white">
                   Investment in a lockable, weatherproof storage container with proper ventilation and racking systems would have prevented the damage completely.
                 </p>
                 
                 <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded border border-green-200 dark:border-green-800">
                   <p className="text-sm font-medium text-green-700 dark:text-green-400 mb-1">Investment vs Savings:</p>
-                  <ul className="text-xs sm:text-sm text-foreground list-disc pl-4">
+                  <ul className="text-xs sm:text-sm text-white list-disc pl-4">
                     <li>Storage container cost: £2,500</li>
                     <li>Total loss prevented: £15,000+</li>
                     <li>Return on investment: 600%</li>
@@ -979,7 +979,7 @@ const Module5Section4_4 = () => {
             </div>
             
             <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-              <p className="text-xs sm:text-sm text-foreground">
+              <p className="text-xs sm:text-sm text-white">
                 <strong>Lesson Learned:</strong> Proper material storage is an investment, not a cost. The project manager now includes weatherproof storage in all project planning and has avoided similar losses on subsequent projects.
               </p>
             </div>
@@ -987,58 +987,58 @@ const Module5Section4_4 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">Practical Guidance</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-4">
             {practicalGuidance.map((guidance, index) => (
               <div key={index} className="border-l-4 border-elec-blue pl-4 bg-emerald-50/50 dark:bg-blue-900/10 py-3 rounded-r">
-                <p className="text-muted-foreground">{guidance}</p>
+                <p className="text-white">{guidance}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border border-border/20 rounded-lg p-4">
-                <h3 className="font-medium text-foreground mb-2">{faq.question}</h3>
-                <p className="text-muted-foreground text-sm">{faq.answer}</p>
+              <div key={index} className="border border-white/10 rounded-lg p-4">
+                <h3 className="font-medium text-white mb-2">{faq.question}</h3>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-6">
-            <BookOpen className="w-6 h-6 text-emerald-400" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Pocket Guide - Managing Wastage & Shortages</h2>
+            <BookOpen className="w-6 h-6 text-elec-yellow" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Pocket Guide - Managing Wastage & Shortages</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-4">
             {pocketGuideItems.map((item, index) => (
               <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-muted/30">
-                <CheckCircle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                <p className="text-xs sm:text-sm text-foreground">{item}</p>
+                <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <p className="text-xs sm:text-sm text-white">{item}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Knowledge Check Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-6">
-            <Clipboard className="w-6 h-6 text-emerald-400" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Knowledge Check</h2>
+            <Clipboard className="w-6 h-6 text-elec-yellow" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Knowledge Check</h2>
           </div>
           <Quiz questions={quizQuestions} />
         </Card>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
-          <Button variant="outline" className="bg-background" asChild>
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
+          <Button variant="outline" className="bg-[#121212]" asChild>
             <Link to="../4-3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -1046,11 +1046,11 @@ const Module5Section4_4 = () => {
           </Button>
           
           <div className="text-center">
-            <p className="text-sm text-muted-foreground">Module 5, Section 4</p>
-            <p className="text-xs text-muted-foreground">4 of 6 subsections</p>
+            <p className="text-sm text-white">Module 5, Section 4</p>
+            <p className="text-xs text-white">4 of 6 subsections</p>
           </div>
           
-          <Button variant="outline" className="bg-background" asChild>
+          <Button variant="outline" className="bg-[#121212]" asChild>
             <Link to="..">
               Next
               <ArrowRight className="w-4 h-4 ml-2" />

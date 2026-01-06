@@ -2,8 +2,8 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Award, Clock, CheckCircle, Star, ExternalLink } from "lucide-react";
-import { Link } from "react-router-dom";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
+import { Award, Clock, CheckCircle, Star, ExternalLink } from "lucide-react";
 
 const Certifications = () => {
   const essentialCertifications = [
@@ -115,12 +115,7 @@ const Certifications = () => {
           <h1 className="text-3xl font-bold tracking-tight">Professional Certifications</h1>
           <p className="text-muted-foreground">Industry certifications and qualifications for electrical professionals</p>
         </div>
-        <Link to="/apprentice/professional-development" className="flex-shrink-0">
-          <Button variant="outline">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Professional Development
-          </Button>
-        </Link>
+        <SmartBackButton />
       </div>
 
       {/* Essential Certifications */}

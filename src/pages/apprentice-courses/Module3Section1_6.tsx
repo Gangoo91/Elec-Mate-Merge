@@ -108,11 +108,11 @@ const Module3Section1_6: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.1
@@ -125,29 +125,29 @@ const Module3Section1_6: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Router className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Router className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">Section 3.1.6</Badge>
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">Section 3.1.6</Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">Data, Signal, and Low Voltage Cabling</h1>
-          <p className="text-muted-foreground">Basic awareness of data networks, signal systems and extra-low voltage installations for modern buildings.</p>
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">Data, Signal, and Low Voltage Cabling</h1>
+          <p className="text-white">Basic awareness of data networks, signal systems and extra-low voltage installations for modern buildings.</p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Data, signal and ELV cables operate at much lower voltages than mains circuits.</li>
                 <li>Used for networking, alarms, CCTV, door entry, building automation and AV systems.</li>
                 <li>Must be separated from mains cables to prevent electromagnetic interference.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Small diameter cables, often with data connectors, Cat6 markings, or alarm labelling.</li>
                 <li><strong>Use:</strong> Computer networks, IP CCTV, telephone systems, doorbells, access control.</li>
@@ -158,9 +158,9 @@ const Module3Section1_6: React.FC = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Identify common types of data, signal, and low voltage cables and their applications.</li>
             <li>Understand their use in domestic, commercial, and industrial settings.</li>
             <li>Recognise the differences between these cables and standard mains power cables.</li>
@@ -170,15 +170,15 @@ const Module3Section1_6: React.FC = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Cable Types and Applications */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2"><Wrench className="w-5 h-5" /> Common Cable Types and Applications</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><Wrench className="w-5 h-5" /> Common Cable Types and Applications</h3>
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-3">Data Cables (Networking)</p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
@@ -203,7 +203,7 @@ const Module3Section1_6: React.FC = () => {
                     </ul>
                   </div>
                 </div>
-                <div className="mt-4 p-3 bg-emerald-500/10 rounded">
+                <div className="mt-4 p-3 bg-elec-yellow/10 rounded">
                   <p className="font-medium mb-2">Technical Specifications</p>
                   <div className="grid md:grid-cols-3 gap-3 text-xs">
                     <div><strong>Cat5e:</strong> 100 MHz, 1 Gbps, 100m max</div>
@@ -214,7 +214,7 @@ const Module3Section1_6: React.FC = () => {
               </div>
 
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                   <p className="font-medium mb-2">Signal Cables</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>Alarm cables:</strong> Multi-core PVC sheathed (4-8 core typical) for intruder alarms, access control, and intercoms</li>
@@ -225,7 +225,7 @@ const Module3Section1_6: React.FC = () => {
                     <li><strong>RS485/Modbus:</strong> Industrial communication protocols for building management</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Low Voltage Power Cables</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>ELV (Extra-Low Voltage):</strong> Below 50 V AC or 120 V DC for enhanced safety</li>
@@ -270,11 +270,11 @@ const Module3Section1_6: React.FC = () => {
 
           {/* Key Differences */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2"><CheckCircle2 className="w-5 h-5" /> Key Differences from Mains Cables</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><CheckCircle2 className="w-5 h-5" /> Key Differences from Mains Cables</h3>
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Physical & Electrical Characteristics</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>Conductor size:</strong> Much smaller (typically 22-26 AWG) due to low current requirements</li>
@@ -284,7 +284,7 @@ const Module3Section1_6: React.FC = () => {
                     <li><strong>Shielding options:</strong> Foil (F/UTP), braided (S/UTP), or both (S/FTP)</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Performance & Safety Requirements</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>Fire performance:</strong> LSZH (Low Smoke Zero Halogen) for escape routes</li>
@@ -296,7 +296,7 @@ const Module3Section1_6: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4 mt-4">
+              <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4 mt-4">
                 <p className="font-medium mb-3">Safety and Regulatory Differences:</p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
@@ -333,10 +333,10 @@ const Module3Section1_6: React.FC = () => {
 
           {/* Installation Considerations */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2"><Settings className="w-5 h-5" /> Installation Considerations</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><Settings className="w-5 h-5" /> Installation Considerations</h3>
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-3">Critical Separation Requirements</p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
@@ -363,7 +363,7 @@ const Module3Section1_6: React.FC = () => {
               </div>
 
               <div className="grid md:grid-cols-3 gap-3 sm:gap-4 mt-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Cable Management Systems</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>Perforated cable trays:</strong> Excellent ventilation and access</li>
@@ -374,7 +374,7 @@ const Module3Section1_6: React.FC = () => {
                     <li><strong>Overhead containment:</strong> Suspended systems in commercial buildings</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                   <p className="font-medium mb-2">Installation Standards</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>Bend radius:</strong> Minimum 4x cable diameter for Cat6 (typically 25mm)</li>
@@ -385,7 +385,7 @@ const Module3Section1_6: React.FC = () => {
                     <li><strong>Cable dressing:</strong> Neat installation for maintenance access</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Environmental Factors</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>Temperature effects:</strong> High temperatures reduce transmission distance</li>
@@ -437,8 +437,8 @@ const Module3Section1_6: React.FC = () => {
         </Card>
 
         {/* Quick Knowledge Checks */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quick knowledge checks</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick knowledge checks</h2>
           <div className="space-y-6">
             {quickCheckQuestions.map((q) => (
               <InlineCheck key={q.id} {...q} />
@@ -447,9 +447,9 @@ const Module3Section1_6: React.FC = () => {
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-8 p-6 bg-card border border-green-400/30">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-world example</h2>
-          <div className="text-xs sm:text-sm text-foreground space-y-3">
+        <Card className="mb-8 p-6 border border-green-400/30">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-world example</h2>
+          <div className="text-xs sm:text-sm text-white space-y-3">
             <p><strong>Office Refurbishment Network Performance Issues</strong></p>
             <p>
               During a major office refurbishment project, the facilities manager reported severe network 
@@ -500,13 +500,13 @@ const Module3Section1_6: React.FC = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently asked questions</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently asked questions</h2>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
             {faqs.map((faq, index) => (
               <div key={index}>
                 <p className="font-medium mb-1">{faq.q}</p>
-                <p className="text-muted-foreground">{faq.a}</p>
+                <p className="text-white">{faq.a}</p>
                 {index < faqs.length - 1 && <Separator className="mt-4" />}
               </div>
             ))}
@@ -514,15 +514,15 @@ const Module3Section1_6: React.FC = () => {
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Test your knowledge</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Test your knowledge</h2>
           <Quiz questions={quizQuestions} title="Data & Signal Cables Knowledge Test" />
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border border-border/30">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
-          <div className="text-xs sm:text-sm text-foreground space-y-3">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border border-border/30">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+          <div className="text-xs sm:text-sm text-white space-y-3">
             <p>
               Data, signal, and low voltage cables are critical for modern systems in homes, offices, 
               and industrial facilities. While they operate at safer voltages, correct selection, routing, 

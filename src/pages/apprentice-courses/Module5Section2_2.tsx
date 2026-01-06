@@ -133,11 +133,11 @@ const Module5Section2_2 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2
@@ -151,38 +151,38 @@ const Module5Section2_2 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Calculator className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Calculator className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 5.2.2
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Load Estimation and Circuit Requirements
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Master the fundamentals of calculating electrical loads and planning circuit requirements in line with BS 7671 regulations.
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-6">
-            <Target className="w-6 h-6 text-foreground" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Spot it in 30 Seconds</h2>
+            <Target className="w-6 h-6 text-white" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Load estimation = calculating electrical demand (watts/kilowatts).</li>
                 <li>Use I = P ÷ V to convert watts to amps.</li>
                 <li>Apply diversity - not all equipment runs simultaneously.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Ring final (32A, 2.5mm²), lighting (6A, 1.5mm²).</li>
                 <li><strong>Use:</strong> BS 7671 Reg 433.1/434.1 for protection.</li>
@@ -193,17 +193,17 @@ const Module5Section2_2 = () => {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <p className="text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <p className="text-base text-white">
             Correctly estimating loads and planning circuit requirements is a fundamental part of electrical design. An under-sized circuit can lead to overheating, nuisance tripping, or even fire, while over-designing circuits may waste materials and increase costs. This subsection introduces the basics of calculating loads and planning circuits in line with BS 7671 Wiring Regulations.
           </p>
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Explain the importance of load estimation.</li>
             <li>Carry out simple load calculations for circuits.</li>
             <li>Recognise diversity factors and why they are applied.</li>
@@ -213,46 +213,46 @@ const Module5Section2_2 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* What Is Load Estimation */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">1. What Is Load Estimation?</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">1. What Is Load Estimation?</h3>
+            <p className="text-base text-white mb-4">
               Load estimation involves calculating the electrical demand of an installation to ensure circuits can safely handle the expected current.
             </p>
             
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-3">Load Calculation Fundamentals</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Load Calculation Fundamentals</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Definition:</strong> Load estimation = calculating the electrical demand of an installation (in watts or kilowatts).</p>
-                        <p className="text-xs sm:text-sm text-foreground">This involves determining how much electrical energy your circuit or installation will actually use under normal and maximum demand conditions.</p>
+                        <p className="text-base text-white mb-2"><strong>Definition:</strong> Load estimation = calculating the electrical demand of an installation (in watts or kilowatts).</p>
+                        <p className="text-xs sm:text-sm text-white">This involves determining how much electrical energy your circuit or installation will actually use under normal and maximum demand conditions.</p>
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>The Basic Formula:</strong> I = P ÷ V</p>
-                        <div className="bg-background/50 p-3 rounded border mb-2">
-                          <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                        <p className="text-base text-white mb-2"><strong>The Basic Formula:</strong> I = P ÷ V</p>
+                        <div className="bg-[#121212]/50 p-3 rounded border mb-2">
+                          <ul className="text-xs sm:text-sm text-white space-y-1">
                             <li><strong>I</strong> = Current in amperes (A)</li>
                             <li><strong>P</strong> = Power in watts (W)</li>
                             <li><strong>V</strong> = Voltage in volts (V)</li>
                           </ul>
                         </div>
-                        <div className="text-xs sm:text-sm text-foreground bg-emerald-50 dark:bg-blue-900/20 p-2 rounded border">
+                        <div className="text-xs sm:text-sm text-white bg-emerald-50 dark:bg-blue-900/20 p-2 rounded border">
                           <strong>Example:</strong> 3000W immersion heater ÷ 230V = 13.04A current draw
                         </div>
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Step-by-Step Load Calculation Process:</strong></p>
-                        <ol className="text-xs sm:text-sm text-foreground ml-4 space-y-2 list-decimal">
+                        <p className="text-base text-white mb-2"><strong>Step-by-Step Load Calculation Process:</strong></p>
+                        <ol className="text-xs sm:text-sm text-white ml-4 space-y-2 list-decimal">
                           <li><strong>Inventory all equipment:</strong> List every appliance, light, and electrical device</li>
                           <li><strong>Identify power ratings:</strong> Check nameplates, specifications, or manufacturer data</li>
                           <li><strong>Calculate individual currents:</strong> Use I = P ÷ V for each item</li>
@@ -264,19 +264,19 @@ const Module5Section2_2 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Types of Electrical Loads:</strong></p>
+                        <p className="text-base text-white mb-2"><strong>Types of Electrical Loads:</strong></p>
                         <div className="grid md:grid-cols-2 gap-3">
-                          <div className="bg-background/30 p-3 rounded border">
-                            <p className="font-medium text-foreground mb-1">Resistive Loads</p>
-                            <ul className="text-xs text-foreground list-disc ml-4 space-y-1">
+                          <div className="bg-[#121212]/30 p-3 rounded border">
+                            <p className="font-medium text-white mb-1">Resistive Loads</p>
+                            <ul className="text-xs text-white list-disc ml-4 space-y-1">
                               <li>Heating elements, kettles, toasters</li>
                               <li>Incandescent lighting</li>
                               <li>Power = Voltage × Current (simple)</li>
                             </ul>
                           </div>
-                          <div className="bg-background/30 p-3 rounded border">
-                            <p className="font-medium text-foreground mb-1">Inductive Loads</p>
-                            <ul className="text-xs text-foreground list-disc ml-4 space-y-1">
+                          <div className="bg-[#121212]/30 p-3 rounded border">
+                            <p className="font-medium text-white mb-1">Inductive Loads</p>
+                            <ul className="text-xs text-white list-disc ml-4 space-y-1">
                               <li>Motors, transformers</li>
                               <li>Fluorescent lighting with ballasts</li>
                               <li>Consider power factor (0.8-0.9 typical)</li>
@@ -286,8 +286,8 @@ const Module5Section2_2 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Practical Considerations:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 space-y-1 list-disc">
+                        <p className="text-base text-white mb-2"><strong>Practical Considerations:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 space-y-1 list-disc">
                           <li><strong>Starting currents:</strong> Motors can draw 3-6 times normal current when starting</li>
                           <li><strong>Ambient temperature:</strong> Higher temperatures reduce cable capacity</li>
                           <li><strong>Installation method:</strong> Buried vs clipped direct affects current ratings</li>
@@ -298,7 +298,7 @@ const Module5Section2_2 = () => {
 
                       <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded border border-green-200 dark:border-green-800">
                         <p className="font-medium text-green-700 dark:text-green-400 mb-2">Worked Example: Small Kitchen</p>
-                        <div className="text-xs sm:text-sm text-foreground space-y-1">
+                        <div className="text-xs sm:text-sm text-white space-y-1">
                           <p><strong>Equipment:</strong></p>
                           <ul className="ml-4 list-disc space-y-1">
                             <li>3kW kettle: 3000W ÷ 230V = 13.0A</li>
@@ -332,36 +332,36 @@ const Module5Section2_2 = () => {
 
           {/* Circuit Requirements */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">2. Circuit Requirements</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">2. Circuit Requirements</h3>
+            <p className="text-base text-white mb-4">
               Circuits must be designed to handle expected loads safely whilst providing adequate protection:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
                     <p className="font-semibold text-green-600 dark:text-green-400 mb-1">Essential Circuit Design Requirements</p>
-                    <p className="text-base text-foreground mb-2"><strong>Current handling:</strong> Handle the expected current safely.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Current handling:</strong> Handle the expected current safely.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Cable current-carrying capacity must exceed maximum demand</li>
                       <li>Consider installation method and ambient temperature</li>
                       <li>Account for grouping and thermal insulation factors</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Protection:</strong> Protect cables from overload and fault current.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Protection:</strong> Protect cables from overload and fault current.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>MCB/fuse rating must protect cable but carry load</li>
                       <li>Breaking capacity adequate for prospective fault current</li>
                       <li>Discrimination between protective devices</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Voltage drop:</strong> Supply equipment without excessive voltage drop.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Voltage drop:</strong> Supply equipment without excessive voltage drop.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Maximum 3% for lighting, 5% for other uses</li>
                       <li>Consider cable length and cross-sectional area</li>
                       <li>Calculate voltage drop using mV/A/m values</li>
                     </ul>
-                    <div className="text-xs sm:text-sm text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Key principle:</strong> Circuit design must balance safety, functionality, and economy
                     </div>
                   </div>
@@ -381,31 +381,31 @@ const Module5Section2_2 = () => {
 
           {/* Diversity Factor */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">3. Diversity Factor</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">3. Diversity Factor</h3>
+            <p className="text-base text-white mb-4">
               Diversity factors recognise that not all equipment operates simultaneously, allowing for realistic load calculations:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-1">Understanding Diversity</p>
-                    <p className="text-base text-foreground mb-2"><strong>Concept:</strong> Not all equipment is used at the same time.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Understanding Diversity</p>
+                    <p className="text-base text-white mb-2"><strong>Concept:</strong> Not all equipment is used at the same time.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Reduces the assumed total load for practical design</li>
                       <li>Based on statistical analysis of usage patterns</li>
                       <li>Applied differently to various circuit types</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Typical diversity factors:</strong></p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Typical diversity factors:</strong></p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Socket outlets: 40-60% (varies by number and usage)</li>
                       <li>Lighting: 66% (some always on, some switched off)</li>
                       <li>Fixed appliances: 100% (cookers, immersion heaters)</li>
                       <li>Commercial premises: varies by building type</li>
                     </ul>
-                    <div className="text-xs sm:text-sm text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Example:</strong> In a domestic kitchen, not all appliances (kettle, oven, microwave) will run simultaneously
                     </div>
                   </div>
@@ -425,13 +425,13 @@ const Module5Section2_2 = () => {
 
           {/* Typical Circuit Examples */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">4. Typical Circuit Examples (Domestic)</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">4. Typical Circuit Examples (Domestic)</h3>
+            <p className="text-base text-white mb-4">
               Standard domestic circuits with typical ratings and cable sizes:
             </p>
             
-            <div className="bg-background/50 p-4 rounded-lg border border-border/20 mb-4">
-              <ul className="text-xs sm:text-sm text-foreground space-y-2">
+            <div className="bg-[#121212]/50 p-4 rounded-lg border border-white/10 mb-4">
+              <ul className="text-xs sm:text-sm text-white space-y-2">
                 <li><strong>Lighting circuits:</strong> 6 A MCB, 1.0/1.5 mm² cable.</li>
                 <li><strong>Ring final circuit:</strong> 32 A MCB, 2.5 mm² cable.</li>
                 <li><strong>Cooker circuit:</strong> 30/32 A MCB, 6 mm² cable.</li>
@@ -444,13 +444,13 @@ const Module5Section2_2 = () => {
 
           {/* BS 7671 Requirements */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">5. BS 7671 Requirements</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">5. BS 7671 Requirements</h3>
+            <p className="text-base text-white mb-4">
               Key regulatory requirements for circuit design and protection:
             </p>
             
-            <div className="bg-background/50 p-4 rounded-lg border border-border/20 mb-4">
-              <ul className="text-xs sm:text-sm text-foreground space-y-2">
+            <div className="bg-[#121212]/50 p-4 rounded-lg border border-white/10 mb-4">
+              <ul className="text-xs sm:text-sm text-white space-y-2">
                 <li><strong>Maximum demand:</strong> Circuits must be designed to meet maximum demand.</li>
                 <li><strong>Compatibility:</strong> Cable size, protective devices, and installation method must all be compatible.</li>
                 <li><strong>Regulation 433.1:</strong> Protection against overload.</li>
@@ -462,13 +462,13 @@ const Module5Section2_2 = () => {
 
           {/* Consequences of Poor Load Planning */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">6. Consequences of Poor Load Planning</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">6. Consequences of Poor Load Planning</h3>
+            <p className="text-base text-white mb-4">
               Poor load estimation creates serious risks and costs:
             </p>
             
             <div className="bg-card p-4 rounded-lg border border-red-200 dark:border-red-800 mb-4">
-              <ul className="text-xs sm:text-sm text-foreground space-y-2">
+              <ul className="text-xs sm:text-sm text-white space-y-2">
                 <li>• Nuisance tripping (circuit breakers constantly operating)</li>
                 <li>• Overheating cables leading to fire risk</li>
                 <li>• Appliances not working correctly due to undervoltage</li>
@@ -480,12 +480,12 @@ const Module5Section2_2 = () => {
 
           {/* Practical Guidance */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Practical Guidance</h3>
+            <h3 className="font-medium text-white mb-4">Practical Guidance</h3>
             
             <div className="space-y-4">
               <div className="bg-card p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                <p className="font-medium text-emerald-400 dark:text-emerald-400 mb-2">Step 1: Equipment Assessment</p>
-                <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                <p className="font-medium text-elec-yellow dark:text-elec-yellow mb-2">Step 1: Equipment Assessment</p>
+                <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>✅ <strong>Create equipment list:</strong> Note all appliances and their power ratings</li>
                   <li>✅ <strong>Convert to current:</strong> Use I = P ÷ V (current = power ÷ voltage)</li>
                   <li>✅ <strong>Example calculation:</strong> 2000 W heater ÷ 230 V = 8.7 A</li>
@@ -495,7 +495,7 @@ const Module5Section2_2 = () => {
               
               <div className="bg-card p-4 rounded-lg border border-green-200 dark:border-green-800">
                 <p className="font-medium text-green-600 dark:text-green-400 mb-2">Step 2: Apply Diversity</p>
-                <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>✅ <strong>Research usage patterns:</strong> Understand how equipment is actually used</li>
                   <li>✅ <strong>Apply appropriate factors:</strong> Use recognised diversity factors for different load types</li>
                   <li>✅ <strong>Conservative approach:</strong> Don't underestimate demand - allow safety margins</li>
@@ -504,8 +504,8 @@ const Module5Section2_2 = () => {
               </div>
               
               <div className="bg-card p-4 rounded-lg border border-purple-200 dark:border-purple-800">
-                <p className="font-medium text-purple-600 dark:text-emerald-400 mb-2">Step 3: Future Planning</p>
-                <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                <p className="font-medium text-purple-600 dark:text-elec-yellow mb-2">Step 3: Future Planning</p>
+                <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>✅ <strong>EV charging provision:</strong> Consider 32A supply for future electric vehicle charging</li>
                   <li>✅ <strong>Heat pump readiness:</strong> Allow for potential heating system upgrades</li>
                   <li>✅ <strong>Smart home technology:</strong> Plan for IoT devices and home automation</li>
@@ -514,8 +514,8 @@ const Module5Section2_2 = () => {
               </div>
               
               <div className="bg-card p-4 rounded-lg border border-orange-200 dark:border-orange-800">
-                <p className="font-medium text-orange-600 dark:text-emerald-400 mb-2">Step 4: Protection Verification</p>
-                <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                <p className="font-medium text-orange-600 dark:text-elec-yellow mb-2">Step 4: Protection Verification</p>
+                <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>✅ <strong>Cable protection:</strong> Ensure protective device ratings don't exceed cable capacity</li>
                   <li>✅ <strong>Load compatibility:</strong> Verify protective devices can carry expected loads</li>
                   <li>✅ <strong>Breaking capacity:</strong> Confirm adequate breaking capacity for fault currents</li>
@@ -527,22 +527,22 @@ const Module5Section2_2 = () => {
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-World Example</h2>
-          <div className="rounded-lg p-5 border-l-4 border-l-orange-500 bg-card">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Example</h2>
+          <div className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
             <div className="flex items-start gap-3">
               <div className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center">
                 <Building2 className="w-4 h-4" />
               </div>
               <div className="flex-1">
-                <p className="font-semibold text-orange-600 dark:text-emerald-400 mb-2">The Student House Circuit Overload</p>
-                <p className="text-base text-foreground mb-3">
+                <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-2">The Student House Circuit Overload</p>
+                <p className="text-base text-white mb-3">
                   <strong>The Scenario:</strong> An electrician installed a ring final circuit in a student house without considering diversity properly. Each bedroom had multiple high-power devices (heaters, kettles, hair dryers, laptop chargers, and gaming equipment).
                 </p>
                 
-                <div className="bg-background/30 p-4 rounded-lg mb-3">
-                  <p className="font-medium text-foreground mb-2">The Calculation Error:</p>
-                  <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                <div className="bg-[#121212]/30 p-4 rounded-lg mb-3">
+                  <p className="font-medium text-white mb-2">The Calculation Error:</p>
+                  <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                     <li><strong>Assumed load per room:</strong> 13A heater + 10A kettle + 8A hair dryer = 31A potential</li>
                     <li><strong>Six bedrooms total:</strong> 6 × 31A = 186A theoretical maximum</li>
                     <li><strong>Applied incorrect diversity:</strong> Used 40% diversity giving 74A demand</li>
@@ -551,8 +551,8 @@ const Module5Section2_2 = () => {
                 </div>
                 
                 <div className="bg-card p-4 rounded-lg mb-3 border border-red-500/20">
-                  <p className="font-medium text-red-600 dark:text-emerald-400 mb-2">The Consequences:</p>
-                  <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                  <p className="font-medium text-red-600 dark:text-elec-yellow mb-2">The Consequences:</p>
+                  <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                     <li><strong>Daily tripping:</strong> 32A breaker tripped multiple times daily, especially mornings</li>
                     <li><strong>Safety hazard:</strong> Students started bypassing the MCB (extremely dangerous)</li>
                     <li><strong>Voltage drop issues:</strong> Equipment performance suffered due to overloaded circuit</li>
@@ -563,7 +563,7 @@ const Module5Section2_2 = () => {
                 
                 <div className="bg-card p-4 rounded-lg border border-green-500/20">
                   <p className="font-medium text-green-600 dark:text-green-400 mb-2">The Expensive Solution:</p>
-                  <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                  <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                     <li><strong>Separate circuits:</strong> Install individual 20A radial circuits for each room</li>
                     <li><strong>Consumer unit upgrade:</strong> Larger CU to accommodate additional circuits</li>
                     <li><strong>Cable installation:</strong> New 2.5mm² cables to all rooms</li>
@@ -572,7 +572,7 @@ const Module5Section2_2 = () => {
                   </ul>
                 </div>
                 
-                <div className="text-xs sm:text-sm text-foreground bg-background/50 p-3 rounded border mt-3">
+                <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-3 rounded border mt-3">
                   <strong>Key lesson:</strong> Correct load estimation saves expensive corrections. Always consider real-world usage patterns, especially in high-demand environments like student accommodation.
                 </div>
               </div>
@@ -581,8 +581,8 @@ const Module5Section2_2 = () => {
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             <div className="flex items-center gap-3">
               <Clipboard className="w-6 h-6" />
               Pocket Guide – Load Estimation & Circuits
@@ -592,8 +592,8 @@ const Module5Section2_2 = () => {
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div className="space-y-4">
               <div className="bg-card p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                <p className="font-medium text-emerald-400 dark:text-emerald-400 mb-2">Load Calculation</p>
-                <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                <p className="font-medium text-elec-yellow dark:text-elec-yellow mb-2">Load Calculation</p>
+                <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>📝 List all expected loads with power ratings</li>
                   <li>🧮 Convert watts into amps (I = P ÷ V)</li>
                   <li>⚖️ Apply diversity but allow for worst-case scenarios</li>
@@ -604,7 +604,7 @@ const Module5Section2_2 = () => {
               
               <div className="bg-card p-4 rounded-lg border border-green-200 dark:border-green-800">
                 <p className="font-medium text-green-600 dark:text-green-400 mb-2">Circuit Design</p>
-                <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>🔌 Ring final: 32A MCB, 2.5mm² cable</li>
                   <li>💡 Lighting: 6A MCB, 1.0/1.5mm² cable</li>
                   <li>🍳 Cooker: 30/32A MCB, 6mm² cable</li>
@@ -616,8 +616,8 @@ const Module5Section2_2 = () => {
             
             <div className="space-y-4">
               <div className="bg-card p-4 rounded-lg border border-purple-200 dark:border-purple-800">
-                <p className="font-medium text-purple-600 dark:text-emerald-400 mb-2">BS 7671 Compliance</p>
-                <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                <p className="font-medium text-purple-600 dark:text-elec-yellow mb-2">BS 7671 Compliance</p>
+                <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>📋 Reg 433.1 - Overload protection</li>
                   <li>⚡ Reg 434.1 - Fault current protection</li>
                   <li>📉 Max voltage drop: 3% lighting, 5% other</li>
@@ -627,8 +627,8 @@ const Module5Section2_2 = () => {
               </div>
               
               <div className="bg-card p-4 rounded-lg border border-orange-200 dark:border-orange-800">
-                <p className="font-medium text-orange-600 dark:text-emerald-400 mb-2">Diversity Factors</p>
-                <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                <p className="font-medium text-orange-600 dark:text-elec-yellow mb-2">Diversity Factors</p>
+                <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>🔌 Socket outlets: 40-60%</li>
                   <li>💡 Lighting circuits: 66%</li>
                   <li>🍳 Fixed appliances: 100%</li>
@@ -639,8 +639,8 @@ const Module5Section2_2 = () => {
             </div>
           </div>
           
-          <div className="mt-6 p-4 bg-background/50 rounded-lg border border-border/20">
-            <p className="text-xs sm:text-sm text-foreground text-center">
+          <div className="mt-6 p-4 bg-[#121212]/50 rounded-lg border border-white/10">
+            <p className="text-xs sm:text-sm text-white text-center">
               <strong>Remember:</strong> Accurate load estimation prevents overheating, tripping, and safety hazards. 
               Always balance safety, functionality, and economics in your calculations.
             </p>
@@ -648,21 +648,21 @@ const Module5Section2_2 = () => {
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Recap</h2>
-          <p className="text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
+          <p className="text-base text-white">
             In this subsection, you learned the basics of estimating loads and planning circuits. You explored the role of diversity in reducing assumed maximum demand, reviewed typical circuit designs, and saw how BS 7671 regulates overload and fault protection. You also looked at the consequences of poor load estimation and how to avoid them.
           </p>
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">FAQs</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-l-4 border-l-emerald-500 pl-4">
-                <p className="font-medium text-foreground mb-2">Q: {faq.question}</p>
-                <p className="text-sm text-muted-foreground">A: {faq.answer}</p>
+              <div key={index} className="border-l-4 border-l-elec-yellow pl-4">
+                <p className="font-medium text-white mb-2">Q: {faq.question}</p>
+                <p className="text-sm text-white">A: {faq.answer}</p>
               </div>
             ))}
           </div>
@@ -672,7 +672,7 @@ const Module5Section2_2 = () => {
         <Quiz questions={quizQuestions} />
 
         {/* Navigation */}
-        <div className="flex justify-between items-center mt-12 pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center mt-12 pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="../2-1" className="flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" />

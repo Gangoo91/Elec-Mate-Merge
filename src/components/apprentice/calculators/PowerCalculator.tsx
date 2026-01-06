@@ -1,10 +1,14 @@
 import React, { useState, useMemo } from 'react';
-import { Card } from '@/components/ui/card';
-import { MobileInput } from '@/components/ui/mobile-input';
-import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from '@/components/ui/mobile-select';
-import { MobileButton } from '@/components/ui/mobile-button';
-import { Separator } from '@/components/ui/separator';
-import { Calculator, Zap } from 'lucide-react';
+import { Info } from 'lucide-react';
+import {
+  CalculatorCard,
+  CalculatorInputGrid,
+  CalculatorInput,
+  CalculatorSelect,
+  CalculatorActions,
+  CalculatorResult,
+  ResultValue,
+} from "@/components/calculators/shared";
 
 interface PowerCalculatorProps {
   className?: string;
@@ -25,35 +29,35 @@ export const PowerCalculator: React.FC<PowerCalculatorProps> = ({ className }) =
 
     if (calcType === 'power') {
       if (V > 0 && I > 0) {
-        return { value: (V * I).toFixed(2), unit: 'W', formula: 'P = V × I' };
+        return { value: (V * I).toFixed(2), unit: 'W', formula: 'P = V × I', label: 'Power' };
       } else if (I > 0 && R > 0) {
-        return { value: (I * I * R).toFixed(2), unit: 'W', formula: 'P = I² × R' };
+        return { value: (I * I * R).toFixed(2), unit: 'W', formula: 'P = I² × R', label: 'Power' };
       } else if (V > 0 && R > 0) {
-        return { value: ((V * V) / R).toFixed(2), unit: 'W', formula: 'P = V² ÷ R' };
+        return { value: ((V * V) / R).toFixed(2), unit: 'W', formula: 'P = V² ÷ R', label: 'Power' };
       }
     } else if (calcType === 'voltage') {
       if (P > 0 && I > 0) {
-        return { value: (P / I).toFixed(2), unit: 'V', formula: 'V = P ÷ I' };
+        return { value: (P / I).toFixed(2), unit: 'V', formula: 'V = P ÷ I', label: 'Voltage' };
       } else if (I > 0 && R > 0) {
-        return { value: (I * R).toFixed(2), unit: 'V', formula: 'V = I × R' };
+        return { value: (I * R).toFixed(2), unit: 'V', formula: 'V = I × R', label: 'Voltage' };
       } else if (P > 0 && R > 0) {
-        return { value: Math.sqrt(P * R).toFixed(2), unit: 'V', formula: 'V = √(P × R)' };
+        return { value: Math.sqrt(P * R).toFixed(2), unit: 'V', formula: 'V = √(P × R)', label: 'Voltage' };
       }
     } else if (calcType === 'current') {
       if (P > 0 && V > 0) {
-        return { value: (P / V).toFixed(2), unit: 'A', formula: 'I = P ÷ V' };
+        return { value: (P / V).toFixed(2), unit: 'A', formula: 'I = P ÷ V', label: 'Current' };
       } else if (V > 0 && R > 0) {
-        return { value: (V / R).toFixed(2), unit: 'A', formula: 'I = V ÷ R' };
+        return { value: (V / R).toFixed(2), unit: 'A', formula: 'I = V ÷ R', label: 'Current' };
       } else if (P > 0 && R > 0) {
-        return { value: Math.sqrt(P / R).toFixed(2), unit: 'A', formula: 'I = √(P ÷ R)' };
+        return { value: Math.sqrt(P / R).toFixed(2), unit: 'A', formula: 'I = √(P ÷ R)', label: 'Current' };
       }
     } else if (calcType === 'resistance') {
       if (V > 0 && I > 0) {
-        return { value: (V / I).toFixed(2), unit: 'Ω', formula: 'R = V ÷ I' };
+        return { value: (V / I).toFixed(2), unit: 'Ω', formula: 'R = V ÷ I', label: 'Resistance' };
       } else if (P > 0 && I > 0) {
-        return { value: (P / (I * I)).toFixed(2), unit: 'Ω', formula: 'R = P ÷ I²' };
+        return { value: (P / (I * I)).toFixed(2), unit: 'Ω', formula: 'R = P ÷ I²', label: 'Resistance' };
       } else if (V > 0 && P > 0) {
-        return { value: ((V * V) / P).toFixed(2), unit: 'Ω', formula: 'R = V² ÷ P' };
+        return { value: ((V * V) / P).toFixed(2), unit: 'Ω', formula: 'R = V² ÷ P', label: 'Resistance' };
       }
     }
 
@@ -67,114 +71,130 @@ export const PowerCalculator: React.FC<PowerCalculatorProps> = ({ className }) =
     setPower('');
   };
 
+  // Check if we have enough inputs for calculation
+  const hasValidInputs = () => {
+    const V = parseFloat(voltage) || 0;
+    const I = parseFloat(current) || 0;
+    const R = parseFloat(resistance) || 0;
+    const P = parseFloat(power) || 0;
+
+    const values = [V, I, R, P].filter(v => v > 0);
+    return values.length >= 2;
+  };
+
   return (
-    <Card className={`p-6 bg-card border-border/20 ${className}`}>
-      <div className="flex items-center gap-3 mb-6">
-        <div className="p-2 rounded-lg bg-elec-dark/10">
-          <Calculator className="w-5 h-5 text-foreground" />
-        </div>
-        <h3 className="text-lg font-semibold text-foreground">Interactive Power Calculator</h3>
-      </div>
+    <div className={`space-y-4 ${className}`}>
+      <CalculatorCard
+        category="power"
+        title="Interactive Power Calculator"
+        description="Calculate power, voltage, current, or resistance from known values"
+      >
+        {/* Calculation Type Selector */}
+        <CalculatorSelect
+          label="Calculate"
+          value={calcType}
+          onChange={(value) => setCalcType(value as 'power' | 'voltage' | 'current' | 'resistance')}
+          options={[
+            { value: "power", label: "Power (P)" },
+            { value: "voltage", label: "Voltage (V)" },
+            { value: "current", label: "Current (I)" },
+            { value: "resistance", label: "Resistance (R)" },
+          ]}
+        />
 
-      <div className="grid gap-6">
-        {/* Calculation Type */}
-        <MobileSelect value={calcType} onValueChange={(value) => setCalcType(value as any)}>
-          <MobileSelectTrigger label="Calculate">
-            <MobileSelectValue />
-          </MobileSelectTrigger>
-          <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
-            <MobileSelectItem value="power">Power (P)</MobileSelectItem>
-            <MobileSelectItem value="voltage">Voltage (V)</MobileSelectItem>
-            <MobileSelectItem value="current">Current (I)</MobileSelectItem>
-            <MobileSelectItem value="resistance">Resistance (R)</MobileSelectItem>
-          </MobileSelectContent>
-        </MobileSelect>
-
-        <Separator />
-
-        {/* Input Fields */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Input Grid - Show relevant inputs based on what we're calculating */}
+        <CalculatorInputGrid columns={2}>
           {calcType !== 'voltage' && (
-            <MobileInput
-              label="Voltage (V)"
-              type="number"
+            <CalculatorInput
+              label="Voltage"
+              unit="V"
+              type="text"
               inputMode="decimal"
               placeholder="e.g., 230"
               value={voltage}
-              onChange={(e) => setVoltage(e.target.value)}
-              unit="V"
+              onChange={setVoltage}
+              hint="UK: 230V single-phase"
             />
           )}
 
           {calcType !== 'current' && (
-            <MobileInput
-              label="Current (A)"
-              type="number"
+            <CalculatorInput
+              label="Current"
+              unit="A"
+              type="text"
               inputMode="decimal"
               placeholder="e.g., 13"
               value={current}
-              onChange={(e) => setCurrent(e.target.value)}
-              unit="A"
+              onChange={setCurrent}
+              hint="Load current"
             />
           )}
 
           {calcType !== 'resistance' && (
-            <MobileInput
-              label="Resistance (Ω)"
-              type="number"
+            <CalculatorInput
+              label="Resistance"
+              unit="Ω"
+              type="text"
               inputMode="decimal"
               placeholder="e.g., 17.6"
               value={resistance}
-              onChange={(e) => setResistance(e.target.value)}
-              unit="Ω"
+              onChange={setResistance}
+              hint="Load resistance"
             />
           )}
 
           {calcType !== 'power' && (
-            <MobileInput
-              label="Power (W)"
-              type="number"
+            <CalculatorInput
+              label="Power"
+              unit="W"
+              type="text"
               inputMode="decimal"
               placeholder="e.g., 3000"
               value={power}
-              onChange={(e) => setPower(e.target.value)}
-              unit="W"
+              onChange={setPower}
+              hint="Power consumption"
             />
           )}
-        </div>
+        </CalculatorInputGrid>
 
-        {/* Result */}
-        {result && (
-          <div className="bg-elec-dark/10 border border-elec-yellow/30 rounded-lg p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <Zap className="w-4 h-4 text-elec-yellow" />
-              <span className="text-sm font-medium text-elec-yellow">Result</span>
-            </div>
-            <div className="text-2xl font-bold text-foreground mb-1">
-              {result.value} {result.unit}
-            </div>
-            <div className="text-sm text-muted-foreground">
-              Using: {result.formula}
-            </div>
+        {/* Action Buttons */}
+        <CalculatorActions
+          category="power"
+          onCalculate={() => {}} // Auto-calculates via useMemo
+          onReset={clearAll}
+          calculateLabel="Auto-calculates"
+          isDisabled={true}
+          showReset={true}
+        />
+      </CalculatorCard>
+
+      {/* Result */}
+      {result && (
+        <CalculatorResult category="power">
+          <ResultValue
+            label={result.label}
+            value={result.value}
+            unit={result.unit}
+            category="power"
+            size="lg"
+          />
+          <p className="text-sm text-white/60 mt-2">
+            <span className="font-medium">Formula:</span> {result.formula}
+          </p>
+        </CalculatorResult>
+      )}
+
+      {/* Helper Tips */}
+      <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 space-y-2">
+        <div className="flex items-start gap-2">
+          <Info className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
+          <div className="text-sm text-blue-200 space-y-1">
+            <p><strong>Tip:</strong> Enter any two known values to calculate the third.</p>
+            <p>Common UK voltages: 230V (single-phase), 400V (three-phase)</p>
+            <p className="text-blue-200/70">Note: These calculations apply to resistive loads</p>
           </div>
-        )}
-
-        {/* Helper Text */}
-        <div className="text-xs text-muted-foreground space-y-1">
-          <p>💡 <strong>Tip:</strong> Enter any two known values to calculate the third.</p>
-          <p>⚡ Common UK voltages: 230V (single-phase), 400V (three-phase)</p>
-          <p>📖 Remember: These calculations apply to resistive loads</p>
         </div>
-
-        {/* Clear Button */}
-        <MobileButton
-          onClick={clearAll}
-          variant="elec-outline"
-          className="min-h-[40px] text-sm"
-        >
-          Clear all values
-        </MobileButton>
       </div>
-    </Card>
+    </div>
   );
 };

@@ -137,11 +137,11 @@ export default function Module4Section4_7() {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 4
@@ -155,17 +155,17 @@ export default function Module4Section4_7() {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Zap className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Zap className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 4.4.7
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Working at Height Safely While Installing Systems
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Learn safe working practices for height work during electrical installations. Covers equipment selection, fall protection, and Work at Height Regulations 2005 compliance.
           </p>
         </header>
@@ -206,7 +206,7 @@ export default function Module4Section4_7() {
         <Card className="mb-8">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <CheckCircle className="h-5 w-5 text-emerald-400" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow" />
               Learning Outcomes
             </CardTitle>
           </CardHeader>
@@ -243,9 +243,9 @@ export default function Module4Section4_7() {
         {/* Content Sections */}
         <div className="space-y-8">
           {/* Section 1 */}
-          <div className="border-l-4 border-l-emerald-500 bg-card p-6 rounded-r-lg">
+          <div className="border-l-4 border-l-elec-yellow p-6 rounded-r-lg">
             <div className="flex items-center gap-3 mb-4">
-              <div className="flex items-center justify-center w-8 h-8 bg-emerald-500 text-white rounded-full font-bold text-sm">
+              <div className="flex items-center justify-center w-8 h-8 bg-elec-yellow text-white rounded-full font-bold text-sm">
                 1
               </div>
               <h3 className="text-lg sm:text-xl font-semibold">Legal and Safety Requirements</h3>
@@ -253,7 +253,7 @@ export default function Module4Section4_7() {
             <div className="space-y-4">
               <p>Work at height is regulated under the <strong>Work at Height Regulations 2005</strong>, which place specific duties on employers and workers.</p>
               
-              <div className="bg-background/50 p-4 rounded border">
+              <div className="bg-[#121212]/50 p-4 rounded border">
                 <h4 className="font-semibold mb-2">Key Legal Requirements:</h4>
                 <ul className="space-y-2">
                   <li>• <strong>Avoid</strong> working at height where reasonably practicable</li>
@@ -283,7 +283,7 @@ export default function Module4Section4_7() {
           />
 
           {/* Section 2 */}
-          <div className="border-l-4 border-l-red-500 bg-card p-6 rounded-r-lg">
+          <div className="border-l-4 border-l-red-500 p-6 rounded-r-lg">
             <div className="flex items-center gap-3 mb-4">
               <div className="flex items-center justify-center w-8 h-8 bg-red-500 text-white rounded-full font-bold text-sm">
                 2
@@ -294,7 +294,7 @@ export default function Module4Section4_7() {
               <p>Understanding hazards is the first step in preventing accidents during electrical installation work at height.</p>
               
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="bg-background/50 p-4 rounded border">
+                <div className="bg-[#121212]/50 p-4 rounded border">
                   <h4 className="font-semibold mb-2">Primary Hazards:</h4>
                   <ul className="space-y-1">
                     <li>• Falls from ladders, scaffolds, or platforms</li>
@@ -303,7 +303,7 @@ export default function Module4Section4_7() {
                     <li>• Slippery or unstable working surfaces</li>
                   </ul>
                 </div>
-                <div className="bg-background/50 p-4 rounded border">
+                <div className="bg-[#121212]/50 p-4 rounded border">
                   <h4 className="font-semibold mb-2">Environmental Hazards:</h4>
                   <ul className="space-y-1">
                     <li>• Contact with overhead power lines</li>
@@ -325,7 +325,7 @@ export default function Module4Section4_7() {
           </div>
 
           {/* Section 3 */}
-          <div className="border-l-4 border-l-green-500 bg-card p-6 rounded-r-lg">
+          <div className="border-l-4 border-l-green-500 p-6 rounded-r-lg">
             <div className="flex items-center gap-3 mb-4">
               <div className="flex items-center justify-center w-8 h-8 bg-green-500 text-white rounded-full font-bold text-sm">
                 3
@@ -336,28 +336,28 @@ export default function Module4Section4_7() {
               <p>Selecting the right access equipment for the task is crucial for both safety and efficiency.</p>
               
               <div className="grid gap-4">
-                <div className="bg-background/50 p-4 rounded border">
+                <div className="bg-[#121212]/50 p-4 rounded border">
                   <h4 className="font-semibold mb-2">Step Ladders</h4>
                   <p><strong>Use for:</strong> Short-duration, light tasks up to 2.5m working height</p>
                   <p><strong>Requirements:</strong> Must be stable, positioned correctly, and not overloaded</p>
                   <p><strong>Limitations:</strong> Not suitable for prolonged work or heavy tool use</p>
                 </div>
                 
-                <div className="bg-background/50 p-4 rounded border">
+                <div className="bg-[#121212]/50 p-4 rounded border">
                   <h4 className="font-semibold mb-2">Extension Ladders</h4>
                   <p><strong>Use for:</strong> Access only, not prolonged work</p>
                   <p><strong>Requirements:</strong> Secure at top and bottom, 4:1 angle ratio</p>
                   <p><strong>Limitations:</strong> No working platform, limited tool carrying capacity</p>
                 </div>
 
-                <div className="bg-background/50 p-4 rounded border">
+                <div className="bg-[#121212]/50 p-4 rounded border">
                   <h4 className="font-semibold mb-2">Towers/Scaffolds</h4>
                   <p><strong>Use for:</strong> Prolonged work requiring large, stable platform</p>
                   <p><strong>Requirements:</strong> Must be erected by competent persons, guard rails fitted</p>
                   <p><strong>Benefits:</strong> Large working area, tool storage, multiple workers</p>
                 </div>
 
-                <div className="bg-background/50 p-4 rounded border">
+                <div className="bg-[#121212]/50 p-4 rounded border">
                   <h4 className="font-semibold mb-2">MEWPs (Mobile Elevating Work Platforms)</h4>
                   <p><strong>Types:</strong> Scissor lifts, boom lifts, cherry pickers</p>
                   <p><strong>Requirements:</strong> IPAF-trained operators, ground condition checks</p>
@@ -378,7 +378,7 @@ export default function Module4Section4_7() {
           <Separator />
 
           {/* Section 4 */}
-          <div className="border-l-4 border-l-purple-500 bg-card p-6 rounded-r-lg">
+          <div className="border-l-4 border-l-purple-500 p-6 rounded-r-lg">
             <div className="flex items-center gap-3 mb-4">
               <div className="flex items-center justify-center w-8 h-8 bg-purple-500 text-white rounded-full font-bold text-sm">
                 4
@@ -389,7 +389,7 @@ export default function Module4Section4_7() {
               <p>Following established safe working practices reduces risk and ensures legal compliance.</p>
               
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="bg-background/50 p-4 rounded border">
+                <div className="bg-[#121212]/50 p-4 rounded border">
                   <h4 className="font-semibold mb-2">Pre-Work Checks:</h4>
                   <ul className="space-y-1">
                     <li>• Inspect all access equipment before use</li>
@@ -399,7 +399,7 @@ export default function Module4Section4_7() {
                     <li>• Confirm rescue arrangements in place</li>
                   </ul>
                 </div>
-                <div className="bg-background/50 p-4 rounded border">
+                <div className="bg-[#121212]/50 p-4 rounded border">
                   <h4 className="font-semibold mb-2">During Work:</h4>
                   <ul className="space-y-1">
                     <li>• Maintain three points of contact on ladders</li>
@@ -422,7 +422,7 @@ export default function Module4Section4_7() {
           </div>
 
           {/* Section 5 */}
-          <div className="border-l-4 border-l-orange-500 bg-card p-6 rounded-r-lg">
+          <div className="border-l-4 border-l-orange-500 p-6 rounded-r-lg">
             <div className="flex items-center gap-3 mb-4">
               <div className="flex items-center justify-center w-8 h-8 bg-orange-500 text-white rounded-full font-bold text-sm">
                 5
@@ -432,7 +432,7 @@ export default function Module4Section4_7() {
             <div className="space-y-4">
               <p>When edge protection cannot be provided, personal fall protection systems become essential.</p>
               
-              <div className="bg-background/50 p-4 rounded border">
+              <div className="bg-[#121212]/50 p-4 rounded border">
                 <h4 className="font-semibold mb-2">Fall Protection Systems:</h4>
                 <ul className="space-y-2">
                   <li>• <strong>Work Restraint:</strong> Prevents reaching the fall edge (preferred method)</li>
@@ -442,7 +442,7 @@ export default function Module4Section4_7() {
               </div>
 
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="bg-background/50 p-4 rounded border">
+                <div className="bg-[#121212]/50 p-4 rounded border">
                   <h4 className="font-semibold mb-2">Equipment Requirements:</h4>
                   <ul className="space-y-1">
                     <li>• Full body harness (not belt)</li>
@@ -451,7 +451,7 @@ export default function Module4Section4_7() {
                     <li>• Regular inspection and maintenance</li>
                   </ul>
                 </div>
-                <div className="bg-background/50 p-4 rounded border">
+                <div className="bg-[#121212]/50 p-4 rounded border">
                   <h4 className="font-semibold mb-2">Critical Factors:</h4>
                   <ul className="space-y-1">
                     <li>• Fall clearance calculations</li>
@@ -481,7 +481,7 @@ export default function Module4Section4_7() {
           />
 
           {/* Section 6 */}
-          <div className="border-l-4 border-l-red-500 bg-card p-6 rounded-r-lg">
+          <div className="border-l-4 border-l-red-500 p-6 rounded-r-lg">
             <div className="flex items-center gap-3 mb-4">
               <div className="flex items-center justify-center w-8 h-8 bg-red-500 text-white rounded-full font-bold text-sm">
                 6
@@ -492,22 +492,22 @@ export default function Module4Section4_7() {
               <p>Learning from common mistakes helps prevent accidents and ensures professional standards.</p>
               
               <div className="grid gap-3">
-                <div className="bg-background/50 p-4 rounded border">
+                <div className="bg-[#121212]/50 p-4 rounded border">
                   <h4 className="font-semibold text-red-600 mb-2">❌ Using ladders for tasks that require a platform</h4>
                   <p>Prolonged work, heavy tools, or two-handed tasks need a stable platform, not ladder access.</p>
                 </div>
                 
-                <div className="bg-background/50 p-4 rounded border">
+                <div className="bg-[#121212]/50 p-4 rounded border">
                   <h4 className="font-semibold text-red-600 mb-2">❌ Standing on the top step or rung of a ladder</h4>
                   <p>This eliminates handholds and creates an unstable working position with high fall risk.</p>
                 </div>
 
-                <div className="bg-background/50 p-4 rounded border">
+                <div className="bg-[#121212]/50 p-4 rounded border">
                   <h4 className="font-semibold text-red-600 mb-2">❌ Failing to secure tools and materials at height</h4>
                   <p>Dropped tools can cause serious injuries and expensive damage to equipment below.</p>
                 </div>
 
-                <div className="bg-background/50 p-4 rounded border">
+                <div className="bg-[#121212]/50 p-4 rounded border">
                   <h4 className="font-semibold text-red-600 mb-2">❌ Ignoring weather conditions for outdoor height work</h4>
                   <p>Wind, rain, or poor visibility significantly increase risks and should halt height work.</p>
                 </div>
@@ -522,7 +522,7 @@ export default function Module4Section4_7() {
         <Card className="mb-8">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Zap className="h-5 w-5 text-emerald-400" />
+              <Zap className="h-5 w-5 text-elec-yellow" />
               Practical Guidance
             </CardTitle>
           </CardHeader>
@@ -579,15 +579,15 @@ export default function Module4Section4_7() {
           <CardContent className="space-y-4">
             <div>
               <h4 className="font-semibold mb-2">Q: Do I always need a harness when working at height?</h4>
-              <p className="text-muted-foreground">A: Not always — harnesses are required where there's a risk of falling and no physical barriers are in place.</p>
+              <p className="text-white">A: Not always — harnesses are required where there's a risk of falling and no physical barriers are in place.</p>
             </div>
             <div>
               <h4 className="font-semibold mb-2">Q: Can I use a ladder on uneven ground?</h4>
-              <p className="text-muted-foreground">A: Only with suitable stabilisers or levelling devices to ensure stability.</p>
+              <p className="text-white">A: Only with suitable stabilisers or levelling devices to ensure stability.</p>
             </div>
             <div>
               <h4 className="font-semibold mb-2">Q: What training is required for MEWP use?</h4>
-              <p className="text-muted-foreground">A: IPAF (International Powered Access Federation) or equivalent certification is required.</p>
+              <p className="text-white">A: IPAF (International Powered Access Federation) or equivalent certification is required.</p>
             </div>
           </CardContent>
         </Card>
@@ -618,7 +618,7 @@ export default function Module4Section4_7() {
               Back to Section 4
             </Button>
           </Link>
-          <div className="text-sm text-muted-foreground">
+          <div className="text-sm text-white">
             End of Module 4.4 - Cable Installation Methods
           </div>
         </div>

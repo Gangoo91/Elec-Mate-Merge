@@ -134,11 +134,11 @@ const Module2Section3_2 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 2.3
@@ -151,15 +151,15 @@ const Module2Section3_2 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <Zap className="h-8 w-8 text-emerald-400" />
+            <Zap className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 2.3.2
               </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
                 Series Circuits - Current and Voltage
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+              <p className="text-xl text-white max-w-3xl mt-2">
                 Master current flow and voltage division in series electrical circuits
               </p>
             </div>
@@ -167,11 +167,11 @@ const Module2Section3_2 = () => {
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Current:</strong> Same everywhere in series (single path).</li>
                 <li><strong>Voltage:</strong> Divides between components according to resistance.</li>
@@ -180,8 +180,8 @@ const Module2Section3_2 = () => {
                 <li><strong>Failure mode:</strong> One open circuit stops everything.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> LED strings, Christmas lights, sensor dividers.</li>
                 <li><strong>Use:</strong> Voltage calculations, current predictions, fault finding.</li>
@@ -192,32 +192,32 @@ const Module2Section3_2 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
-          <ul className="space-y-3 text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
+          <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>State how current and voltage behave in series circuits</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Calculate total resistance using Rt = R1 + R2 + R3...</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Apply the voltage divider rule to find component voltages</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Use Ohm's Law with series circuit calculations</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Predict series circuit behaviour and fault conditions</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Relate calculations to BS 7671 checks and safe practice</span>
             </li>
           </ul>
@@ -225,12 +225,12 @@ const Module2Section3_2 = () => {
 
         {/* Section 1: Series Circuit Fundamentals */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
+          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
               Series Circuit Rules - Current and Resistance
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 In a series circuit, there is only one path for current to flow. This single path means:
               </p>
@@ -246,7 +246,7 @@ const Module2Section3_2 = () => {
                   </ul>
                 </div>
 
-                <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
+                <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                   <p className="text-yellow-300">
                     <strong>Example:</strong> Three 10Ω resistors in series = 30Ω total. 
                     On 12V supply: I = 12V ÷ 30Ω = 0.4A through each resistor.
@@ -261,12 +261,12 @@ const Module2Section3_2 = () => {
 
         {/* Section 2: Voltage Division */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
+          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
               Voltage Division and the Voltage Divider Rule
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 In series circuits, supply voltage divides between components according to their resistance values. 
                 Higher resistance takes a larger share of the voltage.
@@ -275,13 +275,13 @@ const Module2Section3_2 = () => {
               <div className="space-y-4">
                 <div>
                   <p className="font-bold">Voltage divider rule:</p>
-                  <div className="bg-card border border-emerald-500/30 p-4 rounded-lg">
-                    <p className="text-emerald-400 font-mono">Vx = Vsupply × Rx / Rtotal</p>
+                  <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
+                    <p className="text-elec-yellow font-mono">Vx = Vsupply × Rx / Rtotal</p>
                     <p className="text-emerald-200 text-sm mt-2">Where Vx is voltage across component x</p>
                   </div>
                 </div>
 
-                <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
+                <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                   <p className="text-yellow-300">
                     <strong>Worked Example:</strong> 24V supply, R1=150Ω, R2=450Ω in series<br/>
                     • Rtotal = 150 + 450 = 600Ω<br/>
@@ -300,11 +300,11 @@ const Module2Section3_2 = () => {
         {/* Section 3: Calculations and Tools */}
         <div className="mb-8">
           <div className="border-l-4 border-teal-500 bg-teal-500/10 dark:bg-teal-500/10 p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
               Series Circuit Calculations and Problem Solving
             </h2>
-            <div className="space-y-6 text-foreground">
+            <div className="space-y-6 text-white">
               
               {/* Step-by-step approach */}
               <div className="space-y-4">
@@ -383,7 +383,7 @@ const Module2Section3_2 = () => {
                 <h3 className="text-lg font-semibold text-teal-300">Problem-Solving Strategies</h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="bg-card border border-border/30 p-4 rounded-lg">
-                    <h4 className="font-bold text-emerald-400 mb-2">When values are missing:</h4>
+                    <h4 className="font-bold text-elec-yellow mb-2">When values are missing:</h4>
                     <ul className="list-disc pl-6 space-y-1 text-sm text-blue-200">
                       <li>Use Ohm's Law: V = I × R</li>
                       <li>Apply voltage divider rule</li>
@@ -407,7 +407,7 @@ const Module2Section3_2 = () => {
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold text-teal-300">Practice Problems</h3>
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
-                  <h4 className="font-bold text-emerald-400 mb-2">Try these calculations:</h4>
+                  <h4 className="font-bold text-elec-yellow mb-2">Try these calculations:</h4>
                   <div className="space-y-2 text-sm text-orange-200">
                     <p><strong>Problem 1:</strong> 9V battery, three 1kΩ resistors in series. Find current and voltage across each.</p>
                     <p><strong>Problem 2:</strong> 230V supply, R₁ = 50Ω, R₂ = 100Ω, current = 1.5A. What's the third resistor R₃?</p>
@@ -417,12 +417,12 @@ const Module2Section3_2 = () => {
               </div>
 
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-foreground">Interactive Calculators</h3>
+                <h3 className="text-lg font-semibold text-white">Interactive Calculators</h3>
                 <div className="space-y-4">
                   <OhmsCalculator />
                   <SeriesParallelCalculators />
                 </div>
-                <div className="bg-emerald-500/10 border border-emerald-500/30 p-3 rounded">
+                <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-3 rounded">
                   <p className="text-yellow-200 text-sm">
                     <strong>Guidance:</strong> These calculators support understanding only. 
                     Always verify against manufacturer data and apply BS 7671 design rules for real installations.
@@ -435,12 +435,12 @@ const Module2Section3_2 = () => {
 
         {/* Section 4: Practical Applications */}
         <div className="mb-8">
-          <div className="border-l-4 border-amber-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="border-l-4 border-amber-500 dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">4</span>
               Practical Applications and BS 7671
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-card border border-amber-400/30 p-4 rounded-lg space-y-2">
                   <h3 className="text-amber-300 font-semibold">Where you'll find series circuits</h3>
@@ -463,7 +463,7 @@ const Module2Section3_2 = () => {
               </div>
 
               <div className="bg-card border border-border/30 p-4 rounded-lg">
-                <h3 className="text-emerald-400 font-semibold">Real-world example: LED string installation</h3>
+                <h3 className="text-elec-yellow font-semibold">Real-world example: LED string installation</h3>
                 <p className="text-orange-200 text-sm mt-2">
                   LED tape with series segments must respect driver voltage/current limits. 
                   If one segment fails open, the whole string stops. Calculate total current with I = V/Rt 
@@ -485,13 +485,13 @@ const Module2Section3_2 = () => {
         </div>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-border/20 pb-4 last:border-b-0">
-                <h3 className="font-medium text-foreground mb-2">{faq.question}</h3>
-                <p className="text-muted-foreground text-sm">{faq.answer}</p>
+              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
+                <h3 className="font-medium text-white mb-2">{faq.question}</h3>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -499,16 +499,16 @@ const Module2Section3_2 = () => {
 
         {/* Units Pocket Card */}
         <div className="mb-8">
-          <h3 className="text-lg font-semibold text-foreground mb-4">Pocket card</h3>
+          <h3 className="text-lg font-semibold text-white mb-4">Pocket card</h3>
           <UnitsPocketCard />
         </div>
 
         {/* Quick Reference Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quick Reference Card - Series Circuits</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick Reference Card - Series Circuits</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
             <div className="space-y-3">
-              <h4 className="font-bold text-emerald-400">Essential Rules</h4>
+              <h4 className="font-bold text-elec-yellow">Essential Rules</h4>
               <div className="bg-card border border-border/30 p-4 rounded-lg">
                 <ul className="text-blue-200 space-y-1">
                   <li>• Current: Same everywhere (I₁ = I₂ = I₃)</li>
@@ -519,8 +519,8 @@ const Module2Section3_2 = () => {
               </div>
             </div>
             <div className="space-y-3">
-              <h4 className="font-bold text-emerald-400">Key Formulas</h4>
-              <div className="bg-card border border-emerald-500/30 p-4 rounded-lg">
+              <h4 className="font-bold text-elec-yellow">Key Formulas</h4>
+              <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
                 <ul className="text-emerald-200 space-y-1 font-mono text-xs">
                   <li>• I = Vs / Rt</li>
                   <li>• Vx = Vs × Rx / Rt</li>
@@ -533,7 +533,7 @@ const Module2Section3_2 = () => {
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
           <Quiz
             title="Test Your Knowledge - Series Circuits"
             questions={quizQuestions}
@@ -541,7 +541,7 @@ const Module2Section3_2 = () => {
         </Card>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to=".." className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" />

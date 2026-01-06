@@ -1,5 +1,5 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import InstallationGuideTabs from "@/components/apprentice/installation-guides/InstallationGuideTabs";
 import CommercialPlanningSection from "@/components/apprentice/installation-guides/commercial/CommercialPlanningSection";
 import CommercialCircuitGuide from "@/components/apprentice/installation-guides/commercial/CommercialCircuitGuide";
@@ -37,7 +37,7 @@ const CommercialInstallations = () => {
   return (
     <div className="max-w-7xl mx-auto animate-fade-in p-4">
       <div className="mb-6">
-        <BackButton customUrl="/apprentice/on-job-tools/electrical-installation-guides" label="Back to Installation Guides" />
+        <SmartBackButton />
       </div>
 
       <InstallationGuideTabs

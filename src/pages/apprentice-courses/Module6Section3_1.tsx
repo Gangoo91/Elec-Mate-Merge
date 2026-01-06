@@ -139,11 +139,11 @@ const Module6Section3_1 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6.3
@@ -157,45 +157,45 @@ const Module6Section3_1 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Zap className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Zap className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 6.3.1
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Introduction to Test Instruments
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Multimeter, IR tester, and continuity tester fundamentals for electrical testing
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-6">
-            <Target className="w-6 h-6 text-foreground" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Spot it in 30 Seconds</h2>
+            <Target className="w-6 h-6 text-white" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-4 bg-background border border-border/30">
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-4 bg-[#121212] border border-border/30">
               <p className="font-medium mb-3">In 30 seconds</p>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Instrument selection: right tool for the test required</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>GS38 compliance: shrouded probes, fused leads, calibration</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Range setting: appropriate measurement range selected</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Safety procedures: isolation, disconnection, PPE</span>
                 </li>
               </ul>
@@ -204,15 +204,15 @@ const Module6Section3_1 = () => {
               <p className="font-medium mb-3">Spot it / Use it</p>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Spot:</strong> Wrong instrument, non-compliant probes, incorrect range, no calibration</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Use:</strong> Multimeter for voltage/current; IR tester for insulation; continuity for paths</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Check:</strong> Calibration certificates; GS38 markings; proper isolation procedures</span>
                 </li>
               </ul>
@@ -221,21 +221,21 @@ const Module6Section3_1 = () => {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <p className="text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <p className="text-base text-white mb-4">
             Electrical installation work relies on precise measurement and verification to ensure systems are safe, compliant, and functional. Test instruments are the foundation of this process, enabling electricians to check voltage, resistance, insulation quality, and continuity of circuits.
           </p>
-          <p className="text-base text-foreground">
+          <p className="text-base text-white">
             In this subsection, we will introduce three key instruments: the Multimeter, Insulation Resistance (IR) Tester, and the Continuity Tester. These tools form the basis of electrical testing for apprentices and practicing electricians.
           </p>
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-base text-foreground mb-4">By the end of this subsection, you will be able to:</p>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-base text-white mb-4">By the end of this subsection, you will be able to:</p>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Describe the purpose of a multimeter, IR tester, and continuity tester.</li>
             <li>Identify the main parts and functions of each instrument.</li>
             <li>Understand when to use each tool during installation and testing.</li>
@@ -245,27 +245,27 @@ const Module6Section3_1 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* 1. Multimeter */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">1. Multimeter</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">1. Multimeter</h3>
+            <p className="text-base text-white mb-4">
               The multimeter is the most versatile electrical test instrument, capable of measuring multiple electrical parameters essential for installation and maintenance work.
             </p>
             
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-3">Multimeter Fundamentals</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Multimeter Fundamentals</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Primary Purpose:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Primary Purpose:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Measures voltage (AC and DC) for live/dead circuit verification</li>
                           <li>Checks resistance of conductors and components</li>
                           <li>Measures current flow in electrical circuits</li>
@@ -277,8 +277,8 @@ const Module6Section3_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Types and Advanced Features:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Types and Advanced Features:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Digital Multimeter (DMM) – preferred for accuracy and ease of reading</li>
                           <li>Analogue Multimeter – useful for trending measurements and rapid changes</li>
                           <li>True RMS capability for accurate AC measurements with distorted waveforms</li>
@@ -291,8 +291,8 @@ const Module6Section3_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Detailed Functions and Applications:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Detailed Functions and Applications:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Voltage testing: Live/dead verification, supply quality checks, load voltage measurement</li>
                           <li>Resistance measurement: Conductor integrity, heating element checks, motor winding resistance</li>
                           <li>Current measurement: Load current verification, earth leakage detection, circuit loading</li>
@@ -304,8 +304,8 @@ const Module6Section3_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Safety Considerations and Limitations:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Safety Considerations and Limitations:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>CAT rating must match or exceed system voltage and category</li>
                           <li>Current measurement requires breaking circuit or using clamp attachment</li>
                           <li>Input impedance affects readings in high-impedance circuits</li>
@@ -317,15 +317,15 @@ const Module6Section3_1 = () => {
                       </div>
 
                       <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                        <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2">Critical Limitation</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Critical Limitation</p>
+                        <p className="text-xs sm:text-sm text-white">
                           Multimeters are NOT suitable for insulation resistance checks as they cannot apply the high voltages (250V-1000V) required for proper insulation testing. Maximum test voltage is typically only 3-9V DC.
                         </p>
                       </div>
 
                       <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800 mt-3">
-                        <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2">Practical Application Tips</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Practical Application Tips</p>
+                        <p className="text-xs sm:text-sm text-white">
                           Always start measurements on the highest range to protect the instrument, then step down for better resolution. Use the hold function to freeze readings in difficult-to-reach locations.
                         </p>
                       </div>
@@ -347,22 +347,22 @@ const Module6Section3_1 = () => {
 
           {/* 2. Insulation Resistance (IR) Tester */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">2. Insulation Resistance (IR) Tester</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">2. Insulation Resistance (IR) Tester</h3>
+            <p className="text-base text-white mb-4">
               The IR tester is a specialised instrument designed to assess the quality and integrity of electrical insulation by applying high DC voltage and measuring the resulting resistance.
             </p>
             
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-3">IR Tester Operation and Applications</p>
+                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">IR Tester Operation and Applications</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Operating Principle and Theory:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Operating Principle and Theory:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Applies high DC voltage (typically 250V, 500V, or 1000V) to stress insulation</li>
                           <li>Measures resulting current flow through insulation to calculate resistance</li>
                           <li>Good insulation produces minimal current flow (high resistance in megaohms)</li>
@@ -374,8 +374,8 @@ const Module6Section3_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Test Voltage Selection Criteria:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Test Voltage Selection Criteria:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>250V DC: For circuits up to and including 50V (extra-low voltage)</li>
                           <li>500V DC: For circuits between 50V and 500V (low voltage installations)</li>
                           <li>1000V DC: For circuits between 500V and 1000V (high voltage systems)</li>
@@ -387,8 +387,8 @@ const Module6Section3_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Expected Values and Interpretation:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Expected Values and Interpretation:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>New installations: typically &gt;10 MΩ at test voltage</li>
                            <li>BS 7671 minimum requirement: 1 MΩ for new low voltage installations</li>
                            <li>Existing installations: &gt;1 MΩ generally acceptable, investigate if &lt;0.5 MΩ</li>
@@ -400,8 +400,8 @@ const Module6Section3_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Advanced Testing Techniques:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Advanced Testing Techniques:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Polarisation Index (PI): 10-minute reading divided by 1-minute reading</li>
                           <li>Dielectric Absorption Ratio (DAR): 1-minute reading divided by 30-second reading</li>
                           <li>Step voltage testing: progressive voltage increase to identify weakness</li>
@@ -413,8 +413,8 @@ const Module6Section3_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Critical Applications and Procedures:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Critical Applications and Procedures:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Pre-energisation testing: mandatory before connecting new circuits</li>
                           <li>Periodic inspection testing: 5-year intervals for domestic, shorter for commercial</li>
                           <li>Fault investigation: identifying location and extent of insulation damage</li>
@@ -426,15 +426,15 @@ const Module6Section3_1 = () => {
                       </div>
 
                       <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded border border-purple-200 dark:border-purple-800">
-                        <p className="font-medium text-purple-700 dark:text-emerald-400 mb-2">Critical Safety Protocol</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Critical Safety Protocol</p>
+                        <p className="text-xs sm:text-sm text-white">
                           Always ensure complete circuit isolation and disconnection before IR testing. Remove all electronic equipment, LED lamps, RCD devices, and surge protectors. High test voltages WILL damage sensitive equipment.
                         </p>
                       </div>
 
                       <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded border border-purple-200 dark:border-purple-800 mt-3">
-                        <p className="font-medium text-purple-700 dark:text-emerald-400 mb-2">Environmental Considerations</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Environmental Considerations</p>
+                        <p className="text-xs sm:text-sm text-white">
                           Temperature and humidity significantly affect readings. Test in consistent conditions where possible, and apply temperature correction factors when comparing historical data.
                         </p>
                       </div>
@@ -456,13 +456,13 @@ const Module6Section3_1 = () => {
 
           {/* 3. Continuity Tester */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">3. Continuity Tester</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">3. Continuity Tester</h3>
+            <p className="text-base text-white mb-4">
               The continuity tester verifies that electrical conductors form complete, unbroken paths with minimal resistance, essential for proper circuit operation and safety systems.
             </p>
             
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
@@ -470,8 +470,8 @@ const Module6Section3_1 = () => {
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Operating Method and Technology:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Operating Method and Technology:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Passes small, safe DC current (typically 200mA max) through circuit</li>
                           <li>Measures and displays total resistance of the complete path</li>
                           <li>Four-wire measurement technique eliminates lead resistance errors</li>
@@ -484,8 +484,8 @@ const Module6Section3_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Essential Applications and Methods:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Essential Applications and Methods:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Ring final circuit testing: R1+R2 method for end-to-end resistance</li>
                           <li>Radial circuit verification: ensuring continuous paths to all points</li>
                           <li>Protective conductor testing: verifying earthing system integrity</li>
@@ -498,8 +498,8 @@ const Module6Section3_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Expected Values and Standards:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Expected Values and Standards:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Excellent continuity: resistance below 0.1 Ω for short runs</li>
                           <li>Good continuity: resistance typically below 0.5 Ω for most circuits</li>
                           <li>Ring final circuits: R1+R2 values specific to cable type and length</li>
@@ -512,8 +512,8 @@ const Module6Section3_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Advanced Testing Techniques:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Advanced Testing Techniques:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Cross-bonding verification: ensuring proper connection sequences</li>
                           <li>Earth electrode resistance: specialized earth testing requirements</li>
                           <li>Fault loop impedance preparation: continuity forms basis for Ze+R1+R2</li>
@@ -525,8 +525,8 @@ const Module6Section3_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Common Issues and Troubleshooting:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Common Issues and Troubleshooting:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Lead resistance compensation: zeroing procedure eliminates measurement errors</li>
                           <li>Contact resistance effects: clean connections essential for accurate readings</li>
                           <li>Parallel path effects: may give false low readings in complex circuits</li>
@@ -539,14 +539,14 @@ const Module6Section3_1 = () => {
 
                       <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded border border-green-200 dark:border-green-800">
                         <p className="font-medium text-green-700 dark:text-green-400 mb-2">Calibration and Accuracy</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="text-xs sm:text-sm text-white">
                           Always zero the continuity tester before each series of measurements to eliminate lead resistance. Use short, low-resistance test leads and maintain good contact pressure for accurate results.
                         </p>
                       </div>
 
                       <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded border border-green-200 dark:border-green-800 mt-3">
                         <p className="font-medium text-green-700 dark:text-green-400 mb-2">Professional Practice</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="text-xs sm:text-sm text-white">
                           Document all continuity readings methodically. Unexpected high readings often indicate installation defects that must be investigated and rectified before energisation.
                         </p>
                       </div>
@@ -568,13 +568,13 @@ const Module6Section3_1 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Practical Guidance</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
           
           <div className="space-y-6">
             <div>
-              <h3 className="font-semibold text-foreground mb-3">Core Testing Procedures</h3>
-              <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+              <h3 className="font-semibold text-white mb-3">Core Testing Procedures</h3>
+              <ul className="list-disc pl-6 space-y-2 text-base text-white">
                 <li>Always confirm instruments are GS38 compliant (shrouded probes, fused leads, current limitation)</li>
                 <li>Check calibration certificates before use — faulty readings may lead to unsafe conclusions</li>
                 <li>For multimeters: start on the highest range, then step down for optimal resolution</li>
@@ -586,11 +586,11 @@ const Module6Section3_1 = () => {
             </div>
 
             <div className="bg-muted/50 p-4 rounded-lg">
-              <h3 className="font-semibold text-foreground mb-3">Advanced Instrument Selection & Setup</h3>
+              <h3 className="font-semibold text-white mb-3">Advanced Instrument Selection & Setup</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <p className="font-medium text-foreground mb-2">Multimeter Applications:</p>
-                  <ul className="text-xs sm:text-sm text-foreground list-disc pl-4 space-y-1">
+                  <p className="font-medium text-white mb-2">Multimeter Applications:</p>
+                  <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                     <li>AC/DC voltage measurements for supply verification</li>
                     <li>Current measurement using clamp-on adapters for safety</li>
                     <li>Resistance checks for heating elements and motor windings</li>
@@ -600,8 +600,8 @@ const Module6Section3_1 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium text-foreground mb-2">IR Tester Protocols:</p>
-                  <ul className="text-xs sm:text-sm text-foreground list-disc pl-4 space-y-1">
+                  <p className="font-medium text-white mb-2">IR Tester Protocols:</p>
+                  <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                     <li>Voltage selection based on equipment nominal voltage</li>
                     <li>Complete isolation verification before connection</li>
                     <li>Equipment disconnection: electronics, RCDs, surge protectors</li>
@@ -614,11 +614,11 @@ const Module6Section3_1 = () => {
             </div>
 
             <div className="bg-muted/50 p-4 rounded-lg">
-              <h3 className="font-semibold text-foreground mb-3">Professional Testing Techniques</h3>
+              <h3 className="font-semibold text-white mb-3">Professional Testing Techniques</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <p className="font-medium text-foreground mb-2">Continuity Testing Methods:</p>
-                  <ul className="text-xs sm:text-sm text-foreground list-disc pl-4 space-y-1">
+                  <p className="font-medium text-white mb-2">Continuity Testing Methods:</p>
+                  <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                     <li>Ring circuit R1+R2 method for accurate end-to-end values</li>
                     <li>Cross-connection technique for polarity verification</li>
                     <li>Protective conductor testing from main earthing terminal</li>
@@ -628,8 +628,8 @@ const Module6Section3_1 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium text-foreground mb-2">Advanced Diagnostics:</p>
-                  <ul className="text-xs sm:text-sm text-foreground list-disc pl-4 space-y-1">
+                  <p className="font-medium text-white mb-2">Advanced Diagnostics:</p>
+                  <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                     <li>Trending analysis for predictive maintenance planning</li>
                     <li>Comparative testing across similar circuits or phases</li>
                     <li>Load testing using controlled current injection</li>
@@ -642,11 +642,11 @@ const Module6Section3_1 = () => {
             </div>
 
             <div className="bg-muted/50 p-4 rounded-lg">
-              <h3 className="font-semibold text-foreground mb-3">Quality Assurance & Maintenance</h3>
+              <h3 className="font-semibold text-white mb-3">Quality Assurance & Maintenance</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <p className="font-medium text-foreground mb-2">Instrument Maintenance:</p>
-                  <ul className="text-xs sm:text-sm text-foreground list-disc pl-4 space-y-1">
+                  <p className="font-medium text-white mb-2">Instrument Maintenance:</p>
+                  <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                     <li>Annual calibration by accredited laboratories</li>
                     <li>Regular inspection of test leads and probe condition</li>
                     <li>Battery replacement schedules and low-battery procedures</li>
@@ -656,8 +656,8 @@ const Module6Section3_1 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium text-foreground mb-2">Results Management:</p>
-                  <ul className="text-xs sm:text-sm text-foreground list-disc pl-4 space-y-1">
+                  <p className="font-medium text-white mb-2">Results Management:</p>
+                  <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                     <li>Systematic documentation using standard test forms</li>
                     <li>Digital data logging for trend analysis and reporting</li>
                     <li>Cross-verification of critical measurements</li>
@@ -671,7 +671,7 @@ const Module6Section3_1 = () => {
 
             <div className="bg-amber-50 dark:bg-amber-900/20 p-4 rounded-lg border border-amber-200 dark:border-amber-700">
               <h3 className="font-semibold text-amber-800 dark:text-amber-200 mb-3">Safety Critical Reminders</h3>
-              <ul className="text-xs sm:text-sm text-foreground list-disc pl-4 space-y-1">
+              <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                 <li>Never exceed instrument CAT ratings - voltage category and maximum voltage must not be exceeded</li>
                 <li>Always verify instrument functionality with known sources before and after testing</li>
                 <li>IR testing can charge cables and equipment - always discharge safely after testing</li>
@@ -684,29 +684,29 @@ const Module6Section3_1 = () => {
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-World Example</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Example</h2>
           <div className="bg-amber-50 dark:bg-amber-900/20 p-4 rounded-lg border border-amber-200 dark:border-amber-700">
-            <p className="text-base text-foreground mb-4">
+            <p className="text-base text-white mb-4">
               An apprentice electrician is asked to test a ring final circuit in a new domestic property. First, they use a continuity tester to verify the ring is complete by measuring R1+R2 from the consumer unit to each socket, ensuring readings are consistent and within expected values for the cable type. They then use the IR tester to confirm that insulation resistance between live conductors and earth exceeds 1 MΩ at 500V DC, ensuring no dangerous leakage currents. Finally, they use a multimeter to check voltage at each socket outlet, verifying 230V ±10% and correct polarity before handing over to the client.
             </p>
             <div className="grid md:grid-cols-3 gap-3 sm:gap-4 mt-4">
               <div className="p-3 bg-amber-100 dark:bg-amber-900/40 rounded border-l-4 border-l-amber-500">
                 <p className="font-medium text-amber-800 dark:text-amber-200 mb-1">Continuity Testing</p>
-                <p className="text-xs sm:text-sm text-foreground">Verified complete ring integrity and correct polarity using systematic R1+R2 method</p>
+                <p className="text-xs sm:text-sm text-white">Verified complete ring integrity and correct polarity using systematic R1+R2 method</p>
               </div>
               <div className="p-3 bg-amber-100 dark:bg-amber-900/40 rounded border-l-4 border-l-amber-500">
                 <p className="font-medium text-amber-800 dark:text-amber-200 mb-1">Insulation Testing</p>
-                <p className="text-xs sm:text-sm text-foreground">Confirmed insulation quality &gt;1 MΩ using 500V DC appropriate for 230V circuit</p>
+                <p className="text-xs sm:text-sm text-white">Confirmed insulation quality &gt;1 MΩ using 500V DC appropriate for 230V circuit</p>
               </div>
               <div className="p-3 bg-amber-100 dark:bg-amber-900/40 rounded border-l-4 border-l-amber-500">
                 <p className="font-medium text-amber-800 dark:text-amber-200 mb-1">Final Verification</p>
-                <p className="text-xs sm:text-sm text-foreground">Voltage and polarity confirmation using multimeter before energisation</p>
+                <p className="text-xs sm:text-sm text-white">Voltage and polarity confirmation using multimeter before energisation</p>
               </div>
             </div>
             <div className="mt-4 p-3 bg-amber-100 dark:bg-amber-900/40 rounded border-l-4 border-l-amber-500">
               <p className="font-medium text-amber-800 dark:text-amber-200 mb-1">Professional Insight</p>
-              <p className="text-xs sm:text-sm text-foreground">
+              <p className="text-xs sm:text-sm text-white">
                 This systematic approach demonstrates how different instruments serve specific purposes in electrical verification. The sequence ensures safety, compliance, and proper circuit operation before handover to the client.
               </p>
             </div>
@@ -714,96 +714,96 @@ const Module6Section3_1 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             <div className="border-l-4 border-l-emerald-400 pl-4">
-              <p className="font-medium text-foreground mb-1">Q: Can a multimeter test insulation resistance?</p>
-              <p className="text-base text-muted-foreground">A: No. A dedicated insulation resistance tester must be used as multimeters cannot apply the high voltages required.</p>
+              <p className="font-medium text-white mb-1">Q: Can a multimeter test insulation resistance?</p>
+              <p className="text-base text-white">A: No. A dedicated insulation resistance tester must be used as multimeters cannot apply the high voltages required.</p>
             </div>
             <div className="border-l-4 border-l-emerald-400 pl-4">
-              <p className="font-medium text-foreground mb-1">Q: Why do we zero a continuity tester?</p>
-              <p className="text-base text-muted-foreground">A: To eliminate lead resistance and ensure accurate results by compensating for the resistance of the test leads themselves.</p>
+              <p className="font-medium text-white mb-1">Q: Why do we zero a continuity tester?</p>
+              <p className="text-base text-white">A: To eliminate lead resistance and ensure accurate results by compensating for the resistance of the test leads themselves.</p>
             </div>
             <div className="border-l-4 border-l-emerald-400 pl-4">
-              <p className="font-medium text-foreground mb-1">Q: What's the difference between a continuity tester and a multimeter?</p>
-              <p className="text-base text-muted-foreground">A: A continuity tester is specialised for checking unbroken circuits, while a multimeter has broader applications including voltage, resistance, and current measurements.</p>
+              <p className="font-medium text-white mb-1">Q: What's the difference between a continuity tester and a multimeter?</p>
+              <p className="text-base text-white">A: A continuity tester is specialised for checking unbroken circuits, while a multimeter has broader applications including voltage, resistance, and current measurements.</p>
             </div>
           </div>
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-8 p-6 bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-transparent border border-emerald-500/30">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Pocket Guide – Test Instruments</h2>
+        <Card className="mb-8 p-6 bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-transparent border border-elec-yellow/30">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Guide – Test Instruments</h2>
           <div className="grid gap-3">
             <div className="flex items-center gap-2">
               <span className="text-green-500 font-bold">✅</span>
-              <span className="text-base text-foreground">Multimeter = Voltage, current, resistance.</span>
+              <span className="text-base text-white">Multimeter = Voltage, current, resistance.</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-green-500 font-bold">✅</span>
-              <span className="text-base text-foreground">IR Tester = Insulation resistance (MΩ).</span>
+              <span className="text-base text-white">IR Tester = Insulation resistance (MΩ).</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-green-500 font-bold">✅</span>
-              <span className="text-base text-foreground">Continuity Tester = Unbroken circuits, bonding, and earthing.</span>
+              <span className="text-base text-white">Continuity Tester = Unbroken circuits, bonding, and earthing.</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-green-500 font-bold">✅</span>
-              <span className="text-base text-foreground">Always check calibration and compliance before use.</span>
+              <span className="text-base text-white">Always check calibration and compliance before use.</span>
             </div>
           </div>
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">Recap</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Recap</h2>
           <div className="grid md:grid-cols-5 gap-4">
             <div className="text-center p-4 rounded-lg bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700">
-              <Zap className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
-              <p className="font-medium text-blue-700 dark:text-emerald-400 mb-1">Multimeter Versatility</p>
-              <p className="text-xs text-foreground">Voltage, current, resistance</p>
+              <Zap className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
+              <p className="font-medium text-blue-700 dark:text-elec-yellow mb-1">Multimeter Versatility</p>
+              <p className="text-xs text-white">Voltage, current, resistance</p>
             </div>
             <div className="text-center p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-700">
               <Shield className="w-8 h-8 text-purple-600 mx-auto mb-2" />
-              <p className="font-medium text-purple-700 dark:text-emerald-400 mb-1">IR Testing</p>
-              <p className="text-xs text-foreground">Insulation quality assessment</p>
+              <p className="font-medium text-purple-700 dark:text-elec-yellow mb-1">IR Testing</p>
+              <p className="text-xs text-white">Insulation quality assessment</p>
             </div>
             <div className="text-center p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700">
               <FileText className="w-8 h-8 text-green-600 mx-auto mb-2" />
               <p className="font-medium text-green-700 dark:text-green-300 mb-1">Continuity</p>
-              <p className="text-xs text-foreground">Circuit path verification</p>
+              <p className="text-xs text-white">Circuit path verification</p>
             </div>
             <div className="text-center p-4 rounded-lg bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-700">
               <AlertTriangle className="w-8 h-8 text-orange-600 mx-auto mb-2" />
-              <p className="font-medium text-orange-700 dark:text-emerald-400 mb-1">Safety Standards</p>
-              <p className="text-xs text-foreground">GS38 compliance essential</p>
+              <p className="font-medium text-orange-700 dark:text-elec-yellow mb-1">Safety Standards</p>
+              <p className="text-xs text-white">GS38 compliance essential</p>
             </div>
             <div className="text-center p-4 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-700">
               <Target className="w-8 h-8 text-indigo-600 mx-auto mb-2" />
               <p className="font-medium text-indigo-700 dark:text-indigo-300 mb-1">Correct Selection</p>
-              <p className="text-xs text-foreground">Right tool for the job</p>
+              <p className="text-xs text-white">Right tool for the job</p>
             </div>
           </div>
-          <p className="text-base text-foreground mt-6">
+          <p className="text-base text-white mt-6">
             Multimeters measure voltage, current, and resistance. Insulation Resistance Testers measure insulation quality using high DC voltage. Continuity Testers confirm unbroken paths in circuits. Correct tool selection ensures accuracy, safety, and compliance.
           </p>
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <Quiz questions={quizQuestions} title="Section 6.3.1 Knowledge Check" />
         </Card>
 
         {/* Bottom Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 pt-8 border-t border-border/20">
-          <Button variant="outline" className="text-muted-foreground hover:text-foreground w-full sm:w-auto" asChild>
+        <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 pt-8 border-t border-white/10">
+          <Button variant="outline" className="text-white hover:text-white w-full sm:w-auto" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section Overview
             </Link>
           </Button>
-          <Button variant="outline" className="text-muted-foreground hover:text-foreground w-full sm:w-auto" asChild>
+          <Button variant="outline" className="text-white hover:text-white w-full sm:w-auto" asChild>
             <Link to="../3-2">
               Next: Subsection 2
             </Link>

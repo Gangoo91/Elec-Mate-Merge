@@ -1,5 +1,5 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import { Input } from "@/components/ui/input";
@@ -86,7 +86,7 @@ const ElectricalSymbols = () => {
         <p className="text-sm sm:text-base text-muted-foreground text-center max-w-2xl mb-3 sm:mb-4">
           Learn and reference common electrical symbols used in circuit diagrams and schematics
         </p>
-        <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
+        <SmartBackButton />
       </div>
 
       <div className="relative mb-6">

@@ -1,8 +1,8 @@
 
 import { useState } from "react";
-import BackButton from "@/components/common/BackButton";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import {
   Heart,
   BookOpen,
@@ -217,7 +217,7 @@ const ElectricianMentalHealth = () => {
             Your wellbeing matters. Take a moment for yourself.
           </p>
           <div className="mt-4">
-            <BackButton customUrl="/electrician" label="Back to Dashboard" />
+            <SmartBackButton />
           </div>
         </div>
 

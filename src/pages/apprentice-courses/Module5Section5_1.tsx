@@ -229,11 +229,11 @@ const Module5Section5_1 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 5
@@ -247,38 +247,38 @@ const Module5Section5_1 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Users className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Users className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 5.5.1
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Understanding Site Roles and Responsibilities
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Learn about key site personnel, their responsibilities, and the chain of command for effective teamwork.
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-6">
-            <Target className="w-6 h-6 text-foreground" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Introduction</h2>
+            <Target className="w-6 h-6 text-white" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Introduction</h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Every person on site has a defined role and responsibilities.</li>
                 <li>Always follow the chain of command for reporting.</li>
                 <li>Know who to approach for different types of issues.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Confusion about who gives instructions or handles issues.</li>
                 <li><strong>Use:</strong> Clear reporting structures and communication chains.</li>
@@ -289,18 +289,18 @@ const Module5Section5_1 = () => {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <p className="text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <p className="text-base text-white mb-4">
             On any construction site, knowing who is responsible for what is essential to keeping the project organised, safe, and on schedule. Clear understanding of roles ensures that electricians can work effectively with supervisors, other trades, and site personnel. Misunderstanding roles can cause delays, duplication of work, or safety hazards.
           </p>
           
           <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
             <div className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-emerald-400 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2">Why This Matters</p>
-                <p className="text-xs sm:text-sm text-foreground">
+                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Why This Matters</p>
+                <p className="text-xs sm:text-sm text-white">
                   Clear understanding of site roles reduces miscommunication by up to 60% and significantly improves project coordination and safety outcomes.
                 </p>
               </div>
@@ -308,12 +308,12 @@ const Module5Section5_1 = () => {
           </div>
           
           <div className="mt-4 space-y-3">
-            <p className="text-base text-foreground">
+            <p className="text-base text-white">
               <strong>Real Impact:</strong> Sites with clearly defined roles and responsibilities show 35% fewer delays and improved safety performance compared to poorly organised projects.
             </p>
             
             <div className="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded border border-emerald-200 dark:border-emerald-800">
-              <p className="text-xs sm:text-sm text-foreground">
+              <p className="text-xs sm:text-sm text-white">
                 <strong>Industry Standard:</strong> CDM 2015 regulations require clear definition of roles and responsibilities to ensure effective health and safety management on construction sites.
               </p>
             </div>
@@ -321,50 +321,50 @@ const Module5Section5_1 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this subsection, you will be able to:</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-white mb-4">By the end of this subsection, you will be able to:</p>
           
           <div className="grid md:grid-cols-2 gap-4 mb-6">
             <div className="space-y-3">
-              <h4 className="font-medium text-foreground">Site Personnel Knowledge</h4>
-              <ul className="space-y-2 text-muted-foreground text-sm">
+              <h4 className="font-medium text-white">Site Personnel Knowledge</h4>
+              <ul className="space-y-2 text-white text-sm">
                 <li className="flex items-start">
-                  <span className="text-emerald-400 mr-2 font-bold">•</span>
+                  <span className="text-elec-yellow mr-2 font-bold">•</span>
                   Identify the main roles of personnel on a construction site
                 </li>
                 <li className="flex items-start">
-                  <span className="text-emerald-400 mr-2 font-bold">•</span>
+                  <span className="text-elec-yellow mr-2 font-bold">•</span>
                   Understand the responsibilities of each role
                 </li>
                 <li className="flex items-start">
-                  <span className="text-emerald-400 mr-2 font-bold">•</span>
+                  <span className="text-elec-yellow mr-2 font-bold">•</span>
                   Recognise the chain of command and reporting structure
                 </li>
                 <li className="flex items-start">
-                  <span className="text-emerald-400 mr-2 font-bold">•</span>
+                  <span className="text-elec-yellow mr-2 font-bold">•</span>
                   Know who to approach for specific site-related issues
                 </li>
               </ul>
             </div>
             
             <div className="space-y-3">
-              <h4 className="font-medium text-foreground">Communication Skills</h4>
-              <ul className="space-y-2 text-muted-foreground text-sm">
+              <h4 className="font-medium text-white">Communication Skills</h4>
+              <ul className="space-y-2 text-white text-sm">
                 <li className="flex items-start">
-                  <span className="text-emerald-400 mr-2 font-bold">•</span>
+                  <span className="text-elec-yellow mr-2 font-bold">•</span>
                   Work more effectively as part of a multi-trade team
                 </li>
                 <li className="flex items-start">
-                  <span className="text-emerald-400 mr-2 font-bold">•</span>
+                  <span className="text-elec-yellow mr-2 font-bold">•</span>
                   Follow proper reporting procedures and communication chains
                 </li>
                 <li className="flex items-start">
-                  <span className="text-emerald-400 mr-2 font-bold">•</span>
+                  <span className="text-elec-yellow mr-2 font-bold">•</span>
                   Resolve conflicts and issues through appropriate channels
                 </li>
                 <li className="flex items-start">
-                  <span className="text-emerald-400 mr-2 font-bold">•</span>
+                  <span className="text-elec-yellow mr-2 font-bold">•</span>
                   Maintain professional relationships with all site personnel
                 </li>
               </ul>
@@ -373,36 +373,36 @@ const Module5Section5_1 = () => {
           
           <div className="grid md:grid-cols-2 gap-4">
             <div className="space-y-3">
-              <h4 className="font-medium text-foreground">Practical Application</h4>
-              <ul className="space-y-2 text-muted-foreground text-sm">
+              <h4 className="font-medium text-white">Practical Application</h4>
+              <ul className="space-y-2 text-white text-sm">
                 <li className="flex items-start">
-                  <span className="text-emerald-400 mr-2 font-bold">•</span>
+                  <span className="text-elec-yellow mr-2 font-bold">•</span>
                   Navigate site hierarchies and reporting structures effectively
                 </li>
                 <li className="flex items-start">
-                  <span className="text-emerald-400 mr-2 font-bold">•</span>
+                  <span className="text-elec-yellow mr-2 font-bold">•</span>
                   Coordinate work activities with other trades and supervisors
                 </li>
                 <li className="flex items-start">
-                  <span className="text-emerald-400 mr-2 font-bold">•</span>
+                  <span className="text-elec-yellow mr-2 font-bold">•</span>
                   Participate effectively in site meetings and briefings
                 </li>
               </ul>
             </div>
             
             <div className="space-y-3">
-              <h4 className="font-medium text-foreground">Safety & Compliance</h4>
-              <ul className="space-y-2 text-muted-foreground text-sm">
+              <h4 className="font-medium text-white">Safety & Compliance</h4>
+              <ul className="space-y-2 text-white text-sm">
                 <li className="flex items-start">
-                  <span className="text-emerald-400 mr-2 font-bold">•</span>
+                  <span className="text-elec-yellow mr-2 font-bold">•</span>
                   Report safety issues through correct channels
                 </li>
                 <li className="flex items-start">
-                  <span className="text-emerald-400 mr-2 font-bold">•</span>
+                  <span className="text-elec-yellow mr-2 font-bold">•</span>
                   Understand emergency procedures and contact points
                 </li>
                 <li className="flex items-start">
-                  <span className="text-emerald-400 mr-2 font-bold">•</span>
+                  <span className="text-elec-yellow mr-2 font-bold">•</span>
                   Maintain accountability and professional standards
                 </li>
               </ul>
@@ -411,27 +411,27 @@ const Module5Section5_1 = () => {
         </Card>
 
         {/* Content / Learning */}
-        <Card className="mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* Key Site Roles */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">1. Key Site Roles</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">1. Key Site Roles</h3>
+            <p className="text-base text-white mb-4">
               Understanding the main roles and responsibilities on construction sites ensures effective communication and workflow. Each role has specific functions that contribute to project success and safety:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-3 sm:p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-3 sm:p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-2 sm:gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-3 text-sm sm:text-base">Primary Site Personnel and Their Functions</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3 text-sm sm:text-base">Primary Site Personnel and Their Functions</p>
                     
                     <div className="space-y-3 sm:space-y-4">
                       <div>
-                        <p className="text-sm sm:text-base text-foreground mb-2 font-semibold">Management Hierarchy:</p>
-                        <ul className="text-xs sm:text-xs sm:text-sm text-foreground ml-3 sm:ml-4 list-disc space-y-1 sm:space-y-2">
+                        <p className="text-sm sm:text-base text-white mb-2 font-semibold">Management Hierarchy:</p>
+                        <ul className="text-xs sm:text-xs sm:text-sm text-white ml-3 sm:ml-4 list-disc space-y-1 sm:space-y-2">
                           <li><strong>Site Manager / Project Manager</strong> – Overall responsibility for site safety, progress, coordination, budgets, and client liaison. Makes strategic decisions and handles contract issues.</li>
                           <li><strong>Site Supervisor / Foreman</strong> – Day-to-day management of trades, allocation of tasks, quality checks, and direct worker supervision. Your main point of contact for daily operations.</li>
                           <li><strong>Health & Safety Officer</strong> – Ensures compliance with safety regulations, monitors risks, delivers safety briefings, conducts site inspections, and investigates incidents.</li>
@@ -439,8 +439,8 @@ const Module5Section5_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-sm sm:text-base text-foreground mb-2 font-semibold">Operational Personnel:</p>
-                        <ul className="text-xs sm:text-xs sm:text-sm text-foreground ml-3 sm:ml-4 list-disc space-y-1 sm:space-y-2">
+                        <p className="text-sm sm:text-base text-white mb-2 font-semibold">Operational Personnel:</p>
+                        <ul className="text-xs sm:text-xs sm:text-sm text-white ml-3 sm:ml-4 list-disc space-y-1 sm:space-y-2">
                           <li><strong>Electricians / Apprentices</strong> – Carry out installation, testing, and maintenance tasks according to BS 7671 and project specifications. Responsible for quality workmanship and safety compliance.</li>
                           <li><strong>Other Trades (Joiners, Plumbers, HVAC, etc.)</strong> – Responsible for their specific trade tasks, often working alongside electricians. Coordination with these trades is essential for efficient workflow.</li>
                           <li><strong>Client / Client Representative</strong> – May attend site to check progress, ensure requirements are being met, approve variations, and sign off completed work phases.</li>
@@ -448,9 +448,9 @@ const Module5Section5_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-sm sm:text-base text-foreground mb-2 font-semibold">Specialist Roles:</p>
-                        <div className="bg-background/50 p-2 sm:p-3 rounded border mb-2">
-                          <ul className="list-disc ml-3 sm:ml-4 space-y-1 text-xs sm:text-xs sm:text-sm text-foreground">
+                        <p className="text-sm sm:text-base text-white mb-2 font-semibold">Specialist Roles:</p>
+                        <div className="bg-[#121212]/50 p-2 sm:p-3 rounded border mb-2">
+                          <ul className="list-disc ml-3 sm:ml-4 space-y-1 text-xs sm:text-xs sm:text-sm text-white">
                             <li><strong>Quantity Surveyor:</strong> Manages project costs, variations, and material orders</li>
                             <li><strong>Site Engineer:</strong> Provides technical support and sets out work positions</li>
                             <li><strong>CDM Coordinator:</strong> Ensures health and safety compliance under CDM regulations</li>
@@ -461,7 +461,7 @@ const Module5Section5_1 = () => {
 
                       <div className="bg-green-50 dark:bg-green-900/20 p-2 sm:p-3 rounded border border-green-200 dark:border-green-800">
                         <p className="font-medium text-green-700 dark:text-green-400 mb-2 text-xs sm:text-sm">Professional Impact</p>
-                        <p className="text-xs sm:text-xs sm:text-sm text-foreground">
+                        <p className="text-xs sm:text-xs sm:text-sm text-white">
                           Understanding site roles improves your professional credibility and helps you navigate complex project environments more effectively.
                         </p>
                       </div>
@@ -474,13 +474,13 @@ const Module5Section5_1 = () => {
 
           {/* Responsibilities of Each Role */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">2. Responsibilities of Each Role</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">2. Responsibilities of Each Role</h3>
+            <p className="text-base text-white mb-4">
               Each role has specific responsibilities that contribute to project success and site safety. Understanding these helps you know who to approach for different issues:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-3 sm:p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-3 sm:p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-2 sm:gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
@@ -488,9 +488,9 @@ const Module5Section5_1 = () => {
                     
                     <div className="space-y-3 sm:space-y-4">
                       <div>
-                        <p className="text-sm sm:text-base text-foreground mb-2 font-semibold">Management Responsibilities:</p>
-                        <div className="bg-background/50 p-2 sm:p-3 rounded border mb-2">
-                          <ul className="list-disc ml-3 sm:ml-4 space-y-1 text-xs sm:text-xs sm:text-sm text-foreground">
+                        <p className="text-sm sm:text-base text-white mb-2 font-semibold">Management Responsibilities:</p>
+                        <div className="bg-[#121212]/50 p-2 sm:p-3 rounded border mb-2">
+                          <ul className="list-disc ml-3 sm:ml-4 space-y-1 text-xs sm:text-xs sm:text-sm text-white">
                             <li><strong>Site Managers:</strong> Ensure project deadlines, budgets, and safety compliance. Handle contract disputes, client relations, and strategic planning.</li>
                             <li><strong>Supervisors/Foremen:</strong> Direct daily tasks, coordinate between trades, conduct quality checks, manage workforce, and act as communication bridge between workers and management.</li>
                             <li><strong>Health & Safety Officers:</strong> Monitor compliance with safety regulations, conduct risk assessments, deliver toolbox talks, investigate accidents, and ensure PPE compliance.</li>
@@ -499,11 +499,11 @@ const Module5Section5_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-sm sm:text-base text-foreground mb-2 font-semibold">Trade Responsibilities:</p>
+                        <p className="text-sm sm:text-base text-white mb-2 font-semibold">Trade Responsibilities:</p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                          <div className="bg-background/50 p-2 sm:p-3 rounded border">
+                          <div className="bg-[#121212]/50 p-2 sm:p-3 rounded border">
                             <p className="font-medium mb-2 text-xs sm:text-sm">Electricians</p>
-                            <ul className="text-xs sm:text-xs sm:text-sm text-foreground list-disc ml-3 sm:ml-4 space-y-1">
+                            <ul className="text-xs sm:text-xs sm:text-sm text-white list-disc ml-3 sm:ml-4 space-y-1">
                               <li>Install electrical systems to BS 7671</li>
                               <li>Complete testing and certification</li>
                               <li>Maintain accurate records</li>
@@ -511,9 +511,9 @@ const Module5Section5_1 = () => {
                               <li>Supervise apprentices</li>
                             </ul>
                           </div>
-                          <div className="bg-background/50 p-2 sm:p-3 rounded border">
+                          <div className="bg-[#121212]/50 p-2 sm:p-3 rounded border">
                             <p className="font-medium mb-2 text-xs sm:text-sm">Apprentices</p>
-                            <ul className="text-xs sm:text-xs sm:text-sm text-foreground list-disc ml-3 sm:ml-4 space-y-1">
+                            <ul className="text-xs sm:text-xs sm:text-sm text-white list-disc ml-3 sm:ml-4 space-y-1">
                               <li>Follow instructions from qualified personnel</li>
                               <li>Work safely and ask questions when unsure</li>
                               <li>Develop skills through practical experience</li>
@@ -525,9 +525,9 @@ const Module5Section5_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-sm sm:text-base text-foreground mb-2 font-semibold">Coordination Requirements:</p>
+                        <p className="text-sm sm:text-base text-white mb-2 font-semibold">Coordination Requirements:</p>
                         <div className="bg-yellow-50 dark:bg-yellow-900/20 p-2 sm:p-3 rounded border border-yellow-200 dark:border-yellow-800">
-                          <ul className="text-xs sm:text-xs sm:text-sm text-foreground list-disc ml-3 sm:ml-4 space-y-1">
+                          <ul className="text-xs sm:text-xs sm:text-sm text-white list-disc ml-3 sm:ml-4 space-y-1">
                             <li><strong>Client Representatives:</strong> Monitor progress against specifications, approve variations, sign off completed phases</li>
                             <li><strong>Other Trades:</strong> Coordinate installation sequences, share workspace safely, communicate potential conflicts</li>
                             <li><strong>Delivery Personnel:</strong> Coordinate material deliveries, ensure safe storage, verify quantities and specifications</li>
@@ -552,34 +552,34 @@ const Module5Section5_1 = () => {
 
           {/* Chain of Command */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">3. Chain of Command</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">3. Chain of Command</h3>
+            <p className="text-base text-white mb-4">
               Following the correct chain of command ensures clear communication, prevents confusion, and maintains efficient workflow. Understanding reporting structures is essential for professional conduct:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-3 sm:p-5 border-l-4 border-l-orange-500 bg-card">
+              <div className="rounded-lg p-3 sm:p-5 border-l-4 border-l-orange-500 ">
                 <div className="flex items-start gap-2 sm:gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-emerald-400 mb-3 text-sm sm:text-base">Communication Hierarchy and Procedures</p>
+                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3 text-sm sm:text-base">Communication Hierarchy and Procedures</p>
                     
-                    <div className="bg-background rounded-lg p-3 sm:p-4 mb-4">
+                    <div className="bg-[#121212] rounded-lg p-3 sm:p-4 mb-4">
                       <p className="text-white font-semibold mb-3 text-sm sm:text-base">Reporting Structure:</p>
                       
                       <div className="space-y-3">
                         <div className="text-white text-xs sm:text-sm">
-                          <span className="text-emerald-400 mr-2">•</span>
+                          <span className="text-elec-yellow mr-2">•</span>
                           <strong>Always report issues to your immediate supervisor first</strong> – This maintains clear communication lines and ensures proper documentation.
                         </div>
                         
                         <div className="text-white text-xs sm:text-sm">
-                          <span className="text-emerald-400 mr-2">•</span>
+                          <span className="text-elec-yellow mr-2">•</span>
                           <strong>Use the correct communication routes</strong> – Avoid confusion or delays by following established procedures.
                         </div>
                         
                         <div className="text-white text-xs sm:text-sm">
-                          <span className="text-emerald-400 mr-2">•</span>
+                          <span className="text-elec-yellow mr-2">•</span>
                           <strong>Document important communications</strong> – Keep records of instructions, changes, and decisions for future reference.
                         </div>
                       </div>
@@ -587,9 +587,9 @@ const Module5Section5_1 = () => {
                     
                     <div className="space-y-3 sm:space-y-4">
                       <div>
-                        <p className="text-sm sm:text-base text-foreground mb-2 font-semibold">Typical reporting hierarchy:</p>
+                        <p className="text-sm sm:text-base text-white mb-2 font-semibold">Typical reporting hierarchy:</p>
                         <div className="bg-emerald-50 dark:bg-blue-900/20 p-2 sm:p-3 rounded border border-blue-200 dark:border-blue-800 mb-3">
-                          <div className="text-xs sm:text-xs sm:text-sm text-foreground space-y-2">
+                          <div className="text-xs sm:text-xs sm:text-sm text-white space-y-2">
                             <p><strong>Apprentice → Qualified Electrician → Site Supervisor → Site Manager → Client</strong></p>
                             <p className="text-xs">Each level has authority to make decisions within their scope of responsibility</p>
                           </div>
@@ -597,11 +597,11 @@ const Module5Section5_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-sm sm:text-base text-foreground mb-2 font-semibold">Communication flow:</p>
+                        <p className="text-sm sm:text-base text-white mb-2 font-semibold">Communication flow:</p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                           <div className="bg-emerald-50 dark:bg-blue-900/20 p-2 sm:p-3 rounded border border-blue-200 dark:border-blue-800">
-                            <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2 text-xs sm:text-sm">Standard Issues</p>
-                            <ul className="text-xs sm:text-xs sm:text-sm text-foreground list-disc ml-3 sm:ml-4 space-y-1">
+                            <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2 text-xs sm:text-sm">Standard Issues</p>
+                            <ul className="text-xs sm:text-xs sm:text-sm text-white list-disc ml-3 sm:ml-4 space-y-1">
                               <li>Report to immediate supervisor</li>
                               <li>Supervisor escalates if needed</li>
                               <li>Site Manager makes final decisions</li>
@@ -609,8 +609,8 @@ const Module5Section5_1 = () => {
                             </ul>
                           </div>
                           <div className="bg-red-50 dark:bg-red-900/20 p-2 sm:p-3 rounded border border-red-200 dark:border-red-800">
-                            <p className="font-medium text-red-700 dark:text-emerald-400 mb-2 text-xs sm:text-sm">Emergency Situations</p>
-                            <ul className="text-xs sm:text-xs sm:text-sm text-foreground list-disc ml-3 sm:ml-4 space-y-1">
+                            <p className="font-medium text-red-700 dark:text-elec-yellow mb-2 text-xs sm:text-sm">Emergency Situations</p>
+                            <ul className="text-xs sm:text-xs sm:text-sm text-white list-disc ml-3 sm:ml-4 space-y-1">
                               <li>Stop work immediately</li>
                               <li>Alert everyone nearby</li>
                               <li>Follow emergency procedures</li>
@@ -637,23 +637,23 @@ const Module5Section5_1 = () => {
 
           {/* Why Understanding Roles Matters */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">4. Why Understanding Roles Matters</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">4. Why Understanding Roles Matters</h3>
+            <p className="text-base text-white mb-4">
               Clear understanding of roles and responsibilities creates a more efficient and safer working environment. It directly impacts project success, personal development, and workplace relationships:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-3 sm:p-5 border-l-4 border-l-purple-500 bg-card">
+              <div className="rounded-lg p-3 sm:p-5 border-l-4 border-l-purple-500 ">
                 <div className="flex items-start gap-2 sm:gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-3 text-sm sm:text-base">Impact on Project Success and Personal Development</p>
+                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3 text-sm sm:text-base">Impact on Project Success and Personal Development</p>
                     
                     <div className="space-y-3 sm:space-y-4">
                       <div>
-                        <p className="text-sm sm:text-base text-foreground mb-2 font-semibold">Immediate Benefits:</p>
-                        <div className="bg-background/50 p-2 sm:p-3 rounded border mb-3">
-                          <ul className="text-xs sm:text-xs sm:text-sm text-foreground ml-3 sm:ml-4 list-disc space-y-1">
+                        <p className="text-sm sm:text-base text-white mb-2 font-semibold">Immediate Benefits:</p>
+                        <div className="bg-[#121212]/50 p-2 sm:p-3 rounded border mb-3">
+                          <ul className="text-xs sm:text-xs sm:text-sm text-white ml-3 sm:ml-4 list-disc space-y-1">
                             <li><strong>Helps avoid conflict and confusion</strong> – Clear roles prevent overlapping responsibilities and disputes.</li>
                             <li><strong>Keeps workflow smooth and efficient</strong> – Everyone knows their tasks and dependencies.</li>
                             <li><strong>Enhances safety</strong> – Ensures the right person deals with the right problem quickly and correctly.</li>
@@ -663,11 +663,11 @@ const Module5Section5_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-sm sm:text-base text-foreground mb-2 font-semibold">Long-term advantages:</p>
+                        <p className="text-sm sm:text-base text-white mb-2 font-semibold">Long-term advantages:</p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                           <div className="bg-green-50 dark:bg-green-900/20 p-2 sm:p-3 rounded border border-green-200 dark:border-green-800">
                             <p className="font-medium text-green-700 dark:text-green-400 mb-2 text-xs sm:text-sm">Professional Development</p>
-                            <ul className="text-xs sm:text-xs sm:text-sm text-foreground list-disc ml-3 sm:ml-4 space-y-1">
+                            <ul className="text-xs sm:text-xs sm:text-sm text-white list-disc ml-3 sm:ml-4 space-y-1">
                               <li>Understanding hierarchy aids career progression</li>
                               <li>Builds professional credibility and respect</li>
                               <li>Develops leadership and communication skills</li>
@@ -675,8 +675,8 @@ const Module5Section5_1 = () => {
                             </ul>
                           </div>
                           <div className="bg-emerald-50 dark:bg-blue-900/20 p-2 sm:p-3 rounded border border-blue-200 dark:border-blue-800">
-                            <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2 text-xs sm:text-sm">Operational Benefits</p>
-                            <ul className="text-xs sm:text-xs sm:text-sm text-foreground list-disc ml-3 sm:ml-4 space-y-1">
+                            <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2 text-xs sm:text-sm">Operational Benefits</p>
+                            <ul className="text-xs sm:text-xs sm:text-sm text-white list-disc ml-3 sm:ml-4 space-y-1">
                               <li>Faster problem resolution and decision-making</li>
                               <li>Improved safety through clear escalation paths</li>
                               <li>Better coordination and reduced trade conflicts</li>
@@ -687,9 +687,9 @@ const Module5Section5_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-sm sm:text-base text-foreground mb-2 font-semibold">Real-world impact on electrical installations:</p>
+                        <p className="text-sm sm:text-base text-white mb-2 font-semibold">Real-world impact on electrical installations:</p>
                         <div className="bg-amber-50 dark:bg-amber-900/20 p-2 sm:p-3 rounded border border-amber-200 dark:border-amber-800">
-                          <ul className="text-xs sm:text-xs sm:text-sm text-foreground list-disc ml-3 sm:ml-4 space-y-1">
+                          <ul className="text-xs sm:text-xs sm:text-sm text-white list-disc ml-3 sm:ml-4 space-y-1">
                             <li><strong>Quality assurance:</strong> Proper reporting ensures work is checked and approved at appropriate levels</li>
                             <li><strong>Safety compliance:</strong> Clear responsibilities ensure safety requirements are met and maintained</li>
                             <li><strong>Problem resolution:</strong> Issues with design, materials, or access are resolved efficiently through correct channels</li>
@@ -715,15 +715,15 @@ const Module5Section5_1 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Practical Guidance</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
           <div className="space-y-4">
             {practicalGuidance.map((step, index) => (
               <div key={index} className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-sm font-medium text-foreground">{index + 1}</span>
+                <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-sm font-medium text-white">{index + 1}</span>
                 </div>
-                <p className="text-xs sm:text-sm text-foreground">{step}</p>
+                <p className="text-xs sm:text-sm text-white">{step}</p>
               </div>
             ))}
           </div>
@@ -733,7 +733,7 @@ const Module5Section5_1 = () => {
               <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
               <div>
                 <p className="font-medium text-amber-700 dark:text-amber-400 mb-2">Remember</p>
-                <p className="text-xs sm:text-sm text-foreground">
+                <p className="text-xs sm:text-sm text-white">
                   Never bypass the chain of command unless it's an emergency requiring immediate action to prevent harm.
                 </p>
               </div>
@@ -742,11 +742,11 @@ const Module5Section5_1 = () => {
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-World Example</h2>
-          <div className="rounded-lg p-4 bg-slate-50 dark:bg-background/50 border border-slate-200 dark:border-slate-800">
-            <h3 className="font-medium text-foreground mb-3">Commercial Project Communication Breakdown</h3>
-            <div className="space-y-3 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Example</h2>
+          <div className="rounded-lg p-4 bg-slate-50 dark:bg-[#121212]/50 border border-slate-200 dark:border-slate-800">
+            <h3 className="font-medium text-white mb-3">Commercial Project Communication Breakdown</h3>
+            <div className="space-y-3 text-xs sm:text-sm text-white">
               <p>
                 <strong>Situation:</strong> On a large commercial project, an apprentice reported a damaged cable directly to the client's representative instead of the site supervisor.
               </p>
@@ -764,35 +764,35 @@ const Module5Section5_1 = () => {
         </Card>
 
         {/* FAQs Section */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">FAQs</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">FAQs</h2>
           <div className="space-y-6">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-border/20 pb-4 last:border-b-0">
-                <h3 className="font-medium text-foreground mb-2">Q: {faq.question}</h3>
-                <p className="text-sm text-muted-foreground">A: {faq.answer}</p>
+              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
+                <h3 className="font-medium text-white mb-2">Q: {faq.question}</h3>
+                <p className="text-sm text-white">A: {faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Pocket Guide</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Guide</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {pocketGuideItems.map((item, index) => (
               <div key={index} className="flex items-start gap-3">
-                <CheckCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
-                <span className="text-xs sm:text-sm text-foreground">{item}</span>
+                <CheckCircle className="w-4 h-4 text-emerald-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+                <span className="text-xs sm:text-sm text-white">{item}</span>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Recap</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
             <p>
               You've learned that every person on site has a defined role and responsibility. Knowing who to report to and understanding the chain of command avoids confusion, reduces conflict, and ensures the project runs smoothly and safely.
             </p>
@@ -800,8 +800,8 @@ const Module5Section5_1 = () => {
         </Card>
 
         {/* Quiz Section */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">Quiz (10 Questions)</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Quiz (10 Questions)</h2>
           <Quiz questions={quizQuestions} />
         </Card>
 

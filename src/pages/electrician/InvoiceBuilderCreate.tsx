@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
 import { InvoiceWizard } from "@/components/electrician/invoice-builder/InvoiceWizard";
 import { useInvoiceStorage } from "@/hooks/useInvoiceStorage";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 
 const InvoiceBuilderCreate = () => {
   const navigate = useNavigate();
@@ -60,14 +60,7 @@ const InvoiceBuilderCreate = () => {
                 Follow our guided process to create professional invoices
               </p>
             </div>
-            <Button 
-              onClick={() => navigate('/electrician/invoices')}
-              variant="secondary" 
-              size="lg" 
-              className="w-full sm:w-auto shadow-lg"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" /> Back to Invoices
-            </Button>
+            <SmartBackButton className="w-full sm:w-auto shadow-lg" size="lg" />
           </div>
         </div>
       </header>

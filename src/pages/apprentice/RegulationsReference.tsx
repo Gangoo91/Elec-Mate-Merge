@@ -1,5 +1,5 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -90,7 +90,7 @@ const RegulationsReference = () => {
         <p className="text-muted-foreground text-center max-w-2xl mb-4">
           Quick access to key sections of BS7671:2018+A3:2024 (18th Edition) wiring regulations
         </p>
-        <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
+        <SmartBackButton />
       </div>
 
       <div className="relative mb-6">

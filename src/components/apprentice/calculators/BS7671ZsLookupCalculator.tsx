@@ -1,16 +1,35 @@
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { Zap, Search, RotateCcw } from "lucide-react";
-import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
-import { MobileInput } from "@/components/ui/mobile-input";
+import { Search, BookOpen, FileText, ChevronDown } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { zsValues, zsValues5s, curveTypes, fuseTypes, rcdZsValues, disconnectionTimes, getTableReference, get80PercentZs } from "./zs-values/ZsValuesData";
+import { DropdownTabs } from "@/components/ui/dropdown-tabs";
+import { useIsMobile } from "@/hooks/use-mobile";
+import {
+  zsValues,
+  zsValues5s,
+  curveTypes,
+  fuseTypes,
+  rcdZsValues,
+  disconnectionTimes,
+  getTableReference,
+  get80PercentZs
+} from "./zs-values/ZsValuesData";
 import ZsLookupResult from "./zs-lookup/ZsLookupResult";
 import ZsLookupGuidance from "./zs-lookup/ZsLookupGuidance";
 import ZsLookupStandards from "./zs-lookup/ZsLookupStandards";
+import {
+  CalculatorCard,
+  CalculatorInputGrid,
+  CalculatorInput,
+  CalculatorSelect,
+  CalculatorActions,
+  CALCULATOR_CONFIG,
+} from "@/components/calculators/shared";
 
 const BS7671ZsLookupCalculator = () => {
+  const config = CALCULATOR_CONFIG['testing'];
+  const isMobile = useIsMobile();
+
+  const [activeTab, setActiveTab] = useState("results");
   const [searchType, setSearchType] = useState("device");
   const [deviceType, setDeviceType] = useState("");
   const [deviceRating, setDeviceRating] = useState("");
@@ -30,7 +49,7 @@ const BS7671ZsLookupCalculator = () => {
       const data = getZsData();
       const deviceResults: any[] = [];
       const tableRef = getTableReference(deviceType, disconnectionTime);
-      
+
       if (deviceType === "rcd") {
         // RCD values from Table 41.5
         for (const [rating, maxZs] of Object.entries(rcdZsValues)) {
@@ -78,7 +97,7 @@ const BS7671ZsLookupCalculator = () => {
           }
         }
       }
-      
+
       setResults(deviceResults);
     } else if (searchType === "compliance" && measuredZs) {
       checkCompliance();
@@ -185,121 +204,176 @@ const BS7671ZsLookupCalculator = () => {
     setDisconnectionTime("0.4");
   };
 
-  return (
-    <div className="bg-elec-grey min-h-screen">
-      <Card className="border-elec-yellow/20 bg-elec-card">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Zap className="h-5 w-5 text-elec-yellow" />
-            <CardTitle className="text-elec-light">BS 7671 Zs Lookup (Tables 41.2-41.5)</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <Tabs defaultValue="results" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3 bg-elec-dark">
-              <TabsTrigger value="results" className="text-elec-light">Results</TabsTrigger>
-              <TabsTrigger value="guidance" className="text-elec-light">Guidance</TabsTrigger>
-              <TabsTrigger value="standards" className="text-elec-light">Standards</TabsTrigger>
-            </TabsList>
+  const hasValidInputs = () => {
+    if (searchType === "device") {
+      return !!deviceType;
+    }
+    return !!measuredZs;
+  };
 
-            <TabsContent value="results" className="space-y-6">
-              <div className="space-y-4">
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <MobileSelect value={searchType} onValueChange={setSearchType}>
-                    <MobileSelectTrigger label="Search Type">
-                      <MobileSelectValue placeholder="Select search type" />
-                    </MobileSelectTrigger>
-                    <MobileSelectContent>
-                      <MobileSelectItem value="device">Lookup by Device Type</MobileSelectItem>
-                      <MobileSelectItem value="compliance">Check Compliance (80% rule)</MobileSelectItem>
-                    </MobileSelectContent>
-                  </MobileSelect>
+  // Build device type options
+  const deviceTypeOptions = [
+    { value: "mcb", label: "MCB (Table 41.3)" },
+    { value: "rcbo", label: "RCBO (Table 41.3)" },
+    { value: "rcd", label: "RCD (Table 41.5)" },
+    ...Object.entries(fuseTypes).map(([key, label]) => ({
+      value: key,
+      label
+    }))
+  ];
 
-                  <MobileSelect value={disconnectionTime} onValueChange={(v) => setDisconnectionTime(v as "0.4" | "5")}>
-                    <MobileSelectTrigger label="Disconnection Time">
-                      <MobileSelectValue placeholder="Select disconnection time" />
-                    </MobileSelectTrigger>
-                    <MobileSelectContent>
-                      {Object.entries(disconnectionTimes).map(([key, label]) => (
-                        <MobileSelectItem key={key} value={key}>{label}</MobileSelectItem>
-                      ))}
-                    </MobileSelectContent>
-                  </MobileSelect>
-                </div>
+  const tabs = [
+    {
+      value: "results",
+      label: "Results",
+      icon: Search,
+      content: (
+        <div className="space-y-4">
+          {/* Search Configuration */}
+          <CalculatorInputGrid columns={2}>
+            <CalculatorSelect
+              label="Search Type"
+              value={searchType}
+              onChange={setSearchType}
+              options={[
+                { value: "device", label: "Lookup by Device Type" },
+                { value: "compliance", label: "Check Compliance (80% rule)" },
+              ]}
+            />
+            <CalculatorSelect
+              label="Disconnection Time"
+              value={disconnectionTime}
+              onChange={(v) => setDisconnectionTime(v as "0.4" | "5")}
+              options={Object.entries(disconnectionTimes).map(([key, label]) => ({
+                value: key,
+                label
+              }))}
+            />
+          </CalculatorInputGrid>
 
-                {searchType === "device" && (
-                  <>
-                    <div className="grid gap-4 sm:grid-cols-2">
-                      <MobileInput
-                        label="Quick Device (e.g. B32, C16)"
-                        value={quickDevice}
-                        onChange={(e) => handleQuickDevice(e.target.value)}
-                        placeholder="B32, C16, D40..."
-                      />
-                      <MobileSelect value={deviceType} onValueChange={setDeviceType}>
-                        <MobileSelectTrigger label="Device Type">
-                          <MobileSelectValue placeholder="Select device type" />
-                        </MobileSelectTrigger>
-                        <MobileSelectContent>
-                          <MobileSelectItem value="mcb">MCB (Table 41.3)</MobileSelectItem>
-                          <MobileSelectItem value="rcbo">RCBO (Table 41.3)</MobileSelectItem>
-                          <MobileSelectItem value="rcd">RCD (Table 41.5)</MobileSelectItem>
-                          {Object.entries(fuseTypes).map(([key, label]) => (
-                            <MobileSelectItem key={key} value={key}>{label}</MobileSelectItem>
-                          ))}
-                        </MobileSelectContent>
-                      </MobileSelect>
-                    </div>
-                  </>
-                )}
-
-                {searchType === "compliance" && (
-                  <MobileInput
-                    label="Measured Zs Value (Ω)"
-                    type="number"
-                    step="0.001"
-                    value={measuredZs}
-                    onChange={(e) => setMeasuredZs(e.target.value)}
-                    placeholder="e.g., 0.75"
-                    hint="Checks against 80% of max Zs (ambient temperature correction)"
-                  />
-                )}
-
-                <div className="flex gap-2">
-                  <MobileButton
-                    onClick={performLookup}
-                    variant="elec"
-                    className="flex-1 min-h-[48px]"
-                    disabled={searchType === "device" ? !deviceType : !measuredZs}
-                  >
-                    <Search className="mr-2 h-4 w-4" />
-                    {searchType === "device" ? "Show Values" : "Check Compliance"}
-                  </MobileButton>
-
-                  <MobileButton variant="elec-outline" onClick={resetCalculator} className="min-h-[48px]">
-                    <RotateCcw className="h-4 w-4" />
-                  </MobileButton>
-                </div>
-              </div>
-
-              <ZsLookupResult
-                searchType={searchType}
-                results={results}
-                complianceCheck={complianceCheck}
-                measuredZs={measuredZs}
+          {searchType === "device" && (
+            <CalculatorInputGrid columns={2}>
+              <CalculatorInput
+                label="Quick Device"
+                type="text"
+                value={quickDevice}
+                onChange={handleQuickDevice}
+                placeholder="B32, C16, D40..."
+                hint="Type MCB designation"
               />
-            </TabsContent>
+              <CalculatorSelect
+                label="Device Type"
+                value={deviceType}
+                onChange={setDeviceType}
+                options={deviceTypeOptions}
+                placeholder="Select device type"
+              />
+            </CalculatorInputGrid>
+          )}
 
-            <TabsContent value="guidance">
-              <ZsLookupGuidance />
-            </TabsContent>
+          {searchType === "compliance" && (
+            <CalculatorInput
+              label="Measured Zs Value"
+              unit="Ω"
+              type="text"
+              inputMode="decimal"
+              value={measuredZs}
+              onChange={setMeasuredZs}
+              placeholder="e.g., 0.75"
+              hint="Checks against 80% of max Zs (ambient temperature correction)"
+            />
+          )}
 
-            <TabsContent value="standards">
-              <ZsLookupStandards />
+          <CalculatorActions
+            category="testing"
+            onCalculate={performLookup}
+            onReset={resetCalculator}
+            isDisabled={!hasValidInputs()}
+            calculateLabel={searchType === "device" ? "Show Values" : "Check Compliance"}
+            calculateIcon={Search}
+          />
+
+          <ZsLookupResult
+            searchType={searchType}
+            results={results}
+            complianceCheck={complianceCheck}
+            measuredZs={measuredZs}
+          />
+        </div>
+      )
+    },
+    {
+      value: "guidance",
+      label: "Guidance",
+      icon: BookOpen,
+      content: <ZsLookupGuidance />
+    },
+    {
+      value: "standards",
+      label: "Standards",
+      icon: FileText,
+      content: <ZsLookupStandards />
+    }
+  ];
+
+  return (
+    <div className="space-y-4">
+      {/* Calculator Header Card */}
+      <div
+        className="rounded-2xl border p-4 sm:p-6"
+        style={{
+          borderColor: `${config.gradientFrom}20`,
+          background: `linear-gradient(135deg, ${config.gradientFrom}08, ${config.gradientTo}05)`
+        }}
+      >
+        <div className="flex items-center gap-3 mb-2">
+          <div
+            className="p-2 rounded-xl"
+            style={{ backgroundColor: `${config.gradientFrom}15` }}
+          >
+            <Search className="h-5 w-5" style={{ color: config.gradientFrom }} />
+          </div>
+          <div>
+            <h2 className="text-lg font-semibold text-white">BS 7671 Zs Lookup</h2>
+            <p className="text-sm text-white/60">Tables 41.2-41.5 Maximum Earth Fault Loop Impedance</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Tabs */}
+      {isMobile ? (
+        <DropdownTabs
+          tabs={tabs}
+          defaultValue="results"
+          onValueChange={setActiveTab}
+          placeholder="Select tab"
+          className="w-full"
+        />
+      ) : (
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-3 h-12 bg-white/5 rounded-xl p-1">
+            {tabs.map((tab) => {
+              const IconComponent = tab.icon;
+              return (
+                <TabsTrigger
+                  key={tab.value}
+                  value={tab.value}
+                  className="flex items-center gap-2 text-sm font-semibold rounded-lg data-[state=active]:bg-purple-500/20 data-[state=active]:text-purple-400"
+                >
+                  <IconComponent className="h-4 w-4" />
+                  <span className="hidden sm:inline">{tab.label}</span>
+                </TabsTrigger>
+              );
+            })}
+          </TabsList>
+
+          {tabs.map((tab) => (
+            <TabsContent key={tab.value} value={tab.value} className="mt-4">
+              {tab.content}
             </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
+          ))}
+        </Tabs>
+      )}
     </div>
   );
 };

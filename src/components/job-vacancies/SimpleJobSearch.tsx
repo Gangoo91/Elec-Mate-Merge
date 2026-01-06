@@ -126,7 +126,7 @@ const SimpleJobSearch = () => {
       const startTime = Date.now();
       
       // Fixed API endpoint URL
-      const response = await fetch('https://yulrjfdmkjcoeddorawg.supabase.co/functions/v1/intelligent-job-search', {
+      const response = await fetch('https://jtwygbeceundfgnkirof.supabase.co/functions/v1/intelligent-job-search', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

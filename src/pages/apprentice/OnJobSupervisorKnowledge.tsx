@@ -1,8 +1,7 @@
 
-import { Button } from "@/components/ui/button";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, HelpCircle, MessageSquare, Users, Lightbulb, BookOpen, Phone } from "lucide-react";
-import { Link } from "react-router-dom";
+import { HelpCircle, MessageSquare, Users, Lightbulb, BookOpen, Phone } from "lucide-react";
 import QuestionsTab from "@/components/apprentice/supervisor-knowledge/QuestionsTab";
 import SiteKnowledgeTab from "@/components/apprentice/supervisor-knowledge/SiteKnowledgeTab";
 import CommunicationTab from "@/components/apprentice/supervisor-knowledge/CommunicationTab";
@@ -18,12 +17,7 @@ const OnJobSupervisorKnowledge = () => {
           Comprehensive knowledge bank with expert guidance, communication strategies, and resources 
           for building strong professional relationships with supervisors and colleagues
         </p>
-        <Link to="/apprentice/on-job-tools" className="flex-shrink-0">
-          <Button variant="outline">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Tools
-          </Button>
-        </Link>
+        <SmartBackButton />
       </div>
 
       <Tabs defaultValue="questions" className="w-full">

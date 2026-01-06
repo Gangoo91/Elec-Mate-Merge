@@ -12,7 +12,7 @@ import {
   AlertTriangle,
   CheckCircle
 } from "lucide-react";
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 
 const Year1 = () => {
   const monthlyBreakdown = [
@@ -175,7 +175,7 @@ const Year1 = () => {
         <p className="text-muted-foreground text-center max-w-2xl mb-4 text-sm sm:text-base">
           Your first year focuses on building solid foundations in electrical theory, safety, and basic practical skills
         </p>
-        <BackButton customUrl="/apprentice/toolbox/apprenticeship-expectations" label="Back to Expectations" />
+        <SmartBackButton />
       </div>
 
       {/* Overview Card */}

@@ -168,11 +168,11 @@ const Module7Section4_6 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-2 sm:p-0 min-h-[44px] sm:min-h-auto" asChild>
+          <Button variant="ghost" className="text-white hover:text-white p-2 sm:p-0 min-h-[44px] sm:min-h-auto" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 4
@@ -186,29 +186,29 @@ const Module7Section4_6 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <StopCircle className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <StopCircle className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 7.4.6
             </Badge>
           </div>
-          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2 leading-tight">
+          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 leading-tight">
             Knowing when to escalate or stop work
           </h1>
-          <p className="text-muted-foreground text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Learn when to escalate issues or stop work for safety and professional reasons in electrical installations.
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-6">
-            <Target className="w-6 h-6 text-foreground" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Introduction</h2>
+            <Target className="w-6 h-6 text-white" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Introduction</h2>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-sm sm:text-base">Spot it in 30 Seconds</p>
               <ul className="list-disc pl-4 sm:pl-6 space-y-1 text-sm">
                 <li>Immediate safety hazards requiring work stoppage</li>
@@ -218,7 +218,7 @@ const Module7Section4_6 = () => {
                 <li>Regulatory compliance issues</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
               <p className="font-medium mb-2">Spot it / Use it / Check</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Safety risks, competence limits, technical issues</li>
@@ -230,18 +230,18 @@ const Module7Section4_6 = () => {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <p className="text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <p className="text-base text-white mb-4">
             Knowing when to escalate problems or stop work is essential for maintaining safety, quality, and professionalism in electrical work. This critical skill protects lives, prevents damage, and maintains industry standards whilst demonstrating professional competence.
           </p>
           
           <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
             <div className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-emerald-400 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2">Critical Safety Principle</p>
-                <p className="text-xs sm:text-sm text-foreground">
+                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Critical Safety Principle</p>
+                <p className="text-xs sm:text-sm text-white">
                   Proper escalation and work stoppage decisions prevent 90% of serious electrical accidents and maintain professional standards throughout the industry.
                 </p>
               </div>
@@ -249,12 +249,12 @@ const Module7Section4_6 = () => {
           </div>
           
           <div className="mt-4 space-y-3">
-            <p className="text-base text-foreground">
+            <p className="text-base text-white">
               <strong>Industry Impact:</strong> Research shows that knowing when to stop work and seek guidance reduces workplace accidents by 75% and builds strong professional reputation through responsible practice.
             </p>
             
             <div className="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded border border-emerald-200 dark:border-emerald-800">
-              <p className="text-xs sm:text-sm text-foreground">
+              <p className="text-xs sm:text-sm text-white">
                 <strong>Regulatory Requirement:</strong> CDM Regulations 2015 and BS7671 require workers to stop work immediately when safety risks are identified and escalate appropriately to qualified personnel.
               </p>
             </div>
@@ -262,10 +262,10 @@ const Module7Section4_6 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-base text-foreground mb-4">By the end of this subsection, you will be able to:</p>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-base text-white mb-4">By the end of this subsection, you will be able to:</p>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Recognise situations requiring immediate escalation or work stoppage</li>
             <li>Understand the legal and professional importance of working within competence limits</li>
             <li>Apply systematic escalation procedures and comprehensive documentation</li>
@@ -276,28 +276,28 @@ const Module7Section4_6 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* Recognising Limits */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">1. Understanding Competence and Professional Limits</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">1. Understanding Competence and Professional Limits</h3>
+            <p className="text-base text-white mb-4">
               Understanding your competence boundaries is fundamental to safe and professional electrical work. Competence is not just about technical ability—it encompasses knowledge, skills, and experience combined with professional judgement.
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-3">The Competence Framework</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">The Competence Framework</p>
                     
                     <div className="space-y-4">
                       <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                         <div className="p-3 bg-emerald-50 dark:bg-blue-900/20 rounded border border-blue-200 dark:border-blue-800">
-                          <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2">Knowledge</p>
-                          <ul className="text-xs sm:text-sm text-foreground list-disc ml-4 space-y-1">
+                          <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Knowledge</p>
+                          <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                             <li>Understanding electrical theory</li>
                             <li>BS7671 regulations knowledge</li>
                             <li>Safety requirements and procedures</li>
@@ -308,7 +308,7 @@ const Module7Section4_6 = () => {
                         
                         <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded border border-green-200 dark:border-green-800">
                           <p className="font-medium text-green-700 dark:text-green-400 mb-2">Skills</p>
-                          <ul className="text-xs sm:text-sm text-foreground list-disc ml-4 space-y-1">
+                          <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                             <li>Practical technical abilities</li>
                             <li>Safe tool and equipment use</li>
                             <li>Testing and measurement techniques</li>
@@ -318,8 +318,8 @@ const Module7Section4_6 = () => {
                         </div>
                         
                         <div className="p-3 bg-purple-50 dark:bg-purple-900/20 rounded border border-purple-200 dark:border-purple-800">
-                          <p className="font-medium text-purple-700 dark:text-emerald-400 mb-2">Experience</p>
-                          <ul className="text-xs sm:text-sm text-foreground list-disc ml-4 space-y-1">
+                          <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Experience</p>
+                          <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                             <li>Hands-on practical application</li>
                             <li>Learning from real situations</li>
                             <li>Building professional confidence</li>
@@ -331,7 +331,7 @@ const Module7Section4_6 = () => {
 
                       <div className="bg-amber-50 dark:bg-amber-900/20 p-3 rounded border border-amber-200 dark:border-amber-800">
                         <p className="font-medium text-amber-700 dark:text-amber-400 mb-2">Beyond Competence Indicators</p>
-                        <ul className="text-xs sm:text-sm text-foreground list-disc ml-4 space-y-1">
+                        <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                           <li>Feeling uncertain about procedures or safety implications</li>
                           <li>Lacking specific training for the task at hand</li>
                           <li>Working with unfamiliar equipment or complex systems</li>
@@ -358,23 +358,23 @@ const Module7Section4_6 = () => {
 
           {/* When to Stop Work */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">2. Immediate Work Stoppage Situations</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">2. Immediate Work Stoppage Situations</h3>
+            <p className="text-base text-white mb-4">
               Certain situations require immediate work stoppage to prevent injury, death, or significant damage. Recognising these situations and acting decisively is crucial for electrical safety.
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-3">Critical Stop Situations</p>
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Critical Stop Situations</p>
                     
                     <div className="space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                          <p className="text-base text-foreground mb-2"><strong>Electrical Safety Hazards:</strong></p>
-                          <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                          <p className="text-base text-white mb-2"><strong>Electrical Safety Hazards:</strong></p>
+                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                             <li>Live conductors exposed or damaged</li>
                             <li>Unexpected live circuits during testing</li>
                             <li>Inadequate or missing earthing connections</li>
@@ -385,8 +385,8 @@ const Module7Section4_6 = () => {
                         </div>
                         
                         <div>
-                          <p className="text-base text-foreground mb-2"><strong>Environmental Hazards:</strong></p>
-                          <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                          <p className="text-base text-white mb-2"><strong>Environmental Hazards:</strong></p>
+                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                             <li>Suspected gas leaks in vicinity</li>
                             <li>Structural damage affecting safety</li>
                             <li>Water ingress creating electrocution risk</li>
@@ -398,8 +398,8 @@ const Module7Section4_6 = () => {
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-emerald-400 mb-2">Emergency Action Sequence</p>
-                        <ol className="text-xs sm:text-sm text-foreground list-decimal ml-4 space-y-1">
+                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Emergency Action Sequence</p>
+                        <ol className="text-xs sm:text-sm text-white list-decimal ml-4 space-y-1">
                           <li>Stop all work immediately - do not complete current task</li>
                           <li>Secure the area and isolate the hazard if safely possible</li>
                           <li>Evacuate unnecessary personnel from the danger zone</li>
@@ -425,13 +425,13 @@ const Module7Section4_6 = () => {
 
           {/* Escalation Triggers */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">3. Comprehensive Escalation Triggers</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">3. Comprehensive Escalation Triggers</h3>
+            <p className="text-base text-white mb-4">
               Beyond immediate safety issues, many situations require escalation to qualified personnel for guidance, technical expertise, or regulatory compliance.
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-amber-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-amber-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
@@ -441,7 +441,7 @@ const Module7Section4_6 = () => {
                       <div className="grid md:grid-cols-2 gap-4">
                         <div className="p-3 bg-amber-50 dark:bg-amber-900/20 rounded border border-amber-200 dark:border-amber-800">
                           <p className="font-medium text-amber-700 dark:text-amber-400 mb-2">Technical Issues</p>
-                          <ul className="text-xs sm:text-sm text-foreground list-disc ml-4 space-y-1">
+                          <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                             <li>Unexpected test results requiring interpretation</li>
                             <li>Circuit modifications or design changes needed</li>
                             <li>Non-standard installations requiring specialist knowledge</li>
@@ -452,8 +452,8 @@ const Module7Section4_6 = () => {
                         </div>
                         
                         <div className="p-3 bg-emerald-50 dark:bg-blue-900/20 rounded border border-blue-200 dark:border-blue-800">
-                          <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2">Regulatory Compliance</p>
-                          <ul className="text-xs sm:text-sm text-foreground list-disc ml-4 space-y-1">
+                          <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Regulatory Compliance</p>
+                          <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                             <li>Work requiring specialist certifications</li>
                             <li>Building Control notification requirements</li>
                             <li>DNO (Distribution Network Operator) liaison needed</li>
@@ -465,7 +465,7 @@ const Module7Section4_6 = () => {
                         
                         <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded border border-green-200 dark:border-green-800">
                           <p className="font-medium text-green-700 dark:text-green-400 mb-2">Customer Relations</p>
-                          <ul className="text-xs sm:text-sm text-foreground list-disc ml-4 space-y-1">
+                          <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                             <li>Customer requesting work beyond your authority</li>
                             <li>Disputes about work scope or methods</li>
                             <li>Additional costs or time requirements</li>
@@ -476,8 +476,8 @@ const Module7Section4_6 = () => {
                         </div>
                         
                         <div className="p-3 bg-purple-50 dark:bg-purple-900/20 rounded border border-purple-200 dark:border-purple-800">
-                          <p className="font-medium text-purple-700 dark:text-emerald-400 mb-2">Professional Uncertainty</p>
-                          <ul className="text-xs sm:text-sm text-foreground list-disc ml-4 space-y-1">
+                          <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Professional Uncertainty</p>
+                          <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                             <li>Feeling unsure about safety implications</li>
                             <li>Lacking confidence in procedure execution</li>
                             <li>Encountering unfamiliar equipment or systems</li>
@@ -505,26 +505,26 @@ const Module7Section4_6 = () => {
 
           {/* Proper Escalation Procedures */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">4. Systematic Escalation Procedures</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">4. Systematic Escalation Procedures</h3>
+            <p className="text-base text-white mb-4">
               Following proper escalation procedures ensures effective communication, maintains safety, and demonstrates professionalism. Each step builds upon the previous to provide comprehensive information and support.
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-3">Step-by-Step Escalation Process</p>
+                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">Step-by-Step Escalation Process</p>
                     
                     <div className="space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
                         <div className="p-4 bg-white dark:bg-card rounded border border-purple-200 dark:border-purple-700">
                           <div className="flex items-center gap-2 mb-3">
                             <span className="w-6 h-6 bg-purple-500 text-white rounded-full flex items-center justify-center text-xs font-bold">1</span>
-                            <p className="font-medium text-foreground">Immediate Safety Actions</p>
+                            <p className="font-medium text-white">Immediate Safety Actions</p>
                           </div>
-                          <ul className="text-xs sm:text-sm text-foreground list-disc ml-4 space-y-1">
+                          <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                             <li>Stop work and assess immediate dangers</li>
                             <li>Secure the work area and isolate hazards</li>
                             <li>Prevent access by unauthorised personnel</li>
@@ -535,10 +535,10 @@ const Module7Section4_6 = () => {
                         
                         <div className="p-4 bg-white dark:bg-card rounded border border-blue-200 dark:border-blue-700">
                           <div className="flex items-center gap-2 mb-3">
-                            <span className="w-6 h-6 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs font-bold">2</span>
-                            <p className="font-medium text-foreground">Document Everything</p>
+                            <span className="w-6 h-6 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs font-bold">2</span>
+                            <p className="font-medium text-white">Document Everything</p>
                           </div>
-                          <ul className="text-xs sm:text-sm text-foreground list-disc ml-4 space-y-1">
+                          <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                             <li>Record exact location and time</li>
                             <li>Note what was discovered or occurred</li>
                             <li>Document immediate actions taken</li>
@@ -550,9 +550,9 @@ const Module7Section4_6 = () => {
                         <div className="p-4 bg-white dark:bg-card rounded border border-green-200 dark:border-green-700">
                           <div className="flex items-center gap-2 mb-3">
                             <span className="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-xs font-bold">3</span>
-                            <p className="font-medium text-foreground">Contact Supervisor</p>
+                            <p className="font-medium text-white">Contact Supervisor</p>
                           </div>
-                          <ul className="text-xs sm:text-sm text-foreground list-disc ml-4 space-y-1">
+                          <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                             <li>Contact direct supervisor first</li>
                             <li>Provide clear, factual information</li>
                             <li>Explain situation without speculation</li>
@@ -564,9 +564,9 @@ const Module7Section4_6 = () => {
                         <div className="p-4 bg-white dark:bg-card rounded border border-amber-200 dark:border-amber-700">
                           <div className="flex items-center gap-2 mb-3">
                             <span className="w-6 h-6 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold">4</span>
-                            <p className="font-medium text-foreground">Await Instructions</p>
+                            <p className="font-medium text-white">Await Instructions</p>
                           </div>
-                          <ul className="text-xs sm:text-sm text-foreground list-disc ml-4 space-y-1">
+                          <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                             <li>Do not proceed without clear approval</li>
                             <li>Maintain security of work area</li>
                             <li>Be available for additional questions</li>
@@ -577,11 +577,11 @@ const Module7Section4_6 = () => {
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-emerald-400 mb-2">Emergency Escalation Priority</p>
-                        <p className="text-xs sm:text-sm text-foreground mb-2">
+                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Emergency Escalation Priority</p>
+                        <p className="text-xs sm:text-sm text-white mb-2">
                           For immediate life-threatening dangers (electrocution risk, fire, explosion, structural collapse):
                         </p>
-                        <ol className="text-xs sm:text-sm text-foreground list-decimal ml-4 space-y-1">
+                        <ol className="text-xs sm:text-sm text-white list-decimal ml-4 space-y-1">
                           <li>Call 999 emergency services immediately</li>
                           <li>Evacuate the danger area</li>
                           <li>Then contact your supervisor</li>
@@ -606,13 +606,13 @@ const Module7Section4_6 = () => {
 
           {/* Effective Communication */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">5. Professional Communication During Escalation</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">5. Professional Communication During Escalation</h3>
+            <p className="text-base text-white mb-4">
               Clear, accurate communication is essential for effective escalation. How you communicate can significantly impact the response time and quality of assistance received.
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-cyan-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-cyan-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-cyan-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
@@ -623,18 +623,18 @@ const Module7Section4_6 = () => {
                         <p className="font-medium text-cyan-700 dark:text-cyan-400 mb-2">SBAR Communication Method</p>
                         <div className="grid md:grid-cols-2 gap-4">
                           <div>
-                            <p className="text-sm font-medium text-foreground mb-1"><strong>S</strong>ituation:</p>
-                            <p className="text-xs sm:text-sm text-foreground mb-2">"I am working on [location/task] and have discovered [issue]"</p>
+                            <p className="text-sm font-medium text-white mb-1"><strong>S</strong>ituation:</p>
+                            <p className="text-xs sm:text-sm text-white mb-2">"I am working on [location/task] and have discovered [issue]"</p>
                             
-                            <p className="text-sm font-medium text-foreground mb-1"><strong>B</strong>ackground:</p>
-                            <p className="text-xs sm:text-sm text-foreground">"The work involves [description]. The problem occurred when [circumstances]"</p>
+                            <p className="text-sm font-medium text-white mb-1"><strong>B</strong>ackground:</p>
+                            <p className="text-xs sm:text-sm text-white">"The work involves [description]. The problem occurred when [circumstances]"</p>
                           </div>
                           <div>
-                            <p className="text-sm font-medium text-foreground mb-1"><strong>A</strong>ssessment:</p>
-                            <p className="text-xs sm:text-sm text-foreground mb-2">"I believe this is [safety/technical/regulatory] issue because [reasons]"</p>
+                            <p className="text-sm font-medium text-white mb-1"><strong>A</strong>ssessment:</p>
+                            <p className="text-xs sm:text-sm text-white mb-2">"I believe this is [safety/technical/regulatory] issue because [reasons]"</p>
                             
-                            <p className="text-sm font-medium text-foreground mb-1"><strong>R</strong>ecommendation:</p>
-                            <p className="text-xs sm:text-sm text-foreground">"I recommend [immediate actions] and need guidance on [specific questions]"</p>
+                            <p className="text-sm font-medium text-white mb-1"><strong>R</strong>ecommendation:</p>
+                            <p className="text-xs sm:text-sm text-white">"I recommend [immediate actions] and need guidance on [specific questions]"</p>
                           </div>
                         </div>
                       </div>
@@ -642,7 +642,7 @@ const Module7Section4_6 = () => {
                       <div className="grid md:grid-cols-2 gap-4">
                         <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded border border-green-200 dark:border-green-800">
                           <p className="font-medium text-green-700 dark:text-green-400 mb-2">Effective Communication</p>
-                          <ul className="text-xs sm:text-sm text-foreground list-disc ml-4 space-y-1">
+                          <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                             <li>Be clear, concise, and factual</li>
                             <li>Use proper technical terminology</li>
                             <li>Avoid speculation or assumptions</li>
@@ -653,8 +653,8 @@ const Module7Section4_6 = () => {
                         </div>
                         
                         <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded border border-red-200 dark:border-red-800">
-                          <p className="font-medium text-red-700 dark:text-emerald-400 mb-2">Communication Mistakes</p>
-                          <ul className="text-xs sm:text-sm text-foreground list-disc ml-4 space-y-1">
+                          <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Communication Mistakes</p>
+                          <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                             <li>Being vague about location or problem</li>
                             <li>Minimising or exaggerating the issue</li>
                             <li>Offering unprofessional opinions</li>
@@ -681,19 +681,19 @@ const Module7Section4_6 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-4">
-            <Clipboard className="w-5 h-5 text-foreground" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Practical Guidance</h2>
+            <Clipboard className="w-5 h-5 text-white" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Practical Guidance</h2>
           </div>
           
           <div className="space-y-6">
             <div>
-              <h3 className="font-medium text-foreground mb-3">For Apprentices and Developing Electricians:</h3>
+              <h3 className="font-medium text-white mb-3">For Apprentices and Developing Electricians:</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-3 bg-emerald-50 dark:bg-blue-900/20 rounded border border-blue-200 dark:border-blue-800">
-                  <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2">Professional Development</p>
-                  <ul className="text-xs sm:text-sm text-foreground list-disc ml-4 space-y-1">
+                  <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Professional Development</p>
+                  <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                     <li>Know your competence limits and respect them</li>
                     <li>Build relationships with supervisors for effective communication</li>
                     <li>Learn from each escalation situation</li>
@@ -704,7 +704,7 @@ const Module7Section4_6 = () => {
                 
                 <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded border border-green-200 dark:border-green-800">
                   <p className="font-medium text-green-700 dark:text-green-400 mb-2">Building Confidence</p>
-                  <ul className="text-xs sm:text-sm text-foreground list-disc ml-4 space-y-1">
+                  <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                     <li>Never feel pressured to work beyond your qualifications</li>
                     <li>Remember that escalation shows professional maturity</li>
                     <li>Use each situation as a learning opportunity</li>
@@ -722,8 +722,8 @@ const Module7Section4_6 = () => {
               </div>
               <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                 <div>
-                  <p className="text-sm font-medium text-foreground mb-1">Situation Details:</p>
-                  <ul className="text-xs text-foreground list-disc ml-4 space-y-1">
+                  <p className="text-sm font-medium text-white mb-1">Situation Details:</p>
+                  <ul className="text-xs text-white list-disc ml-4 space-y-1">
                     <li>Exact location and time</li>
                     <li>Work being performed</li>
                     <li>What was discovered</li>
@@ -731,8 +731,8 @@ const Module7Section4_6 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-foreground mb-1">Safety Actions:</p>
-                  <ul className="text-xs text-foreground list-disc ml-4 space-y-1">
+                  <p className="text-sm font-medium text-white mb-1">Safety Actions:</p>
+                  <ul className="text-xs text-white list-disc ml-4 space-y-1">
                     <li>Area secured how</li>
                     <li>People evacuated/warned</li>
                     <li>Equipment isolated</li>
@@ -740,8 +740,8 @@ const Module7Section4_6 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-foreground mb-1">Technical Information:</p>
-                  <ul className="text-xs text-foreground list-disc ml-4 space-y-1">
+                  <p className="text-sm font-medium text-white mb-1">Technical Information:</p>
+                  <ul className="text-xs text-white list-disc ml-4 space-y-1">
                     <li>Test results if applicable</li>
                     <li>Equipment involved</li>
                     <li>Symptoms observed</li>
@@ -753,13 +753,13 @@ const Module7Section4_6 = () => {
 
             <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded border border-red-200 dark:border-red-800">
               <div className="flex items-center gap-2 mb-3">
-                <Phone className="w-5 h-5 text-red-600 dark:text-emerald-400" />
-                <h3 className="font-medium text-red-700 dark:text-emerald-400">Emergency Contact Hierarchy</h3>
+                <Phone className="w-5 h-5 text-red-600 dark:text-elec-yellow" />
+                <h3 className="font-medium text-red-700 dark:text-elec-yellow">Emergency Contact Hierarchy</h3>
               </div>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-sm font-medium text-foreground mb-2">Normal Escalation Order:</p>
-                  <ol className="text-xs sm:text-sm text-foreground list-decimal ml-4 space-y-1">
+                  <p className="text-sm font-medium text-white mb-2">Normal Escalation Order:</p>
+                  <ol className="text-xs sm:text-sm text-white list-decimal ml-4 space-y-1">
                     <li>Direct supervisor or site manager</li>
                     <li>Qualified electrician or engineer</li>
                     <li>Site safety officer (for safety issues)</li>
@@ -768,8 +768,8 @@ const Module7Section4_6 = () => {
                   </ol>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-foreground mb-2">Emergency Situations:</p>
-                  <ol className="text-xs sm:text-sm text-foreground list-decimal ml-4 space-y-1">
+                  <p className="text-sm font-medium text-white mb-2">Emergency Situations:</p>
+                  <ol className="text-xs sm:text-sm text-white list-decimal ml-4 space-y-1">
                     <li><strong>999 Emergency Services</strong> (immediate danger)</li>
                     <li>Site safety officer or first aider</li>
                     <li>Your supervisor (while emergency response continues)</li>
@@ -783,25 +783,25 @@ const Module7Section4_6 = () => {
         </Card>
 
         {/* Frequently Asked Questions */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-border/20 pb-4 last:border-b-0">
-                <h3 className="font-medium text-foreground mb-2">{faq.question}</h3>
-                <p className="text-xs sm:text-sm text-foreground">{faq.answer}</p>
+              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
+                <h3 className="font-medium text-white mb-2">{faq.question}</h3>
+                <p className="text-xs sm:text-sm text-white">{faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quick Reference Pocket Guide</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick Reference Pocket Guide</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded border border-red-200 dark:border-red-800">
-              <h3 className="font-medium text-red-700 dark:text-emerald-400 mb-3">STOP WORK IMMEDIATELY if you see:</h3>
-              <ul className="text-xs sm:text-sm text-foreground list-disc ml-4 space-y-1">
+              <h3 className="font-medium text-red-700 dark:text-elec-yellow mb-3">STOP WORK IMMEDIATELY if you see:</h3>
+              <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                 <li>⚡ Live conductors exposed</li>
                 <li>🔥 Burning smell or smoke</li>
                 <li>💨 Gas smell</li>
@@ -813,7 +813,7 @@ const Module7Section4_6 = () => {
             
             <div className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded border border-amber-200 dark:border-amber-800">
               <h3 className="font-medium text-amber-700 dark:text-amber-400 mb-3">ESCALATE if you encounter:</h3>
-              <ul className="text-xs sm:text-sm text-foreground list-disc ml-4 space-y-1">
+              <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                 <li>🤔 Uncertainty about safety</li>
                 <li>📋 Work beyond your training</li>
                 <li>🔧 Unfamiliar equipment</li>
@@ -825,8 +825,8 @@ const Module7Section4_6 = () => {
           </div>
           
           <div className="mt-4 p-4 bg-emerald-50 dark:bg-blue-900/20 rounded border border-blue-200 dark:border-blue-800">
-            <h3 className="font-medium text-blue-700 dark:text-emerald-400 mb-3">Emergency Contact Template:</h3>
-            <div className="text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-blue-700 dark:text-elec-yellow mb-3">Emergency Contact Template:</h3>
+            <div className="text-xs sm:text-sm text-white">
               <p className="mb-2"><strong>"This is [Your Name] calling about [Location]. I have discovered [Issue] and have [Actions Taken]. I need [Specific Help] urgently."</strong></p>
               <p className="text-xs">Remember: Be calm, clear, and factual. Safety first, everything else second.</p>
             </div>
@@ -834,18 +834,18 @@ const Module7Section4_6 = () => {
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-4">
-            <CheckCircle className="w-5 h-5 text-foreground" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Recap</h2>
+            <CheckCircle className="w-5 h-5 text-white" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Recap</h2>
           </div>
           <div className="space-y-4">
             <div>
-              <h3 className="font-medium text-foreground mb-3">Essential Professional Responsibilities:</h3>
+              <h3 className="font-medium text-white mb-3">Essential Professional Responsibilities:</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded border border-green-200 dark:border-green-800">
                   <p className="font-medium text-green-700 dark:text-green-400 mb-2">Safety Obligations</p>
-                  <ul className="text-xs sm:text-sm text-foreground list-disc ml-4 space-y-1">
+                  <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                     <li>Stop work immediately when safety is at risk</li>
                     <li>Secure areas and prevent further danger</li>
                     <li>Call emergency services for immediate threats</li>
@@ -854,8 +854,8 @@ const Module7Section4_6 = () => {
                 </div>
                 
                 <div className="p-3 bg-emerald-50 dark:bg-blue-900/20 rounded border border-blue-200 dark:border-blue-800">
-                  <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2">Professional Practice</p>
-                  <ul className="text-xs sm:text-sm text-foreground list-disc ml-4 space-y-1">
+                  <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Professional Practice</p>
+                  <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                     <li>Recognise and work within your competence limits</li>
                     <li>Follow systematic escalation procedures</li>
                     <li>Document and communicate issues clearly</li>
@@ -866,11 +866,11 @@ const Module7Section4_6 = () => {
             </div>
 
             <div className="bg-gradient-to-r from-blue-50 to-green-50 dark:from-blue-900/20 dark:to-green-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-              <p className="font-medium text-foreground mb-2">Core Safety and Professional Principle:</p>
-              <p className="text-foreground text-base">
+              <p className="font-medium text-white mb-2">Core Safety and Professional Principle:</p>
+              <p className="text-white text-base">
                 It's always better to stop work and ask for guidance than to continue when unsure. Professional electricians take full responsibility for their decisions, prioritise safety above all else, and demonstrate competence through appropriate escalation when needed.
               </p>
-              <p className="text-sm text-muted-foreground mt-2">
+              <p className="text-sm text-white mt-2">
                 This approach protects lives, maintains quality standards, and builds lasting professional reputation in the electrical industry.
               </p>
             </div>

@@ -1,5 +1,5 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -17,7 +17,7 @@ const RightsAndPay = () => {
         <p className="text-sm sm:text-base text-muted-foreground text-center max-w-2xl mb-3 sm:mb-4">
           Know your rights, understand wage expectations, and learn where to get help when needed
         </p>
-        <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
+        <SmartBackButton />
       </div>
 
       <Tabs defaultValue="wages" className="w-full">

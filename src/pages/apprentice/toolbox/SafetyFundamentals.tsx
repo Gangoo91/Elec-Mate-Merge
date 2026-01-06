@@ -1,5 +1,5 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { 
@@ -61,7 +61,7 @@ const SafetyFundamentals = () => {
           Essential electrical safety principles, procedures, and practices for apprentices and qualified electricians. 
           Your safety and the safety of others depends on following these fundamentals.
         </p>
-        <BackButton customUrl="/apprentice/toolbox" label="Back to Toolbox" />
+        <SmartBackButton />
       </div>
 
       {/* Core Safety Principles */}

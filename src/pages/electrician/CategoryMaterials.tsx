@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Package, ArrowLeft, RefreshCw, Loader2, Scale, Brain } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import MaterialCard from "@/components/electrician-materials/MaterialCard";
@@ -214,11 +215,7 @@ const CategoryMaterials = () => {
 
       <header className="mobile-card-spacing">
         <div className="flex items-center justify-between mb-4">
-          <Link to="/electrician/materials">
-            <Button variant="outline" size="sm" className="flex items-center gap-1.5">
-              <ArrowLeft className="h-4 w-4" /> Back to Materials
-            </Button>
-          </Link>
+          <SmartBackButton />
           <MaterialsMoreTools
             selectedCount={selectedMaterials.length}
             onCompareClick={() => setCurrentView('compare')}

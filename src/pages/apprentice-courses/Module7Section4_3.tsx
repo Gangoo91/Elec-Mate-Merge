@@ -189,11 +189,11 @@ const Module7Section4_3 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-0 text-sm sm:text-base" asChild>
+          <Button variant="ghost" className="text-white hover:text-white p-0 text-sm sm:text-base" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 4
@@ -207,34 +207,34 @@ const Module7Section4_3 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card w-fit">
-              <Search className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg w-fit">
+              <Search className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 w-fit">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow w-fit">
               Section 7.4.3
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl lg:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl lg:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Testing One Component or Section at a Time
           </h1>
-          <p className="text-muted-foreground text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Structured approach to fault diagnosis by testing individual components and circuit sections systematically
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Testing one component at a time prevents confusion and wasted effort.</li>
                 <li>This method logically narrows down fault locations step by step.</li>
                 <li>It works effectively for both simple domestic and complex industrial circuits.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
               <p className="font-medium mb-2">Spot it / Use it / Check</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Components that could be causing circuit failure.</li>
@@ -246,9 +246,9 @@ const Module7Section4_3 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-sm sm:text-base text-foreground">
+        <Card className="mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-sm sm:text-base text-white">
             <li>Explain why testing one part of a circuit at a time is effective.</li>
             <li>Describe how this method helps isolate faults systematically.</li>
             <li>Apply the principle to both simple and more complex installations.</li>
@@ -258,27 +258,27 @@ const Module7Section4_3 = () => {
         </Card>
 
         {/* Content - 4 main blocks with inline checks after each */}
-        <Card className="mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-6">Content / Learning</h2>
+        <Card className="mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">Content / Learning</h2>
 
           {/* Block 1: Concept and Benefits */}
           <section className="mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-emerald-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-elec-yellow ">
               <div className="flex items-start gap-3">
-                <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-emerald-400 dark:text-emerald-400 mb-4 text-base sm:text-lg">Concept and Benefits of Component-by-Component Testing</h3>
-                  <p className="text-sm sm:text-base text-foreground mb-4">
+                  <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-4 text-base sm:text-lg">Concept and Benefits of Component-by-Component Testing</h3>
+                  <p className="text-sm sm:text-base text-white mb-4">
                     Testing one component or section at a time is a fundamental fault-finding principle that prevents confusion and builds confidence through systematic progression. This approach transforms complex circuit diagnosis into manageable, logical steps.
                   </p>
                   
                   <div className="space-y-4">
                     <div>
-                      <p className="font-medium text-foreground mb-3">Core Principles of Sequential Testing</p>
+                      <p className="font-medium text-white mb-3">Core Principles of Sequential Testing</p>
                       <div className="grid sm:grid-cols-2 gap-4">
-                        <div className="bg-background/30 p-3 rounded-lg">
+                        <div className="bg-[#121212]/30 p-3 rounded-lg">
                           <p className="font-medium text-sm mb-2">Logical Progression</p>
-                          <ul className="text-xs text-foreground space-y-1">
+                          <ul className="text-xs text-white space-y-1">
                             <li>• Follow circuit path systematically</li>
                             <li>• Test in order of signal or power flow</li>
                             <li>• Confirm each stage before proceeding</li>
@@ -286,9 +286,9 @@ const Module7Section4_3 = () => {
                             <li>• Avoid jumping between unrelated components</li>
                           </ul>
                         </div>
-                        <div className="bg-background/30 p-3 rounded-lg">
+                        <div className="bg-[#121212]/30 p-3 rounded-lg">
                           <p className="font-medium text-sm mb-2">Fault Isolation Benefits</p>
-                          <ul className="text-xs text-foreground space-y-1">
+                          <ul className="text-xs text-white space-y-1">
                             <li>• Pinpoints exact fault location</li>
                             <li>• Prevents unnecessary component replacement</li>
                             <li>• Reduces diagnostic time significantly</li>
@@ -300,12 +300,12 @@ const Module7Section4_3 = () => {
                     </div>
 
                     <div>
-                      <p className="font-medium text-foreground mb-3">Avoiding Common Diagnostic Pitfalls</p>
-                      <div className="bg-background/30 p-4 rounded-lg">
+                      <p className="font-medium text-white mb-3">Avoiding Common Diagnostic Pitfalls</p>
+                      <div className="bg-[#121212]/30 p-4 rounded-lg">
                         <div className="grid sm:grid-cols-2 gap-4">
                           <div>
                             <p className="font-medium text-sm mb-2">What NOT to Do</p>
-                            <ul className="text-xs text-foreground space-y-1">
+                            <ul className="text-xs text-white space-y-1">
                               <li>• Testing multiple components simultaneously</li>
                               <li>• Making assumptions about fault locations</li>
                               <li>• Replacing parts without confirmation</li>
@@ -314,7 +314,7 @@ const Module7Section4_3 = () => {
                           </div>
                           <div>
                             <p className="font-medium text-sm mb-2">Systematic Approach</p>
-                            <ul className="text-xs text-foreground space-y-1">
+                            <ul className="text-xs text-white space-y-1">
                               <li>• Test one component completely before next</li>
                               <li>• Record all results systematically</li>
                               <li>• Confirm each stage is sound</li>
@@ -326,7 +326,7 @@ const Module7Section4_3 = () => {
                     </div>
                   </div>
 
-                  <div className="text-xs sm:text-xs sm:text-sm text-foreground bg-background/50 p-3 rounded border mt-4">
+                  <div className="text-xs sm:text-xs sm:text-sm text-white bg-[#121212]/50 p-3 rounded border mt-4">
                     <strong>Key principle:</strong> By testing components individually, electricians build a clear map of circuit condition, identifying exactly where normal operation breaks down and focusing repair efforts precisely where needed.
                   </div>
                 </div>
@@ -345,23 +345,23 @@ const Module7Section4_3 = () => {
 
           {/* Block 2: Domestic Circuits Application */}
           <section className="mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-green-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-green-500 ">
               <div className="flex items-start gap-3">
                 <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                 <div className="flex-1">
                   <h3 className="font-semibold text-green-600 dark:text-green-400 mb-4 text-base sm:text-lg">Application to Domestic Circuits</h3>
-                  <p className="text-sm sm:text-base text-foreground mb-4">
+                  <p className="text-sm sm:text-base text-white mb-4">
                     In domestic installations, component-by-component testing prevents unnecessary work and quickly identifies faults in ring final circuits, lighting circuits, and consumer unit distribution systems.
                   </p>
                   
                   <div className="space-y-4">
                     <div>
-                      <p className="font-medium text-foreground mb-3">Ring Final Circuit Testing Strategy</p>
-                      <div className="bg-background/30 p-4 rounded-lg">
+                      <p className="font-medium text-white mb-3">Ring Final Circuit Testing Strategy</p>
+                      <div className="bg-[#121212]/30 p-4 rounded-lg">
                         <div className="grid sm:grid-cols-2 gap-4">
                           <div>
                             <p className="font-medium text-sm mb-2">Sequential Testing Steps</p>
-                            <ol className="text-xs text-foreground space-y-1 list-decimal pl-4">
+                            <ol className="text-xs text-white space-y-1 list-decimal pl-4">
                               <li>Test continuity at consumer unit first</li>
                               <li>Move to first socket outlet on circuit</li>
                               <li>Test continuity at each subsequent socket</li>
@@ -371,7 +371,7 @@ const Module7Section4_3 = () => {
                           </div>
                           <div>
                             <p className="font-medium text-sm mb-2">Progressive Elimination</p>
-                            <ul className="text-xs text-foreground space-y-1">
+                            <ul className="text-xs text-white space-y-1">
                               <li>• Each successful test confirms that section is sound</li>
                               <li>• Failed test pinpoints fault to specific cable run</li>
                               <li>• Avoids testing entire ring unnecessarily</li>
@@ -383,11 +383,11 @@ const Module7Section4_3 = () => {
                     </div>
 
                     <div>
-                      <p className="font-medium text-foreground mb-3">Lighting Circuit Systematic Approach</p>
+                      <p className="font-medium text-white mb-3">Lighting Circuit Systematic Approach</p>
                       <div className="grid sm:grid-cols-2 gap-4">
-                        <div className="bg-background/30 p-3 rounded-lg">
+                        <div className="bg-[#121212]/30 p-3 rounded-lg">
                           <p className="font-medium text-sm mb-2">Component Testing Order</p>
-                          <ol className="text-xs text-foreground space-y-1 list-decimal pl-4">
+                          <ol className="text-xs text-white space-y-1 list-decimal pl-4">
                             <li>Supply voltage at consumer unit</li>
                             <li>Switch operation and contacts</li>
                             <li>Cable continuity to fitting</li>
@@ -395,9 +395,9 @@ const Module7Section4_3 = () => {
                             <li>Neutral return path</li>
                           </ol>
                         </div>
-                        <div className="bg-background/30 p-3 rounded-lg">
+                        <div className="bg-[#121212]/30 p-3 rounded-lg">
                           <p className="font-medium text-sm mb-2">Avoiding Assumptions</p>
-                          <ul className="text-xs text-foreground space-y-1">
+                          <ul className="text-xs text-white space-y-1">
                             <li>• Don't assume lamp is faulty first</li>
                             <li>• Don't replace fitting without testing switch</li>
                             <li>• Test supply before changing components</li>
@@ -408,7 +408,7 @@ const Module7Section4_3 = () => {
                     </div>
                   </div>
 
-                  <div className="text-xs sm:text-xs sm:text-sm text-foreground bg-background/50 p-3 rounded border mt-4">
+                  <div className="text-xs sm:text-xs sm:text-sm text-white bg-[#121212]/50 p-3 rounded border mt-4">
                     <strong>Practical tip:</strong> In domestic circuits, starting with supply verification at the consumer unit often saves time by confirming power availability before investigating downstream components.
                   </div>
                 </div>
@@ -427,23 +427,23 @@ const Module7Section4_3 = () => {
 
           {/* Block 3: Industrial Control Systems */}
           <section className="mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-orange-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-orange-500 ">
               <div className="flex items-start gap-3">
                 <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-orange-600 dark:text-emerald-400 mb-4 text-base sm:text-lg">Industrial Control Systems and Complex Installations</h3>
-                  <p className="text-sm sm:text-base text-foreground mb-4">
+                  <h3 className="font-semibold text-orange-600 dark:text-elec-yellow mb-4 text-base sm:text-lg">Industrial Control Systems and Complex Installations</h3>
+                  <p className="text-sm sm:text-base text-white mb-4">
                     In industrial environments, staged testing of control systems prevents time wasted on complex diagnostics when simple faults exist. Testing follows the control logic sequence systematically.
                   </p>
                   
                   <div className="space-y-4">
                     <div>
-                      <p className="font-medium text-foreground mb-3">Motor Control Circuit Testing Stages</p>
-                      <div className="bg-background/30 p-4 rounded-lg">
+                      <p className="font-medium text-white mb-3">Motor Control Circuit Testing Stages</p>
+                      <div className="bg-[#121212]/30 p-4 rounded-lg">
                         <div className="grid sm:grid-cols-2 gap-4">
                           <div>
                             <p className="font-medium text-sm mb-2">Stage 1: Supply Verification</p>
-                            <ul className="text-xs text-foreground space-y-1">
+                            <ul className="text-xs text-white space-y-1">
                               <li>• Three-phase supply voltage and balance</li>
                               <li>• Protective device operation</li>
                               <li>• Isolation switch functionality</li>
@@ -452,7 +452,7 @@ const Module7Section4_3 = () => {
                           </div>
                           <div>
                             <p className="font-medium text-sm mb-2">Stage 2: Control Circuit Testing</p>
-                            <ul className="text-xs text-foreground space-y-1">
+                            <ul className="text-xs text-white space-y-1">
                               <li>• Control voltage supply</li>
                               <li>• Start/stop button operation</li>
                               <li>• Safety interlock verification</li>
@@ -463,7 +463,7 @@ const Module7Section4_3 = () => {
                         <div className="grid sm:grid-cols-2 gap-4 mt-4">
                           <div>
                             <p className="font-medium text-sm mb-2">Stage 3: Contactor Operation</p>
-                            <ul className="text-xs text-foreground space-y-1">
+                            <ul className="text-xs text-white space-y-1">
                               <li>• Coil resistance and operation</li>
                               <li>• Contact condition and closure</li>
                               <li>• Auxiliary contact operation</li>
@@ -472,7 +472,7 @@ const Module7Section4_3 = () => {
                           </div>
                           <div>
                             <p className="font-medium text-sm mb-2">Stage 4: Motor Testing</p>
-                            <ul className="text-xs text-foreground space-y-1">
+                            <ul className="text-xs text-white space-y-1">
                               <li>• Winding continuity testing</li>
                               <li>• Insulation resistance verification</li>
                               <li>• Terminal connections inspection</li>
@@ -484,9 +484,9 @@ const Module7Section4_3 = () => {
                     </div>
 
                     <div>
-                      <p className="font-medium text-foreground mb-3">Safety Considerations in Sequential Testing</p>
-                      <div className="bg-background/30 p-3 rounded-lg">
-                        <ul className="text-xs text-foreground space-y-1">
+                      <p className="font-medium text-white mb-3">Safety Considerations in Sequential Testing</p>
+                      <div className="bg-[#121212]/30 p-3 rounded-lg">
+                        <ul className="text-xs text-white space-y-1">
                           <li>• Verify safe isolation before testing each stage</li>
                           <li>• Test safety interlocks before proceeding to power circuits</li>
                           <li>• Confirm emergency stop operation at each stage</li>
@@ -498,7 +498,7 @@ const Module7Section4_3 = () => {
                     </div>
                   </div>
 
-                  <div className="text-xs sm:text-xs sm:text-sm text-foreground bg-background/50 p-3 rounded border mt-4">
+                  <div className="text-xs sm:text-xs sm:text-sm text-white bg-[#121212]/50 p-3 rounded border mt-4">
                     <strong>Industrial insight:</strong> Sequential testing in industrial systems often reveals that complex-seeming faults are actually simple issues like loose connections or failed basic components, avoiding unnecessary downtime.
                   </div>
                 </div>
@@ -517,22 +517,22 @@ const Module7Section4_3 = () => {
 
           {/* Block 4: Practical Guidance and Best Practices */}
           <section className="mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-purple-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-purple-500 ">
               <div className="flex items-start gap-3">
                 <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-purple-600 dark:text-emerald-400 mb-4 text-base sm:text-lg">Practical Guidance and Time-Saving Techniques</h3>
-                  <p className="text-sm sm:text-base text-foreground mb-4">
+                  <h3 className="font-semibold text-purple-600 dark:text-elec-yellow mb-4 text-base sm:text-lg">Practical Guidance and Time-Saving Techniques</h3>
+                  <p className="text-sm sm:text-base text-white mb-4">
                     Effective component-by-component testing requires discipline, proper documentation, and systematic progression. These practical techniques maximise efficiency and prevent common mistakes.
                   </p>
                   
                   <div className="space-y-4">
                     <div>
-                      <p className="font-medium text-foreground mb-3">Essential Documentation and Recording</p>
+                      <p className="font-medium text-white mb-3">Essential Documentation and Recording</p>
                       <div className="grid sm:grid-cols-2 gap-4">
-                        <div className="bg-background/30 p-3 rounded-lg">
+                        <div className="bg-[#121212]/30 p-3 rounded-lg">
                           <p className="font-medium text-sm mb-2">What to Record</p>
-                          <ul className="text-xs text-foreground space-y-1">
+                          <ul className="text-xs text-white space-y-1">
                             <li>• Test results for each component</li>
                             <li>• Component condition (pass/fail/partial)</li>
                             <li>• Measurements taken and values obtained</li>
@@ -540,9 +540,9 @@ const Module7Section4_3 = () => {
                             <li>• Any observations or anomalies noted</li>
                           </ul>
                         </div>
-                        <div className="bg-background/30 p-3 rounded-lg">
+                        <div className="bg-[#121212]/30 p-3 rounded-lg">
                           <p className="font-medium text-sm mb-2">Recording Benefits</p>
-                          <ul className="text-xs text-foreground space-y-1">
+                          <ul className="text-xs text-white space-y-1">
                             <li>• Prevents retesting same components</li>
                             <li>• Builds clear fault location picture</li>
                             <li>• Provides evidence for repair decisions</li>
@@ -554,12 +554,12 @@ const Module7Section4_3 = () => {
                     </div>
 
                     <div>
-                      <p className="font-medium text-foreground mb-3">Maintaining Systematic Discipline</p>
-                      <div className="bg-background/30 p-4 rounded-lg">
+                      <p className="font-medium text-white mb-3">Maintaining Systematic Discipline</p>
+                      <div className="bg-[#121212]/30 p-4 rounded-lg">
                         <div className="grid sm:grid-cols-2 gap-4">
                           <div>
                             <p className="font-medium text-sm mb-2">Avoiding Temptation</p>
-                            <ul className="text-xs text-foreground space-y-1">
+                            <ul className="text-xs text-white space-y-1">
                               <li>• Resist urge to "jump around" circuit</li>
                               <li>• Don't skip steps even if fault seems obvious</li>
                               <li>• Avoid testing multiple components together</li>
@@ -568,7 +568,7 @@ const Module7Section4_3 = () => {
                           </div>
                           <div>
                             <p className="font-medium text-sm mb-2">Building Confidence</p>
-                            <ul className="text-xs text-foreground space-y-1">
+                            <ul className="text-xs text-white space-y-1">
                               <li>• Each successful test confirms system status</li>
                               <li>• Progressive elimination builds certainty</li>
                               <li>• Systematic approach reduces anxiety</li>
@@ -580,9 +580,9 @@ const Module7Section4_3 = () => {
                     </div>
 
                     <div>
-                      <p className="font-medium text-foreground mb-3">Tools and Equipment for Efficient Testing</p>
-                      <div className="bg-background/30 p-3 rounded-lg">
-                        <ul className="text-xs text-foreground space-y-1">
+                      <p className="font-medium text-white mb-3">Tools and Equipment for Efficient Testing</p>
+                      <div className="bg-[#121212]/30 p-3 rounded-lg">
+                        <ul className="text-xs text-white space-y-1">
                           <li>• Multifunction tester with good leads and probes</li>
                           <li>• Clipboard or tablet for recording results systematically</li>
                           <li>• Circuit diagrams and component identification sheets</li>
@@ -594,7 +594,7 @@ const Module7Section4_3 = () => {
                     </div>
                   </div>
 
-                  <div className="text-xs sm:text-xs sm:text-sm text-foreground bg-background/50 p-3 rounded border mt-4">
+                  <div className="text-xs sm:text-xs sm:text-sm text-white bg-[#121212]/50 p-3 rounded border mt-4">
                     <strong>Time-saving principle:</strong> Systematic component-by-component testing actually saves time in the long run by preventing repeated work, false diagnoses, and unnecessary component replacement.
                   </div>
                 </div>
@@ -613,34 +613,34 @@ const Module7Section4_3 = () => {
         </Card>
 
         {/* Real-World Examples */}
-        <Card className="mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-6">Real-World Examples</h2>
+        <Card className="mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">Real-World Examples</h2>
           
           <div className="grid gap-6 sm:gap-8">
             {/* Case Study 1 */}
-            <div className="rounded-lg p-4 sm:p-6 border border-border/20 bg-background/30">
+            <div className="rounded-lg p-4 sm:p-6 border border-white/10 bg-[#121212]/30">
               <div className="flex items-start gap-3 mb-4">
-                <div className="p-2 rounded-lg bg-card">
-                  <FileText className="w-5 h-5 text-emerald-400" />
+                <div className="p-2 rounded-lg ">
+                  <FileText className="w-5 h-5 text-elec-yellow" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground text-base sm:text-lg">Case Study 1: Domestic Lighting Circuit Failure</h3>
-                  <p className="text-sm text-muted-foreground">Systematic testing reveals loose connection</p>
+                  <h3 className="font-semibold text-white text-base sm:text-lg">Case Study 1: Domestic Lighting Circuit Failure</h3>
+                  <p className="text-sm text-white">Systematic testing reveals loose connection</p>
                 </div>
               </div>
 
               <div className="space-y-4">
                 <div>
-                  <h4 className="font-medium text-foreground mb-2">Scenario</h4>
-                  <p className="text-xs sm:text-sm text-foreground">
+                  <h4 className="font-medium text-white mb-2">Scenario</h4>
+                  <p className="text-xs sm:text-sm text-white">
                     In a domestic property, a lighting circuit stopped working completely. An inexperienced worker immediately replaced the ceiling rose, assuming it was faulty, but the problem remained.
                   </p>
                 </div>
 
                 <div>
-                  <h4 className="font-medium text-foreground mb-2">Systematic Approach Applied</h4>
-                  <div className="bg-background/50 p-3 rounded">
-                    <ol className="text-xs sm:text-sm text-foreground space-y-1 list-decimal pl-4">
+                  <h4 className="font-medium text-white mb-2">Systematic Approach Applied</h4>
+                  <div className="bg-[#121212]/50 p-3 rounded">
+                    <ol className="text-xs sm:text-sm text-white space-y-1 list-decimal pl-4">
                       <li><strong>Step 1:</strong> Tested supply voltage at consumer unit - 230V present, MCB operational</li>
                       <li><strong>Step 2:</strong> Tested switch operation - no continuity when operated</li>
                       <li><strong>Step 3:</strong> Investigated switch connections - line conductor loose in terminal</li>
@@ -650,8 +650,8 @@ const Module7Section4_3 = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-medium text-foreground mb-2">Learning Points</h4>
-                  <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc pl-6">
+                  <h4 className="font-medium text-white mb-2">Learning Points</h4>
+                  <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-6">
                     <li>Replacing components without testing wastes time and money</li>
                     <li>Systematic testing quickly identified the actual fault location</li>
                     <li>The ceiling rose replacement was completely unnecessary</li>
@@ -662,29 +662,29 @@ const Module7Section4_3 = () => {
             </div>
 
             {/* Case Study 2 */}
-            <div className="rounded-lg p-4 sm:p-6 border border-border/20 bg-background/30">
+            <div className="rounded-lg p-4 sm:p-6 border border-white/10 bg-[#121212]/30">
               <div className="flex items-start gap-3 mb-4">
-                <div className="p-2 rounded-lg bg-card">
-                  <Wrench className="w-5 h-5 text-emerald-400" />
+                <div className="p-2 rounded-lg ">
+                  <Wrench className="w-5 h-5 text-elec-yellow" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground text-base sm:text-lg">Case Study 2: Factory Machine Motor Failure</h3>
-                  <p className="text-sm text-muted-foreground">Sequential testing prevents unnecessary system dismantling</p>
+                  <h3 className="font-semibold text-white text-base sm:text-lg">Case Study 2: Factory Machine Motor Failure</h3>
+                  <p className="text-sm text-white">Sequential testing prevents unnecessary system dismantling</p>
                 </div>
               </div>
 
               <div className="space-y-4">
                 <div>
-                  <h4 className="font-medium text-foreground mb-2">Scenario</h4>
-                  <p className="text-xs sm:text-sm text-foreground">
+                  <h4 className="font-medium text-white mb-2">Scenario</h4>
+                  <p className="text-xs sm:text-sm text-white">
                     A factory production machine would not start, causing production delays. Rather than dismantling the entire control system, the electrician applied systematic component testing.
                   </p>
                 </div>
 
                 <div>
-                  <h4 className="font-medium text-foreground mb-2">Sequential Testing Process</h4>
-                  <div className="bg-background/50 p-3 rounded">
-                    <ol className="text-xs sm:text-sm text-foreground space-y-1 list-decimal pl-4">
+                  <h4 className="font-medium text-white mb-2">Sequential Testing Process</h4>
+                  <div className="bg-[#121212]/50 p-3 rounded">
+                    <ol className="text-xs sm:text-sm text-white space-y-1 list-decimal pl-4">
                       <li><strong>Stage 1:</strong> Supply testing - three-phase supply correct at control panel (415V balanced)</li>
                       <li><strong>Stage 2:</strong> Control circuit testing - 24V control supply present, start button operational</li>
                       <li><strong>Stage 3:</strong> Contactor testing - coil energising correctly, main contacts closing</li>
@@ -695,8 +695,8 @@ const Module7Section4_3 = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-medium text-foreground mb-2">Outcome and Benefits</h4>
-                  <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc pl-6">
+                  <h4 className="font-medium text-white mb-2">Outcome and Benefits</h4>
+                  <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-6">
                     <li>Avoided unnecessary work on control panel and contactors</li>
                     <li>Focused repair effort on the actual fault - motor windings</li>
                     <li>Minimised production downtime by targeting exact problem</li>
@@ -710,22 +710,22 @@ const Module7Section4_3 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-6">Frequently Asked Questions</h2>
+        <Card className="mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-border/20 pb-4 last:border-b-0 last:pb-0">
-                <h3 className="font-medium text-foreground mb-2 text-sm sm:text-base">{faq.question}</h3>
-                <p className="text-muted-foreground text-sm">{faq.answer}</p>
+              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
+                <h3 className="font-medium text-white mb-2 text-sm sm:text-base">{faq.question}</h3>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Key Takeaways */}
-        <Card className="mb-8 p-4 sm:p-6 bg-card border border-border/40">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Recap</h2>
-          <p className="text-sm sm:text-base text-foreground mb-4">
+        <Card className="mb-8 p-4 sm:p-6 border border-border/40">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
+          <p className="text-sm sm:text-base text-white mb-4">
             Testing one component or section at a time is a disciplined way of narrowing down faults. Instead of guessing or replacing parts unnecessarily, electricians work step by step, confirming each stage of the circuit until the problem is found. This method is efficient, accurate, and suitable for everything from a single lighting circuit to an industrial control system.
           </p>
         </Card>
@@ -734,7 +734,7 @@ const Module7Section4_3 = () => {
         <Quiz questions={quizQuestions} title="Test Your Knowledge: Component-by-Component Testing" />
 
         {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 pt-6 border-t border-border/20">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 pt-6 border-t border-white/10">
           <Button variant="outline" className="w-full sm:w-auto" asChild>
             <Link to="../4-2">
               <ArrowLeft className="w-4 h-4 mr-2" />

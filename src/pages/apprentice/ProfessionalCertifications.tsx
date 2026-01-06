@@ -1,5 +1,5 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Award, Clock, BookOpen, CheckCircle, Zap, Shield, Home, Building, Users, Car, Flame, Sun } from "lucide-react";
@@ -172,7 +172,7 @@ const ProfessionalCertifications = () => {
           Advance your electrical career with industry-recognised qualifications. These certifications open new opportunities, 
           increase earning potential, and demonstrate professional competence to clients and employers.
         </p>
-        <BackButton customUrl="/apprentice/professional-development" label="Back to Professional Development" />
+        <SmartBackButton />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

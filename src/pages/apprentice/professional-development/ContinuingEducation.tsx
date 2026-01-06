@@ -1,8 +1,8 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, BookOpen, Clock, Users, Lightbulb } from "lucide-react";
-import { Link } from "react-router-dom";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
+import { BookOpen, Clock, Users, Lightbulb } from "lucide-react";
 
 const ContinuingEducation = () => {
   const educationOptions = [
@@ -47,12 +47,7 @@ const ContinuingEducation = () => {
           <h1 className="text-3xl font-bold tracking-tight">Continuing Education</h1>
           <p className="text-muted-foreground">Keep your skills current and expand into new areas</p>
         </div>
-        <Link to="/apprentice/professional-development" className="flex-shrink-0">
-          <Button variant="outline">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Professional Development
-          </Button>
-        </Link>
+        <SmartBackButton />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

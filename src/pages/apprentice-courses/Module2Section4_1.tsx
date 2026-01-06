@@ -151,11 +151,11 @@ const Module2Section4_1 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 2.4
@@ -168,15 +168,15 @@ const Module2Section4_1 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <Lightbulb className="h-8 w-8 text-emerald-400" />
+            <Lightbulb className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 2.4.1
               </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
                 AC vs DC Differences
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+              <p className="text-xl text-white max-w-3xl mt-2">
                 Practical differences for UK electricians: waveforms, polarity, measurement, protection and testing
               </p>
             </div>
@@ -184,11 +184,11 @@ const Module2Section4_1 = () => {
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>AC alternates</strong> at 50 Hz in the UK; DC is one-directional (0 Hz).</li>
                 <li><strong>230 V mains</strong> is an RMS value; Vp ≈ Vrms × √2 ≈ 325 V.</li>
@@ -197,8 +197,8 @@ const Module2Section4_1 = () => {
                 <li><strong>Use true-RMS</strong> meters for non-sinusoidal waveforms.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>AC:</strong> Distribution, mains sockets, induction motors.</li>
                 <li><strong>DC:</strong> Control panels, LED drivers/tapes, PV/DC rails, EV charger electronics.</li>
@@ -209,32 +209,32 @@ const Module2Section4_1 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
-          <ul className="space-y-3 text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
+          <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Explain AC vs DC in plain terms and identify each on-site</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Relate RMS, peak and frequency to measurements and nameplate ratings</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Recognise polarity sensitivity in DC circuits and AC L/N conventions</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Select appropriate RCD type where DC components may be present</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Apply safe isolation and testing procedures to both AC and DC</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Reference relevant parts of BS 7671 in design and selection</span>
             </li>
           </ul>
@@ -242,12 +242,12 @@ const Module2Section4_1 = () => {
 
         {/* Section 1: Fundamentals */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
+          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
               Fundamentals - Direction, Waveform and Frequency
             </h2>
-            <div className="space-y-6 text-foreground">
+            <div className="space-y-6 text-white">
               <p>
                 Understanding the fundamental differences between AC and DC is essential for safe electrical work. 
                 The key distinction lies in current direction and how this affects electrical behaviour, measurement, and safety.
@@ -255,7 +255,7 @@ const Module2Section4_1 = () => {
               
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-lg font-semibold text-emerald-400 mb-3">Current Direction and Flow</h3>
+                  <h3 className="text-lg font-semibold text-elec-yellow mb-3">Current Direction and Flow</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-border/30 p-4 rounded-lg">
                       <p className="text-blue-200 text-sm mb-2"><strong>AC (Alternating Current):</strong></p>
@@ -281,7 +281,7 @@ const Module2Section4_1 = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-emerald-400 mb-3">RMS, Peak and Average Values</h3>
+                  <h3 className="text-lg font-semibold text-elec-yellow mb-3">RMS, Peak and Average Values</h3>
                   <div className="space-y-3">
                     <p className="text-sm">
                       Understanding these measurements is crucial for proper electrical calculations and safety assessments:
@@ -298,7 +298,7 @@ const Module2Section4_1 = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-emerald-400 mb-3">UK Electrical Standards</h3>
+                  <h3 className="text-lg font-semibold text-elec-yellow mb-3">UK Electrical Standards</h3>
                   <div className="space-y-3">
                     <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
                       <ul className="list-disc pl-6 space-y-2 text-sm text-slate-100">
@@ -312,7 +312,7 @@ const Module2Section4_1 = () => {
                   </div>
                 </div>
 
-                <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
+                <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                   <p className="text-yellow-300">
                     <strong>Worked Example:</strong> UK mains 230V RMS calculation:<br/>
                     • Peak voltage: Vp = 230V × √2 = 230V × 1.414 = 325V<br/>
@@ -323,7 +323,7 @@ const Module2Section4_1 = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-emerald-400 mb-3">Practical Implications</h3>
+                  <h3 className="text-lg font-semibold text-elec-yellow mb-3">Practical Implications</h3>
                   <div className="space-y-2">
                     <div className="bg-card border border-border/30 p-3 rounded">
                       <p className="text-sm text-blue-100">
@@ -351,12 +351,12 @@ const Module2Section4_1 = () => {
 
         {/* Section 2: Practical Identification */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
+          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
               Practical Identification and Measurement
             </h2>
-            <div className="space-y-6 text-foreground">
+            <div className="space-y-6 text-white">
               <p>
                 Rapid, accurate identification of AC vs DC is essential for safety and selecting appropriate test methods. 
                 Multiple indicators and measurement techniques ensure correct identification.
@@ -364,9 +364,9 @@ const Module2Section4_1 = () => {
               
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-lg font-semibold text-emerald-400 mb-3">Visual Identification Methods</h3>
+                  <h3 className="text-lg font-semibold text-elec-yellow mb-3">Visual Identification Methods</h3>
                   <div className="space-y-3">
-                    <div className="bg-card border border-emerald-500/30 p-4 rounded-lg">
+                    <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
                       <p className="text-emerald-200 text-sm mb-2"><strong>Nameplate Information:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-emerald-100">
                         <li><strong>~ symbol:</strong> Indicates AC supply or output</li>
@@ -390,9 +390,9 @@ const Module2Section4_1 = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-emerald-400 mb-3">Measurement Techniques</h3>
+                  <h3 className="text-lg font-semibold text-elec-yellow mb-3">Measurement Techniques</h3>
                   <div className="space-y-3">
-                    <div className="bg-card border border-emerald-500/30 p-4 rounded-lg">
+                    <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
                       <p className="text-emerald-200 text-sm mb-2"><strong>Multimeter Testing:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-emerald-100">
                         <li><strong>AC mode (V~):</strong> Will read near zero on pure DC sources</li>
@@ -416,9 +416,9 @@ const Module2Section4_1 = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-emerald-400 mb-3">Common Installation Locations</h3>
+                  <h3 className="text-lg font-semibold text-elec-yellow mb-3">Common Installation Locations</h3>
                   <div className="grid md:grid-cols-2 gap-4">
-                    <div className="bg-card border border-emerald-500/30 p-3 rounded">
+                    <div className="bg-card border border-elec-yellow/30 p-3 rounded">
                       <p className="text-emerald-200 font-medium mb-2">Typical AC Locations:</p>
                       <ul className="list-disc pl-4 space-y-1 text-xs text-emerald-100">
                         <li>Distribution boards and consumer units</li>
@@ -442,9 +442,9 @@ const Module2Section4_1 = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-emerald-400 mb-3">Meter Selection and Accuracy</h3>
+                  <h3 className="text-lg font-semibold text-elec-yellow mb-3">Meter Selection and Accuracy</h3>
                   <div className="space-y-3">
-                    <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
+                    <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                       <p className="text-yellow-300 text-sm mb-2"><strong>True-RMS vs Average-Responding Meters:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-yellow-200">
                         <li><strong>True-RMS:</strong> Accurate for all waveforms including distorted AC from drives/inverters</li>
@@ -454,7 +454,7 @@ const Module2Section4_1 = () => {
                       </ul>
                     </div>
                     
-                    <div className="bg-card border border-emerald-500/30 p-3 rounded">
+                    <div className="bg-card border border-elec-yellow/30 p-3 rounded">
                       <p className="text-sm text-emerald-100">
                         <strong>Safety Note:</strong> Always verify meter category rating (CAT II/III/IV) matches installation voltage levels. 
                         Use appropriate test leads and ensure meter is calibrated for accurate readings.
@@ -472,11 +472,11 @@ const Module2Section4_1 = () => {
         {/* Section 3: Protection and Testing */}
         <div className="mb-8">
           <div className="border-l-4 border-teal-500 bg-teal-500/10 dark:bg-teal-500/10 p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
               Protection and Testing Differences
             </h2>
-            <div className="space-y-6 text-foreground">
+            <div className="space-y-6 text-white">
               <p>
                 AC and DC systems require different protective devices and testing approaches. Understanding these differences 
                 prevents protection failures and ensures compliance with BS 7671.
@@ -568,7 +568,7 @@ const Module2Section4_1 = () => {
                 <div>
                   <h3 className="text-lg font-semibold text-teal-300 mb-3">Instrument Selection</h3>
                   <div className="space-y-3">
-                    <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
+                    <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                       <p className="text-yellow-300 text-sm mb-2"><strong>Critical Considerations:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-yellow-200">
                         <li><strong>Voltage category:</strong> CAT II (accessories), CAT III (distribution), CAT IV (supply)</li>
@@ -587,12 +587,12 @@ const Module2Section4_1 = () => {
 
         {/* Section 4: Common Mistakes & On-site Checks */}
         <div className="mb-8">
-          <div className="border-l-4 border-amber-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="border-l-4 border-amber-500 dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">4</span>
               Common Mistakes and On-site Safety
             </h2>
-            <div className="space-y-6 text-foreground">
+            <div className="space-y-6 text-white">
               <p>
                 Avoiding common mistakes when working with AC and DC systems prevents equipment damage, personal injury, 
                 and installation failures. Understanding these pitfalls improves both safety and efficiency.
@@ -652,7 +652,7 @@ const Module2Section4_1 = () => {
                 <div>
                   <h3 className="text-lg font-semibold text-amber-300 mb-3">Systematic Inspection Protocol</h3>
                   <div className="space-y-4">
-                    <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
+                    <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                       <p className="text-yellow-300 text-sm mb-2"><strong>Pre-Work Safety Checklist:</strong></p>
                       <div className="grid md:grid-cols-2 gap-4">
                         <ul className="list-decimal pl-6 space-y-1 text-sm text-yellow-200">
@@ -737,8 +737,8 @@ const Module2Section4_1 = () => {
         </div>
 
         {/* Real-world Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">Real-world Examples</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Real-world Examples</h2>
           
           <div className="space-y-6">
             <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
@@ -764,53 +764,53 @@ const Module2Section4_1 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-border/20 pb-4 last:border-b-0">
-                <h3 className="font-medium text-foreground mb-2">{faq.question}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{faq.answer}</p>
+              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
+                <h3 className="font-medium text-white mb-2">{faq.question}</h3>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">AC vs DC — Pocket Guide</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">AC vs DC — Pocket Guide</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
             <div className="space-y-3">
-              <div className="bg-background/20 border border-border/20 p-3 rounded">
-                <p className="font-medium text-foreground mb-1">Direction & Symbols</p>
-                <p className="text-muted-foreground">AC (~): Alternates at 50Hz | DC (=): One direction, 0Hz</p>
+              <div className="bg-[#121212]/20 border border-white/10 p-3 rounded">
+                <p className="font-medium text-white mb-1">Direction & Symbols</p>
+                <p className="text-white">AC (~): Alternates at 50Hz | DC (=): One direction, 0Hz</p>
               </div>
-              <div className="bg-background/20 border border-border/20 p-3 rounded">
-                <p className="font-medium text-foreground mb-1">Typical Uses</p>
-                <p className="text-muted-foreground">AC: Mains, motors, distribution | DC: LEDs, controls, PV, EV electronics</p>
+              <div className="bg-[#121212]/20 border border-white/10 p-3 rounded">
+                <p className="font-medium text-white mb-1">Typical Uses</p>
+                <p className="text-white">AC: Mains, motors, distribution | DC: LEDs, controls, PV, EV electronics</p>
               </div>
-              <div className="bg-background/20 border border-border/20 p-3 rounded">
-                <p className="font-medium text-foreground mb-1">Measurement</p>
-                <p className="text-muted-foreground">AC: Vrms (UK 230V, peak ≈325V) | DC: Steady voltage, check polarity</p>
+              <div className="bg-[#121212]/20 border border-white/10 p-3 rounded">
+                <p className="font-medium text-white mb-1">Measurement</p>
+                <p className="text-white">AC: Vrms (UK 230V, peak ≈325V) | DC: Steady voltage, check polarity</p>
               </div>
             </div>
             <div className="space-y-3">
-              <div className="bg-background/20 border border-border/20 p-3 rounded">
-                <p className="font-medium text-foreground mb-1">Protection (RCD Types)</p>
-                <p className="text-muted-foreground">AC/A for standard | Type B for smooth DC components</p>
+              <div className="bg-[#121212]/20 border border-white/10 p-3 rounded">
+                <p className="font-medium text-white mb-1">Protection (RCD Types)</p>
+                <p className="text-white">AC/A for standard | Type B for smooth DC components</p>
               </div>
-              <div className="bg-background/20 border border-border/20 p-3 rounded">
-                <p className="font-medium text-foreground mb-1">Polarity</p>
-                <p className="text-muted-foreground">AC: L/N conventions | DC: +/- critical for LEDs/electronics</p>
+              <div className="bg-[#121212]/20 border border-white/10 p-3 rounded">
+                <p className="font-medium text-white mb-1">Polarity</p>
+                <p className="text-white">AC: L/N conventions | DC: +/- critical for LEDs/electronics</p>
               </div>
-              <div className="bg-background/20 border border-border/20 p-3 rounded">
-                <p className="font-medium text-foreground mb-1">Meter Tips</p>
-                <p className="text-muted-foreground">True-RMS for distorted waveforms | Verify polarity on DC</p>
+              <div className="bg-[#121212]/20 border border-white/10 p-3 rounded">
+                <p className="font-medium text-white mb-1">Meter Tips</p>
+                <p className="text-white">True-RMS for distorted waveforms | Verify polarity on DC</p>
               </div>
             </div>
           </div>
-          <div className="mt-4 p-3 bg-emerald-500/10 rounded border border-emerald-500/30">
-            <p className="text-xs sm:text-sm text-foreground">
+          <div className="mt-4 p-3 bg-elec-yellow/10 rounded border border-elec-yellow/30">
+            <p className="text-xs sm:text-sm text-white">
               <strong>Do:</strong> Check RCD type compatibility, verify polarity, use correct meters. 
               <strong>Don't:</strong> Ignore DC components, reverse polarity on sensitive loads.
             </p>
@@ -823,7 +823,7 @@ const Module2Section4_1 = () => {
         </section>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />

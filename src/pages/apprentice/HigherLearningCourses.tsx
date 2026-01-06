@@ -1,10 +1,9 @@
 
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "react-router-dom";
-import { ArrowLeft, School, GraduationCap } from "lucide-react";
+import { School, GraduationCap } from "lucide-react";
 import { courseCategories } from "@/data/courseCategories";
 import EnhancedFurtherEducation from "@/components/apprentice/career/EnhancedFurtherEducation";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 
 const HigherLearningCourses = () => {
   // Find the higher learning courses category
@@ -21,15 +20,7 @@ const HigherLearningCourses = () => {
             Advanced qualification pathways for electrical professionals
           </p>
         </div>
-        <Link to="/apprentice/study" className="w-full sm:w-auto">
-          <Button 
-            variant="outline" 
-            className="border-elec-yellow/30 hover:bg-elec-yellow/10 w-full sm:w-auto"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Study Centre
-          </Button>
-        </Link>
+<SmartBackButton />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

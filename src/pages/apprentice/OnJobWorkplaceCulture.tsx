@@ -1,9 +1,8 @@
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, MessageSquare, Users, BookOpen, HelpCircle, Lightbulb, Globe } from "lucide-react";
-import { Link } from "react-router-dom";
+import { MessageSquare, Users, BookOpen, HelpCircle, Lightbulb, Globe } from "lucide-react";
 import WorkplaceCultureOverviewTab from "@/components/apprentice/workplace-culture/WorkplaceCultureOverviewTab";
 import CommunicationGuideTab from "@/components/apprentice/workplace-culture/CommunicationGuideTab";
 import CultureModulesTab from "@/components/apprentice/workplace-culture/CultureModulesTab";
@@ -19,12 +18,7 @@ const OnJobWorkplaceCulture = () => {
         <p className="text-muted-foreground text-center max-w-2xl mb-4">
           Master workplace communication, understand UK electrical industry culture, and build professional relationships
         </p>
-        <Link to="/apprentice/on-job-tools" className="flex-shrink-0">
-          <Button variant="outline">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Tools
-          </Button>
-        </Link>
+        <SmartBackButton />
       </div>
 
       <Tabs defaultValue="overview" className="w-full">

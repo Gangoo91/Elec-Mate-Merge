@@ -1,11 +1,11 @@
 
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, BookOpen, FileText, Wrench, Shield, Lightbulb } from "lucide-react";
-import { level2DiplomaUnits, getCourseUnitById } from "@/data/courseUnits";
-import type { CourseUnit } from "@/data/courseTypes";
+import { BookOpen, FileText, Wrench, Shield, Lightbulb } from "lucide-react";
+import { level2DiplomaUnits } from "@/data/courseUnits";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 
 const EALLevel2Diploma = () => {
   const navigate = useNavigate();
@@ -51,15 +51,7 @@ const EALLevel2Diploma = () => {
             Diploma in Electrical Installation
           </p>
         </div>
-        <Link to="/apprentice/study/eal" className="w-full sm:w-auto">
-          <Button 
-            variant="outline" 
-            className="border-elec-yellow/30 hover:bg-elec-yellow/10 w-full sm:w-auto"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to EAL Courses
-          </Button>
-        </Link>
+<SmartBackButton />
       </div>
 
       {/* Course description */}

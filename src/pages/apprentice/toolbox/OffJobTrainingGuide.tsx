@@ -1,21 +1,16 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Clock, FileText, Users, CheckCircle, AlertCircle, BookOpen, Target, Shield } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Clock, FileText, Users, CheckCircle, AlertCircle, BookOpen, Target, Shield } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 
 const OffJobTrainingGuide = () => {
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
         <h1 className="text-3xl font-bold tracking-tight">Off-the-Job Training Guide</h1>
-        <Link to="/apprentice/toolbox" className="flex-shrink-0">
-          <Button variant="outline">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Toolbox
-          </Button>
-        </Link>
+        <SmartBackButton />
       </div>
 
       {/* Introduction Section */}

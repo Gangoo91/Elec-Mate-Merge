@@ -39,17 +39,17 @@ const ScenarioCard = ({
   };
 
   return (
-    <Card className="p-6 bg-card border-border/20">
-      <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-        <Target className="w-5 h-5 text-emerald-400" />
+    <Card className="p-6 bg-transparent border-white/20">
+      <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
+        <Target className="w-5 h-5 text-elec-yellow" />
         {title}
       </h4>
       <div className="bg-emerald-50/50 dark:bg-emerald-950/20 p-4 rounded-lg mb-4">
-        <p className="text-xs sm:text-sm text-foreground">{scenario}</p>
+        <p className="text-xs sm:text-sm text-white">{scenario}</p>
       </div>
       
       <div className="space-y-3 mb-4">
-        <p className="font-medium text-xs sm:text-sm text-foreground">Choose the best option:</p>
+        <p className="font-medium text-xs sm:text-sm text-white">Choose the best option:</p>
         {options.map((option, index) => (
           <button
             key={index}
@@ -61,10 +61,10 @@ const ScenarioCard = ({
                   ? index === correctAnswer
                     ? 'bg-green-500/20 border-green-400/50 text-green-800 dark:text-green-200'
                     : 'bg-red-500/20 border-red-400/50 text-red-800 dark:text-red-200'
-                  : 'bg-emerald-500/20 border-emerald-400/20 text-blue-800 dark:text-blue-200'
+                  : 'bg-elec-yellow/20 border-emerald-400/20 text-blue-800 dark:text-blue-200'
                 : showAnswer && index === correctAnswer
                 ? 'bg-green-500/20 border-green-400/50 text-green-800 dark:text-green-200'
-                : 'bg-white dark:bg-card border-gray-300 dark:border-gray-600 hover:border-blue-300 dark:hover:border-emerald-500 text-gray-900 dark:text-gray-100'
+                : 'bg-white dark:bg-card border-gray-300 dark:border-gray-600 hover:border-blue-300 dark:hover:border-elec-yellow text-gray-900 dark:text-gray-100'
             }`}
           >
             <div className="flex items-center gap-3">
@@ -97,7 +97,7 @@ const ScenarioCard = ({
 
       <div className="flex gap-2">
         {!showAnswer && selectedOption !== null && (
-          <Button onClick={handleRevealAnswer} size="sm" className="bg-emerald-500 hover:bg-blue-700">
+          <Button onClick={handleRevealAnswer} size="sm" className="bg-elec-yellow hover:bg-blue-700">
             Show Answer
           </Button>
         )}
@@ -317,11 +317,11 @@ const Module3Section1_7: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.1
@@ -334,29 +334,29 @@ const Module3Section1_7: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Settings className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Settings className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">Section 3.1.7</Badge>
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">Section 3.1.7</Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">Selecting Cables Based on Application and Environment</h1>
-          <p className="text-muted-foreground">Learn to choose the right cable for every situation through interactive real-world scenarios.</p>
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">Selecting Cables Based on Application and Environment</h1>
+          <p className="text-white">Learn to choose the right cable for every situation through interactive real-world scenarios.</p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Correct cable selection prevents overheating, voltage drop, and fire hazards.</li>
                 <li>Consider current capacity, environment, installation method, and protection needs.</li>
                 <li>BS 7671 requires cables to meet both electrical and environmental requirements.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Consider temperature, UV exposure, mechanical risk, and installation method.</li>
                 <li><strong>Use:</strong> SWA for burial, heat-resistant for high temps, UV-resistant outdoors.</li>
@@ -367,9 +367,9 @@ const Module3Section1_7: React.FC = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Apply systematic cable selection principles based on application requirements and environmental conditions.</li>
             <li>Identify when specific cable types (SWA, heat-resistant, UV-resistant) are required for safety and compliance.</li>
             <li>Understand the impact of installation methods and environmental factors on cable performance.</li>
@@ -380,16 +380,16 @@ const Module3Section1_7: React.FC = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Cable Selection Principles</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Cable Selection Principles</h2>
 
           {/* Selection Criteria */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2"><Wrench className="w-5 h-5" /> Key Selection Criteria</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><Wrench className="w-5 h-5" /> Key Selection Criteria</h3>
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               
               <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Electrical Requirements</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>Current capacity:</strong> Design current plus derating factors</li>
@@ -399,7 +399,7 @@ const Module3Section1_7: React.FC = () => {
                     <li><strong>Harmonic compatibility:</strong> Consider non-linear loads</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                   <p className="font-medium mb-2">Environmental Factors</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>Temperature:</strong> Ambient and operating temperature ranges</li>
@@ -409,7 +409,7 @@ const Module3Section1_7: React.FC = () => {
                     <li><strong>Mechanical stress:</strong> Vibration, movement, impact risk</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Installation Method</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>Direct burial:</strong> Requires armoured or protected cables</li>
@@ -421,7 +421,7 @@ const Module3Section1_7: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4">
+              <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
                 <p className="font-medium mb-3">BS 7671 Selection Requirements:</p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <ul className="list-disc pl-4 space-y-1">
@@ -452,10 +452,10 @@ const Module3Section1_7: React.FC = () => {
 
           {/* Environmental Classifications */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2"><ThermometerSun className="w-5 h-5" /> Environmental Classifications</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><ThermometerSun className="w-5 h-5" /> Environmental Classifications</h3>
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-3">External Influence Classifications (IP Codes)</p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
@@ -482,7 +482,7 @@ const Module3Section1_7: React.FC = () => {
               </div>
 
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Mechanical Impact (AG)</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>AG1:</strong> Light (0.225 J) - domestic/office areas</li>
@@ -491,7 +491,7 @@ const Module3Section1_7: React.FC = () => {
                     <li><strong>Direct burial:</strong> Requires maximum protection</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Solar Radiation (AN)</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>AN1:</strong> Low (indoor installations)</li>
@@ -515,9 +515,9 @@ const Module3Section1_7: React.FC = () => {
         </Card>
 
         {/* Interactive Scenarios */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Interactive Cable Selection Scenarios</h2>
-          <p className="text-sm text-muted-foreground mb-6">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Interactive Cable Selection Scenarios</h2>
+          <p className="text-sm text-white mb-6">
             Test your cable selection knowledge with these real-world scenarios. Choose your answer, then reveal the correct solution with detailed explanation.
           </p>
           
@@ -529,8 +529,8 @@ const Module3Section1_7: React.FC = () => {
         </Card>
 
         {/* Quick Knowledge Checks */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quick knowledge checks</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick knowledge checks</h2>
           <div className="space-y-6">
             {quickCheckQuestions.map((q) => (
               <InlineCheck key={q.id} {...q} />
@@ -539,9 +539,9 @@ const Module3Section1_7: React.FC = () => {
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-8 p-6 bg-card border border-green-400/30">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-world example</h2>
-          <div className="text-xs sm:text-sm text-foreground space-y-3">
+        <Card className="mb-8 p-6 border border-green-400/30">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-world example</h2>
+          <div className="text-xs sm:text-sm text-white space-y-3">
             <p><strong>Industrial Food Processing Plant Cable Selection Challenge</strong></p>
             <p>
               An industrial food processing plant required electrical installation across multiple environmental zones, 
@@ -582,13 +582,13 @@ const Module3Section1_7: React.FC = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently asked questions</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently asked questions</h2>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
             {faqs.map((faq, index) => (
               <div key={index}>
                 <p className="font-medium mb-1">{faq.q}</p>
-                <p className="text-muted-foreground">{faq.a}</p>
+                <p className="text-white">{faq.a}</p>
                 {index < faqs.length - 1 && <Separator className="mt-4" />}
               </div>
             ))}
@@ -596,9 +596,9 @@ const Module3Section1_7: React.FC = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border border-border/30">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
-          <div className="text-xs sm:text-sm text-foreground space-y-3">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border border-border/30">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+          <div className="text-xs sm:text-sm text-white space-y-3">
             <p>
               Correct cable selection is fundamental to electrical safety, system reliability, and regulatory compliance. 
               The process requires systematic consideration of electrical, environmental, and installation factors to 
@@ -622,8 +622,8 @@ const Module3Section1_7: React.FC = () => {
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Test your knowledge</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Test your knowledge</h2>
           <Quiz questions={quizQuestions} title="Cable Selection Knowledge Test" />
         </Card>
       </main>

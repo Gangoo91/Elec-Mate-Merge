@@ -104,11 +104,11 @@ const Module6Section4_4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6.4
@@ -122,62 +122,62 @@ const Module6Section4_4 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <CheckCircle className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <CheckCircle className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 6.4.4
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Common Faults Found During Continuity/Polarity Tests
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Recognise common faults found during continuity and polarity tests
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-8 p-6 bg-card border-border/20">
+        <Card className="mb-8 p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-6">
-            <Target className="w-6 h-6 text-foreground" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Spot it in 30 Seconds</h2>
+            <Target className="w-6 h-6 text-white" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-3">In 30 seconds</p>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Open circuits break conductor continuity</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>High resistance joints cause overheating</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Disconnected CPC = shock hazard</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Reversed polarity compromises safety</span>
                 </li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/20">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/20">
               <p className="font-medium mb-3">Spot it / Use it / Check it</p>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Spot:</strong> Open circuits, loose connections, reversed wiring</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Use:</strong> Low resistance ohmmeter, two-pole voltage tester</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Check:</strong> All circuits before energising</span>
                 </li>
               </ul>
@@ -186,18 +186,18 @@ const Module6Section4_4 = () => {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <p className="text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <p className="text-base text-white mb-4">
             Continuity and polarity testing are designed not only to confirm correct wiring but also to identify common faults that compromise safety and functionality. These tests reveal issues such as open circuits, incorrect polarity, high resistance joints, and missing CPCs. If left undetected, these faults can result in electric shock, fire hazards, or premature equipment failure.
           </p>
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-base text-foreground mb-4">By the end of this subsection, learners will be able to:</p>
-          <ul className="space-y-3 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-base text-white mb-4">By the end of this subsection, learners will be able to:</p>
+          <ul className="space-y-3 text-base text-white">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
               <span>Recognise common faults found during continuity and polarity tests</span>
@@ -223,22 +223,22 @@ const Module6Section4_4 = () => {
 
 
         {/* Content / Learning */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* 1. Common Continuity Faults */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-3">Common Continuity Faults</p>
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Common Continuity Faults</p>
                     
                     <div className="space-y-4">
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Open Circuit Conductors:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Open Circuit Conductors:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Caused by loose terminations at accessories or distribution boards</li>
                            <li>Broken wires due to damage during installation or maintenance</li>
                            <li>Missing links or connections in ring circuits</li>
@@ -247,23 +247,23 @@ const Module6Section4_4 = () => {
                          </ul>
                          <div className="mt-3 space-y-2">
                            <div className="flex items-start gap-2">
-                             <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                             <span className="text-xs sm:text-sm text-foreground">Prevents current flow through complete circuit path</span>
+                             <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                             <span className="text-xs sm:text-sm text-white">Prevents current flow through complete circuit path</span>
                            </div>
                            <div className="flex items-start gap-2">
-                             <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                             <span className="text-xs sm:text-sm text-foreground">Detected by infinite resistance readings during continuity tests</span>
+                             <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                             <span className="text-xs sm:text-sm text-white">Detected by infinite resistance readings during continuity tests</span>
                            </div>
                            <div className="flex items-start gap-2">
-                             <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                             <span className="text-xs sm:text-sm text-foreground">Confirms parallel earth paths are properly connected and provide redundancy</span>
+                             <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                             <span className="text-xs sm:text-sm text-white">Confirms parallel earth paths are properly connected and provide redundancy</span>
                            </div>
                          </div>
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>High Resistance Joints:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>High Resistance Joints:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Poor connections due to inadequate tightening of terminals</li>
                            <li>Corroded terminals from moisture ingress or age</li>
                            <li>Oxidation at brass or copper connections</li>
@@ -272,23 +272,23 @@ const Module6Section4_4 = () => {
                          </ul>
                          <div className="mt-3 space-y-2">
                            <div className="flex items-start gap-2">
-                             <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                             <span className="text-xs sm:text-sm text-foreground">Causes overheating due to increased I²R losses</span>
+                             <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                             <span className="text-xs sm:text-sm text-white">Causes overheating due to increased I²R losses</span>
                            </div>
                            <div className="flex items-start gap-2">
-                             <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                             <span className="text-xs sm:text-sm text-foreground">Creates significant fire risk from excessive heat generation</span>
+                             <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                             <span className="text-xs sm:text-sm text-white">Creates significant fire risk from excessive heat generation</span>
                            </div>
                            <div className="flex items-start gap-2">
-                             <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                             <span className="text-xs sm:text-sm text-foreground">May not be obvious during normal operation but degrades over time</span>
+                             <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                             <span className="text-xs sm:text-sm text-white">May not be obvious during normal operation but degrades over time</span>
                            </div>
                          </div>
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Disconnected CPC:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Disconnected CPC:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Loss of protective earthing creating severe shock risk</li>
                            <li>Missing earth connections at socket outlets</li>
                            <li>Broken earth continuity in ring circuits</li>
@@ -297,16 +297,16 @@ const Module6Section4_4 = () => {
                          </ul>
                          <div className="mt-3 space-y-2">
                            <div className="flex items-start gap-2">
-                             <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                             <span className="text-xs sm:text-sm text-foreground">Exposed metalwork may become live under fault conditions</span>
+                             <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                             <span className="text-xs sm:text-sm text-white">Exposed metalwork may become live under fault conditions</span>
                            </div>
                            <div className="flex items-start gap-2">
-                             <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                             <span className="text-xs sm:text-sm text-foreground">Protective devices cannot operate effectively without earth path</span>
+                             <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                             <span className="text-xs sm:text-sm text-white">Protective devices cannot operate effectively without earth path</span>
                            </div>
                            <div className="flex items-start gap-2">
-                             <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                             <span className="text-xs sm:text-sm text-foreground">Creates serious electric shock hazard to users</span>
+                             <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                             <span className="text-xs sm:text-sm text-white">Creates serious electric shock hazard to users</span>
                            </div>
                          </div>
                        </div>
@@ -336,16 +336,16 @@ const Module6Section4_4 = () => {
           {/* 2. Common Polarity Faults */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-3">Common Polarity Faults</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Common Polarity Faults</p>
                     
                     <div className="space-y-4">
                         <div>
-                          <p className="text-base text-foreground mb-2"><strong>Line and Neutral Reversed:</strong></p>
-                          <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                          <p className="text-base text-white mb-2"><strong>Line and Neutral Reversed:</strong></p>
+                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                             <li>Appliances may still operate but protective devices won't function correctly</li>
                             <li>Internal fuses and switches in appliances designed to break line conductor only</li>
                             <li>RCD protection effectiveness reduced when polarity is incorrect</li>
@@ -357,8 +357,8 @@ const Module6Section4_4 = () => {
                         </div>
 
                         <div>
-                          <p className="text-base text-foreground mb-2"><strong>Switch Wired in Neutral:</strong></p>
-                          <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                          <p className="text-base text-white mb-2"><strong>Switch Wired in Neutral:</strong></p>
+                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                             <li>Equipment remains permanently live even when switched off</li>
                             <li>Serious shock hazard during maintenance, lamp changes, or cleaning</li>
                             <li>Violates BS 7671 Regulation 132.7 requiring single-pole devices to break line</li>
@@ -370,8 +370,8 @@ const Module6Section4_4 = () => {
                         </div>
 
                         <div>
-                          <p className="text-base text-foreground mb-2"><strong>Incorrect Polarity at Multiway Lighting:</strong></p>
-                          <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                          <p className="text-base text-white mb-2"><strong>Incorrect Polarity at Multiway Lighting:</strong></p>
+                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                             <li>Can cause flickering, erratic operation, or premature lamp failure</li>
                             <li>Dangerous energisation of supposedly dead circuits during maintenance</li>
                             <li>Confusion about circuit status when testing or troubleshooting</li>
@@ -406,20 +406,20 @@ const Module6Section4_4 = () => {
         </Card>
 
         {/* Content Card for Section 3 */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           {/* 3. Interpretation of Results */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-emerald-500/5">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow bg-elec-yellow/5">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-600 dark:text-emerald-400 mb-3">Interpretation of Results</p>
+                    <p className="font-semibold text-emerald-600 dark:text-elec-yellow mb-3">Interpretation of Results</p>
                     
                     <div className="space-y-4">
                         <div>
-                          <p className="text-base text-foreground mb-2"><strong>Acceptable Values and Limits:</strong></p>
-                          <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                          <p className="text-base text-white mb-2"><strong>Acceptable Values and Limits:</strong></p>
+                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                             <li>CPC continuity: should not exceed (R1 + R2) values specified in BS 7671</li>
                             <li>Ring circuit end-to-end resistance: typically 0.05Ω to 1.67Ω depending on cable size</li>
                             <li>Polarity confirmation: correct at all points - no tolerance for incorrect connections</li>
@@ -428,16 +428,16 @@ const Module6Section4_4 = () => {
                           </ul>
                           <div className="mt-3 space-y-2">
                             <div className="flex items-start gap-2">
-                              <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                              <span className="text-xs sm:text-sm text-foreground">All results must comply with BS 7671 requirements before energisation</span>
+                              <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                              <span className="text-xs sm:text-sm text-white">All results must comply with BS 7671 requirements before energisation</span>
                             </div>
                             <div className="flex items-start gap-2">
-                              <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                              <span className="text-xs sm:text-sm text-foreground">Document any readings that appear higher than expected for investigation</span>
+                              <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                              <span className="text-xs sm:text-sm text-white">Document any readings that appear higher than expected for investigation</span>
                             </div>
                             <div className="flex items-start gap-2">
-                              <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                              <span className="text-xs sm:text-sm text-foreground">Consider cable length, cross-sectional area, and material when evaluating results</span>
+                              <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                              <span className="text-xs sm:text-sm text-white">Consider cable length, cross-sectional area, and material when evaluating results</span>
                             </div>
                           </div>
                         </div>
@@ -467,7 +467,7 @@ const Module6Section4_4 = () => {
           {/* 4. Causes and Testing Methods */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-amber-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-amber-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
@@ -475,8 +475,8 @@ const Module6Section4_4 = () => {
                     
                     <div className="space-y-4">
                         <div>
-                          <p className="text-base text-foreground mb-2"><strong>Common Causes of Continuity and Polarity Faults:</strong></p>
-                          <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                          <p className="text-base text-white mb-2"><strong>Common Causes of Continuity and Polarity Faults:</strong></p>
+                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                             <li>Poor workmanship or inadequate training in electrical installation practices</li>
                             <li>Incorrect reading of circuit drawings, specifications, or installation instructions</li>
                             <li>Physical damage to cables during installation from drilling, crushing, or impact</li>
@@ -490,8 +490,8 @@ const Module6Section4_4 = () => {
                         </div>
 
                         <div>
-                          <p className="text-base text-foreground mb-2"><strong>Test Methods to Confirm and Diagnose Faults:</strong></p>
-                          <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                          <p className="text-base text-white mb-2"><strong>Test Methods to Confirm and Diagnose Faults:</strong></p>
+                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                             <li>Low resistance ohmmeter for accurate continuity measurements and CPC verification</li>
                             <li>Two-pole voltage tester for definitive polarity confirmation at accessories</li>
                             <li>Comprehensive visual inspection for physical damage before electrical testing</li>
@@ -505,8 +505,8 @@ const Module6Section4_4 = () => {
                         </div>
 
                         <div>
-                          <p className="text-base text-foreground mb-2"><strong>Serious Consequences of Undetected Faults:</strong></p>
-                          <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                          <p className="text-base text-white mb-2"><strong>Serious Consequences of Undetected Faults:</strong></p>
+                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                             <li>Increased fire risk from overheating joints causing ignition of surrounding materials</li>
                             <li>Fatal electric shock hazards due to live exposed metalwork and failed protection</li>
                             <li>Nuisance tripping or complete failure of protective devices during fault conditions</li>
@@ -543,9 +543,9 @@ const Module6Section4_4 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Practical Guidance</h2>
-          <div className="space-y-3 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
+          <div className="space-y-3 text-base text-white">
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
               <span>Always isolate and prove dead before opening circuits for investigation</span>
@@ -570,24 +570,24 @@ const Module6Section4_4 = () => {
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-World Example: Kitchen Circuit Fault</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Example: Kitchen Circuit Fault</h2>
           <div className="space-y-4">
-            <div className="p-4 rounded-lg bg-card border border-emerald-500/20">
+            <div className="p-4 rounded-lg border border-elec-yellow/20">
               <div className="space-y-3">
                 <div>
-                  <h3 className="font-semibold text-foreground mb-2">The Scenario</h3>
-                  <p className="text-xs sm:text-sm text-foreground">
+                  <h3 className="font-semibold text-white mb-2">The Scenario</h3>
+                  <p className="text-xs sm:text-sm text-white">
                     A domestic kitchen was being rewired with a new 32A ring final circuit to BS 7671 standards. The circuit included 8 socket outlets and was wired with 2.5mm² T&E cable. All installation work appeared complete and ready for testing.
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="font-semibold text-foreground mb-2">The Testing</h3>
-                  <p className="text-xs sm:text-sm text-foreground">
+                  <h3 className="font-semibold text-white mb-2">The Testing</h3>
+                  <p className="text-xs sm:text-sm text-white">
                     During initial continuity testing, the electrician measured:
                   </p>
-                  <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1 mt-2">
+                  <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1 mt-2">
                     <li>End-to-end line resistance: 0.82Ω (expected ~0.8Ω)</li>
                     <li>End-to-end neutral resistance: 0.84Ω (expected ~0.8Ω)</li>
                     <li>End-to-end CPC resistance: Infinite (∞) - FAULT DETECTED</li>
@@ -595,22 +595,22 @@ const Module6Section4_4 = () => {
                 </div>
 
                 <div>
-                  <h3 className="font-semibold text-foreground mb-2">The Investigation</h3>
-                  <p className="text-xs sm:text-sm text-foreground">
+                  <h3 className="font-semibold text-white mb-2">The Investigation</h3>
+                  <p className="text-xs sm:text-sm text-white">
                     The open CPC reading triggered immediate investigation. Testing each socket in sequence revealed the fault between sockets 4 and 5. Visual inspection at socket 4 showed the CPC terminal screw was finger-tight only - the cable had pulled out during final fitting.
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="font-semibold text-foreground mb-2">The Corrective Action</h3>
-                  <p className="text-xs sm:text-sm text-foreground">
+                  <h3 className="font-semibold text-white mb-2">The Corrective Action</h3>
+                  <p className="text-xs sm:text-sm text-white">
                     The terminal was properly tightened and retested. Final readings: Line 0.82Ω, Neutral 0.84Ω, CPC 0.85Ω - all within acceptable limits. The circuit was then successfully energised after completing insulation resistance and RCD tests.
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="font-semibold text-foreground mb-2">The Lesson</h3>
-                  <p className="text-xs sm:text-sm text-foreground">
+                  <h3 className="font-semibold text-white mb-2">The Lesson</h3>
+                  <p className="text-xs sm:text-sm text-white">
                     Without proper testing, this kitchen would have been energised with no earth protection on half the ring circuit. Any fault in appliances connected to sockets 5-8 could have made their metalwork live, creating fatal shock risks for users.
                   </p>
                 </div>
@@ -620,77 +620,77 @@ const Module6Section4_4 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-l-4 border-primary/50 bg-card p-4 rounded-r-lg">
-                <p className="font-medium text-foreground mb-2">{faq.question}</p>
-                <p className="text-muted-foreground">{faq.answer}</p>
+              <div key={index} className="border-l-4 border-primary/50 p-4 rounded-r-lg">
+                <p className="font-medium text-white mb-2">{faq.question}</p>
+                <p className="text-white">{faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Pocket Guide (Key Takeaways)</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Guide (Key Takeaways)</h2>
           <div className="grid gap-4 text-sm">
-            <div className="p-4 rounded-lg bg-card border border-green-500/20">
+            <div className="p-4 rounded-lg border border-green-500/20">
               <p className="font-medium text-green-700 dark:text-green-400 mb-2">Common Faults</p>
               <p>Open circuits, reversed polarity, high resistance joints, and disconnected CPCs</p>
             </div>
-            <div className="p-4 rounded-lg bg-card border border-orange-500/20">
-              <p className="font-medium text-orange-700 dark:text-emerald-400 mb-2">Consequences</p>
+            <div className="p-4 rounded-lg border border-orange-500/20">
+              <p className="font-medium text-orange-700 dark:text-elec-yellow mb-2">Consequences</p>
               <p>Shock hazards, fire risk, and failure of protective devices</p>
             </div>
-            <div className="p-4 rounded-lg bg-card border border-emerald-500/20">
-              <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2">Testing</p>
+            <div className="p-4 rounded-lg border border-elec-yellow/20">
+              <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Testing</p>
               <p>Use continuity and polarity tests to confirm conductor integrity</p>
             </div>
-            <div className="p-4 rounded-lg bg-card border border-purple-500/20">
-              <p className="font-medium text-purple-700 dark:text-emerald-400 mb-2">Action</p>
+            <div className="p-4 rounded-lg border border-purple-500/20">
+              <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Action</p>
               <p>Always rectify and document faults before energising</p>
             </div>
           </div>
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Recap</h2>
-          <p className="text-base text-foreground mb-6">Master the four key areas of fault identification and resolution:</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
+          <p className="text-base text-white mb-6">Master the four key areas of fault identification and resolution:</p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-4 rounded-lg bg-card border border-red-500/20">
-              <h3 className="font-semibold text-red-600 dark:text-emerald-400 mb-2 flex items-center gap-2">
+            <div className="p-4 rounded-lg border border-red-500/20">
+              <h3 className="font-semibold text-red-600 dark:text-elec-yellow mb-2 flex items-center gap-2">
                 <span className="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold">1</span>
                 Know It
               </h3>
-              <p className="text-xs sm:text-sm text-foreground">Common faults: open circuits, high resistance joints, disconnected CPCs, and reversed polarity</p>
+              <p className="text-xs sm:text-sm text-white">Common faults: open circuits, high resistance joints, disconnected CPCs, and reversed polarity</p>
             </div>
             
-            <div className="p-4 rounded-lg bg-card border border-emerald-500/20">
-              <h3 className="font-semibold text-emerald-400 dark:text-emerald-400 mb-2 flex items-center gap-2">
-                <span className="w-6 h-6 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs font-bold">2</span>
+            <div className="p-4 rounded-lg border border-elec-yellow/20">
+              <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2 flex items-center gap-2">
+                <span className="w-6 h-6 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs font-bold">2</span>
                 Spot It
               </h3>
-              <p className="text-xs sm:text-sm text-foreground">Visual cues: scorching, loose terminals, incorrect connections, and damaged cables</p>
+              <p className="text-xs sm:text-sm text-white">Visual cues: scorching, loose terminals, incorrect connections, and damaged cables</p>
             </div>
             
-            <div className="p-4 rounded-lg bg-card border border-emerald-500/20">
-              <h3 className="font-semibold text-emerald-600 dark:text-emerald-400 mb-2 flex items-center gap-2">
-                <span className="w-6 h-6 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs font-bold">3</span>
+            <div className="p-4 rounded-lg border border-elec-yellow/20">
+              <h3 className="font-semibold text-emerald-600 dark:text-elec-yellow mb-2 flex items-center gap-2">
+                <span className="w-6 h-6 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs font-bold">3</span>
                 Test It
               </h3>
-              <p className="text-xs sm:text-sm text-foreground">Measurements: infinite resistance = open circuit, high R1+R2 = poor joints, polarity confirmation</p>
+              <p className="text-xs sm:text-sm text-white">Measurements: infinite resistance = open circuit, high R1+R2 = poor joints, polarity confirmation</p>
             </div>
             
-            <div className="p-4 rounded-lg bg-card border border-amber-500/20">
+            <div className="p-4 rounded-lg border border-amber-500/20">
               <h3 className="font-semibold text-amber-600 dark:text-amber-400 mb-2 flex items-center gap-2">
                 <span className="w-6 h-6 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold">4</span>
                 Fix It
               </h3>
-              <p className="text-xs sm:text-sm text-foreground">Actions: rectify all faults, document clearly, retest, then safely energise the circuit</p>
+              <p className="text-xs sm:text-sm text-white">Actions: rectify all faults, document clearly, retest, then safely energise the circuit</p>
             </div>
           </div>
         </Card>

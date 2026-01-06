@@ -112,11 +112,11 @@ const Module6Section5_4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-0 text-sm sm:text-base" asChild>
+          <Button variant="ghost" className="text-white hover:text-white p-0 text-sm sm:text-base" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6.5
@@ -130,62 +130,62 @@ const Module6Section5_4 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-            <div className="p-1.5 sm:p-2 rounded-lg bg-card">
-              <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
+            <div className="p-1.5 sm:p-2 rounded-lg ">
+              <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 text-xs sm:text-sm">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs sm:text-sm">
               Section 6.5.4
             </Badge>
           </div>
-          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Interpreting Insulation Resistance Test Results against BS 7671
           </h1>
-          <p className="text-muted-foreground text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Understanding minimum values, interpreting readings and making safety decisions
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-            <Target className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground">Spot it in 30 Seconds</h2>
+            <Target className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 sm:mb-3">In 30 seconds</p>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Minimum 1 MΩ for most LV circuits</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>High readings = good insulation</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Low readings = investigate before energising</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Consider environmental factors</span>
                 </li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/20">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/20">
               <p className="font-medium mb-2 sm:mb-3">Spot it / Use it / Check it</p>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Spot:</strong> Readings below 1 MΩ or borderline values</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Use:</strong> BS 7671 minimum values as guidance</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Check:</strong> Environmental factors affecting readings</span>
                 </li>
               </ul>
@@ -194,18 +194,18 @@ const Module6Section5_4 = () => {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Introduction</h2>
-          <p className="text-sm sm:text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Introduction</h2>
+          <p className="text-sm sm:text-base text-white mb-4">
             Interpreting insulation resistance test results correctly is crucial for electrical safety. BS 7671 provides minimum acceptable values, but understanding what these readings mean in practice — and when to take action — requires experience and knowledge. A reading that technically meets the standard may still indicate potential problems, while seemingly low readings might be explained by environmental factors. This subsection explains how to interpret results professionally and make informed decisions about circuit safety.
           </p>
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Learning Outcomes</h2>
-          <p className="text-sm sm:text-base text-foreground mb-3 sm:mb-4">By the end of this subsection, learners will be able to:</p>
-          <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Learning Outcomes</h2>
+          <p className="text-sm sm:text-base text-white mb-3 sm:mb-4">By the end of this subsection, learners will be able to:</p>
+          <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-white">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" />
               <span>Identify the minimum insulation resistance values specified in BS 7671</span>
@@ -226,26 +226,26 @@ const Module6Section5_4 = () => {
         </Card>
 
         {/* Content / Learning */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Content / Learning</h2>
 
           {/* 1. Minimum Values according to BS 7671 */}
           <section className="mb-4 sm:mb-6">
             <div className="space-y-4 sm:space-y-6">
-              <div className="rounded-lg p-3 sm:p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-3 sm:p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-2 sm:gap-3 mb-2">
-                  <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-2 sm:mb-3 text-sm sm:text-base">Minimum Values according to BS 7671</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2 sm:mb-3 text-sm sm:text-base">Minimum Values according to BS 7671</p>
                     
                     <div className="space-y-4">
-                      <p className="text-xs sm:text-sm text-foreground">
+                      <p className="text-xs sm:text-sm text-white">
                         BS 7671 establishes clear minimum insulation resistance values that form the foundation of electrical safety. For circuits up to 500V (most domestic and commercial installations), the absolute minimum is <strong>1 MΩ</strong> when tested at 500V DC. Any reading of 1 MΩ or below constitutes an automatic failure and the circuit must not be energised under any circumstances.
                       </p>
                       
                       <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
                         <h4 className="font-semibold text-red-800 dark:text-red-200 mb-2">Critical Failure Thresholds:</h4>
-                        <ul className="text-sm space-y-1 text-red-700 dark:text-emerald-400">
+                        <ul className="text-sm space-y-1 text-red-700 dark:text-elec-yellow">
                           <li>• <strong>≤ 1 MΩ:</strong> Automatic failure - circuit must not be energised</li>
                           <li>• <strong>0.5 - 1 MΩ:</strong> Serious insulation breakdown requiring immediate investigation</li>
                           <li>• <strong>&lt; 0.5 MΩ:</strong> Dangerous condition - potential imminent failure</li>
@@ -261,7 +261,7 @@ const Module6Section5_4 = () => {
                         </ul>
                       </div>
 
-                      <p className="text-xs sm:text-sm text-foreground">
+                      <p className="text-xs sm:text-sm text-white">
                         Different installation types have varying requirements. SELV circuits (&lt; 50V) require only 0.25 MΩ, while circuits between 500V-1000V require 1 MΩ, and those above 1000V require 1 MΩ per kV. However, these are absolute minimums - professional practice demands much higher values.
                       </p>
                     </div>
@@ -282,14 +282,14 @@ const Module6Section5_4 = () => {
           {/* 2. Interpreting High and Low Readings */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
                     <p className="font-semibold text-green-600 dark:text-green-400 mb-3 text-base">Interpreting High and Low Readings</p>
                     
                     <div className="space-y-4">
-                      <p className="text-xs sm:text-sm text-foreground">
+                      <p className="text-xs sm:text-sm text-white">
                         Understanding what different readings actually mean is crucial for making sound professional judgements. The reading tells a story about the condition of the insulation and the potential risks involved.
                       </p>
 
@@ -313,14 +313,14 @@ const Module6Section5_4 = () => {
 
                       <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
                         <h4 className="font-semibold text-red-800 dark:text-red-200 mb-2">Low Readings (Failure Conditions):</h4>
-                        <ul className="text-sm space-y-1 text-red-700 dark:text-emerald-400">
+                        <ul className="text-sm space-y-1 text-red-700 dark:text-elec-yellow">
                           <li>• <strong>0.8-1 MΩ:</strong> Insulation breakdown, investigate immediately</li>
                           <li>• <strong>0.3-0.8 MΩ:</strong> Significant deterioration, likely moisture/damage</li>
                           <li>• <strong>&lt; 0.3 MΩ:</strong> Dangerous condition, potential short circuit risk</li>
                         </ul>
                       </div>
 
-                      <p className="text-xs sm:text-sm text-foreground">
+                      <p className="text-xs sm:text-sm text-white">
                         Remember that readings can vary with environmental conditions. A reading of 1.8 MΩ in cold, dry conditions might drop to 0.9 MΩ in warm, humid weather - both readings tell you about the same cable in different conditions.
                       </p>
                     </div>
@@ -341,20 +341,20 @@ const Module6Section5_4 = () => {
           {/* 3. Factors Affecting Results */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-emerald-400 mb-3 text-base">Factors Affecting Results</p>
+                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3 text-base">Factors Affecting Results</p>
                     
                     <div className="space-y-4">
-                      <p className="text-xs sm:text-sm text-foreground">
+                      <p className="text-xs sm:text-sm text-white">
                         Multiple factors can significantly influence insulation resistance readings. Understanding these helps distinguish between genuine insulation faults and temporary conditions that might resolve naturally.
                       </p>
 
                       <div className="bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
                         <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">Environmental Factors:</h4>
-                        <ul className="text-sm space-y-1 text-blue-700 dark:text-emerald-400">
+                        <ul className="text-sm space-y-1 text-blue-700 dark:text-elec-yellow">
                           <li>• <strong>Temperature:</strong> Higher temps reduce readings by ~2% per °C above 20°C</li>
                           <li>• <strong>Humidity:</strong> &gt;80% relative humidity can halve resistance values</li>
                           <li>• <strong>Moisture:</strong> Direct water contact can drop readings to &lt;0.1 MΩ</li>
@@ -364,7 +364,7 @@ const Module6Section5_4 = () => {
 
                       <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-3">
                         <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-2">Cable Age and Condition:</h4>
-                        <ul className="text-sm space-y-1 text-purple-700 dark:text-emerald-400">
+                        <ul className="text-sm space-y-1 text-purple-700 dark:text-elec-yellow">
                           <li>• <strong>New cables (0-5 years):</strong> Typically 20-100 MΩ+</li>
                           <li>• <strong>Mature cables (5-15 years):</strong> Usually 5-20 MΩ in good condition</li>
                           <li>• <strong>Older cables (15-25 years):</strong> May show 2-8 MΩ if well maintained</li>
@@ -384,7 +384,7 @@ const Module6Section5_4 = () => {
                         </ul>
                       </div>
 
-                      <p className="text-xs sm:text-sm text-foreground">
+                      <p className="text-xs sm:text-sm text-white">
                         <strong>Critical Point:</strong> A cable showing 15 MΩ when new might legitimately read 2 MΩ after 20 years of service and still be perfectly safe. Context and trends matter more than absolute values.
                       </p>
                     </div>
@@ -405,20 +405,20 @@ const Module6Section5_4 = () => {
           {/* 4. Making Safety Decisions */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-3 text-base">Making Safety Decisions</p>
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3 text-base">Making Safety Decisions</p>
                     
                     <div className="space-y-4">
-                      <p className="text-xs sm:text-sm text-foreground">
+                      <p className="text-xs sm:text-sm text-white">
                         Professional electrical work demands sound decision-making based on test results, industry standards, and safety principles. The decision to energise a circuit should never be taken lightly or based solely on whether readings technically meet minimum standards.
                       </p>
 
                       <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
                         <h4 className="font-semibold text-red-800 dark:text-red-200 mb-2">Immediate Action Required (Do NOT Energise):</h4>
-                        <ul className="text-sm space-y-1 text-red-700 dark:text-emerald-400">
+                        <ul className="text-sm space-y-1 text-red-700 dark:text-elec-yellow">
                           <li>• Any reading ≤ 1 MΩ - automatic failure requiring fault investigation</li>
                           <li>• Significant reading variation between repeat tests</li>
                           <li>• Evidence of physical damage or moisture ingress</li>
@@ -447,7 +447,7 @@ const Module6Section5_4 = () => {
                         </ul>
                       </div>
 
-                      <div className="bg-slate-50 dark:bg-background/20 border border-slate-200 dark:border-slate-800 rounded-lg p-3">
+                      <div className="bg-slate-50 dark:bg-[#121212]/20 border border-slate-200 dark:border-slate-800 rounded-lg p-3">
                         <h4 className="font-semibold text-slate-800 dark:text-slate-200 mb-2">Professional Decision Matrix:</h4>
                         <div className="text-sm space-y-2 text-slate-700 dark:text-slate-300">
                           <p><strong>Consider these factors together:</strong></p>
@@ -464,7 +464,7 @@ const Module6Section5_4 = () => {
 
                       <div className="bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
                         <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">Documentation Requirements:</h4>
-                        <ul className="text-sm space-y-1 text-blue-700 dark:text-emerald-400">
+                        <ul className="text-sm space-y-1 text-blue-700 dark:text-elec-yellow">
                           <li>• Always record actual readings, not just "PASS/FAIL"</li>
                           <li>• Note environmental conditions during testing</li>
                           <li>• Document any remedial actions taken</li>
@@ -473,7 +473,7 @@ const Module6Section5_4 = () => {
                         </ul>
                       </div>
 
-                      <p className="text-xs sm:text-sm text-foreground">
+                      <p className="text-xs sm:text-sm text-white">
                         <strong>Remember:</strong> Your professional competence and legal responsibilities extend beyond simply meeting minimum standards. When in doubt, always err on the side of caution - it's better to investigate further or delay energising than to risk safety.
                       </p>
                     </div>
@@ -493,9 +493,9 @@ const Module6Section5_4 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Practical Guidance</h2>
-          <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Practical Guidance</h2>
+          <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-white">
             <li className="flex items-start gap-2">
               <span className="text-primary">•</span>
               <span>Good insulation typically shows readings well above the minimum — several megaohms is normal</span>
@@ -520,13 +520,13 @@ const Module6Section5_4 = () => {
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Real-World Example</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Real-World Example</h2>
           <div className="space-y-4">
-            <p className="text-sm sm:text-base text-foreground">
+            <p className="text-sm sm:text-base text-white">
               During a periodic inspection at an office building, an electrician found insulation resistance readings of only 0.4 MΩ on several lighting circuits. Initially concerned about widespread insulation failure, he investigated further and discovered that the consumer unit was located in a basement area with high humidity and some water ingress. After the moisture issue was resolved and the installation allowed to dry out, the same circuits showed readings above 5 MΩ, well within acceptable limits.
             </p>
-            <div className="p-3 sm:p-4 bg-card border border-green-500/20 rounded-lg">
+            <div className="p-3 sm:p-4 bg-transparent border border-green-500/20 rounded-lg">
               <p className="text-sm font-medium text-green-700 dark:text-green-300">
                 ✅ <strong>Lesson:</strong> Environmental factors can significantly affect readings. Don't immediately assume permanent damage — investigate the root cause first.
               </p>
@@ -535,15 +535,15 @@ const Module6Section5_4 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">FAQs</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">FAQs</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <div key={index} className="border-l-2 border-l-primary/20 pl-4">
-                <p className="font-medium text-foreground mb-2 text-sm sm:text-base">
+                <p className="font-medium text-white mb-2 text-sm sm:text-base">
                   <strong>Q:</strong> {faq.question}
                 </p>
-                <p className="text-muted-foreground text-sm">
+                <p className="text-white text-sm">
                   <strong>A:</strong> {faq.answer}
                 </p>
               </div>
@@ -553,11 +553,11 @@ const Module6Section5_4 = () => {
 
         {/* Pocket Guide */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-gradient-to-r from-primary/5 to-secondary/5 border-primary/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">📋 Pocket Guide: Interpreting IR Results</h2>
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">📋 Pocket Guide: Interpreting IR Results</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div className="space-y-2">
-              <h3 className="font-medium text-foreground">BS 7671 Values:</h3>
-              <ul className="space-y-1 text-foreground">
+              <h3 className="font-medium text-white">BS 7671 Values:</h3>
+              <ul className="space-y-1 text-white">
                 <li>• Minimum: 1 MΩ (LV circuits)</li>
                 <li>• Good practice: Several MΩ+</li>
                 <li>• Borderline: Close to minimum</li>
@@ -565,8 +565,8 @@ const Module6Section5_4 = () => {
               </ul>
             </div>
             <div className="space-y-2">
-              <h3 className="font-medium text-foreground">Decision Matrix:</h3>
-              <ul className="space-y-1 text-foreground">
+              <h3 className="font-medium text-white">Decision Matrix:</h3>
+              <ul className="space-y-1 text-white">
                 <li>• High readings: Safe to energise</li>
                 <li>• Borderline: Investigate first</li>
                 <li>• Low readings: Do not energise</li>
@@ -577,30 +577,30 @@ const Module6Section5_4 = () => {
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Recap</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-            <div className="p-3 sm:p-4 rounded-lg bg-card border border-emerald-500/20">
-              <h3 className="font-medium text-blue-700 dark:text-emerald-400 mb-2 text-sm">Minimum Values</h3>
-              <p className="text-xs text-foreground">1 MΩ minimum for LV circuits per BS 7671, higher values expected</p>
+            <div className="p-3 sm:p-4 rounded-lg border border-elec-yellow/20">
+              <h3 className="font-medium text-blue-700 dark:text-elec-yellow mb-2 text-sm">Minimum Values</h3>
+              <p className="text-xs text-white">1 MΩ minimum for LV circuits per BS 7671, higher values expected</p>
             </div>
-            <div className="p-3 sm:p-4 rounded-lg bg-card border border-green-500/20">
+            <div className="p-3 sm:p-4 rounded-lg border border-green-500/20">
               <h3 className="font-medium text-green-700 dark:text-green-300 mb-2 text-sm">Interpretation</h3>
-              <p className="text-xs text-foreground">High readings = good insulation, low readings = investigate</p>
+              <p className="text-xs text-white">High readings = good insulation, low readings = investigate</p>
             </div>
-            <div className="p-3 sm:p-4 rounded-lg bg-card border border-orange-500/20">
-              <h3 className="font-medium text-orange-700 dark:text-emerald-400 mb-2 text-sm">Factors</h3>
-              <p className="text-xs text-foreground">Environment, moisture, temperature affect readings</p>
+            <div className="p-3 sm:p-4 rounded-lg border border-orange-500/20">
+              <h3 className="font-medium text-orange-700 dark:text-elec-yellow mb-2 text-sm">Factors</h3>
+              <p className="text-xs text-white">Environment, moisture, temperature affect readings</p>
             </div>
-            <div className="p-3 sm:p-4 rounded-lg bg-card border border-red-500/20">
-              <h3 className="font-medium text-red-700 dark:text-emerald-400 mb-2 text-sm">Safety Decisions</h3>
-              <p className="text-xs text-foreground">When in doubt, investigate — never compromise safety</p>
+            <div className="p-3 sm:p-4 rounded-lg border border-red-500/20">
+              <h3 className="font-medium text-red-700 dark:text-elec-yellow mb-2 text-sm">Safety Decisions</h3>
+              <p className="text-xs text-white">When in doubt, investigate — never compromise safety</p>
             </div>
           </div>
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <Quiz
             title="Interpreting IR Test Results Quiz"
             questions={quizQuestions}
@@ -608,7 +608,7 @@ const Module6Section5_4 = () => {
         </Card>
 
         {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-border/20">
+        <div className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-white/10">
           <Button variant="outline" className="order-2 sm:order-1" asChild>
             <Link to="../5-3">
               <ArrowLeft className="w-4 h-4 mr-2" />

@@ -4,15 +4,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Package, 
+import {
+  Package,
   Search,
   Cable,
   Zap,
   Shield,
   Settings,
   Building,
-  ArrowLeft,
   Loader2,
   Boxes,
   Badge as BadgeIcon,
@@ -25,6 +24,7 @@ import {
   RefreshCw
 } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { useMaterialsData } from "@/hooks/useMaterialsData";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -263,11 +263,7 @@ const ElectricalMaterials = () => {
             </AlertDialogContent>
           </AlertDialog>
 
-          <Link to="/electrician/business">
-            <Button variant="outline" className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" /> Back to Business Hub
-            </Button>
-          </Link>
+          <SmartBackButton />
         </div>
       </header>
 

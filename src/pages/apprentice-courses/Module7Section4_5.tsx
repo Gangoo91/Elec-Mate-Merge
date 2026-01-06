@@ -128,11 +128,11 @@ const Module7Section4_5 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 4
@@ -146,29 +146,29 @@ const Module7Section4_5 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Eye className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Eye className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 7.4.5
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Interpreting Test Readings
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Learn to interpret electrical test readings effectively and know when results indicate problems that need investigation.
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-6">
-            <Target className="w-6 h-6 text-foreground" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Introduction</h2>
+            <Target className="w-6 h-6 text-white" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Introduction</h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2">Spot it in 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Readings significantly outside normal ranges</li>
@@ -176,7 +176,7 @@ const Module7Section4_5 = () => {
                 <li>Values approaching or exceeding maximum limits</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
               <p className="font-medium mb-2">Spot it / Use it / Check</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Unusual readings requiring investigation</li>
@@ -188,18 +188,18 @@ const Module7Section4_5 = () => {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <p className="text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <p className="text-base text-white mb-4">
             Understanding how to interpret test readings is crucial for electrical safety and compliance. This section teaches you to recognise when readings indicate acceptable results versus when they suggest problems requiring investigation. Learn to spot patterns, understand limits, and make informed decisions about test results.
           </p>
           
           <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
             <div className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-emerald-400 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2">Why This Matters</p>
-                <p className="text-xs sm:text-sm text-foreground">
+                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Why This Matters</p>
+                <p className="text-xs sm:text-sm text-white">
                   Proper interpretation of test readings prevents 85% of electrical faults from going undetected and ensures installations meet safety standards.
                 </p>
               </div>
@@ -207,12 +207,12 @@ const Module7Section4_5 = () => {
           </div>
           
           <div className="mt-4 space-y-3">
-            <p className="text-base text-foreground">
+            <p className="text-base text-white">
               <strong>Real Impact:</strong> Accurate reading interpretation reduces callback rates by 60% and prevents potential electrical hazards before they become dangerous.
             </p>
             
             <div className="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded border border-emerald-200 dark:border-emerald-800">
-              <p className="text-xs sm:text-sm text-foreground">
+              <p className="text-xs sm:text-sm text-white">
                 <strong>Industry Standard:</strong> BS 7671 provides specific limits for test readings that must be understood and applied correctly for compliant installations.
               </p>
             </div>
@@ -220,10 +220,10 @@ const Module7Section4_5 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-base text-foreground mb-4">By the end of this subsection, you will be able to:</p>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-base text-white mb-4">By the end of this subsection, you will be able to:</p>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Interpret test readings for continuity, insulation resistance, and earth fault loop impedance.</li>
             <li>Identify when readings indicate potential problems requiring investigation.</li>
             <li>Use BS 7671 requirements to determine pass/fail criteria.</li>
@@ -233,27 +233,27 @@ const Module7Section4_5 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* Understanding Test Readings */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">1. Understanding Test Readings</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">1. Understanding Test Readings</h3>
+            <p className="text-base text-white mb-4">
               Test readings tell us whether electrical installations are safe and compliant. Each test has specific limits and normal ranges:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-3">Continuity Testing</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Continuity Testing</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Acceptable readings:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Acceptable readings:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Ring final circuits: Initial reading of R1 + R2 within expected range</li>
                           <li>Protective conductors: Low resistance path confirmed</li>
                           <li>Main bonding: Resistance typically &lt;0.05Ω</li>
@@ -262,7 +262,7 @@ const Module7Section4_5 = () => {
 
                       <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded border border-green-200 dark:border-green-800">
                         <p className="font-medium text-green-700 dark:text-green-400 mb-2">Good Practice</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="text-xs sm:text-sm text-white">
                           Compare readings between similar circuits - significant variations may indicate connection problems.
                         </p>
                       </div>
@@ -275,13 +275,13 @@ const Module7Section4_5 = () => {
 
           {/* Insulation Resistance */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">2. Insulation Resistance Interpretation</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">2. Insulation Resistance Interpretation</h3>
+            <p className="text-base text-white mb-4">
               Insulation resistance readings indicate the quality of insulation between conductors and earth:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
@@ -289,9 +289,9 @@ const Module7Section4_5 = () => {
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Reading interpretation:</strong></p>
-                        <div className="bg-background/50 p-3 rounded border mb-2">
-                          <ul className="list-disc ml-4 space-y-1 text-xs sm:text-sm text-foreground">
+                        <p className="text-base text-white mb-2"><strong>Reading interpretation:</strong></p>
+                        <div className="bg-[#121212]/50 p-3 rounded border mb-2">
+                          <ul className="list-disc ml-4 space-y-1 text-xs sm:text-sm text-white">
                             <li><strong>Minimum acceptable:</strong> 1MΩ (BS 7671 requirement)</li>
                             <li><strong>Good reading:</strong> 10MΩ or higher</li>
                             <li><strong>Excellent reading:</strong> &gt;999MΩ or above</li>
@@ -317,13 +317,13 @@ const Module7Section4_5 = () => {
 
           {/* Earth Fault Loop Impedance */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">3. Earth Fault Loop Impedance (Zs)</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">3. Earth Fault Loop Impedance (Zs)</h3>
+            <p className="text-base text-white mb-4">
               Zs readings determine whether protective devices will operate quickly enough to prevent danger:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-amber-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-amber-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
@@ -331,8 +331,8 @@ const Module7Section4_5 = () => {
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Critical factors:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Critical factors:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Must not exceed BS 7671 maximum values for the protection device</li>
                           <li>Consider circuit voltage and disconnection time requirements</li>
                           <li>Account for temperature correction factors</li>
@@ -341,8 +341,8 @@ const Module7Section4_5 = () => {
                       </div>
 
                       <div className="bg-orange-50 dark:bg-orange-900/20 p-3 rounded border border-orange-200 dark:border-orange-800">
-                        <p className="font-medium text-orange-700 dark:text-emerald-400 mb-2">Safety Margin</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="font-medium text-orange-700 dark:text-elec-yellow mb-2">Safety Margin</p>
+                        <p className="text-xs sm:text-sm text-white">
                           Readings above 80% of maximum should be investigated as they may indicate developing earth faults.
                         </p>
                       </div>
@@ -364,22 +364,22 @@ const Module7Section4_5 = () => {
 
           {/* When to Investigate */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">4. When to Investigate Further</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">4. When to Investigate Further</h3>
+            <p className="text-base text-white mb-4">
               Professional judgement is required to determine when readings warrant investigation:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-3">Investigation Triggers</p>
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Investigation Triggers</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Investigate when:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Investigate when:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Readings approach or exceed maximum limits</li>
                           <li>Significant variations between similar circuits</li>
                           <li>Results differ from previous test records</li>
@@ -388,8 +388,8 @@ const Module7Section4_5 = () => {
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-emerald-400 mb-2">Professional Responsibility</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Professional Responsibility</p>
+                        <p className="text-xs sm:text-sm text-white">
                           When in doubt, investigate. It's better to find nothing wrong than miss a developing fault.
                         </p>
                       </div>
@@ -410,13 +410,13 @@ const Module7Section4_5 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Practical Guidance</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
           
           <div className="space-y-6">
             <div>
-              <h3 className="font-medium text-foreground mb-3">For Apprentices:</h3>
-              <ul className="list-disc pl-6 space-y-2 text-foreground">
+              <h3 className="font-medium text-white mb-3">For Apprentices:</h3>
+              <ul className="list-disc pl-6 space-y-2 text-white">
                 <li>Always record readings exactly as displayed on the meter</li>
                 <li>Compare results with BS 7671 tables and previous records</li>
                 <li>Report unexpected or borderline readings to your supervisor</li>
@@ -425,8 +425,8 @@ const Module7Section4_5 = () => {
             </div>
             
             <div className="bg-emerald-50 dark:bg-blue-900/20 p-4 rounded border border-blue-200 dark:border-blue-800">
-              <h3 className="font-medium text-blue-700 dark:text-emerald-400 mb-3">Common Mistakes to Avoid:</h3>
-              <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-foreground">
+              <h3 className="font-medium text-blue-700 dark:text-elec-yellow mb-3">Common Mistakes to Avoid:</h3>
+              <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                 <li>Accepting borderline readings without investigation</li>
                 <li>Assuming all similar circuits should give identical readings</li>
                 <li>Ignoring temperature effects on resistance measurements</li>
@@ -437,13 +437,13 @@ const Module7Section4_5 = () => {
         </Card>
 
         {/* Frequently Asked Questions */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-border/20 pb-4 last:border-b-0">
-                <h3 className="font-medium text-foreground mb-2">{faq.question}</h3>
-                <p className="text-xs sm:text-sm text-foreground">{faq.answer}</p>
+              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
+                <h3 className="font-medium text-white mb-2">{faq.question}</h3>
+                <p className="text-xs sm:text-sm text-white">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -453,12 +453,12 @@ const Module7Section4_5 = () => {
         <Quiz questions={quizQuestions} />
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Recap</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
           <div className="space-y-4">
             <div>
-              <h3 className="font-medium text-foreground mb-2">Key Points to Remember:</h3>
-              <ul className="list-disc pl-6 space-y-2 text-foreground">
+              <h3 className="font-medium text-white mb-2">Key Points to Remember:</h3>
+              <ul className="list-disc pl-6 space-y-2 text-white">
                 <li>Know the acceptable ranges for each type of test</li>
                 <li>Look for patterns and consistency in readings</li>
                 <li>Understand when readings require investigation</li>
@@ -467,9 +467,9 @@ const Module7Section4_5 = () => {
               </ul>
             </div>
 
-            <div className="bg-background/50 p-4 rounded-lg border">
-              <p className="font-medium text-foreground mb-2">Best Practice:</p>
-              <p className="text-foreground">
+            <div className="bg-[#121212]/50 p-4 rounded-lg border">
+              <p className="font-medium text-white mb-2">Best Practice:</p>
+              <p className="text-white">
                 Record all readings clearly, note any unusual results, and always err on the side of caution when interpreting borderline readings. Professional competence includes knowing when to seek advice.
               </p>
             </div>

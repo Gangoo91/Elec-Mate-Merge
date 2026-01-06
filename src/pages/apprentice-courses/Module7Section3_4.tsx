@@ -186,11 +186,11 @@ const Module7Section3_4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-0 text-sm sm:text-base" asChild>
+          <Button variant="ghost" className="text-white hover:text-white p-0 text-sm sm:text-base" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3
@@ -204,34 +204,34 @@ const Module7Section3_4 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card w-fit">
-              <Volume2 className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg w-fit">
+              <Volume2 className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 w-fit">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow w-fit">
               Section 7.3.4
             </Badge>
           </div>
-          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Buzzing, Arcing and Sparking
           </h1>
-          <p className="text-muted-foreground text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Identifying and responding to audible and visual signs of electrical faults including buzzing, arcing and sparking.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Buzzing, arcing and sparking indicate serious electrical faults requiring immediate action.</li>
                 <li>These signs often precede dangerous failures, fires, or explosions.</li>
                 <li>Early detection and proper response are critical for safety and preventing escalation.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
               <p className="font-medium mb-2">Spot it / Use it / Check</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Audible buzzing at switches/boards, visible sparking, scorch marks.</li>
@@ -243,9 +243,9 @@ const Module7Section3_4 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Recognise audible warning signs including buzzing, crackling, and arcing sounds in electrical equipment.</li>
             <li>Identify visual indicators of sparking and arcing including carbon tracking and contact deterioration.</li>
             <li>Understand the causes and progression of electrical arcing faults and their extreme fire risks.</li>
@@ -255,37 +255,37 @@ const Module7Section3_4 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* Identifying Audible Warning Signs */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Identifying Audible and Visual Warning Signs</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Identifying Audible and Visual Warning Signs</h3>
+            <p className="text-base text-white mb-4">
               Buzzing, arcing and sparking are critical warning signs of developing electrical faults that can rapidly escalate to dangerous conditions. These phenomena indicate high-energy electrical disturbances requiring immediate investigation:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-1">Buzzing and Humming Sounds</p>
-                    <p className="text-base text-foreground mb-2"><strong>Transformer and choke buzzing:</strong> Magnetostriction causing core lamination vibration.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Buzzing and Humming Sounds</p>
+                    <p className="text-base text-white mb-2"><strong>Transformer and choke buzzing:</strong> Magnetostriction causing core lamination vibration.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>50Hz or 100Hz humming from fluorescent ballasts and transformers</li>
                       <li>Increasing buzz indicating loose core laminations or overloading</li>
                       <li>High-pitched whining from switch-mode power supplies under stress</li>
                       <li>Irregular buzzing from contactors with worn or misaligned contacts</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Connection buzzing:</strong> Arcing at loose or corroded electrical connections.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Connection buzzing:</strong> Arcing at loose or corroded electrical connections.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Intermittent buzzing from loose terminal connections</li>
                       <li>Crackling sounds indicating micro-arcing between conductors</li>
                       <li>Sizzling or frying sounds from moisture ingress causing tracking</li>
                       <li>Rhythmic buzzing synchronized with load switching cycles</li>
                     </ul>
-                    <div className="text-xs sm:text-sm text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Emergency response:</strong> Isolate supply immediately - buzzing often precedes dangerous arcing and fire
                     </div>
                   </div>
@@ -305,33 +305,33 @@ const Module7Section3_4 = () => {
 
           {/* Arcing and Sparking Phenomena */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Understanding Arcing and Sparking Mechanisms</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Understanding Arcing and Sparking Mechanisms</h3>
+            <p className="text-base text-white mb-4">
               Electrical arcing represents one of the most dangerous fault conditions in electrical systems, capable of generating extreme temperatures and causing immediate fire or explosion risks:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-emerald-400 mb-1">Electrical Arcing Characteristics</p>
-                    <p className="text-base text-foreground mb-2"><strong>Arc formation:</strong> Electrical discharge through ionized air gap between conductors.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Electrical Arcing Characteristics</p>
+                    <p className="text-base text-white mb-2"><strong>Arc formation:</strong> Electrical discharge through ionized air gap between conductors.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Arc temperatures exceeding 3000°C - hotter than steel melting point</li>
                       <li>Intense ultraviolet radiation capable of causing eye damage</li>
                       <li>Metal vapour production creating conductive particles</li>
                       <li>Explosive expansion of air creating pressure waves and noise</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Sparking at contacts:</strong> Normal and abnormal sparking during switching operations.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Sparking at contacts:</strong> Normal and abnormal sparking during switching operations.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Brief sparking during normal switch operation with resistive loads</li>
                       <li>Excessive sparking with inductive loads due to back-EMF</li>
                       <li>Sustained arcing indicating worn or damaged switch contacts</li>
                       <li>Carbon tracking following repeated arcing events</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Visual indicators:</strong> Physical evidence of arcing activity.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Visual indicators:</strong> Physical evidence of arcing activity.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Black carbon deposits and tracking marks on insulation surfaces</li>
                       <li>Pitted and eroded contact surfaces with metal transfer</li>
                       <li>Scorch marks and heat damage to surrounding components</li>
@@ -354,33 +354,33 @@ const Module7Section3_4 = () => {
 
           {/* Investigation and Response */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Investigation and Emergency Response Procedures</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Investigation and Emergency Response Procedures</h3>
+            <p className="text-base text-white mb-4">
               Buzzing, arcing and sparking require immediate and systematic response due to their potential for rapid escalation to dangerous conditions:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">Immediate Response Protocol</p>
-                    <p className="text-base text-foreground mb-2"><strong>Emergency isolation:</strong> Safe disconnection of electrical supply.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Immediate Response Protocol</p>
+                    <p className="text-base text-white mb-2"><strong>Emergency isolation:</strong> Safe disconnection of electrical supply.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Isolate at the main switch if specific isolation unknown</li>
                       <li>Secure isolation with locks and warning notices</li>
                       <li>Clear area of personnel and remove ignition sources</li>
                       <li>Ensure fire extinguishing equipment is readily available</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Investigation techniques:</strong> Safe methods for fault location.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Investigation techniques:</strong> Safe methods for fault location.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Visual inspection for scorch marks, carbon tracking, and damage</li>
                       <li>Thermal imaging to identify hotspots and poor connections</li>
                       <li>Ultrasonic detection for high-frequency arcing sounds</li>
                       <li>Connection resistance testing to identify high-resistance joints</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Remedial actions:</strong> Correcting faults and preventing recurrence.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Remedial actions:</strong> Correcting faults and preventing recurrence.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Replace damaged contacts, switches, and accessories</li>
                       <li>Re-terminate connections with proper torque specifications</li>
                       <li>Clean carbon deposits and check insulation resistance</li>
@@ -402,12 +402,12 @@ const Module7Section3_4 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Practical Guidance</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div>
-              <h3 className="font-medium text-foreground mb-3">Detection Techniques</h3>
-              <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+              <h3 className="font-medium text-white mb-3">Detection Techniques</h3>
+              <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
                 <li>Use ultrasonic detectors to identify high-frequency arcing sounds not audible to human ears</li>
                 <li>Thermal imaging reveals hotspots indicating poor connections before visible damage occurs</li>
                 <li>Low-resistance ohmmeters can identify high-resistance connections prone to arcing</li>
@@ -415,8 +415,8 @@ const Module7Section3_4 = () => {
               </ul>
             </div>
             <div>
-              <h3 className="font-medium text-foreground mb-3">Safety Precautions</h3>
-              <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+              <h3 className="font-medium text-white mb-3">Safety Precautions</h3>
+              <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
                 <li>Never attempt to investigate energised equipment showing signs of arcing</li>
                 <li>Maintain safe distances - electrical arcs can extend several metres</li>
                 <li>Use appropriate PPE including arc-rated clothing for high-energy systems</li>
@@ -427,38 +427,38 @@ const Module7Section3_4 = () => {
         </Card>
 
         {/* Real-World Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-World Examples</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Examples</h2>
           
           <div className="space-y-6">
-            <div className="rounded-lg p-4 border border-border/20 bg-card">
-              <h3 className="font-medium text-foreground mb-2">Case Study: Factory Motor Control Panel</h3>
-              <p className="text-xs sm:text-sm text-foreground mb-2">
+            <div className="rounded-lg p-4 border border-white/10 ">
+              <h3 className="font-medium text-white mb-2">Case Study: Factory Motor Control Panel</h3>
+              <p className="text-xs sm:text-sm text-white mb-2">
                 <strong>Situation:</strong> Maintenance staff reported increasing buzzing from a 3-phase motor contactor during startup.
               </p>
-              <p className="text-xs sm:text-sm text-foreground mb-2">
+              <p className="text-xs sm:text-sm text-white mb-2">
                 <strong>Investigation:</strong> Initial visual inspection showed no obvious damage, but thermal imaging revealed one contact running 15°C hotter than others.
               </p>
-              <p className="text-xs sm:text-sm text-foreground mb-2">
+              <p className="text-xs sm:text-sm text-white mb-2">
                 <strong>Findings:</strong> Contact inspection revealed pitting and metal transfer indicating arcing. The buzzing intensified as contact deterioration progressed.
               </p>
-              <p className="text-xs sm:text-sm text-foreground">
+              <p className="text-xs sm:text-sm text-white">
                 <strong>Resolution:</strong> Contactor replacement prevented potential fire risk and costly production downtime from complete failure.
               </p>
             </div>
 
-            <div className="rounded-lg p-4 border border-border/20 bg-card">
-              <h3 className="font-medium text-foreground mb-2">Case Study: Office Building Distribution Board</h3>
-              <p className="text-xs sm:text-sm text-foreground mb-2">
+            <div className="rounded-lg p-4 border border-white/10 ">
+              <h3 className="font-medium text-white mb-2">Case Study: Office Building Distribution Board</h3>
+              <p className="text-xs sm:text-sm text-white mb-2">
                 <strong>Situation:</strong> Facilities manager reported intermittent crackling sounds from main distribution board during peak load periods.
               </p>
-              <p className="text-xs sm:text-sm text-foreground mb-2">
+              <p className="text-xs sm:text-sm text-white mb-2">
                 <strong>Investigation:</strong> Ultrasonic detection identified specific MCB positions generating high-frequency noise indicating micro-arcing.
               </p>
-              <p className="text-xs sm:text-sm text-foreground mb-2">
+              <p className="text-xs sm:text-sm text-white mb-2">
                 <strong>Findings:</strong> Main busbar connections had loosened due to thermal cycling, creating high resistance and intermittent arcing.
               </p>
-              <p className="text-xs sm:text-sm text-foreground">
+              <p className="text-xs sm:text-sm text-white">
                 <strong>Resolution:</strong> Emergency re-termination of all busbar connections with proper torque settings eliminated the arcing risk.
               </p>
             </div>
@@ -466,43 +466,43 @@ const Module7Section3_4 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-border/20 pb-4 last:border-b-0 last:pb-0">
-                <h3 className="font-medium text-foreground mb-2">{faq.question}</h3>
-                <p className="text-sm text-muted-foreground">{faq.answer}</p>
+              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
+                <h3 className="font-medium text-white mb-2">{faq.question}</h3>
+                <p className="text-sm text-white">{faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Recap</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
           <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
               <CheckCircle className="w-5 h-5 text-green-500 mb-2" />
               <p className="font-medium text-sm mb-1">Key Warning Signs</p>
-              <p className="text-xs text-muted-foreground">Buzzing, crackling, visible sparking, and carbon tracking indicate dangerous electrical faults requiring immediate isolation.</p>
+              <p className="text-xs text-white">Buzzing, crackling, visible sparking, and carbon tracking indicate dangerous electrical faults requiring immediate isolation.</p>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
-              <AlertTriangle className="w-5 h-5 text-emerald-400 mb-2" />
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mb-2" />
               <p className="font-medium text-sm mb-1">Extreme Dangers</p>
-              <p className="text-xs text-muted-foreground">Electrical arcing generates temperatures over 3000°C, creating immediate fire and explosion risks requiring emergency response.</p>
+              <p className="text-xs text-white">Electrical arcing generates temperatures over 3000°C, creating immediate fire and explosion risks requiring emergency response.</p>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
-              <Target className="w-5 h-5 text-emerald-400 mb-2" />
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
+              <Target className="w-5 h-5 text-elec-yellow mb-2" />
               <p className="font-medium text-sm mb-1">Prevention Focus</p>
-              <p className="text-xs text-muted-foreground">Proper installation, regular thermal monitoring, and immediate response to early warning signs prevent escalation to dangerous conditions.</p>
+              <p className="text-xs text-white">Proper installation, regular thermal monitoring, and immediate response to early warning signs prevent escalation to dangerous conditions.</p>
             </div>
           </div>
         </Card>
 
         {/* Knowledge Check */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Knowledge Check</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Knowledge Check</h2>
           <Quiz questions={quizQuestions} title="Buzzing, Arcing and Sparking Quiz" />
         </Card>
 

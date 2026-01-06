@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MobileButton } from "@/components/ui/mobile-button";
-import { ArrowLeft, FileText, Send, Edit, Eye, Bell, AlertCircle, Plus, Filter, Download, CheckCircle, Mail, LayoutDashboard, PoundSterling } from "lucide-react";
+import { FileText, Send, Edit, Eye, Bell, AlertCircle, Plus, Filter, Download, CheckCircle, Mail, LayoutDashboard, PoundSterling } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { useInvoiceStorage } from "@/hooks/useInvoiceStorage";
 import { format, isPast } from "date-fns";
 import { Quote } from "@/types/quote";
@@ -430,7 +431,7 @@ Thank you for your business!`;
       return {
         text: "Edit Invoice",
         icon: <Edit className="h-4 w-4" />,
-        className: "bg-elec-yellow hover:bg-elec-yellow/90 text-black border-elec-yellow font-medium",
+        variant: "accent" as const,
         ariaLabel: `Edit invoice ${invoice.invoice_number}`,
       };
     }
@@ -438,7 +439,7 @@ Thank you for your business!`;
     return {
       text: "View Invoice",
       icon: <Eye className="h-4 w-4" />,
-      className: "bg-elec-yellow hover:bg-elec-yellow/90 text-black border-elec-yellow font-medium",
+      variant: "accent" as const,
       ariaLabel: `View invoice ${invoice.invoice_number}`,
     };
   };
@@ -528,16 +529,7 @@ Thank you for your business!`;
               <p className="text-sm text-white/60">Manage and track your invoices</p>
             </div>
           </div>
-          <Link to="/electrician/business">
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to Business
-            </Button>
-          </Link>
+          <SmartBackButton />
         </header>
 
         {/* Quick Actions */}

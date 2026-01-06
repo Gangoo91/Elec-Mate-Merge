@@ -1,8 +1,7 @@
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, BookOpen, Brain, Target } from "lucide-react";
-import { Link } from "react-router-dom";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
+import { BookOpen, Brain, Target } from "lucide-react";
 import FlashcardSetCard from "@/components/apprentice/flashcards/FlashcardSetCard";
 import StudyModeSelector from "@/components/apprentice/flashcards/StudyModeSelector";
 import FlashcardStudySession from "@/components/apprentice/flashcards/FlashcardStudySession";
@@ -164,12 +163,7 @@ const OnJobFlashcards = () => {
             Quick-fire revision for regulations, codes, and essential knowledge
           </p>
         </div>
-        <Link to="/apprentice/on-job-tools" className="flex-shrink-0">
-          <Button variant="outline" className="border-elec-yellow/30 hover:bg-elec-yellow/10">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Tools
-          </Button>
-        </Link>
+        <SmartBackButton />
       </div>
 
       {/* Progress Overview */}

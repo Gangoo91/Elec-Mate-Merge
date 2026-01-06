@@ -112,11 +112,11 @@ const Module6Section5_1 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-0 text-sm sm:text-base" asChild>
+          <Button variant="ghost" className="text-white hover:text-white p-0 text-sm sm:text-base" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6.5
@@ -130,62 +130,62 @@ const Module6Section5_1 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-            <div className="p-1.5 sm:p-2 rounded-lg bg-card">
-              <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
+            <div className="p-1.5 sm:p-2 rounded-lg ">
+              <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 text-xs sm:text-sm">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs sm:text-sm">
               Section 6.5.1
             </Badge>
           </div>
-          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Purpose of Insulation Resistance Testing
           </h1>
-          <p className="text-muted-foreground text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Understanding why insulation resistance testing is necessary for safety and compliance with BS 7671
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-            <Target className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground">Spot it in 30 Seconds</h2>
+            <Target className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 sm:mb-3">In 30 seconds</p>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>IR testing prevents dangerous leakage currents</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Legal requirement under BS 7671 and EAWR 1989</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>High readings = good insulation, low = damage</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Must test before energising any circuit</span>
                 </li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/20">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/20">
               <p className="font-medium mb-2 sm:mb-3">Spot it / Use it / Check it</p>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Spot:</strong> Moisture damage, cable wear, poor installation</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Use:</strong> Insulation resistance tester (megger), proper procedures</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Check:</strong> Readings meet BS 7671 minimums, record results</span>
                 </li>
               </ul>
@@ -194,18 +194,18 @@ const Module6Section5_1 = () => {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Introduction</h2>
-          <p className="text-sm sm:text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Introduction</h2>
+          <p className="text-sm sm:text-base text-white mb-4">
             Insulation resistance (IR) testing is one of the most important checks in electrical installation work. It verifies that the insulation between conductors, and between conductors and earth, is in good condition and able to prevent leakage currents that could cause electric shock or fire. Without this test, defects may remain hidden within the system until they lead to a serious incident.
           </p>
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Learning Outcomes</h2>
-          <p className="text-sm sm:text-base text-foreground mb-3 sm:mb-4">By the end of this subsection, learners will be able to:</p>
-          <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Learning Outcomes</h2>
+          <p className="text-sm sm:text-base text-white mb-3 sm:mb-4">By the end of this subsection, learners will be able to:</p>
+          <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-white">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" />
               <span>Explain why insulation resistance testing is necessary for safety and compliance</span>
@@ -226,29 +226,29 @@ const Module6Section5_1 = () => {
         </Card>
 
         {/* Content / Learning */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Content / Learning</h2>
 
           {/* 1. Why Insulation Resistance Testing is Essential */}
           <section className="mb-4 sm:mb-6">
             <div className="space-y-4 sm:space-y-6">
-              <div className="rounded-lg p-3 sm:p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-3 sm:p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-2 sm:gap-3 mb-2">
-                  <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-2 sm:mb-3 text-sm sm:text-base">Why Insulation Resistance Testing is Essential</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2 sm:mb-3 text-sm sm:text-base">Why Insulation Resistance Testing is Essential</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <h4 className="font-medium text-foreground mb-2">The Critical Safety Function</h4>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <h4 className="font-medium text-white mb-2">The Critical Safety Function</h4>
+                        <p className="text-xs sm:text-sm text-white">
                           Insulation resistance testing is carried out to ensure that the insulation on cables and equipment is sound. Over time, insulation can deteriorate due to various factors including age, heat, moisture, mechanical damage, chemical contamination, or UV exposure. When insulation breaks down, it creates pathways for current to leak from one conductor to another or to earth, presenting serious hazards.
                         </p>
                       </div>
 
                       <div>
-                        <h4 className="font-medium text-foreground mb-2">Types of Insulation Failure</h4>
-                        <ul className="text-xs sm:text-sm text-foreground space-y-1 pl-4">
+                        <h4 className="font-medium text-white mb-2">Types of Insulation Failure</h4>
+                        <ul className="text-xs sm:text-sm text-white space-y-1 pl-4">
                           <li>• <strong>Complete breakdown:</strong> Total failure creating a direct fault path</li>
                           <li>• <strong>Gradual deterioration:</strong> Slow reduction in insulation effectiveness over time</li>
                           <li>• <strong>Moisture ingress:</strong> Water penetration reducing insulation properties</li>
@@ -258,11 +258,11 @@ const Module6Section5_1 = () => {
                       </div>
 
                       <div>
-                        <h4 className="font-medium text-foreground mb-2">Consequences of Poor Insulation</h4>
-                        <p className="text-xs sm:text-sm text-foreground mb-2">
+                        <h4 className="font-medium text-white mb-2">Consequences of Poor Insulation</h4>
+                        <p className="text-xs sm:text-sm text-white mb-2">
                           If insulation resistance is compromised, several dangerous scenarios can occur:
                         </p>
-                        <ul className="text-xs sm:text-sm text-foreground space-y-1 pl-4">
+                        <ul className="text-xs sm:text-sm text-white space-y-1 pl-4">
                           <li>• <strong>Electric shock:</strong> Leakage current through damaged insulation can cause fatal electric shock</li>
                           <li>• <strong>Fire risk:</strong> High resistance faults can generate heat, leading to fire</li>
                           <li>• <strong>Equipment damage:</strong> Leakage currents can damage sensitive electronic equipment</li>
@@ -272,18 +272,18 @@ const Module6Section5_1 = () => {
                       </div>
 
                       <div>
-                        <h4 className="font-medium text-foreground mb-2">Prevention Through Testing</h4>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <h4 className="font-medium text-white mb-2">Prevention Through Testing</h4>
+                        <p className="text-xs sm:text-sm text-white">
                           By carrying out this test, electricians can identify faults before energising a circuit and prevent potentially dangerous situations. The test reveals problems that visual inspection alone cannot detect, such as internal cable damage or moisture penetration within junction boxes.
                         </p>
                       </div>
                       
-                      <p className="text-xs sm:text-sm text-foreground">
+                      <p className="text-xs sm:text-sm text-white">
                         In practice, this means every new installation, as well as any alterations or repairs, must undergo insulation resistance testing before being put into service. This applies to domestic, commercial, and industrial installations without exception.
                       </p>
                       
-                      <div className="bg-card border border-emerald-500/20 rounded p-3">
-                        <p className="text-sm font-medium text-blue-700 dark:text-emerald-400">
+                      <div className="bg-card border border-elec-yellow/20 rounded p-3">
+                        <p className="text-sm font-medium text-blue-700 dark:text-elec-yellow">
                           It is not just a formality — it is a legal requirement under the Electricity at Work Regulations 1989 and a fundamental step in keeping people safe.
                         </p>
                       </div>
@@ -305,7 +305,7 @@ const Module6Section5_1 = () => {
           {/* 2. What the Test Measures */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
@@ -313,25 +313,25 @@ const Module6Section5_1 = () => {
                     
                     <div className="space-y-4">
                       <div>
-                        <h4 className="font-medium text-foreground mb-2">The Testing Process</h4>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <h4 className="font-medium text-white mb-2">The Testing Process</h4>
+                        <p className="text-xs sm:text-sm text-white">
                           The insulation resistance test applies a high DC voltage, typically 250V, 500V, or 1000V depending on the circuit voltage, from an insulation resistance tester (commonly called a "megger" or "insulation tester"). The instrument measures the resistance to current flow through the insulation material between conductors.
                         </p>
                       </div>
 
                       <div>
-                        <h4 className="font-medium text-foreground mb-2">Understanding the Measurement</h4>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <h4 className="font-medium text-white mb-2">Understanding the Measurement</h4>
+                        <p className="text-xs sm:text-sm text-white">
                           The test measures how effectively the insulation prevents current flow. Perfect insulation would have infinite resistance, but in practice, we look for very high values measured in megaohms (MΩ). The higher the reading, the better the insulation integrity.
                         </p>
                       </div>
 
                       <div>
-                        <h4 className="font-medium text-foreground mb-2">Test Combinations Required</h4>
-                        <p className="text-xs sm:text-sm text-foreground mb-2">
+                        <h4 className="font-medium text-white mb-2">Test Combinations Required</h4>
+                        <p className="text-xs sm:text-sm text-white mb-2">
                           For comprehensive testing, several conductor combinations must be tested:
                         </p>
-                        <ul className="text-xs sm:text-sm text-foreground space-y-1 pl-4">
+                        <ul className="text-xs sm:text-sm text-white space-y-1 pl-4">
                           <li>• <strong>Line to Neutral:</strong> Tests insulation between live conductors</li>
                           <li>• <strong>Line to Earth:</strong> Tests insulation between live conductor and earth</li>
                           <li>• <strong>Neutral to Earth:</strong> Tests insulation between neutral and earth (where not linked)</li>
@@ -340,9 +340,9 @@ const Module6Section5_1 = () => {
                       </div>
 
                       <div>
-                        <h4 className="font-medium text-foreground mb-2">Interpreting Results</h4>
+                        <h4 className="font-medium text-white mb-2">Interpreting Results</h4>
                         <div className="bg-card border border-green-500/20 rounded p-3 mb-3">
-                          <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                          <ul className="text-xs sm:text-sm text-white space-y-1">
                             <li><strong>Good Insulation:</strong> Readings in hundreds of MΩ or higher</li>
                             <li><strong>Acceptable:</strong> Above minimum values specified in BS 7671</li>
                             <li><strong>Poor:</strong> Close to or below minimum acceptable values</li>
@@ -352,8 +352,8 @@ const Module6Section5_1 = () => {
                       </div>
 
                       <div>
-                        <h4 className="font-medium text-foreground mb-2">Factors Affecting Readings</h4>
-                        <ul className="text-xs sm:text-sm text-foreground space-y-1 pl-4">
+                        <h4 className="font-medium text-white mb-2">Factors Affecting Readings</h4>
+                        <ul className="text-xs sm:text-sm text-white space-y-1 pl-4">
                           <li>• <strong>Temperature:</strong> Higher temperatures generally reduce insulation resistance</li>
                           <li>• <strong>Humidity:</strong> Moisture can significantly lower readings</li>
                           <li>• <strong>Cable length:</strong> Longer cables may show lower readings due to larger surface area</li>
@@ -385,23 +385,23 @@ const Module6Section5_1 = () => {
           {/* 3. Link to BS 7671 and Legal Requirements */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-emerald-400 mb-3">Link to BS 7671 and Legal Requirements</p>
+                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3">Link to BS 7671 and Legal Requirements</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <h4 className="font-medium text-foreground mb-2">BS 7671 Requirements</h4>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <h4 className="font-medium text-white mb-2">BS 7671 Requirements</h4>
+                        <p className="text-xs sm:text-sm text-white">
                           The requirement to carry out insulation resistance testing is clearly set out in BS 7671 (IET Wiring Regulations). Section 643 specifically covers insulation resistance testing and states that this test shall be applied to verify the insulation of electrical installations.
                         </p>
                       </div>
 
                       <div>
-                        <h4 className="font-medium text-foreground mb-2">When Testing is Required</h4>
-                        <ul className="text-xs sm:text-sm text-foreground space-y-1 pl-4">
+                        <h4 className="font-medium text-white mb-2">When Testing is Required</h4>
+                        <ul className="text-xs sm:text-sm text-white space-y-1 pl-4">
                           <li>• <strong>New installations:</strong> All circuits before initial energisation</li>
                           <li>• <strong>Additions:</strong> New circuits added to existing installations</li>
                           <li>• <strong>Alterations:</strong> Modified circuits or significant changes</li>
@@ -412,11 +412,11 @@ const Module6Section5_1 = () => {
                       </div>
 
                       <div>
-                        <h4 className="font-medium text-foreground mb-2">Documentation Requirements</h4>
-                        <p className="text-xs sm:text-sm text-foreground mb-2">
+                        <h4 className="font-medium text-white mb-2">Documentation Requirements</h4>
+                        <p className="text-xs sm:text-sm text-white mb-2">
                           Test results must be recorded on the appropriate certificates as specified in BS 7671:
                         </p>
-                        <ul className="text-xs sm:text-sm text-foreground space-y-1 pl-4">
+                        <ul className="text-xs sm:text-sm text-white space-y-1 pl-4">
                           <li>• <strong>Electrical Installation Certificate (EIC):</strong> For new installations and major alterations</li>
                           <li>• <strong>Minor Works Certificate (MWC):</strong> For small additions, alterations, and replacements</li>
                           <li>• <strong>Electrical Installation Condition Report (EICR):</strong> For periodic inspections and condition reports</li>
@@ -424,10 +424,10 @@ const Module6Section5_1 = () => {
                       </div>
 
                       <div>
-                        <h4 className="font-medium text-foreground mb-2">Legal Framework</h4>
+                        <h4 className="font-medium text-white mb-2">Legal Framework</h4>
                         <div className="bg-card border border-orange-500/20 rounded p-3 mb-3">
-                          <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Electricity at Work Regulations 1989:</strong></p>
-                          <ul className="text-xs sm:text-sm text-foreground space-y-1 pl-4">
+                          <p className="text-xs sm:text-sm text-white mb-2"><strong>Electricity at Work Regulations 1989:</strong></p>
+                          <ul className="text-xs sm:text-sm text-white space-y-1 pl-4">
                             <li>• Regulation 4: Systems shall be constructed, maintained and worked to prevent danger</li>
                             <li>• Regulation 14: No person shall work on equipment unless suitable precautions are taken</li>
                             <li>• Regulation 29: Defence to prove all reasonable steps were taken</li>
@@ -436,11 +436,11 @@ const Module6Section5_1 = () => {
                       </div>
 
                       <div>
-                        <h4 className="font-medium text-foreground mb-2">Professional Responsibilities</h4>
-                        <p className="text-xs sm:text-sm text-foreground mb-2">
+                        <h4 className="font-medium text-white mb-2">Professional Responsibilities</h4>
+                        <p className="text-xs sm:text-sm text-white mb-2">
                           Qualified electricians have both professional and legal obligations to:
                         </p>
-                        <ul className="text-xs sm:text-sm text-foreground space-y-1 pl-4">
+                        <ul className="text-xs sm:text-sm text-white space-y-1 pl-4">
                           <li>• Carry out all required tests before energising circuits</li>
                           <li>• Record results accurately and legibly</li>
                           <li>• Not energise circuits that fail tests</li>
@@ -451,11 +451,11 @@ const Module6Section5_1 = () => {
                       </div>
 
                       <div>
-                        <h4 className="font-medium text-foreground mb-2">Duty Holder Responsibilities</h4>
-                        <p className="text-xs sm:text-sm text-foreground mb-2">
+                        <h4 className="font-medium text-white mb-2">Duty Holder Responsibilities</h4>
+                        <p className="text-xs sm:text-sm text-white mb-2">
                           Under the Electricity at Work Regulations 1989, duty holders (employers, building owners, facility managers) must ensure electrical systems remain safe. This includes:
                         </p>
-                        <ul className="text-xs sm:text-sm text-foreground space-y-1 pl-4">
+                        <ul className="text-xs sm:text-sm text-white space-y-1 pl-4">
                           <li>• Appointing competent persons for electrical work</li>
                           <li>• Ensuring proper testing and certification is carried out</li>
                           <li>• Maintaining records of all electrical work</li>
@@ -464,7 +464,7 @@ const Module6Section5_1 = () => {
                       </div>
 
                       <div className="bg-card border border-orange-500/20 rounded p-3">
-                        <p className="text-sm font-medium text-orange-700 dark:text-emerald-400">
+                        <p className="text-sm font-medium text-orange-700 dark:text-elec-yellow">
                           Carrying out and recording insulation resistance tests is a direct way of proving that these legal duties have been met and demonstrating due diligence in electrical safety.
                         </p>
                       </div>
@@ -486,19 +486,19 @@ const Module6Section5_1 = () => {
           {/* 4. Consequences of Skipping IR Testing */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-3">Consequences of Skipping IR Testing</p>
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Consequences of Skipping IR Testing</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <h4 className="font-medium text-foreground mb-2">Immediate Safety Risks</h4>
-                        <p className="text-xs sm:text-sm text-foreground mb-2">
+                        <h4 className="font-medium text-white mb-2">Immediate Safety Risks</h4>
+                        <p className="text-xs sm:text-sm text-white mb-2">
                           If insulation resistance testing is not performed, dangerous faults may remain hidden until they cause serious incidents. These hidden faults can manifest in various ways:
                         </p>
-                        <ul className="text-xs sm:text-sm text-foreground space-y-1 pl-4">
+                        <ul className="text-xs sm:text-sm text-white space-y-1 pl-4">
                           <li>• <strong>Electric shock or electrocution:</strong> Compromised insulation can make normally safe surfaces live</li>
                           <li>• <strong>Fire hazards:</strong> High resistance faults generate heat, potentially igniting combustible materials</li>
                           <li>• <strong>Equipment damage:</strong> Leakage currents can destroy expensive electronic equipment</li>
@@ -507,11 +507,11 @@ const Module6Section5_1 = () => {
                       </div>
 
                       <div>
-                        <h4 className="font-medium text-foreground mb-2">Real-World Scenarios</h4>
-                        <div className="bg-emerald-500/10 border border-emerald-500/30 rounded p-3 mb-3">
-                          <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Water Ingress Example:</strong></p>
-                          <p className="text-xs sm:text-sm text-foreground mb-2">Water penetration into a junction box creates a conductive path to earth. Without prior IR testing, this could cause:</p>
-                          <ul className="text-xs sm:text-sm text-foreground space-y-1 pl-4">
+                        <h4 className="font-medium text-white mb-2">Real-World Scenarios</h4>
+                        <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded p-3 mb-3">
+                          <p className="text-xs sm:text-sm text-white mb-2"><strong>Water Ingress Example:</strong></p>
+                          <p className="text-xs sm:text-sm text-white mb-2">Water penetration into a junction box creates a conductive path to earth. Without prior IR testing, this could cause:</p>
+                          <ul className="text-xs sm:text-sm text-white space-y-1 pl-4">
                             <li>• Immediate RCD tripping when energised</li>
                             <li>• Potential electrocution of anyone touching the affected circuit</li>
                             <li>• Arcing and fire if the fault develops further</li>
@@ -519,9 +519,9 @@ const Module6Section5_1 = () => {
                         </div>
 
                         <div className="bg-card border border-border/30 rounded p-3 mb-3">
-                          <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Mechanical Damage Example:</strong></p>
-                          <p className="text-xs sm:text-sm text-foreground mb-2">A drill bit nicks a cable during installation. Without IR testing:</p>
-                          <ul className="text-xs sm:text-sm text-foreground space-y-1 pl-4">
+                          <p className="text-xs sm:text-sm text-white mb-2"><strong>Mechanical Damage Example:</strong></p>
+                          <p className="text-xs sm:text-sm text-white mb-2">A drill bit nicks a cable during installation. Without IR testing:</p>
+                          <ul className="text-xs sm:text-sm text-white space-y-1 pl-4">
                             <li>• The damage may not be immediately apparent</li>
                             <li>• Gradual moisture ingress weakens insulation further</li>
                             <li>• Complete breakdown occurs weeks or months later</li>
@@ -531,11 +531,11 @@ const Module6Section5_1 = () => {
                       </div>
 
                       <div>
-                        <h4 className="font-medium text-foreground mb-2">Legal and Professional Consequences</h4>
-                        <p className="text-xs sm:text-sm text-foreground mb-2">
+                        <h4 className="font-medium text-white mb-2">Legal and Professional Consequences</h4>
+                        <p className="text-xs sm:text-sm text-white mb-2">
                           Beyond immediate safety risks, failing to carry out IR testing constitutes a serious breach of professional and legal standards:
                         </p>
-                        <ul className="text-xs sm:text-sm text-foreground space-y-1 pl-4">
+                        <ul className="text-xs sm:text-sm text-white space-y-1 pl-4">
                           <li>• <strong>Criminal prosecution:</strong> Under the Electricity at Work Regulations 1989</li>
                           <li>• <strong>Civil liability:</strong> Compensation claims for injury or property damage</li>
                           <li>• <strong>Invalid insurance:</strong> Insurers may refuse claims for work not compliant with BS 7671</li>
@@ -545,8 +545,8 @@ const Module6Section5_1 = () => {
                       </div>
 
                       <div>
-                        <h4 className="font-medium text-foreground mb-2">Business Impact</h4>
-                        <ul className="text-xs sm:text-sm text-foreground space-y-1 pl-4">
+                        <h4 className="font-medium text-white mb-2">Business Impact</h4>
+                        <ul className="text-xs sm:text-sm text-white space-y-1 pl-4">
                           <li>• <strong>Reputation damage:</strong> Loss of client trust and future work opportunities</li>
                           <li>• <strong>Financial penalties:</strong> Fines, compensation payments, and legal costs</li>
                           <li>• <strong>Increased scrutiny:</strong> Enhanced inspection regimes from enforcement authorities</li>
@@ -556,11 +556,11 @@ const Module6Section5_1 = () => {
                       </div>
 
                       <div>
-                        <h4 className="font-medium text-foreground mb-2">Case Study Consequences</h4>
+                        <h4 className="font-medium text-white mb-2">Case Study Consequences</h4>
                         <div className="bg-card border border-red-500/20 rounded p-3 mb-3">
-                          <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Commercial Office Fire (2019):</strong></p>
-                          <p className="text-xs sm:text-sm text-foreground mb-2">An electrical contractor skipped IR testing during office refurbishment to meet a tight deadline. Six months later:</p>
-                          <ul className="text-xs sm:text-sm text-foreground space-y-1 pl-4">
+                          <p className="text-xs sm:text-sm text-white mb-2"><strong>Commercial Office Fire (2019):</strong></p>
+                          <p className="text-xs sm:text-sm text-white mb-2">An electrical contractor skipped IR testing during office refurbishment to meet a tight deadline. Six months later:</p>
+                          <ul className="text-xs sm:text-sm text-white space-y-1 pl-4">
                             <li>• Fire broke out due to damaged cable in ceiling void</li>
                             <li>• Building evacuated, significant smoke damage</li>
                             <li>• Investigation revealed no test certificates on file</li>
@@ -572,7 +572,7 @@ const Module6Section5_1 = () => {
                       </div>
 
                       <div className="bg-card border border-red-500/20 rounded p-3">
-                        <p className="text-sm font-medium text-red-700 dark:text-emerald-400">
+                        <p className="text-sm font-medium text-red-700 dark:text-elec-yellow">
                           Electricians who neglect this essential test risk not only their own reputation and livelihood but also the safety and lives of those using the installation. There is no acceptable excuse for skipping IR testing.
                         </p>
                       </div>
@@ -593,9 +593,9 @@ const Module6Section5_1 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Practical Guidance</h2>
-          <div className="space-y-3 sm:space-y-4 text-sm sm:text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Practical Guidance</h2>
+          <div className="space-y-3 sm:space-y-4 text-sm sm:text-base text-white">
             <p>
               Always carry out insulation resistance tests before energising a new or modified circuit. Use the correct test instrument and follow the procedure in BS 7671. Sensitive equipment such as electronic devices should be disconnected before testing to avoid damage.
             </p>
@@ -603,7 +603,7 @@ const Module6Section5_1 = () => {
               Record every result carefully, making sure it is linked to the circuit it relates to. If any readings fall below the acceptable limits set out in the regulations, do not energise until the fault has been identified and rectified.
             </p>
             <div className="bg-card p-3 sm:p-4 rounded-lg border border-border/30">
-              <h4 className="font-medium text-foreground mb-2">Key Testing Points:</h4>
+              <h4 className="font-medium text-white mb-2">Key Testing Points:</h4>
               <ul className="space-y-1 text-xs sm:text-sm">
                 <li>• Test between Line-Neutral, Line-Earth, and Neutral-Earth</li>
                 <li>• Use appropriate test voltage (250V, 500V, or 1000V DC)</li>
@@ -616,19 +616,19 @@ const Module6Section5_1 = () => {
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Real-World Example</h2>
-          <div className="space-y-3 sm:space-y-4 text-sm sm:text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Real-World Example</h2>
+          <div className="space-y-3 sm:space-y-4 text-sm sm:text-base text-white">
             <div className="bg-card p-3 sm:p-4 rounded-lg border border-border/30">
-              <h4 className="font-medium text-foreground mb-2">Commercial Refurbishment Project</h4>
+              <h4 className="font-medium text-white mb-2">Commercial Refurbishment Project</h4>
               <p className="text-xs sm:text-sm mb-2 sm:mb-3">
                 During a commercial refurbishment, a contractor assumed that new wiring installed by their team was in perfect condition and skipped the insulation resistance tests to save time. Weeks later, when the building was occupied, moisture from a roof leak seeped into a cable joint, lowering the insulation resistance dramatically.
               </p>
               <p className="text-xs sm:text-sm mb-2 sm:mb-3">
                 This led to nuisance tripping of protective devices and an eventual small fire in a ceiling void. When the incident was investigated, the absence of recorded test results meant the contractor could not demonstrate compliance. They were forced to pay for retesting and repairs, as well as facing criticism from the client.
               </p>
-              <div className="mt-3 sm:mt-4 p-2 sm:p-3 bg-card border border-emerald-500/20 rounded">
-                <p className="text-xs sm:text-sm font-medium text-emerald-700 dark:text-emerald-400">
+              <div className="mt-3 sm:mt-4 p-2 sm:p-3 border border-elec-yellow/20 rounded">
+                <p className="text-xs sm:text-sm font-medium text-emerald-700 dark:text-elec-yellow">
                   ✅ Lesson: Carrying out and recording insulation resistance tests protects lives, property, and professional credibility.
                 </p>
               </div>
@@ -637,25 +637,25 @@ const Module6Section5_1 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">FAQs</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">FAQs</h2>
           <div className="space-y-3 sm:space-y-4">
             {faqs.map((faq, index) => (
               <div key={index} className="border-l-4 border-l-primary/30 pl-3 sm:pl-4">
-                <p className="font-medium text-foreground mb-1 sm:mb-2 text-sm sm:text-base">Q: {faq.question}</p>
-                <p className="text-xs sm:text-sm text-muted-foreground">A: {faq.answer}</p>
+                <p className="font-medium text-white mb-1 sm:mb-2 text-sm sm:text-base">Q: {faq.question}</p>
+                <p className="text-xs sm:text-sm text-white">A: {faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Pocket Guide: IR Testing Essentials</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Pocket Guide: IR Testing Essentials</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm">
             <div className="space-y-2">
-              <h4 className="font-medium text-foreground">Before Testing:</h4>
-              <ul className="space-y-1 text-foreground">
+              <h4 className="font-medium text-white">Before Testing:</h4>
+              <ul className="space-y-1 text-white">
                 <li>• Disconnect sensitive equipment</li>
                 <li>• Check test instrument calibration</li>
                 <li>• Ensure circuit is isolated</li>
@@ -663,8 +663,8 @@ const Module6Section5_1 = () => {
               </ul>
             </div>
             <div className="space-y-2">
-              <h4 className="font-medium text-foreground">Minimum Values (BS 7671):</h4>
-              <ul className="space-y-1 text-foreground">
+              <h4 className="font-medium text-white">Minimum Values (BS 7671):</h4>
+              <ul className="space-y-1 text-white">
                 <li>• SELV/PELV circuits: ≥0.25 MΩ</li>
                 <li>• Up to 500V circuits: ≥1.0 MΩ</li>
                 <li>• Above 500V circuits: ≥1.0 MΩ</li>
@@ -675,30 +675,30 @@ const Module6Section5_1 = () => {
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Recap</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Recap</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
             <div className="bg-card p-3 sm:p-4 rounded-lg border border-border/30">
-              <h4 className="font-medium text-foreground mb-2">Safety Purpose</h4>
-              <p className="text-xs sm:text-xs sm:text-sm text-foreground">
+              <h4 className="font-medium text-white mb-2">Safety Purpose</h4>
+              <p className="text-xs sm:text-xs sm:text-sm text-white">
                 Insulation resistance testing ensures that cable and equipment insulation is intact and effective at preventing leakage currents that could cause fire, shock, or injury.
               </p>
             </div>
             <div className="bg-card p-3 sm:p-4 rounded-lg border border-border/30">
-              <h4 className="font-medium text-foreground mb-2">Legal Requirement</h4>
-              <p className="text-xs sm:text-xs sm:text-sm text-foreground">
+              <h4 className="font-medium text-white mb-2">Legal Requirement</h4>
+              <p className="text-xs sm:text-xs sm:text-sm text-white">
                 It is a requirement of BS 7671 and the Electricity at Work Regulations 1989. Test results must be recorded on appropriate certificates.
               </p>
             </div>
             <div className="bg-card p-3 sm:p-4 rounded-lg border border-border/30">
-              <h4 className="font-medium text-foreground mb-2">Professional Protection</h4>
-              <p className="text-xs sm:text-xs sm:text-sm text-foreground">
+              <h4 className="font-medium text-white mb-2">Professional Protection</h4>
+              <p className="text-xs sm:text-xs sm:text-sm text-white">
                 Proper testing and documentation protects electricians from prosecution, invalid insurance claims, and loss of professional reputation.
               </p>
             </div>
             <div className="bg-card p-3 sm:p-4 rounded-lg border border-border/30">
-              <h4 className="font-medium text-foreground mb-2">Hidden Dangers</h4>
-              <p className="text-xs sm:text-xs sm:text-sm text-foreground">
+              <h4 className="font-medium text-white mb-2">Hidden Dangers</h4>
+              <p className="text-xs sm:text-xs sm:text-sm text-white">
                 Without testing, dangerous faults could remain hidden, leading to fire, shock, or injury when circuits are energised.
               </p>
             </div>
@@ -716,7 +716,7 @@ const Module6Section5_1 = () => {
         </div>
 
         {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 sm:gap-4 pt-6 sm:pt-8 border-t border-border/20">
+        <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 sm:gap-4 pt-6 sm:pt-8 border-t border-white/10">
           <Button variant="outline" className="w-full sm:w-auto min-h-[44px] touch-manipulation" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />

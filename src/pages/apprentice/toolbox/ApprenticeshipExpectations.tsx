@@ -17,7 +17,7 @@ import {
   TrendingUp
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import SalaryProgressionChart from "@/components/apprentice/apprenticeship-expectations/SalaryProgressionChart";
 
 const ApprenticeshipExpectations = () => {
@@ -148,7 +148,7 @@ const ApprenticeshipExpectations = () => {
         <p className="text-muted-foreground text-center max-w-2xl mb-4 text-sm sm:text-base">
           Your comprehensive guide to what to expect during your electrical apprenticeship journey
         </p>
-        <BackButton customUrl="/apprentice/toolbox" label="Back to Toolbox" />
+        <SmartBackButton />
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">

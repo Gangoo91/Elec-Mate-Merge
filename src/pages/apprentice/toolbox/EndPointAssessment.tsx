@@ -2,9 +2,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Award, FileText, ClipboardCheck, MessageSquare, Clock, CheckCircle, AlertTriangle, Star, Target, BookOpen, Lightbulb, AlertCircle } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Award, FileText, ClipboardCheck, MessageSquare, Clock, CheckCircle, AlertTriangle, Star, Target, BookOpen, Lightbulb, AlertCircle } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
 
 const EndPointAssessment = () => {
@@ -165,12 +165,7 @@ const EndPointAssessment = () => {
     <div className="space-y-8 animate-fade-in">
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
         <h1 className="text-3xl font-bold tracking-tight">End Point Assessment Guide</h1>
-        <Link to="/apprentice/toolbox" className="flex-shrink-0">
-          <Button variant="outline">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Toolbox
-          </Button>
-        </Link>
+        <SmartBackButton />
       </div>
 
       {/* Introduction */}

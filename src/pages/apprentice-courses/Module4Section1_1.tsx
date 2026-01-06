@@ -165,11 +165,11 @@ const Module4Section1_1 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 4.1
@@ -183,35 +183,35 @@ const Module4Section1_1 = () => {
         {/* Header (matches Module 3.4.3 style) */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <FileText className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <FileText className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 4.1.1
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Reading Installation Drawings and Specifications
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Learn to read drawings, symbols and specifications to deliver safe, compliant work to BS 7671.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Drawings = routes, devices, containment; specs = materials and workmanship.</li>
                 <li>Understand symbols, title block and scale before starting.</li>
                 <li>Always work from the latest issue to avoid rework and safety risks.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Title block, key/legend, symbol list, schedules.</li>
                 <li><strong>Use:</strong> Trace circuits, follow containment, confirm specs.</li>
@@ -222,9 +222,9 @@ const Module4Section1_1 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Identify common symbols used in electrical drawings.</li>
             <li>Interpret wiring diagrams, schematic layouts and schedules.</li>
             <li>Understand the relationship between the drawing and written specifications.</li>
@@ -234,42 +234,42 @@ const Module4Section1_1 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Purpose of Installation Drawings */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <FileText className="w-5 h-5" /> Purpose of Installation Drawings
             </h3>
             <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30 text-center">
-                <Eye className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30 text-center">
+                <Eye className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
                 <p className="font-semibold">Visual Representation</p>
-                <p className="text-sm text-muted-foreground">Shows the electrical system layout</p>
+                <p className="text-sm text-white">Shows the electrical system layout</p>
               </div>
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/30 text-center">
-                <CheckCircle className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30 text-center">
+                <CheckCircle className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
                 <p className="font-semibold">Clear Indication</p>
-                <p className="text-sm text-muted-foreground">Routes, connection points, containment, device locations</p>
+                <p className="text-sm text-white">Routes, connection points, containment, device locations</p>
               </div>
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30 text-center">
-                <AlertTriangle className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30 text-center">
+                <AlertTriangle className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
                 <p className="font-semibold">Compliance Assurance</p>
-                <p className="text-sm text-muted-foreground">Helps meet design intent and regulations</p>
+                <p className="text-sm text-white">Helps meet design intent and regulations</p>
               </div>
             </div>
           </section>
 
           {/* Types of Electrical Drawings */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3">Types of Electrical Drawings</h3>
+            <h3 className="font-medium text-white mb-3">Types of Electrical Drawings</h3>
             <div className="space-y-3">
               {drawingTypes.map((d, i) => (
-                <div key={i} className="rounded-lg p-4 border-l-4 border-l-emerald-500 bg-card">
+                <div key={i} className="rounded-lg p-4 border-l-4 border-l-elec-yellow ">
                   <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-                    <p className="font-semibold text-emerald-400">{d.type}</p>
-                    <p className="text-sm text-muted-foreground">{d.description}</p>
+                    <p className="font-semibold text-elec-yellow">{d.type}</p>
+                    <p className="text-sm text-white">{d.description}</p>
                     <Badge variant="secondary" className="w-fit text-xs">{d.use}</Badge>
                   </div>
                 </div>
@@ -279,8 +279,8 @@ const Module4Section1_1 = () => {
 
           {/* Common Symbols and Notations */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3">Common Symbols and Notations</h3>
-            <div className="rounded-lg p-4 bg-emerald-500/10 border border-emerald-500/30 text-sm">
+            <h3 className="font-medium text-white mb-3">Common Symbols and Notations</h3>
+            <div className="rounded-lg p-4 bg-elec-yellow/10 border border-elec-yellow/30 text-sm">
               <ul className="list-disc pl-6 space-y-1">
                 <li>Socket outlets, light fittings, switches, distribution boards.</li>
                 <li>Cable types and containment symbols.</li>
@@ -295,8 +295,8 @@ const Module4Section1_1 = () => {
 
           {/* Understanding Specifications */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3">Understanding Specifications</h3>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30 text-sm space-y-2">
+            <h3 className="font-medium text-white mb-3">Understanding Specifications</h3>
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30 text-sm space-y-2">
               <p>Written documents that describe materials, workmanship and standards to follow.</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Include performance requirements, quality standards and installation methods.</li>
@@ -307,19 +307,19 @@ const Module4Section1_1 = () => {
 
           {/* How to Read Drawings Effectively */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">How to Read Drawings Effectively</h3>
-            <p className="text-sm text-muted-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">How to Read Drawings Effectively</h3>
+            <p className="text-sm text-white mb-4">
               Follow this systematic approach to ensure accurate interpretation of electrical drawings:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-emerald-500/5">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow bg-elec-yellow/5">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-600 dark:text-emerald-400 mb-1">Check the Title Block</p>
-                    <p className="text-sm text-muted-foreground mb-2">Project name, drawing number, scale and date.</p>
-                    <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                    <p className="font-semibold text-emerald-600 dark:text-elec-yellow mb-1">Check the Title Block</p>
+                    <p className="text-sm text-white mb-2">Project name, drawing number, scale and date.</p>
+                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>What to look for:</strong> Drawing number for reference, revision letter/number, 
                       scale (e.g., 1:50), issue date, project name and client details. Always verify you have the latest revision.
                     </div>
@@ -327,13 +327,13 @@ const Module4Section1_1 = () => {
                 </div>
               </div>
 
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-emerald-500/5">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow bg-elec-yellow/5">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-600 dark:text-emerald-400 mb-1">Understand the Scale</p>
-                    <p className="text-sm text-muted-foreground mb-2">Ensure accurate measurement and placement.</p>
-                    <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                    <p className="font-semibold text-emerald-600 dark:text-elec-yellow mb-1">Understand the Scale</p>
+                    <p className="text-sm text-white mb-2">Ensure accurate measurement and placement.</p>
+                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Key considerations:</strong> Scale affects cable lengths, containment routes and positioning. 
                       Common scales: 1:50 (general layouts), 1:20 (detailed areas), 1:100 (site plans). Use a scale ruler for accurate measurements.
                     </div>
@@ -341,13 +341,13 @@ const Module4Section1_1 = () => {
                 </div>
               </div>
 
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-emerald-500/5">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow bg-elec-yellow/5">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-600 dark:text-emerald-400 mb-1">Review the Key/Legend</p>
-                    <p className="text-sm text-muted-foreground mb-2">Interpret symbols correctly.</p>
-                    <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                    <p className="font-semibold text-emerald-600 dark:text-elec-yellow mb-1">Review the Key/Legend</p>
+                    <p className="text-sm text-white mb-2">Interpret symbols correctly.</p>
+                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Essential symbols:</strong> Socket outlets (13A, 20A), lighting points, switches (1-way, 2-way), 
                       distribution boards, cable types (T&E, SWA), containment (conduit, trunking). Keep the legend visible while working.
                     </div>
@@ -355,13 +355,13 @@ const Module4Section1_1 = () => {
                 </div>
               </div>
 
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-emerald-500/5">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow bg-elec-yellow/5">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-600 dark:text-emerald-400 mb-1">Follow the Circuit</p>
-                    <p className="text-sm text-muted-foreground mb-2">Trace wiring routes and connections.</p>
-                    <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                    <p className="font-semibold text-emerald-600 dark:text-elec-yellow mb-1">Follow the Circuit</p>
+                    <p className="text-sm text-white mb-2">Trace wiring routes and connections.</p>
+                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Systematic approach:</strong> Start from the distribution board, follow circuit numbers, 
                       trace cable routes through containment, identify connection points. Note cable sizes, protective device ratings and switching arrangements.
                     </div>
@@ -369,13 +369,13 @@ const Module4Section1_1 = () => {
                 </div>
               </div>
 
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-emerald-500/5">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow bg-elec-yellow/5">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-600 dark:text-emerald-400 mb-1">Cross-Reference with Specifications</p>
-                    <p className="text-sm text-muted-foreground mb-2">Confirm compliance with written requirements.</p>
-                    <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                    <p className="font-semibold text-emerald-600 dark:text-elec-yellow mb-1">Cross-Reference with Specifications</p>
+                    <p className="text-sm text-white mb-2">Confirm compliance with written requirements.</p>
+                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Check against:</strong> Cable specifications, equipment schedules, installation methods, 
                       BS 7671 requirements, manufacturer instructions. Resolve any conflicts before starting work.
                     </div>
@@ -383,13 +383,13 @@ const Module4Section1_1 = () => {
                 </div>
               </div>
 
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">6</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">6</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">Verify Dimensions and Levels</p>
-                    <p className="text-sm text-muted-foreground mb-2">Check heights, depths and positioning requirements.</p>
-                    <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Verify Dimensions and Levels</p>
+                    <p className="text-sm text-white mb-2">Check heights, depths and positioning requirements.</p>
+                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Critical measurements:</strong> Socket heights (450mm above floor), switch heights (1200mm), 
                       distribution board positions, cable entry points. Cross-check with building drawings and site conditions.
                     </div>
@@ -398,9 +398,9 @@ const Module4Section1_1 = () => {
               </div>
             </div>
 
-            <div className="mt-4 p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-lg">
-              <p className="text-sm font-medium text-foreground mb-1">Pro Tip</p>
-              <p className="text-xs text-foreground/90">
+            <div className="mt-4 p-4 bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg">
+              <p className="text-sm font-medium text-white mb-1">Pro Tip</p>
+              <p className="text-xs text-white/90">
                 Always keep a copy of the drawing with you on site. Mark up any discrepancies or clarifications 
                 needed and report them before proceeding. Take photos of existing conditions that might affect the installation.
               </p>
@@ -412,22 +412,22 @@ const Module4Section1_1 = () => {
 
           {/* Version Control */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3">Version Control</h3>
+            <h3 className="font-medium text-white mb-3">Version Control</h3>
             <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30 text-center">
-                <AlertTriangle className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30 text-center">
+                <AlertTriangle className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
                 <p className="font-semibold">Latest Issue</p>
-                <p className="text-sm text-muted-foreground">Always work from the latest drawing issue</p>
+                <p className="text-sm text-white">Always work from the latest drawing issue</p>
               </div>
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30 text-center">
-                <FileText className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30 text-center">
+                <FileText className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
                 <p className="font-semibold">Remove Superseded</p>
-                <p className="text-sm text-muted-foreground">Remove superseded drawings from the work area</p>
+                <p className="text-sm text-white">Remove superseded drawings from the work area</p>
               </div>
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30 text-center">
-                <FileText className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30 text-center">
+                <FileText className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
                 <p className="font-semibold">Raise Discrepancies</p>
-                <p className="text-sm text-muted-foreground">Raise any discrepancies with your supervisor or designer</p>
+                <p className="text-sm text-white">Raise any discrepancies with your supervisor or designer</p>
               </div>
             </div>
           </section>
@@ -437,9 +437,9 @@ const Module4Section1_1 = () => {
 
           {/* Real‑World Example */}
           <section className="mb-2">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-semibold mb-1">Real‑World Example</p>
-              <p className="text-xs sm:text-sm text-foreground">
+              <p className="text-xs sm:text-sm text-white">
                 An installer used an outdated layout drawing showing a distribution board in the wrong location.
                 Result: 15 metres of cable installed incorrectly, requiring removal and rework — costing time and money.
               </p>
@@ -449,26 +449,26 @@ const Module4Section1_1 = () => {
 
         {/* FAQs */}
         <div className="space-y-4 mb-8">
-          <div className="rounded-lg bg-card border border-border/20 p-4">
+          <div className="rounded-lg border border-white/10 p-4">
             <p className="font-medium mb-1">What if a symbol on a drawing is unfamiliar?</p>
             <p className="text-sm">Refer to the legend; if unclear, ask the designer or supervisor.</p>
           </div>
-          <div className="rounded-lg bg-card border border-border/20 p-4">
+          <div className="rounded-lg border border-white/10 p-4">
             <p className="font-medium mb-1">Do I need to understand scale for electrical work?</p>
             <p className="text-sm">Yes — scale affects containment lengths, cable sizes and positioning accuracy.</p>
           </div>
-          <div className="rounded-lg bg-card border border-border/20 p-4">
+          <div className="rounded-lg border border-white/10 p-4">
             <p className="font-medium mb-1">Who issues the latest drawings?</p>
             <p className="text-sm">The project manager or site supervisor; installers must still check they have the latest version.</p>
           </div>
         </div>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border border-emerald-500/30">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-2 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border border-elec-yellow/30">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-2 flex items-center gap-2">
             <CheckCircle className="w-5 h-5" /> Summary
           </h2>
-          <p className="text-foreground/90 text-sm">
+          <p className="text-white/90 text-sm">
             Reading installation drawings and specifications ensures accurate, compliant and efficient work. By understanding
             symbols, diagrams and written requirements, electricians deliver to the correct standard without costly errors.
           </p>
@@ -476,12 +476,12 @@ const Module4Section1_1 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <h2 className="text-2xl font-bold text-foreground mb-4">Test your knowledge</h2>
+          <h2 className="text-2xl font-bold text-white mb-4">Test your knowledge</h2>
           <Quiz questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}
-        <div className="flex justify-between items-center pt-6 border-t border-border/20">
+        <div className="flex justify-between items-center pt-6 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />

@@ -136,11 +136,11 @@ const Module7Section2_3 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               <span className="hidden sm:inline">Back to Section 2</span>
@@ -153,28 +153,28 @@ const Module7Section2_3 = () => {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-start gap-4">
-          <div className="p-2 rounded-lg bg-card self-start">
-            <AlertTriangle className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
+          <div className="p-2 rounded-lg self-start">
+            <AlertTriangle className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </div>
           <div className="flex-1">
-            <Badge variant="outline" className="mb-2 sm:mb-3 border-emerald-500/30 text-emerald-400 text-xs sm:text-sm">
+            <Badge variant="outline" className="mb-2 sm:mb-3 border-elec-yellow/30 text-elec-yellow text-xs sm:text-sm">
               Section 7.2.3
             </Badge>
-            <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+            <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
               2.3 Earth Faults and Leakage Currents
             </h1>
-            <p className="text-sm sm:text-base text-muted-foreground max-w-3xl">
+            <p className="text-sm sm:text-base text-white max-w-3xl">
               Understanding earth faults, leakage currents, and protective measures in electrical installations
             </p>
           </div>
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-            <div className="grid gap-4 sm:gap-6 md:grid-cols-2 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+            <div className="grid gap-4 sm:gap-6 md:grid-cols-2 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
                 <ul className="list-disc pl-4 space-y-1 sm:space-y-2">
                   <li>An <strong>earth fault</strong> occurs when a live conductor makes contact with earth or exposed conductive parts</li>
                   <li>Creates serious risk of electric shock and equipment damage</li>
@@ -184,8 +184,8 @@ const Module7Section2_3 = () => {
                 </ul>
               </div>
               
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/30">
-                <h3 className="font-medium text-foreground mb-2">Spot / Use / Check</h3>
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
+                <h3 className="font-medium text-white mb-2">Spot / Use / Check</h3>
                 <ul className="list-disc pl-4 space-y-1">
                   <li><strong>Spot:</strong> RCD operation, shock risk, equipment damage</li>
                   <li><strong>Use:</strong> RCD tester, insulation resistance tester</li>
@@ -197,10 +197,10 @@ const Module7Section2_3 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
               <li>Identify the characteristics and symptoms of earth faults and leakage currents</li>
               <li>Understand the difference between earth faults and normal leakage currents</li>
               <li>Apply systematic testing methods to detect and locate earth faults</li>
@@ -212,23 +212,23 @@ const Module7Section2_3 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-6">Content</h2>
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">Content</h2>
             
             {/* Section 1: Earth Faults and Leakage Current - Fundamentals */}
-            <div className="border-l-4 border-l-emerald-500 bg-card p-4 sm:p-6 rounded-r-lg mb-6">
+            <div className="border-l-4 border-l-elec-yellow p-4 sm:p-6 rounded-r-lg mb-6">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</div>
-                <h3 className="text-base sm:text-lg font-semibold text-foreground">Earth Faults and Leakage Current - Fundamentals</h3>
+                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</div>
+                <h3 className="text-base sm:text-lg font-semibold text-white">Earth Faults and Leakage Current - Fundamentals</h3>
               </div>
               
-              <div className="text-xs sm:text-sm text-foreground space-y-4">
+              <div className="text-xs sm:text-sm text-white space-y-4">
                 <div>
-                  <h4 className="font-medium mb-3 text-emerald-400 dark:text-emerald-400">Definitions and Key Differences</h4>
+                  <h4 className="font-medium mb-3 text-elec-yellow dark:text-elec-yellow">Definitions and Key Differences</h4>
                   <div className="grid gap-4 md:grid-cols-2">
-                    <div className="bg-background/50 p-3 rounded border border-border/20">
-                      <h5 className="font-medium text-red-600 dark:text-emerald-400 mb-2">Earth Fault</h5>
+                    <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
+                      <h5 className="font-medium text-red-600 dark:text-elec-yellow mb-2">Earth Fault</h5>
                       <p className="text-xs mb-2">An electrical fault where a live conductor makes direct contact with earth or exposed conductive parts, creating an immediate dangerous condition.</p>
                       <ul className="text-xs space-y-1">
                         <li>• Typically involves higher currents (hundreds of mA to several amps)</li>
@@ -237,7 +237,7 @@ const Module7Section2_3 = () => {
                         <li>• Requires urgent investigation and rectification</li>
                       </ul>
                     </div>
-                    <div className="bg-background/50 p-3 rounded border border-border/20">
+                    <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
                       <h5 className="font-medium text-amber-600 dark:text-amber-400 mb-2">Leakage Current</h5>
                       <p className="text-xs mb-2">Small amounts of current that flow continuously to earth through insulation or designed paths (such as EMC filters).</p>
                       <ul className="text-xs space-y-1">
@@ -251,11 +251,11 @@ const Module7Section2_3 = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-medium mb-3 text-emerald-400 dark:text-emerald-400">Common Causes and Contributing Factors</h4>
+                  <h4 className="font-medium mb-3 text-elec-yellow dark:text-elec-yellow">Common Causes and Contributing Factors</h4>
                   <div className="space-y-3">
                     <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 p-3 rounded-lg">
-                      <h5 className="font-medium text-red-700 dark:text-emerald-400 mb-2">Earth Fault Causes</h5>
-                      <ul className="text-xs text-red-600 dark:text-emerald-400 space-y-1">
+                      <h5 className="font-medium text-red-700 dark:text-elec-yellow mb-2">Earth Fault Causes</h5>
+                      <ul className="text-xs text-red-600 dark:text-elec-yellow space-y-1">
                         <li>• <strong>Mechanical damage:</strong> Nails, screws, or tools penetrating cable insulation</li>
                         <li>• <strong>Water ingress:</strong> Moisture entering electrical equipment or accessories</li>
                         <li>• <strong>Insulation failure:</strong> Age, heat, or chemical degradation of cable insulation</li>
@@ -277,9 +277,9 @@ const Module7Section2_3 = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-medium mb-3 text-emerald-400 dark:text-emerald-400">Safety Risks and Effects</h4>
+                  <h4 className="font-medium mb-3 text-elec-yellow dark:text-elec-yellow">Safety Risks and Effects</h4>
                   <div className="bg-card border border-border/30 rounded-lg p-3">
-                    <h5 className="font-medium text-red-600 dark:text-emerald-400 mb-2">Immediate Safety Risks</h5>
+                    <h5 className="font-medium text-red-600 dark:text-elec-yellow mb-2">Immediate Safety Risks</h5>
                     <ul className="text-xs space-y-1">
                       <li>• <strong>Electric shock:</strong> Exposed metalwork becomes live and dangerous to touch</li>
                       <li>• <strong>Fire risk:</strong> Arcing at fault points can ignite combustible materials</li>
@@ -288,7 +288,7 @@ const Module7Section2_3 = () => {
                     </ul>
                   </div>
                   <div className="bg-card border border-border/30 rounded-lg p-3 mt-3">
-                    <h5 className="font-medium text-orange-600 dark:text-emerald-400 mb-2">Operational Problems</h5>
+                    <h5 className="font-medium text-orange-600 dark:text-elec-yellow mb-2">Operational Problems</h5>
                     <ul className="text-xs space-y-1">
                       <li>• <strong>Nuisance tripping:</strong> RCDs operate unnecessarily, causing supply interruption</li>
                       <li>• <strong>Reduced availability:</strong> Frequent supply interruptions affect productivity and safety systems</li>
@@ -316,17 +316,17 @@ const Module7Section2_3 = () => {
             <Separator className="my-6" />
 
             {/* Section 2: Protection Systems and BS 7671 Requirements */}
-            <div className="border-l-4 border-l-green-500 bg-card p-4 sm:p-6 rounded-r-lg mb-6">
+            <div className="border-l-4 border-l-green-500 p-4 sm:p-6 rounded-r-lg mb-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">2</div>
-                <h3 className="text-base sm:text-lg font-semibold text-foreground">Protection Systems and BS 7671 Requirements</h3>
+                <h3 className="text-base sm:text-lg font-semibold text-white">Protection Systems and BS 7671 Requirements</h3>
               </div>
               
-              <div className="text-xs sm:text-sm text-foreground space-y-4">
+              <div className="text-xs sm:text-sm text-white space-y-4">
                 <div>
                   <h4 className="font-medium mb-3 text-green-600 dark:text-green-400">Residual Current Device (RCD) Protection</h4>
                   <div className="grid gap-4 md:grid-cols-2">
-                    <div className="bg-background/50 p-3 rounded border border-border/20">
+                    <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
                       <h5 className="font-medium mb-2">How RCDs Work</h5>
                       <ul className="text-xs space-y-1">
                         <li>• Monitor current balance between live and neutral conductors</li>
@@ -336,7 +336,7 @@ const Module7Section2_3 = () => {
                         <li>• Must disconnect within specified time limits (typically 300ms)</li>
                       </ul>
                     </div>
-                    <div className="bg-background/50 p-3 rounded border border-border/20">
+                    <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
                       <h5 className="font-medium mb-2">RCD Types and Applications</h5>
                       <ul className="text-xs space-y-1">
                         <li>• <strong>30mA:</strong> Personal protection, socket outlets, bathrooms</li>
@@ -353,8 +353,8 @@ const Module7Section2_3 = () => {
                   <h4 className="font-medium mb-3 text-green-600 dark:text-green-400">BS 7671 Requirements and Standards</h4>
                   <div className="space-y-3">
                     <div className="bg-emerald-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 p-3 rounded-lg">
-                      <h5 className="font-medium text-blue-700 dark:text-emerald-400 mb-2">Key BS 7671 Requirements</h5>
-                      <ul className="text-xs text-emerald-400 dark:text-emerald-400 space-y-1">
+                      <h5 className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Key BS 7671 Requirements</h5>
+                      <ul className="text-xs text-elec-yellow dark:text-elec-yellow space-y-1">
                         <li>• <strong>Section 411:</strong> Protective measures - basic protection and fault protection</li>
                         <li>• <strong>Section 531:</strong> Selection and erection of RCDs and protective devices</li>
                         <li>• <strong>30mA additional protection:</strong> Required for socket outlets up to 20A and mobile equipment</li>
@@ -363,8 +363,8 @@ const Module7Section2_3 = () => {
                       </ul>
                     </div>
                     <div className="bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800 p-3 rounded-lg">
-                      <h5 className="font-medium text-purple-700 dark:text-emerald-400 mb-2">Design Considerations</h5>
-                      <ul className="text-xs text-purple-600 dark:text-emerald-400 space-y-1">
+                      <h5 className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Design Considerations</h5>
+                      <ul className="text-xs text-purple-600 dark:text-elec-yellow space-y-1">
                         <li>• <strong>Discrimination and selectivity:</strong> Use time-delayed RCDs in series arrangements</li>
                         <li>• <strong>Split-load design:</strong> Separate circuits to prevent total loss of supply</li>
                         <li>• <strong>RCD sensitivity selection:</strong> Balance between protection and nuisance tripping</li>
@@ -407,16 +407,16 @@ const Module7Section2_3 = () => {
             <Separator className="my-6" />
 
             {/* Section 3: Testing, Diagnosis and Troubleshooting */}
-            <div className="border-l-4 border-l-purple-500 bg-card p-4 sm:p-6 rounded-r-lg mb-6">
+            <div className="border-l-4 border-l-purple-500 p-4 sm:p-6 rounded-r-lg mb-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-6 h-6 sm:w-8 sm:h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">3</div>
-                <h3 className="text-base sm:text-lg font-semibold text-foreground">Testing, Diagnosis and Troubleshooting</h3>
+                <h3 className="text-base sm:text-lg font-semibold text-white">Testing, Diagnosis and Troubleshooting</h3>
               </div>
               
-              <div className="text-xs sm:text-sm text-foreground space-y-4">
+              <div className="text-xs sm:text-sm text-white space-y-4">
                 <div>
-                  <h4 className="font-medium mb-3 text-purple-600 dark:text-emerald-400">Systematic Testing Process</h4>
-                  <div className="bg-background/50 p-3 rounded border border-border/20">
+                  <h4 className="font-medium mb-3 text-purple-600 dark:text-elec-yellow">Systematic Testing Process</h4>
+                  <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
                     <h5 className="font-medium mb-2">Step-by-Step Investigation</h5>
                     <ol className="list-decimal pl-4 space-y-2 text-xs">
                       <li><strong>Initial assessment:</strong> Review symptoms, check RCD operations, gather user reports</li>
@@ -433,9 +433,9 @@ const Module7Section2_3 = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-medium mb-3 text-purple-600 dark:text-emerald-400">Testing Equipment and Techniques</h4>
+                  <h4 className="font-medium mb-3 text-purple-600 dark:text-elec-yellow">Testing Equipment and Techniques</h4>
                   <div className="grid gap-4 md:grid-cols-2">
-                    <div className="bg-background/50 p-3 rounded border border-border/20">
+                    <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
                       <h5 className="font-medium mb-2">Essential Test Equipment</h5>
                       <ul className="text-xs space-y-1">
                         <li>• <strong>Earth leakage clamp meter:</strong> Measures current to earth without circuit interruption</li>
@@ -445,7 +445,7 @@ const Module7Section2_3 = () => {
                         <li>• <strong>PAT tester:</strong> Portable appliance earth leakage measurement</li>
                       </ul>
                     </div>
-                    <div className="bg-background/50 p-3 rounded border border-border/20">
+                    <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
                       <h5 className="font-medium mb-2">Test Standards and Limits</h5>
                       <ul className="text-xs space-y-1">
                         <li>• <strong>Insulation resistance:</strong> Minimum 1MΩ for final circuits</li>
@@ -459,11 +459,11 @@ const Module7Section2_3 = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-medium mb-3 text-purple-600 dark:text-emerald-400">Troubleshooting Common Issues</h4>
+                  <h4 className="font-medium mb-3 text-purple-600 dark:text-elec-yellow">Troubleshooting Common Issues</h4>
                   <div className="space-y-3">
                     <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 p-3 rounded-lg">
-                      <h5 className="font-medium text-red-700 dark:text-emerald-400 mb-2">Nuisance RCD Tripping</h5>
-                      <ul className="text-xs text-red-600 dark:text-emerald-400 space-y-1">
+                      <h5 className="font-medium text-red-700 dark:text-elec-yellow mb-2">Nuisance RCD Tripping</h5>
+                      <ul className="text-xs text-red-600 dark:text-elec-yellow space-y-1">
                         <li>• <strong>Identify cumulative leakage:</strong> Test individual circuits to find high contributors</li>
                         <li>• <strong>Temporary disconnection:</strong> Isolate suspected circuits to confirm source</li>
                         <li>• <strong>Load redistribution:</strong> Move high-leakage equipment to separate RCD</li>
@@ -485,7 +485,7 @@ const Module7Section2_3 = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-medium mb-3 text-purple-600 dark:text-emerald-400">Verification and Documentation</h4>
+                  <h4 className="font-medium mb-3 text-purple-600 dark:text-elec-yellow">Verification and Documentation</h4>
                   <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 p-3 rounded-lg">
                     <h5 className="font-medium text-green-700 dark:text-green-300 mb-2">Post-Repair Verification</h5>
                     <ul className="text-xs text-green-600 dark:text-green-400 space-y-1">
@@ -516,16 +516,16 @@ const Module7Section2_3 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
             <div className="flex items-center gap-2 mb-4">
-              <Lightbulb className="w-5 h-5 text-emerald-400" />
-              <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground">Practical Guidance</h2>
+              <Lightbulb className="w-5 h-5 text-elec-yellow" />
+              <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white">Practical Guidance</h2>
             </div>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="grid gap-4 md:grid-cols-2">
-                <div className="bg-card p-4 rounded-lg border border-border/20">
-                  <h3 className="font-medium mb-3 text-foreground">Safe Investigation Procedure</h3>
+                <div className="bg-card p-4 rounded-lg border border-white/10">
+                  <h3 className="font-medium mb-3 text-white">Safe Investigation Procedure</h3>
                   <ol className="list-decimal pl-4 space-y-2">
                     <li>Isolate supply and confirm dead before investigation</li>
                     <li>Check for obvious visual signs of damage or water ingress</li>
@@ -536,7 +536,7 @@ const Module7Section2_3 = () => {
                   </ol>
                 </div>
                 <div className="bg-card p-4 rounded-lg border border-border/30">
-                  <h3 className="font-medium mb-3 text-emerald-400 dark:text-emerald-400">Testing Equipment Required</h3>
+                  <h3 className="font-medium mb-3 text-elec-yellow dark:text-elec-yellow">Testing Equipment Required</h3>
                   <ul className="list-disc pl-4 space-y-2">
                     <li><strong>RCD tester:</strong> For trip time and sensitivity testing</li>
                     <li><strong>Insulation resistance tester:</strong> 500V minimum for circuits</li>
@@ -551,15 +551,15 @@ const Module7Section2_3 = () => {
         </Card>
 
         {/* Real-world Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-gradient-to-r from-card/20 to-transparent border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-gradient-to-r from-card/20 to-transparent border-white/10">
           <CardContent className="p-0">
             <div className="flex items-center gap-2 mb-4">
               <CheckCircle className="w-5 h-5 text-green-500" />
-              <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground">Real-world Example</h2>
+              <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white">Real-world Example</h2>
             </div>
-            <div className="bg-card p-4 rounded-lg border border-border/20">
-              <h3 className="font-medium mb-3 text-foreground">Office Building RCD Nuisance Tripping</h3>
-              <div className="space-y-3 text-xs sm:text-sm text-foreground">
+            <div className="bg-card p-4 rounded-lg border border-white/10">
+              <h3 className="font-medium mb-3 text-white">Office Building RCD Nuisance Tripping</h3>
+              <div className="space-y-3 text-xs sm:text-sm text-white">
                 <p><strong>Problem:</strong> An office building experienced repeated RCD tripping on the ground floor lighting and power circuits, causing disruption to computer equipment and loss of productivity.</p>
                 <p><strong>Investigation:</strong> Initial testing showed no obvious faults - insulation resistance values were acceptable and RCD sensitivity was correct. However, earth leakage clamp meter readings revealed 25mA of leakage current on the circuit.</p>
                 <p><strong>Root Cause:</strong> Water had seeped into a floor-level socket outlet through damaged trunking, creating a leakage path to earth. The 30mA RCD was operating correctly but nuisance tripping occurred during peak load periods when the additional leakage pushed total current above the trip threshold.</p>
@@ -571,10 +571,10 @@ const Module7Section2_3 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
-            <div className="grid gap-4 md:grid-cols-2 text-xs sm:text-sm text-foreground">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+            <div className="grid gap-4 md:grid-cols-2 text-xs sm:text-sm text-white">
               <div>
                 <h3 className="font-medium mb-2">Key Points:</h3>
                 <ul className="list-disc pl-4 space-y-1">
@@ -598,21 +598,21 @@ const Module7Section2_3 = () => {
         </Card>
 
         {/* FAQ */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
             <div className="space-y-4">
-              <div className="border-l-4 border-l-emerald-500 pl-4">
-                <h3 className="font-medium text-foreground mb-2">Q: Why do RCDs trip when there's no fault?</h3>
-                <p className="text-sm text-muted-foreground">A: This is usually due to cumulative leakage currents from multiple sources exceeding the RCD sensitivity. Electronic equipment, damp conditions, and ageing insulation all contribute small leakage currents that can sum to trip 30mA RCDs.</p>
+              <div className="border-l-4 border-l-elec-yellow pl-4">
+                <h3 className="font-medium text-white mb-2">Q: Why do RCDs trip when there's no fault?</h3>
+                <p className="text-sm text-white">A: This is usually due to cumulative leakage currents from multiple sources exceeding the RCD sensitivity. Electronic equipment, damp conditions, and ageing insulation all contribute small leakage currents that can sum to trip 30mA RCDs.</p>
               </div>
               <div className="border-l-4 border-l-green-500 pl-4">
-                <h3 className="font-medium text-foreground mb-2">Q: Is it safe to increase RCD sensitivity to prevent tripping?</h3>
-                <p className="text-sm text-muted-foreground">A: No. RCD sensitivity should not be increased as this reduces protection levels. Instead, identify and address the source of leakage or use RCBO design to limit the impact of tripping.</p>
+                <h3 className="font-medium text-white mb-2">Q: Is it safe to increase RCD sensitivity to prevent tripping?</h3>
+                <p className="text-sm text-white">A: No. RCD sensitivity should not be increased as this reduces protection levels. Instead, identify and address the source of leakage or use RCBO design to limit the impact of tripping.</p>
               </div>
               <div className="border-l-4 border-l-orange-500 pl-4">
-                <h3 className="font-medium text-foreground mb-2">Q: How often should RCDs be tested?</h3>
-                <p className="text-sm text-muted-foreground">A: RCDs should be tested using the integral test button monthly by the user, and comprehensively tested by a qualified electrician during periodic inspection and testing as required by BS 7671.</p>
+                <h3 className="font-medium text-white mb-2">Q: How often should RCDs be tested?</h3>
+                <p className="text-sm text-white">A: RCDs should be tested using the integral test button monthly by the user, and comprehensively tested by a qualified electrician during periodic inspection and testing as required by BS 7671.</p>
               </div>
             </div>
           </CardContent>

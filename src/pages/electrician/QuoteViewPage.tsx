@@ -4,8 +4,9 @@ import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
 import { QuoteReviewStep } from '@/components/electrician/quote-builder/steps/QuoteReviewStep';
 import { MobileButton } from '@/components/ui/mobile-button';
-import { ArrowLeft, Loader2, Edit, Trash2 } from 'lucide-react';
+import { Loader2, Edit, Trash2 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
 import { Helmet } from 'react-helmet';
 import {
   AlertDialog,
@@ -151,14 +152,7 @@ const QuoteViewPage = () => {
   if (error || !quote) {
     return (
       <div className="space-y-6">
-        <MobileButton
-          variant="ghost"
-          onClick={() => navigate('/electrician/quote-builder')}
-          className="gap-2"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to Quotes
-        </MobileButton>
+        <SmartBackButton />
         <div className="text-center py-12 space-y-4">
           <h2 className="text-2xl font-bold">Quote Not Found</h2>
           <p className="text-muted-foreground">
@@ -215,11 +209,7 @@ const QuoteViewPage = () => {
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-              <Link to="/electrician/quote-builder" className="w-full sm:w-auto">
-                <MobileButton variant="outline" size="wide" className="sm:w-auto w-full">
-                  <ArrowLeft className="mr-2 h-4 w-4" /> Back
-                </MobileButton>
-              </Link>
+              <SmartBackButton className="w-full sm:w-auto" />
               <MobileButton
                 variant="elec"
                 size="wide"

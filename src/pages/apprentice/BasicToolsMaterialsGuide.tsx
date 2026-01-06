@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -463,7 +463,7 @@ const BasicToolsMaterialsGuide = () => {
           Complete guide to electrical tools, materials, and equipment for UK apprentices. 
           Learn what you need, when you need it, and where to get the best deals.
         </p>
-        <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
+        <SmartBackButton />
       </div>
 
       {/* Interactive Cable Quiz - Enhanced */}

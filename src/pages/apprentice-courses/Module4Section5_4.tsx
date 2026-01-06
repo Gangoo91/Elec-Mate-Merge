@@ -139,11 +139,11 @@ const Module4Section5_4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 5
@@ -157,35 +157,35 @@ const Module4Section5_4 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Wrench className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Wrench className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 4.5.4
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Using Ferrules, Sleeving, Glands, and Crimps
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Master cable termination accessories for secure, reliable, and compliant electrical connections according to BS 7671.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Cable termination accessories ensure secure, reliable, and compliant connections.</li>
                 <li>Each accessory has specific purposes: ferrules, sleeving, glands, and crimps.</li>
                 <li>Improper selection or installation leads to failures and safety hazards.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Cable type, accessory requirements, environmental conditions.</li>
                 <li><strong>Use:</strong> Correct sizes, proper tools, correct fitting techniques.</li>
@@ -196,9 +196,9 @@ const Module4Section5_4 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Identify the purpose and types of ferrules, sleeving, glands, and crimps for different applications.</li>
             <li>Select the correct accessory size and type for the cable being terminated.</li>
             <li>Apply correct fitting techniques for each accessory according to manufacturer instructions.</li>
@@ -208,25 +208,25 @@ const Module4Section5_4 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Ferrules */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Ferrules and Their Applications</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Ferrules and Their Applications</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Ferrules are essential accessories for terminating stranded flexible conductors safely and securely:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">Ferrule Construction and Types</p>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Primary function:</strong> Prevent conductor strands from splaying when inserted into terminals.</p>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Available types:</strong></p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Ferrule Construction and Types</p>
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Primary function:</strong> Prevent conductor strands from splaying when inserted into terminals.</p>
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Available types:</strong></p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Uninsulated ferrules: Bare copper or tinned copper for general use</li>
                       <li>Insulated ferrules: Colour-coded plastic sleeves for identification and protection</li>
                       <li>Twin ferrules: For terminating two conductors in one terminal</li>
@@ -234,15 +234,15 @@ const Module4Section5_4 = () => {
                       <li>Cord-end terminals: Pre-fitted with wire for quick installation</li>
                       <li>Heat-shrink ferrules: Provide additional strain relief and protection</li>
                     </ul>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Size selection criteria:</strong></p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Size selection criteria:</strong></p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Must match conductor cross-sectional area exactly (0.5mm² to 50mm²)</li>
                       <li>Consider strand count: Class 5 stranding requires specific ferrule types</li>
                       <li>Temperature rating: Must match or exceed cable operating temperature</li>
                       <li>Material compatibility: Copper for copper conductors, avoid dissimilar metals</li>
                     </ul>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Step-by-step installation procedure:</strong></p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Step-by-step installation procedure:</strong></p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>1. Strip cable insulation to match ferrule barrel length exactly</li>
                       <li>2. Check conductor for damage or missing strands</li>
                       <li>3. Insert conductor fully into ferrule until touching end stop</li>
@@ -250,7 +250,7 @@ const Module4Section5_4 = () => {
                       <li>5. Apply crimp ensuring tool ratchet completes full cycle</li>
                       <li>6. Perform tug test to verify mechanical security</li>
                     </ul>
-                    <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Quality check:</strong> Properly crimped ferrule should show hexagonal impression with no conductor visible at crimp
                     </div>
                   </div>
@@ -270,33 +270,33 @@ const Module4Section5_4 = () => {
 
           {/* Sleeving */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Sleeving for Conductor Identification and Protection</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Sleeving for Conductor Identification and Protection</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Sleeving provides insulation and identification for conductors, particularly essential for CPC identification:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">Sleeving Applications and Colour Coding</p>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Primary applications:</strong> Insulate and identify bare conductors in electrical installations.</p>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>BS 7671 colour coding requirements:</strong></p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Sleeving Applications and Colour Coding</p>
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Primary applications:</strong> Insulate and identify bare conductors in electrical installations.</p>
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>BS 7671 colour coding requirements:</strong></p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Green/Yellow: Circuit Protective Conductor (CPC/Earth) - mandatory identification</li>
                       <li>Blue: Neutral conductor identification where required</li>
                       <li>Brown: Line conductor identification in control circuits</li>
                       <li>Other colours: Used for control and instrumentation circuits as specified</li>
                     </ul>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Installation requirements:</strong></p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Installation requirements:</strong></p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Must fit snugly over conductor without gaps or loose sections</li>
                       <li>Extend sufficient length for clear identification at terminations</li>
                       <li>Heat-shrink sleeving for permanent protection in harsh environments</li>
                       <li>Self-amalgamating tape for waterproof sealing applications</li>
                     </ul>
-                    <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>BS 7671 requirement:</strong> CPC in T&E cable must always be sleeved green/yellow before termination
                     </div>
                   </div>
@@ -316,39 +316,39 @@ const Module4Section5_4 = () => {
 
           {/* Glands */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Glands for Cable Entry and Environmental Protection</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Glands for Cable Entry and Environmental Protection</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Glands secure cables at enclosure entry points, providing mechanical retention and environmental sealing:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">Gland Types and Applications</p>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Metallic glands:</strong> Used with armoured cables for mechanical retention and earth continuity.</p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Gland Types and Applications</p>
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Metallic glands:</strong> Used with armoured cables for mechanical retention and earth continuity.</p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Brass or stainless steel construction for corrosion resistance</li>
                       <li>Integral earthing through gland body to maintain earth continuity</li>
                       <li>Suitable for SWA, AWA, and other armoured cable types</li>
                       <li>Must be earthed to prevent becoming live during fault conditions</li>
                     </ul>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Plastic glands:</strong> Common for indoor flexible cable terminations.</p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Plastic glands:</strong> Common for indoor flexible cable terminations.</p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Nylon or PVC construction for cost-effective sealing</li>
                       <li>Suitable for non-armoured flexible cables</li>
                       <li>Available in various thread sizes and cable diameter ranges</li>
                       <li>Do not require earthing as they cannot become live</li>
                     </ul>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>IP rating requirements:</strong></p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>IP rating requirements:</strong></p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>IP68: Complete protection against dust and continuous water immersion</li>
                       <li>IP67: Dust-tight and protected against temporary immersion</li>
                       <li>IP54: Protected against dust and water splashing from any direction</li>
                       <li>Selection based on environmental conditions and exposure requirements</li>
                     </ul>
-                    <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Installation note:</strong> Follow manufacturer torque settings to avoid damage while maintaining IP rating
                     </div>
                   </div>
@@ -368,34 +368,34 @@ const Module4Section5_4 = () => {
 
           {/* Crimps and Common Errors */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Crimps and Installation Best Practices</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Crimps and Installation Best Practices</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Crimps provide reliable mechanical and electrical connections when properly selected and installed:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">Crimp Terminal Types and Applications</p>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Ring crimps:</strong> For bolted terminations providing secure mechanical connection.</p>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Spade crimps:</strong> For quick-connect terminals allowing easy disconnection.</p>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Butt crimps:</strong> For joining conductors end-to-end in cable extensions.</p>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Pin crimps:</strong> For insertion into plug and socket connectors.</p>
-                    <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Crimp Terminal Types and Applications</p>
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Ring crimps:</strong> For bolted terminations providing secure mechanical connection.</p>
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Spade crimps:</strong> For quick-connect terminals allowing easy disconnection.</p>
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Butt crimps:</strong> For joining conductors end-to-end in cable extensions.</p>
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Pin crimps:</strong> For insertion into plug and socket connectors.</p>
+                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Tool requirement:</strong> Ratchet crimp tool matched to terminal size ensures proper compression
                     </div>
                   </div>
                 </div>
               </div>
               
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-1">Common Errors to Avoid</p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Common Errors to Avoid</p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Using wrong size accessory for conductor cross-sectional area</li>
                       <li>Not fully inserting conductor into ferrule, gland, or crimp before securing</li>
                       <li>Over-tightening glands causing damage to cable insulation or sealing components</li>
@@ -403,38 +403,38 @@ const Module4Section5_4 = () => {
                       <li>Failing to earth metallic glands when required by installation requirements</li>
                       <li>Reusing crimped terminals that have been previously deformed</li>
                     </ul>
-                    <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Safety note:</strong> Poor terminations are a leading cause of electrical fires and system failures
                     </div>
                   </div>
                 </div>
               </div>
               
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">6</span>
                   <div className="flex-1">
                     <p className="font-semibold text-green-600 dark:text-green-400 mb-1">Inspection and Testing Procedures</p>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Visual inspection requirements:</strong></p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Visual inspection requirements:</strong></p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Full insertion of conductor into accessory with no exposed strands</li>
                       <li>Correct colour coding and identification of all conductors</li>
                       <li>No damage to insulation or conductor during termination process</li>
                       <li>Proper sealing and IP rating maintenance at gland entries</li>
                     </ul>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Mechanical testing:</strong></p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Mechanical testing:</strong></p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Tug test crimps and ferrules to ensure secure mechanical connection</li>
                       <li>Check gland tightness without over-torquing</li>
                       <li>Verify strain relief effectiveness under normal operating conditions</li>
                     </ul>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Electrical testing:</strong></p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Electrical testing:</strong></p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Continuity testing to verify low-resistance connections</li>
                       <li>Polarity checks to ensure correct conductor identification</li>
                       <li>CPC integrity testing for earth continuity through metallic glands</li>
                     </ul>
-                    <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>BS 7671 requirement:</strong> All terminations must be tested for electrical and mechanical integrity
                     </div>
                   </div>
@@ -445,15 +445,15 @@ const Module4Section5_4 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Practical Guidance</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
           
           {/* Tool Selection and Preparation */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Tool Selection and Workshop Preparation</h3>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <p className="text-xs sm:text-sm text-foreground mb-3"><strong>Essential tools for professional terminations:</strong></p>
-              <div className="grid md:grid-cols-2 gap-4 text-xs text-foreground">
+            <h3 className="font-medium text-white mb-4">Tool Selection and Workshop Preparation</h3>
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <p className="text-xs sm:text-sm text-white mb-3"><strong>Essential tools for professional terminations:</strong></p>
+              <div className="grid md:grid-cols-2 gap-4 text-xs text-white">
                 <div>
                   <p className="font-medium mb-2">Crimping Tools:</p>
                   <ul className="list-disc pl-4 space-y-1">
@@ -473,20 +473,20 @@ const Module4Section5_4 = () => {
                   </ul>
                 </div>
               </div>
-              <div className="mt-3 p-2 bg-background/50 rounded border">
-                <p className="text-xs text-foreground"><strong>Workshop organisation:</strong> Keep accessories sorted by size and type in clearly labelled containers to prevent selection errors during installation.</p>
+              <div className="mt-3 p-2 bg-[#121212]/50 rounded border">
+                <p className="text-xs text-white"><strong>Workshop organisation:</strong> Keep accessories sorted by size and type in clearly labelled containers to prevent selection errors during installation.</p>
               </div>
             </div>
           </section>
 
           {/* Step-by-Step Procedures */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Step-by-Step Installation Procedures</h3>
+            <h3 className="font-medium text-white mb-4">Step-by-Step Installation Procedures</h3>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-4 bg-card border border-green-400/30">
-                <p className="font-medium text-foreground mb-2">Procedure 1: Installing Ferrules on Flexible Cables</p>
-                <ol className="text-xs text-foreground space-y-1 list-decimal pl-4">
+              <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
+                <p className="font-medium text-white mb-2">Procedure 1: Installing Ferrules on Flexible Cables</p>
+                <ol className="text-xs text-white space-y-1 list-decimal pl-4">
                   <li>Measure and mark strip length equal to ferrule barrel length (typically 8-12mm)</li>
                   <li>Use appropriate wire strippers to remove insulation without nicking conductors</li>
                   <li>Inspect conductor for damage - reject if more than 10% strands are broken</li>
@@ -500,9 +500,9 @@ const Module4Section5_4 = () => {
                 </ol>
               </div>
 
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-                <p className="font-medium text-foreground mb-2">Procedure 2: Installing Cable Glands</p>
-                <ol className="text-xs text-foreground space-y-1 list-decimal pl-4">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+                <p className="font-medium text-white mb-2">Procedure 2: Installing Cable Glands</p>
+                <ol className="text-xs text-white space-y-1 list-decimal pl-4">
                   <li>Select gland with appropriate thread size for enclosure knockout</li>
                   <li>Verify IP rating meets or exceeds environmental requirements</li>
                   <li>Disassemble gland and check all sealing components are present</li>
@@ -516,9 +516,9 @@ const Module4Section5_4 = () => {
                 </ol>
               </div>
 
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-                <p className="font-medium text-foreground mb-2">Procedure 3: Applying Sleeving to CPC Conductors</p>
-                <ol className="text-xs text-foreground space-y-1 list-decimal pl-4">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+                <p className="font-medium text-white mb-2">Procedure 3: Applying Sleeving to CPC Conductors</p>
+                <ol className="text-xs text-white space-y-1 list-decimal pl-4">
                   <li>Cut green/yellow sleeving to appropriate length (minimum 25mm each end)</li>
                   <li>Ensure sleeving internal diameter matches conductor size</li>
                   <li>Slide sleeving over bare CPC conductor from both ends</li>
@@ -534,10 +534,10 @@ const Module4Section5_4 = () => {
 
           {/* Quality Control */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Quality Control and Testing</h3>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <p className="text-xs sm:text-sm text-foreground mb-3"><strong>Mandatory checks before energising:</strong></p>
-              <div className="grid md:grid-cols-2 gap-4 text-xs text-foreground">
+            <h3 className="font-medium text-white mb-4">Quality Control and Testing</h3>
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <p className="text-xs sm:text-sm text-white mb-3"><strong>Mandatory checks before energising:</strong></p>
+              <div className="grid md:grid-cols-2 gap-4 text-xs text-white">
                 <div>
                   <p className="font-medium mb-2">Visual Inspections:</p>
                   <ul className="list-disc pl-4 space-y-1">
@@ -559,65 +559,65 @@ const Module4Section5_4 = () => {
                   </ul>
                 </div>
               </div>
-              <div className="mt-3 p-2 bg-background/50 rounded border">
-                <p className="text-xs text-foreground"><strong>Record keeping:</strong> Document all test results and accessory specifications used for future maintenance reference.</p>
+              <div className="mt-3 p-2 bg-[#121212]/50 rounded border">
+                <p className="text-xs text-white"><strong>Record keeping:</strong> Document all test results and accessory specifications used for future maintenance reference.</p>
               </div>
             </div>
           </section>
 
           {/* Troubleshooting Guide */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Troubleshooting Common Problems</h3>
+            <h3 className="font-medium text-white mb-4">Troubleshooting Common Problems</h3>
             <div className="space-y-3">
-              <div className="rounded-lg p-3 bg-card border border-amber-400/30">
-                <p className="font-medium text-foreground text-sm mb-1">Problem: Ferrule keeps slipping off conductor</p>
-                <p className="text-xs text-foreground mb-2"><strong>Causes:</strong> Oversized ferrule, insufficient crimp pressure, damaged strands</p>
-                <p className="text-xs text-foreground"><strong>Solutions:</strong> Check size chart, verify tool calibration, inspect conductor integrity, consider twin ferrule for multiple conductors</p>
+              <div className="rounded-lg p-3 border border-amber-400/30">
+                <p className="font-medium text-white text-sm mb-1">Problem: Ferrule keeps slipping off conductor</p>
+                <p className="text-xs text-white mb-2"><strong>Causes:</strong> Oversized ferrule, insufficient crimp pressure, damaged strands</p>
+                <p className="text-xs text-white"><strong>Solutions:</strong> Check size chart, verify tool calibration, inspect conductor integrity, consider twin ferrule for multiple conductors</p>
               </div>
               
-              <div className="rounded-lg p-3 bg-card border border-amber-400/30">
-                <p className="font-medium text-foreground text-sm mb-1">Problem: Gland not maintaining IP rating</p>
-                <p className="text-xs text-foreground mb-2"><strong>Causes:</strong> Incorrect installation torque, damaged seals, wrong cable diameter</p>
-                <p className="text-xs text-foreground"><strong>Solutions:</strong> Check torque specification, replace gaskets, use cable gland with correct size range, apply thread sealant if specified</p>
+              <div className="rounded-lg p-3 border border-amber-400/30">
+                <p className="font-medium text-white text-sm mb-1">Problem: Gland not maintaining IP rating</p>
+                <p className="text-xs text-white mb-2"><strong>Causes:</strong> Incorrect installation torque, damaged seals, wrong cable diameter</p>
+                <p className="text-xs text-white"><strong>Solutions:</strong> Check torque specification, replace gaskets, use cable gland with correct size range, apply thread sealant if specified</p>
               </div>
               
-              <div className="rounded-lg p-3 bg-card border border-amber-400/30">
-                <p className="font-medium text-foreground text-sm mb-1">Problem: High resistance at crimped connection</p>
-                <p className="text-xs text-foreground mb-2"><strong>Causes:</strong> Incomplete crimp, oxidised surfaces, wrong tool die size</p>
-                <p className="text-xs text-foreground"><strong>Solutions:</strong> Re-crimp with correct tool, clean conductor surfaces, check tool maintenance, verify accessory specifications</p>
+              <div className="rounded-lg p-3 border border-amber-400/30">
+                <p className="font-medium text-white text-sm mb-1">Problem: High resistance at crimped connection</p>
+                <p className="text-xs text-white mb-2"><strong>Causes:</strong> Incomplete crimp, oxidised surfaces, wrong tool die size</p>
+                <p className="text-xs text-white"><strong>Solutions:</strong> Re-crimp with correct tool, clean conductor surfaces, check tool maintenance, verify accessory specifications</p>
               </div>
             </div>
           </section>
         </Card>
 
         {/* Real-World Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-World Examples</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Examples</h2>
           
           <div className="space-y-4">
-            <div className="rounded-lg p-4 bg-card border border-amber-400/30">
-              <p className="text-xs sm:text-sm text-foreground mb-2">
+            <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
+              <p className="text-xs sm:text-sm text-white mb-2">
                 <strong>Case Study 1: Manufacturing Plant Failure</strong>
               </p>
-              <p className="text-xs sm:text-sm text-foreground">
+              <p className="text-xs sm:text-sm text-white">
                 A machinery installation used flexible cables without ferrules in vibration-heavy conditions. Over time, loose strands worked free from terminals, causing overheating and intermittent tripping. The loose connections created high resistance points, leading to voltage drop and equipment malfunction. Refitting with correctly sized ferrules solved the problem, eliminated the high resistance connections, and extended the system's service life significantly.
               </p>
             </div>
 
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <p className="text-xs sm:text-sm text-foreground mb-2">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <p className="text-xs sm:text-sm text-white mb-2">
                 <strong>Case Study 2: Outdoor Installation Issues</strong>
               </p>
-              <p className="text-xs sm:text-sm text-foreground">
+              <p className="text-xs sm:text-sm text-white">
                 An outdoor lighting installation failed IP testing after 6 months due to water ingress through improperly fitted glands. Investigation revealed the installer had over-tightened the glands, deforming the sealing gaskets. The solution involved replacing all glands, using proper torque settings, and applying thread sealant where specified by the manufacturer. The installation passed subsequent IP testing and remained watertight.
               </p>
             </div>
 
-            <div className="rounded-lg p-4 bg-card border border-green-400/30">
-              <p className="text-xs sm:text-sm text-foreground mb-2">
+            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
+              <p className="text-xs sm:text-sm text-white mb-2">
                 <strong>Case Study 3: Control Panel Upgrade Success</strong>
               </p>
-              <p className="text-xs sm:text-sm text-foreground">
+              <p className="text-xs sm:text-sm text-white">
                 A control panel upgrade required terminating over 200 flexible cables in limited space. Using twin ferrules and proper sleeving techniques, all connections were completed safely within tight timeframes. Post-installation testing showed all connections met BS 7671 requirements with continuity readings below 0.1Ω. The systematic approach to accessory selection and quality control prevented any subsequent failures.
               </p>
             </div>
@@ -625,38 +625,38 @@ const Module4Section5_4 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">FAQs</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
           <div className="space-y-4">
             <div>
-              <h4 className="font-medium text-foreground mb-2">Q: Can I use uninsulated ferrules in domestic wiring?</h4>
-              <p className="text-sm text-muted-foreground">A: Yes, but insulated ferrules are often preferred for added protection and easier identification of conductor functions.</p>
+              <h4 className="font-medium text-white mb-2">Q: Can I use uninsulated ferrules in domestic wiring?</h4>
+              <p className="text-sm text-white">A: Yes, but insulated ferrules are often preferred for added protection and easier identification of conductor functions.</p>
             </div>
             <Separator />
             <div>
-              <h4 className="font-medium text-foreground mb-2">Q: Do all glands need earthing?</h4>
-              <p className="text-sm text-muted-foreground">A: Only metallic glands that could become live during fault conditions require earthing. Plastic glands do not conduct electricity and therefore do not need earthing.</p>
+              <h4 className="font-medium text-white mb-2">Q: Do all glands need earthing?</h4>
+              <p className="text-sm text-white">A: Only metallic glands that could become live during fault conditions require earthing. Plastic glands do not conduct electricity and therefore do not need earthing.</p>
             </div>
             <Separator />
             <div>
-              <h4 className="font-medium text-foreground mb-2">Q: Can I crimp a ferrule with pliers in an emergency?</h4>
-              <p className="text-sm text-muted-foreground">A: No — pliers cannot apply the correct compression force uniformly, leading to unsafe terminations that may fail over time. Always use proper crimping tools.</p>
+              <h4 className="font-medium text-white mb-2">Q: Can I crimp a ferrule with pliers in an emergency?</h4>
+              <p className="text-sm text-white">A: No — pliers cannot apply the correct compression force uniformly, leading to unsafe terminations that may fail over time. Always use proper crimping tools.</p>
             </div>
           </div>
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
-          <p className="text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+          <p className="text-xs sm:text-sm text-white">
             Ferrules, sleeving, glands, and crimps are not optional extras — they are key components in safe and professional electrical installations. Correct sizing, proper tools, and compliance with BS 7671 ensure secure, long-lasting connections that meet safety requirements and maintain system reliability throughout the installation's operational life.
           </p>
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quiz (8 Questions)</h2>
-          <p className="text-sm text-muted-foreground mb-6">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quiz (8 Questions)</h2>
+          <p className="text-sm text-white mb-6">
             Test your understanding of ferrules, sleeving, glands, and crimps
           </p>
           <Quiz questions={quizQuestions} />

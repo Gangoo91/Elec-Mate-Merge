@@ -181,11 +181,11 @@ const Module5Section5_3 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 5
@@ -199,35 +199,35 @@ const Module5Section5_3 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Users className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Users className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 5.5.3
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Coordinating with Joiners, Plumbers, Plasterers, etc.
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Master essential coordination skills for working effectively with other trades on construction sites.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Multi-trade coordination prevents costly clashes and delays on construction sites.</li>
                 <li>Mark electrical runs clearly before other trades start their work.</li>
                 <li>Always report coordination issues to supervisors - never resolve clashes independently.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Conduit vs pipe clashes, boxes being plastered over, access blockages.</li>
                 <li><strong>Use:</strong> Clear marking, advance communication, trade sequence planning.</li>
@@ -238,9 +238,9 @@ const Module5Section5_3 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Recognise the roles and responsibilities of common building trades.</li>
             <li>Understand the importance of trade sequencing in construction projects.</li>
             <li>Apply effective communication techniques for multi-trade coordination.</li>
@@ -310,10 +310,10 @@ const Module5Section5_3 = () => {
                 <div>
                   <h4 className="font-semibold mb-3">Construction Phase Breakdown:</h4>
                   <div className="space-y-3">
-                    <div className="border-l-4 border-emerald-500 pl-4">
+                    <div className="border-l-4 border-elec-yellow pl-4">
                       <p><strong>First Fix Phase:</strong> Structural work complete, basic services installation, cable containment routes established. This is when electrical framework and rough-in work occurs.</p>
                     </div>
-                    <div className="border-l-4 border-emerald-500 pl-4">
+                    <div className="border-l-4 border-elec-yellow pl-4">
                       <p><strong>Coordination Phase:</strong> Multiple trades working simultaneously - the most critical coordination period. Requires constant communication and schedule awareness.</p>
                     </div>
                     <div className="border-l-4 border-green-500 pl-4">
@@ -326,8 +326,8 @@ const Module5Section5_3 = () => {
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-gray-50 dark:bg-background/30 p-4 rounded-lg">
-                    <h4 className="font-semibold mb-3 text-blue-700 dark:text-emerald-400">Typical Sequence:</h4>
+                  <div className="bg-gray-50 dark:bg-[#121212]/30 p-4 rounded-lg">
+                    <h4 className="font-semibold mb-3 text-blue-700 dark:text-elec-yellow">Typical Sequence:</h4>
                     <ol className="space-y-2 text-sm list-decimal pl-6">
                       <li><strong>Week 1-2:</strong> Structural/building fabric completion</li>
                       <li><strong>Week 3-4:</strong> Electrical first fix (cables, conduits, boxes)</li>
@@ -339,8 +339,8 @@ const Module5Section5_3 = () => {
                       <li><strong>Week 11:</strong> Final commissioning and handover</li>
                     </ol>
                   </div>
-                  <div className="bg-gray-50 dark:bg-background/30 p-4 rounded-lg">
-                    <h4 className="font-semibold mb-3 text-red-700 dark:text-emerald-400">Critical Coordination Points:</h4>
+                  <div className="bg-gray-50 dark:bg-[#121212]/30 p-4 rounded-lg">
+                    <h4 className="font-semibold mb-3 text-red-700 dark:text-elec-yellow">Critical Coordination Points:</h4>
                     <ul className="space-y-2 text-sm">
                       <li><strong>Cable route planning:</strong> Avoid HVAC ducts and plumbing runs</li>
                       <li><strong>Ceiling void access:</strong> Coordinate with other services installation</li>
@@ -575,7 +575,7 @@ const Module5Section5_3 = () => {
               {faqs.map((faq, index) => (
                 <div key={index}>
                   <p className="font-semibold">Q: {faq.question}</p>
-                  <p className="text-muted-foreground">A: {faq.answer}</p>
+                  <p className="text-white">A: {faq.answer}</p>
                 </div>
               ))}
             </div>

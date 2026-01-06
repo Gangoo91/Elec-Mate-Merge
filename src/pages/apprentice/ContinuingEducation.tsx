@@ -1,5 +1,5 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { BookOpen, Monitor, Users, Calendar, Globe, Lightbulb, Building, Award, Zap, Shield } from "lucide-react";
@@ -216,7 +216,7 @@ const ContinuingEducation = () => {
           Stay at the forefront of the electrical industry through ongoing education and professional development. 
           Meet CPD requirements whilst building expertise that advances your career and increases earning potential.
         </p>
-        <BackButton customUrl="/apprentice/professional-development" label="Back to Professional Development" />
+        <SmartBackButton />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

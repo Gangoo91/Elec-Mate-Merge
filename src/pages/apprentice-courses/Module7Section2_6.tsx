@@ -136,10 +136,10 @@ const Module7Section2_6 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+    <div className="min-h-screen bg-[#121212]">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               <span className="hidden sm:inline">Back to Section 2</span>
@@ -151,27 +151,27 @@ const Module7Section2_6 = () => {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
         <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row sm:items-start gap-3">
-          <div className="p-2 rounded-lg bg-card self-start">
-            <Search className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
+          <div className="p-2 rounded-lg self-start">
+            <Search className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </div>
           <div className="flex-1">
-            <Badge variant="outline" className="mb-2 border-emerald-500/30 text-emerald-400 text-xs sm:text-sm">
+            <Badge variant="outline" className="mb-2 border-elec-yellow/30 text-elec-yellow text-xs sm:text-sm">
               Section 7.2.6
             </Badge>
-            <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+            <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
               2.6 Loose or Poor Connections
             </h1>
-            <p className="text-sm sm:text-base text-muted-foreground">
+            <p className="text-sm sm:text-base text-white">
               Detecting, correcting and preventing loose or poor electrical connections
             </p>
           </div>
         </div>
 
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-            <div className="grid gap-4 sm:gap-6 md:grid-cols-2 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+            <div className="grid gap-4 sm:gap-6 md:grid-cols-2 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
                 <ul className="list-disc pl-4 space-y-1 sm:space-y-2">
                   <li><strong>Loose or poor connections</strong> are common faults in electrical installations</li>
                   <li>Create resistance which generates heat when current flows</li>
@@ -181,8 +181,8 @@ const Module7Section2_6 = () => {
                 </ul>
               </div>
               
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/30">
-                <h3 className="font-medium text-foreground mb-2">Spot / Use / Check</h3>
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
+                <h3 className="font-medium text-white mb-2">Spot / Use / Check</h3>
                 <ul className="list-disc pl-4 space-y-1">
                   <li><strong>Spot:</strong> Discolouration, burning smell, warm outlets, intermittent operation</li>
                   <li><strong>Use:</strong> Torque screwdriver, thermal imaging camera, clamp meter</li>
@@ -193,10 +193,10 @@ const Module7Section2_6 = () => {
           </CardContent>
         </Card>
 
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
               <li>Define what loose or poor connections are in electrical circuits</li>
               <li>Identify the main causes of loose or poor connections</li>
               <li>Explain the dangers they create for people and property</li>
@@ -205,27 +205,27 @@ const Module7Section2_6 = () => {
           </CardContent>
         </Card>
 
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-6">Content</h2>
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">Content</h2>
             
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-3">What Are Loose or Poor Connections?</p>
-                    <p className="text-xs sm:text-sm text-foreground mb-3">
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">What Are Loose or Poor Connections?</p>
+                    <p className="text-xs sm:text-sm text-white mb-3">
                       A loose connection occurs when a conductor is not securely fastened within a terminal, or the contact surface is not clean and tight enough to carry current effectively. Poor connections can also result from incorrect termination, such as too much insulation stripped away, or multiple conductors crammed into a terminal not designed for them.
                     </p>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Types of poor connections:</strong></p>
-                    <ul className="text-xs text-foreground ml-4 mb-3 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Types of poor connections:</strong></p>
+                    <ul className="text-xs text-white ml-4 mb-3 list-disc space-y-1">
                       <li>Loose terminal screws allowing conductor movement</li>
                       <li>Oxidised or corroded contact surfaces</li>
                       <li>Oversized conductors forced into undersized terminals</li>
                       <li>Insufficient conductor insertion depth</li>
                     </ul>
-                    <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Physics principle:</strong> Poor connections create high resistance. Using Ohm's Law (P = I²R), even small increases in resistance cause significant heat generation
                     </div>
                   </div>
@@ -245,30 +245,30 @@ const Module7Section2_6 = () => {
                 explanation="A loose connection occurs when a conductor is not securely fastened within a terminal, creating poor electrical contact."
               />
 
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
                     <p className="font-semibold text-green-600 dark:text-green-400 mb-3">Causes of Loose or Poor Connections</p>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Installation factors:</strong></p>
-                    <ul className="text-xs text-foreground ml-4 mb-3 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Installation factors:</strong></p>
+                    <ul className="text-xs text-white ml-4 mb-3 list-disc space-y-1">
                       <li>Poor workmanship and inadequate torque settings</li>
                       <li>Using incorrect tools or techniques</li>
                       <li>Rushed installation schedules</li>
                       <li>Inadequate quality control procedures</li>
                     </ul>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Environmental factors:</strong></p>
-                    <ul className="text-xs text-foreground ml-4 mb-3 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Environmental factors:</strong></p>
+                    <ul className="text-xs text-white ml-4 mb-3 list-disc space-y-1">
                       <li>Vibration in industrial or transport settings</li>
                       <li>Thermal cycling from load changes</li>
                       <li>Corrosion in humid environments</li>
                       <li>Mechanical stress over time</li>
                     </ul>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Progressive deterioration cycle:</strong></p>
-                    <p className="text-xs text-foreground ml-4 mb-3">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Progressive deterioration cycle:</strong></p>
+                    <p className="text-xs text-white ml-4 mb-3">
                       Loose connections create a cycle: increased resistance → heat generation → thermal expansion → further loosening → more resistance. This process accelerates over time.
                     </p>
-                    <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Manufacturer specifications:</strong> Always follow torque settings - typically 1.0-1.2 Nm for 2.5mm² terminals, 1.2-1.5 Nm for 4mm² terminals
                     </div>
                   </div>
@@ -288,29 +288,29 @@ const Module7Section2_6 = () => {
                 explanation="Thermal cycling (heating and cooling) and vibration are common reasons why connections become loose over time."
               />
 
-              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-emerald-400 mb-3">Dangers and Consequences</p>
-                    <p className="text-xs sm:text-sm text-foreground mb-3">
+                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3">Dangers and Consequences</p>
+                    <p className="text-xs sm:text-sm text-white mb-3">
                       Loose connections cause resistance, which generates heat according to I²R losses. The consequences escalate progressively:
                     </p>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Immediate risks:</strong></p>
-                    <ul className="text-xs text-foreground ml-4 mb-3 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Immediate risks:</strong></p>
+                    <ul className="text-xs text-white ml-4 mb-3 list-disc space-y-1">
                       <li>Overheating of terminals and accessories</li>
                       <li>Voltage drops affecting equipment performance</li>
                       <li>Increased energy consumption and costs</li>
                       <li>Intermittent operation causing disruption</li>
                     </ul>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Progressive damage:</strong></p>
-                    <ul className="text-xs text-foreground ml-4 mb-3 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Progressive damage:</strong></p>
+                    <ul className="text-xs text-white ml-4 mb-3 list-disc space-y-1">
                       <li>Arcing causing carbonisation</li>
                       <li>Insulation degradation from heat</li>
                       <li>Terminal damage requiring replacement</li>
                       <li>Fire ignition of surrounding materials</li>
                     </ul>
-                    <div className="text-xs text-foreground bg-red-50 dark:bg-red-900/20 p-2 rounded border border-red-200 dark:border-red-800">
+                    <div className="text-xs text-white bg-red-50 dark:bg-red-900/20 p-2 rounded border border-red-200 dark:border-red-800">
                       <strong>Critical safety point:</strong> Loose connections can cause fires without tripping protective devices because increased resistance may not create enough excess current to operate overcurrent protection
                     </div>
                   </div>
@@ -330,36 +330,36 @@ const Module7Section2_6 = () => {
                 explanation="Loose connections create resistance that generates heat and arcing, which can cause fires without drawing enough current to trip protective devices."
               />
 
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-3">Detection, Correction, and Prevention</p>
-                    <p className="text-xs sm:text-sm text-foreground mb-3">
+                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">Detection, Correction, and Prevention</p>
+                    <p className="text-xs sm:text-sm text-white mb-3">
                       Early detection and proper correction techniques are essential for preventing serious consequences:
                     </p>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Detection methods:</strong></p>
-                    <ul className="text-xs text-foreground ml-4 mb-3 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Detection methods:</strong></p>
+                    <ul className="text-xs text-white ml-4 mb-3 list-disc space-y-1">
                       <li>Visual inspection for discolouration, heat damage, or melted insulation</li>
                       <li>Thermal imaging cameras to identify hot spots</li>
                       <li>High resistance readings in continuity or Zs tests</li>
                       <li>Unusual odours, sounds, or warm components</li>
                     </ul>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Correction process:</strong></p>
-                    <ul className="text-xs text-foreground ml-4 mb-3 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Correction process:</strong></p>
+                    <ul className="text-xs text-white ml-4 mb-3 list-disc space-y-1">
                       <li>Safe isolation of the affected circuit</li>
                       <li>Clean contact surfaces of oxidation or corrosion</li>
                       <li>Re-terminate conductor with correct torque</li>
                       <li>Test and verify repair effectiveness</li>
                     </ul>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Prevention strategy:</strong></p>
-                    <ul className="text-xs text-foreground ml-4 mb-3 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Prevention strategy:</strong></p>
+                    <ul className="text-xs text-white ml-4 mb-3 list-disc space-y-1">
                       <li>Use calibrated torque tools and follow specifications</li>
                       <li>Implement regular inspection schedules</li>
                       <li>Maintain quality installation procedures</li>
                       <li>Ensure proper training and supervision</li>
                     </ul>
-                    <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Professional best practice:</strong> Always retest after correction and document findings. High resistance readings often indicate connection problems before visual signs appear
                     </div>
                   </div>
@@ -383,10 +383,10 @@ const Module7Section2_6 = () => {
         </Card>
 
         {/* Practical Guidance Section */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Practical Guidance</h2>
-            <div className="space-y-3 text-xs sm:text-sm text-foreground">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
+            <div className="space-y-3 text-xs sm:text-sm text-white">
               <ul className="list-disc pl-6 space-y-2">
                 <li>Always check every connection during installation, not just assume it is secure</li>
                 <li>Use the correct screwdriver and torque settings recommended by manufacturers</li>
@@ -398,11 +398,11 @@ const Module7Section2_6 = () => {
         </Card>
 
         {/* Real-World Example Section */}
-        <Card className="mb-6 sm:mb-8 p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Real-World Example</h2>
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Real-World Example</h2>
             
-            <div className="rounded-lg p-5 border-l-4 border-l-amber-500 bg-card">
+            <div className="rounded-lg p-5 border-l-4 border-l-amber-500 ">
               <div className="flex items-start gap-3 mb-4">
                 <div className="w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center flex-shrink-0">
                   <span className="text-white text-sm font-bold">🔥</span>
@@ -410,14 +410,14 @@ const Module7Section2_6 = () => {
                 <div className="flex-1">
                   <p className="font-semibold text-amber-600 dark:text-amber-400 mb-3">Near-Miss Fire Incident: Retail Shop Case Study</p>
                   
-                  <p className="text-xs sm:text-sm text-foreground mb-4">
+                  <p className="text-xs sm:text-sm text-white mb-4">
                     In a busy retail clothing shop, staff noticed a burning smell during peak Saturday trading. Investigation revealed a loose neutral conductor in a socket terminal that had overheated, melting the faceplate and scorching the wall behind.
                   </p>
                   
                   <div className="space-y-3">
                     <div>
-                      <p className="text-sm font-medium text-foreground mb-1">Timeline of events:</p>
-                      <ul className="text-xs text-muted-foreground ml-4 list-disc space-y-1">
+                      <p className="text-sm font-medium text-white mb-1">Timeline of events:</p>
+                      <ul className="text-xs text-white ml-4 list-disc space-y-1">
                         <li>Burning smell noticed over 2-3 hours</li>
                         <li>Socket outlet becoming warm to touch</li>
                         <li>Till equipment operating intermittently</li>
@@ -426,8 +426,8 @@ const Module7Section2_6 = () => {
                     </div>
                     
                     <div>
-                      <p className="text-sm font-medium text-foreground mb-1">Investigation findings:</p>
-                      <ul className="text-xs text-muted-foreground ml-4 list-disc space-y-1">
+                      <p className="text-sm font-medium text-white mb-1">Investigation findings:</p>
+                      <ul className="text-xs text-white ml-4 list-disc space-y-1">
                         <li>Terminal screw only finger-tight</li>
                         <li>Severe carbonisation around terminal</li>
                         <li>Socket faceplate partially melted</li>
@@ -436,15 +436,15 @@ const Module7Section2_6 = () => {
                     </div>
                     
                     <div>
-                      <p className="text-sm font-medium text-foreground mb-1">Root cause:</p>
-                      <p className="text-xs text-muted-foreground ml-4">
+                      <p className="text-sm font-medium text-white mb-1">Root cause:</p>
+                      <p className="text-xs text-white ml-4">
                         Poor termination during original installation, worsened by thermal cycling from high-current till equipment, with no routine maintenance programme in place.
                       </p>
                     </div>
                   </div>
                   
                   <div className="mt-4 p-3 rounded-lg bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800">
-                    <p className="font-medium text-emerald-700 dark:text-emerald-400 text-sm">
+                    <p className="font-medium text-emerald-700 dark:text-elec-yellow text-sm">
                       ✅ Lesson: Without quick response, this could have ignited the wall cavity, potentially causing a major fire in a crowded shopping centre. Quality installation and routine maintenance are essential fire prevention measures.
                     </p>
                   </div>
@@ -455,88 +455,88 @@ const Module7Section2_6 = () => {
         </Card>
 
         {/* FAQs Section */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">FAQs</h2>
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
             <div className="space-y-4 text-sm">
               <div>
-                <h3 className="font-medium text-foreground mb-2">Q: Do loose connections always cause immediate faults?</h3>
-                <p className="text-muted-foreground">A: No, they often develop slowly and may only show symptoms after prolonged use.</p>
+                <h3 className="font-medium text-white mb-2">Q: Do loose connections always cause immediate faults?</h3>
+                <p className="text-white">A: No, they often develop slowly and may only show symptoms after prolonged use.</p>
               </div>
               <Separator />
               <div>
-                <h3 className="font-medium text-foreground mb-2">Q: Can vibration cause connections to loosen?</h3>
-                <p className="text-muted-foreground">A: Yes, particularly in industrial, commercial, or transport applications.</p>
+                <h3 className="font-medium text-white mb-2">Q: Can vibration cause connections to loosen?</h3>
+                <p className="text-white">A: Yes, particularly in industrial, commercial, or transport applications.</p>
               </div>
               <Separator />
               <div>
-                <h3 className="font-medium text-foreground mb-2">Q: How can electricians prevent loose connections?</h3>
-                <p className="text-muted-foreground">A: By using correct torque settings, good workmanship, and thorough inspection/testing.</p>
+                <h3 className="font-medium text-white mb-2">Q: How can electricians prevent loose connections?</h3>
+                <p className="text-white">A: By using correct torque settings, good workmanship, and thorough inspection/testing.</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Enhanced Summary Section */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-background/80 border-border/20 backdrop-blur-sm">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-[#121212]/80 border-white/10 backdrop-blur-sm">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-6">Professional Knowledge Summary</h2>
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">Professional Knowledge Summary</h2>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-4 border-l-4 border-l-emerald-500 bg-card border border-emerald-400/20">
+              <div className="rounded-lg p-4 border-l-4 border-l-elec-yellow border border-emerald-400/20">
                 <div className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-2">Definition & Physics:</p>
-                    <p className="text-xs sm:text-sm text-foreground">
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2">Definition & Physics:</p>
+                    <p className="text-xs sm:text-sm text-white">
                       Conductors not securely fastened create high resistance. Using P = I²R, even small resistance increases cause significant heat generation.
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="rounded-lg p-4 border-l-4 border-l-red-500 bg-card border border-red-400/20">
+              <div className="rounded-lg p-4 border-l-4 border-l-red-500 border border-red-400/20">
                 <div className="flex items-start gap-3">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-2">Hidden Danger:</p>
-                    <p className="text-xs sm:text-sm text-foreground">
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-2">Hidden Danger:</p>
+                    <p className="text-xs sm:text-sm text-white">
                       Can cause fires without tripping protective devices. Heat generation occurs without excess current draw.
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="rounded-lg p-4 border-l-4 border-l-orange-500 bg-card border border-orange-400/20">
+              <div className="rounded-lg p-4 border-l-4 border-l-orange-500 border border-orange-400/20">
                 <div className="flex items-start gap-3">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-emerald-400 mb-2">Progressive Nature:</p>
-                    <p className="text-xs sm:text-sm text-foreground">
+                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-2">Progressive Nature:</p>
+                    <p className="text-xs sm:text-sm text-white">
                       Creates deterioration cycle: poor connection → resistance → heat → expansion → worse connection → more heat.
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="rounded-lg p-4 border-l-4 border-l-green-500 bg-card border border-green-400/20">
+              <div className="rounded-lg p-4 border-l-4 border-l-green-500 border border-green-400/20">
                 <div className="flex items-start gap-3">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
                     <p className="font-semibold text-green-600 dark:text-green-400 mb-2">Detection Methods:</p>
-                    <p className="text-xs sm:text-sm text-foreground">
+                    <p className="text-xs sm:text-sm text-white">
                       Visual inspection, thermal imaging, high resistance in tests, burning odours, and warm components.
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="rounded-lg p-4 border-l-4 border-l-purple-500 bg-card border border-purple-400/20">
+              <div className="rounded-lg p-4 border-l-4 border-l-purple-500 border border-purple-400/20">
                 <div className="flex items-start gap-3">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-2">Common Causes:</p>
-                    <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-2">Common Causes:</p>
+                    <ul className="text-xs sm:text-sm text-white space-y-1">
                       <li>• Poor workmanship</li>
                       <li>• Incorrect torque settings</li>
                       <li>• Vibration and thermal cycling</li>
@@ -545,12 +545,12 @@ const Module7Section2_6 = () => {
                 </div>
               </div>
 
-              <div className="rounded-lg p-4 border-l-4 border-l-emerald-500 bg-emerald-500/10 border border-emerald-400/20">
+              <div className="rounded-lg p-4 border-l-4 border-l-elec-yellow bg-elec-yellow/10 border border-emerald-400/20">
                 <div className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">6</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">6</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-2">Prevention:</p>
-                    <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2">Prevention:</p>
+                    <ul className="text-xs sm:text-sm text-white space-y-1">
                       <li>• Calibrated torque tools</li>
                       <li>• Regular maintenance</li>
                       <li>• Quality control procedures</li>
@@ -564,7 +564,7 @@ const Module7Section2_6 = () => {
                   <span className="flex-shrink-0 w-8 h-8 bg-indigo-500 text-white rounded-full flex items-center justify-center text-sm font-bold">7</span>
                   <div className="flex-1">
                     <p className="font-semibold text-indigo-600 dark:text-indigo-400 mb-2">Correction:</p>
-                    <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                    <ul className="text-xs sm:text-sm text-white space-y-1">
                       <li>• Safe isolation</li>
                       <li>• Clean and re-terminate</li>
                       <li>• Test and document</li>
@@ -577,8 +577,8 @@ const Module7Section2_6 = () => {
                 <div className="flex items-start gap-3">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-sm font-bold">!</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-2">Critical Professional Insight:</p>
-                    <p className="text-xs sm:text-sm text-foreground">
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-2">Critical Professional Insight:</p>
+                    <p className="text-xs sm:text-sm text-white">
                       Loose connections are a leading cause of electrical fires, often developing slowly over years without obvious symptoms. The physics is unforgiving: poor connections create resistance, resistance creates heat, and heat causes damage that can ignite surrounding materials. Quality installation and regular maintenance are the only defences against this progressive threat to life and property.
                     </p>
                   </div>

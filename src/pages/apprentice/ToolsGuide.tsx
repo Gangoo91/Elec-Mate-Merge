@@ -1,8 +1,8 @@
 
-import { Button } from "@/components/ui/button";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Wrench, CheckCircle, Store, AlertTriangle } from "lucide-react";
+import { Wrench, CheckCircle, Store, AlertTriangle } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -20,16 +20,7 @@ const ToolsGuide = () => {
         {/* Header */}
         <div className="space-y-4">
           <div className="flex justify-start">
-            <Link to="/apprentice/toolbox">
-              <Button 
-                variant="outline" 
-                size={isMobile ? "sm" : "default"} 
-                className="bg-elec-gray/50 border-elec-yellow/30 hover:bg-elec-yellow/10 text-white"
-              >
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                {isMobile ? "Back to Toolbox" : "Back to Toolbox"}
-              </Button>
-            </Link>
+            <SmartBackButton />
           </div>
           
           <div className="text-center space-y-3 px-2">

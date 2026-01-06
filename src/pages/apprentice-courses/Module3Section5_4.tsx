@@ -156,13 +156,13 @@ export default function Module3Section5_4() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -177,30 +177,30 @@ export default function Module3Section5_4() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Shield className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Shield className="w-6 h-6 text-white" />
             </div>
             <Badge
               variant="outline"
-              className="border-emerald-500/30 text-emerald-400"
+              className="border-elec-yellow/30 text-elec-yellow"
             >
               Section 3.5.4
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Material Selection for Corrosive and Damp Environments
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Practical selection and installation guidance for damp, coastal and chemically aggressive locations with references to BS 7671 external influences and good practice.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Moisture and chemicals rapidly degrade unsuitable materials.</li>
                 <li>Material choice, IP rating and installation details are critical.</li>
@@ -208,8 +208,8 @@ export default function Module3Section5_4() {
                 <li>Assess external influences as required by BS 7671.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Salt air, condensation, chemical washdowns, existing corrosion.</li>
                 <li><strong>Use:</strong> 316 stainless, GRP/polycarbonate, LSZH cables, IP66+ enclosures.</li>
@@ -220,9 +220,9 @@ export default function Module3Section5_4() {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Identify common corrosive and damp environments and their risks.</li>
             <li>Select compliant materials for the environment and duty.</li>
             <li>Apply installation details to prevent water/chemical ingress.</li>
@@ -231,55 +231,55 @@ export default function Module3Section5_4() {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* 1. Environmental Influences and Assessment */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Droplets className="w-5 h-5" /> 1. Environmental Influences and Assessment (BS 7671)
             </h3>
             
             <div className="mb-6">
-              <h4 className="font-medium text-foreground mb-3">BS 7671 External Influences Classification</h4>
-              <div className="p-4 bg-card border border-border/30 rounded-lg mb-4">
-                <p className="text-xs sm:text-sm text-foreground mb-3">
+              <h4 className="font-medium text-white mb-3">BS 7671 External Influences Classification</h4>
+              <div className="p-4 bg-transparent border border-border/30 rounded-lg mb-4">
+                <p className="text-xs sm:text-sm text-white mb-3">
                   <strong>BS 7671 Section 512:</strong> External influences must be assessed during design. Each location receives codes for Environmental (A), Utilisation (B), and Construction (C) conditions that determine equipment selection.
                 </p>
                 <div className="overflow-x-auto">
-                  <table className="w-full border-collapse border border-border/20 text-sm">
+                  <table className="w-full border-collapse border border-white/10 text-sm">
                     <thead>
-                      <tr className="bg-card">
-                        <th className="border border-border/20 p-3 text-left">Influence Type</th>
-                        <th className="border border-border/20 p-3 text-left">Code</th>
-                        <th className="border border-border/20 p-3 text-left">Description</th>
-                        <th className="border border-border/20 p-3 text-left">Equipment Requirements</th>
+                      <tr className="">
+                        <th className="border border-white/10 p-3 text-left">Influence Type</th>
+                        <th className="border border-white/10 p-3 text-left">Code</th>
+                        <th className="border border-white/10 p-3 text-left">Description</th>
+                        <th className="border border-white/10 p-3 text-left">Equipment Requirements</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="border border-border/20 p-3">Ambient Temperature</td>
-                        <td className="border border-border/20 p-3">AA1-AA8</td>
-                        <td className="border border-border/20 p-3">-60°C to +180°C ranges</td>
-                        <td className="border border-border/20 p-3">Temperature-rated components</td>
+                        <td className="border border-white/10 p-3">Ambient Temperature</td>
+                        <td className="border border-white/10 p-3">AA1-AA8</td>
+                        <td className="border border-white/10 p-3">-60°C to +180°C ranges</td>
+                        <td className="border border-white/10 p-3">Temperature-rated components</td>
                       </tr>
                       <tr className="bg-muted/5">
-                        <td className="border border-border/20 p-3">Water/Moisture</td>
-                        <td className="border border-border/20 p-3">AD1-AD8</td>
-                        <td className="border border-border/20 p-3">Negligible to continuous immersion</td>
-                        <td className="border border-border/20 p-3">IP rating selection</td>
+                        <td className="border border-white/10 p-3">Water/Moisture</td>
+                        <td className="border border-white/10 p-3">AD1-AD8</td>
+                        <td className="border border-white/10 p-3">Negligible to continuous immersion</td>
+                        <td className="border border-white/10 p-3">IP rating selection</td>
                       </tr>
                       <tr>
-                        <td className="border border-border/20 p-3">Corrosive/Pollutants</td>
-                        <td className="border border-border/20 p-3">AF1-AF4</td>
-                        <td className="border border-border/20 p-3">Negligible to high significance</td>
-                        <td className="border border-border/20 p-3">Material compatibility</td>
+                        <td className="border border-white/10 p-3">Corrosive/Pollutants</td>
+                        <td className="border border-white/10 p-3">AF1-AF4</td>
+                        <td className="border border-white/10 p-3">Negligible to high significance</td>
+                        <td className="border border-white/10 p-3">Material compatibility</td>
                       </tr>
                       <tr className="bg-muted/5">
-                        <td className="border border-border/20 p-3">Mechanical Impact</td>
-                        <td className="border border-border/20 p-3">AG1-AG3</td>
-                        <td className="border border-border/20 p-3">Low to high severity</td>
-                        <td className="border border-border/20 p-3">IK rating required</td>
+                        <td className="border border-white/10 p-3">Mechanical Impact</td>
+                        <td className="border border-white/10 p-3">AG1-AG3</td>
+                        <td className="border border-white/10 p-3">Low to high severity</td>
+                        <td className="border border-white/10 p-3">IK rating required</td>
                       </tr>
                     </tbody>
                   </table>
@@ -287,11 +287,11 @@ export default function Module3Section5_4() {
               </div>
 
               <div className="space-y-4">
-                <div className="p-4 bg-card border border-border/30 rounded-lg">
-                  <h5 className="font-medium text-emerald-400 mb-3">Swimming Pool Plant Rooms - Detailed Assessment</h5>
+                <div className="p-4 bg-transparent border border-border/30 rounded-lg">
+                  <h5 className="font-medium text-elec-yellow mb-3">Swimming Pool Plant Rooms - Detailed Assessment</h5>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">Environmental Conditions</h6>
+                      <h6 className="font-medium text-white mb-2">Environmental Conditions</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• <strong>Temperature:</strong> 25-35°C typical operating range</li>
                         <li>• <strong>Humidity:</strong> Often exceeds 90% relative humidity</li>
@@ -301,7 +301,7 @@ export default function Module3Section5_4() {
                       </ul>
                     </div>
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">Material Degradation Effects</h6>
+                      <h6 className="font-medium text-white mb-2">Material Degradation Effects</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• <strong>Steel corrosion:</strong> Rapid rust and pitting in 6-12 months</li>
                         <li>• <strong>Copper oxidation:</strong> Green patina formation, connection loosening</li>
@@ -312,17 +312,17 @@ export default function Module3Section5_4() {
                     </div>
                   </div>
                   <div className="mt-4 p-3 bg-white/5 rounded-lg">
-                    <p className="text-xs sm:text-sm text-foreground">
+                    <p className="text-xs sm:text-sm text-white">
                       <strong>BS 7671 Classification:</strong> Typical swimming pool plant room would be coded as AA5 (high temperature), AD4 (water splashing), AF3 (chemically active substances present).
                     </p>
                   </div>
                 </div>
 
-                <div className="p-4 bg-card border border-amber-400/30 rounded-lg">
+                <div className="p-4 bg-transparent border border-amber-400/30 rounded-lg">
                   <h5 className="font-medium text-amber-400 mb-3">Food Processing - Hygiene and Chemical Challenges</h5>
                   <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">Cleaning Regime</h6>
+                      <h6 className="font-medium text-white mb-2">Cleaning Regime</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• <strong>Frequency:</strong> Multiple times per shift</li>
                         <li>• <strong>Pressure:</strong> 40-80 bar water jets typical</li>
@@ -331,7 +331,7 @@ export default function Module3Section5_4() {
                       </ul>
                     </div>
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">Design Requirements</h6>
+                      <h6 className="font-medium text-white mb-2">Design Requirements</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• <strong>Surfaces:</strong> Smooth, non-porous, sloped to drain</li>
                         <li>• <strong>Accessibility:</strong> All areas must be cleanable</li>
@@ -340,7 +340,7 @@ export default function Module3Section5_4() {
                       </ul>
                     </div>
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">Common Failures</h6>
+                      <h6 className="font-medium text-white mb-2">Common Failures</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• <strong>Seal degradation:</strong> Chemical attack on gaskets</li>
                         <li>• <strong>Crevice corrosion:</strong> In joints and fixings</li>
@@ -351,11 +351,11 @@ export default function Module3Section5_4() {
                   </div>
                 </div>
 
-                <div className="p-4 bg-card border border-cyan-400/30 rounded-lg">
+                <div className="p-4 bg-transparent border border-cyan-400/30 rounded-lg">
                   <h5 className="font-medium text-cyan-400 mb-3">Coastal and Marine Environments</h5>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">Corrosion Mechanisms</h6>
+                      <h6 className="font-medium text-white mb-2">Corrosion Mechanisms</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• <strong>Pitting corrosion:</strong> Chloride attack on passive layers</li>
                         <li>• <strong>Galvanic action:</strong> Electrolyte (salt water) accelerates</li>
@@ -365,7 +365,7 @@ export default function Module3Section5_4() {
                       </ul>
                     </div>
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">Distance-Based Risk Assessment</h6>
+                      <h6 className="font-medium text-white mb-2">Distance-Based Risk Assessment</h6>
                       <div className="space-y-2">
                         <div className="p-2 bg-white/5 rounded text-sm">
                           <strong>0-200m from sea:</strong> Severe - Direct salt spray exposure
@@ -386,11 +386,11 @@ export default function Module3Section5_4() {
               </div>
             </div>
 
-            <div className="p-4 bg-card border border-green-400/30 rounded-lg">
+            <div className="p-4 bg-transparent border border-green-400/30 rounded-lg">
               <h4 className="font-medium text-green-400 mb-3">Practical Assessment Checklist</h4>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <h6 className="font-medium text-foreground mb-2">Site Survey Questions</h6>
+                  <h6 className="font-medium text-white mb-2">Site Survey Questions</h6>
                   <ul className="space-y-1 text-sm">
                     <li>• What chemicals are used, stored, or produced on site?</li>
                     <li>• What cleaning procedures will occur around electrical equipment?</li>
@@ -401,7 +401,7 @@ export default function Module3Section5_4() {
                   </ul>
                 </div>
                 <div>
-                  <h6 className="font-medium text-foreground mb-2">Documentation Requirements</h6>
+                  <h6 className="font-medium text-white mb-2">Documentation Requirements</h6>
                   <ul className="space-y-1 text-sm">
                     <li>• Record external influence codes for each location</li>
                     <li>• Specify minimum IP ratings and material grades</li>
@@ -420,53 +420,53 @@ export default function Module3Section5_4() {
 
           {/* 2. Material Selection */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Wrench className="w-5 h-5" /> 2. Material Selection and Compatibility
             </h3>
 
             <div className="mb-6">
-              <h4 className="font-medium text-foreground mb-3">Metallic Materials - Properties and Applications</h4>
-              <div className="p-4 bg-card border border-green-400/30 rounded-lg mb-4">
+              <h4 className="font-medium text-white mb-3">Metallic Materials - Properties and Applications</h4>
+              <div className="p-4 bg-transparent border border-green-400/30 rounded-lg mb-4">
                 <h5 className="font-medium text-green-400 mb-3">Stainless Steel Grades and Selection</h5>
                 <div className="overflow-x-auto">
-                  <table className="w-full border-collapse border border-border/20 text-sm">
+                  <table className="w-full border-collapse border border-white/10 text-sm">
                     <thead>
-                      <tr className="bg-card">
-                        <th className="border border-border/20 p-3 text-left">Grade</th>
-                        <th className="border border-border/20 p-3 text-left">Composition</th>
-                        <th className="border border-border/20 p-3 text-left">Corrosion Resistance</th>
-                        <th className="border border-border/20 p-3 text-left">Typical Use</th>
-                        <th className="border border-border/20 p-3 text-left">Cost</th>
+                      <tr className="">
+                        <th className="border border-white/10 p-3 text-left">Grade</th>
+                        <th className="border border-white/10 p-3 text-left">Composition</th>
+                        <th className="border border-white/10 p-3 text-left">Corrosion Resistance</th>
+                        <th className="border border-white/10 p-3 text-left">Typical Use</th>
+                        <th className="border border-white/10 p-3 text-left">Cost</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="border border-border/20 p-3"><strong>304</strong></td>
-                        <td className="border border-border/20 p-3">18% Cr, 8% Ni</td>
-                        <td className="border border-border/20 p-3">Good general purpose</td>
-                        <td className="border border-border/20 p-3">Indoor, mild environments</td>
-                        <td className="border border-border/20 p-3">Standard</td>
+                        <td className="border border-white/10 p-3"><strong>304</strong></td>
+                        <td className="border border-white/10 p-3">18% Cr, 8% Ni</td>
+                        <td className="border border-white/10 p-3">Good general purpose</td>
+                        <td className="border border-white/10 p-3">Indoor, mild environments</td>
+                        <td className="border border-white/10 p-3">Standard</td>
                       </tr>
                       <tr className="bg-muted/5">
-                        <td className="border border-border/20 p-3"><strong>316</strong></td>
-                        <td className="border border-border/20 p-3">18% Cr, 10% Ni, 2% Mo</td>
-                        <td className="border border-border/20 p-3">Excellent marine/chemical</td>
-                        <td className="border border-border/20 p-3">Coastal, pool plant rooms</td>
-                        <td className="border border-border/20 p-3">+15-25%</td>
+                        <td className="border border-white/10 p-3"><strong>316</strong></td>
+                        <td className="border border-white/10 p-3">18% Cr, 10% Ni, 2% Mo</td>
+                        <td className="border border-white/10 p-3">Excellent marine/chemical</td>
+                        <td className="border border-white/10 p-3">Coastal, pool plant rooms</td>
+                        <td className="border border-white/10 p-3">+15-25%</td>
                       </tr>
                       <tr>
-                        <td className="border border-border/20 p-3"><strong>316L</strong></td>
-                        <td className="border border-border/20 p-3">Low carbon 316</td>
-                        <td className="border border-border/20 p-3">Superior weld zones</td>
-                        <td className="border border-border/20 p-3">Fabricated enclosures</td>
-                        <td className="border border-border/20 p-3">+20-30%</td>
+                        <td className="border border-white/10 p-3"><strong>316L</strong></td>
+                        <td className="border border-white/10 p-3">Low carbon 316</td>
+                        <td className="border border-white/10 p-3">Superior weld zones</td>
+                        <td className="border border-white/10 p-3">Fabricated enclosures</td>
+                        <td className="border border-white/10 p-3">+20-30%</td>
                       </tr>
                       <tr className="bg-muted/5">
-                        <td className="border border-border/20 p-3"><strong>2205</strong></td>
-                        <td className="border border-border/20 p-3">Duplex grade</td>
-                        <td className="border border-border/20 p-3">Maximum chloride resistance</td>
-                        <td className="border border-border/20 p-3">Severe marine, desalination</td>
-                        <td className="border border-border/20 p-3">+40-60%</td>
+                        <td className="border border-white/10 p-3"><strong>2205</strong></td>
+                        <td className="border border-white/10 p-3">Duplex grade</td>
+                        <td className="border border-white/10 p-3">Maximum chloride resistance</td>
+                        <td className="border border-white/10 p-3">Severe marine, desalination</td>
+                        <td className="border border-white/10 p-3">+40-60%</td>
                       </tr>
                     </tbody>
                   </table>
@@ -474,7 +474,7 @@ export default function Module3Section5_4() {
 
                 <div className="mt-4 grid md:grid-cols-2 gap-4">
                   <div className="p-3 bg-white/5 rounded-lg">
-                    <h6 className="font-medium text-foreground mb-2">Stainless Steel Installation Tips</h6>
+                    <h6 className="font-medium text-white mb-2">Stainless Steel Installation Tips</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• Use only stainless steel fixings - never mix with carbon steel</li>
                       <li>• Avoid tool contamination - dedicated stainless steel cutting tools</li>
@@ -484,7 +484,7 @@ export default function Module3Section5_4() {
                     </ul>
                   </div>
                   <div className="p-3 bg-white/5 rounded-lg">
-                    <h6 className="font-medium text-foreground mb-2">Common Stainless Steel Failures</h6>
+                    <h6 className="font-medium text-white mb-2">Common Stainless Steel Failures</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Pitting:</strong> Chloride attack, especially in stagnant areas</li>
                       <li>• <strong>Crevice corrosion:</strong> Under gaskets, washers, deposits</li>
@@ -496,11 +496,11 @@ export default function Module3Section5_4() {
                 </div>
               </div>
 
-              <div className="p-4 bg-card border border-border/30 rounded-lg mb-4">
-                <h5 className="font-medium text-emerald-400 mb-3">Other Metallic Options</h5>
+              <div className="p-4 bg-transparent border border-border/30 rounded-lg mb-4">
+                <h5 className="font-medium text-elec-yellow mb-3">Other Metallic Options</h5>
                 <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Aluminium Alloys</h6>
+                    <h6 className="font-medium text-white mb-2">Aluminium Alloys</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>6063-T6:</strong> Good strength, moderate corrosion resistance</li>
                       <li>• <strong>5083:</strong> Marine grade, excellent salt water resistance</li>
@@ -510,7 +510,7 @@ export default function Module3Section5_4() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Galvanised Steel</h6>
+                    <h6 className="font-medium text-white mb-2">Galvanised Steel</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Hot dip:</strong> 85 micron minimum, 15-20 year life</li>
                       <li>• <strong>Sherardised:</strong> For threaded components</li>
@@ -520,7 +520,7 @@ export default function Module3Section5_4() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Copper Alloys</h6>
+                    <h6 className="font-medium text-white mb-2">Copper Alloys</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Brass:</strong> Vulnerable to dezincification</li>
                       <li>• <strong>Bronze:</strong> Good marine performance</li>
@@ -532,65 +532,65 @@ export default function Module3Section5_4() {
                 </div>
               </div>
 
-              <div className="p-4 bg-card border border-border/30 rounded-lg mb-4">
-                <h5 className="font-medium text-emerald-400 mb-3">Non-Metallic Materials Selection</h5>
+              <div className="p-4 bg-transparent border border-border/30 rounded-lg mb-4">
+                <h5 className="font-medium text-elec-yellow mb-3">Non-Metallic Materials Selection</h5>
                 <div className="overflow-x-auto">
-                  <table className="w-full border-collapse border border-border/20 text-sm">
+                  <table className="w-full border-collapse border border-white/10 text-sm">
                     <thead>
-                      <tr className="bg-card">
-                        <th className="border border-border/20 p-3 text-left">Material</th>
-                        <th className="border border-border/20 p-3 text-left">Chemical Resistance</th>
-                        <th className="border border-border/20 p-3 text-left">Temperature Range</th>
-                        <th className="border border-border/20 p-3 text-left">UV Resistance</th>
-                        <th className="border border-border/20 p-3 text-left">Applications</th>
+                      <tr className="">
+                        <th className="border border-white/10 p-3 text-left">Material</th>
+                        <th className="border border-white/10 p-3 text-left">Chemical Resistance</th>
+                        <th className="border border-white/10 p-3 text-left">Temperature Range</th>
+                        <th className="border border-white/10 p-3 text-left">UV Resistance</th>
+                        <th className="border border-white/10 p-3 text-left">Applications</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="border border-border/20 p-3"><strong>GRP</strong></td>
-                        <td className="border border-border/20 p-3">Excellent acids/alkalis</td>
-                        <td className="border border-border/20 p-3">-40°C to +120°C</td>
-                        <td className="border border-border/20 p-3">Good with gel coat</td>
-                        <td className="border border-border/20 p-3">Chemical plant, washdown areas</td>
+                        <td className="border border-white/10 p-3"><strong>GRP</strong></td>
+                        <td className="border border-white/10 p-3">Excellent acids/alkalis</td>
+                        <td className="border border-white/10 p-3">-40°C to +120°C</td>
+                        <td className="border border-white/10 p-3">Good with gel coat</td>
+                        <td className="border border-white/10 p-3">Chemical plant, washdown areas</td>
                       </tr>
                       <tr className="bg-muted/5">
-                        <td className="border border-border/20 p-3"><strong>Polycarbonate</strong></td>
-                        <td className="border border-border/20 p-3">Good general purpose</td>
-                        <td className="border border-border/20 p-3">-40°C to +130°C</td>
-                        <td className="border border-border/20 p-3">Requires UV stabilisation</td>
-                        <td className="border border-border/20 p-3">Impact-resistant enclosures</td>
+                        <td className="border border-white/10 p-3"><strong>Polycarbonate</strong></td>
+                        <td className="border border-white/10 p-3">Good general purpose</td>
+                        <td className="border border-white/10 p-3">-40°C to +130°C</td>
+                        <td className="border border-white/10 p-3">Requires UV stabilisation</td>
+                        <td className="border border-white/10 p-3">Impact-resistant enclosures</td>
                       </tr>
                       <tr>
-                        <td className="border border-border/20 p-3"><strong>ABS</strong></td>
-                        <td className="border border-border/20 p-3">Moderate</td>
-                        <td className="border border-border/20 p-3">-20°C to +80°C</td>
-                        <td className="border border-border/20 p-3">Poor - degrades rapidly</td>
-                        <td className="border border-border/20 p-3">Indoor, controlled environments</td>
+                        <td className="border border-white/10 p-3"><strong>ABS</strong></td>
+                        <td className="border border-white/10 p-3">Moderate</td>
+                        <td className="border border-white/10 p-3">-20°C to +80°C</td>
+                        <td className="border border-white/10 p-3">Poor - degrades rapidly</td>
+                        <td className="border border-white/10 p-3">Indoor, controlled environments</td>
                       </tr>
                       <tr className="bg-muted/5">
-                        <td className="border border-border/20 p-3"><strong>PTFE/FEP</strong></td>
-                        <td className="border border-border/20 p-3">Outstanding all chemicals</td>
-                        <td className="border border-border/20 p-3">-200°C to +260°C</td>
-                        <td className="border border-border/20 p-3">Excellent</td>
-                        <td className="border border-border/20 p-3">Extreme chemical conditions</td>
+                        <td className="border border-white/10 p-3"><strong>PTFE/FEP</strong></td>
+                        <td className="border border-white/10 p-3">Outstanding all chemicals</td>
+                        <td className="border border-white/10 p-3">-200°C to +260°C</td>
+                        <td className="border border-white/10 p-3">Excellent</td>
+                        <td className="border border-white/10 p-3">Extreme chemical conditions</td>
                       </tr>
                       <tr>
-                        <td className="border border-border/20 p-3"><strong>PVC</strong></td>
-                        <td className="border border-border/20 p-3">Good acids, poor solvents</td>
-                        <td className="border border-border/20 p-3">-10°C to +60°C</td>
-                        <td className="border border-border/20 p-3">Requires stabilisation</td>
-                        <td className="border border-border/20 p-3">General purpose, cost-effective</td>
+                        <td className="border border-white/10 p-3"><strong>PVC</strong></td>
+                        <td className="border border-white/10 p-3">Good acids, poor solvents</td>
+                        <td className="border border-white/10 p-3">-10°C to +60°C</td>
+                        <td className="border border-white/10 p-3">Requires stabilisation</td>
+                        <td className="border border-white/10 p-3">General purpose, cost-effective</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
 
-              <div className="p-4 bg-card border border-border/30 rounded-lg">
-                <h5 className="font-medium text-emerald-400 mb-3">Cable and Wiring System Materials</h5>
+              <div className="p-4 bg-transparent border border-border/30 rounded-lg">
+                <h5 className="font-medium text-elec-yellow mb-3">Cable and Wiring System Materials</h5>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Cable Sheath Materials</h6>
+                    <h6 className="font-medium text-white mb-2">Cable Sheath Materials</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>PVC:</strong> Cost-effective, requires UV stabilisation outdoors</li>
                       <li>• <strong>LSZH:</strong> Reduced toxic gas emission, good chemical resistance</li>
@@ -600,7 +600,7 @@ export default function Module3Section5_4() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Conduit and Trunking</h6>
+                    <h6 className="font-medium text-white mb-2">Conduit and Trunking</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>PVC conduit:</strong> Good for most environments, UV rating essential</li>
                       <li>• <strong>Galvanised steel:</strong> Mechanical protection, needs coating maintenance</li>
@@ -611,7 +611,7 @@ export default function Module3Section5_4() {
                   </div>
                 </div>
                 <div className="mt-4 p-3 bg-white/5 rounded-lg">
-                  <h6 className="font-medium text-foreground mb-2">Cable Gland Selection Criteria</h6>
+                  <h6 className="font-medium text-white mb-2">Cable Gland Selection Criteria</h6>
                   <div className="grid md:grid-cols-2 gap-4">
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>IP rating:</strong> Match or exceed enclosure rating</li>
@@ -634,17 +634,17 @@ export default function Module3Section5_4() {
 
           {/* 3. Installation Details and Good Practice */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Beaker className="w-5 h-5" /> 3. Installation Details and Good Practice
             </h3>
 
             <div className="mb-6">
-              <h4 className="font-medium text-foreground mb-3">Water Ingress Prevention Techniques</h4>
-              <div className="p-4 bg-card border border-amber-400/30 rounded-lg mb-4">
+              <h4 className="font-medium text-white mb-3">Water Ingress Prevention Techniques</h4>
+              <div className="p-4 bg-transparent border border-amber-400/30 rounded-lg mb-4">
                 <h5 className="font-medium text-amber-400 mb-3">Cable Entry Design and Installation</h5>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Drip Loop Design</h6>
+                    <h6 className="font-medium text-white mb-2">Drip Loop Design</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Purpose:</strong> Directs water away from cable entry points</li>
                       <li>• <strong>Minimum drop:</strong> 150mm below entry point</li>
@@ -654,7 +654,7 @@ export default function Module3Section5_4() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Entry Point Selection</h6>
+                    <h6 className="font-medium text-white mb-2">Entry Point Selection</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Side entries:</strong> Preferred over top entries</li>
                       <li>• <strong>Bottom entries:</strong> Best for washdown environments</li>
@@ -666,50 +666,50 @@ export default function Module3Section5_4() {
                 </div>
 
                 <div className="mt-4 overflow-x-auto">
-                  <table className="w-full border-collapse border border-border/20 text-sm">
+                  <table className="w-full border-collapse border border-white/10 text-sm">
                     <thead>
-                      <tr className="bg-card">
-                        <th className="border border-border/20 p-3 text-left">Cable Gland Type</th>
-                        <th className="border border-border/20 p-3 text-left">IP Rating Available</th>
-                        <th className="border border-border/20 p-3 text-left">Cable Types</th>
-                        <th className="border border-border/20 p-3 text-left">Environment Suitability</th>
+                      <tr className="">
+                        <th className="border border-white/10 p-3 text-left">Cable Gland Type</th>
+                        <th className="border border-white/10 p-3 text-left">IP Rating Available</th>
+                        <th className="border border-white/10 p-3 text-left">Cable Types</th>
+                        <th className="border border-white/10 p-3 text-left">Environment Suitability</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="border border-border/20 p-3">Standard PVC Gland</td>
-                        <td className="border border-border/20 p-3">IP66/67</td>
-                        <td className="border border-border/20 p-3">PVC/LSZH/Rubber</td>
-                        <td className="border border-border/20 p-3">General purpose, not chemical</td>
+                        <td className="border border-white/10 p-3">Standard PVC Gland</td>
+                        <td className="border border-white/10 p-3">IP66/67</td>
+                        <td className="border border-white/10 p-3">PVC/LSZH/Rubber</td>
+                        <td className="border border-white/10 p-3">General purpose, not chemical</td>
                       </tr>
                       <tr className="bg-muted/5">
-                        <td className="border border-border/20 p-3">Stainless Steel Gland</td>
-                        <td className="border border-border/20 p-3">IP66/67/68</td>
-                        <td className="border border-border/20 p-3">All cable types</td>
-                        <td className="border border-border/20 p-3">Marine, chemical, high temperature</td>
+                        <td className="border border-white/10 p-3">Stainless Steel Gland</td>
+                        <td className="border border-white/10 p-3">IP66/67/68</td>
+                        <td className="border border-white/10 p-3">All cable types</td>
+                        <td className="border border-white/10 p-3">Marine, chemical, high temperature</td>
                       </tr>
                       <tr>
-                        <td className="border border-border/20 p-3">Hygienic Gland</td>
-                        <td className="border border-border/20 p-3">IP69K</td>
-                        <td className="border border-border/20 p-3">Food-grade cables</td>
-                        <td className="border border-border/20 p-3">Food processing, pharmaceuticals</td>
+                        <td className="border border-white/10 p-3">Hygienic Gland</td>
+                        <td className="border border-white/10 p-3">IP69K</td>
+                        <td className="border border-white/10 p-3">Food-grade cables</td>
+                        <td className="border border-white/10 p-3">Food processing, pharmaceuticals</td>
                       </tr>
                       <tr className="bg-muted/5">
-                        <td className="border border-border/20 p-3">EMC/Earth Gland</td>
-                        <td className="border border-border/20 p-3">IP66 typical</td>
-                        <td className="border border-border/20 p-3">Armoured/screened</td>
-                        <td className="border border-border/20 p-3">SWA termination, EMC control</td>
+                        <td className="border border-white/10 p-3">EMC/Earth Gland</td>
+                        <td className="border border-white/10 p-3">IP66 typical</td>
+                        <td className="border border-white/10 p-3">Armoured/screened</td>
+                        <td className="border border-white/10 p-3">SWA termination, EMC control</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
 
-              <div className="p-4 bg-card border border-border/30 rounded-lg mb-4">
-                <h5 className="font-medium text-emerald-400 mb-3">Enclosure Mounting and Installation</h5>
+              <div className="p-4 bg-transparent border border-border/30 rounded-lg mb-4">
+                <h5 className="font-medium text-elec-yellow mb-3">Enclosure Mounting and Installation</h5>
                 <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Wall Mounting</h6>
+                    <h6 className="font-medium text-white mb-2">Wall Mounting</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Standoff distance:</strong> 25-50mm from damp walls</li>
                       <li>• <strong>Gasket continuity:</strong> Full perimeter sealing</li>
@@ -718,7 +718,7 @@ export default function Module3Section5_4() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Ventilation and Drainage</h6>
+                    <h6 className="font-medium text-white mb-2">Ventilation and Drainage</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Breather membranes:</strong> Allow pressure equalisation</li>
                       <li>• <strong>Internal heaters:</strong> Prevent condensation</li>
@@ -727,7 +727,7 @@ export default function Module3Section5_4() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Sealing Systems</h6>
+                    <h6 className="font-medium text-white mb-2">Sealing Systems</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Gasket material:</strong> EPDM, silicone, FKM for chemicals</li>
                       <li>• <strong>Compression ratio:</strong> 25-30% for optimal sealing</li>
@@ -738,11 +738,11 @@ export default function Module3Section5_4() {
                 </div>
               </div>
 
-              <div className="p-4 bg-card border border-border/30 rounded-lg mb-4">
-                <h5 className="font-medium text-emerald-400 mb-3">Corrosion Prevention Strategies</h5>
+              <div className="p-4 bg-transparent border border-border/30 rounded-lg mb-4">
+                <h5 className="font-medium text-elec-yellow mb-3">Corrosion Prevention Strategies</h5>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Galvanic Corrosion Control</h6>
+                    <h6 className="font-medium text-white mb-2">Galvanic Corrosion Control</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Material separation:</strong> Nylon washers, PTFE tape</li>
                       <li>• <strong>Compatible fasteners:</strong> Match base material or upgrade</li>
@@ -752,7 +752,7 @@ export default function Module3Section5_4() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Coating Systems Maintenance</h6>
+                    <h6 className="font-medium text-white mb-2">Coating Systems Maintenance</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Pre-installation:</strong> Touch up any shipping damage</li>
                       <li>• <strong>Site protection:</strong> Mask during construction activities</li>
@@ -764,26 +764,26 @@ export default function Module3Section5_4() {
                 </div>
 
                 <div className="mt-4 p-3 bg-white/5 rounded-lg">
-                  <h6 className="font-medium text-foreground mb-2">Galvanic Series (Anodic ↑ to Cathodic ↓)</h6>
+                  <h6 className="font-medium text-white mb-2">Galvanic Series (Anodic ↑ to Cathodic ↓)</h6>
                   <div className="grid md:grid-cols-4 gap-2 text-sm">
                     <div className="text-center p-2 bg-red-500/20 rounded">Magnesium</div>
                     <div className="text-center p-2 bg-orange-500/20 rounded">Zinc</div>
-                    <div className="text-center p-2 bg-emerald-500/20 rounded">Aluminium</div>
-                    <div className="text-center p-2 bg-emerald-500/20 rounded">Carbon Steel</div>
+                    <div className="text-center p-2 bg-elec-yellow/20 rounded">Aluminium</div>
+                    <div className="text-center p-2 bg-elec-yellow/20 rounded">Carbon Steel</div>
                     <div className="text-center p-2 bg-green-500/20 rounded">Stainless 316</div>
                     <div className="text-center p-2 bg-purple-500/20 rounded">Brass</div>
                     <div className="text-center p-2 bg-indigo-500/20 rounded">Copper</div>
                     <div className="text-center p-2 bg-gray-500/20 rounded">Graphite</div>
                   </div>
-                  <p className="text-xs mt-2 text-muted-foreground">Metals further apart are more likely to cause galvanic corrosion when coupled</p>
+                  <p className="text-xs mt-2 text-white">Metals further apart are more likely to cause galvanic corrosion when coupled</p>
                 </div>
               </div>
 
-              <div className="p-4 bg-card border border-green-400/30 rounded-lg mb-4">
+              <div className="p-4 bg-transparent border border-green-400/30 rounded-lg mb-4">
                 <h5 className="font-medium text-green-400 mb-3">Specific Environment Installation Guidelines</h5>
                 <div className="space-y-4">
                   <div className="p-3 bg-white/5 rounded-lg">
-                    <h6 className="font-medium text-foreground mb-2">Swimming Pool Plant Rooms</h6>
+                    <h6 className="font-medium text-white mb-2">Swimming Pool Plant Rooms</h6>
                     <div className="grid md:grid-cols-2 gap-4">
                       <ul className="space-y-1 text-sm">
                         <li>• Install dehumidification to maintain &lt;60% RH</li>
@@ -801,7 +801,7 @@ export default function Module3Section5_4() {
                   </div>
 
                   <div className="p-3 bg-white/5 rounded-lg">
-                    <h6 className="font-medium text-foreground mb-2">Food Processing Areas</h6>
+                    <h6 className="font-medium text-white mb-2">Food Processing Areas</h6>
                     <div className="grid md:grid-cols-2 gap-4">
                       <ul className="space-y-1 text-sm">
                         <li>• All surfaces sloped minimum 3° to prevent pooling</li>
@@ -819,7 +819,7 @@ export default function Module3Section5_4() {
                   </div>
 
                   <div className="p-3 bg-white/5 rounded-lg">
-                    <h6 className="font-medium text-foreground mb-2">Coastal Installations</h6>
+                    <h6 className="font-medium text-white mb-2">Coastal Installations</h6>
                     <div className="grid md:grid-cols-2 gap-4">
                       <ul className="space-y-1 text-sm">
                         <li>• Weekly fresh water washing to remove salt deposits</li>
@@ -838,11 +838,11 @@ export default function Module3Section5_4() {
                 </div>
               </div>
 
-              <div className="p-4 bg-card border border-border/30 rounded-lg">
-                <h5 className="font-medium text-emerald-400 mb-3">Testing and Commissioning Considerations</h5>
+              <div className="p-4 bg-transparent border border-border/30 rounded-lg">
+                <h5 className="font-medium text-elec-yellow mb-3">Testing and Commissioning Considerations</h5>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Pre-Commissioning Checks</h6>
+                    <h6 className="font-medium text-white mb-2">Pre-Commissioning Checks</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Seal integrity:</strong> Pressure test to 1.5x operating pressure</li>
                       <li>• <strong>Coating continuity:</strong> Holiday detection at 100V/μm</li>
@@ -852,7 +852,7 @@ export default function Module3Section5_4() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Ongoing Monitoring</h6>
+                    <h6 className="font-medium text-white mb-2">Ongoing Monitoring</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Insulation resistance:</strong> Monthly testing in damp conditions</li>
                       <li>• <strong>Earth fault monitoring:</strong> Continuous RCD supervision</li>
@@ -865,11 +865,11 @@ export default function Module3Section5_4() {
               </div>
             </div>
 
-            <div className="p-4 bg-card border border-border/20 rounded-lg">
-              <h4 className="font-medium text-foreground mb-3">BS 7671 Compliance Framework</h4>
+            <div className="p-4 bg-transparent border border-white/10 rounded-lg">
+              <h4 className="font-medium text-white mb-3">BS 7671 Compliance Framework</h4>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <h6 className="font-medium text-foreground mb-2">Design Stage Requirements</h6>
+                  <h6 className="font-medium text-white mb-2">Design Stage Requirements</h6>
                   <ul className="space-y-1 text-sm">
                     <li>• Assessment of external influences (Section 512)</li>
                     <li>• Selection of equipment suitable for conditions (Section 512)</li>
@@ -878,7 +878,7 @@ export default function Module3Section5_4() {
                   </ul>
                 </div>
                 <div>
-                  <h6 className="font-medium text-foreground mb-2">Installation Requirements</h6>
+                  <h6 className="font-medium text-white mb-2">Installation Requirements</h6>
                   <ul className="space-y-1 text-sm">
                     <li>• Workmanship to BS 7671 Section 134</li>
                     <li>• Protection against corrosion (Section 522)</li>
@@ -894,24 +894,24 @@ export default function Module3Section5_4() {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
-            <div className="p-4 bg-card border border-border/20 rounded-lg">
-              <h3 className="font-medium text-foreground mb-2">Q: Do I always need stainless steel outdoors?</h3>
-              <p className="text-xs sm:text-sm text-foreground">
+            <div className="p-4 bg-transparent border border-white/10 rounded-lg">
+              <h3 className="font-medium text-white mb-2">Q: Do I always need stainless steel outdoors?</h3>
+              <p className="text-xs sm:text-sm text-white">
                 A: Not always. Consider the environment and duty—UV‑stable plastics or coated metals may be suitable inland. Coastal and chemical sites often justify 316 stainless or GRP.
               </p>
             </div>
-            <div className="p-4 bg-card border border-border/20 rounded-lg">
-              <h3 className="font-medium text-foreground mb-2">Q: How often should gaskets be changed?</h3>
-              <p className="text-xs sm:text-sm text-foreground">
+            <div className="p-4 bg-transparent border border-white/10 rounded-lg">
+              <h3 className="font-medium text-white mb-2">Q: How often should gaskets be changed?</h3>
+              <p className="text-xs sm:text-sm text-white">
                 A: Follow manufacturer guidance—monthly inspection in harsh areas is common, with proactive replacement at first signs of hardening, cracking or flattening.
               </p>
             </div>
-            <div className="p-4 bg-card border border-border/20 rounded-lg">
-              <h3 className="font-medium text-foreground mb-2">Q: Are LSZH cables always the best choice?</h3>
-              <p className="text-xs sm:text-sm text-foreground">
+            <div className="p-4 bg-transparent border border-white/10 rounded-lg">
+              <h3 className="font-medium text-white mb-2">Q: Are LSZH cables always the best choice?</h3>
+              <p className="text-xs sm:text-sm text-white">
                 A: LSZH is often preferred in public or process areas, but confirm chemical and UV compatibility. Select sheath type for the actual environment and mechanical duty.
               </p>
             </div>
@@ -919,21 +919,21 @@ export default function Module3Section5_4() {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
-          <p className="text-foreground/90">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+          <p className="text-white/90">
             Correct material selection and installation detail are essential in damp and corrosive areas. Assess external influences, choose compatible metals/non‑metals, protect against ingress and galvanic action, and maintain seals and coatings. Following BS 7671 principles ensures safe, durable installations.
           </p>
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quiz (8 Questions)</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quiz (8 Questions)</h2>
           <Quiz questions={quizQuestions} />
         </Card>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="../5-3">
               <ArrowLeft className="w-4 h-4 mr-2" />

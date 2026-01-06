@@ -1,6 +1,4 @@
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import OnTheJobToolsBox from "@/components/apprentice/OnTheJobToolsBox";
 import { Settings, HardHat, MessageSquare, HelpCircle, BookOpen, Wrench } from "lucide-react";
 
@@ -61,12 +59,7 @@ const OnJobTools = () => {
     <div className="space-y-8 animate-fade-in">
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
         <h1 className="text-3xl font-bold tracking-tight">On the Job Tools</h1>
-        <Link to="/apprentice" className="flex-shrink-0">
-          <Button variant="outline">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Apprentice Hub
-          </Button>
-        </Link>
+        <SmartBackButton className="flex-shrink-0" />
       </div>
 
       <OnTheJobToolsBox tools={onJobTools} />

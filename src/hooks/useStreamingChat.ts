@@ -92,7 +92,7 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
 
     try {
       // ALWAYS use agent-router for consistency, deduplication, and proper flow
-      const FUNCTION_URL = `https://yulrjfdmkjcoeddorawg.supabase.co/functions/v1/agent-router`;
+      const FUNCTION_URL = `https://jtwygbeceundfgnkirof.supabase.co/functions/v1/agent-router`;
       
       if (!FUNCTION_URL) {
         throw new Error('Invalid function URL configuration');

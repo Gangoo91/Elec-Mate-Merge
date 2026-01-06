@@ -208,13 +208,13 @@ const Module3Section3_5: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -229,32 +229,32 @@ const Module3Section3_5: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Truck className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Truck className="w-6 h-6 text-white" />
             </div>
             <Badge
               variant="outline"
-              className="border-emerald-500/30 text-emerald-400"
+              className="border-elec-yellow/30 text-elec-yellow"
             >
               Section 3.3.5
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Safe Use, Transport, and Storage of Tools
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Essential practices for safe tool handling, transport methods and storage to prevent injury and extend tool life.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Introduction
           </h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Safe use: right tool, right PPE, follow instructions, stable position.</li>
                 <li>Transport: secured in boxes, batteries removed, covers on sharp tools.</li>
@@ -262,8 +262,8 @@ const Module3Section3_5: React.FC = () => {
                 <li>Height work: tool lanyards essential, never leave tools unsecured.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>
                   <strong>Spot:</strong> Loose tools, missing covers, mixed storage, unsafe carrying.
@@ -280,11 +280,11 @@ const Module3Section3_5: React.FC = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Learning outcomes
           </h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Apply safe handling practices when using hand and power tools.</li>
             <li>Describe correct transport methods to prevent tool damage and injury.</li>
             <li>Explain how proper storage helps maintain tool condition and safety.</li>
@@ -293,17 +293,17 @@ const Module3Section3_5: React.FC = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Safe Use */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Shield className="w-5 h-5" /> Safe Use of Tools
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-2">Operational Safety Principles</p>
                 <div className="space-y-3">
                   <div>
@@ -343,13 +343,13 @@ const Module3Section3_5: React.FC = () => {
 
           {/* Safe Transport */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Truck className="w-5 h-5" /> Safe Transport of Tools
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                   <p className="font-medium mb-2">Personal Transport</p>
                   <div className="space-y-3">
                     <div>
@@ -373,7 +373,7 @@ const Module3Section3_5: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Vehicle Transport</p>
                   <div className="space-y-3">
                     <div>
@@ -405,12 +405,12 @@ const Module3Section3_5: React.FC = () => {
 
           {/* Safe Storage */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Home className="w-5 h-5" /> Safe Storage of Tools
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-4 bg-card border border-amber-400/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
                 <p className="font-medium mb-2">Storage Environment & Organisation</p>
                 <div className="space-y-3">
                   <div>
@@ -449,12 +449,12 @@ const Module3Section3_5: React.FC = () => {
         </Card>
 
         {/* What this means on site */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Building className="w-5 h-5" /> What this means on site
           </h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2">Daily Site Operations</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Establish secure tool storage areas at start of each project</li>
@@ -463,7 +463,7 @@ const Module3Section3_5: React.FC = () => {
                 <li>Regular site inspections to identify unsafe tool practices</li>
               </ul>
             </div>
-            <div className="rounded-lg p-4 bg-card border border-green-400/30">
+            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
               <p className="font-medium mb-2">Risk Management Benefits</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Reduces dropped tool incidents and potential injuries</li>
@@ -476,13 +476,13 @@ const Module3Section3_5: React.FC = () => {
         </Card>
 
         {/* Installation Practices */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Settings className="w-5 h-5" /> Installation Practices
           </h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
+          <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="rounded-lg p-4 bg-card border border-amber-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
                 <p className="font-medium mb-2">Work Planning</p>
                 <ul className="list-disc pl-6 space-y-1">
                   <li>Plan tool requirements before starting work</li>
@@ -491,7 +491,7 @@ const Module3Section3_5: React.FC = () => {
                   <li>Create designated tool zones for team work</li>
                 </ul>
               </div>
-              <div className="rounded-lg p-4 bg-card border border-cyan-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-cyan-400/30">
                 <p className="font-medium mb-2">Site-Specific Requirements</p>
                 <ul className="list-disc pl-6 space-y-1">
                   <li>Comply with site-specific tool policies</li>
@@ -505,13 +505,13 @@ const Module3Section3_5: React.FC = () => {
         </Card>
 
         {/* Common Mistakes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5 text-emerald-400" /> Common Mistakes
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <AlertTriangle className="w-5 h-5 text-elec-yellow" /> Common Mistakes
           </h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <p className="font-medium mb-2 text-emerald-400">Dangerous Practices</p>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <p className="font-medium mb-2 text-elec-yellow">Dangerous Practices</p>
               <ul className="list-disc pl-6 space-y-1 text-red-200">
                 <li><strong>Carrying sharp tools loose</strong> - Risk of cuts and puncture wounds</li>
                 <li><strong>No lanyards at height</strong> - Potential for serious head injuries from dropped tools</li>
@@ -519,8 +519,8 @@ const Module3Section3_5: React.FC = () => {
                 <li><strong>Mixed storage of insulated tools</strong> - Confusion leading to electric shock risk</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <p className="font-medium mb-2 text-emerald-400">Equipment Issues</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <p className="font-medium mb-2 text-elec-yellow">Equipment Issues</p>
               <ul className="list-disc pl-6 space-y-1 text-orange-200">
                 <li><strong>Poor storage conditions</strong> - Accelerated corrosion and premature failure</li>
                 <li><strong>Batteries left in tools</strong> - Accidental activation during transport</li>
@@ -532,11 +532,11 @@ const Module3Section3_5: React.FC = () => {
         </Card>
 
         {/* Health & Safety Context */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Shield className="w-5 h-5" /> Health & Safety Context
           </h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
+          <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="rounded-lg p-4 bg-indigo-500/10 border border-indigo-400/30">
               <p className="font-medium mb-2">Regulatory Requirements</p>
               <ul className="list-disc pl-6 space-y-1">
@@ -561,11 +561,11 @@ const Module3Section3_5: React.FC = () => {
         <InlineCheck {...quickCheckQuestions[3]} />
 
         {/* Real-world Scenario */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Factory className="w-5 h-5" /> Real-world Scenario
           </h2>
-          <div className="rounded-lg p-3 sm:p-4 bg-card border border-slate-400/30">
+          <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30">
             <p className="font-medium mb-2">Scenario: Falling Angle Grinder Near Miss</p>
             <p className="text-sm mb-4">
               On a commercial site, an unsecured angle grinder fell from a scaffold platform after being left on the edge. 
@@ -574,7 +574,7 @@ const Module3Section3_5: React.FC = () => {
             </p>
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
-                <p className="font-medium text-emerald-400 mb-1">Potential Consequences</p>
+                <p className="font-medium text-elec-yellow mb-1">Potential Consequences</p>
                 <ul className="list-disc pl-4 space-y-1 text-red-200">
                   <li>Serious head injury or fatality</li>
                   <li>HSE investigation and prosecution</li>
@@ -596,15 +596,15 @@ const Module3Section3_5: React.FC = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Frequently Asked Questions
           </h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <div key={index}>
-                <p className="font-medium text-foreground mb-1">{faq.q}</p>
-                <p className="text-sm text-muted-foreground">{faq.a}</p>
+                <p className="font-medium text-white mb-1">{faq.q}</p>
+                <p className="text-sm text-white">{faq.a}</p>
                 {index < faqs.length - 1 && <Separator className="mt-4" />}
               </div>
             ))}
@@ -612,15 +612,15 @@ const Module3Section3_5: React.FC = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
             <p>
               Safe use, transport, and storage of tools are key elements of site safety and professionalism. 
               Proper handling prevents accidents, protects tools from damage, and ensures they are ready for work when needed.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="rounded-lg p-4 bg-card border border-green-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                 <p className="font-medium text-green-300 mb-2">Key Benefits</p>
                 <ul className="list-disc pl-4 space-y-1 text-green-200">
                   <li>Prevents accidents and reduces injury risks</li>
@@ -629,8 +629,8 @@ const Module3Section3_5: React.FC = () => {
                   <li>Improves site organisation and efficiency</li>
                 </ul>
               </div>
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-                <p className="font-medium text-emerald-400 mb-2">Essential Points</p>
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+                <p className="font-medium text-elec-yellow mb-2">Essential Points</p>
                 <ul className="list-disc pl-4 space-y-1 text-blue-200">
                   <li>Always use appropriate PPE for each tool</li>
                   <li>Secure tools during transport and at height</li>
@@ -643,12 +643,12 @@ const Module3Section3_5: React.FC = () => {
         </Card>
 
         {/* Apprentice Do's and Don'ts */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Target className="w-5 h-5" /> Apprentice Do's and Don'ts
           </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-            <div className="rounded-lg p-4 bg-card border border-green-400/30">
+            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
               <p className="font-medium text-green-300 mb-3 flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4" /> DO
               </p>
@@ -661,8 +661,8 @@ const Module3Section3_5: React.FC = () => {
                 <li>✓ Inspect tools after transport before use</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <p className="font-medium text-emerald-400 mb-3 flex items-center gap-2">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <p className="font-medium text-elec-yellow mb-3 flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4" /> DON'T
               </p>
               <ul className="space-y-2 text-sm text-red-200">
@@ -678,11 +678,11 @@ const Module3Section3_5: React.FC = () => {
         </Card>
 
         {/* Pocket Card Quick Reference */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Pocket Card Quick Reference
           </h2>
-          <div className="rounded-lg p-3 sm:p-4 bg-card border border-slate-400/30 text-sm">
+          <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30 text-sm">
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <p className="font-medium mb-2">Safe Use Checklist</p>
@@ -711,9 +711,9 @@ const Module3Section3_5: React.FC = () => {
         </Card>
 
         {/* Key References */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Key References</h2>
-          <div className="text-xs sm:text-sm text-foreground space-y-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Key References</h2>
+          <div className="text-xs sm:text-sm text-white space-y-2">
             <p><strong>PUWER 1998:</strong> Provision and Use of Work Equipment Regulations</p>
             <p><strong>Work at Height Regulations 2005:</strong> Prevention of falls and dropped objects</p>
             <p><strong>MHSWR 1999:</strong> Management of Health and Safety at Work Regulations</p>
@@ -722,8 +722,8 @@ const Module3Section3_5: React.FC = () => {
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Knowledge Check
           </h2>
           <Quiz questions={quizQuestions} />

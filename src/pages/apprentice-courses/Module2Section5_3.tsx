@@ -88,11 +88,11 @@ const Module2Section5_3 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2.5
@@ -105,15 +105,15 @@ const Module2Section5_3 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <Thermometer className="h-8 w-8 text-emerald-400" />
+            <Thermometer className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 2.5.3
               </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
                 Factors Affecting Resistance
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+              <p className="text-xl text-white max-w-3xl mt-2">
                 Learn how length, area, temperature and material affect electrical resistance
               </p>
             </div>
@@ -121,11 +121,11 @@ const Module2Section5_3 = () => {
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Formula:</strong> R = ρL/A (resistivity × length ÷ area)</li>
                 <li><strong>Length:</strong> Longer runs = higher resistance</li>
@@ -134,8 +134,8 @@ const Module2Section5_3 = () => {
                 <li><strong>Temperature:</strong> Heat increases metal resistance</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Long cable runs, small CSA, hot environments</li>
                 <li><strong>Use:</strong> Apply correction factors from Appendix 4</li>
@@ -146,33 +146,33 @@ const Module2Section5_3 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
-          <ul className="space-y-3 text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
+          <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>State and apply R = ρL/A for simple scenarios</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Explain how length, CSA, material and temperature influence resistance</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Use BS 7671 Appendix 4 data to consider resistance and voltage drop</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Recognise practical issues: joints, terminations and heat rise</span>
             </li>
           </ul>
         </Card>
 
         {/* Plain English explainer */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">What does the formula mean? (Plain English)</h2>
-          <ul className="list-disc pl-6 space-y-2 text-foreground text-sm">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">What does the formula mean? (Plain English)</h2>
+          <ul className="list-disc pl-6 space-y-2 text-white text-sm">
             <li>Think of resistance like traffic on a road. A longer road adds more delay; a wider road lets more cars through.</li>
             <li>Length (L): more length = more resistance.</li>
             <li>Area (A): a bigger cross‑section (thicker cable) = less resistance.</li>
@@ -183,24 +183,24 @@ const Module2Section5_3 = () => {
         </Card>
 
         {/* How we calculate (practical method) */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">How we calculate resistance for cables</h2>
-          <div className="text-foreground text-sm space-y-3">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">How we calculate resistance for cables</h2>
+          <div className="text-white text-sm space-y-3">
             <p>Use the standard constant for the metal and enter the cable length L (metres) and cross‑sectional area A (mm²):</p>
             <ul className="list-disc pl-6 space-y-1">
               <li><strong>Copper:</strong> R (Ω) ≈ <strong>0.0172 × L ÷ A</strong></li>
               <li><strong>Aluminium:</strong> R (Ω) ≈ <strong>0.0282 × L ÷ A</strong></li>
               <li>Values are referenced to around 20°C. Use temperature correction if needed.</li>
             </ul>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/30">
-              <h3 className="font-semibold text-emerald-400 mb-1">Quick example</h3>
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
+              <h3 className="font-semibold text-elec-yellow mb-1">Quick example</h3>
               <p>30 m of copper, 2.5 mm²: R ≈ 0.0172 × 30 ÷ 2.5 = <strong>0.206 Ω</strong>.</p>
             </div>
 
             <Collapsible>
-              <CollapsibleTrigger className="mt-2 inline-flex text-emerald-400 text-sm underline">Show derivation (SI units)</CollapsibleTrigger>
+              <CollapsibleTrigger className="mt-2 inline-flex text-elec-yellow text-sm underline">Show derivation (SI units)</CollapsibleTrigger>
               <CollapsibleContent className="mt-4">
-                <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
+                <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
                   <div className="bg-card border border-slate-400/30 p-4 rounded-lg space-y-1">
                     <h3 className="font-semibold text-slate-300 mb-1">Step 1 – Convert areas</h3>
                     <p>Manufacturers give cable size in mm². The base formula uses m².</p>
@@ -231,19 +231,19 @@ const Module2Section5_3 = () => {
         <ResistanceCalculator />
 
         {/* Key Factors */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">Key Factors</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Key Factors</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
             <div className="bg-card border border-border/30 p-4 rounded-lg space-y-2">
-              <h3 className="font-semibold text-emerald-400 mb-1 flex items-center gap-2"><Ruler className="w-4 h-4" /> Length (L)</h3>
+              <h3 className="font-semibold text-elec-yellow mb-1 flex items-center gap-2"><Ruler className="w-4 h-4" /> Length (L)</h3>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Longer conductors have higher resistance (directly proportional).</li>
                 <li>Ring circuits or return paths increase effective length of the current path.</li>
                 <li>Keep runs short where possible to limit voltage drop and heating.</li>
               </ul>
             </div>
-            <div className="bg-card border border-emerald-500/30 p-4 rounded-lg space-y-2">
-              <h3 className="font-semibold text-emerald-400 mb-1 flex items-center gap-2"><Expand className="w-4 h-4" /> Cross‑Sectional Area (A)</h3>
+            <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg space-y-2">
+              <h3 className="font-semibold text-elec-yellow mb-1 flex items-center gap-2"><Expand className="w-4 h-4" /> Cross‑Sectional Area (A)</h3>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Larger CSA reduces resistance (inversely proportional).</li>
                 <li>Upsizing feeders can control voltage drop on long runs.</li>
@@ -270,9 +270,9 @@ const Module2Section5_3 = () => {
         </Card>
 
         {/* Practical Notes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">Practical Notes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Practical Notes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-white">
             <li>Design for acceptable voltage drop and temperature rise using Appendix 4 data.</li>
             <li>Maintain tight, clean connections; poor joints add resistance and heat.</li>
             <li>Avoid bunching/grouping without applying correction factors – heat raises R.</li>
@@ -281,9 +281,9 @@ const Module2Section5_3 = () => {
         </Card>
 
         {/* BS 7671 References (guidance) */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">BS 7671 References (guidance)</h2>
-          <ul className="list-disc pl-6 space-y-2 text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">BS 7671 References (guidance)</h2>
+          <ul className="list-disc pl-6 space-y-2 text-white">
             <li>Appendix 4 – Conductor resistance, current‑carrying capacity and voltage drop</li>
             <li>Section 525 – Thermal effects and protection against overheating</li>
             <li>Section 526 – Electrical connections (quality of joints/terminations)</li>
@@ -291,9 +291,9 @@ const Module2Section5_3 = () => {
         </Card>
 
         {/* Worked Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">Worked Examples</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Worked Examples</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
             <div className="bg-indigo-500/10 border border-indigo-400/30 p-4 rounded-lg">
               <h3 className="font-semibold text-indigo-300 mb-2 flex items-center gap-2"><Calculator className="w-4 h-4" /> Example 1 – Using constants (copper)</h3>
               <p>Find resistance of 30 m copper, 2.5 mm², at 20°C.</p>
@@ -316,9 +316,9 @@ const Module2Section5_3 = () => {
         </Card>
 
         {/* Common Mistakes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">Common Mistakes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Common Mistakes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-white">
             <li>Ignoring the effect of length on voltage drop in long runs.</li>
             <li>Using too small a CSA causing excessive heating and drop.</li>
             <li>Poorly made joints that create hot spots due to high contact resistance.</li>
@@ -327,11 +327,11 @@ const Module2Section5_3 = () => {
         </Card>
 
         {/* Safety Callout */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">Safety Callout</h2>
-          <div className="flex items-start gap-3 bg-background/20 border-l-4 border-emerald-500 p-4 rounded">
-            <AlertTriangle className="w-5 h-5 text-emerald-400 mt-0.5" />
-            <p className="text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Safety Callout</h2>
+          <div className="flex items-start gap-3 bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded">
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5" />
+            <p className="text-white">
               High resistance joints overheat and can damage insulation or start fires. Always isolate, lock‑off and prove dead
               before tightening or re‑making connections. Follow manufacturer torque data and BS 7671 requirements.
             </p>
@@ -339,9 +339,9 @@ const Module2Section5_3 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">FAQs</h2>
-          <div className="space-y-3 text-foreground text-sm">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
+          <div className="space-y-3 text-white text-sm">
             <p><strong>Q:</strong> Do multi‑stranded cables have lower resistance than solid of the same CSA? <br /><span className="opacity-90">A: Bulk resistance is similar for the same CSA and material at 50 Hz. Stranding mainly improves flexibility.</span></p>
             <p><strong>Q:</strong> Does temperature always increase resistance? <br /><span className="opacity-90">A: For most metals, yes. Some devices (NTC thermistors) decrease R with temperature, but fixed wiring design uses metal conductors with positive coefficients.</span></p>
             <p><strong>Q:</strong> How do I limit voltage drop on long runs? <br /><span className="opacity-90">A: Increase CSA, shorten routes, or split loads. Use Appendix 4 tables to verify limits.</span></p>
@@ -349,8 +349,8 @@ const Module2Section5_3 = () => {
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-20 p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quick Check Quiz</h2>
+        <Card className="mb-20 p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick Check Quiz</h2>
           <Quiz questions={quizQuestions} />
         </Card>
 

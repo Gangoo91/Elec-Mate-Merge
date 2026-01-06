@@ -1,14 +1,27 @@
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
-import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
-import { Calculator, RotateCcw, Sun, Settings, Info, AlertTriangle, CheckCircle, XCircle } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Sun, Info, AlertTriangle, CheckCircle2, BookOpen, ChevronDown, Settings, XCircle } from "lucide-react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { cn } from "@/lib/utils";
+import {
+  CalculatorCard,
+  CalculatorInputGrid,
+  CalculatorInput,
+  CalculatorSelect,
+  CalculatorActions,
+  CalculatorResult,
+  ResultValue,
+  ResultsGrid,
+  CALCULATOR_CONFIG,
+} from "@/components/calculators/shared";
 import { toast } from "@/hooks/use-toast";
 
-// Common panel specifications for dropdowns
+// Panel specifications
 const panelSpecs = {
   wattage: [
     { value: "300", label: "300W (Budget)" },
@@ -19,10 +32,10 @@ const panelSpecs = {
     { value: "550", label: "550W (Commercial)" }
   ],
   dimensions: [
-    { length: "1.65", width: "1.0", label: "1.65m × 1.0m (Standard 60-cell)" },
-    { length: "2.0", width: "1.0", label: "2.0m × 1.0m (Standard 72-cell)" },
+    { length: "1.65", width: "1.0", label: "1.65m × 1.0m (60-cell)" },
+    { length: "2.0", width: "1.0", label: "2.0m × 1.0m (72-cell)" },
     { length: "2.1", width: "1.05", label: "2.1m × 1.05m (Modern)" },
-    { length: "2.3", width: "1.1", label: "2.3m × 1.1m (Large format)" }
+    { length: "2.3", width: "1.1", label: "2.3m × 1.1m (Large)" }
   ],
   electrical: [
     { voc: "49.5", vmpp: "40.6", impp: "9.85", label: "400W Mono PERC" },
@@ -33,48 +46,32 @@ const panelSpecs = {
 };
 
 const inverterSpecs = [
-  { maxVdc: "1000", minVdc: "200", maxIdc: "20", power: "5000", label: "5kW String Inverter" },
-  { maxVdc: "1000", minVdc: "200", maxIdc: "30", power: "8000", label: "8kW String Inverter" },
-  { maxVdc: "1100", minVdc: "250", maxIdc: "40", power: "10000", label: "10kW String Inverter" },
+  { maxVdc: "1000", minVdc: "200", maxIdc: "20", power: "5000", label: "5kW String" },
+  { maxVdc: "1000", minVdc: "200", maxIdc: "30", power: "8000", label: "8kW String" },
+  { maxVdc: "1100", minVdc: "250", maxIdc: "40", power: "10000", label: "10kW String" },
   { maxVdc: "1500", minVdc: "200", maxIdc: "50", power: "15000", label: "15kW Commercial" }
 ];
 
-const cableSpecs = [
-  { dcLoss: "1.0", acLoss: "0.8", label: "Short runs (<20m)" },
-  { dcLoss: "1.5", acLoss: "1.0", label: "Medium runs (20-50m)" },
-  { dcLoss: "2.0", acLoss: "1.5", label: "Long runs (50-100m)" },
-  { dcLoss: "2.5", acLoss: "2.0", label: "Very long runs (>100m)" }
-];
-
 interface PVResult {
-  // Layout
   panelsPerRow: number;
   numberOfRows: number;
   totalPanels: number;
   totalWattage: number;
   usedArea: number;
   areaEfficiency: number;
-  
-  // Generation
   dailyGeneration: number;
   monthlyGeneration: number;
   yearlyGeneration: number;
   performanceRatio: number;
-  
-  // String sizing
   stringsRequired: number;
   panelsPerString: number;
   totalStrings: number;
   stringVocCold: number;
   stringVmppHot: number;
   stringCurrent: number;
-  
-  // System checks
   inverterSizing: number;
   voltageDropDC: number;
   voltageDropAC: number;
-  
-  // Compliance
   complianceChecks: {
     stringVoltageOK: boolean;
     inverterSizingOK: boolean;
@@ -85,9 +82,10 @@ interface PVResult {
 }
 
 const SolarArrayCalculator = () => {
-  // Mode
+  const config = CALCULATOR_CONFIG['renewable'];
+
   const [advancedMode, setAdvancedMode] = useState(false);
-  
+
   // Basic inputs
   const [panelWattage, setPanelWattage] = useState("");
   const [panelLength, setPanelLength] = useState("");
@@ -95,12 +93,12 @@ const SolarArrayCalculator = () => {
   const [availableLength, setAvailableLength] = useState("");
   const [availableWidth, setAvailableWidth] = useState("");
   const [location, setLocation] = useState("uk-south");
-  
+
   // Advanced inputs
-  const [panelVoc, setPanelVoc] = useState(""); // Open circuit voltage
-  const [panelVmpp, setPanelVmpp] = useState(""); // Max power point voltage
-  const [panelImpp, setPanelImpp] = useState(""); // Max power point current
-  const [panelTempCoeff, setPanelTempCoeff] = useState("-0.38"); // Temp coefficient Voc
+  const [panelVoc, setPanelVoc] = useState("");
+  const [panelVmpp, setPanelVmpp] = useState("");
+  const [panelImpp, setPanelImpp] = useState("");
+  const [panelTempCoeff, setPanelTempCoeff] = useState("-0.38");
   const [tiltAngle, setTiltAngle] = useState("35");
   const [azimuthAngle, setAzimuthAngle] = useState("180");
   const [shadingLoss, setShadingLoss] = useState("5");
@@ -115,10 +113,14 @@ const SolarArrayCalculator = () => {
   const [dcCableLength, setDcCableLength] = useState("30");
   const [acCableLength, setAcCableLength] = useState("50");
   const [systemVoltage, setSystemVoltage] = useState("230");
-  
+
+  // Collapsible states
+  const [showGuidance, setShowGuidance] = useState(false);
+  const [showRegs, setShowRegs] = useState(false);
+  const [showAssumptions, setShowAssumptions] = useState(false);
+
   const [result, setResult] = useState<PVResult | null>(null);
 
-  // Location data for solar irradiance (simplified)
   const locationData = {
     'uk-south': { irradiance: 1100, tempAmbient: 15, name: 'UK South' },
     'uk-central': { irradiance: 1000, tempAmbient: 13, name: 'UK Central' },
@@ -132,14 +134,13 @@ const SolarArrayCalculator = () => {
     const panelWd = parseFloat(panelWidth);
     const availL = parseFloat(availableLength);
     const availW = parseFloat(availableWidth);
-    
+
     if (!panelW || !panelL || !panelWd || !availL || !availW) {
       toast({ title: "Missing inputs", description: "Please fill in all required fields", variant: "destructive" });
       return;
     }
 
-    // Advanced parameters with defaults
-    const voc = parseFloat(panelVoc) || (panelW * 0.08); // Estimate if not provided
+    const voc = parseFloat(panelVoc) || (panelW * 0.08);
     const vmpp = parseFloat(panelVmpp) || (voc * 0.82);
     const impp = parseFloat(panelImpp) || (panelW / vmpp);
     const tempCoeff = parseFloat(panelTempCoeff) / 100;
@@ -147,27 +148,24 @@ const SolarArrayCalculator = () => {
     const azimuth = parseFloat(azimuthAngle);
     const invMaxVdc = parseFloat(inverterMaxVdc);
     const invMinVdc = parseFloat(inverterMinVdc);
-    const invMaxIdc = parseFloat(inverterMaxIdc);
-    const invNomPower = parseFloat(inverterNominalPower) || (panelW * 20); // Default estimate
+    const invNomPower = parseFloat(inverterNominalPower) || (panelW * 20);
     const dcLength = parseFloat(dcCableLength);
     const acLength = parseFloat(acCableLength);
     const sysVoltage = parseFloat(systemVoltage);
 
-    // Calculate panel layout with proper spacing
-    const spacing = Math.max(0.5, panelL * 0.3); // Minimum 0.5m or 30% of panel length
-    const rowSpacing = Math.max(2.0, panelL * Math.sin(Math.PI * tilt / 180) * 2.5); // Row spacing for shading
-    
-    const panelsPerRow = Math.floor(availL / (panelL + 0.2)); // 0.2m side spacing
+    const spacing = Math.max(0.5, panelL * 0.3);
+    const rowSpacing = Math.max(2.0, panelL * Math.sin(Math.PI * tilt / 180) * 2.5);
+
+    const panelsPerRow = Math.floor(availL / (panelL + 0.2));
     const numberOfRows = Math.floor(availW / rowSpacing);
     const totalPanels = panelsPerRow * numberOfRows;
     const totalWattage = totalPanels * panelW;
 
-    // String sizing calculations
-    const tempCold = -10; // UK cold temperature
-    const tempHot = 70; // Cell temperature at high irradiance
+    const tempCold = -10;
+    const tempHot = 70;
     const vocCold = voc * (1 + tempCoeff * (tempCold - 25));
     const vmppHot = vmpp * (1 + tempCoeff * (tempHot - 25));
-    
+
     const maxPanelsPerString = Math.floor(invMaxVdc / vocCold);
     const minPanelsPerString = Math.ceil(invMinVdc / vmppHot);
     const panelsPerString = Math.min(maxPanelsPerString, Math.max(minPanelsPerString, Math.floor(totalPanels / 4)));
@@ -176,51 +174,43 @@ const SolarArrayCalculator = () => {
     const stringVocCold = vocCold * panelsPerString;
     const stringVmppHot = vmppHot * panelsPerString;
 
-    // Performance calculations
     const locationInfo = locationData[location as keyof typeof locationData];
     const annualIrradiance = locationInfo.irradiance;
-    
-    // System losses
+
     const shadingFactor = (100 - parseFloat(shadingLoss)) / 100;
     const soilingFactor = (100 - parseFloat(soilingLoss)) / 100;
     const inverterEff = parseFloat(inverterEfficiency) / 100;
     const dcLossFactor = (100 - parseFloat(dcCableLoss)) / 100;
     const acLossFactor = (100 - parseFloat(acCableLoss)) / 100;
-    const tiltFactor = Math.max(0.8, 1 - Math.abs(tilt - 35) / 100); // Optimal at 35°
-    const azimuthFactor = Math.max(0.85, 1 - Math.abs(azimuth - 180) / 180); // Optimal at 180° (South)
-    
+    const tiltFactor = Math.max(0.8, 1 - Math.abs(tilt - 35) / 100);
+    const azimuthFactor = Math.max(0.85, 1 - Math.abs(azimuth - 180) / 180);
+
     const systemEfficiency = shadingFactor * soilingFactor * inverterEff * dcLossFactor * acLossFactor * tiltFactor * azimuthFactor;
-    const performanceRatio = systemEfficiency * 0.85; // Account for other losses
-    
+    const performanceRatio = systemEfficiency * 0.85;
+
     const yearlyGeneration = (totalWattage * annualIrradiance * systemEfficiency) / 1000;
     const dailyGeneration = yearlyGeneration / 365;
     const monthlyGeneration = yearlyGeneration / 12;
 
-    // Voltage drop calculations
     const dcCurrent = totalStrings * impp;
     const dcVoltage = stringVmppHot;
     const dcPower = dcVoltage * dcCurrent;
-    const acCurrent = dcPower / (sysVoltage * Math.sqrt(3) * 0.9); // Assuming 3-phase, 0.9 PF
-    
-    // Simplified voltage drop (assuming 4mm² DC, 6mm² AC)
-    const dcVoltDropPercentage = (dcCurrent * dcLength * 0.0044) / dcVoltage * 100; // 4mm² copper
-    const acVoltDropPercentage = (acCurrent * acLength * 0.0029) / sysVoltage * 100; // 6mm² copper
+    const acCurrent = dcPower / (sysVoltage * Math.sqrt(3) * 0.9);
 
-    // Area calculations
+    const dcVoltDropPercentage = (dcCurrent * dcLength * 0.0044) / dcVoltage * 100;
+    const acVoltDropPercentage = (acCurrent * acLength * 0.0029) / sysVoltage * 100;
+
     const usedArea = totalPanels * panelL * panelWd;
     const totalArea = availL * availW;
     const areaEfficiency = (usedArea / totalArea) * 100;
-
-    // Inverter sizing ratio
     const inverterSizing = (invNomPower / totalWattage) * 100;
 
-    // Compliance checks
     const complianceChecks = {
       stringVoltageOK: stringVocCold <= invMaxVdc && stringVmppHot >= invMinVdc,
       inverterSizingOK: inverterSizing >= 90 && inverterSizing <= 120,
       voltageDropOK: dcVoltDropPercentage <= 3 && acVoltDropPercentage <= 2.5,
-      isolationDistanceOK: spacing >= 0.5, // BS 7671 minimum
-      mcsSizingOK: totalPanels >= 4 && totalWattage >= 1000 // Typical MCS requirements
+      isolationDistanceOK: spacing >= 0.5,
+      mcsSizingOK: totalPanels >= 4 && totalWattage >= 1000
     };
 
     setResult({
@@ -257,598 +247,347 @@ const SolarArrayCalculator = () => {
     setPanelVoc("");
     setPanelVmpp("");
     setPanelImpp("");
-    setPanelTempCoeff("-0.38");
-    setTiltAngle("35");
-    setAzimuthAngle("180");
-    setShadingLoss("5");
-    setSoilingLoss("3");
-    setInverterEfficiency("97");
-    setDcCableLoss("1.5");
-    setAcCableLoss("1");
-    setInverterMaxVdc("1000");
-    setInverterMinVdc("200");
-    setInverterMaxIdc("20");
-    setInverterNominalPower("");
-    setDcCableLength("30");
-    setAcCableLength("50");
-    setSystemVoltage("230");
     setResult(null);
   };
 
+  const hasValidInputs = () => {
+    return panelWattage && panelLength && panelWidth && availableLength && availableWidth;
+  };
+
+  const handlePanelSize = (value: string) => {
+    const [length, width] = value.split(',');
+    setPanelLength(length);
+    setPanelWidth(width);
+  };
+
+  const handleElectricalPreset = (label: string) => {
+    const spec = panelSpecs.electrical.find(s => s.label === label);
+    if (spec) {
+      setPanelVoc(spec.voc);
+      setPanelVmpp(spec.vmpp);
+      setPanelImpp(spec.impp);
+    }
+  };
+
+  const handleInverterPreset = (label: string) => {
+    const spec = inverterSpecs.find(s => s.label === label);
+    if (spec) {
+      setInverterMaxVdc(spec.maxVdc);
+      setInverterMinVdc(spec.minVdc);
+      setInverterMaxIdc(spec.maxIdc);
+      setInverterNominalPower(spec.power);
+    }
+  };
+
+  const allChecksPass = result && Object.values(result.complianceChecks).every(v => v);
+
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
-      <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Sun className="h-5 w-5 text-elec-yellow" />
-            PV System Designer
-          </div>
-          <MobileButton
-            onClick={() => setAdvancedMode(!advancedMode)}
+    <div className="space-y-4">
+      <CalculatorCard
+        category="renewable"
+        title="PV System Designer"
+        description="Professional solar array design with BS 7671 compliance"
+        badge="MCS"
+        headerAction={
+          <Button
             variant="outline"
             size="sm"
+            onClick={() => setAdvancedMode(!advancedMode)}
+            className="gap-2 h-8 text-xs border-white/20 hover:bg-white/10"
           >
-            <Settings className="w-4 h-4 mr-2" />
+            <Settings className="h-3 w-3" />
             {advancedMode ? 'Basic' : 'Advanced'}
-          </MobileButton>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        {/* Info Alert */}
-        <Alert>
-          <Info className="h-4 w-4" />
-          <AlertDescription>
-            Professional PV system design tool with string sizing, performance analysis, and BS 7671 compliance checks.
-          </AlertDescription>
-        </Alert>
+          </Button>
+        }
+      >
+        {/* Panel Selection */}
+        <CalculatorInputGrid columns={2}>
+          <CalculatorSelect
+            label="Panel Wattage"
+            value={panelWattage}
+            onChange={setPanelWattage}
+            options={panelSpecs.wattage.map(s => ({ value: s.value, label: s.label }))}
+            placeholder="Select wattage"
+          />
+          <CalculatorSelect
+            label="Panel Dimensions"
+            value={panelLength ? `${panelLength},${panelWidth}` : ""}
+            onChange={handlePanelSize}
+            options={panelSpecs.dimensions.map(s => ({ value: `${s.length},${s.width}`, label: s.label }))}
+            placeholder="Select size"
+          />
+        </CalculatorInputGrid>
 
-        {/* Basic Inputs */}
-        <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-elec-yellow">Panel & Site Details</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <MobileSelect value={panelWattage} onValueChange={setPanelWattage}>
-              <MobileSelectTrigger label="Panel Wattage">
-                <MobileSelectValue placeholder="Choose panel wattage" />
-              </MobileSelectTrigger>
-              <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
-                {panelSpecs.wattage.map((spec) => (
-                  <MobileSelectItem key={spec.value} value={spec.value}>{spec.label}</MobileSelectItem>
-                ))}
-              </MobileSelectContent>
-            </MobileSelect>
+        <CalculatorInputGrid columns={2}>
+          <CalculatorSelect
+            label="Location"
+            value={location}
+            onChange={setLocation}
+            options={Object.entries(locationData).map(([key, data]) => ({ value: key, label: data.name }))}
+          />
+          <CalculatorInput
+            label="Custom Wattage"
+            unit="W"
+            type="text"
+            inputMode="numeric"
+            value={panelWattage}
+            onChange={setPanelWattage}
+            placeholder="Or enter custom"
+          />
+        </CalculatorInputGrid>
 
-            <MobileSelect
-              value={panelLength ? `${panelLength},${panelWidth}` : ""}
-              onValueChange={(value) => {
-                const [length, width] = value.split(',');
-                setPanelLength(length);
-                setPanelWidth(width);
-              }}
-            >
-              <MobileSelectTrigger label="Panel Size">
-                <MobileSelectValue placeholder="Choose panel dimensions" />
-              </MobileSelectTrigger>
-              <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
-                {panelSpecs.dimensions.map((spec) => (
-                  <MobileSelectItem key={spec.label} value={`${spec.length},${spec.width}`}>
-                    {spec.label}
-                  </MobileSelectItem>
-                ))}
-              </MobileSelectContent>
-            </MobileSelect>
+        <CalculatorInputGrid columns={2}>
+          <CalculatorInput
+            label="Available Length"
+            unit="m"
+            type="text"
+            inputMode="decimal"
+            value={availableLength}
+            onChange={setAvailableLength}
+            placeholder="e.g., 12"
+          />
+          <CalculatorInput
+            label="Available Width"
+            unit="m"
+            type="text"
+            inputMode="decimal"
+            value={availableWidth}
+            onChange={setAvailableWidth}
+            placeholder="e.g., 8"
+          />
+        </CalculatorInputGrid>
 
-            <MobileSelect value={location} onValueChange={setLocation}>
-              <MobileSelectTrigger label="Location">
-                <MobileSelectValue placeholder="Select location" />
-              </MobileSelectTrigger>
-              <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
-                {Object.entries(locationData).map(([key, data]) => (
-                  <MobileSelectItem key={key} value={key}>{data.name}</MobileSelectItem>
-                ))}
-              </MobileSelectContent>
-            </MobileSelect>
-
-            <MobileInput
-              label="Custom Panel Wattage (optional)"
-              type="number"
-              value={panelWattage}
-              onChange={(e) => setPanelWattage(e.target.value)}
-              placeholder="Or enter custom wattage"
-              unit="W"
-            />
-
-            <MobileInput
-              label="Available Length"
-              type="number"
-              value={availableLength}
-              onChange={(e) => setAvailableLength(e.target.value)}
-              placeholder="e.g., 12"
-              unit="m"
-            />
-            
-            <MobileInput
-              label="Available Width"
-              type="number"
-              value={availableWidth}
-              onChange={(e) => setAvailableWidth(e.target.value)}
-              placeholder="e.g., 8"
-              unit="m"
-            />
-          </div>
-        </div>
-
-        {/* Advanced Inputs */}
+        {/* Advanced Options */}
         {advancedMode && (
-          <MobileAccordion type="multiple" className="space-y-2">
-            <MobileAccordionItem value="panel-specs">
-              <MobileAccordionTrigger>Panel Electrical Specifications</MobileAccordionTrigger>
-              <MobileAccordionContent className="space-y-4">
-                <MobileSelect
-                  value=""
-                  onValueChange={(value) => {
-                    const spec = panelSpecs.electrical.find(s => s.label === value);
-                    if (spec) {
-                      setPanelVoc(spec.voc);
-                      setPanelVmpp(spec.vmpp);
-                      setPanelImpp(spec.impp);
-                    }
-                  }}
-                >
-                  <MobileSelectTrigger label="Panel Electrical Preset">
-                    <MobileSelectValue placeholder="Choose panel electrical specs" />
-                  </MobileSelectTrigger>
-                  <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
-                    {panelSpecs.electrical.map((spec) => (
-                      <MobileSelectItem key={spec.label} value={spec.label}>{spec.label}</MobileSelectItem>
-                    ))}
-                  </MobileSelectContent>
-                </MobileSelect>
-                
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <MobileInput
-                    label="Voc (Open Circuit)"
-                    type="number"
-                    value={panelVoc}
-                    onChange={(e) => setPanelVoc(e.target.value)}
-                    placeholder="e.g., 49.5"
-                    unit="V"
-                  />
-                  <MobileInput
-                    label="Vmpp (Max Power Point)"
-                    type="number"
-                    value={panelVmpp}
-                    onChange={(e) => setPanelVmpp(e.target.value)}
-                    placeholder="e.g., 40.6"
-                    unit="V"
-                  />
-                  <MobileInput
-                    label="Impp (Max Power Current)"
-                    type="number"
-                    value={panelImpp}
-                    onChange={(e) => setPanelImpp(e.target.value)}
-                    placeholder="e.g., 9.85"
-                    unit="A"
-                  />
-                  <MobileInput
-                    label="Temp Coeff Voc"
-                    type="number"
-                    value={panelTempCoeff}
-                    onChange={(e) => setPanelTempCoeff(e.target.value)}
-                    placeholder="e.g., -0.38"
-                    unit="%/°C"
-                  />
-                </div>
-              </MobileAccordionContent>
-            </MobileAccordionItem>
+          <div className="space-y-4 pt-4 border-t border-white/10">
+            <h4 className="text-sm font-medium text-white/80">Panel Electrical</h4>
+            <CalculatorSelect
+              label="Electrical Preset"
+              value=""
+              onChange={handleElectricalPreset}
+              options={panelSpecs.electrical.map(s => ({ value: s.label, label: s.label }))}
+              placeholder="Select preset"
+            />
+            <CalculatorInputGrid columns={3}>
+              <CalculatorInput label="Voc" unit="V" type="text" inputMode="decimal" value={panelVoc} onChange={setPanelVoc} placeholder="49.5" />
+              <CalculatorInput label="Vmpp" unit="V" type="text" inputMode="decimal" value={panelVmpp} onChange={setPanelVmpp} placeholder="40.6" />
+              <CalculatorInput label="Impp" unit="A" type="text" inputMode="decimal" value={panelImpp} onChange={setPanelImpp} placeholder="9.85" />
+            </CalculatorInputGrid>
 
-            <MobileAccordionItem value="system-config">
-              <MobileAccordionTrigger>System Configuration</MobileAccordionTrigger>
-              <MobileAccordionContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <MobileInput
-                    label="Tilt Angle"
-                    type="number"
-                    value={tiltAngle}
-                    onChange={(e) => setTiltAngle(e.target.value)}
-                    placeholder="e.g., 35"
-                    unit="°"
-                  />
-                  <MobileInput
-                    label="Azimuth Angle"
-                    type="number"
-                    value={azimuthAngle}
-                    onChange={(e) => setAzimuthAngle(e.target.value)}
-                    placeholder="e.g., 180 (South)"
-                    unit="°"
-                  />
-                  <MobileInput
-                    label="Shading Loss"
-                    type="number"
-                    value={shadingLoss}
-                    onChange={(e) => setShadingLoss(e.target.value)}
-                    placeholder="e.g., 5"
-                    unit="%"
-                  />
-                  <MobileInput
-                    label="Soiling Loss"
-                    type="number"
-                    value={soilingLoss}
-                    onChange={(e) => setSoilingLoss(e.target.value)}
-                    placeholder="e.g., 3"
-                    unit="%"
-                  />
-                </div>
-              </MobileAccordionContent>
-            </MobileAccordionItem>
+            <h4 className="text-sm font-medium text-white/80 pt-2">Inverter</h4>
+            <CalculatorSelect
+              label="Inverter Preset"
+              value=""
+              onChange={handleInverterPreset}
+              options={inverterSpecs.map(s => ({ value: s.label, label: s.label }))}
+              placeholder="Select inverter"
+            />
+            <CalculatorInputGrid columns={2}>
+              <CalculatorInput label="Max Vdc" unit="V" type="text" inputMode="numeric" value={inverterMaxVdc} onChange={setInverterMaxVdc} placeholder="1000" />
+              <CalculatorInput label="Min Vdc" unit="V" type="text" inputMode="numeric" value={inverterMinVdc} onChange={setInverterMinVdc} placeholder="200" />
+              <CalculatorInput label="Nominal Power" unit="W" type="text" inputMode="numeric" value={inverterNominalPower} onChange={setInverterNominalPower} placeholder="8000" />
+              <CalculatorInput label="Efficiency" unit="%" type="text" inputMode="decimal" value={inverterEfficiency} onChange={setInverterEfficiency} placeholder="97" />
+            </CalculatorInputGrid>
 
-            <MobileAccordionItem value="inverter-specs">
-              <MobileAccordionTrigger>Inverter Specifications</MobileAccordionTrigger>
-              <MobileAccordionContent className="space-y-4">
-                <MobileSelect
-                  value=""
-                  onValueChange={(value) => {
-                    const spec = inverterSpecs.find(s => s.label === value);
-                    if (spec) {
-                      setInverterMaxVdc(spec.maxVdc);
-                      setInverterMinVdc(spec.minVdc);
-                      setInverterMaxIdc(spec.maxIdc);
-                      setInverterNominalPower(spec.power);
-                    }
-                  }}
-                >
-                  <MobileSelectTrigger label="Inverter Preset">
-                    <MobileSelectValue placeholder="Choose inverter specifications" />
-                  </MobileSelectTrigger>
-                  <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
-                    {inverterSpecs.map((spec) => (
-                      <MobileSelectItem key={spec.label} value={spec.label}>{spec.label}</MobileSelectItem>
-                    ))}
-                  </MobileSelectContent>
-                </MobileSelect>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <MobileInput
-                    label="Max DC Voltage"
-                    type="number"
-                    value={inverterMaxVdc}
-                    onChange={(e) => setInverterMaxVdc(e.target.value)}
-                    placeholder="e.g., 1000"
-                    unit="V"
-                  />
-                  <MobileInput
-                    label="Min DC Voltage"
-                    type="number"
-                    value={inverterMinVdc}
-                    onChange={(e) => setInverterMinVdc(e.target.value)}
-                    placeholder="e.g., 200"
-                    unit="V"
-                  />
-                  <MobileInput
-                    label="Max DC Current"
-                    type="number"
-                    value={inverterMaxIdc}
-                    onChange={(e) => setInverterMaxIdc(e.target.value)}
-                    placeholder="e.g., 20"
-                    unit="A"
-                  />
-                  <MobileInput
-                    label="Nominal Power"
-                    type="number"
-                    value={inverterNominalPower}
-                    onChange={(e) => setInverterNominalPower(e.target.value)}
-                    placeholder="e.g., 8000"
-                    unit="W"
-                  />
-                  <MobileInput
-                    label="Efficiency"
-                    type="number"
-                    value={inverterEfficiency}
-                    onChange={(e) => setInverterEfficiency(e.target.value)}
-                    placeholder="e.g., 97"
-                    unit="%"
-                  />
-                </div>
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-
-            <MobileAccordionItem value="system-losses">
-              <MobileAccordionTrigger>System Losses & Cabling</MobileAccordionTrigger>
-              <MobileAccordionContent className="space-y-4">
-                <MobileSelect
-                  value=""
-                  onValueChange={(value) => {
-                    const spec = cableSpecs.find(s => s.label === value);
-                    if (spec) {
-                      setDcCableLoss(spec.dcLoss);
-                      setAcCableLoss(spec.acLoss);
-                    }
-                  }}
-                >
-                  <MobileSelectTrigger label="Cable Run Preset">
-                    <MobileSelectValue placeholder="Choose cable run length preset" />
-                  </MobileSelectTrigger>
-                  <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
-                    {cableSpecs.map((spec) => (
-                      <MobileSelectItem key={spec.label} value={spec.label}>{spec.label}</MobileSelectItem>
-                    ))}
-                  </MobileSelectContent>
-                </MobileSelect>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <MobileInput
-                    label="DC Cable Loss"
-                    type="number"
-                    value={dcCableLoss}
-                    onChange={(e) => setDcCableLoss(e.target.value)}
-                    placeholder="e.g., 1.5"
-                    unit="%"
-                  />
-                  <MobileInput
-                    label="AC Cable Loss"
-                    type="number"
-                    value={acCableLoss}
-                    onChange={(e) => setAcCableLoss(e.target.value)}
-                    placeholder="e.g., 1"
-                    unit="%"
-                  />
-                  <MobileInput
-                    label="DC Cable Length"
-                    type="number"
-                    value={dcCableLength}
-                    onChange={(e) => setDcCableLength(e.target.value)}
-                    placeholder="e.g., 30"
-                    unit="m"
-                  />
-                  <MobileInput
-                    label="AC Cable Length"
-                    type="number"
-                    value={acCableLength}
-                    onChange={(e) => setAcCableLength(e.target.value)}
-                    placeholder="e.g., 50"
-                    unit="m"
-                  />
-                  <MobileInput
-                    label="System Voltage"
-                    type="number"
-                    value={systemVoltage}
-                    onChange={(e) => setSystemVoltage(e.target.value)}
-                    placeholder="e.g., 230"
-                    unit="V"
-                  />
-                </div>
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-          </MobileAccordion>
-        )}
-
-        {/* Action Buttons */}
-        <div className="flex gap-2">
-          <MobileButton onClick={calculatePVSystem} className="flex-1">
-            <Calculator className="w-4 h-4 mr-2" />
-            Calculate System
-          </MobileButton>
-          <MobileButton onClick={reset} variant="outline">
-            <RotateCcw className="w-4 h-4" />
-          </MobileButton>
-        </div>
-
-        {/* Results */}
-        {result && (
-          <div className="space-y-6">
-            {/* System Layout */}
-            <div className="p-6 bg-elec-gray rounded-lg border border-elec-yellow/20">
-              <h3 className="font-semibold text-elec-yellow mb-4 flex items-center gap-2 text-lg">
-                <Sun className="h-5 w-5" />
-                System Layout & Performance
-              </h3>
-              <div className="space-y-6 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-6">
-                <div className="space-y-3">
-                  <h4 className="text-elec-yellow font-medium text-base mb-3 border-b border-elec-yellow/20 pb-2">Array Configuration</h4>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-elec-light">Panels per row:</span>
-                      <span className="text-elec-yellow font-medium">{result.panelsPerRow}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-elec-light">Number of rows:</span>
-                      <span className="text-elec-yellow font-medium">{result.numberOfRows}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-elec-light">Total panels:</span>
-                      <span className="text-elec-yellow font-medium">{result.totalPanels}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-elec-light">Total capacity:</span>
-                      <span className="text-elec-yellow font-medium">{(result.totalWattage/1000).toFixed(1)} kWp</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-3">
-                  <h4 className="text-elec-yellow font-medium text-base mb-3 border-b border-elec-yellow/20 pb-2">String Configuration</h4>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-elec-light">Total strings:</span>
-                      <span className="text-elec-yellow font-medium">{result.totalStrings}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-elec-light">Panels per string:</span>
-                      <span className="text-elec-yellow font-medium">{result.panelsPerString}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-elec-light">String Voc (cold):</span>
-                      <span className="text-elec-yellow font-medium">{result.stringVocCold.toFixed(0)} V</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-elec-light">String Vmpp (hot):</span>
-                      <span className="text-elec-yellow font-medium">{result.stringVmppHot.toFixed(0)} V</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-3">
-                  <h4 className="text-elec-yellow font-medium text-base mb-3 border-b border-elec-yellow/20 pb-2">Annual Performance</h4>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-elec-light">Yearly generation:</span>
-                      <span className="text-elec-yellow font-medium">{result.yearlyGeneration.toFixed(0)} kWh</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-elec-light">Performance ratio:</span>
-                      <span className="text-elec-yellow font-medium">{(result.performanceRatio * 100).toFixed(1)}%</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-elec-light">Area efficiency:</span>
-                      <span className="text-elec-yellow font-medium">{result.areaEfficiency.toFixed(1)}%</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-elec-light">Inverter sizing:</span>
-                      <span className="text-elec-yellow font-medium">{result.inverterSizing.toFixed(0)}%</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Compliance Checks */}
-            <div className="p-6 bg-elec-gray rounded-lg border border-elec-yellow/20">
-              <h3 className="font-semibold text-elec-yellow mb-4 flex items-center gap-2 text-lg">
-                <CheckCircle className="h-5 w-5" />
-                BS 7671 Compliance Checks
-              </h3>
-              <div className="space-y-4">
-                <div className="space-y-3">
-                  <div className="flex items-start gap-3 p-3 rounded-lg bg-elec-dark/50">
-                    {result.complianceChecks.stringVoltageOK ? 
-                      <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" /> : 
-                      <XCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
-                    }
-                    <div>
-                      <p className="font-medium text-sm">String voltage within inverter limits</p>
-                      <p className="text-xs text-elec-light mt-1">Voc cold: {result.stringVocCold.toFixed(0)}V, Vmpp hot: {result.stringVmppHot.toFixed(0)}V</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-3 p-3 rounded-lg bg-elec-dark/50">
-                    {result.complianceChecks.inverterSizingOK ? 
-                      <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" /> : 
-                      <AlertTriangle className="h-5 w-5 text-amber-400 mt-0.5 flex-shrink-0" />
-                    }
-                    <div>
-                      <p className="font-medium text-sm">Inverter sizing (90-120% recommended)</p>
-                      <p className="text-xs text-elec-light mt-1">Current sizing: {result.inverterSizing.toFixed(0)}%</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-3 p-3 rounded-lg bg-elec-dark/50">
-                    {result.complianceChecks.voltageDropOK ? 
-                      <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" /> : 
-                      <XCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
-                    }
-                    <div>
-                      <p className="font-medium text-sm">Voltage drop within limits</p>
-                      <p className="text-xs text-elec-light mt-1">DC: {result.voltageDropDC.toFixed(2)}% (max 3%), AC: {result.voltageDropAC.toFixed(2)}% (max 2.5%)</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-3 p-3 rounded-lg bg-elec-dark/50">
-                    {result.complianceChecks.isolationDistanceOK ? 
-                      <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" /> : 
-                      <XCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
-                    }
-                    <div>
-                      <p className="font-medium text-sm">Minimum isolation distances</p>
-                      <p className="text-xs text-elec-light mt-1">BS 7671 spacing requirements met</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-3 p-3 rounded-lg bg-elec-dark/50">
-                    {result.complianceChecks.mcsSizingOK ? 
-                      <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" /> : 
-                      <AlertTriangle className="h-5 w-5 text-amber-400 mt-0.5 flex-shrink-0" />
-                    }
-                    <div>
-                      <p className="font-medium text-sm">MCS sizing requirements</p>
-                      <p className="text-xs text-elec-light mt-1">Minimum panel count and capacity requirements</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Professional Analysis */}
-            <div className="p-6 bg-elec-gray rounded-lg border border-elec-yellow/20">
-              <h3 className="font-semibold text-elec-yellow mb-4 flex items-center gap-2 text-lg">
-                <Info className="h-5 w-5" />
-                System Analysis & Recommendations
-              </h3>
-              <div className="space-y-6 text-sm text-elec-light">
-                <div className="space-y-3">
-                  <h4 className="font-medium text-elec-yellow text-base border-b border-elec-yellow/20 pb-2">Performance Analysis</h4>
-                  <div className="space-y-2 pl-3 border-l-2 border-elec-yellow/30">
-                    <p>• Performance ratio of <span className="text-elec-yellow font-medium">{(result.performanceRatio * 100).toFixed(1)}%</span> is <span className="text-elec-yellow">{result.performanceRatio > 0.8 ? 'excellent' : result.performanceRatio > 0.75 ? 'good' : 'below average'}</span> for UK installations</p>
-                    <p>• Annual yield of <span className="text-elec-yellow font-medium">{(result.yearlyGeneration / result.totalWattage * 1000).toFixed(0)} kWh/kWp</span> is <span className="text-elec-yellow">{result.yearlyGeneration / result.totalWattage * 1000 > 900 ? 'above average' : 'typical'}</span> for the selected location</p>
-                    <p>• Area utilisation of <span className="text-elec-yellow font-medium">{result.areaEfficiency.toFixed(1)}%</span> optimises available space effectively</p>
-                  </div>
-                </div>
-                
-                <div className="space-y-3">
-                  <h4 className="font-medium text-elec-yellow text-base border-b border-elec-yellow/20 pb-2">Regulatory Compliance (BS 7671)</h4>
-                  <div className="space-y-2 pl-3 border-l-2 border-elec-yellow/30">
-                    <p>• <span className="text-elec-yellow font-medium">DC isolation:</span> Ensure minimum 6mm air gap and 4mm creepage for safety disconnection</p>
-                    <p>• <span className="text-elec-yellow font-medium">Earth fault protection:</span> Install residual current monitoring device (RCMD) for enhanced safety</p>
-                    <p>• <span className="text-elec-yellow font-medium">Surge protection:</span> Type 2 SPDs required at DC and AC sides as per Section 534</p>
-                    <p>• <span className="text-elec-yellow font-medium">Cable sizing:</span> Verify current-carrying capacity with installation method and ambient temperature</p>
-                  </div>
-                </div>
-
-                <div className="space-y-3">
-                  <h4 className="font-medium text-elec-yellow text-base border-b border-elec-yellow/20 pb-2">Installation Considerations</h4>
-                  <div className="space-y-2 pl-3 border-l-2 border-elec-yellow/30">
-                    <p>• <span className="text-elec-yellow font-medium">String configuration:</span> Allows for future expansion with additional MPPT inputs</p>
-                    <p>• <span className="text-elec-yellow font-medium">MC4 connectors:</span> Specify outdoor weatherproofing (IP67 minimum)</p>
-                    <p>• <span className="text-elec-yellow font-medium">Fire safety:</span> Maintain 1m setback from roof edges and 3m between arrays on large installations</p>
-                    <p>• <span className="text-elec-yellow font-medium">Protection:</span> Bird/vermin guards recommended for roof-mounted installations</p>
-                  </div>
-                </div>
-
-                {!result.complianceChecks.voltageDropOK && (
-                  <div className="p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
-                    <h4 className="font-medium text-red-400 mb-3 flex items-center gap-2">
-                      <AlertTriangle className="h-4 w-4" />
-                      Action Required
-                    </h4>
-                    <p className="text-red-300 mb-2 font-medium">Voltage drop exceeds regulatory limits. Consider:</p>
-                    <div className="space-y-1 pl-3 border-l-2 border-red-500/30">
-                      <p className="text-red-200">• Larger cable cross-sectional area (6mm² DC, 10mm² AC minimum)</p>
-                      <p className="text-red-200">• Shorter cable runs or intermediate junction boxes</p>
-                      <p className="text-red-200">• Higher DC operating voltage with series string configuration</p>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
+            <h4 className="text-sm font-medium text-white/80 pt-2">System Config</h4>
+            <CalculatorInputGrid columns={2}>
+              <CalculatorInput label="Tilt Angle" unit="°" type="text" inputMode="numeric" value={tiltAngle} onChange={setTiltAngle} placeholder="35" />
+              <CalculatorInput label="Azimuth" unit="°" type="text" inputMode="numeric" value={azimuthAngle} onChange={setAzimuthAngle} placeholder="180" />
+              <CalculatorInput label="Shading Loss" unit="%" type="text" inputMode="decimal" value={shadingLoss} onChange={setShadingLoss} placeholder="5" />
+              <CalculatorInput label="Soiling Loss" unit="%" type="text" inputMode="decimal" value={soilingLoss} onChange={setSoilingLoss} placeholder="3" />
+            </CalculatorInputGrid>
           </div>
         )}
 
-        {/* Assumptions */}
-        <MobileAccordion type="single" collapsible>
-          <MobileAccordionItem value="assumptions">
-            <MobileAccordionTrigger>Calculation Assumptions</MobileAccordionTrigger>
-            <MobileAccordionContent className="space-y-2 text-sm text-elec-light">
-              <p>• Panel spacing includes 0.5m minimum for maintenance access</p>
-              <p>• Row spacing calculated to prevent shading at winter solstice</p>
-              <p>• Cold temperature: -10°C, Hot cell temperature: 70°C</p>
-              <p>• Standard Test Conditions (STC): 1000 W/m², 25°C, AM 1.5</p>
-              <p>• DC cable: 4mm² copper, AC cable: 6mm² copper (adjustable in advanced mode)</p>
-              <p>• System grounding and earthing as per BS 7671 requirements</p>
-              <p>• Annual degradation not included (typically 0.5-0.8% per year)</p>
-              <p>• Irradiance data based on UK regional averages</p>
-            </MobileAccordionContent>
-          </MobileAccordionItem>
-        </MobileAccordion>
-      </CardContent>
-    </Card>
+        <CalculatorActions
+          category="renewable"
+          onCalculate={calculatePVSystem}
+          onReset={reset}
+          isDisabled={!hasValidInputs()}
+          calculateLabel="Design System"
+        />
+      </CalculatorCard>
+
+      {result && (
+        <div className="space-y-4 animate-fade-in">
+          {/* Main Results */}
+          <CalculatorResult category="renewable">
+            <div className="text-center pb-4 border-b border-white/10">
+              <p className="text-sm text-white/60 mb-1">System Capacity</p>
+              <div
+                className="text-4xl font-bold bg-clip-text text-transparent"
+                style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}
+              >
+                {(result.totalWattage / 1000).toFixed(1)} kWp
+              </div>
+              <div className="flex justify-center gap-2 mt-2">
+                <Badge variant="outline" className="text-green-400 border-green-400/50">
+                  {result.totalPanels} panels
+                </Badge>
+                <Badge variant="outline" className="text-green-400 border-green-400/50">
+                  {result.totalStrings} strings
+                </Badge>
+              </div>
+            </div>
+
+            {/* Layout */}
+            <div className="pt-4">
+              <h4 className="text-sm font-medium text-white/80 mb-3">Array Layout</h4>
+              <ResultsGrid columns={2}>
+                <ResultValue label="Panels per Row" value={result.panelsPerRow.toString()} category="renewable" size="sm" />
+                <ResultValue label="Number of Rows" value={result.numberOfRows.toString()} category="renewable" size="sm" />
+                <ResultValue label="Panels per String" value={result.panelsPerString.toString()} category="renewable" size="sm" />
+                <ResultValue label="Area Efficiency" value={result.areaEfficiency.toFixed(1)} unit="%" category="renewable" size="sm" />
+              </ResultsGrid>
+            </div>
+
+            {/* Performance */}
+            <div className="pt-4 mt-4 border-t border-white/10">
+              <h4 className="text-sm font-medium text-white/80 mb-3">Annual Performance</h4>
+              <ResultsGrid columns={2}>
+                <ResultValue label="Yearly Generation" value={(result.yearlyGeneration).toFixed(0)} unit="kWh" category="renewable" size="sm" />
+                <ResultValue label="Performance Ratio" value={(result.performanceRatio * 100).toFixed(1)} unit="%" category="renewable" size="sm" />
+                <ResultValue label="Daily Average" value={result.dailyGeneration.toFixed(1)} unit="kWh" category="renewable" size="sm" />
+                <ResultValue label="Inverter Sizing" value={result.inverterSizing.toFixed(0)} unit="%" category="renewable" size="sm" />
+              </ResultsGrid>
+            </div>
+
+            {/* String Voltages */}
+            <div className="pt-4 mt-4 border-t border-white/10">
+              <h4 className="text-sm font-medium text-white/80 mb-3">String Configuration</h4>
+              <ResultsGrid columns={2}>
+                <ResultValue label="Voc (Cold)" value={result.stringVocCold.toFixed(0)} unit="V" category="renewable" size="sm" />
+                <ResultValue label="Vmpp (Hot)" value={result.stringVmppHot.toFixed(0)} unit="V" category="renewable" size="sm" />
+                <ResultValue label="DC Voltage Drop" value={result.voltageDropDC.toFixed(2)} unit="%" category="renewable" size="sm" />
+                <ResultValue label="AC Voltage Drop" value={result.voltageDropAC.toFixed(2)} unit="%" category="renewable" size="sm" />
+              </ResultsGrid>
+            </div>
+          </CalculatorResult>
+
+          {/* Compliance Checks */}
+          <div className="calculator-card p-4" style={{ borderColor: allChecksPass ? '#22c55e20' : '#ef444420' }}>
+            <div className="flex items-center gap-2 mb-4">
+              {allChecksPass ? (
+                <CheckCircle2 className="h-5 w-5 text-green-400" />
+              ) : (
+                <AlertTriangle className="h-5 w-5 text-orange-400" />
+              )}
+              <span className="font-semibold text-white">BS 7671 Compliance</span>
+            </div>
+            <div className="space-y-2">
+              {[
+                { check: result.complianceChecks.stringVoltageOK, label: "String voltage within inverter limits", detail: `Voc: ${result.stringVocCold.toFixed(0)}V` },
+                { check: result.complianceChecks.inverterSizingOK, label: "Inverter sizing (90-120%)", detail: `${result.inverterSizing.toFixed(0)}%` },
+                { check: result.complianceChecks.voltageDropOK, label: "Voltage drop within limits", detail: `DC: ${result.voltageDropDC.toFixed(2)}%, AC: ${result.voltageDropAC.toFixed(2)}%` },
+                { check: result.complianceChecks.isolationDistanceOK, label: "Isolation distances", detail: "BS 7671 compliant" },
+                { check: result.complianceChecks.mcsSizingOK, label: "MCS requirements", detail: `${result.totalPanels} panels, ${(result.totalWattage/1000).toFixed(1)}kWp` },
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-3 p-2 rounded-lg bg-white/5">
+                  {item.check ? (
+                    <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0" />
+                  ) : (
+                    <XCircle className="h-4 w-4 text-red-400 shrink-0" />
+                  )}
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm text-white">{item.label}</p>
+                    <p className="text-xs text-white/60">{item.detail}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Voltage Drop Warning */}
+          {!result.complianceChecks.voltageDropOK && (
+            <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/30">
+              <div className="flex items-start gap-2">
+                <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 shrink-0" />
+                <div className="space-y-1 text-sm text-red-200">
+                  <p className="font-medium">Voltage drop exceeds limits</p>
+                  <p>Consider larger cable CSA or shorter runs</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Guidance */}
+          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
+              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                <div className="flex items-center gap-3">
+                  <Info className="h-4 w-4 text-blue-400" />
+                  <span className="text-sm sm:text-base font-medium text-blue-300">System Analysis</span>
+                </div>
+                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showGuidance && "rotate-180")} />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="p-4 pt-0 space-y-2">
+                <p className="text-sm text-blue-200/80">
+                  Performance ratio of <strong className="text-blue-300">{(result.performanceRatio * 100).toFixed(1)}%</strong> is {result.performanceRatio > 0.8 ? 'excellent' : result.performanceRatio > 0.75 ? 'good' : 'below average'} for UK installations.
+                </p>
+                <p className="text-sm text-blue-200/80">
+                  Annual yield: <strong className="text-blue-300">{(result.yearlyGeneration / result.totalWattage * 1000).toFixed(0)} kWh/kWp</strong>
+                </p>
+                <p className="text-sm text-blue-200/80">
+                  Area utilisation of <strong className="text-blue-300">{result.areaEfficiency.toFixed(1)}%</strong> optimises available space.
+                </p>
+              </CollapsibleContent>
+            </div>
+          </Collapsible>
+
+          {/* BS 7671 Reference */}
+          <Collapsible open={showRegs} onOpenChange={setShowRegs}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
+              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                <div className="flex items-center gap-3">
+                  <BookOpen className="h-4 w-4 text-amber-400" />
+                  <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 Requirements</span>
+                </div>
+                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showRegs && "rotate-180")} />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="p-4 pt-0">
+                <div className="space-y-2 text-sm text-amber-200/80">
+                  <p><strong className="text-amber-300">DC isolation:</strong> Min 6mm air gap, 4mm creepage</p>
+                  <p><strong className="text-amber-300">Section 712:</strong> Solar PV power supply systems</p>
+                  <p><strong className="text-amber-300">Section 534:</strong> Type 2 SPDs at DC and AC sides</p>
+                  <p><strong className="text-amber-300">Fire safety:</strong> 1m setback from roof edges</p>
+                </div>
+              </CollapsibleContent>
+            </div>
+          </Collapsible>
+
+          {/* Assumptions */}
+          <Collapsible open={showAssumptions} onOpenChange={setShowAssumptions}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#a78bfa15' }}>
+              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                <div className="flex items-center gap-3">
+                  <Sun className="h-4 w-4 text-purple-400" />
+                  <span className="text-sm sm:text-base font-medium text-purple-300">Calculation Assumptions</span>
+                </div>
+                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showAssumptions && "rotate-180")} />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="p-4 pt-0">
+                <div className="space-y-2 text-sm text-purple-200/80">
+                  <p>Cold temp: -10°C, Hot cell temp: 70°C</p>
+                  <p>STC: 1000 W/m², 25°C, AM 1.5</p>
+                  <p>DC cable: 4mm² copper, AC: 6mm² copper</p>
+                  <p>Annual degradation not included</p>
+                </div>
+              </CollapsibleContent>
+            </div>
+          </Collapsible>
+        </div>
+      )}
+
+      {/* Formula Reference */}
+      <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
+        <div className="flex items-start gap-2">
+          <Info className="h-4 w-4 text-green-400 mt-0.5 shrink-0" />
+          <p className="text-sm text-green-200">
+            <strong>Annual Yield</strong> = Capacity × Irradiance × PR. UK typical: 850-1000 kWh/kWp/year.
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };
 

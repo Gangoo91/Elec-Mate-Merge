@@ -1,5 +1,5 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BookOpen, Target, Brain, Clock, Heart, Lightbulb } from "lucide-react";
@@ -18,7 +18,7 @@ const StudyTips = () => {
         <p className="text-muted-foreground text-center max-w-2xl mb-4">
           Your complete study companion for electrical training success. Master 18th Edition, Level 3, and all electrical qualifications with comprehensive learning resources and proven study strategies.
         </p>
-        <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
+        <SmartBackButton />
       </div>
 
       {/* Quick Stats */}

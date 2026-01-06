@@ -1,19 +1,13 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileText, ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { FileText } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 
 const BusinessTemplates = () => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center gap-2">
-        <Link to="/electrician/business-development">
-          <Button variant="ghost" size="sm" className="gap-1">
-            <ArrowLeft className="h-4 w-4" />
-            <span>Back</span>
-          </Button>
-        </Link>
+        <SmartBackButton />
         <h1 className="text-2xl font-bold">Business Templates</h1>
       </div>
       

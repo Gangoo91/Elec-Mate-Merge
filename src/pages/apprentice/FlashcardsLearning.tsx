@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { BookOpen, ChevronLeft, ChevronRight, Info, RotateCcw, Zap } from "lucide-react";
 import { useState } from "react";
 
@@ -193,7 +193,7 @@ const FlashcardsLearning = () => {
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Flashcards</h1>
           <p className="text-muted-foreground text-sm mt-1">Quick revision for key electrical concepts</p>
         </div>
-        <BackButton customUrl="/apprentice/on-job-tools" label="Back to Tools" />
+        <SmartBackButton />
       </div>
 
       {/* Header Card */}

@@ -202,13 +202,13 @@ const Module3Section2_2: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -223,32 +223,32 @@ const Module3Section2_2: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Wrench className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Wrench className="w-6 h-6 text-white" />
             </div>
             <Badge
               variant="outline"
-              className="border-emerald-500/30 text-emerald-400"
+              className="border-elec-yellow/30 text-elec-yellow"
             >
               Section 3.2.2
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             PVC and Metal Conduit (Surface/Recessed)
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Understanding conduit materials, installation methods and practical application techniques.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Introduction
           </h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>PVC: lightweight, easy to work, cost-effective for most applications.</li>
                 <li>Steel: maximum protection, can be earthed, ideal for harsh environments.</li>
@@ -256,8 +256,8 @@ const Module3Section2_2: React.FC = () => {
                 <li>Choose based on environment, protection needs and aesthetic requirements.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>
                   <strong>Spot:</strong> Round white (PVC) or grey/black (steel) tubes on surfaces or in walls.
@@ -274,11 +274,11 @@ const Module3Section2_2: React.FC = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Learning outcomes
           </h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Identify the characteristics of PVC and metal conduit systems.</li>
             <li>Explain the differences between surface and recessed conduit installation.</li>
             <li>Select the correct conduit type for different environments and applications.</li>
@@ -288,18 +288,18 @@ const Module3Section2_2: React.FC = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Conduit Types */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Shield className="w-5 h-5" /> Conduit Types and Characteristics
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">PVC Conduit Systems</p>
                   <div className="space-y-3">
                     <div>
@@ -333,7 +333,7 @@ const Module3Section2_2: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Metal Conduit Systems (Steel)</p>
                   <div className="space-y-3">
                     <div>
@@ -375,13 +375,13 @@ const Module3Section2_2: React.FC = () => {
 
           {/* Installation Methods */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Settings className="w-5 h-5" /> Installation Methods: Surface vs Recessed
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                   <p className="font-medium mb-2">Surface-Mounted Installation</p>
                   <div className="space-y-3">
                     <div>
@@ -413,7 +413,7 @@ const Module3Section2_2: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Recessed (Flush) Installation</p>
                   <div className="space-y-3">
                     <div>
@@ -454,12 +454,12 @@ const Module3Section2_2: React.FC = () => {
 
           {/* Practical Installation Techniques */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Wrench className="w-5 h-5" /> Practical Installation Techniques
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-4 bg-card border border-amber-400/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
                 <p className="font-medium mb-2">PVC Conduit Installation</p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
@@ -485,7 +485,7 @@ const Module3Section2_2: React.FC = () => {
                 </div>
               </div>
 
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-2">Steel Conduit Installation</p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
@@ -545,12 +545,12 @@ const Module3Section2_2: React.FC = () => {
         </Card>
 
         {/* Common Mistakes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Common Mistakes and How to Avoid Them</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Common Mistakes and How to Avoid Them</h2>
           
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <p className="font-medium mb-2 text-emerald-400">Excessive bends between draw points</p>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <p className="font-medium mb-2 text-elec-yellow">Excessive bends between draw points</p>
               <ul className="list-disc pl-4 space-y-1 text-red-200">
                 <li>More than 4 x 90° bends making cable pulling impossible</li>
                 <li>Tight radius bends damaging cables during installation</li>
@@ -558,7 +558,7 @@ const Module3Section2_2: React.FC = () => {
               </ul>
             </div>
 
-            <div className="rounded-lg p-4 bg-card border border-amber-400/30">
+            <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
               <p className="font-medium mb-2 text-amber-300">Poor support and fixing</p>
               <ul className="list-disc pl-4 space-y-1 text-amber-200">
                 <li>Inadequate support spacing causing conduit sag</li>
@@ -567,8 +567,8 @@ const Module3Section2_2: React.FC = () => {
               </ul>
             </div>
 
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <p className="font-medium mb-2 text-emerald-400">Steel conduit earthing failures</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <p className="font-medium mb-2 text-elec-yellow">Steel conduit earthing failures</p>
               <ul className="list-disc pl-4 space-y-1 text-orange-200">
                 <li>Poor electrical continuity through joints</li>
                 <li>Relying on paint or corrosion-compromised connections</li>
@@ -576,8 +576,8 @@ const Module3Section2_2: React.FC = () => {
               </ul>
             </div>
 
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <p className="font-medium mb-2 text-emerald-400">Inadequate cable protection</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <p className="font-medium mb-2 text-elec-yellow">Inadequate cable protection</p>
               <ul className="list-disc pl-4 space-y-1 text-purple-200">
                 <li>Missing bushes allowing cable insulation damage</li>
                 <li>Sharp edges not removed from cut conduit</li>
@@ -588,11 +588,11 @@ const Module3Section2_2: React.FC = () => {
         </Card>
 
         {/* BS 7671 Context */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">BS 7671 Context and Compliance</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">BS 7671 Context and Compliance</h2>
           
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <p className="text-muted-foreground">
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <p className="text-white">
               Conduit installation must comply with specific BS 7671 requirements:
             </p>
 
@@ -604,11 +604,11 @@ const Module3Section2_2: React.FC = () => {
               <li><strong>Section 522.3:</strong> Selection according to external influences (temperature, corrosion, impact)</li>
             </ul>
 
-            <div className="mt-6 p-4 border-l-4 border-emerald-500 bg-emerald-500/10 rounded-r-lg">
+            <div className="mt-6 p-4 border-l-4 border-elec-yellow bg-elec-yellow/10 rounded-r-lg">
               <div className="flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="font-medium text-emerald-400 mb-1">Key Testing Requirement</p>
+                  <p className="font-medium text-elec-yellow mb-1">Key Testing Requirement</p>
                   <p className="text-sm">
                     "Where metallic conduit is used as protective conductor, electrical continuity must be verified by measurement. 
                     Maximum resistance should not exceed 0.05Ω per joint." - Section 543.2.9
@@ -620,14 +620,14 @@ const Module3Section2_2: React.FC = () => {
         </Card>
 
         {/* Real‑world scenario */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border border-border/30">
-          <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border border-border/30">
+          <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
             <Target className="w-5 h-5" /> Real‑world scenario: Retail store refurbishment
           </h2>
           
           <div className="p-4 border-l-4 border-emerald-400 bg-emerald-400/5 rounded-r-lg mb-4">
             <div className="flex items-start gap-3">
-              <Building className="w-6 h-6 text-emerald-400 mt-1 flex-shrink-0" />
+              <Building className="w-6 h-6 text-elec-yellow mt-1 flex-shrink-0" />
               <div className="text-blue-200">
                 <p className="font-medium mb-2">The Challenge</p>
                 <p className="text-sm leading-relaxed">
@@ -645,7 +645,7 @@ const Module3Section2_2: React.FC = () => {
           </div>
 
           <div className="grid md:grid-cols-2 gap-4 mb-4">
-            <div className="rounded-lg p-3 bg-card border border-green-400/30">
+            <div className="rounded-lg p-3 border border-green-400/30">
               <p className="font-medium text-green-300 mb-2">Solution: Mixed Approach</p>
               <ul className="list-disc pl-4 space-y-1 text-green-200 text-sm">
                 <li>Sales areas: 20mm PVC recessed in walls, oval conduit to minimise chases</li>
@@ -654,8 +654,8 @@ const Module3Section2_2: React.FC = () => {
                 <li>Back office: 32mm steel trunking for high cable capacity</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 bg-card border border-emerald-500/30">
-              <p className="font-medium text-emerald-400 mb-2">Benefits Delivered</p>
+            <div className="rounded-lg p-3 border border-elec-yellow/30">
+              <p className="font-medium text-elec-yellow mb-2">Benefits Delivered</p>
               <ul className="list-disc pl-4 space-y-1 text-emerald-200 text-sm">
                 <li>Perfect aesthetic finish in customer areas</li>
                 <li>Zero damage incidents in stockroom after 2 years</li>
@@ -667,15 +667,15 @@ const Module3Section2_2: React.FC = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Frequently asked questions
           </h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
+          <div className="space-y-4 text-xs sm:text-sm text-white">
             {faqs.map((faq, idx) => (
               <div key={idx}>
                 <p className="font-medium mb-1">{faq.q}</p>
-                <p className="text-muted-foreground">{faq.a}</p>
+                <p className="text-white">{faq.a}</p>
                 {idx < faqs.length - 1 && (
                   <Separator className="mt-4" />
                 )}
@@ -685,8 +685,8 @@ const Module3Section2_2: React.FC = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border border-emerald-500/30">
-          <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-2">Summary</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border border-elec-yellow/30">
+          <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-2">Summary</h2>
           <p className="text-emerald-200 text-sm leading-relaxed">
             PVC and steel conduit each have distinct advantages - choose PVC for ease of installation and cost-effectiveness, 
             steel for maximum protection and harsh environments. Surface mounting provides accessibility and speed, 
@@ -695,8 +695,8 @@ const Module3Section2_2: React.FC = () => {
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Test your knowledge
           </h2>
           <Quiz

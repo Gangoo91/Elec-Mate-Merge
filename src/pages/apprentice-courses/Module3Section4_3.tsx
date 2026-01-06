@@ -180,13 +180,13 @@ const Module3Section4_3: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -201,30 +201,30 @@ const Module3Section4_3: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Cable className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Cable className="w-6 h-6 text-white" />
             </div>
             <Badge
               variant="outline"
-              className="border-emerald-500/30 text-emerald-400"
+              className="border-elec-yellow/30 text-elec-yellow"
             >
               Section 3.4.3
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Terminating Cables: Sleeving, Ferrules, and Crimps
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Essential cable termination techniques for safe, reliable electrical connections meeting BS 7671 standards.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Sleeving:</strong> Provides identification and insulation for exposed conductors.</li>
                 <li><strong>Ferrules:</strong> Prevent strand splay in flexible conductors for reliable connections.</li>
@@ -232,8 +232,8 @@ const Module3Section4_3: React.FC = () => {
                 <li>Poor termination leads to overheating, arcing, and potential fire risks.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Green/yellow earth sleeving, insulated ferrules, ring/spade terminals.</li>
                 <li><strong>Use:</strong> Ferrules for multi-strand, sleeving for identification, crimps for connections.</li>
@@ -244,9 +244,9 @@ const Module3Section4_3: React.FC = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Identify the main types of cable terminations and their purposes.</li>
             <li>Select appropriate termination methods for different cable types and applications.</li>
             <li>Apply correct installation techniques to ensure safe, reliable connections.</li>
@@ -255,16 +255,16 @@ const Module3Section4_3: React.FC = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Sleeving */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Shield className="w-5 h-5" /> Sleeving
             </h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-2">Purpose & Materials</p>
                 <div className="space-y-3">
                   <div>
@@ -307,11 +307,11 @@ const Module3Section4_3: React.FC = () => {
 
           {/* Ferrules */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Wrench className="w-5 h-5" /> Ferrules
             </h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-4 bg-card border border-green-400/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                 <p className="font-medium mb-2">Purpose & Construction</p>
                 <div className="space-y-3">
                   <div>
@@ -356,11 +356,11 @@ const Module3Section4_3: React.FC = () => {
 
           {/* Crimps */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <CircuitBoard className="w-5 h-5" /> Crimps
             </h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-2">Types & Applications</p>
                 <div className="space-y-3">
                   <div>
@@ -407,11 +407,11 @@ const Module3Section4_3: React.FC = () => {
 
           {/* Consequences of Poor Termination */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" /> Consequences of Poor Termination
             </h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-2">Electrical Hazards</p>
                 <ul className="list-disc pl-6 space-y-1">
                   <li><strong>High Resistance Joints:</strong> Loose terminations cause increased resistance, leading to heat build-up</li>
@@ -420,7 +420,7 @@ const Module3Section4_3: React.FC = () => {
                   <li><strong>Circuit Failure:</strong> Complete disconnection under load can damage equipment</li>
                 </ul>
               </div>
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-2">Mechanical Issues</p>
                 <ul className="list-disc pl-6 space-y-1">
                   <li><strong>Strand Breakage:</strong> Damaged conductors reduce current-carrying capacity</li>
@@ -429,7 +429,7 @@ const Module3Section4_3: React.FC = () => {
                   <li><strong>Contact Degradation:</strong> Poor terminations deteriorate over time</li>
                 </ul>
               </div>
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-2">Safety Risks</p>
                 <ul className="list-disc pl-6 space-y-1">
                   <li><strong>Electric Shock:</strong> Incorrect colour coding causes identification errors</li>
@@ -445,12 +445,12 @@ const Module3Section4_3: React.FC = () => {
         </Card>
 
         {/* Tools and Equipment */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Essential Tools and Equipment</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Essential Tools and Equipment</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
             <div className="space-y-4">
               <div className="flex items-center gap-2 mb-3">
-                <Wrench className="w-5 h-5 text-emerald-400" />
+                <Wrench className="w-5 h-5 text-elec-yellow" />
                 <h3 className="font-semibold">Crimping Tools</h3>
               </div>
               <ul className="list-disc pl-6 space-y-1">
@@ -462,7 +462,7 @@ const Module3Section4_3: React.FC = () => {
             </div>
             <div className="space-y-4">
               <div className="flex items-center gap-2 mb-3">
-                <Scissors className="w-5 h-5 text-emerald-400" />
+                <Scissors className="w-5 h-5 text-elec-yellow" />
                 <h3 className="font-semibold">Preparation Tools</h3>
               </div>
               <ul className="list-disc pl-6 space-y-1">
@@ -476,12 +476,12 @@ const Module3Section4_3: React.FC = () => {
         </Card>
 
         {/* Industry Standards */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Industry Standards & Compliance</h2>
-          <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm text-foreground">
-            <div className="bg-emerald-500/5 rounded-lg p-4 border border-emerald-500/30">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Industry Standards & Compliance</h2>
+          <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm text-white">
+            <div className="bg-elec-yellow/5 rounded-lg p-4 border border-elec-yellow/30">
               <h3 className="font-semibold mb-2 flex items-center gap-2">
-                <Shield className="w-4 h-4 text-emerald-400" />
+                <Shield className="w-4 h-4 text-elec-yellow" />
                 BS 7671 Requirements
               </h3>
               <ul className="list-disc pl-4 space-y-1">
@@ -490,9 +490,9 @@ const Module3Section4_3: React.FC = () => {
                 <li>Section 514: Identification and notices</li>
               </ul>
             </div>
-            <div className="bg-emerald-500/5 rounded-lg p-4 border border-emerald-500/30">
+            <div className="bg-elec-yellow/5 rounded-lg p-4 border border-elec-yellow/30">
               <h3 className="font-semibold mb-2 flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow" />
                 IET Guidelines
               </h3>
               <ul className="list-disc pl-4 space-y-1">
@@ -501,9 +501,9 @@ const Module3Section4_3: React.FC = () => {
                 <li>Best practice procedures</li>
               </ul>
             </div>
-            <div className="bg-emerald-500/5 rounded-lg p-4 border border-emerald-500/30">
+            <div className="bg-elec-yellow/5 rounded-lg p-4 border border-elec-yellow/30">
               <h3 className="font-semibold mb-2 flex items-center gap-2">
-                <Building className="w-4 h-4 text-emerald-400" />
+                <Building className="w-4 h-4 text-elec-yellow" />
                 Manufacturer Standards
               </h3>
               <ul className="list-disc pl-4 space-y-1">
@@ -516,98 +516,98 @@ const Module3Section4_3: React.FC = () => {
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-start gap-4 mb-6">
-            <div className="p-3 bg-emerald-500/10 rounded-lg border border-emerald-500/30">
-              <AlertTriangle className="w-6 h-6 text-emerald-400" />
+            <div className="p-3 bg-elec-yellow/10 rounded-lg border border-elec-yellow/30">
+              <AlertTriangle className="w-6 h-6 text-elec-yellow" />
             </div>
             <div>
-              <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-2">Real-World Example</h2>
-              <p className="text-muted-foreground font-medium">Distribution Board Installation - Terminal Failure Case Study</p>
+              <h2 className="text-lg sm:text-xl font-semibold text-white mb-2">Real-World Example</h2>
+              <p className="text-white font-medium">Distribution Board Installation - Terminal Failure Case Study</p>
             </div>
           </div>
           
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             {/* The Problem */}
-            <div className="bg-muted/30 rounded-lg p-4 border border-border/20">
+            <div className="bg-muted/30 rounded-lg p-4 border border-white/10">
               <div className="flex items-center gap-2 mb-3">
                 <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                <h3 className="font-semibold text-foreground">The Problem</h3>
+                <h3 className="font-semibold text-white">The Problem</h3>
               </div>
-              <div className="space-y-2 text-sm text-muted-foreground">
+              <div className="space-y-2 text-sm text-white">
                 <div className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-foreground">Initial Installation:</strong> Multi-stranded conductor terminated directly into screw terminal</span>
+                  <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span><strong className="text-white">Initial Installation:</strong> Multi-stranded conductor terminated directly into screw terminal</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <Clock className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-foreground">Over Time:</strong> Building vibration caused conductor strand splay</span>
+                  <Clock className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span><strong className="text-white">Over Time:</strong> Building vibration caused conductor strand splay</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <Zap className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-foreground">Result:</strong> Reduced contact area created high-resistance hot joint</span>
+                  <Zap className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span><strong className="text-white">Result:</strong> Reduced contact area created high-resistance hot joint</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <Power className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-foreground">Failure:</strong> Joint overheated, tripped circuit, required costly emergency repairs</span>
+                  <Power className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span><strong className="text-white">Failure:</strong> Joint overheated, tripped circuit, required costly emergency repairs</span>
                 </div>
               </div>
             </div>
 
             {/* The Solution */}
-            <div className="bg-muted/30 rounded-lg p-4 border border-border/20">
+            <div className="bg-muted/30 rounded-lg p-4 border border-white/10">
               <div className="flex items-center gap-2 mb-3">
-                <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
-                <h3 className="font-semibold text-foreground">The Correct Method</h3>
+                <div className="w-3 h-3 bg-elec-yellow rounded-full"></div>
+                <h3 className="font-semibold text-white">The Correct Method</h3>
               </div>
-              <div className="space-y-2 text-sm text-muted-foreground">
+              <div className="space-y-2 text-sm text-white">
                 <div className="flex items-start gap-2">
-                  <Wrench className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-foreground">Preparation:</strong> Strip conductor to correct length for ferrule</span>
+                  <Wrench className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span><strong className="text-white">Preparation:</strong> Strip conductor to correct length for ferrule</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <Shield className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-foreground">Ferrule Installation:</strong> Insert conductor fully and crimp with proper tool</span>
+                  <Shield className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span><strong className="text-white">Ferrule Installation:</strong> Insert conductor fully and crimp with proper tool</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-foreground">Termination:</strong> Ferrule provides solid termination point preventing strand splay</span>
+                  <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span><strong className="text-white">Termination:</strong> Ferrule provides solid termination point preventing strand splay</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <Activity className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-foreground">Outcome:</strong> Reliable connection maintains integrity under vibration</span>
+                  <Activity className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span><strong className="text-white">Outcome:</strong> Reliable connection maintains integrity under vibration</span>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Key Lessons */}
-          <div className="mt-6 bg-emerald-500/5 rounded-lg p-4 border border-emerald-500/30">
+          <div className="mt-6 bg-elec-yellow/5 rounded-lg p-4 border border-elec-yellow/30">
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
-              <h3 className="font-semibold text-foreground">Key Lessons Learned</h3>
+              <div className="w-3 h-3 bg-elec-yellow rounded-full"></div>
+              <h3 className="font-semibold text-white">Key Lessons Learned</h3>
             </div>
             <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-sm">
               <div className="flex items-start gap-2">
-                <Target className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                <span className="text-muted-foreground"><strong className="text-foreground">Prevention:</strong> Always use ferrules with multi-stranded conductors</span>
+                <Target className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <span className="text-white"><strong className="text-white">Prevention:</strong> Always use ferrules with multi-stranded conductors</span>
               </div>
               <div className="flex items-start gap-2">
-                <Search className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                <span className="text-muted-foreground"><strong className="text-foreground">Inspection:</strong> Regular thermal imaging can detect developing problems</span>
+                <Search className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <span className="text-white"><strong className="text-white">Inspection:</strong> Regular thermal imaging can detect developing problems</span>
               </div>
               <div className="flex items-start gap-2">
-                <ClipboardCheck className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                <span className="text-muted-foreground"><strong className="text-foreground">Quality:</strong> Initial correct installation prevents costly failures</span>
+                <ClipboardCheck className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <span className="text-white"><strong className="text-white">Quality:</strong> Initial correct installation prevents costly failures</span>
               </div>
             </div>
           </div>
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
-          <div className="space-y-6 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
+          <div className="space-y-6 text-xs sm:text-sm text-white">
             <div>
               <p className="font-semibold mb-1">Can I use electrical tape instead of sleeving?</p>
               <p>No — sleeving provides a neater, safer, and more durable solution. Tape can unravel over time and doesn't provide the same level of protection or identification.</p>
@@ -631,14 +631,14 @@ const Module3Section4_3: React.FC = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-start gap-4 mb-6">
-            <div className="p-3 bg-emerald-500/10 rounded-lg border border-emerald-500/30">
-              <ClipboardCheck className="w-6 h-6 text-emerald-400" />
+            <div className="p-3 bg-elec-yellow/10 rounded-lg border border-elec-yellow/30">
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow" />
             </div>
             <div>
-              <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-2">Summary</h2>
-              <p className="text-muted-foreground">Essential termination techniques for professional electrical installations</p>
+              <h2 className="text-lg sm:text-xl font-semibold text-white mb-2">Summary</h2>
+              <p className="text-white">Essential termination techniques for professional electrical installations</p>
             </div>
           </div>
 
@@ -646,22 +646,22 @@ const Module3Section4_3: React.FC = () => {
             {/* Sleeving Summary */}
             <div className="space-y-4">
               <div className="flex items-center gap-2 mb-3">
-                <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
-                <h3 className="font-semibold text-foreground">Sleeving</h3>
+                <div className="w-3 h-3 bg-elec-yellow rounded-full"></div>
+                <h3 className="font-semibold text-white">Sleeving</h3>
               </div>
               <div className="space-y-3 text-sm">
                 <div className="flex items-start gap-2">
-                  <Shield className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <Shield className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-foreground font-medium">Protection & Identification</p>
-                    <p className="text-muted-foreground">Insulates and colour-codes exposed conductors</p>
+                    <p className="text-white font-medium">Protection & Identification</p>
+                    <p className="text-white">Insulates and colour-codes exposed conductors</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-foreground font-medium">BS 7671 Compliance</p>
-                    <p className="text-muted-foreground">Green/yellow for earth, blue for neutral</p>
+                    <p className="text-white font-medium">BS 7671 Compliance</p>
+                    <p className="text-white">Green/yellow for earth, blue for neutral</p>
                   </div>
                 </div>
               </div>
@@ -670,22 +670,22 @@ const Module3Section4_3: React.FC = () => {
             {/* Ferrules Summary */}
             <div className="space-y-4">
               <div className="flex items-center gap-2 mb-3">
-                <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
-                <h3 className="font-semibold text-foreground">Ferrules</h3>
+                <div className="w-3 h-3 bg-elec-yellow rounded-full"></div>
+                <h3 className="font-semibold text-white">Ferrules</h3>
               </div>
               <div className="space-y-3 text-sm">
                 <div className="flex items-start gap-2">
-                  <Wrench className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <Wrench className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-foreground font-medium">Strand Management</p>
-                    <p className="text-muted-foreground">Prevents splay in flexible conductors</p>
+                    <p className="text-white font-medium">Strand Management</p>
+                    <p className="text-white">Prevents splay in flexible conductors</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
-                  <Activity className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <Activity className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-foreground font-medium">Reliable Connection</p>
-                    <p className="text-muted-foreground">Ensures all strands make contact</p>
+                    <p className="text-white font-medium">Reliable Connection</p>
+                    <p className="text-white">Ensures all strands make contact</p>
                   </div>
                 </div>
               </div>
@@ -694,22 +694,22 @@ const Module3Section4_3: React.FC = () => {
             {/* Crimps Summary */}
             <div className="space-y-4">
               <div className="flex items-center gap-2 mb-3">
-                <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
-                <h3 className="font-semibold text-foreground">Crimps</h3>
+                <div className="w-3 h-3 bg-elec-yellow rounded-full"></div>
+                <h3 className="font-semibold text-white">Crimps</h3>
               </div>
               <div className="space-y-3 text-sm">
                 <div className="flex items-start gap-2">
-                  <CircuitBoard className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <CircuitBoard className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-foreground font-medium">Versatile Connections</p>
-                    <p className="text-muted-foreground">Ring, spade, butt connectors available</p>
+                    <p className="text-white font-medium">Versatile Connections</p>
+                    <p className="text-white">Ring, spade, butt connectors available</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
-                  <Power className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <Power className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-foreground font-medium">Secure Termination</p>
-                    <p className="text-muted-foreground">Proper crimping ensures lasting connection</p>
+                    <p className="text-white font-medium">Secure Termination</p>
+                    <p className="text-white">Proper crimping ensures lasting connection</p>
                   </div>
                 </div>
               </div>
@@ -717,8 +717,8 @@ const Module3Section4_3: React.FC = () => {
           </div>
 
           {/* Bottom Line */}
-          <div className="mt-6 bg-emerald-500/5 rounded-lg p-4 border border-emerald-500/30">
-            <p className="text-foreground font-medium text-center">
+          <div className="mt-6 bg-elec-yellow/5 rounded-lg p-4 border border-elec-yellow/30">
+            <p className="text-white font-medium text-center">
               <strong>Bottom Line:</strong> Proper cable termination using sleeving, ferrules, and crimps is fundamental to electrical safety. 
               These techniques prevent failures, ensure compliance with BS 7671, and protect both equipment and personnel.
             </p>
@@ -726,8 +726,8 @@ const Module3Section4_3: React.FC = () => {
         </Card>
 
         {/* Knowledge Check */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Knowledge Check</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Knowledge Check</h2>
           <Quiz questions={mainQuizQuestions} />
         </Card>
 

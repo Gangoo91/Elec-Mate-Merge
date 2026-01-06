@@ -207,13 +207,13 @@ const Module3Section3_4: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -228,32 +228,32 @@ const Module3Section3_4: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Search className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Search className="w-6 h-6 text-white" />
             </div>
             <Badge
               variant="outline"
-              className="border-emerald-500/30 text-emerald-400"
+              className="border-elec-yellow/30 text-elec-yellow"
             >
               Section 3.3.4
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Tool Inspection and Maintenance
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Essential practices for safe, reliable tools and compliance with workplace safety regulations.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Introduction
           </h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Daily inspection: check handles, casings, cables, insulation for damage.</li>
                 <li>Regular maintenance: clean, lubricate, sharpen, calibrate as needed.</li>
@@ -261,8 +261,8 @@ const Module3Section3_4: React.FC = () => {
                 <li>PUWER compliance: formal inspections, records, defect reporting.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>
                   <strong>Spot:</strong> Cracked handles, frayed cables, blunt edges, corrosion signs.
@@ -279,11 +279,11 @@ const Module3Section3_4: React.FC = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Learning outcomes
           </h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Explain why tool inspection and maintenance are critical for safety and performance.</li>
             <li>Identify common signs of tool damage or wear.</li>
             <li>Carry out basic maintenance for hand tools and power tools.</li>
@@ -292,18 +292,18 @@ const Module3Section3_4: React.FC = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Routine Inspection */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Search className="w-5 h-5" /> Routine Tool Inspection
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Hand Tools</p>
                   <div className="space-y-3">
                     <div>
@@ -327,7 +327,7 @@ const Module3Section3_4: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Power Tools</p>
                   <div className="space-y-3">
                     <div>
@@ -359,12 +359,12 @@ const Module3Section3_4: React.FC = () => {
 
           {/* Signs of Damage */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" /> Signs of Tool Damage or Wear
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-2">Common Warning Signs</p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
@@ -404,13 +404,13 @@ const Module3Section3_4: React.FC = () => {
 
           {/* Maintenance Practices */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Settings className="w-5 h-5" /> Maintenance Practices
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                   <p className="font-medium mb-2">Regular Cleaning</p>
                   <div className="space-y-3">
                     <div>
@@ -434,7 +434,7 @@ const Module3Section3_4: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Mechanical Maintenance</p>
                   <div className="space-y-3">
                     <div>
@@ -465,12 +465,12 @@ const Module3Section3_4: React.FC = () => {
         </Card>
 
         {/* What this means on site */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Building className="w-5 h-5" /> What this means on site
           </h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2">Daily Site Practices</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Start each day with tool inspection before work begins</li>
@@ -479,7 +479,7 @@ const Module3Section3_4: React.FC = () => {
                 <li>Use site tool inspection tags and tracking systems</li>
               </ul>
             </div>
-            <div className="rounded-lg p-4 bg-card border border-green-400/30">
+            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
               <p className="font-medium mb-2">Professional Benefits</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Well-maintained tools improve work quality and efficiency</li>
@@ -492,13 +492,13 @@ const Module3Section3_4: React.FC = () => {
         </Card>
 
         {/* Installation Practices */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Settings className="w-5 h-5" /> Installation Practices
           </h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
+          <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="rounded-lg p-4 bg-card border border-amber-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
                 <p className="font-medium mb-2">Storage & Handling</p>
                 <ul className="list-disc pl-6 space-y-1">
                   <li>Store tools in dry, secure conditions away from moisture</li>
@@ -507,7 +507,7 @@ const Module3Section3_4: React.FC = () => {
                   <li>Keep blades and sharp tools in protective covers</li>
                 </ul>
               </div>
-              <div className="rounded-lg p-4 bg-card border border-cyan-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-cyan-400/30">
                 <p className="font-medium mb-2">Battery & Power Management</p>
                 <ul className="list-disc pl-6 space-y-1">
                   <li>Follow charging guidelines and avoid deep discharge</li>
@@ -521,13 +521,13 @@ const Module3Section3_4: React.FC = () => {
         </Card>
 
         {/* Common Mistakes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5 text-emerald-400" /> Common Mistakes
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <AlertTriangle className="w-5 h-5 text-elec-yellow" /> Common Mistakes
           </h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <p className="font-medium mb-2 text-emerald-400">Dangerous Practices</p>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <p className="font-medium mb-2 text-elec-yellow">Dangerous Practices</p>
               <ul className="list-disc pl-6 space-y-1 text-red-200">
                 <li><strong>Using damaged insulated tools</strong> - Electric shock risk from compromised insulation</li>
                 <li><strong>Continuing with cracked casings</strong> - Exposes internal wiring, creates shock hazard</li>
@@ -535,8 +535,8 @@ const Module3Section3_4: React.FC = () => {
                 <li><strong>Skipping calibration</strong> - Inaccurate test results, compliance failures</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <p className="font-medium mb-2 text-emerald-400">Performance Issues</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <p className="font-medium mb-2 text-elec-yellow">Performance Issues</p>
               <ul className="list-disc pl-6 space-y-1 text-orange-200">
                 <li><strong>Poor storage conditions</strong> - Accelerated corrosion, premature failure</li>
                 <li><strong>Inadequate cleaning</strong> - Dust buildup causes overheating and wear</li>
@@ -548,11 +548,11 @@ const Module3Section3_4: React.FC = () => {
         </Card>
 
         {/* PUWER Context */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Shield className="w-5 h-5" /> PUWER & Regulatory Context
           </h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
+          <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="rounded-lg p-4 bg-indigo-500/10 border border-indigo-400/30">
               <p className="font-medium mb-2">PUWER Requirements</p>
               <ul className="list-disc pl-6 space-y-1">
@@ -577,11 +577,11 @@ const Module3Section3_4: React.FC = () => {
         <InlineCheck {...quickCheckQuestions[3]} />
 
         {/* Real-world Scenario */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Factory className="w-5 h-5" /> Real-world Scenario
           </h2>
-          <div className="rounded-lg p-3 sm:p-4 bg-card border border-slate-400/30">
+          <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30">
             <p className="font-medium mb-2">Scenario: Cracked SDS Drill Causes Site Shutdown</p>
             <p className="text-sm mb-4">
               An electrician on a commercial site used a damaged SDS drill with a cracked casing. The crack exposed internal wiring, 
@@ -590,7 +590,7 @@ const Module3Section3_4: React.FC = () => {
             </p>
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
-                <p className="font-medium text-emerald-400 mb-1">Consequences</p>
+                <p className="font-medium text-elec-yellow mb-1">Consequences</p>
                 <ul className="list-disc pl-4 space-y-1 text-red-200">
                   <li>Site safety shutdown and investigation</li>
                   <li>Potential injury to the electrician</li>
@@ -612,15 +612,15 @@ const Module3Section3_4: React.FC = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Frequently Asked Questions
           </h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <div key={index}>
-                <p className="font-medium text-foreground mb-1">{faq.q}</p>
-                <p className="text-sm text-muted-foreground">{faq.a}</p>
+                <p className="font-medium text-white mb-1">{faq.q}</p>
+                <p className="text-sm text-white">{faq.a}</p>
                 {index < faqs.length - 1 && <Separator className="mt-4" />}
               </div>
             ))}
@@ -628,16 +628,16 @@ const Module3Section3_4: React.FC = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
             <p>
               Regular inspection and maintenance of tools are essential for safety, compliance, and long service life. 
               By cleaning, storing, and repairing tools correctly, electricians can work more efficiently and avoid 
               unnecessary downtime or hazards.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="rounded-lg p-4 bg-card border border-green-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                 <p className="font-medium text-green-300 mb-2">Key Benefits</p>
                 <ul className="list-disc pl-4 space-y-1 text-green-200">
                   <li>Prevents accidents and ensures electrical safety</li>
@@ -646,8 +646,8 @@ const Module3Section3_4: React.FC = () => {
                   <li>Reduces downtime and replacement costs</li>
                 </ul>
               </div>
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-                <p className="font-medium text-emerald-400 mb-2">Essential Points</p>
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+                <p className="font-medium text-elec-yellow mb-2">Essential Points</p>
                 <ul className="list-disc pl-4 space-y-1 text-blue-200">
                   <li>Inspect before each use and at formal intervals</li>
                   <li>Remove damaged tools from service immediately</li>
@@ -660,12 +660,12 @@ const Module3Section3_4: React.FC = () => {
         </Card>
 
         {/* Apprentice Do's and Don'ts */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Target className="w-5 h-5" /> Apprentice Do's and Don'ts
           </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-            <div className="rounded-lg p-4 bg-card border border-green-400/30">
+            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
               <p className="font-medium text-green-300 mb-3 flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4" /> DO
               </p>
@@ -678,8 +678,8 @@ const Module3Section3_4: React.FC = () => {
                 <li>✓ Follow manufacturer maintenance guidelines</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <p className="font-medium text-emerald-400 mb-3 flex items-center gap-2">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <p className="font-medium text-elec-yellow mb-3 flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4" /> DON'T
               </p>
               <ul className="space-y-2 text-sm text-red-200">
@@ -695,11 +695,11 @@ const Module3Section3_4: React.FC = () => {
         </Card>
 
         {/* Pocket Card Quick Reference */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Pocket Card Quick Reference
           </h2>
-          <div className="rounded-lg p-3 sm:p-4 bg-card border border-slate-400/30 text-sm">
+          <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30 text-sm">
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <p className="font-medium mb-2">Daily Inspection Checklist</p>
@@ -728,9 +728,9 @@ const Module3Section3_4: React.FC = () => {
         </Card>
 
         {/* Key References */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Key References</h2>
-          <div className="text-xs sm:text-sm text-foreground space-y-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Key References</h2>
+          <div className="text-xs sm:text-sm text-white space-y-2">
             <p><strong>PUWER 1998:</strong> Provision and Use of Work Equipment Regulations</p>
             <p><strong>HSE INDG291:</strong> Safe use of work equipment</p>
             <p><strong>BS EN 60900:</strong> Live working - Hand tools for use up to 1000V AC</p>
@@ -739,8 +739,8 @@ const Module3Section3_4: React.FC = () => {
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Knowledge Check
           </h2>
           <Quiz questions={quizQuestions} />

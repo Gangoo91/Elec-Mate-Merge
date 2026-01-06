@@ -202,13 +202,13 @@ const Module3Section2_4: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -223,32 +223,32 @@ const Module3Section2_4: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Container className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Container className="w-6 h-6 text-white" />
             </div>
             <Badge
               variant="outline"
-              className="border-emerald-500/30 text-emerald-400"
+              className="border-elec-yellow/30 text-elec-yellow"
             >
               Section 3.2.4
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Cable Tray, Basket and Ladder Systems
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Understanding open cable containment systems, their applications and installation requirements for electrical installations.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Introduction
           </h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Cable trays: Solid/perforated support, weather protection, medium-high loads.</li>
                 <li>Cable baskets: Wire mesh, excellent ventilation, lightweight, easy cutting.</li>
@@ -256,8 +256,8 @@ const Module3Section2_4: React.FC = () => {
                 <li>All systems require proper earthing, support spacing and BS 7671 compliance.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>
                   <strong>Spot:</strong> Metal mesh (baskets), solid perforated sheets (trays), side rails with rungs (ladders).
@@ -274,11 +274,11 @@ const Module3Section2_4: React.FC = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Learning outcomes
           </h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Identify the characteristics and applications of cable trays, baskets and ladder systems.</li>
             <li>Select the appropriate containment system based on load, environment and cable type.</li>
             <li>Calculate support spacing and loads for different cable containment systems.</li>
@@ -288,18 +288,18 @@ const Module3Section2_4: React.FC = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* System Types */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Shield className="w-5 h-5" /> Cable Containment System Types
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Cable Trays</p>
                   <div className="space-y-3">
                     <div>
@@ -332,7 +332,7 @@ const Module3Section2_4: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                   <p className="font-medium mb-2">Cable Baskets</p>
                   <div className="space-y-3">
                     <div>
@@ -365,7 +365,7 @@ const Module3Section2_4: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Ladder Systems</p>
                   <div className="space-y-3">
                     <div>
@@ -406,12 +406,12 @@ const Module3Section2_4: React.FC = () => {
 
           {/* What this means on site */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Target className="w-5 h-5" /> What this means on site
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium text-orange-200 mb-2">Selection criteria</p>
                 <ul className="list-disc pl-4 space-y-1 text-orange-200">
                   <li>Calculate total cable weight including 25% future capacity</li>
@@ -422,7 +422,7 @@ const Module3Section2_4: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="rounded-lg p-4 bg-card border border-cyan-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-cyan-400/30">
                 <p className="font-medium text-cyan-200 mb-2">Load calculations</p>
                 <ul className="list-disc pl-4 space-y-1 text-cyan-200">
                   <li>Total load = cable weight + system self-weight + 25% safety factor</li>
@@ -439,12 +439,12 @@ const Module3Section2_4: React.FC = () => {
 
           {/* Installation Practices */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Settings className="w-5 h-5" /> Installation Practices and Techniques
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
                 <p className="font-medium text-emerald-200 mb-2">Support spacing requirements</p>
                 <ul className="list-disc pl-4 space-y-1 text-emerald-200">
                   <li><strong>Cable trays:</strong> 1.2-2.0m depending on width and load</li>
@@ -485,12 +485,12 @@ const Module3Section2_4: React.FC = () => {
 
           {/* Common Mistakes */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" /> Common Mistakes to Avoid
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium text-red-200 mb-2">Installation errors</p>
                 <ul className="list-disc pl-4 space-y-1 text-red-200">
                   <li><strong>Inadequate support spacing:</strong> Causing excessive deflection and cable stress</li>
@@ -501,7 +501,7 @@ const Module3Section2_4: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="rounded-lg p-4 bg-card border border-amber-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
                 <p className="font-medium text-amber-200 mb-2">Planning oversights</p>
                 <ul className="list-disc pl-4 space-y-1 text-amber-200">
                   <li><strong>Ignoring thermal expansion:</strong> Not providing expansion joints in long runs</li>
@@ -518,12 +518,12 @@ const Module3Section2_4: React.FC = () => {
 
           {/* BS 7671 Context */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <CheckCircle2 className="w-5 h-5" /> BS 7671 and Standards Context
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium text-blue-200 mb-2">Key standards and regulations</p>
                 <ul className="list-disc pl-4 space-y-1 text-blue-200">
                   <li><strong>BS EN 61537:</strong> Cable management systems for electrical installations</li>
@@ -534,7 +534,7 @@ const Module3Section2_4: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="rounded-lg p-4 bg-card border border-green-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                 <p className="font-medium text-green-200 mb-2">Fire safety requirements</p>
                 <ul className="list-disc pl-4 space-y-1 text-green-200">
                   <li>Enhanced fire performance required in escape routes</li>
@@ -545,7 +545,7 @@ const Module3Section2_4: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium text-purple-200 mb-2">Compliance testing</p>
                 <ul className="list-disc pl-4 space-y-1 text-purple-200">
                   <li>Earth continuity testing: &lt;0.1Ω between all metallic sections</li>
@@ -560,11 +560,11 @@ const Module3Section2_4: React.FC = () => {
         </Card>
 
         {/* Real-world Scenario */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Factory className="w-5 h-5" /> Real-world Scenario
           </h2>
-          <div className="rounded-lg p-3 sm:p-4 bg-card border border-slate-400/30">
+          <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30">
             <h3 className="font-medium text-slate-200 mb-2">Industrial facility cable management</h3>
             <p className="text-slate-200 text-sm mb-3">
               A manufacturing facility requires cable containment for the main electrical distribution. 
@@ -594,22 +594,22 @@ const Module3Section2_4: React.FC = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-l-4 border-l-emerald-500/50 pl-4">
-                <p className="font-medium text-foreground mb-1">Q: {faq.q}</p>
-                <p className="text-muted-foreground text-sm">A: {faq.a}</p>
+              <div key={index} className="border-l-4 border-l-elec-yellow/50 pl-4">
+                <p className="font-medium text-white mb-1">Q: {faq.q}</p>
+                <p className="text-white text-sm">A: {faq.a}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
-          <div className="space-y-3 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+          <div className="space-y-3 text-xs sm:text-sm text-white">
             <p>
               <strong>Cable containment systems</strong> are essential for organised, safe cable installations.
             </p>
@@ -628,10 +628,10 @@ const Module3Section2_4: React.FC = () => {
         </Card>
 
         {/* Apprentice Do's and Don'ts */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Apprentice Do's and Don'ts</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Apprentice Do's and Don'ts</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
-            <div className="rounded-lg p-4 bg-card border border-green-400/30">
+            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
               <h3 className="font-medium text-green-200 mb-3">✓ DO</h3>
               <ul className="space-y-2 text-green-200">
                 <li>• Calculate total loads including future capacity</li>
@@ -644,7 +644,7 @@ const Module3Section2_4: React.FC = () => {
                 <li>• Test earth continuity after installation</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <h3 className="font-medium text-red-200 mb-3">✗ DON'T</h3>
               <ul className="space-y-2 text-red-200">
                 <li>• Exceed manufacturer's load ratings</li>
@@ -661,10 +661,10 @@ const Module3Section2_4: React.FC = () => {
         </Card>
 
         {/* Pocket Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Pocket Card: Cable Containment Quick Reference</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Card: Cable Containment Quick Reference</h2>
           <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-xs">
-            <div className="rounded-lg p-3 bg-card border border-border/30">
+            <div className="rounded-lg p-3 border border-border/30">
               <h4 className="font-medium text-blue-200 mb-2">Cable Trays</h4>
               <ul className="space-y-1 text-blue-200">
                 <li>• Load: 75-300 kg/m</li>
@@ -673,7 +673,7 @@ const Module3Section2_4: React.FC = () => {
                 <li>• Benefit: Weather protection</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 bg-card border border-green-400/30">
+            <div className="rounded-lg p-3 border border-green-400/30">
               <h4 className="font-medium text-green-200 mb-2">Cable Baskets</h4>
               <ul className="space-y-1 text-green-200">
                 <li>• Load: 50-150 kg/m</li>
@@ -682,7 +682,7 @@ const Module3Section2_4: React.FC = () => {
                 <li>• Benefit: Easy installation</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 bg-card border border-border/30">
+            <div className="rounded-lg p-3 border border-border/30">
               <h4 className="font-medium text-purple-200 mb-2">Ladder Systems</h4>
               <ul className="space-y-1 text-purple-200">
                 <li>• Load: 150-500 kg/m</li>
@@ -692,7 +692,7 @@ const Module3Section2_4: React.FC = () => {
               </ul>
             </div>
           </div>
-          <div className="mt-4 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30">
+          <div className="mt-4 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
             <p className="text-yellow-200 text-xs">
               <strong>Remember:</strong> All metallic systems need earthing (&lt;0.1Ω). 
               Support spacing critical for safety. Check BS EN 61537 for fire requirements.
@@ -701,30 +701,30 @@ const Module3Section2_4: React.FC = () => {
         </Card>
 
         {/* Key References */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Key References</h2>
-          <div className="space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Key References</h2>
+          <div className="space-y-2 text-xs sm:text-sm text-white">
             <div className="flex justify-between items-center p-2 rounded bg-muted/10">
               <span>BS EN 61537:2006</span>
-              <span className="text-muted-foreground">Cable management systems for electrical installations</span>
+              <span className="text-white">Cable management systems for electrical installations</span>
             </div>
             <div className="flex justify-between items-center p-2 rounded bg-muted/10">
               <span>BS 7671:2018+A2:2022</span>
-              <span className="text-muted-foreground">IET Wiring Regulations (Chapter 52)</span>
+              <span className="text-white">IET Wiring Regulations (Chapter 52)</span>
             </div>
             <div className="flex justify-between items-center p-2 rounded bg-muted/10">
               <span>BS EN 50085</span>
-              <span className="text-muted-foreground">Cable trunking and ducting systems</span>
+              <span className="text-white">Cable trunking and ducting systems</span>
             </div>
             <div className="flex justify-between items-center p-2 rounded bg-muted/10">
               <span>Health & Safety at Work etc. Act 1974</span>
-              <span className="text-muted-foreground">General workplace safety requirements</span>
+              <span className="text-white">General workplace safety requirements</span>
             </div>
           </div>
         </Card>
 
         {/* Quiz */}
-        <Card className="p-6 bg-card border-border/20">
+        <Card className="p-6 bg-transparent border-white/20">
           <Quiz title="Test Your Knowledge: Cable Containment Systems" questions={quizQuestions} />
         </Card>
       </main>

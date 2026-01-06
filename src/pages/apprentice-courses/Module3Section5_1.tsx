@@ -173,13 +173,13 @@ export default function Module3Section5_1() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -194,30 +194,30 @@ export default function Module3Section5_1() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Eye className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Eye className="w-6 h-6 text-white" />
             </div>
             <Badge
               variant="outline"
-              className="border-emerald-500/30 text-emerald-400"
+              className="border-elec-yellow/30 text-elec-yellow"
             >
               Section 3.5.1
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Understanding External Influences (BS 7671 Overview)
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Master BS 7671 external influence classification codes, environmental assessment, and their critical impact on electrical installation design and equipment selection.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Electrical installations face environmental and operational challenges.</li>
                 <li>BS 7671 requires assessment of external influences before equipment selection.</li>
@@ -225,8 +225,8 @@ export default function Module3Section5_1() {
                 <li>Proper assessment ensures safety, compliance, and equipment longevity.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Environmental conditions, operational factors, building characteristics.</li>
                 <li><strong>Use:</strong> BS 7671 classification codes; appropriate equipment selection.</li>
@@ -237,9 +237,9 @@ export default function Module3Section5_1() {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Define "external influence" in the context of BS 7671.</li>
             <li>Identify the three main categories of external influences.</li>
             <li>Interpret BS 7671 influence codes and apply them to design and installation decisions.</li>
@@ -248,28 +248,28 @@ export default function Module3Section5_1() {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* 1. Definition of External Influences */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <FileText className="w-5 h-5" /> 1. Definition of External Influences - Comprehensive Overview
             </h3>
             
             <div className="mb-6">
-              <h4 className="font-medium text-foreground mb-3">What Constitutes an External Influence</h4>
-              <div className="p-4 bg-card border border-border/30 rounded-lg mb-4">
-                <p className="text-xs sm:text-sm text-foreground mb-3">
+              <h4 className="font-medium text-white mb-3">What Constitutes an External Influence</h4>
+              <div className="p-4 bg-transparent border border-border/30 rounded-lg mb-4">
+                <p className="text-xs sm:text-sm text-white mb-3">
                   <strong>BS 7671 Definition:</strong> External influences are any environmental or operational factors that can affect the safety, performance, and durability of an electrical installation.
                 </p>
-                <p className="text-xs sm:text-sm text-foreground">
+                <p className="text-xs sm:text-sm text-white">
                   These influences must be identified and assessed during the design phase to ensure appropriate equipment selection, installation methods, and protective measures.
                 </p>
               </div>
 
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="p-4 bg-card border border-amber-400/30 rounded-lg">
+                <div className="p-4 bg-transparent border border-amber-400/30 rounded-lg">
                   <h5 className="font-medium text-amber-400 mb-2">Environmental Factors</h5>
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start gap-2">
@@ -290,23 +290,23 @@ export default function Module3Section5_1() {
                     </li>
                   </ul>
                 </div>
-                <div className="p-4 bg-card border border-border/30 rounded-lg">
-                  <h5 className="font-medium text-emerald-400 mb-2">Operational Factors</h5>
+                <div className="p-4 bg-transparent border border-border/30 rounded-lg">
+                  <h5 className="font-medium text-elec-yellow mb-2">Operational Factors</h5>
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start gap-2">
-                      <Mountain className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                      <Mountain className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span><strong>Mechanical stress:</strong> Vibration, impact, cable movement</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Zap className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                      <Zap className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span><strong>Electromagnetic interference:</strong> RF fields, harmonic distortion</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <AlertTriangle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                      <AlertTriangle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span><strong>Fire risk factors:</strong> Combustible materials, ignition sources</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span><strong>Access limitations:</strong> Maintenance constraints, safety requirements</span>
                     </li>
                   </ul>
@@ -315,10 +315,10 @@ export default function Module3Section5_1() {
             </div>
 
             <div className="mb-4">
-              <h4 className="font-medium text-foreground mb-3">Impact on Installation Design</h4>
+              <h4 className="font-medium text-white mb-3">Impact on Installation Design</h4>
               <div className="space-y-3">
-                <div className="p-3 bg-card border border-border/30 rounded-lg">
-                  <h5 className="font-medium text-emerald-400 mb-2">Equipment Selection Criteria</h5>
+                <div className="p-3 border border-border/30 rounded-lg">
+                  <h5 className="font-medium text-elec-yellow mb-2">Equipment Selection Criteria</h5>
                   <ul className="space-y-1 text-sm">
                     <li>• <strong>IP ratings:</strong> Ingress protection against solids and liquids</li>
                     <li>• <strong>Material compatibility:</strong> Corrosion resistance, UV stability</li>
@@ -327,7 +327,7 @@ export default function Module3Section5_1() {
                     <li>• <strong>Fire performance:</strong> Material flammability and toxicity ratings</li>
                   </ul>
                 </div>
-                <div className="p-3 bg-card border border-green-400/30 rounded-lg">
+                <div className="p-3 border border-green-400/30 rounded-lg">
                   <h5 className="font-medium text-green-400 mb-2">Installation Method Considerations</h5>
                   <ul className="space-y-1 text-sm">
                     <li>• <strong>Cable routing:</strong> Protection from physical damage and environmental exposure</li>
@@ -345,41 +345,41 @@ export default function Module3Section5_1() {
 
           {/* 2. BS 7671 Classification System */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <FileText className="w-5 h-5" /> 2. BS 7671 Classification System - Detailed Code Structure
             </h3>
             
             <div className="mb-6">
-              <h4 className="font-medium text-foreground mb-3">Three-Part Coding System Explained</h4>
-              <div className="p-4 bg-card border border-border/20 rounded-lg mb-4">
+              <h4 className="font-medium text-white mb-3">Three-Part Coding System Explained</h4>
+              <div className="p-4 bg-transparent border border-white/10 rounded-lg mb-4">
                 <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-emerald-400 mb-2">A</div>
-                    <h5 className="font-medium text-foreground mb-1">First Letter</h5>
-                    <p className="text-xs text-muted-foreground">General Category</p>
+                    <div className="text-2xl font-bold text-elec-yellow mb-2">A</div>
+                    <h5 className="font-medium text-white mb-1">First Letter</h5>
+                    <p className="text-xs text-white">General Category</p>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-emerald-400 mb-2">D</div>
-                    <h5 className="font-medium text-foreground mb-1">Second Letter</h5>
-                    <p className="text-xs text-muted-foreground">Nature of Influence</p>
+                    <div className="text-2xl font-bold text-elec-yellow mb-2">D</div>
+                    <h5 className="font-medium text-white mb-1">Second Letter</h5>
+                    <p className="text-xs text-white">Nature of Influence</p>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-emerald-400 mb-2">3</div>
-                    <h5 className="font-medium text-foreground mb-1">Number</h5>
-                    <p className="text-xs text-muted-foreground">Severity Level</p>
+                    <div className="text-2xl font-bold text-elec-yellow mb-2">3</div>
+                    <h5 className="font-medium text-white mb-1">Number</h5>
+                    <p className="text-xs text-white">Severity Level</p>
                   </div>
                 </div>
-                <div className="mt-4 p-3 bg-card border border-border/30 rounded-lg">
+                <div className="mt-4 p-3 border border-border/30 rounded-lg">
                   <p className="text-sm text-center"><strong>Example: AD3</strong> = Environmental (A) + Water presence (D) + Splashing level (3)</p>
                 </div>
               </div>
 
               <div className="space-y-4">
-                <div className="p-4 bg-card border border-border/30 rounded-lg">
-                  <h5 className="font-medium text-emerald-400 mb-3">Category A: Environmental Conditions</h5>
+                <div className="p-4 bg-transparent border border-border/30 rounded-lg">
+                  <h5 className="font-medium text-elec-yellow mb-3">Category A: Environmental Conditions</h5>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">AA - Ambient Temperature</h6>
+                      <h6 className="font-medium text-white mb-2">AA - Ambient Temperature</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• AA1: -60°C to +5°C (cold storage)</li>
                         <li>• AA2: -40°C to +5°C (unheated buildings)</li>
@@ -390,7 +390,7 @@ export default function Module3Section5_1() {
                       </ul>
                     </div>
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">AD - Presence of Water</h6>
+                      <h6 className="font-medium text-white mb-2">AD - Presence of Water</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• AD1: Negligible (dry locations)</li>
                         <li>• AD2: Dripping (condensation)</li>
@@ -405,11 +405,11 @@ export default function Module3Section5_1() {
                   </div>
                 </div>
 
-                <div className="p-4 bg-card border border-green-400/30 rounded-lg">
+                <div className="p-4 bg-transparent border border-green-400/30 rounded-lg">
                   <h5 className="font-medium text-green-400 mb-3">Category B: Utilisation Conditions</h5>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">BA - Mechanical Stress</h6>
+                      <h6 className="font-medium text-white mb-2">BA - Mechanical Stress</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• BA1: Low severity (fixed equipment)</li>
                         <li>• BA2: Medium severity (portable equipment)</li>
@@ -419,7 +419,7 @@ export default function Module3Section5_1() {
                       </ul>
                     </div>
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">BB - Impact</h6>
+                      <h6 className="font-medium text-white mb-2">BB - Impact</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• BB1: Low energy (0.15J - AG1)</li>
                         <li>• BB2: Medium energy (0.35J - AG2)</li>
@@ -431,18 +431,18 @@ export default function Module3Section5_1() {
                   </div>
                 </div>
 
-                <div className="p-4 bg-card border border-border/30 rounded-lg">
-                  <h5 className="font-medium text-emerald-400 mb-3">Category C: Construction of Buildings</h5>
+                <div className="p-4 bg-transparent border border-border/30 rounded-lg">
+                  <h5 className="font-medium text-elec-yellow mb-3">Category C: Construction of Buildings</h5>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">CA - Construction Materials</h6>
+                      <h6 className="font-medium text-white mb-2">CA - Construction Materials</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• CA1: Non-combustible</li>
                         <li>• CA2: Combustible</li>
                       </ul>
                     </div>
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">CB - Building Design</h6>
+                      <h6 className="font-medium text-white mb-2">CB - Building Design</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• CB1: Negligible fire risk</li>
                         <li>• CB2: Low fire risk</li>
@@ -461,14 +461,14 @@ export default function Module3Section5_1() {
 
           {/* 3. Practical Application and Assessment */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" /> 3. Practical Application and Environmental Assessment
             </h3>
 
             <div className="mb-6">
-              <h4 className="font-medium text-foreground mb-3">Site Assessment Methodology</h4>
+              <h4 className="font-medium text-white mb-3">Site Assessment Methodology</h4>
               <div className="space-y-4">
-                <div className="p-4 bg-card border border-amber-400/30 rounded-lg">
+                <div className="p-4 bg-transparent border border-amber-400/30 rounded-lg">
                   <h5 className="font-medium text-amber-400 mb-3">Step-by-Step Assessment Process</h5>
                   <ol className="list-decimal pl-6 space-y-2 text-sm">
                     <li><strong>Initial site survey:</strong> Document all environmental conditions and operational requirements</li>
@@ -482,8 +482,8 @@ export default function Module3Section5_1() {
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-                  <div className="p-3 bg-card border border-border/30 rounded-lg">
-                    <h5 className="font-medium text-emerald-400 mb-2">Environmental Monitoring</h5>
+                  <div className="p-3 border border-border/30 rounded-lg">
+                    <h5 className="font-medium text-elec-yellow mb-2">Environmental Monitoring</h5>
                     <ul className="space-y-1 text-xs">
                       <li>• Temperature logging over seasons</li>
                       <li>• Humidity measurement and trends</li>
@@ -493,7 +493,7 @@ export default function Module3Section5_1() {
                       <li>• Air quality and pollutants</li>
                     </ul>
                   </div>
-                  <div className="p-3 bg-card border border-green-400/30 rounded-lg">
+                  <div className="p-3 border border-green-400/30 rounded-lg">
                     <h5 className="font-medium text-green-400 mb-2">Operational Analysis</h5>
                     <ul className="space-y-1 text-xs">
                       <li>• Mechanical stress evaluation</li>
@@ -504,8 +504,8 @@ export default function Module3Section5_1() {
                       <li>• Emergency evacuation needs</li>
                     </ul>
                   </div>
-                  <div className="p-3 bg-card border border-border/30 rounded-lg">
-                    <h5 className="font-medium text-emerald-400 mb-2">Structural Considerations</h5>
+                  <div className="p-3 border border-border/30 rounded-lg">
+                    <h5 className="font-medium text-elec-yellow mb-2">Structural Considerations</h5>
                     <ul className="space-y-1 text-xs">
                       <li>• Building material composition</li>
                       <li>• Fire load assessment</li>
@@ -520,13 +520,13 @@ export default function Module3Section5_1() {
             </div>
 
             <div className="mb-4">
-              <h4 className="font-medium text-foreground mb-3">Common Application Examples</h4>
+              <h4 className="font-medium text-white mb-3">Common Application Examples</h4>
               <div className="space-y-3">
-                <div className="p-4 bg-card border border-border/20 rounded-lg">
-                  <h5 className="font-medium text-foreground mb-2">Commercial Kitchen Installation</h5>
+                <div className="p-4 bg-transparent border border-white/10 rounded-lg">
+                  <h5 className="font-medium text-white mb-2">Commercial Kitchen Installation</h5>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">Influence Classifications</h6>
+                      <h6 className="font-medium text-white mb-2">Influence Classifications</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• <strong>AA6:</strong> High temperature from cooking equipment</li>
                         <li>• <strong>AD4:</strong> Water spraying from cleaning</li>
@@ -535,7 +535,7 @@ export default function Module3Section5_1() {
                       </ul>
                     </div>
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">Equipment Requirements</h6>
+                      <h6 className="font-medium text-white mb-2">Equipment Requirements</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• IP65-rated accessories minimum</li>
                         <li>• Stainless steel enclosures</li>
@@ -546,11 +546,11 @@ export default function Module3Section5_1() {
                   </div>
                 </div>
 
-                <div className="p-4 bg-card border border-border/20 rounded-lg">
-                  <h5 className="font-medium text-foreground mb-2">Coastal Industrial Facility</h5>
+                <div className="p-4 bg-transparent border border-white/10 rounded-lg">
+                  <h5 className="font-medium text-white mb-2">Coastal Industrial Facility</h5>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">Influence Classifications</h6>
+                      <h6 className="font-medium text-white mb-2">Influence Classifications</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• <strong>AF3:</strong> High salt concentration</li>
                         <li>• <strong>AD5:</strong> Storm water exposure</li>
@@ -559,7 +559,7 @@ export default function Module3Section5_1() {
                       </ul>
                     </div>
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">Protection Measures</h6>
+                      <h6 className="font-medium text-white mb-2">Protection Measures</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• Marine-grade aluminium enclosures</li>
                         <li>• Sacrificial anodes for cathodic protection</li>
@@ -578,13 +578,13 @@ export default function Module3Section5_1() {
 
           {/* 4. Documentation and Compliance */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <FileText className="w-5 h-5" /> 4. Documentation Requirements and Compliance Standards
             </h3>
 
             <div className="space-y-4">
-              <div className="p-4 bg-card border border-border/30 rounded-lg">
-                <h5 className="font-medium text-emerald-400 mb-3">BS 7671 Documentation Requirements</h5>
+              <div className="p-4 bg-transparent border border-border/30 rounded-lg">
+                <h5 className="font-medium text-elec-yellow mb-3">BS 7671 Documentation Requirements</h5>
                 <ul className="space-y-2 text-sm">
                   <li><strong>Design documentation:</strong> All external influence assessments must be recorded</li>
                   <li><strong>Installation certificates:</strong> Reference to relevant influence codes</li>
@@ -594,7 +594,7 @@ export default function Module3Section5_1() {
                 </ul>
               </div>
 
-              <div className="p-4 bg-card border border-green-400/30 rounded-lg">
+              <div className="p-4 bg-transparent border border-green-400/30 rounded-lg">
                 <h5 className="font-medium text-green-400 mb-3">Quality Assurance Procedures</h5>
                 <ul className="space-y-2 text-sm">
                   <li><strong>Design review:</strong> Independent verification of influence classifications</li>
@@ -609,31 +609,31 @@ export default function Module3Section5_1() {
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-World Case Studies</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Case Studies</h2>
           <div className="space-y-4">
-            <div className="p-4 bg-card border border-amber-400/30 rounded-lg">
+            <div className="p-4 bg-transparent border border-amber-400/30 rounded-lg">
               <h3 className="font-medium text-amber-400 mb-3">Case Study 1: Coastal Café Installation Failure</h3>
-              <p className="text-xs sm:text-sm text-foreground mb-3">
+              <p className="text-xs sm:text-sm text-white mb-3">
                 <strong>Situation:</strong> Standard outdoor sockets were installed at a coastal café without considering the high salt content in the air (AF3 – corrosive environment).
               </p>
-              <p className="text-xs sm:text-sm text-foreground mb-3">
+              <p className="text-xs sm:text-sm text-white mb-3">
                 <strong>Outcome:</strong> Within six months, severe corrosion caused electrical failures, tripping RCDs and creating safety hazards.
               </p>
-              <p className="text-xs sm:text-sm text-foreground">
+              <p className="text-xs sm:text-sm text-white">
                 <strong>Solution:</strong> Replacement with marine-grade stainless steel fittings (316L grade), IP65-rated enclosures, and enhanced corrosion protection resolved the issues and provided long-term reliability.
               </p>
             </div>
 
-            <div className="p-4 bg-card border border-border/30 rounded-lg">
-              <h3 className="font-medium text-emerald-400 mb-3">Case Study 2: Industrial Vibration Problems</h3>
-              <p className="text-xs sm:text-sm text-foreground mb-3">
+            <div className="p-4 bg-transparent border border-border/30 rounded-lg">
+              <h3 className="font-medium text-elec-yellow mb-3">Case Study 2: Industrial Vibration Problems</h3>
+              <p className="text-xs sm:text-sm text-white mb-3">
                 <strong>Situation:</strong> Cable terminations in a manufacturing facility were failing due to constant vibration (BA4 conditions) from heavy machinery.
               </p>
-              <p className="text-xs sm:text-sm text-foreground mb-3">
+              <p className="text-xs sm:text-sm text-white mb-3">
                 <strong>Analysis:</strong> Standard compression glands and rigid conduit systems couldn't accommodate the mechanical stress.
               </p>
-              <p className="text-xs sm:text-sm text-foreground">
+              <p className="text-xs sm:text-sm text-white">
                 <strong>Solution:</strong> Installation of flexible conduit systems, vibration-resistant cable glands, and spring-loaded support systems eliminated the failures.
               </p>
             </div>
@@ -641,36 +641,36 @@ export default function Module3Section5_1() {
         </Card>
 
         {/* Enhanced FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
-            <div className="p-4 bg-card border border-border/20 rounded-lg">
-              <h3 className="font-medium text-foreground mb-2">Q: Do I need to document external influences in the installation certificate?</h3>
-              <p className="text-xs sm:text-sm text-foreground">
+            <div className="p-4 bg-transparent border border-white/10 rounded-lg">
+              <h3 className="font-medium text-white mb-2">Q: Do I need to document external influences in the installation certificate?</h3>
+              <p className="text-xs sm:text-sm text-white">
                 A: Yes — BS 7671 requires that design decisions consider external influences, and this must be recorded in the design section of the electrical installation certificate for compliance and future reference.
               </p>
             </div>
-            <div className="p-4 bg-card border border-border/20 rounded-lg">
-              <h3 className="font-medium text-foreground mb-2">Q: Are all installations affected by external influences?</h3>
-              <p className="text-xs sm:text-sm text-foreground">
+            <div className="p-4 bg-transparent border border-white/10 rounded-lg">
+              <h3 className="font-medium text-white mb-2">Q: Are all installations affected by external influences?</h3>
+              <p className="text-xs sm:text-sm text-white">
                 A: Yes — even 'normal' environments have influence ratings (e.g., AD1 = no significant presence of water, AA4 = normal temperature range). Every installation must be classified.
               </p>
             </div>
-            <div className="p-4 bg-card border border-border/20 rounded-lg">
-              <h3 className="font-medium text-foreground mb-2">Q: Can the classification change over time?</h3>
-              <p className="text-xs sm:text-sm text-foreground">
+            <div className="p-4 bg-transparent border border-white/10 rounded-lg">
+              <h3 className="font-medium text-white mb-2">Q: Can the classification change over time?</h3>
+              <p className="text-xs sm:text-sm text-white">
                 A: Yes — building extensions, change of use, environmental changes, or operational modifications can alter the influence category. Regular reassessment is recommended.
               </p>
             </div>
-            <div className="p-4 bg-card border border-border/20 rounded-lg">
-              <h3 className="font-medium text-foreground mb-2">Q: How often should external influence assessments be reviewed?</h3>
-              <p className="text-xs sm:text-sm text-foreground">
+            <div className="p-4 bg-transparent border border-white/10 rounded-lg">
+              <h3 className="font-medium text-white mb-2">Q: How often should external influence assessments be reviewed?</h3>
+              <p className="text-xs sm:text-sm text-white">
                 A: Formally during periodic inspection and testing (typically 1-5 years depending on installation type), and whenever significant changes occur to the building use or environment.
               </p>
             </div>
-            <div className="p-4 bg-card border border-border/20 rounded-lg">
-              <h3 className="font-medium text-foreground mb-2">Q: What happens if I use equipment with insufficient rating?</h3>
-              <p className="text-xs sm:text-sm text-foreground">
+            <div className="p-4 bg-transparent border border-white/10 rounded-lg">
+              <h3 className="font-medium text-white mb-2">Q: What happens if I use equipment with insufficient rating?</h3>
+              <p className="text-xs sm:text-sm text-white">
                 A: Equipment may fail prematurely, creating safety hazards and non-compliance with BS 7671. Insurance claims may be rejected, and legal liability could arise from inadequate design.
               </p>
             </div>
@@ -678,21 +678,21 @@ export default function Module3Section5_1() {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
-          <p className="text-foreground/90">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+          <p className="text-white/90">
             External influences, as defined by BS 7671, are environmental and operational factors that impact electrical installations. Understanding the three-category classification system and applying appropriate codes in design and installation ensures safety, compliance, and long-term durability. Proper assessment and documentation are essential for regulatory compliance and professional practice.
           </p>
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quiz (8 Questions)</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quiz (8 Questions)</h2>
           <Quiz questions={quizQuestions} />
         </Card>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />

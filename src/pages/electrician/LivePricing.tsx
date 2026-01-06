@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { PoundSterling, ArrowLeft, RefreshCw, Search } from "lucide-react";
+import { PoundSterling, RefreshCw, Search } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { useLiveMetalPrices } from "@/hooks/useLiveMetalPrices";
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -44,16 +45,7 @@ const LivePricing = () => {
             </div>
           </div>
           <div className="flex gap-2">
-            <Link to="/electrician">
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Back to Hub
-              </Button>
-            </Link>
+            <SmartBackButton />
             <Button
               variant="outline"
               size="sm"

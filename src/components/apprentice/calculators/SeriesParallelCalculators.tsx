@@ -1,15 +1,18 @@
-import React, { useMemo, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { useMemo, useState } from "react";
+import { Plus, X, Info, BookOpen, ChevronDown, RotateCcw } from "lucide-react";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { cn } from "@/lib/utils";
+import {
+  CalculatorCard,
+  CalculatorResult,
+  ResultValue,
+  ResultsGrid,
+  CALCULATOR_CONFIG,
+} from "@/components/calculators/shared";
 
 type Unit = "Ω" | "kΩ" | "MΩ";
 
@@ -50,7 +53,61 @@ function useRows(initial: Row[]) {
   return { rows, addRow, reset, removeRow, setValue, setUnit };
 }
 
+// Reusable Resistor Row Component
+const ResistorRow = ({
+  index,
+  value,
+  unit,
+  onValueChange,
+  onUnitChange,
+  onRemove
+}: {
+  index: number;
+  value: string;
+  unit: Unit;
+  onValueChange: (value: string) => void;
+  onUnitChange: (unit: Unit) => void;
+  onRemove: () => void;
+}) => (
+  <div className="flex items-center gap-2">
+    <div className="flex-1">
+      <div className="flex items-center gap-2">
+        <span className="text-xs text-white/50 w-8">R{index + 1}</span>
+        <input
+          type="text"
+          inputMode="decimal"
+          placeholder="Value"
+          value={value}
+          onChange={(e) => onValueChange(e.target.value)}
+          className="flex-1 h-11 px-3 rounded-lg bg-white/5 border border-white/10 text-white text-base placeholder:text-white/30 focus:outline-none focus:border-amber-400/50"
+        />
+        <select
+          value={unit}
+          onChange={(e) => onUnitChange(e.target.value as Unit)}
+          className="h-11 px-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-400/50"
+        >
+          <option value="Ω">Ω</option>
+          <option value="kΩ">kΩ</option>
+          <option value="MΩ">MΩ</option>
+        </select>
+      </div>
+    </div>
+    <button
+      onClick={onRemove}
+      className="h-11 w-11 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-white/50 hover:text-red-400 hover:bg-red-400/10 hover:border-red-400/30 transition-colors touch-manipulation"
+      aria-label={`Remove R${index + 1}`}
+    >
+      <X className="h-4 w-4" />
+    </button>
+  </div>
+);
+
 export default function SeriesParallelCalculators() {
+  const config = CALCULATOR_CONFIG['power'];
+  const [showSeriesGuidance, setShowSeriesGuidance] = useState(false);
+  const [showParallelGuidance, setShowParallelGuidance] = useState(false);
+  const [showReference, setShowReference] = useState(false);
+
   const init: Row[] = [
     { value: "", unit: "Ω" },
     { value: "", unit: "Ω" },
@@ -67,6 +124,7 @@ export default function SeriesParallelCalculators() {
     return vals.reduce((a, b) => a + b, 0);
   }, [series.rows]);
   const seriesFmt = formatAllUnits(seriesTotalOhms);
+  const seriesValidCount = series.rows.filter(r => parseFloat(r.value) > 0).length;
 
   // Parallel
   const parallel = useRows(init);
@@ -81,144 +139,218 @@ export default function SeriesParallelCalculators() {
     return 1 / sumRecip;
   }, [parallel.rows]);
   const parallelFmt = formatAllUnits(parallelTotalOhms);
+  const parallelValidCount = parallel.rows.filter(r => parseFloat(r.value) > 0).length;
 
   return (
-    <div className="space-y-8">
-      <Card className="bg-card border-border/20">
-        <CardHeader>
-          <CardTitle className="text-foreground">Series Resistance Calculator</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <p className="text-sm text-muted-foreground">
-            Add individual resistor values connected in series. The total resistance is the sum of all resistances (BS 7671 principle).
-          </p>
-          <div className="space-y-3">
-            {series.rows.map((row, idx) => (
-              <div key={idx} className="grid grid-cols-12 gap-3 items-center">
-                <div className="col-span-7 sm:col-span-8">
-                  <Label htmlFor={`s-val-${idx}`} className="text-sm">R{idx + 1} value</Label>
-                  <Input
-                    id={`s-val-${idx}`}
-                    inputMode="decimal"
-                    placeholder="e.g., 220"
-                    value={row.value}
-                    onChange={(e) => series.setValue(idx, e.target.value)}
-                  />
-                </div>
-                <div className="col-span-4 sm:col-span-3">
-                  <Label className="text-sm">Unit</Label>
-                  <Select value={row.unit} onValueChange={(v: Unit) => series.setUnit(idx, v)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Ω" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Ω">Ω</SelectItem>
-                      <SelectItem value="kΩ">kΩ</SelectItem>
-                      <SelectItem value="MΩ">MΩ</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="col-span-1 flex justify-end">
-                  <Button
-                    aria-label={`Remove resistor ${idx + 1}`}
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => series.removeRow(idx)}
-                  >
-                    ×
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <Button onClick={series.addRow} variant="secondary">Add resistor</Button>
-            <Button onClick={series.reset} variant="outline">Reset</Button>
-          </div>
-          <div className="mt-4 grid sm:grid-cols-3 gap-3">
-            <div className="bg-accent/30 rounded-md p-3">
-              <div className="text-xs text-muted-foreground">Total</div>
-              <div className="text-lg font-semibold text-foreground">{seriesFmt.ohm}</div>
-            </div>
-            <div className="bg-accent/30 rounded-md p-3">
-              <div className="text-xs text-muted-foreground">Total</div>
-              <div className="text-lg font-semibold text-foreground">{seriesFmt.kohm}</div>
-            </div>
-            <div className="bg-accent/30 rounded-md p-3">
-              <div className="text-xs text-muted-foreground">Total</div>
-              <div className="text-lg font-semibold text-foreground">{seriesFmt.Mohm}</div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+    <div className="space-y-6">
+      {/* Series Resistance Calculator */}
+      <CalculatorCard
+        category="power"
+        title="Series Resistance"
+        description="Calculate total resistance for series-connected resistors"
+        badge="Rt = ΣR"
+      >
+        <p className="text-sm text-white/60 -mt-2">
+          Add resistor values connected in series. Total resistance equals the sum of all resistances.
+        </p>
 
-      <Card className="bg-card border-border/20">
-        <CardHeader>
-          <CardTitle className="text-foreground">Parallel Resistance Calculator</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <p className="text-sm text-muted-foreground">
-            Add resistor values connected in parallel. The total resistance is calculated using 1/Rt = 1/R1 + 1/R2 + … (diversity and parallel paths reduce total R).
-          </p>
-          <div className="space-y-3">
-            {parallel.rows.map((row, idx) => (
-              <div key={idx} className="grid grid-cols-12 gap-3 items-center">
-                <div className="col-span-7 sm:col-span-8">
-                  <Label htmlFor={`p-val-${idx}`} className="text-sm">R{idx + 1} value</Label>
-                  <Input
-                    id={`p-val-${idx}`}
-                    inputMode="decimal"
-                    placeholder="e.g., 1.2"
-                    value={row.value}
-                    onChange={(e) => parallel.setValue(idx, e.target.value)}
-                  />
-                </div>
-                <div className="col-span-4 sm:col-span-3">
-                  <Label className="text-sm">Unit</Label>
-                  <Select value={row.unit} onValueChange={(v: Unit) => parallel.setUnit(idx, v)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Ω" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Ω">Ω</SelectItem>
-                      <SelectItem value="kΩ">kΩ</SelectItem>
-                      <SelectItem value="MΩ">MΩ</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="col-span-1 flex justify-end">
-                  <Button
-                    aria-label={`Remove resistor ${idx + 1}`}
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => parallel.removeRow(idx)}
-                  >
-                    ×
-                  </Button>
-                </div>
+        {/* Resistor Rows */}
+        <div className="space-y-2">
+          {series.rows.map((row, idx) => (
+            <ResistorRow
+              key={idx}
+              index={idx}
+              value={row.value}
+              unit={row.unit}
+              onValueChange={(v) => series.setValue(idx, v)}
+              onUnitChange={(u) => series.setUnit(idx, u)}
+              onRemove={() => series.removeRow(idx)}
+            />
+          ))}
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex gap-2">
+          <button
+            onClick={series.addRow}
+            className="flex-1 h-12 flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 text-white/80 hover:bg-white/10 transition-colors touch-manipulation"
+          >
+            <Plus className="h-4 w-4" />
+            Add Resistor
+          </button>
+          <button
+            onClick={series.reset}
+            className="h-12 px-4 flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 text-white/50 hover:bg-white/10 transition-colors touch-manipulation"
+          >
+            <RotateCcw className="h-4 w-4" />
+          </button>
+        </div>
+
+        {/* Live Results */}
+        {seriesValidCount > 0 && (
+          <div className="p-4 rounded-xl border border-amber-400/20 bg-amber-400/5">
+            <div className="text-center mb-3">
+              <p className="text-xs text-white/50 mb-1">Total Resistance</p>
+              <div
+                className="text-3xl font-bold bg-clip-text text-transparent"
+                style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}
+              >
+                {seriesFmt.ohm}
               </div>
-            ))}
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <Button onClick={parallel.addRow} variant="secondary">Add resistor</Button>
-            <Button onClick={parallel.reset} variant="outline">Reset</Button>
-          </div>
-          <div className="mt-4 grid sm:grid-cols-3 gap-3">
-            <div className="bg-accent/30 rounded-md p-3">
-              <div className="text-xs text-muted-foreground">Total</div>
-              <div className="text-lg font-semibold text-foreground">{parallelFmt.ohm}</div>
             </div>
-            <div className="bg-accent/30 rounded-md p-3">
-              <div className="text-xs text-muted-foreground">Total</div>
-              <div className="text-lg font-semibold text-foreground">{parallelFmt.kohm}</div>
-            </div>
-            <div className="bg-accent/30 rounded-md p-3">
-              <div className="text-xs text-muted-foreground">Total</div>
-              <div className="text-lg font-semibold text-foreground">{parallelFmt.Mohm}</div>
+            <div className="grid grid-cols-2 gap-2 text-center text-sm">
+              <div className="p-2 rounded-lg bg-white/5">
+                <span className="text-white/60">{seriesFmt.kohm}</span>
+              </div>
+              <div className="p-2 rounded-lg bg-white/5">
+                <span className="text-white/60">{seriesFmt.Mohm}</span>
+              </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        )}
+
+        {/* How It Works */}
+        <Collapsible open={showSeriesGuidance} onOpenChange={setShowSeriesGuidance}>
+          <div className="rounded-xl border border-blue-400/15 overflow-hidden">
+            <CollapsibleTrigger className="w-full flex items-center justify-between p-3 hover:bg-white/5 transition-colors">
+              <div className="flex items-center gap-3">
+                <Info className="h-4 w-4 text-blue-400" />
+                <span className="text-sm font-medium text-blue-300">How Series Works</span>
+              </div>
+              <ChevronDown className={cn(
+                "h-4 w-4 text-white/40 transition-transform duration-200",
+                showSeriesGuidance && "rotate-180"
+              )} />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="p-4 pt-0">
+              <div className="space-y-2 text-sm text-blue-200/80">
+                <p><strong className="text-blue-300">Formula:</strong> Rt = R1 + R2 + R3 + ...</p>
+                <p>In series, current flows through each resistor one after another. The total resistance increases.</p>
+                <p className="text-xs text-white/50 mt-2">Example: 100Ω + 200Ω + 300Ω = 600Ω</p>
+              </div>
+            </CollapsibleContent>
+          </div>
+        </Collapsible>
+      </CalculatorCard>
+
+      {/* Parallel Resistance Calculator */}
+      <CalculatorCard
+        category="power"
+        title="Parallel Resistance"
+        description="Calculate total resistance for parallel-connected resistors"
+        badge="1/Rt = Σ(1/R)"
+      >
+        <p className="text-sm text-white/60 -mt-2">
+          Add resistor values connected in parallel. Total resistance is less than the smallest resistor.
+        </p>
+
+        {/* Resistor Rows */}
+        <div className="space-y-2">
+          {parallel.rows.map((row, idx) => (
+            <ResistorRow
+              key={idx}
+              index={idx}
+              value={row.value}
+              unit={row.unit}
+              onValueChange={(v) => parallel.setValue(idx, v)}
+              onUnitChange={(u) => parallel.setUnit(idx, u)}
+              onRemove={() => parallel.removeRow(idx)}
+            />
+          ))}
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex gap-2">
+          <button
+            onClick={parallel.addRow}
+            className="flex-1 h-12 flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 text-white/80 hover:bg-white/10 transition-colors touch-manipulation"
+          >
+            <Plus className="h-4 w-4" />
+            Add Resistor
+          </button>
+          <button
+            onClick={parallel.reset}
+            className="h-12 px-4 flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 text-white/50 hover:bg-white/10 transition-colors touch-manipulation"
+          >
+            <RotateCcw className="h-4 w-4" />
+          </button>
+        </div>
+
+        {/* Live Results */}
+        {parallelValidCount > 0 && (
+          <div className="p-4 rounded-xl border border-amber-400/20 bg-amber-400/5">
+            <div className="text-center mb-3">
+              <p className="text-xs text-white/50 mb-1">Total Resistance</p>
+              <div
+                className="text-3xl font-bold bg-clip-text text-transparent"
+                style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}
+              >
+                {parallelFmt.ohm}
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-2 text-center text-sm">
+              <div className="p-2 rounded-lg bg-white/5">
+                <span className="text-white/60">{parallelFmt.kohm}</span>
+              </div>
+              <div className="p-2 rounded-lg bg-white/5">
+                <span className="text-white/60">{parallelFmt.Mohm}</span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* How It Works */}
+        <Collapsible open={showParallelGuidance} onOpenChange={setShowParallelGuidance}>
+          <div className="rounded-xl border border-blue-400/15 overflow-hidden">
+            <CollapsibleTrigger className="w-full flex items-center justify-between p-3 hover:bg-white/5 transition-colors">
+              <div className="flex items-center gap-3">
+                <Info className="h-4 w-4 text-blue-400" />
+                <span className="text-sm font-medium text-blue-300">How Parallel Works</span>
+              </div>
+              <ChevronDown className={cn(
+                "h-4 w-4 text-white/40 transition-transform duration-200",
+                showParallelGuidance && "rotate-180"
+              )} />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="p-4 pt-0">
+              <div className="space-y-2 text-sm text-blue-200/80">
+                <p><strong className="text-blue-300">Formula:</strong> 1/Rt = 1/R1 + 1/R2 + 1/R3 + ...</p>
+                <p>In parallel, current has multiple paths. The total resistance decreases below the smallest resistor.</p>
+                <p className="text-xs text-white/50 mt-2">Example: Two 100Ω in parallel = 50Ω</p>
+              </div>
+            </CollapsibleContent>
+          </div>
+        </Collapsible>
+      </CalculatorCard>
+
+      {/* Quick Reference */}
+      <Collapsible open={showReference} onOpenChange={setShowReference}>
+        <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
+          <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+            <div className="flex items-center gap-3">
+              <BookOpen className="h-4 w-4 text-amber-400" />
+              <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 Reference</span>
+            </div>
+            <ChevronDown className={cn(
+              "h-4 w-4 text-white/40 transition-transform duration-200",
+              showReference && "rotate-180"
+            )} />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="p-4 pt-0">
+            <div className="space-y-3 text-sm text-amber-200/80">
+              <p>
+                <strong className="text-amber-300">Series circuits:</strong> Used for voltage division, daisy-chained loads, and measuring resistance in cables.
+              </p>
+              <p>
+                <strong className="text-amber-300">Parallel circuits:</strong> Used in ring finals (BS 7671), diversity calculations, and earth electrode arrays.
+              </p>
+              <p className="text-xs text-white/50 pt-2 border-t border-white/10">
+                Ring final circuits combine both series and parallel principles for balanced load distribution.
+              </p>
+            </div>
+          </CollapsibleContent>
+        </div>
+      </Collapsible>
     </div>
   );
 }

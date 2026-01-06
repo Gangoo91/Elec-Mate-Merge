@@ -136,11 +136,11 @@ const Module7Section2_1 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               <span className="hidden sm:inline">Back to Section 2</span>
@@ -153,28 +153,28 @@ const Module7Section2_1 = () => {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-start gap-4">
-          <div className="p-2 rounded-lg bg-card self-start">
-            <Search className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
+          <div className="p-2 rounded-lg self-start">
+            <Search className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </div>
           <div className="flex-1">
-            <Badge variant="outline" className="mb-2 sm:mb-3 border-emerald-500/30 text-emerald-400 text-xs sm:text-sm">
+            <Badge variant="outline" className="mb-2 sm:mb-3 border-elec-yellow/30 text-elec-yellow text-xs sm:text-sm">
               Section 7.2.1
             </Badge>
-            <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+            <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
               2.1 Open Circuit Faults
             </h1>
-            <p className="text-sm sm:text-base text-muted-foreground max-w-3xl">
+            <p className="text-sm sm:text-base text-white max-w-3xl">
               Understanding detection, causes, and rectification of open circuit faults
             </p>
           </div>
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-            <div className="grid gap-4 sm:gap-6 md:grid-cols-2 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+            <div className="grid gap-4 sm:gap-6 md:grid-cols-2 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
                 <ul className="list-disc pl-4 space-y-1 sm:space-y-2">
                   <li>An <strong>open circuit fault</strong> occurs when there is a break in the electrical path</li>
                   <li>Prevents current from flowing through the circuit</li>
@@ -184,8 +184,8 @@ const Module7Section2_1 = () => {
                 </ul>
               </div>
               
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/30">
-                <h3 className="font-medium text-foreground mb-2">Spot / Use / Check</h3>
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
+                <h3 className="font-medium text-white mb-2">Spot / Use / Check</h3>
                 <ul className="list-disc pl-4 space-y-1">
                   <li><strong>Spot:</strong> No voltage readings, equipment not functioning</li>
                   <li><strong>Use:</strong> Multimeter for continuity testing</li>
@@ -197,10 +197,10 @@ const Module7Section2_1 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
               <li>Identify the characteristics and symptoms of open circuit faults</li>
               <li>Understand the common causes of open circuits in electrical installations</li>
               <li>Apply systematic testing methods to locate open circuit faults</li>
@@ -212,25 +212,25 @@ const Module7Section2_1 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-6">Content</h2>
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">Content</h2>
             
             {/* Section 1: Definition and Characteristics */}
-            <div className="border-l-4 border-l-emerald-500 bg-card p-4 sm:p-6 rounded-r-lg mb-6">
+            <div className="border-l-4 border-l-elec-yellow p-4 sm:p-6 rounded-r-lg mb-6">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</div>
-                <h3 className="text-base sm:text-lg font-semibold text-foreground">Definition and Characteristics</h3>
+                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</div>
+                <h3 className="text-base sm:text-lg font-semibold text-white">Definition and Characteristics</h3>
               </div>
               
-              <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+              <p className="text-sm text-white mb-4 leading-relaxed">
                 An open circuit fault occurs when the electrical path becomes incomplete, preventing current from flowing. This can happen when a conductor is physically broken, disconnected, or when a connection becomes loose enough to break the circuit.
               </p>
 
               <div className="space-y-3 mb-4">
-                <div className="bg-background/50 p-3 rounded border border-border/20">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
                   <h4 className="font-medium text-sm mb-2">Key Characteristics</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>• Complete interruption of current flow in the affected circuit</li>
                     <li>• No voltage present at load terminals</li>
                     <li>• Equipment downstream of the fault will not operate</li>
@@ -239,9 +239,9 @@ const Module7Section2_1 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-background/50 p-3 rounded border border-border/20">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
                   <h4 className="font-medium text-sm mb-2">Types of Open Circuit Faults</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>• <strong>Complete break:</strong> Physical separation of conductor</li>
                     <li>• <strong>Loose connection:</strong> High resistance joint that eventually fails</li>
                     <li>• <strong>Component failure:</strong> Blown fuse, failed switch contacts</li>
@@ -267,20 +267,20 @@ const Module7Section2_1 = () => {
             <Separator className="my-6" />
 
             {/* Section 2: Common Causes */}
-            <div className="border-l-4 border-l-green-500 bg-card p-4 sm:p-6 rounded-r-lg mb-6">
+            <div className="border-l-4 border-l-green-500 p-4 sm:p-6 rounded-r-lg mb-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">2</div>
-                <h3 className="text-base sm:text-lg font-semibold text-foreground">Common Causes</h3>
+                <h3 className="text-base sm:text-lg font-semibold text-white">Common Causes</h3>
               </div>
               
-              <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+              <p className="text-sm text-white mb-4 leading-relaxed">
                 Open circuit faults can arise from various factors throughout the lifecycle of an electrical installation:
               </p>
 
               <div className="grid gap-3 sm:grid-cols-2 mb-4">
-                <div className="bg-background/50 p-3 rounded border border-border/20">
-                  <h4 className="font-medium text-sm mb-2 text-red-600 dark:text-emerald-400">Installation Issues</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
+                  <h4 className="font-medium text-sm mb-2 text-red-600 dark:text-elec-yellow">Installation Issues</h4>
+                  <ul className="text-xs text-white space-y-1">
                     <li>• Insufficient tightening of terminal screws</li>
                     <li>• Poor quality connections during installation</li>
                     <li>• Inadequate cable preparation (stripped lengths)</li>
@@ -289,9 +289,9 @@ const Module7Section2_1 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-background/50 p-3 rounded border border-border/20">
-                  <h4 className="font-medium text-sm mb-2 text-orange-600 dark:text-emerald-400">Physical Damage</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
+                  <h4 className="font-medium text-sm mb-2 text-orange-600 dark:text-elec-yellow">Physical Damage</h4>
+                  <ul className="text-xs text-white space-y-1">
                     <li>• Mechanical damage from drilling or nailing</li>
                     <li>• Cable crushing during construction work</li>
                     <li>• Rodent damage to cable insulation and conductors</li>
@@ -300,9 +300,9 @@ const Module7Section2_1 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-background/50 p-3 rounded border border-border/20">
-                  <h4 className="font-medium text-sm mb-2 text-purple-600 dark:text-emerald-400">Component Failures</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
+                  <h4 className="font-medium text-sm mb-2 text-purple-600 dark:text-elec-yellow">Component Failures</h4>
+                  <ul className="text-xs text-white space-y-1">
                     <li>• Blown fuses due to overload or fault conditions</li>
                     <li>• Switch or breaker contact failure</li>
                     <li>• Lamp filament failure in series circuits</li>
@@ -311,9 +311,9 @@ const Module7Section2_1 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-background/50 p-3 rounded border border-border/20">
-                  <h4 className="font-medium text-sm mb-2 text-emerald-400 dark:text-emerald-400">Environmental Factors</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
+                  <h4 className="font-medium text-sm mb-2 text-elec-yellow dark:text-elec-yellow">Environmental Factors</h4>
+                  <ul className="text-xs text-white space-y-1">
                     <li>• Corrosion due to moisture ingress</li>
                     <li>• Thermal damage from overheating</li>
                     <li>• UV degradation of cable insulation</li>
@@ -340,20 +340,20 @@ const Module7Section2_1 = () => {
             <Separator className="my-6" />
 
             {/* Section 3: Effects and Safety Implications */}
-            <div className="border-l-4 border-l-orange-500 bg-card p-4 sm:p-6 rounded-r-lg mb-6">
+            <div className="border-l-4 border-l-orange-500 p-4 sm:p-6 rounded-r-lg mb-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-6 h-6 sm:w-8 sm:h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">3</div>
-                <h3 className="text-base sm:text-lg font-semibold text-foreground">Effects and Safety Implications</h3>
+                <h3 className="text-base sm:text-lg font-semibold text-white">Effects and Safety Implications</h3>
               </div>
               
-              <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+              <p className="text-sm text-white mb-4 leading-relaxed">
                 While open circuits may seem less dangerous than short circuits, they can have serious safety and operational consequences:
               </p>
 
               <div className="space-y-3 mb-4">
-                <div className="bg-background/50 p-3 rounded border border-border/20">
-                  <h4 className="font-medium text-sm mb-2 text-red-600 dark:text-emerald-400">Immediate Effects</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
+                  <h4 className="font-medium text-sm mb-2 text-red-600 dark:text-elec-yellow">Immediate Effects</h4>
+                  <ul className="text-xs text-white space-y-1">
                     <li>• Complete loss of function in affected circuits</li>
                     <li>• Lighting circuits leaving areas without illumination</li>
                     <li>• Power circuits causing equipment shutdown</li>
@@ -362,9 +362,9 @@ const Module7Section2_1 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-background/50 p-3 rounded border border-border/20">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
                   <h4 className="font-medium text-sm mb-2 text-amber-600 dark:text-amber-400">Critical Safety Implications</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>• <strong>CPC failure:</strong> Loss of earth fault protection</li>
                     <li>• <strong>Emergency systems:</strong> Fire alarms, emergency lighting failure</li>
                     <li>• <strong>Security systems:</strong> Intruder alarms, access control</li>
@@ -373,9 +373,9 @@ const Module7Section2_1 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-background/50 p-3 rounded border border-border/20">
-                  <h4 className="font-medium text-sm mb-2 text-emerald-400 dark:text-emerald-400">Secondary Effects</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
+                  <h4 className="font-medium text-sm mb-2 text-elec-yellow dark:text-elec-yellow">Secondary Effects</h4>
+                  <ul className="text-xs text-white space-y-1">
                     <li>• Business disruption and financial losses</li>
                     <li>• Data loss in computer systems</li>
                     <li>• Food spoilage in refrigeration systems</li>
@@ -387,10 +387,10 @@ const Module7Section2_1 = () => {
 
               <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 p-3 rounded-lg">
                 <div className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-red-600 dark:text-emerald-400 mt-0.5" />
+                  <AlertTriangle className="w-4 h-4 text-red-600 dark:text-elec-yellow mt-0.5" />
                   <div>
-                    <h4 className="font-medium text-sm text-red-700 dark:text-emerald-400 mb-1">Critical Safety Note</h4>
-                    <p className="text-xs text-red-600 dark:text-emerald-400">
+                    <h4 className="font-medium text-sm text-red-700 dark:text-elec-yellow mb-1">Critical Safety Note</h4>
+                    <p className="text-xs text-red-600 dark:text-elec-yellow">
                       Open circuit faults in protective conductors (CPC) are particularly dangerous as they remove earth fault protection while equipment may continue to operate normally. This creates a hidden danger that could result in electric shock or fire.
                     </p>
                   </div>
@@ -401,20 +401,20 @@ const Module7Section2_1 = () => {
             <Separator className="my-6" />
 
             {/* Section 4: Detection Methods */}
-            <div className="border-l-4 border-l-purple-500 bg-card p-4 sm:p-6 rounded-r-lg mb-6">
+            <div className="border-l-4 border-l-purple-500 p-4 sm:p-6 rounded-r-lg mb-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-6 h-6 sm:w-8 sm:h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">4</div>
-                <h3 className="text-base sm:text-lg font-semibold text-foreground">Detection and Testing Methods</h3>
+                <h3 className="text-base sm:text-lg font-semibold text-white">Detection and Testing Methods</h3>
               </div>
               
-              <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+              <p className="text-sm text-white mb-4 leading-relaxed">
                 Systematic testing approaches are essential for locating open circuit faults efficiently and safely:
               </p>
 
               <div className="space-y-3 mb-4">
-                <div className="bg-background/50 p-3 rounded border border-border/20">
-                  <h4 className="font-medium text-sm mb-2 text-emerald-400 dark:text-emerald-400">Primary Testing Methods</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
+                  <h4 className="font-medium text-sm mb-2 text-elec-yellow dark:text-elec-yellow">Primary Testing Methods</h4>
+                  <ul className="text-xs text-white space-y-1">
                     <li>• <strong>Continuity testing:</strong> Using multimeter or dedicated continuity tester</li>
                     <li>• <strong>Visual inspection:</strong> Checking for obvious breaks or loose connections</li>
                     <li>• <strong>Voltage testing:</strong> Measuring voltage presence at various points</li>
@@ -422,9 +422,9 @@ const Module7Section2_1 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-background/50 p-3 rounded border border-border/20">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
                   <h4 className="font-medium text-sm mb-2 text-green-600 dark:text-green-400">Testing Sequence</h4>
-                  <ol className="text-xs text-muted-foreground space-y-1 list-decimal list-inside">
+                  <ol className="text-xs text-white space-y-1 list-decimal list-inside">
                     <li><strong>Isolate</strong> the circuit and verify isolation</li>
                     <li><strong>Visual inspection</strong> of accessible connections</li>
                     <li><strong>Continuity test</strong> from supply to load</li>
@@ -433,9 +433,9 @@ const Module7Section2_1 = () => {
                   </ol>
                 </div>
                 
-                <div className="bg-background/50 p-3 rounded border border-border/20">
-                  <h4 className="font-medium text-sm mb-2 text-orange-600 dark:text-emerald-400">Safety Considerations</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
+                  <h4 className="font-medium text-sm mb-2 text-orange-600 dark:text-elec-yellow">Safety Considerations</h4>
+                  <ul className="text-xs text-white space-y-1">
                     <li>• Always isolate before testing - never test live circuits for continuity</li>
                     <li>• Use appropriate test instruments for the voltage level</li>
                     <li>• Verify test equipment operation before and after use</li>
@@ -465,17 +465,17 @@ const Module7Section2_1 = () => {
             <div className="border-l-4 border-l-teal-500 bg-teal-500/5 p-4 sm:p-6 rounded-r-lg">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-6 h-6 sm:w-8 sm:h-8 bg-teal-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">5</div>
-                <h3 className="text-base sm:text-lg font-semibold text-foreground">Repair and Prevention</h3>
+                <h3 className="text-base sm:text-lg font-semibold text-white">Repair and Prevention</h3>
               </div>
               
-              <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+              <p className="text-sm text-white mb-4 leading-relaxed">
                 Effective repair requires proper techniques and consideration of prevention measures:
               </p>
 
               <div className="space-y-3 mb-4">
-                <div className="bg-background/50 p-3 rounded border border-border/20">
-                  <h4 className="font-medium text-sm mb-2 text-emerald-400 dark:text-emerald-400">Repair Procedures</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
+                  <h4 className="font-medium text-sm mb-2 text-elec-yellow dark:text-elec-yellow">Repair Procedures</h4>
+                  <ul className="text-xs text-white space-y-1">
                     <li>• <strong>Reconnection:</strong> Clean and properly terminate loose connections</li>
                     <li>• <strong>Cable repair:</strong> Use appropriate junction boxes or replacement sections</li>
                     <li>• <strong>Component replacement:</strong> Replace blown fuses, failed switches</li>
@@ -484,9 +484,9 @@ const Module7Section2_1 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-background/50 p-3 rounded border border-border/20">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
                   <h4 className="font-medium text-sm mb-2 text-green-600 dark:text-green-400">Prevention Measures</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>• Use correct torque settings for terminal connections</li>
                     <li>• Provide adequate cable protection in vulnerable areas</li>
                     <li>• Regular inspection and maintenance schedules</li>
@@ -495,9 +495,9 @@ const Module7Section2_1 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-background/50 p-3 rounded border border-border/20">
-                  <h4 className="font-medium text-sm mb-2 text-purple-600 dark:text-emerald-400">BS 7671 Requirements</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
+                  <h4 className="font-medium text-sm mb-2 text-purple-600 dark:text-elec-yellow">BS 7671 Requirements</h4>
+                  <ul className="text-xs text-white space-y-1">
                     <li>• Continuity testing must be performed during installation</li>
                     <li>• Protective conductor continuity is critical for safety</li>
                     <li>• All connections must be accessible for inspection</li>
@@ -511,9 +511,9 @@ const Module7Section2_1 = () => {
         </Card>
 
         {/* Real World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-background border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-[#121212] border-white/10">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-6">Real World Example</h2>
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">Real World Example</h2>
             
             <div className="space-y-4">
               <div className="rounded-lg p-4 border-l-4 border-l-amber-400 bg-amber-400/20">
@@ -523,7 +523,7 @@ const Module7Section2_1 = () => {
                   </span>
                   <div className="flex-1">
                     <h3 className="font-semibold text-amber-300 mb-2">Case Study: Office Socket Circuit Failure</h3>
-                    <p className="text-xs sm:text-sm text-foreground">
+                    <p className="text-xs sm:text-sm text-white">
                       During a routine office refurbishment, an apprentice electrician installed new socket outlets. Two weeks later, several sockets on the circuit stopped working, causing disruption to the office operations.
                     </p>
                   </div>
@@ -536,8 +536,8 @@ const Module7Section2_1 = () => {
                     <AlertTriangle className="w-4 h-4" />
                   </span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 mb-2">The Problem:</p>
-                    <p className="text-xs sm:text-sm text-foreground">
+                    <p className="font-semibold text-elec-yellow mb-2">The Problem:</p>
+                    <p className="text-xs sm:text-sm text-white">
                       Multiple socket outlets on a ring final circuit suddenly lost power. Initial checks showed the MCB had not tripped, and other sockets on the circuit were still working normally.
                     </p>
                   </div>
@@ -550,8 +550,8 @@ const Module7Section2_1 = () => {
                     <Search className="w-4 h-4" />
                   </span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 mb-2">The Investigation:</p>
-                    <p className="text-xs sm:text-sm text-foreground">
+                    <p className="font-semibold text-elec-yellow mb-2">The Investigation:</p>
+                    <p className="text-xs sm:text-sm text-white">
                       An experienced electrician performed continuity testing and discovered an open circuit in the neutral conductor at one of the newly installed sockets. The socket itself appeared to be properly connected.
                     </p>
                   </div>
@@ -564,8 +564,8 @@ const Module7Section2_1 = () => {
                     <Wrench className="w-4 h-4" />
                   </span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 mb-2">The Root Cause:</p>
-                    <p className="text-xs sm:text-sm text-foreground">
+                    <p className="font-semibold text-elec-yellow mb-2">The Root Cause:</p>
+                    <p className="text-xs sm:text-sm text-white">
                       Upon closer inspection, it was found that the neutral conductor terminal screw had not been properly tightened during installation. Vibration from normal office activity had caused the connection to gradually work loose until it made insufficient contact.
                     </p>
                   </div>
@@ -578,8 +578,8 @@ const Module7Section2_1 = () => {
                     <CheckCircle className="w-4 h-4" />
                   </span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 mb-2">The Solution:</p>
-                    <p className="text-xs sm:text-sm text-foreground">
+                    <p className="font-semibold text-elec-yellow mb-2">The Solution:</p>
+                    <p className="text-xs sm:text-sm text-white">
                       The loose connection was properly re-terminated with the correct torque applied. All other new sockets were checked and several more loose connections were found and corrected. The circuit was then fully tested for continuity and functionality.
                     </p>
                   </div>
@@ -593,7 +593,7 @@ const Module7Section2_1 = () => {
                   </span>
                   <div className="flex-1">
                     <p className="font-semibold text-green-300 mb-2">Lessons Learned:</p>
-                    <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                    <ul className="text-xs sm:text-sm text-white space-y-1">
                       <li>• Always use the correct torque settings for terminal connections</li>
                       <li>• Perform thorough testing after installation completion</li>
                       <li>• Quality control checks should verify all connections</li>
@@ -607,47 +607,47 @@ const Module7Section2_1 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-6">FAQs</h2>
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">FAQs</h2>
             <div className="space-y-4">
               <div>
-                <h3 className="font-medium text-foreground mb-2 text-sm">What's the difference between an open circuit and a short circuit?</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">An open circuit has a break in the path preventing current flow, while a short circuit creates an unintended low-resistance path allowing excessive current flow.</p>
+                <h3 className="font-medium text-white mb-2 text-sm">What's the difference between an open circuit and a short circuit?</h3>
+                <p className="text-xs sm:text-sm text-white">An open circuit has a break in the path preventing current flow, while a short circuit creates an unintended low-resistance path allowing excessive current flow.</p>
               </div>
               
               <Separator />
               
               <div>
-                <h3 className="font-medium text-foreground mb-2 text-sm">Can an open circuit be dangerous?</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">While open circuits don't cause overcurrent, they can be dangerous if they affect safety systems like emergency lighting or protective devices.</p>
+                <h3 className="font-medium text-white mb-2 text-sm">Can an open circuit be dangerous?</h3>
+                <p className="text-xs sm:text-sm text-white">While open circuits don't cause overcurrent, they can be dangerous if they affect safety systems like emergency lighting or protective devices.</p>
               </div>
               
               <Separator />
               
               <div>
-                <h3 className="font-medium text-foreground mb-2 text-sm">How do I test for continuity safely?</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">Always isolate the circuit first, verify isolation, then use a multimeter set to continuity mode. Never test continuity on live circuits.</p>
+                <h3 className="font-medium text-white mb-2 text-sm">How do I test for continuity safely?</h3>
+                <p className="text-xs sm:text-sm text-white">Always isolate the circuit first, verify isolation, then use a multimeter set to continuity mode. Never test continuity on live circuits.</p>
               </div>
               
               <Separator />
               
               <div>
-                <h3 className="font-medium text-foreground mb-2 text-sm">What tools do I need for open circuit fault finding?</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">Essential tools include a multimeter, continuity tester, voltage indicator, and basic hand tools for accessing connections.</p>
+                <h3 className="font-medium text-white mb-2 text-sm">What tools do I need for open circuit fault finding?</h3>
+                <p className="text-xs sm:text-sm text-white">Essential tools include a multimeter, continuity tester, voltage indicator, and basic hand tools for accessing connections.</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5 text-green-500" />
               Summary
             </h2>
-            <p className="text-xs sm:text-sm text-foreground">
+            <p className="text-xs sm:text-sm text-white">
               Open circuit faults represent one of the most common electrical problems, characterised by a complete break in the electrical path that prevents current flow. These faults can occur due to loose connections, mechanical damage, component failures, and environmental factors. While they may not immediately cause protective device operation, they can have serious safety implications, particularly when affecting protective conductors or safety-critical systems. Effective detection requires systematic testing with proper isolation procedures, and understanding their behaviour is fundamental for electrical technicians.
             </p>
           </CardContent>

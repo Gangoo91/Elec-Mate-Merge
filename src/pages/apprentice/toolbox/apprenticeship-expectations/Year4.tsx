@@ -14,7 +14,7 @@ import {
   Users,
   MapPin
 } from "lucide-react";
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 
 const Year4 = () => {
   const monthlyBreakdown = [
@@ -187,7 +187,7 @@ const Year4 = () => {
         <p className="text-muted-foreground text-center max-w-2xl mb-4 text-sm sm:text-base">
           Your final year focuses on specialisation, EPA completion, and transitioning to qualified electrician status
         </p>
-        <BackButton customUrl="/apprentice/toolbox/apprenticeship-expectations" label="Back to Expectations" />
+        <SmartBackButton />
       </div>
 
       {/* Overview Card */}

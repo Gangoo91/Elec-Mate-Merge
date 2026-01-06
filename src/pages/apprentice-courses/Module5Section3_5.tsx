@@ -128,11 +128,11 @@ const Module5Section3_5 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3
@@ -146,38 +146,38 @@ const Module5Section3_5 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Settings className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Settings className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 5.3.5
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Dealing with Variations and Unforeseen Issues
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Learn to manage project changes and unexpected challenges effectively while maintaining safety, quality, and compliance standards.
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-6">
-            <Target className="w-6 h-6 text-foreground" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Introduction</h2>
+            <Target className="w-6 h-6 text-white" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Introduction</h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Record all changes formally with written approval.</li>
                 <li>Stop work if safety is compromised by unforeseen issues.</li>
                 <li>Communicate changes to all affected parties immediately.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Unauthorised changes, hidden conditions, safety hazards.</li>
                 <li><strong>Use:</strong> Variation orders, site instructions, change logs.</li>
@@ -188,18 +188,18 @@ const Module5Section3_5 = () => {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <p className="text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <p className="text-base text-white mb-4">
             No matter how well a project is planned, variations and unforeseen issues will always arise. These may include design changes, unexpected site conditions, or delays caused by other trades. The key is not to avoid them — which is impossible — but to manage them effectively so that safety, quality, and deadlines are not compromised.
           </p>
           
           <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
             <div className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-emerald-400 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2">Why This Matters</p>
-                <p className="text-xs sm:text-sm text-foreground">
+                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Why This Matters</p>
+                <p className="text-xs sm:text-sm text-white">
                   Studies show that 75% of construction projects experience significant variations, with poorly managed changes causing 40% of project delays and 35% of cost overruns.
                 </p>
               </div>
@@ -207,12 +207,12 @@ const Module5Section3_5 = () => {
           </div>
           
           <div className="mt-4 space-y-3">
-            <p className="text-base text-foreground">
+            <p className="text-base text-white">
               <strong>Real Impact:</strong> Professional variation management can reduce project disputes by 60% and maintain schedule adherence even when significant changes occur.
             </p>
             
             <div className="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded border border-emerald-200 dark:border-emerald-800">
-              <p className="text-xs sm:text-sm text-foreground">
+              <p className="text-xs sm:text-sm text-white">
                 <strong>Industry Standard:</strong> JCT contracts and NEC frameworks require systematic variation management to maintain legal compliance and project governance.
               </p>
             </div>
@@ -220,10 +220,10 @@ const Module5Section3_5 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-base text-foreground mb-4">By the end of this subsection, you will be able to:</p>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-base text-white mb-4">By the end of this subsection, you will be able to:</p>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Recognise common causes of variations and unforeseen issues on site.</li>
             <li>Apply methods to manage and record changes.</li>
             <li>Communicate effectively when issues arise.</li>
@@ -233,32 +233,32 @@ const Module5Section3_5 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* What Are Variations */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">1. What Are Variations? - Comprehensive Understanding</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">1. What Are Variations? - Comprehensive Understanding</h3>
+            <p className="text-base text-white mb-4">
               Variations are fundamental changes that deviate from the original project scope and require systematic management:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-3">Definition and Types of Variations</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Definition and Types of Variations</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Core Definition:</strong></p>
-                        <p className="text-xs sm:text-sm text-foreground mb-3">Any change to the agreed design, scope, or programme that differs from the original contract or specification.</p>
+                        <p className="text-base text-white mb-2"><strong>Core Definition:</strong></p>
+                        <p className="text-xs sm:text-sm text-white mb-3">Any change to the agreed design, scope, or programme that differs from the original contract or specification.</p>
                         
                         <div className="grid md:grid-cols-2 gap-4">
                           <div>
-                            <p className="text-base text-foreground mb-2"><strong>Design Variations:</strong></p>
-                            <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                            <p className="text-base text-white mb-2"><strong>Design Variations:</strong></p>
+                            <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                               <li>Client requests additional sockets or switches</li>
                               <li>Moving lighting positions for aesthetic reasons</li>
                               <li>Upgrading cable sizes for increased loads</li>
@@ -267,8 +267,8 @@ const Module5Section3_5 = () => {
                             </ul>
                           </div>
                           <div>
-                            <p className="text-base text-foreground mb-2"><strong>Scope Variations:</strong></p>
-                            <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                            <p className="text-base text-white mb-2"><strong>Scope Variations:</strong></p>
+                            <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                               <li>Additional floors or areas to be serviced</li>
                               <li>Increased power requirements for equipment</li>
                               <li>Extra data and communication installations</li>
@@ -280,8 +280,8 @@ const Module5Section3_5 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Programme Variations:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Programme Variations:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Accelerated completion requirements</li>
                           <li>Phased handover changes</li>
                           <li>Working hour restrictions due to occupation</li>
@@ -292,7 +292,7 @@ const Module5Section3_5 = () => {
 
                       <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded border border-green-200 dark:border-green-800">
                         <p className="font-medium text-green-700 dark:text-green-400 mb-2">Financial Impact</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="text-xs sm:text-sm text-white">
                           Well-managed variations can actually improve project profitability, while poorly managed ones can result in losses of 10-20% of contract value.
                         </p>
                       </div>
@@ -305,8 +305,8 @@ const Module5Section3_5 = () => {
 
           {/* Variation Classification System */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">1.1 Variation Classification and Impact Assessment</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">1.1 Variation Classification and Impact Assessment</h3>
+            <p className="text-base text-white mb-4">
               Understanding variation categories helps determine appropriate response and management strategies:
             </p>
             
@@ -314,7 +314,7 @@ const Module5Section3_5 = () => {
               <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                 <div className="rounded-lg p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
                   <h4 className="font-medium text-green-800 dark:text-green-200 mb-3">Minor Variations</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-foreground">
+                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Single socket additions</li>
                     <li>Switch position adjustments</li>
                     <li>Cable colour changes</li>
@@ -325,7 +325,7 @@ const Module5Section3_5 = () => {
 
                 <div className="rounded-lg p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800">
                   <h4 className="font-medium text-yellow-800 dark:text-yellow-200 mb-3">Moderate Variations</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-foreground">
+                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Room layout changes</li>
                     <li>Panel board relocations</li>
                     <li>Additional circuits</li>
@@ -336,13 +336,13 @@ const Module5Section3_5 = () => {
 
                 <div className="rounded-lg p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
                   <h4 className="font-medium text-red-800 dark:text-red-200 mb-3">Major Variations</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-foreground">
+                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Complete system redesign</li>
                     <li>Additional building areas</li>
                     <li>Load increase requiring infrastructure changes</li>
                     <li>Specification upgrades</li>
                   </ul>
-                  <p className="text-xs text-red-700 dark:text-emerald-400 mt-2">Impact: &gt; 10% project value</p>
+                  <p className="text-xs text-red-700 dark:text-elec-yellow mt-2">Impact: &gt; 10% project value</p>
                 </div>
               </div>
             </div>
@@ -359,14 +359,14 @@ const Module5Section3_5 = () => {
 
           {/* Unforeseen Issues */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">2. Unforeseen Issues - Identification and Response</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">2. Unforeseen Issues - Identification and Response</h3>
+            <p className="text-base text-white mb-4">
               Unforeseen issues are circumstances that could not have been reasonably anticipated during planning:
             </p>
             
             <div className="space-y-6">
               {/* Site Conditions */}
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">A</span>
                   <div className="flex-1">
@@ -375,8 +375,8 @@ const Module5Section3_5 = () => {
                     <div className="space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                          <p className="text-base text-foreground mb-2"><strong>Structural Discoveries:</strong></p>
-                          <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                          <p className="text-base text-white mb-2"><strong>Structural Discoveries:</strong></p>
+                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                             <li>Steel beams blocking planned cable routes</li>
                             <li>Concrete thickness preventing core drilling</li>
                             <li>Asbestos-containing materials in ceiling voids</li>
@@ -385,8 +385,8 @@ const Module5Section3_5 = () => {
                           </ul>
                         </div>
                         <div>
-                          <p className="text-base text-foreground mb-2"><strong>Environmental Factors:</strong></p>
-                          <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                          <p className="text-base text-white mb-2"><strong>Environmental Factors:</strong></p>
+                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                             <li>Waterlogged ground conditions</li>
                             <li>Rock formations requiring specialist equipment</li>
                             <li>Contaminated soil requiring special handling</li>
@@ -398,7 +398,7 @@ const Module5Section3_5 = () => {
                       
                       <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded border border-green-200 dark:border-green-800">
                         <p className="font-medium text-green-700 dark:text-green-400 mb-2">Response Protocol</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="text-xs sm:text-sm text-white">
                           Immediately stop work, secure the area, document conditions with photos, and report to site management for specialist assessment.
                         </p>
                       </div>
@@ -408,17 +408,17 @@ const Module5Section3_5 = () => {
               </div>
 
               {/* Supply Chain Issues */}
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">B</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">B</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-3">Supply Chain and Material Issues</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Supply Chain and Material Issues</p>
                     
                     <div className="space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                          <p className="text-base text-foreground mb-2"><strong>Material Challenges:</strong></p>
-                          <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                          <p className="text-base text-white mb-2"><strong>Material Challenges:</strong></p>
+                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                             <li>Material shortages due to global supply issues</li>
                             <li>Late deliveries affecting critical path activities</li>
                             <li>Quality defects requiring replacement materials</li>
@@ -427,8 +427,8 @@ const Module5Section3_5 = () => {
                           </ul>
                         </div>
                         <div>
-                          <p className="text-base text-foreground mb-2"><strong>Mitigation Strategies:</strong></p>
-                          <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                          <p className="text-base text-white mb-2"><strong>Mitigation Strategies:</strong></p>
+                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                             <li>Identify alternative suppliers and products</li>
                             <li>Maintain buffer stock for critical items</li>
                             <li>Develop substitute material specifications</li>
@@ -439,8 +439,8 @@ const Module5Section3_5 = () => {
                       </div>
                       
                       <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                        <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2">Proactive Monitoring</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Proactive Monitoring</p>
+                        <p className="text-xs sm:text-sm text-white">
                           Regularly monitor delivery schedules and maintain relationships with multiple suppliers to anticipate and manage supply chain disruptions.
                         </p>
                       </div>
@@ -450,17 +450,17 @@ const Module5Section3_5 = () => {
               </div>
 
               {/* External Dependencies */}
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">C</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-3">External Dependencies and Delays</p>
+                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">External Dependencies and Delays</p>
                     
                     <div className="space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                          <p className="text-base text-foreground mb-2"><strong>Weather-Related Delays:</strong></p>
-                          <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                          <p className="text-base text-white mb-2"><strong>Weather-Related Delays:</strong></p>
+                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                             <li>Extreme weather preventing external work</li>
                             <li>Flooding affecting site access</li>
                             <li>High winds restricting crane operations</li>
@@ -469,8 +469,8 @@ const Module5Section3_5 = () => {
                           </ul>
                         </div>
                         <div>
-                          <p className="text-base text-foreground mb-2"><strong>Third Party Dependencies:</strong></p>
-                          <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                          <p className="text-base text-white mb-2"><strong>Third Party Dependencies:</strong></p>
+                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                             <li>Other trades not completing work on time</li>
                             <li>Utility company connection delays</li>
                             <li>Planning permission modifications</li>
@@ -481,8 +481,8 @@ const Module5Section3_5 = () => {
                       </div>
                       
                       <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded border border-purple-200 dark:border-purple-800">
-                        <p className="font-medium text-purple-700 dark:text-emerald-400 mb-2">Contingency Planning</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Contingency Planning</p>
+                        <p className="text-xs sm:text-sm text-white">
                           Develop contingency plans for weather-sensitive work and maintain regular communication with all stakeholders to anticipate delays.
                         </p>
                       </div>
@@ -504,16 +504,16 @@ const Module5Section3_5 = () => {
 
           {/* Risks of Poor Management */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">3. Risks of Poor Variation Management - Consequence Analysis</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">3. Risks of Poor Variation Management - Consequence Analysis</h3>
+            <p className="text-base text-white mb-4">
               Understanding the full impact of poor variation management emphasises the importance of systematic approaches:
             </p>
             
             <div className="space-y-4">
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="rounded-lg p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
-                  <h4 className="font-medium text-red-700 dark:text-emerald-400 mb-3">Safety and Compliance Risks</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-foreground">
+                  <h4 className="font-medium text-red-700 dark:text-elec-yellow mb-3">Safety and Compliance Risks</h4>
+                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li><strong>Safety Compromises:</strong> Rushed changes bypassing risk assessments</li>
                     <li><strong>Regulation Breaches:</strong> Non-compliance with BS 7671 or building regulations</li>
                     <li><strong>Certification Issues:</strong> Invalid test certificates for modified installations</li>
@@ -522,8 +522,8 @@ const Module5Section3_5 = () => {
                 </div>
 
                 <div className="rounded-lg p-4 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800">
-                  <h4 className="font-medium text-orange-700 dark:text-emerald-400 mb-3">Commercial and Legal Risks</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-foreground">
+                  <h4 className="font-medium text-orange-700 dark:text-elec-yellow mb-3">Commercial and Legal Risks</h4>
+                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li><strong>Cost Disputes:</strong> Disagreements over variation pricing</li>
                     <li><strong>Legal Claims:</strong> Breach of contract allegations</li>
                     <li><strong>Payment Delays:</strong> Disputes holding up progress payments</li>
@@ -533,27 +533,27 @@ const Module5Section3_5 = () => {
               </div>
 
               <div className="rounded-lg p-4 bg-gray-50 dark:bg-card/50 border border-gray-200 dark:border-gray-700">
-                <h4 className="font-medium text-foreground mb-3">Project Impact Assessment</h4>
+                <h4 className="font-medium text-white mb-3">Project Impact Assessment</h4>
                 <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                   <div>
-                    <p className="font-medium text-foreground mb-2">Time Impact:</p>
-                    <ul className="list-disc pl-5 text-xs sm:text-sm text-foreground">
+                    <p className="font-medium text-white mb-2">Time Impact:</p>
+                    <ul className="list-disc pl-5 text-xs sm:text-sm text-white">
                       <li>Project delays up to 30%</li>
                       <li>Extended site overheads</li>
                       <li>Cascade effects on other projects</li>
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-foreground mb-2">Cost Impact:</p>
-                    <ul className="list-disc pl-5 text-xs sm:text-sm text-foreground">
+                    <p className="font-medium text-white mb-2">Cost Impact:</p>
+                    <ul className="list-disc pl-5 text-xs sm:text-sm text-white">
                       <li>Rework costs 5-20% of value</li>
                       <li>Acceleration costs</li>
                       <li>Disruption claims</li>
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-foreground mb-2">Quality Impact:</p>
-                    <ul className="list-disc pl-5 text-xs sm:text-sm text-foreground">
+                    <p className="font-medium text-white mb-2">Quality Impact:</p>
+                    <ul className="list-disc pl-5 text-xs sm:text-sm text-white">
                       <li>Defect rates increase</li>
                       <li>System performance issues</li>
                       <li>Maintenance problems</li>
@@ -566,13 +566,13 @@ const Module5Section3_5 = () => {
 
           {/* Managing Variations */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">4. Managing Variations - Systematic Approach</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">4. Managing Variations - Systematic Approach</h3>
+            <p className="text-base text-white mb-4">
               Effective variation management requires structured processes and clear accountability:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-amber-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-amber-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
@@ -580,8 +580,8 @@ const Module5Section3_5 = () => {
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Documentation Requirements:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Documentation Requirements:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Record all changes formally using variation orders or site instructions</li>
                           <li>Include detailed descriptions of work affected</li>
                           <li>Specify time and cost implications</li>
@@ -592,9 +592,9 @@ const Module5Section3_5 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Approval Hierarchy:</strong></p>
-                        <div className="bg-background/50 p-3 rounded border mb-2">
-                          <ol className="list-decimal ml-4 space-y-1 text-xs sm:text-sm text-foreground">
+                        <p className="text-base text-white mb-2"><strong>Approval Hierarchy:</strong></p>
+                        <div className="bg-[#121212]/50 p-3 rounded border mb-2">
+                          <ol className="list-decimal ml-4 space-y-1 text-xs sm:text-sm text-white">
                             <li><strong>Site Level:</strong> Supervisor approval for minor variations (under £500)</li>
                             <li><strong>Project Level:</strong> Project manager approval for moderate variations (£500-£5000)</li>
                             <li><strong>Commercial Level:</strong> Commercial manager approval for major variations (over £5000)</li>
@@ -604,8 +604,8 @@ const Module5Section3_5 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Process Implementation:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Process Implementation:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Ensure supervisor or project manager approval before proceeding</li>
                           <li>Update all relevant drawings and documentation</li>
                           <li>Communicate changes to design team and other trades</li>
@@ -615,8 +615,8 @@ const Module5Section3_5 = () => {
                       </div>
 
                       <div className="bg-orange-50 dark:bg-orange-900/20 p-3 rounded border border-orange-200 dark:border-orange-800">
-                        <p className="font-medium text-orange-700 dark:text-emerald-400 mb-2">Digital Management Systems</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="font-medium text-orange-700 dark:text-elec-yellow mb-2">Digital Management Systems</p>
+                        <p className="text-xs sm:text-sm text-white">
                           Modern project management software can automate variation tracking, approval workflows, and document distribution, reducing errors and improving efficiency.
                         </p>
                       </div>
@@ -638,8 +638,8 @@ const Module5Section3_5 = () => {
 
           {/* Communication Strategies */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">5. Communication and Stakeholder Management</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">5. Communication and Stakeholder Management</h3>
+            <p className="text-base text-white mb-4">
               Effective communication is critical for successful variation management:
             </p>
             
@@ -649,7 +649,7 @@ const Module5Section3_5 = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <p className="font-medium text-cyan-700 dark:text-cyan-400 mb-2">Internal Communication:</p>
-                    <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-foreground">
+                    <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                       <li>Inform all affected parties early and completely</li>
                       <li>Use standardised communication templates</li>
                       <li>Establish clear escalation procedures</li>
@@ -659,7 +659,7 @@ const Module5Section3_5 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-cyan-700 dark:text-cyan-400 mb-2">External Communication:</p>
-                    <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-foreground">
+                    <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                       <li>Keep the client updated on time and cost implications</li>
                       <li>Coordinate with other contractors and consultants</li>
                       <li>Maintain records of all client instructions</li>
@@ -672,7 +672,7 @@ const Module5Section3_5 = () => {
 
               <div className="rounded-lg p-4 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800">
                 <h4 className="font-medium text-indigo-700 dark:text-indigo-400 mb-3">Dispute Prevention and Resolution</h4>
-                <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-foreground">
+                <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                   <li><strong>Clear Documentation:</strong> Document discussions in writing to avoid disputes</li>
                   <li><strong>Prompt Notification:</strong> Notify potential variations as soon as identified</li>
                   <li><strong>Cost Transparency:</strong> Provide detailed cost breakdowns for variations</li>
@@ -685,14 +685,14 @@ const Module5Section3_5 = () => {
         </Card>
 
         {/* Advanced Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Advanced Practical Guidance</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Advanced Practical Guidance</h2>
           <div className="space-y-6">
             
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div className="rounded-lg p-4 bg-slate-50 dark:bg-card/50 border border-slate-200 dark:border-slate-700">
-                <h3 className="font-medium text-foreground mb-3">Daily Management Practices</h3>
-                <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+                <h3 className="font-medium text-white mb-3">Daily Management Practices</h3>
+                <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
                   <li>Always carry a variation log and update it daily</li>
                   <li>Never make design changes without written approval</li>
                   <li>Keep flexible with sequencing — switch tasks while waiting on issue resolution</li>
@@ -703,8 +703,8 @@ const Module5Section3_5 = () => {
               </div>
 
               <div className="rounded-lg p-4 bg-slate-50 dark:bg-card/50 border border-slate-200 dark:border-slate-700">
-                <h3 className="font-medium text-foreground mb-3">Quality Assurance Measures</h3>
-                <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+                <h3 className="font-medium text-white mb-3">Quality Assurance Measures</h3>
+                <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
                   <li>Verify compliance with BS 7671 for all variations</li>
                   <li>Update test schedules to reflect design changes</li>
                   <li>Ensure certification covers all varied work</li>
@@ -720,15 +720,15 @@ const Module5Section3_5 = () => {
               <div className="space-y-3">
                 <div>
                   <p className="font-medium text-emerald-800 dark:text-emerald-200">Mobile Documentation:</p>
-                  <p className="text-xs sm:text-sm text-foreground">Use smartphones and tablets for real-time variation recording, photo documentation, and instant communication with project teams.</p>
+                  <p className="text-xs sm:text-sm text-white">Use smartphones and tablets for real-time variation recording, photo documentation, and instant communication with project teams.</p>
                 </div>
                 <div>
                   <p className="font-medium text-emerald-800 dark:text-emerald-200">Cloud-Based Systems:</p>
-                  <p className="text-xs sm:text-sm text-foreground">Implement cloud-based project management systems for real-time variation tracking, approval workflows, and document sharing.</p>
+                  <p className="text-xs sm:text-sm text-white">Implement cloud-based project management systems for real-time variation tracking, approval workflows, and document sharing.</p>
                 </div>
                 <div>
                   <p className="font-medium text-emerald-800 dark:text-emerald-200">BIM Integration:</p>
-                  <p className="text-xs sm:text-sm text-foreground">Use Building Information Modeling (BIM) to visualise variation impacts and coordinate changes with other building systems.</p>
+                  <p className="text-xs sm:text-sm text-white">Use Building Information Modeling (BIM) to visualise variation impacts and coordinate changes with other building systems.</p>
                 </div>
               </div>
             </div>
@@ -738,7 +738,7 @@ const Module5Section3_5 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <p className="font-medium text-purple-800 dark:text-purple-200 mb-2">Proactive Risk Identification:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-foreground">
+                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Regular site condition assessments</li>
                     <li>Early supplier communication for long-lead items</li>
                     <li>Weather monitoring and contingency planning</li>
@@ -747,7 +747,7 @@ const Module5Section3_5 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-purple-800 dark:text-purple-200 mb-2">Reactive Response Planning:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-foreground">
+                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Pre-agreed alternative suppliers and materials</li>
                     <li>Flexible resource allocation strategies</li>
                     <li>Emergency communication protocols</li>
@@ -760,18 +760,18 @@ const Module5Section3_5 = () => {
         </Card>
 
         {/* Multiple Real-World Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-World Case Studies</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Case Studies</h2>
           
           <div className="space-y-6">
             <div className="rounded-lg p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
               <h3 className="font-semibold text-red-800 dark:text-red-200 mb-3">Case Study 1: Unauthorised Structural Modification</h3>
-              <p className="text-red-700 dark:text-emerald-400 mb-3">
+              <p className="text-red-700 dark:text-elec-yellow mb-3">
                 On a commercial project, electricians discovered steel beams obstructing the planned cable route. Instead of stopping and reporting, they improvised by drilling through the beam, creating a serious safety risk. The work had to be removed and redone, and the contractor faced penalties. Correct action would have been to report the issue, seek design approval, and reroute safely.
               </p>
               <div className="bg-red-100 dark:bg-red-900/40 p-3 rounded">
                 <p className="font-medium text-red-800 dark:text-red-200 mb-1">Lessons Learned:</p>
-                <ul className="list-disc pl-5 text-sm text-red-700 dark:text-emerald-400">
+                <ul className="list-disc pl-5 text-sm text-red-700 dark:text-elec-yellow">
                   <li>Never make structural modifications without engineering approval</li>
                   <li>Stop work immediately when unexpected conditions are encountered</li>
                   <li>Cost of proper procedures far less than cost of remedial work</li>
@@ -798,12 +798,12 @@ const Module5Section3_5 = () => {
 
             <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
               <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-3">Case Study 3: Client-Driven Variation Management</h3>
-              <p className="text-blue-700 dark:text-emerald-400 mb-3">
+              <p className="text-blue-700 dark:text-elec-yellow mb-3">
                 A retail fit-out project experienced multiple client-requested changes to lighting layouts. The electrical contractor implemented a systematic variation management process, with regular client meetings and clear cost implications for each change. The project completed successfully with full client satisfaction and profitable variation recovery.
               </p>
               <div className="bg-blue-100 dark:bg-blue-900/40 p-3 rounded">
                 <p className="font-medium text-blue-800 dark:text-blue-200 mb-1">Key Strategies:</p>
-                <ul className="list-disc pl-5 text-sm text-blue-700 dark:text-emerald-400">
+                <ul className="list-disc pl-5 text-sm text-blue-700 dark:text-elec-yellow">
                   <li>Structured variation approval process with clear pricing</li>
                   <li>Regular client communication to manage expectations</li>
                   <li>Detailed documentation of all changes and approvals</li>
@@ -815,13 +815,13 @@ const Module5Section3_5 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">FAQs</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-l-4 border-l-emerald-500 pl-4">
-                <p className="font-medium text-foreground mb-2">Q: {faq.question}</p>
-                <p className="text-muted-foreground">A: {faq.answer}</p>
+              <div key={index} className="border-l-4 border-l-elec-yellow pl-4">
+                <p className="font-medium text-white mb-2">Q: {faq.question}</p>
+                <p className="text-white">A: {faq.answer}</p>
               </div>
             ))}
           </div>
@@ -830,7 +830,7 @@ const Module5Section3_5 = () => {
         {/* Pocket Guide */}
         <Card className="mb-8 p-6 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800">
           <h2 className="text-lg sm:text-xl font-semibold text-emerald-800 dark:text-emerald-200 mb-4">Pocket Guide</h2>
-          <div className="space-y-2 text-emerald-700 dark:text-emerald-400">
+          <div className="space-y-2 text-emerald-700 dark:text-elec-yellow">
             <p>✅ Record all changes in writing.</p>
             <p>✅ Never proceed with design changes without approval.</p>
             <p>✅ Report unforeseen issues immediately.</p>
@@ -840,18 +840,18 @@ const Module5Section3_5 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
-          <p className="text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+          <p className="text-base text-white">
             In this subsection, you learned how to deal with variations and unforeseen issues by recording them properly, getting approval, and maintaining clear communication. You saw how ignoring or mishandling changes can lead to disputes, delays, and safety risks. A professional approach ensures problems are solved efficiently while keeping projects safe, compliant, and on track.
           </p>
         </Card>
 
         {/* Knowledge Check */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-4">
-            <BookOpen className="w-6 h-6 text-foreground" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Knowledge Check</h2>
+            <BookOpen className="w-6 h-6 text-white" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Knowledge Check</h2>
           </div>
           <Quiz questions={quizQuestions} />
         </Card>

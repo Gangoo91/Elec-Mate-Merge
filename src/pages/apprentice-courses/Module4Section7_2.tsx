@@ -178,11 +178,11 @@ const Module4Section7_2 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 7
@@ -196,35 +196,35 @@ const Module4Section7_2 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <FileText className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <FileText className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 4.7.2
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Using Hand and Power Tools Safely and Legally
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Master safe tool operation, maintenance, and legal compliance to prevent injuries and equipment damage.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Hand and power tools are essential in electrical installation but can cause serious injuries if used improperly.</li>
                 <li>Legal requirements under PUWER 1998 and EAWR 1989 mandate safe tool use, maintenance, and inspection.</li>
                 <li>Proper tool selection, correct operation, and regular maintenance prevent most tool-related accidents and equipment failures.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Damaged tool leads, missing guards, blunt cutting edges, tools without RCD protection.</li>
                 <li><strong>Use:</strong> Insulated hand tools, RCD-protected power supplies, correct PPE for each task.</li>
@@ -235,9 +235,9 @@ const Module4Section7_2 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Identify legal and regulatory requirements for tool use.</li>
             <li>Operate hand and power tools safely and effectively.</li>
             <li>Recognise common hazards associated with tool use.</li>
@@ -247,23 +247,23 @@ const Module4Section7_2 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Legal and Regulatory Requirements */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">1. Legal and Regulatory Requirements</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">1. Legal and Regulatory Requirements</h3>
+            <p className="text-base text-white mb-4">
               Tool safety in the workplace is governed by comprehensive legislation that establishes clear responsibilities for both employers and employees:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">PUWER 1998 (Provision and Use of Work Equipment Regulations)</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">PUWER 1998 (Provision and Use of Work Equipment Regulations)</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Suitable equipment</strong> - tools must be appropriate for the work and environment</li>
                       <li><strong>Maintenance requirements</strong> - regular inspection and maintenance to keep tools safe</li>
                       <li><strong>Training obligations</strong> - users must be trained and competent in tool operation</li>
@@ -272,16 +272,16 @@ const Module4Section7_2 = () => {
                       <li><strong>Dangerous parts protection</strong> - guards and safety devices must be in place and working</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Electricity at Work Regulations 1989:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Electricity at Work Regulations 1989:</strong></p>
+                      <p className="text-xs text-white">
                         Portable power tools must be electrically safe and regularly inspected. RCD protection is required for portable equipment used in harsh environments or where increased risk exists. Regular PAT testing ensures ongoing electrical safety.
                       </p>
                     </div>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Manufacturer instructions:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Manufacturer instructions:</strong></p>
+                      <p className="text-xs text-white">
                         Following manufacturer instructions is a legal requirement. This includes operating procedures, maintenance schedules, PPE requirements, and safety precautions. Deviating from manufacturer guidance can void warranties and create liability issues.
                       </p>
                     </div>
@@ -302,18 +302,18 @@ const Module4Section7_2 = () => {
 
           {/* Common Hazards */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">2. Common Hazards</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">2. Common Hazards</h3>
+            <p className="text-base text-white mb-4">
               Understanding and recognising tool-related hazards is essential for preventing accidents and maintaining a safe working environment:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-1">Physical and Electrical Hazards</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Physical and Electrical Hazards</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Cuts, burns, and eye injuries</strong> - from sharp edges, hot surfaces, and flying debris</li>
                       <li><strong>Electric shock from damaged equipment</strong> - faulty cables, broken plugs, or compromised insulation</li>
                       <li><strong>Trips from trailing extension leads</strong> - poor cable management and inadequate routing</li>
@@ -322,16 +322,16 @@ const Module4Section7_2 = () => {
                       <li><strong>Respiratory hazards</strong> - dust, fumes, and particles from cutting and grinding operations</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Environmental factors:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Environmental factors:</strong></p>
+                      <p className="text-xs text-white">
                         Weather conditions, lighting, and workspace layout all affect tool safety. Wet conditions increase electric shock risk, poor lighting leads to accidents, and cramped spaces prevent proper tool control and emergency responses.
                       </p>
                     </div>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Human factors:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Human factors:</strong></p>
+                      <p className="text-xs text-white">
                         Fatigue, rushing, inadequate training, and complacency contribute significantly to tool-related accidents. Proper work planning, regular breaks, and maintaining concentration are essential for safe tool operation.
                       </p>
                     </div>
@@ -352,18 +352,18 @@ const Module4Section7_2 = () => {
 
           {/* Hand Tools */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">3. Hand Tools</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">3. Hand Tools</h3>
+            <p className="text-base text-white mb-4">
               Hand tools form the foundation of electrical work, requiring proper selection, maintenance, and technique for safe and effective operation:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
                     <p className="font-semibold text-green-600 dark:text-green-400 mb-1">Safe Hand Tool Practices</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Screwdrivers</strong> - use correct size and type to avoid slipping, ensure insulated handles for electrical work</li>
                       <li><strong>Pliers and cutters</strong> - maintain sharp cutting edges, use insulated versions near live conductors</li>
                       <li><strong>Hammers</strong> - check handles and heads are secure, use appropriate weight for the task</li>
@@ -372,16 +372,16 @@ const Module4Section7_2 = () => {
                       <li><strong>Measuring tools</strong> - handle carefully to maintain accuracy, store in protective cases</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Insulated hand tools:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Insulated hand tools:</strong></p>
+                      <p className="text-xs text-white">
                         BS EN 60900 specifies requirements for insulated hand tools rated up to 1000V AC or 1500V DC. These tools provide essential protection when working near live conductors and should be inspected regularly for damage to the insulation.
                       </p>
                     </div>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Tool condition checklist:</strong></p>
-                      <ul className="text-xs text-muted-foreground list-disc ml-4 space-y-1">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Tool condition checklist:</strong></p>
+                      <ul className="text-xs text-white list-disc ml-4 space-y-1">
                         <li>Handles secure and free from cracks or splits</li>
                         <li>Cutting edges sharp and properly aligned</li>
                         <li>No bent or damaged components</li>
@@ -407,18 +407,18 @@ const Module4Section7_2 = () => {
 
           {/* Power Tools */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">4. Power Tools</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">4. Power Tools</h3>
+            <p className="text-base text-white mb-4">
               Power tools increase productivity but require additional safety measures due to their electrical and mechanical hazards:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-amber-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-amber-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
                     <p className="font-semibold text-amber-600 dark:text-amber-400 mb-1">Power Tool Safety Requirements</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Pre-use inspection</strong> - check plugs, leads, and guards before each use</li>
                       <li><strong>RCD protection</strong> - all portable power tools must be RCD-protected (30mA trip)</li>
                       <li><strong>Appropriate PPE</strong> - safety glasses, gloves, ear defenders as required by task</li>
@@ -427,9 +427,9 @@ const Module4Section7_2 = () => {
                       <li><strong>Environmental awareness</strong> - check for hidden services, adequate lighting, and stable surfaces</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Specific tool safety:</strong></p>
-                      <ul className="text-xs text-muted-foreground list-disc ml-4 space-y-1">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Specific tool safety:</strong></p>
+                      <ul className="text-xs text-white list-disc ml-4 space-y-1">
                         <li><strong>Drills:</strong> Remove chuck key before use, drill pilot holes for large bits, avoid loose clothing</li>
                         <li><strong>Grinders:</strong> Use correct disc type, check guard position, wear face protection</li>
                         <li><strong>Saws:</strong> Allow blade to stop before setting down, keep hands away from cutting line</li>
@@ -439,8 +439,8 @@ const Module4Section7_2 = () => {
                     </div>
                     
                     <div className="mt-3 p-3 bg-amber-50/50 dark:bg-amber-900/10 rounded border border-amber-200/30">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Battery tool considerations:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Battery tool considerations:</strong></p>
+                      <p className="text-xs text-white">
                         Cordless tools eliminate trailing lead hazards but require attention to battery condition, charging safety, and power management. Store batteries in dry conditions and never attempt to repair damaged battery packs.
                       </p>
                     </div>
@@ -452,18 +452,18 @@ const Module4Section7_2 = () => {
 
           {/* Maintenance and Storage */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">5. Maintenance and Storage</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">5. Maintenance and Storage</h3>
+            <p className="text-base text-white mb-4">
               Proper maintenance and storage are essential for tool safety, longevity, and legal compliance:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-1">Tool Maintenance and Storage Systems</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Tool Maintenance and Storage Systems</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Daily inspection</strong> - check tools before and after each use for defects</li>
                       <li><strong>Immediate removal</strong> - tag and remove faulty tools from service immediately</li>
                       <li><strong>Cleaning procedures</strong> - keep tools clean and free from debris and contaminants</li>
@@ -472,16 +472,16 @@ const Module4Section7_2 = () => {
                       <li><strong>Regular maintenance</strong> - follow manufacturer schedules for servicing and calibration</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>PAT testing schedule:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>PAT testing schedule:</strong></p>
+                      <p className="text-xs text-white">
                         Portable Appliance Testing frequency depends on equipment type and environment. Construction sites typically require 3-monthly testing, while office environments may allow annual testing. Keep records of all tests and inspections.
                       </p>
                     </div>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Tool tagging system:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Tool tagging system:</strong></p>
+                      <p className="text-xs text-white">
                         Use clear tagging to identify tool status - serviceable, due for testing, or defective. Red tags indicate tools must not be used. Ensure all team members understand the tagging system and respect tool status indicators.
                       </p>
                     </div>
@@ -493,15 +493,15 @@ const Module4Section7_2 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Wrench className="w-5 h-5" />
             Practical Guidance (On-Site Tips)
           </h2>
           <div className="grid gap-4">
-            <div className="p-4 bg-card rounded-lg border border-border/10">
-              <h3 className="font-medium text-foreground mb-2">Pre-Work Safety Checks</h3>
-              <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc ml-5">
+            <div className="p-4 bg-transparent rounded-lg border border-border/10">
+              <h3 className="font-medium text-white mb-2">Pre-Work Safety Checks</h3>
+              <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-5">
                 <li>Always check for buried cables/pipes before drilling into walls using a cable detector</li>
                 <li>Verify RCD protection is working before connecting power tools</li>
                 <li>Ensure adequate lighting and ventilation in work areas</li>
@@ -509,9 +509,9 @@ const Module4Section7_2 = () => {
               </ul>
             </div>
             
-            <div className="p-4 bg-card rounded-lg border border-border/10">
-              <h3 className="font-medium text-foreground mb-2">Tool Management Best Practices</h3>
-              <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc ml-5">
+            <div className="p-4 bg-transparent rounded-lg border border-border/10">
+              <h3 className="font-medium text-white mb-2">Tool Management Best Practices</h3>
+              <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-5">
                 <li>Keep battery chargers and cordless tools dry and off the floor</li>
                 <li>Use corded tools with RCD protection at all times</li>
                 <li>Carry only the tools you need when working at height</li>
@@ -519,9 +519,9 @@ const Module4Section7_2 = () => {
               </ul>
             </div>
             
-            <div className="p-4 bg-card rounded-lg border border-border/10">
-              <h3 className="font-medium text-foreground mb-2">Emergency Procedures</h3>
-              <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc ml-5">
+            <div className="p-4 bg-transparent rounded-lg border border-border/10">
+              <h3 className="font-medium text-white mb-2">Emergency Procedures</h3>
+              <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-5">
                 <li>Know how to quickly disconnect power in case of tool malfunction</li>
                 <li>Report all tool defects immediately, no matter how minor</li>
                 <li>Never attempt field repairs on electrical tools</li>
@@ -532,8 +532,8 @@ const Module4Section7_2 = () => {
         </Card>
 
         {/* Real-World Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Users className="w-5 h-5" />
             Real-World Examples
           </h2>
@@ -543,11 +543,11 @@ const Module4Section7_2 = () => {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-red-600 mt-1" />
                 <div>
-                  <h3 className="font-medium text-red-800 dark:text-emerald-400 mb-2">Case Study 1: Improper Tool Use</h3>
-                  <p className="text-xs sm:text-sm text-foreground mb-2">
+                  <h3 className="font-medium text-red-800 dark:text-elec-yellow mb-2">Case Study 1: Improper Tool Use</h3>
+                  <p className="text-xs sm:text-sm text-white mb-2">
                     On a housing development, an apprentice used a blunt screwdriver on a consumer unit, causing the tool to slip and cut his hand badly. The wrong-sized tool created excessive force requirements and loss of control.
                   </p>
-                  <p className="text-xs text-muted-foreground bg-background/50 p-2 rounded">
+                  <p className="text-xs text-white bg-[#121212]/50 p-2 rounded">
                     <strong>Prevention:</strong> Using the correct size insulated screwdriver would have prevented slipping and provided electrical protection. Regular tool maintenance ensures cutting edges remain effective.
                   </p>
                 </div>
@@ -558,11 +558,11 @@ const Module4Section7_2 = () => {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-red-600 mt-1" />
                 <div>
-                  <h3 className="font-medium text-red-800 dark:text-emerald-400 mb-2">Case Study 2: Electrical Safety Failure</h3>
-                  <p className="text-xs sm:text-sm text-foreground mb-2">
+                  <h3 className="font-medium text-red-800 dark:text-elec-yellow mb-2">Case Study 2: Electrical Safety Failure</h3>
+                  <p className="text-xs sm:text-sm text-white mb-2">
                     A contractor suffered electric shock when using a power drill with damaged cable insulation. The absence of RCD protection meant the fault was not detected until contact occurred.
                   </p>
-                  <p className="text-xs text-muted-foreground bg-background/50 p-2 rounded">
+                  <p className="text-xs text-white bg-[#121212]/50 p-2 rounded">
                     <strong>Prevention:</strong> Daily visual inspection would have identified the damaged cable. RCD protection would have disconnected the supply immediately upon fault occurrence.
                   </p>
                 </div>
@@ -574,10 +574,10 @@ const Module4Section7_2 = () => {
                 <CheckCircle className="w-5 h-5 text-green-600 mt-1" />
                 <div>
                   <h3 className="font-medium text-green-800 dark:text-green-300 mb-2">Case Study 3: Good Practice Example</h3>
-                  <p className="text-xs sm:text-sm text-foreground mb-2">
+                  <p className="text-xs sm:text-sm text-white mb-2">
                     An experienced electrician discovered a faulty angle grinder during pre-use inspection. The tool was immediately tagged and removed from service, preventing potential injury to other workers.
                   </p>
-                  <p className="text-xs text-muted-foreground bg-background/50 p-2 rounded">
+                  <p className="text-xs text-white bg-[#121212]/50 p-2 rounded">
                     <strong>Good Practice:</strong> Regular inspection, immediate action on defects, and clear communication protected the entire team. The tool was professionally repaired before returning to service.
                   </p>
                 </div>
@@ -587,67 +587,67 @@ const Module4Section7_2 = () => {
         </Card>
 
         {/* FAQ */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <HardHat className="w-5 h-5" />
             Frequently Asked Questions
           </h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-border/20 pb-4 last:border-b-0">
-                <h3 className="font-medium text-foreground mb-2">{faq.question}</h3>
-                <p className="text-sm text-muted-foreground">{faq.answer}</p>
+              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
+                <h3 className="font-medium text-white mb-2">{faq.question}</h3>
+                <p className="text-sm text-white">{faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <ClipboardList className="w-5 h-5" />
             Pocket Guide (Key Takeaways)
           </h2>
           <div className="grid md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                <span className="font-medium text-foreground">PUWER requires safe and suitable tool use</span>
+                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                <span className="font-medium text-white">PUWER requires safe and suitable tool use</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                <span className="font-medium text-foreground">Inspect all tools before use</span>
+                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                <span className="font-medium text-white">Inspect all tools before use</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                <span className="font-medium text-foreground">Use insulated hand tools for electrical work</span>
+                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                <span className="font-medium text-white">Use insulated hand tools for electrical work</span>
               </div>
             </div>
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                <span className="font-medium text-foreground">Always wear PPE for cutting, drilling, or grinding</span>
+                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                <span className="font-medium text-white">Always wear PPE for cutting, drilling, or grinding</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                <span className="font-medium text-foreground">Faulty tools = tag, remove, report</span>
+                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                <span className="font-medium text-white">Faulty tools = tag, remove, report</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                <span className="font-medium text-foreground">RCD protection for all portable power tools</span>
+                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                <span className="font-medium text-white">RCD protection for all portable power tools</span>
               </div>
             </div>
           </div>
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Book className="w-5 h-5" />
             Recap
           </h2>
-          <p className="text-base text-foreground mb-4">In this subsection, you learned:</p>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+          <p className="text-base text-white mb-4">In this subsection, you learned:</p>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>The legal requirements for tool safety under PUWER and EAWR.</li>
             <li>Hazards linked to tool use and how to avoid them.</li>
             <li>Best practice for both hand and power tool use.</li>
@@ -657,8 +657,8 @@ const Module4Section7_2 = () => {
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Target className="w-5 h-5" />
             Knowledge Check Quiz
           </h2>
@@ -666,7 +666,7 @@ const Module4Section7_2 = () => {
         </Card>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-6 border-t border-border/20">
+        <div className="flex justify-between items-center pt-6 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="module4-section7/subsection1" className="flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" />

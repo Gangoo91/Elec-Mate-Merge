@@ -1,8 +1,8 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { 
+import {
   Building,
   CheckCircle,
   Cable,
@@ -78,7 +78,7 @@ const CommercialInstallations = () => {
           Comprehensive guide to commercial electrical installations including offices, shops, restaurants 
           and small commercial premises with enhanced safety requirements.
         </p>
-        <BackButton customUrl="/apprentice/electrical-installation-guides" label="Back to Installation Guides" />
+        <SmartBackButton />
       </div>
 
       {/* Common Installation Types */}

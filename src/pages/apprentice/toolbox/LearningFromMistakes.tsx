@@ -1,5 +1,5 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AlertTriangle, Brain, Users, Target, CheckCircle } from "lucide-react";
@@ -18,7 +18,7 @@ const LearningFromMistakes = () => {
         <p className="text-muted-foreground text-center max-w-2xl mb-4">
           Master the art of turning mistakes into learning opportunities. Build resilience, develop professional recovery skills, and transform setbacks into career advancement in the electrical trade.
         </p>
-        <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
+        <SmartBackButton />
       </div>
 
       <Tabs defaultValue="categories" className="w-full">

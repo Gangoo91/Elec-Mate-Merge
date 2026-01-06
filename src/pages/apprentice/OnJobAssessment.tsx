@@ -1,5 +1,5 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ClipboardCheck, Shield, HardHat, AlertTriangle, BookOpen } from "lucide-react";
@@ -17,7 +17,7 @@ const OnJobAssessment = () => {
         <p className="text-muted-foreground text-center max-w-2xl mb-4">
           Comprehensive checklists, educational guides and regulations for professional site evaluations and safety assessments
         </p>
-        <BackButton customUrl="/apprentice/on-job-tools" label="Back to On-Job Tools" />
+        <SmartBackButton />
       </div>
 
       <Tabs defaultValue="pre-job-safety" className="w-full">

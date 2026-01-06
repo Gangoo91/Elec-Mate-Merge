@@ -1,30 +1,58 @@
 import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-const Card = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      // Base card styling - lighter grey with gold ring
-      "rounded-2xl bg-[#1e1e1e] border border-elec-yellow/20",
-      // Modern shadow and overflow
-      "shadow-none overflow-hidden",
-      // Smooth transitions for interactions
-      "transition-all duration-200",
-      // Touch-friendly interactions
-      "touch-manipulation",
-      className
-    )}
-    {...props}
-  />
-))
+/**
+ * Card variants for consistent styling across the application.
+ *
+ * Variant Usage Guide:
+ * - `default`   Standard card with subtle yellow border
+ * - `elevated`  Gradient background for emphasis
+ * - `subtle`    Minimal styling for nested/grouped cards
+ * - `highlight` Yellow gradient for featured/promoted content
+ */
+const cardVariants = cva(
+  "rounded-2xl border shadow-none overflow-hidden transition-all duration-200 touch-manipulation",
+  {
+    variants: {
+      variant: {
+        default: "bg-[#1e1e1e] border-elec-yellow/20",
+        elevated: "bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20",
+        subtle: "bg-white/5 border-white/10",
+        highlight: "bg-gradient-to-br from-elec-yellow/20 to-orange-500/10 border-elec-yellow/30",
+      },
+      interactive: {
+        true: "cursor-pointer hover:border-elec-yellow/40 hover:bg-[#222222] active:scale-[0.98] active:opacity-90",
+        false: "",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      interactive: false,
+    },
+  }
+)
+
+export interface CardProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof cardVariants> {}
+
+const Card = React.forwardRef<HTMLDivElement, CardProps>(
+  ({ className, variant, interactive, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn(cardVariants({ variant, interactive, className }))}
+      {...props}
+    />
+  )
+)
 Card.displayName = "Card"
 
-// Interactive card variant for clickable cards
+/**
+ * @deprecated Use Card with interactive={true} instead.
+ * Example: <Card interactive>...</Card>
+ */
 const CardInteractive = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -107,4 +135,4 @@ const CardFooter = React.forwardRef<
 ))
 CardFooter.displayName = "CardFooter"
 
-export { Card, CardInteractive, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
+export { Card, CardInteractive, CardHeader, CardFooter, CardTitle, CardDescription, CardContent, cardVariants }

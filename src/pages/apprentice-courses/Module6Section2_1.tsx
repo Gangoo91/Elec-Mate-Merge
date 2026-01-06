@@ -139,11 +139,11 @@ const Module6Section2_1 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6.2
@@ -157,30 +157,30 @@ const Module6Section2_1 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Eye className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Eye className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 6.2.1
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             What to Look for During Visual Checks
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Comprehensive guide to visual inspection procedures and identifying defects in electrical installations
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-6">
-            <Target className="w-6 h-6 text-foreground" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Spot it in 30 Seconds</h2>
+            <Target className="w-6 h-6 text-white" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Visual inspection is the first defence in electrical safety.</li>
                 <li>Check for obvious damage: cracked sockets, scorched cables, loose accessories.</li>
@@ -188,8 +188,8 @@ const Module6Section2_1 = () => {
                 <li>Confirm earthing, bonding, and safety devices are present.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Damaged enclosures, exposed conductors, poor workmanship, missing RCDs, incorrect IP ratings.</li>
                 <li><strong>Use:</strong> Adequate lighting, systematic checklist, insulated tools, BS 7671 safe zone requirements.</li>
@@ -200,18 +200,18 @@ const Module6Section2_1 = () => {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <p className="text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <p className="text-base text-white mb-4">
             Visual inspection is the first stage of ensuring an electrical installation is safe, compliant, and fit for use. Before any testing is carried out, installers must carefully check for obvious defects, hazards, and poor workmanship. A thorough visual inspection reduces the likelihood of electrical faults, improves safety, and ensures compliance with BS 7671.
           </p>
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-base text-foreground mb-4">By the end of this subsection, learners will be able to:</p>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-base text-white mb-4">By the end of this subsection, learners will be able to:</p>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Identify the main elements to check during a visual inspection.</li>
             <li>Recognise unsafe practices such as exposed conductors or damaged insulation.</li>
             <li>Understand the importance of checking workmanship quality.</li>
@@ -221,27 +221,27 @@ const Module6Section2_1 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* 1. Condition of Equipment and Accessories */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">1. Condition of Equipment and Accessories</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">1. Condition of Equipment and Accessories</h3>
+            <p className="text-base text-white mb-4">
               The first priority during visual inspection is checking the physical condition of all electrical equipment and accessories. This includes examining sockets, switches, distribution boards, and other electrical components for signs of damage, wear, or deterioration.
             </p>
             
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-3">Equipment Condition Checks</p>
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Equipment Condition Checks</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Socket Outlets and Switches:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Socket Outlets and Switches:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Check for cracks, breaks, or damage to the faceplate or mounting box</li>
                           <li>Look for scorch marks or discolouration indicating overheating</li>
                           <li>Ensure mounting is secure with no loose fixings</li>
@@ -250,8 +250,8 @@ const Module6Section2_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Enclosures and Distribution Boards:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Enclosures and Distribution Boards:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Check for missing covers or damaged enclosure integrity</li>
                           <li>Look for signs of moisture ingress or corrosion</li>
                           <li>Verify proper sealing and gasketing where required</li>
@@ -260,8 +260,8 @@ const Module6Section2_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>General Equipment Checks:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>General Equipment Checks:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Verify equipment is suitable for the installation environment</li>
                           <li>Check for proper manufacturer's markings and compliance symbols</li>
                           <li>Ensure protective devices are correctly rated and installed</li>
@@ -286,22 +286,22 @@ const Module6Section2_1 = () => {
 
           {/* 2. Integrity of Cables and Conductors */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">2. Integrity of Cables and Conductors</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">2. Integrity of Cables and Conductors</h3>
+            <p className="text-base text-white mb-4">
               Cable integrity is fundamental to electrical safety. During visual inspection, particular attention must be paid to the condition of cable insulation, sheathing, and mechanical protection throughout the installation.
             </p>
             
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-3">Cable and Conductor Inspection</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Cable and Conductor Inspection</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Cable Condition:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Cable Condition:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Look for cuts, nicks, or damage to cable sheathing or insulation</li>
                           <li>Check for exposed live conductors or damaged protective covering</li>
                           <li>Identify any signs of rodent damage or environmental degradation</li>
@@ -310,8 +310,8 @@ const Module6Section2_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Cable Support and Installation:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Cable Support and Installation:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Ensure cables are properly supported at appropriate intervals</li>
                           <li>Check that cables are not under mechanical strain or stress</li>
                           <li>Verify minimum bending radii are maintained</li>
@@ -320,8 +320,8 @@ const Module6Section2_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Terminations and Connections:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Terminations and Connections:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Visual check of cable entry points into accessories and equipment</li>
                           <li>Ensure proper strain relief and cable glands are fitted</li>
                           <li>Look for any loose or poorly terminated connections (where visible)</li>
@@ -348,13 +348,13 @@ const Module6Section2_1 = () => {
           
           {/* 3. Correct Selection and Installation */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">3. Correct Selection and Installation</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">3. Correct Selection and Installation</h3>
+            <p className="text-base text-white mb-4">
               Visual inspection must verify that all components are correctly selected for their intended application and installed according to manufacturer instructions and BS 7671 requirements.
             </p>
             
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
@@ -362,8 +362,8 @@ const Module6Section2_1 = () => {
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Component Rating and Suitability:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Component Rating and Suitability:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Confirm accessories are correctly rated for their intended current and voltage</li>
                           <li>Verify protective devices match cable ratings and installation methods</li>
                           <li>Check that equipment specifications match design requirements</li>
@@ -372,8 +372,8 @@ const Module6Section2_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Environmental Protection:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Environmental Protection:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Verify appropriate IP ratings for location (bathrooms, outdoor areas)</li>
                           <li>Check sealing and weatherproofing where required</li>
                           <li>Confirm equipment can withstand expected environmental conditions</li>
@@ -400,22 +400,22 @@ const Module6Section2_1 = () => {
           
           {/* 4. Earthing and Bonding */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">4. Earthing and Bonding</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">4. Earthing and Bonding</h3>
+            <p className="text-base text-white mb-4">
               Effective earthing and bonding systems are critical for electrical safety. Visual inspection must confirm that all earthing and bonding connections are present, accessible, and properly implemented according to BS 7671 requirements.
             </p>
             
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-3">Earthing and Bonding Systems</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Earthing and Bonding Systems</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Main Earthing Arrangements:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Main Earthing Arrangements:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Verify presence and condition of main earthing conductor from MET to earth electrode</li>
                           <li>Check earth electrode connection is secure and accessible for testing</li>
                           <li>Ensure earthing conductor is correctly sized for the installation</li>
@@ -425,8 +425,8 @@ const Module6Section2_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Main Equipotential Bonding:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Main Equipotential Bonding:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Water service pipes - bonding within 600mm of entry to building</li>
                           <li>Gas installation pipes - bonding at meter position or entry point</li>
                           <li>Oil fuel supply pipes - bonding at entry point to building</li>
@@ -437,8 +437,8 @@ const Module6Section2_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Supplementary Bonding (Where Required):</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Supplementary Bonding (Where Required):</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Bathroom zones - bonding of accessible metallic parts</li>
                           <li>Swimming pools - extensive bonding requirements</li>
                           <li>Special locations - as specified in BS 7671 Part 7</li>
@@ -448,7 +448,7 @@ const Module6Section2_1 = () => {
 
                       <div className="bg-amber-50 dark:bg-amber-900/20 p-3 rounded border border-amber-200 dark:border-amber-800">
                         <p className="font-medium text-amber-700 dark:text-amber-400 mb-2">Critical Safety Point</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="text-xs sm:text-sm text-white">
                           Missing or inadequate earthing and bonding can result in dangerous touch voltages during fault conditions. Always verify all required connections are present and properly terminated.
                         </p>
                       </div>
@@ -470,26 +470,26 @@ const Module6Section2_1 = () => {
 
           {/* 5. Safe Cable Routes and Zones */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">5. Safe Cable Routes and Zones</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">5. Safe Cable Routes and Zones</h3>
+            <p className="text-base text-white mb-4">
               BS 7671 specifies safe zones for cable installation to reduce the risk of inadvertent damage during building work. Visual inspection must verify compliance with these critical safety requirements.
             </p>
             
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-3">Safe Zone Compliance</p>
+                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">Safe Zone Compliance</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Permitted Safe Zones (BS 7671 Section 522):</strong></p>
-                        <div className="bg-background/50 p-3 rounded border mb-2">
+                        <p className="text-base text-white mb-2"><strong>Permitted Safe Zones (BS 7671 Section 522):</strong></p>
+                        <div className="bg-[#121212]/50 p-3 rounded border mb-2">
                           <div className="grid md:grid-cols-2 gap-4">
                             <div>
-                              <p className="font-medium text-foreground mb-2">Horizontal Zones:</p>
-                              <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                              <p className="font-medium text-white mb-2">Horizontal Zones:</p>
+                              <ul className="text-xs sm:text-sm text-white space-y-1">
                                 <li>• Within 150mm of top or bottom of wall</li>
                                 <li>• Within 150mm horizontally from ceiling</li>
                                 <li>• Within 150mm horizontally from floor</li>
@@ -497,8 +497,8 @@ const Module6Section2_1 = () => {
                               </ul>
                             </div>
                             <div>
-                              <p className="font-medium text-foreground mb-2">Vertical Zones:</p>
-                              <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                              <p className="font-medium text-white mb-2">Vertical Zones:</p>
+                              <ul className="text-xs sm:text-sm text-white space-y-1">
                                 <li>• Within 150mm of external corners</li>
                                 <li>• Within 150mm either side of accessories</li>
                                 <li>• Directly above or below accessories</li>
@@ -510,8 +510,8 @@ const Module6Section2_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Cable Protection Requirements:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Cable Protection Requirements:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Minimum 50mm depth from surface OR RCD protection (≤30mA)</li>
                           <li>Mechanical protection where cables are shallow or vulnerable</li>
                           <li>Warning tape for buried cables in accessible areas</li>
@@ -521,8 +521,8 @@ const Module6Section2_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Special Considerations:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Special Considerations:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Partition walls - cables only in zones likely to be maintained</li>
                           <li>Thermal insulation - cables must not be covered unless suitably rated</li>
                           <li>Accessibility - maintain access for inspection and maintenance</li>
@@ -547,22 +547,22 @@ const Module6Section2_1 = () => {
 
           {/* 6. Signs of Poor Workmanship */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">6. Signs of Poor Workmanship</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">6. Signs of Poor Workmanship</h3>
+            <p className="text-base text-white mb-4">
               Poor workmanship can compromise both safety and compliance. Visual inspection should identify installation practices that do not meet professional standards or regulatory requirements.
             </p>
             
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">6</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-emerald-400 mb-3">Workmanship Quality Indicators</p>
+                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3">Workmanship Quality Indicators</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Cable Management Issues:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Cable Management Issues:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Uneven trunking runs with poor alignment</li>
                           <li>Missing fixings or inadequate support spacing</li>
                           <li>Excessive bends that could damage cable insulation</li>
@@ -573,8 +573,8 @@ const Module6Section2_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Termination and Connection Problems:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Termination and Connection Problems:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Loose accessories or poor mounting</li>
                           <li>Inadequate cable entry sealing</li>
                           <li>Wrong terminal block types or ratings</li>
@@ -585,8 +585,8 @@ const Module6Section2_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>General Installation Standards:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>General Installation Standards:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Inconsistent cable types within same circuit</li>
                           <li>Poor labelling or missing identification</li>
                           <li>Inadequate consideration of maintenance access</li>
@@ -596,8 +596,8 @@ const Module6Section2_1 = () => {
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-emerald-400 mb-2">Professional Standards</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Professional Standards</p>
+                        <p className="text-xs sm:text-sm text-white">
                           Poor workmanship not only affects appearance but can lead to safety hazards, premature failure, and non-compliance with standards. Document all workmanship issues found during inspection.
                         </p>
                       </div>
@@ -619,8 +619,8 @@ const Module6Section2_1 = () => {
 
           {/* 7. Presence of Safety Devices */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">7. Presence of Safety Devices</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">7. Presence of Safety Devices</h3>
+            <p className="text-base text-white mb-4">
               Modern electrical installations include various safety devices mandated by BS 7671. Visual inspection must confirm these devices are present, correctly installed, and properly labelled.
             </p>
             
@@ -633,8 +633,8 @@ const Module6Section2_1 = () => {
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>RCD Protection Requirements:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>RCD Protection Requirements:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>All socket outlets rated up to 20A (domestic and similar)</li>
                           <li>All circuits in bathrooms and shower rooms</li>
                           <li>All outdoor circuits and equipment</li>
@@ -645,8 +645,8 @@ const Module6Section2_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Protective Device Checks:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Protective Device Checks:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Verify RCD ratings (typically 30mA for additional protection)</li>
                           <li>Check MCB/RCBO ratings match cable and load requirements</li>
                           <li>Confirm main switch and isolator arrangements</li>
@@ -656,8 +656,8 @@ const Module6Section2_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Labelling and Identification:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Labelling and Identification:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Clear circuit identification at distribution board</li>
                           <li>RCD test button labelling and access</li>
                           <li>Emergency switching clearly marked</li>
@@ -667,8 +667,8 @@ const Module6Section2_1 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Additional Safety Measures:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Additional Safety Measures:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Arc fault detection devices (AFDDs) where specified</li>
                           <li>Fire isolation switches for concealed wiring</li>
                           <li>Emergency lighting provision</li>
@@ -684,13 +684,13 @@ const Module6Section2_1 = () => {
         </Card>
 
         {/* Comprehensive Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Comprehensive Practical Guidance</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Comprehensive Practical Guidance</h2>
           
           <div className="space-y-6">
             <div>
-              <h3 className="font-semibold text-foreground mb-3">Pre-Inspection Preparation</h3>
-              <ul className="space-y-2 text-base text-foreground">
+              <h3 className="font-semibold text-white mb-3">Pre-Inspection Preparation</h3>
+              <ul className="space-y-2 text-base text-white">
                 <li>• <strong>Gather Documentation:</strong> Obtain installation drawings, specifications, and any previous inspection reports</li>
                 <li>• <strong>Review Standards:</strong> Familiarise yourself with current BS 7671 requirements for the installation type</li>
                 <li>• <strong>Prepare Tools:</strong> High-quality torch, magnifying glass, measuring tape, camera, inspection checklists</li>
@@ -700,8 +700,8 @@ const Module6Section2_1 = () => {
             </div>
 
             <div>
-              <h3 className="font-semibold text-foreground mb-3">Systematic Inspection Approach</h3>
-              <ul className="space-y-2 text-base text-foreground">
+              <h3 className="font-semibold text-white mb-3">Systematic Inspection Approach</h3>
+              <ul className="space-y-2 text-base text-white">
                 <li>• <strong>Start at the Origin:</strong> Begin inspection at the main incoming supply and work systematically through the installation</li>
                 <li>• <strong>Follow Circuit Paths:</strong> Trace each circuit from distribution board to final connections</li>
                 <li>• <strong>Check All Zones:</strong> Inspect every accessible area including concealed spaces, loft areas, and service ducts</li>
@@ -711,8 +711,8 @@ const Module6Section2_1 = () => {
             </div>
 
             <div>
-              <h3 className="font-semibold text-foreground mb-3">Environmental Considerations</h3>
-              <ul className="space-y-2 text-base text-foreground">
+              <h3 className="font-semibold text-white mb-3">Environmental Considerations</h3>
+              <ul className="space-y-2 text-base text-white">
                 <li>• <strong>Moisture and Humidity:</strong> Check for condensation, water ingress, corrosion in damp areas</li>
                 <li>• <strong>Temperature Effects:</strong> Look for heat damage, thermal expansion effects, ventilation adequacy</li>
                 <li>• <strong>Dust and Contamination:</strong> Assess cleanliness, filter condition, ingress protection effectiveness</li>
@@ -722,8 +722,8 @@ const Module6Section2_1 = () => {
             </div>
 
             <div>
-              <h3 className="font-semibold text-foreground mb-3">Common Problem Areas</h3>
-              <ul className="space-y-2 text-base text-foreground">
+              <h3 className="font-semibold text-white mb-3">Common Problem Areas</h3>
+              <ul className="space-y-2 text-base text-white">
                 <li>• <strong>Junction Boxes:</strong> Often poorly accessible, inadequate sealing, overloaded terminals</li>
                 <li>• <strong>Outdoor Equipment:</strong> Weather exposure, UV degradation, water ingress, corrosion</li>
                 <li>• <strong>Concealed Wiring:</strong> Difficult to inspect, often damaged during building work</li>
@@ -734,8 +734,8 @@ const Module6Section2_1 = () => {
             </div>
 
             <div>
-              <h3 className="font-semibold text-foreground mb-3">Critical Safety Checks</h3>
-              <ul className="space-y-2 text-base text-foreground">
+              <h3 className="font-semibold text-white mb-3">Critical Safety Checks</h3>
+              <ul className="space-y-2 text-base text-white">
                 <li>• <strong>Never Assume:</strong> Always verify rather than assume compliance - look for evidence</li>
                 <li>• <strong>Touch Test:</strong> Gently check for loose mountings, but never touch exposed conductors</li>
                 <li>• <strong>Visual Clues:</strong> Burn marks, discoloration, unusual odours can indicate problems</li>
@@ -745,8 +745,8 @@ const Module6Section2_1 = () => {
             </div>
 
             <div>
-              <h3 className="font-semibold text-foreground mb-3">Professional Standards and Compliance</h3>
-              <ul className="space-y-2 text-base text-foreground">
+              <h3 className="font-semibold text-white mb-3">Professional Standards and Compliance</h3>
+              <ul className="space-y-2 text-base text-white">
                 <li>• <strong>BS 7671 Compliance:</strong> Ensure all work meets current wiring regulations requirements</li>
                 <li>• <strong>Building Regulations:</strong> Check compliance with Part P and other relevant building standards</li>
                 <li>• <strong>Manufacturer Instructions:</strong> Verify installation follows equipment manufacturer guidance</li>
@@ -756,11 +756,11 @@ const Module6Section2_1 = () => {
             </div>
 
             <div className="bg-emerald-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-              <h4 className="font-semibold text-blue-700 dark:text-emerald-400 mb-2">Inspector Competence and Responsibility</h4>
-              <p className="text-xs sm:text-sm text-foreground mb-2">
+              <h4 className="font-semibold text-blue-700 dark:text-elec-yellow mb-2">Inspector Competence and Responsibility</h4>
+              <p className="text-xs sm:text-sm text-white mb-2">
                 Visual inspection requires significant knowledge and experience. The inspector must be competent to:
               </p>
-              <ul className="text-xs sm:text-sm text-foreground space-y-1">
+              <ul className="text-xs sm:text-sm text-white space-y-1">
                 <li>• Understand and apply current electrical standards and regulations</li>
                 <li>• Recognise potentially dangerous situations and make appropriate safety decisions</li>
                 <li>• Identify non-compliant work and understand its implications</li>
@@ -772,13 +772,13 @@ const Module6Section2_1 = () => {
         </Card>
 
         {/* Advanced Troubleshooting Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Advanced Visual Inspection Techniques</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Advanced Visual Inspection Techniques</h2>
           
           <div className="space-y-6">
             <div>
-              <h3 className="font-semibold text-foreground mb-3">Thermal Indicators</h3>
-              <ul className="space-y-2 text-base text-foreground">
+              <h3 className="font-semibold text-white mb-3">Thermal Indicators</h3>
+              <ul className="space-y-2 text-base text-white">
                 <li>• <strong>Discoloration:</strong> Brown or black marks around terminals indicate overheating</li>
                 <li>• <strong>Melting:</strong> Distorted plastic or cable sheathing suggests excessive temperature</li>
                 <li>• <strong>Expansion:</strong> Thermal expansion can cause loose connections over time</li>
@@ -787,8 +787,8 @@ const Module6Section2_1 = () => {
             </div>
 
             <div>
-              <h3 className="font-semibold text-foreground mb-3">Mechanical Stress Indicators</h3>
-              <ul className="space-y-2 text-base text-foreground">
+              <h3 className="font-semibold text-white mb-3">Mechanical Stress Indicators</h3>
+              <ul className="space-y-2 text-base text-white">
                 <li>• <strong>Cable Kinking:</strong> Sharp bends that exceed minimum radius requirements</li>
                 <li>• <strong>Strain Relief:</strong> Missing or inadequate cable entry protection</li>
                 <li>• <strong>Vibration Damage:</strong> Loose fixings, worn insulation at contact points</li>
@@ -797,8 +797,8 @@ const Module6Section2_1 = () => {
             </div>
 
             <div>
-              <h3 className="font-semibold text-foreground mb-3">Environmental Damage Assessment</h3>
-              <ul className="space-y-2 text-base text-foreground">
+              <h3 className="font-semibold text-white mb-3">Environmental Damage Assessment</h3>
+              <ul className="space-y-2 text-base text-white">
                 <li>• <strong>Corrosion:</strong> Metal degradation, particularly in coastal or industrial areas</li>
                 <li>• <strong>Pest Damage:</strong> Rodent damage to cables, insect nests in equipment</li>
                 <li>• <strong>Chemical Attack:</strong> Material degradation from cleaning products, industrial chemicals</li>
@@ -809,30 +809,30 @@ const Module6Section2_1 = () => {
         </Card>
 
         {/* Expanded Quick Knowledge Check */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Knowledge Check Questions</h2>
-          <div className="space-y-4 text-base text-foreground">
-            <div className="p-4 border-l-4 border-emerald-500 bg-card">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Knowledge Check Questions</h2>
+          <div className="space-y-4 text-base text-white">
+            <div className="p-4 border-l-4 border-elec-yellow ">
               <p className="font-semibold mb-2">Q: Why must visual checks be completed before testing?</p>
               <p>A: To identify obvious safety hazards and defects that could pose danger during testing, and to ensure the installation is safe to energise.</p>
             </div>
             
-            <div className="p-4 border-l-4 border-green-500 bg-card">
+            <div className="p-4 border-l-4 border-green-500 ">
               <p className="font-semibold mb-2">Q: What should you look for on socket outlets and switches?</p>
               <p>A: Cracks, scorch marks, loose mounting, damaged faceplates, missing screws, and signs of overheating or poor termination.</p>
             </div>
             
-            <div className="p-4 border-l-4 border-purple-500 bg-card">
+            <div className="p-4 border-l-4 border-purple-500 ">
               <p className="font-semibold mb-2">Q: Which regulation outlines permitted cable zones?</p>
               <p>A: BS 7671 Section 522 specifies safe zones within 150mm of corners, ceiling, floor, and accessories.</p>
             </div>
             
-            <div className="p-4 border-l-4 border-orange-500 bg-card">
+            <div className="p-4 border-l-4 border-orange-500 ">
               <p className="font-semibold mb-2">Q: What signs may indicate poor workmanship?</p>
               <p>A: Uneven trunking, missing fixings, excessive cable bends, loose accessories, poor cable management, and inconsistent installation methods.</p>
             </div>
 
-            <div className="p-4 border-l-4 border-red-500 bg-card">
+            <div className="p-4 border-l-4 border-red-500 ">
               <p className="font-semibold mb-2">Q: When should you stop an inspection?</p>
               <p>A: Immediately upon discovering any condition that presents immediate danger, such as exposed live conductors or severely damaged equipment.</p>
             </div>
@@ -840,70 +840,70 @@ const Module6Section2_1 = () => {
         </Card>
 
         {/* Multiple Real-World Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-World Case Studies</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Case Studies</h2>
           
           <div className="space-y-6">
-            <div className="p-4 border-l-4 border-amber-500 bg-card">
+            <div className="p-4 border-l-4 border-amber-500 ">
               <h3 className="font-semibold text-amber-700 dark:text-amber-400 mb-2">Case Study 1: Kitchen Socket Fire Risk</h3>
-              <p className="text-base text-foreground mb-2">
+              <p className="text-base text-white mb-2">
                 <strong>Situation:</strong> During a domestic inspection, an electrician noticed slight scorch marks around a kitchen socket outlet that had been recently decorated over.
               </p>
-              <p className="text-base text-foreground mb-2">
+              <p className="text-base text-white mb-2">
                 <strong>Investigation:</strong> Closer inspection revealed the socket had been painted over multiple times, and the terminal screws were loose, causing arcing and overheating.
               </p>
-              <p className="text-base text-foreground mb-2">
+              <p className="text-base text-white mb-2">
                 <strong>Outcome:</strong> The socket was immediately isolated and replaced. The circuit was checked for other similar issues. This prevented a potential kitchen fire.
               </p>
-              <p className="text-base text-foreground">
+              <p className="text-base text-white">
                 <strong>Learning Point:</strong> Paint can hide early signs of electrical problems. Always look for subtle discoloration or other clues beneath surface finishes.
               </p>
             </div>
 
-            <div className="p-4 border-l-4 border-red-500 bg-card">
-              <h3 className="font-semibold text-red-700 dark:text-emerald-400 mb-2">Case Study 2: Bathroom Bonding Failure</h3>
-              <p className="text-base text-foreground mb-2">
+            <div className="p-4 border-l-4 border-red-500 ">
+              <h3 className="font-semibold text-red-700 dark:text-elec-yellow mb-2">Case Study 2: Bathroom Bonding Failure</h3>
+              <p className="text-base text-white mb-2">
                 <strong>Situation:</strong> A bathroom renovation inspection revealed beautiful new fittings but missing supplementary bonding connections.
               </p>
-              <p className="text-base text-foreground mb-2">
+              <p className="text-base text-white mb-2">
                 <strong>Investigation:</strong> The installer had connected the electrical circuits but failed to bond the metal bath, towel rail, and pipework.
               </p>
-              <p className="text-base text-foreground mb-2">
+              <p className="text-base text-white mb-2">
                 <strong>Outcome:</strong> All metallic parts were properly bonded before the installation was certified. This prevented potential electrocution risk.
               </p>
-              <p className="text-base text-foreground">
+              <p className="text-base text-white">
                 <strong>Learning Point:</strong> Special locations require additional safety measures that are easily overlooked if not systematically checked.
               </p>
             </div>
 
-            <div className="p-4 border-l-4 border-emerald-500 bg-card">
-              <h3 className="font-semibold text-blue-700 dark:text-emerald-400 mb-2">Case Study 3: Cable in Unsafe Zone</h3>
-              <p className="text-base text-foreground mb-2">
+            <div className="p-4 border-l-4 border-elec-yellow ">
+              <h3 className="font-semibold text-blue-700 dark:text-elec-yellow mb-2">Case Study 3: Cable in Unsafe Zone</h3>
+              <p className="text-base text-white mb-2">
                 <strong>Situation:</strong> Office renovation work had required new socket outlets, but cable routing appeared to violate safe zone requirements.
               </p>
-              <p className="text-base text-foreground mb-2">
+              <p className="text-base text-white mb-2">
                 <strong>Investigation:</strong> Cables were routed diagonally across walls outside permitted safe zones with no RCD protection for concealed cables.
               </p>
-              <p className="text-base text-foreground mb-2">
+              <p className="text-base text-white mb-2">
                 <strong>Outcome:</strong> Installation was redesigned to use surface trunking and proper safe zone routing with RCD protection added.
               </p>
-              <p className="text-base text-foreground">
+              <p className="text-base text-white">
                 <strong>Learning Point:</strong> Convenience in cable routing must never override safety requirements. Always verify safe zone compliance.
               </p>
             </div>
 
-            <div className="p-4 border-l-4 border-green-500 bg-card">
+            <div className="p-4 border-l-4 border-green-500 ">
               <h3 className="font-semibold text-green-700 dark:text-green-400 mb-2">Case Study 4: Outdoor Equipment Failure</h3>
-              <p className="text-base text-foreground mb-2">
+              <p className="text-base text-white mb-2">
                 <strong>Situation:</strong> Garden lighting system showing signs of water ingress and corroded connections after two years.
               </p>
-              <p className="text-base text-foreground mb-2">
+              <p className="text-base text-white mb-2">
                 <strong>Investigation:</strong> IP ratings were inadequate for outdoor use, and cable glands were not properly sealed.
               </p>
-              <p className="text-base text-foreground mb-2">
+              <p className="text-base text-white mb-2">
                 <strong>Outcome:</strong> All outdoor equipment was upgraded to appropriate IP ratings with proper sealing and drainage.
               </p>
-              <p className="text-base text-foreground">
+              <p className="text-base text-white">
                 <strong>Learning Point:</strong> Environmental protection is critical for longevity and safety. IP ratings must match the actual conditions.
               </p>
             </div>
@@ -911,66 +911,66 @@ const Module6Section2_1 = () => {
         </Card>
 
         {/* Expanded FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Comprehensive FAQs</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Comprehensive FAQs</h2>
           <div className="space-y-4">
             <div>
-              <p className="font-medium text-foreground mb-2">Q: Do I need to remove accessories during visual inspection?</p>
-              <p className="text-base text-foreground">A: Not always, but covers may need to be removed for detailed inspection of connections, particularly if poor workmanship is suspected or there are signs of overheating.</p>
+              <p className="font-medium text-white mb-2">Q: Do I need to remove accessories during visual inspection?</p>
+              <p className="text-base text-white">A: Not always, but covers may need to be removed for detailed inspection of connections, particularly if poor workmanship is suspected or there are signs of overheating.</p>
             </div>
             <Separator />
             
             <div>
-              <p className="font-medium text-foreground mb-2">Q: Should minor cosmetic defects (e.g., scratches) be recorded?</p>
-              <p className="text-base text-foreground">A: Only defects that affect safety, functionality, or compliance must be recorded. Minor cosmetic issues are not required to be documented unless they indicate underlying problems.</p>
+              <p className="font-medium text-white mb-2">Q: Should minor cosmetic defects (e.g., scratches) be recorded?</p>
+              <p className="text-base text-white">A: Only defects that affect safety, functionality, or compliance must be recorded. Minor cosmetic issues are not required to be documented unless they indicate underlying problems.</p>
             </div>
             <Separator />
             
             <div>
-              <p className="font-medium text-foreground mb-2">Q: How often should visual inspections take place?</p>
-              <p className="text-base text-foreground">A: At installation handover, during routine maintenance periods, whenever alterations are made, before any electrical testing, and when faults are suspected or reported.</p>
+              <p className="font-medium text-white mb-2">Q: How often should visual inspections take place?</p>
+              <p className="text-base text-white">A: At installation handover, during routine maintenance periods, whenever alterations are made, before any electrical testing, and when faults are suspected or reported.</p>
             </div>
             <Separator />
             
             <div>
-              <p className="font-medium text-foreground mb-2">Q: What if I find a serious defect during visual inspection?</p>
-              <p className="text-base text-foreground">A: Stop work immediately, make the installation safe, do not proceed with testing until the defect is rectified, document the finding and inform all relevant parties including the client.</p>
+              <p className="font-medium text-white mb-2">Q: What if I find a serious defect during visual inspection?</p>
+              <p className="text-base text-white">A: Stop work immediately, make the installation safe, do not proceed with testing until the defect is rectified, document the finding and inform all relevant parties including the client.</p>
             </div>
             <Separator />
             
             <div>
-              <p className="font-medium text-foreground mb-2">Q: Can I conduct a visual inspection on a live installation?</p>
-              <p className="text-base text-foreground">A: While some visual checks can be done on live installations, it is much safer and more thorough to isolate supplies where possible. Never remove covers or access live parts during visual inspection.</p>
+              <p className="font-medium text-white mb-2">Q: Can I conduct a visual inspection on a live installation?</p>
+              <p className="text-base text-white">A: While some visual checks can be done on live installations, it is much safer and more thorough to isolate supplies where possible. Never remove covers or access live parts during visual inspection.</p>
             </div>
             <Separator />
             
             <div>
-              <p className="font-medium text-foreground mb-2">Q: What tools are essential for proper visual inspection?</p>
-              <p className="text-base text-foreground">A: High-quality torch, magnifying glass, measuring tape, camera, inspection checklists, insulated tools, voltage indicator, appropriate PPE, and current copy of BS 7671.</p>
+              <p className="font-medium text-white mb-2">Q: What tools are essential for proper visual inspection?</p>
+              <p className="text-base text-white">A: High-quality torch, magnifying glass, measuring tape, camera, inspection checklists, insulated tools, voltage indicator, appropriate PPE, and current copy of BS 7671.</p>
             </div>
             <Separator />
             
             <div>
-              <p className="font-medium text-foreground mb-2">Q: How do I inspect concealed wiring effectively?</p>
-              <p className="text-base text-foreground">A: Check accessible termination points, verify safe zone compliance, look for surface damage indicators, check for adequate RCD protection, and use thermal imaging where available and appropriate.</p>
+              <p className="font-medium text-white mb-2">Q: How do I inspect concealed wiring effectively?</p>
+              <p className="text-base text-white">A: Check accessible termination points, verify safe zone compliance, look for surface damage indicators, check for adequate RCD protection, and use thermal imaging where available and appropriate.</p>
             </div>
             <Separator />
             
             <div>
-              <p className="font-medium text-foreground mb-2">Q: What should I do if the client pressures me to skip parts of the inspection?</p>
-              <p className="text-base text-foreground">A: Never compromise on safety or professional standards. Explain the legal and safety requirements, document any limitations imposed, and consider whether you can ethically complete the work under the restrictions.</p>
+              <p className="font-medium text-white mb-2">Q: What should I do if the client pressures me to skip parts of the inspection?</p>
+              <p className="text-base text-white">A: Never compromise on safety or professional standards. Explain the legal and safety requirements, document any limitations imposed, and consider whether you can ethically complete the work under the restrictions.</p>
             </div>
           </div>
         </Card>
 
         {/* Enhanced Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Professional Pocket Guide – Key Visual Checks</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Professional Pocket Guide – Key Visual Checks</h2>
           <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border border-green-200 dark:border-green-800">
             <div className="grid md:grid-cols-2 gap-4">
               <div>
-                <h3 className="font-semibold text-foreground mb-2">Essential Safety Checks</h3>
-                <ul className="space-y-1 text-xs sm:text-sm text-foreground">
+                <h3 className="font-semibold text-white mb-2">Essential Safety Checks</h3>
+                <ul className="space-y-1 text-xs sm:text-sm text-white">
                   <li>✅ Exposed live parts - immediate danger</li>
                   <li>✅ Damaged accessories and equipment</li>
                   <li>✅ Cable damage and strain relief</li>
@@ -980,8 +980,8 @@ const Module6Section2_1 = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold text-foreground mb-2">Compliance Verification</h3>
-                <ul className="space-y-1 text-xs sm:text-sm text-foreground">
+                <h3 className="font-semibold text-white mb-2">Compliance Verification</h3>
+                <ul className="space-y-1 text-xs sm:text-sm text-white">
                   <li>✅ Safe zone compliance (150mm rule)</li>
                   <li>✅ IP ratings for environment</li>
                   <li>✅ RCD protection where required</li>
@@ -993,8 +993,8 @@ const Module6Section2_1 = () => {
             </div>
             
             <div className="mt-4 pt-4 border-t border-green-200 dark:border-green-800">
-              <h3 className="font-semibold text-foreground mb-2">Professional Standards</h3>
-              <ul className="space-y-1 text-xs sm:text-sm text-foreground">
+              <h3 className="font-semibold text-white mb-2">Professional Standards</h3>
+              <ul className="space-y-1 text-xs sm:text-sm text-white">
                 <li>✅ Workmanship quality and consistency</li>
                 <li>✅ Manufacturer instruction compliance</li>
                 <li>✅ Future maintenance accessibility</li>
@@ -1006,12 +1006,12 @@ const Module6Section2_1 = () => {
         </Card>
 
         {/* Enhanced Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Comprehensive Recap</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Comprehensive Recap</h2>
           <div className="space-y-4">
             <div>
-              <h3 className="font-semibold text-foreground mb-2">Key Learning Points</h3>
-              <ul className="space-y-2 text-base text-foreground">
+              <h3 className="font-semibold text-white mb-2">Key Learning Points</h3>
+              <ul className="space-y-2 text-base text-white">
                 <li>• Visual inspections are the foundation of electrical safety - they must be thorough and systematic</li>
                 <li>• Seven critical areas: equipment condition, cable integrity, selection/installation, earthing/bonding, safe zones, workmanship, safety devices</li>
                 <li>• Environmental factors significantly affect installation longevity and safety</li>
@@ -1021,8 +1021,8 @@ const Module6Section2_1 = () => {
             </div>
             
             <div>
-              <h3 className="font-semibold text-foreground mb-2">Critical Safety Messages</h3>
-              <ul className="space-y-2 text-base text-foreground">
+              <h3 className="font-semibold text-white mb-2">Critical Safety Messages</h3>
+              <ul className="space-y-2 text-base text-white">
                 <li>• Never energise installations based on visual inspection alone - testing is also required</li>
                 <li>• Stop immediately if immediate danger is discovered and make the installation safe</li>
                 <li>• Question everything - if something appears unusual, investigate further</li>
@@ -1036,14 +1036,14 @@ const Module6Section2_1 = () => {
         {/* Quiz Section */}
         <div className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-6">
-            <FileText className="w-6 h-6 text-foreground" />
-            <h2 className="text-2xl font-semibold text-foreground">Quiz (10 Questions)</h2>
+            <FileText className="w-6 h-6 text-white" />
+            <h2 className="text-2xl font-semibold text-white">Quiz (10 Questions)</h2>
           </div>
           <Quiz questions={quizQuestions} />
         </div>
 
         {/* Navigation */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-between pt-8 border-t border-border/20">
+        <div className="flex flex-col sm:flex-row gap-4 justify-between pt-8 border-t border-white/10">
           <Button variant="outline" className="sm:w-auto" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />

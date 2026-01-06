@@ -1,6 +1,6 @@
 
 import React from 'react';
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -11,12 +11,10 @@ import {
   Shield,
   BookOpen,
   GraduationCap,
-  Zap,
-  ArrowLeft
+  Zap
 } from "lucide-react";
 import DailyAITipsTab from "@/components/apprentice/ojt/enhanced/DailyAITipsTab";
 import HelpBotTab from "@/components/apprentice/ojt/enhanced/HelpBotTab";
-import { Link } from "react-router-dom";
 
 const AdvancedHelp = () => {
   return (
@@ -27,13 +25,9 @@ const AdvancedHelp = () => {
         <div className="absolute bottom-0 left-0 w-48 h-48 bg-orange-500/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 
         <div className="relative z-10">
-          <Link
-            to="/apprentice"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-elec-yellow transition-colors mb-4"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Apprentice Hub
-          </Link>
+          <div className="mb-4">
+            <SmartBackButton />
+          </div>
 
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>

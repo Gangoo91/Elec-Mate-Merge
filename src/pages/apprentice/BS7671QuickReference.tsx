@@ -1,8 +1,8 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { 
+import {
   BookOpen,
   CheckCircle,
   Shield,
@@ -222,7 +222,7 @@ const BS7671QuickReference = () => {
           Essential sections of the 18th Edition Wiring Regulations (BS 7671:2018+A3:2024). 
           Quick reference guide for electrical installation requirements and compliance.
         </p>
-        <BackButton customUrl="/apprentice/electrical-installation-guides" label="Back to Installation Guides" />
+        <SmartBackButton />
       </div>
 
       {/* BS 7671 Parts Overview */}

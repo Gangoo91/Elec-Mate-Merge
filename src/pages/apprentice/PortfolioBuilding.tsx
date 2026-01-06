@@ -1,5 +1,5 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -62,7 +62,7 @@ const PortfolioBuilding = () => {
           Build a professional portfolio that showcases your skills, meets assessment standards, and impresses employers. 
           Our comprehensive toolkit guides you through every step of the process.
         </p>
-        <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
+        <SmartBackButton />
       </div>
 
       <Tabs defaultValue="overview" className="w-full">

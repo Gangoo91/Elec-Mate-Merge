@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, Loader2 } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Loader2 } from "lucide-react";
+import { useLocation } from "react-router-dom";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { useState, lazy, Suspense } from "react";
 import CalculatorSelector from "@/components/apprentice/calculators/CalculatorSelector";
 
@@ -79,8 +79,6 @@ const OnJobCalculations = () => {
 
   // Determine context based on current path
   const isFromApprenticeHub = location.pathname === "/apprentice/calculators";
-  const backUrl = isFromApprenticeHub ? "/apprentice" : "/apprentice/on-job-tools";
-  const backLabel = isFromApprenticeHub ? "Back to Apprentice Hub" : "Back to Tools";
   const pageTitle = isFromApprenticeHub ? "Electrical Calculators" : "On-the-Job Calculations";
   const pageDescription = isFromApprenticeHub
     ? "Professional electrical calculations for your studies and work"
@@ -208,11 +206,7 @@ const OnJobCalculations = () => {
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">{pageTitle}</h1>
           <p className="text-sm sm:text-base text-muted-foreground">{pageDescription}</p>
         </div>
-        <Link to={backUrl}>
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" /> {backLabel}
-          </Button>
-        </Link>
+        <SmartBackButton />
       </div>
 
       {/* Calculator Selector */}

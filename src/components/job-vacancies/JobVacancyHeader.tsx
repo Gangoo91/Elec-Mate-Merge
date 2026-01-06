@@ -2,6 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Briefcase, ArrowLeft } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 
 interface JobVacancyHeaderProps {
   onBack?: () => void;
@@ -19,14 +20,18 @@ const JobVacancyHeader = ({ onBack }: JobVacancyHeaderProps) => {
           Find electrical jobs across the UK
         </p>
       </div>
-      
-      <Button 
-        variant="outline" 
-        className="hidden xl:flex items-center gap-2 w-full sm:w-auto"
-        onClick={onBack}
-      >
-        <ArrowLeft className="h-4 w-4" /> Back to Career Progression
-      </Button>
+
+      {onBack ? (
+        <Button
+          variant="outline"
+          className="hidden xl:flex items-center gap-2 w-full sm:w-auto"
+          onClick={onBack}
+        >
+          <ArrowLeft className="h-4 w-4" /> Back to Career Progression
+        </Button>
+      ) : (
+        <SmartBackButton className="hidden xl:flex w-full sm:w-auto" />
+      )}
     </div>
   );
 };

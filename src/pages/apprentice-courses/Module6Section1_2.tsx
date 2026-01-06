@@ -119,11 +119,11 @@ const Module6Section1_2 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6.1
@@ -137,30 +137,30 @@ const Module6Section1_2 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Scale className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Scale className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 6.1.2
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Legal and Safety Reasons for Electrical Inspection and Testing
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Legal requirements under EAWR 1989, BS 7671 compliance, personal responsibility and consequences of non-compliance
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-6">
-            <Target className="w-6 h-6 text-foreground" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Spot it in 30 Seconds</h2>
+            <Target className="w-6 h-6 text-white" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>EAWR 1989 creates absolute legal duty to prevent electrical danger.</li>
                 <li>BS 7671 sets technical standards – initial verification and periodic inspection mandatory.</li>
@@ -168,8 +168,8 @@ const Module6Section1_2 = () => {
                 <li>Non-compliance consequences: prosecution, fines, imprisonment, professional disgrace.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> EAWR references, BS 7671 amendment dates, calibration labels, certificate signatures.</li>
                 <li><strong>Use:</strong> Check legal duties before work; verify competence and authority; use calibrated instruments; document everything.</li>
@@ -180,17 +180,17 @@ const Module6Section1_2 = () => {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <p className="text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <p className="text-base text-white">
             Electrical inspection and testing operates within a robust legal framework designed to protect lives and property. The Electricity at Work Regulations (EAWR 1989) creates the legal obligation, while BS 7671 provides the technical framework for compliance. Understanding these legal requirements is essential for every electrical worker, as non-compliance can result in serious personal and professional consequences.
           </p>
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Identify the specific legal requirements for inspection and testing under EAWR 1989 and their enforcement.</li>
             <li>Explain how BS 7671 principles guide safe design, installation, and testing practices in electrical work.</li>
             <li>Understand the serious personal, professional, and criminal consequences of failing to comply with regulations.</li>
@@ -201,27 +201,27 @@ const Module6Section1_2 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* 1. The Electricity at Work Regulations (EAWR 1989) */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">1. The Electricity at Work Regulations (EAWR 1989)</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">1. The Electricity at Work Regulations (EAWR 1989)</h3>
+            <p className="text-base text-white mb-4">
               The EAWR 1989 creates the legal foundation for electrical safety in the UK. Unlike guidance documents, these are statutory regulations with the full force of criminal law behind them. They place absolute duties on both employers and employees to prevent electrical danger.
             </p>
             
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-3">Legal Framework and Enforcement Powers</p>
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Legal Framework and Enforcement Powers</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Key Regulations and Duties:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Key Regulations and Duties:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li><strong>Regulation 4(1):</strong> All electrical systems must be constructed, maintained, and used in a manner that prevents danger so far as is reasonably practicable</li>
                           <li><strong>Regulation 4(2):</strong> Systems must be maintained in a safe condition at all times, requiring ongoing verification of safety</li>
                           <li><strong>Regulation 14:</strong> No person shall work on or near live conductors except in specific circumstances with adequate precautions</li>
@@ -230,8 +230,8 @@ const Module6Section1_2 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Enforcement and Penalties:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Enforcement and Penalties:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li><strong>HSE Powers:</strong> Health and Safety Executive can prosecute individuals and companies</li>
                           <li><strong>Criminal Sanctions:</strong> Unlimited fines and up to 2 years imprisonment for serious breaches</li>
                           <li><strong>Corporate Manslaughter:</strong> Directors can face personal prosecution under the Corporate Manslaughter Act</li>
@@ -240,8 +240,8 @@ const Module6Section1_2 = () => {
                       </div>
 
                       <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded border border-yellow-200 dark:border-yellow-800">
-                        <p className="font-medium text-yellow-700 dark:text-emerald-400 mb-2">Critical Legal Point</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="font-medium text-yellow-700 dark:text-elec-yellow mb-2">Critical Legal Point</p>
+                        <p className="text-xs sm:text-sm text-white">
                           EAWR 1989 creates "absolute duties" – this means you cannot use cost, time pressure, or difficulty as excuses for non-compliance. If electrical danger exists, the law has been broken regardless of circumstances.
                         </p>
                       </div>
@@ -263,22 +263,22 @@ const Module6Section1_2 = () => {
 
           {/* 2. BS 7671 Wiring Regulations */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">2. BS 7671 Wiring Regulations - The Technical Framework</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">2. BS 7671 Wiring Regulations - The Technical Framework</h3>
+            <p className="text-base text-white mb-4">
               While EAWR 1989 sets the legal requirement for safety, BS 7671 provides the detailed technical methods for achieving compliance. Courts recognise BS 7671 as the definitive standard for electrical installation safety in the UK.
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">BS 7671 Compliance Framework</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">BS 7671 Compliance Framework</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Mandatory Requirements:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Mandatory Requirements:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li><strong>Initial verification (Part 6):</strong> Mandatory testing before any new installation is energised</li>
                           <li><strong>Periodic inspection and testing:</strong> Regular verification that existing installations remain safe</li>
                           <li><strong>Test procedures:</strong> Specific sequences for continuity, insulation resistance, polarity, earth fault loop impedance</li>
@@ -287,12 +287,12 @@ const Module6Section1_2 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Documentation and Certification:</strong></p>
-                        <div className="bg-background/50 p-3 rounded border mb-2">
+                        <p className="text-base text-white mb-2"><strong>Documentation and Certification:</strong></p>
+                        <div className="bg-[#121212]/50 p-3 rounded border mb-2">
                           <div className="grid md:grid-cols-2 gap-4">
                             <div>
-                              <p className="font-medium text-foreground mb-2">Required Certificates:</p>
-                              <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                              <p className="font-medium text-white mb-2">Required Certificates:</p>
+                              <ul className="text-xs sm:text-sm text-white space-y-1">
                                 <li><strong>EIC:</strong> Electrical Installation Certificate (new work)</li>
                                 <li><strong>EICR:</strong> Electrical Installation Condition Report (periodic)</li>
                                 <li><strong>MWC:</strong> Minor Works Certificate (alterations/additions)</li>
@@ -300,8 +300,8 @@ const Module6Section1_2 = () => {
                               </ul>
                             </div>
                             <div>
-                              <p className="font-medium text-foreground mb-2">Amendment Updates:</p>
-                              <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                              <p className="font-medium text-white mb-2">Amendment Updates:</p>
+                              <ul className="text-xs sm:text-sm text-white space-y-1">
                                 <li><strong>Current:</strong> 18th Edition Amendment 2 (2022)</li>
                                 <li><strong>Key changes:</strong> AFDD requirements, EV charging provisions</li>
                                 <li><strong>Compliance:</strong> Must use current amendment for new work</li>
@@ -313,8 +313,8 @@ const Module6Section1_2 = () => {
                       </div>
 
                       <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                        <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2">Legal Status of BS 7671</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Legal Status of BS 7671</p>
+                        <p className="text-xs sm:text-sm text-white">
                           While BS 7671 is not directly law, courts accept it as the standard for safe electrical installation. Deviation from BS 7671 without equivalent safety measures can be used as evidence of EAWR non-compliance in legal proceedings.
                         </p>
                       </div>
@@ -336,13 +336,13 @@ const Module6Section1_2 = () => {
 
           {/* 3. Personal Legal Responsibility */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">3. Personal Legal Responsibility and Professional Accountability</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">3. Personal Legal Responsibility and Professional Accountability</h3>
+            <p className="text-base text-white mb-4">
               When you sign an electrical certificate, you're not just completing paperwork – you're making a legal declaration that could result in criminal prosecution if proved false or negligent. Understanding this responsibility is crucial for career protection.
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-amber-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-amber-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
@@ -350,8 +350,8 @@ const Module6Section1_2 = () => {
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Certificate Signature Responsibilities:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Certificate Signature Responsibilities:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li><strong>Legal declaration:</strong> Signing creates personal legal liability for accuracy of all test results</li>
                           <li><strong>Competence requirement:</strong> Must be competent to carry out the work being certified</li>
                           <li><strong>Supervision limitations:</strong> Remain liable even when supervising others' work</li>
@@ -360,20 +360,20 @@ const Module6Section1_2 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Professional and Insurance Implications:</strong></p>
+                        <p className="text-base text-white mb-2"><strong>Professional and Insurance Implications:</strong></p>
                         <div className="grid md:grid-cols-2 gap-3">
-                          <div className="bg-background/50 p-3 rounded border">
-                            <p className="font-medium text-foreground mb-1">Professional Registration</p>
-                            <ul className="text-xs text-foreground list-disc ml-4 space-y-1">
+                          <div className="bg-[#121212]/50 p-3 rounded border">
+                            <p className="font-medium text-white mb-1">Professional Registration</p>
+                            <ul className="text-xs text-white list-disc ml-4 space-y-1">
                               <li><strong>Scheme membership:</strong> NICEIC, NAPIT, ELECSA can remove members</li>
                               <li><strong>Self-certification rights:</strong> Lost if removed from scheme</li>
                               <li><strong>Annual assessments:</strong> Work quality and compliance checked</li>
                               <li><strong>Complaints procedure:</strong> Poor work can trigger investigation</li>
                             </ul>
                           </div>
-                          <div className="bg-background/50 p-3 rounded border">
-                            <p className="font-medium text-foreground mb-1">Insurance and Liability</p>
-                            <ul className="text-xs text-foreground list-disc ml-4 space-y-1">
+                          <div className="bg-[#121212]/50 p-3 rounded border">
+                            <p className="font-medium text-white mb-1">Insurance and Liability</p>
+                            <ul className="text-xs text-white list-disc ml-4 space-y-1">
                               <li><strong>Professional indemnity:</strong> May be void if working outside competence</li>
                               <li><strong>Public liability:</strong> Required for injury claims from electrical faults</li>
                               <li><strong>Fraudulent work:</strong> Insurance doesn't cover deliberate misconduct</li>
@@ -384,8 +384,8 @@ const Module6Section1_2 = () => {
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-emerald-400 mb-2">Criminal Liability Warning</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Criminal Liability Warning</p>
+                        <p className="text-xs sm:text-sm text-white">
                           Fraudulent certification or gross negligence can result in prosecution under fraud laws or manslaughter charges if someone dies. Prison sentences are real – in 2019, a landlord received 12 months imprisonment after a tenant died in an electrical fire.
                         </p>
                       </div>
@@ -407,22 +407,22 @@ const Module6Section1_2 = () => {
 
           {/* 4. Real-World Consequences */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">4. Real-World Consequences and Case Studies</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">4. Real-World Consequences and Case Studies</h3>
+            <p className="text-base text-white mb-4">
               The consequences of cutting corners on inspection and testing extend far beyond paperwork issues. Real people suffer real harm, and the legal system responds with serious penalties for those responsible.
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-1">Legal Precedents and Industry Impact</p>
+                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Legal Precedents and Industry Impact</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Criminal and Civil Consequences:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Criminal and Civil Consequences:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li><strong>Criminal prosecution:</strong> HSE prosecutions carry unlimited fines and up to 2 years imprisonment</li>
                           <li><strong>Corporate manslaughter:</strong> Company directors face prosecution if poor electrical safety contributes to deaths</li>
                           <li><strong>Civil liability:</strong> Injury claims can bankrupt individuals and companies</li>
@@ -431,12 +431,12 @@ const Module6Section1_2 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Recent Case Examples:</strong></p>
-                        <div className="bg-background/50 p-3 rounded border mb-2">
+                        <p className="text-base text-white mb-2"><strong>Recent Case Examples:</strong></p>
+                        <div className="bg-[#121212]/50 p-3 rounded border mb-2">
                           <div className="space-y-3">
                             <div>
-                              <p className="font-medium text-foreground mb-1">R v Tangerine Confectionery (2014)</p>
-                              <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                              <p className="font-medium text-white mb-1">R v Tangerine Confectionery (2014)</p>
+                              <ul className="text-xs sm:text-sm text-white space-y-1">
                                 <li><strong>Incident:</strong> Maintenance electrician killed by 415V shock</li>
                                 <li><strong>Failures:</strong> No electrical safety policy, untested equipment, missing labels</li>
                                 <li><strong>Penalty:</strong> Company fined £750,000, manager received suspended sentence</li>
@@ -444,8 +444,8 @@ const Module6Section1_2 = () => {
                               </ul>
                             </div>
                             <div>
-                              <p className="font-medium text-foreground mb-1">Landlord Manslaughter Case (2019)</p>
-                              <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                              <p className="font-medium text-white mb-1">Landlord Manslaughter Case (2019)</p>
+                              <ul className="text-xs sm:text-sm text-white space-y-1">
                                 <li><strong>Incident:</strong> Tenant died in electrical fire</li>
                                 <li><strong>Cause:</strong> No proper inspection or testing of installation</li>
                                 <li><strong>Penalty:</strong> 12-month prison sentence for gross negligence manslaughter</li>
@@ -457,8 +457,8 @@ const Module6Section1_2 = () => {
                       </div>
 
                       <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded border border-purple-200 dark:border-purple-800">
-                        <p className="font-medium text-purple-700 dark:text-emerald-400 mb-2">Industry-Wide Impact</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Industry-Wide Impact</p>
+                        <p className="text-xs sm:text-sm text-white">
                           Every incident of poor electrical work damages the reputation of the entire electrical industry and leads to increased regulation and scrutiny. Your professional conduct affects not just your own career, but the standing of all electrical workers.
                         </p>
                       </div>
@@ -480,16 +480,16 @@ const Module6Section1_2 = () => {
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-8 p-6 bg-card border border-amber-400/30">
+        <Card className="mb-8 p-6 border border-amber-400/30">
           <h2 className="text-lg sm:text-xl font-semibold text-amber-500 mb-4 flex items-center gap-2">
             <AlertTriangle className="w-6 h-6" />
             Real-World Case Study: The Legal Reality
           </h2>
-          <div className="text-base text-foreground space-y-4">
+          <div className="text-base text-white space-y-4">
             <p>
               <strong>R v Tangerine Confectionery and Mr David Costley-Wood (2014):</strong> A maintenance electrician was killed when he touched live 415V conductors in a distribution board. The investigation revealed systematic failures in electrical safety management.
             </p>
-            <div className="rounded-lg p-4 bg-background/50 border border-border/20">
+            <div className="rounded-lg p-4 bg-[#121212]/50 border border-white/10">
               <p className="font-medium mb-2">The failures that led to conviction:</p>
               <ul className="list-disc pl-6 space-y-1 text-sm">
                 <li>No electrical safety policy or risk assessments</li>
@@ -502,20 +502,20 @@ const Module6Section1_2 = () => {
             <p>
               <strong>Consequences:</strong> The company was fined £750,000, and the maintenance manager received a 6-month suspended prison sentence. The victim's family received substantial compensation, but no amount of money could repair the devastation to his wife and children.
             </p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white">
               <strong>Lesson:</strong> This case demonstrates that electrical safety isn't just about individual competence – it requires systematic compliance with legal duties at every level.
             </p>
           </div>
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border border-border/30">
-          <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border border-border/30">
+          <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
             <FileText className="w-6 h-6" />
             Practical Guidance for Legal Compliance
           </h2>
-          <div className="text-base text-foreground space-y-4">
-            <div className="rounded-lg p-4 bg-background/50 border border-border/20">
+          <div className="text-base text-white space-y-4">
+            <div className="rounded-lg p-4 bg-[#121212]/50 border border-white/10">
               <p className="font-medium mb-3">Before starting any electrical work:</p>
               <ul className="list-disc pl-6 space-y-2 text-sm">
                 <li>Verify your competence for the specific work type and complexity</li>
@@ -525,7 +525,7 @@ const Module6Section1_2 = () => {
                 <li>Review the latest amendments to BS 7671 and any relevant guidance notes</li>
               </ul>
             </div>
-            <div className="rounded-lg p-4 bg-background/50 border border-border/20">
+            <div className="rounded-lg p-4 bg-[#121212]/50 border border-white/10">
               <p className="font-medium mb-3">During testing and certification:</p>
               <ul className="list-disc pl-6 space-y-2 text-sm">
                 <li>Never sign certificates for work you haven't personally tested or directly supervised</li>
@@ -535,16 +535,16 @@ const Module6Section1_2 = () => {
                 <li>Ensure all test results are within acceptable limits before signing</li>
               </ul>
             </div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white">
               <strong>Career protection tip:</strong> Keep detailed records of all work, including who was present during testing, equipment used, and any unusual circumstances. These records can be invaluable if questions arise years later.
             </p>
           </div>
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border border-emerald-500/30">
-          <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">Pocket Guide Summary</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border border-elec-yellow/30">
+          <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">Pocket Guide Summary</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
             <div>
               <p className="font-medium mb-3">Legal Framework:</p>
               <ul className="space-y-2 text-sm">
@@ -567,13 +567,13 @@ const Module6Section1_2 = () => {
         </Card>
 
         {/* Key Takeaways */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border border-border/30">
-          <h2 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-4">Key Takeaways</h2>
-          <div className="text-base text-foreground space-y-3">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border border-border/30">
+          <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">Key Takeaways</h2>
+          <div className="text-base text-white space-y-3">
             <p>
               Electrical inspection and testing exist within a robust legal framework that protects lives and property. EAWR 1989 creates the legal duty, BS 7671 provides the technical methods, and personal responsibility ensures accountability.
             </p>
-            <div className="rounded-lg p-4 bg-background/50 border border-border/20">
+            <div className="rounded-lg p-4 bg-[#121212]/50 border border-white/10">
               <p className="font-medium mb-2">Remember the hierarchy:</p>
               <ul className="list-disc pl-6 space-y-1 text-sm">
                 <li><strong>Criminal law (EAWR):</strong> Creates absolute duties and penalties</li>
@@ -582,7 +582,7 @@ const Module6Section1_2 = () => {
                 <li><strong>Industry reputation:</strong> Maintains public trust in electrical work</li>
               </ul>
             </div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white">
               Every time you test an installation and sign a certificate, you're not just completing a job – you're participating in a system designed to prevent electrical deaths and injuries. This legal framework exists because electricity can kill, and society demands that those who work with it accept serious responsibilities.
             </p>
           </div>
@@ -592,7 +592,7 @@ const Module6Section1_2 = () => {
         <Quiz questions={quizQuestions} title="Legal and Safety Requirements Quiz" />
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="../1-1">
               <ArrowLeft className="w-4 h-4 mr-2" />

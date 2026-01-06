@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Package, ArrowLeft, AlertTriangle, ExternalLink, Star, BellDot, RefreshCw } from "lucide-react";
+import { Package, AlertTriangle, ExternalLink, Star, BellDot, RefreshCw } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { toast } from "@/hooks/use-toast";
 import MaterialSearch from "@/components/electrician-materials/MaterialSearch";
@@ -115,11 +116,7 @@ const SupplierMaterials = () => {
             <Package className="h-8 w-8 text-elec-yellow" />
             Supplier not found
           </h1>
-          <Link to="/electrician/materials">
-            <Button variant="outline" className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" /> Back to Materials
-            </Button>
-          </Link>
+          <SmartBackButton />
         </div>
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardContent className="p-6 text-center">
@@ -168,11 +165,7 @@ const SupplierMaterials = () => {
             <RefreshCw className={`h-4 w-4 ${isFetchingLive ? "animate-spin" : ""}`} />
             {isFetchingLive ? "Fetching…" : "Fetch Live Deals"}
           </Button>
-          <Link to="/electrician/materials">
-            <Button variant="outline" className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" /> Back to Materials
-            </Button>
-          </Link>
+          <SmartBackButton />
         </div>
       </div>
 

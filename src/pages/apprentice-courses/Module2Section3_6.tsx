@@ -134,11 +134,11 @@ const Module2Section3_6 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 2.3
@@ -151,15 +151,15 @@ const Module2Section3_6 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <Search className="h-8 w-8 text-emerald-400" />
+            <Search className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 2.3.6
               </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
                 Recognising Circuit Types on Site
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+              <p className="text-xl text-white max-w-3xl mt-2">
                 Identify series, parallel and mixed circuits for effective fault finding
               </p>
             </div>
@@ -167,11 +167,11 @@ const Module2Section3_6 = () => {
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Series clues:</strong> Single path, daisy-chain wiring, all fail together.</li>
                 <li><strong>Parallel clues:</strong> Multiple branches, independent operation, junction boxes.</li>
@@ -180,8 +180,8 @@ const Module2Section3_6 = () => {
                 <li><strong>BS 7671:</strong> Use continuity testing and visual inspection methods.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> CU terminations, junction patterns, failure modes.</li>
                 <li><strong>Use:</strong> Fault diagnosis, circuit mapping, modification planning.</li>
@@ -192,32 +192,32 @@ const Module2Section3_6 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
-          <ul className="space-y-3 text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
+          <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Visually identify series and parallel wiring patterns on site</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Recognise ring final circuits from consumer unit terminations</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Use safe methods to trace and verify circuit configurations</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Apply circuit recognition skills to fault finding procedures</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Interpret common installation configurations in real buildings</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Plan circuit modifications based on existing arrangements</span>
             </li>
           </ul>
@@ -225,19 +225,19 @@ const Module2Section3_6 = () => {
 
         {/* Section 1: Visual Recognition Techniques */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
+          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
               Visual Clues and Recognition Techniques
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 Circuit identification starts with systematic observation. Learn to read the visual clues that reveal circuit topology without energised testing.
               </p>
               
               <div className="space-y-4">
                 <div>
-                  <p className="font-bold text-emerald-400">Series circuit indicators:</p>
+                  <p className="font-bold text-elec-yellow">Series circuit indicators:</p>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li><strong>Daisy-chain wiring:</strong> Single cable in, single cable out at each component</li>
                     <li><strong>No junction boxes:</strong> Components connected end-to-end</li>
@@ -247,7 +247,7 @@ const Module2Section3_6 = () => {
                 </div>
 
                 <div>
-                  <p className="font-bold text-emerald-400">Parallel circuit indicators:</p>
+                  <p className="font-bold text-elec-yellow">Parallel circuit indicators:</p>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li><strong>Junction boxes:</strong> Multiple terminations at distribution points</li>
                     <li><strong>Independent operation:</strong> Components work separately</li>
@@ -256,7 +256,7 @@ const Module2Section3_6 = () => {
                   </ul>
                 </div>
 
-                <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
+                <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                   <p className="text-yellow-300">
                     <strong>Safety tip:</strong> Always isolate and prove dead before opening accessories. 
                     Visual inspection should be your first step, not energised testing.
@@ -271,19 +271,19 @@ const Module2Section3_6 = () => {
 
         {/* Section 2: Consumer Unit Analysis */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
+          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
               Consumer Unit Termination Patterns
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 The consumer unit tells the story of circuit configuration. Learn to read termination patterns to identify circuit types quickly.
               </p>
               
               <div className="space-y-4">
                 <div>
-                  <p className="font-bold text-emerald-400">Ring final circuits:</p>
+                  <p className="font-bold text-elec-yellow">Ring final circuits:</p>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li><strong>Two conductors:</strong> Two line conductors at MCB/RCBO terminal</li>
                     <li><strong>Loop back:</strong> Circuit leaves CU and returns to same protective device</li>
@@ -293,7 +293,7 @@ const Module2Section3_6 = () => {
                 </div>
 
                 <div>
-                  <p className="font-bold text-emerald-400">Radial circuits:</p>
+                  <p className="font-bold text-elec-yellow">Radial circuits:</p>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li><strong>Single conductors:</strong> One line conductor at protective device</li>
                     <li><strong>Tree structure:</strong> Branches at accessories, not at CU</li>
@@ -302,8 +302,8 @@ const Module2Section3_6 = () => {
                   </ul>
                 </div>
 
-                <div className="bg-card border border-emerald-500/30 p-4 rounded-lg">
-                  <p className="text-emerald-400">
+                <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
+                  <p className="text-elec-yellow">
                     <strong>Practical check:</strong> Ring finals show low resistance (typically &lt;0.05Ω) 
                     between opposite ends when tested at CU. Radials show open circuit at far end.
                   </p>
@@ -318,11 +318,11 @@ const Module2Section3_6 = () => {
         {/* Section 3: Testing and Verification Methods */}
         <div className="mb-8">
           <div className="border-l-4 border-teal-500 bg-teal-500/10 dark:bg-teal-500/10 p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
               Advanced Circuit Recognition Techniques
             </h2>
-            <div className="space-y-6 text-foreground">
+            <div className="space-y-6 text-white">
               
               {/* Testing methodology */}
               <div className="space-y-4">
@@ -402,12 +402,12 @@ const Module2Section3_6 = () => {
 
         {/* Section 4: Fault Finding Applications */}
         <div className="mb-8">
-          <div className="border-l-4 border-amber-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="border-l-4 border-amber-500 dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">4</span>
               Fault Finding and BS 7671 Context
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 Circuit recognition is essential for effective fault diagnosis and compliance with BS 7671 testing requirements.
               </p>
@@ -440,7 +440,7 @@ const Module2Section3_6 = () => {
                 
                 <h3 className="text-lg font-semibold text-amber-300">BS 7671 Testing Requirements</h3>
                 
-                <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
+                <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                   <ul className="list-disc pl-6 space-y-2 text-sm text-yellow-300">
                     <li><strong>Regulation 643.2:</strong> Continuity testing of protective conductors and equipotential bonding</li>
                     <li><strong>Regulation 643.3:</strong> Continuity of ring final circuit conductors</li>
@@ -454,13 +454,13 @@ const Module2Section3_6 = () => {
         </div>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-border/20 pb-4 last:border-b-0">
-                <h3 className="font-semibold text-foreground mb-2">{faq.question}</h3>
-                <p className="text-muted-foreground text-sm">{faq.answer}</p>
+              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
+                <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -468,16 +468,16 @@ const Module2Section3_6 = () => {
 
         {/* Circuit Recognition Pocket Guide */}
         <div className="mb-8">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">On-Site Circuit Recognition Guide</h2>
-          <Card className="p-6 bg-card border-border/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">On-Site Circuit Recognition Guide</h2>
+          <Card className="p-6 bg-transparent border-white/20 bg-none shadow-none">
             <div className="grid md:grid-cols-3 gap-6 text-sm">
               <div className="space-y-3">
-                <h3 className="font-semibold text-foreground flex items-center gap-2">
-                  <span className="bg-emerald-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">S</span>
+                <h3 className="font-semibold text-white flex items-center gap-2">
+                  <span className="bg-elec-yellow text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">S</span>
                   Series Indicators
                 </h3>
                 <div className="bg-card border border-border/30 p-3 rounded">
-                  <p className="font-medium text-emerald-400 mb-2">Look For:</p>
+                  <p className="font-medium text-elec-yellow mb-2">Look For:</p>
                   <ul className="list-disc pl-4 space-y-1 text-blue-200 text-xs">
                     <li>Single cable in/out at each point</li>
                     <li>No junction boxes</li>
@@ -488,12 +488,12 @@ const Module2Section3_6 = () => {
               </div>
               
               <div className="space-y-3">
-                <h3 className="font-semibold text-foreground flex items-center gap-2">
-                  <span className="bg-emerald-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">P</span>
+                <h3 className="font-semibold text-white flex items-center gap-2">
+                  <span className="bg-elec-yellow text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">P</span>
                   Parallel Indicators
                 </h3>
-                <div className="bg-card border border-emerald-500/30 p-3 rounded">
-                  <p className="font-medium text-emerald-400 mb-2">Look For:</p>
+                <div className="bg-card border border-elec-yellow/30 p-3 rounded">
+                  <p className="font-medium text-elec-yellow mb-2">Look For:</p>
                   <ul className="list-disc pl-4 space-y-1 text-emerald-200 text-xs">
                     <li>Multiple junction boxes</li>
                     <li>Independent operation</li>
@@ -504,7 +504,7 @@ const Module2Section3_6 = () => {
               </div>
 
               <div className="space-y-3">
-                <h3 className="font-semibold text-foreground flex items-center gap-2">
+                <h3 className="font-semibold text-white flex items-center gap-2">
                   <span className="bg-amber-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">R</span>
                   Ring Finals
                 </h3>
@@ -520,15 +520,15 @@ const Module2Section3_6 = () => {
               </div>
             </div>
             
-            <div className="mt-6 pt-4 border-t border-border/20">
+            <div className="mt-6 pt-4 border-t border-white/10">
               <div className="grid md:grid-cols-2 gap-4 text-xs">
                 <div>
-                  <p className="font-medium text-foreground mb-2">Safety First:</p>
-                  <p className="text-muted-foreground">Always isolate and prove dead before investigating circuits. Use approved voltage indicators and follow safe isolation procedures.</p>
+                  <p className="font-medium text-white mb-2">Safety First:</p>
+                  <p className="text-white">Always isolate and prove dead before investigating circuits. Use approved voltage indicators and follow safe isolation procedures.</p>
                 </div>
                 <div>
-                  <p className="font-medium text-foreground mb-2">Quick Test:</p>
-                  <p className="text-muted-foreground">Ring finals: continuity between opposite ends. Radials: dead-end at furthest point. Series: continuity through all components.</p>
+                  <p className="font-medium text-white mb-2">Quick Test:</p>
+                  <p className="text-white">Ring finals: continuity between opposite ends. Radials: dead-end at furthest point. Series: continuity through all components.</p>
                 </div>
               </div>
             </div>
@@ -536,12 +536,12 @@ const Module2Section3_6 = () => {
         </div>
 
         {/* Quick Reference Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quick Reference: Circuit Recognition Checklist</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick Reference: Circuit Recognition Checklist</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
             <div className="space-y-3">
-              <h3 className="font-semibold text-foreground">At the Consumer Unit</h3>
-              <ul className="list-disc pl-6 space-y-1 text-foreground">
+              <h3 className="font-semibold text-white">At the Consumer Unit</h3>
+              <ul className="list-disc pl-6 space-y-1 text-white">
                 <li>Count conductors at each terminal</li>
                 <li>Two conductors = likely ring final</li>
                 <li>One conductor = radial circuit</li>
@@ -550,8 +550,8 @@ const Module2Section3_6 = () => {
               </ul>
             </div>
             <div className="space-y-3">
-              <h3 className="font-semibold text-foreground">At Accessories</h3>
-              <ul className="list-disc pl-6 space-y-1 text-foreground">
+              <h3 className="font-semibold text-white">At Accessories</h3>
+              <ul className="list-disc pl-6 space-y-1 text-white">
                 <li>Multiple terminations = parallel branching</li>
                 <li>Single in/out = series connection</li>
                 <li>Test failure patterns (safe isolation first)</li>
@@ -563,12 +563,12 @@ const Module2Section3_6 = () => {
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
           <Quiz title="Circuit Recognition Knowledge Check" questions={quizQuestions} />
         </Card>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to=".." className="flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" />

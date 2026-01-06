@@ -1,5 +1,5 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AlertTriangle, CheckCircle, X, ThumbsUp } from "lucide-react";
@@ -71,7 +71,7 @@ const LearningFromMistakes = () => {
         <p className="text-muted-foreground text-center max-w-2xl mb-4">
           Understanding which mistakes are normal learning experiences and which ones are serious safety issues
         </p>
-        <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
+        <SmartBackButton />
       </div>
 
       <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">

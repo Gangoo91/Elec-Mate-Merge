@@ -178,11 +178,11 @@ const Module4Section6_6 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6
@@ -196,35 +196,35 @@ const Module4Section6_6 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <FileText className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <FileText className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 4.6.6
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Recording Inspection and Test Results
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Master the legal requirements and best practices for accurate documentation of electrical testing.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Accurate recording of inspection and test results is not just good practice — it is a legal and regulatory requirement under BS 7671 and the Electricity at Work Regulations 1989.</li>
                 <li>Clear records prove that the installation has been inspected, tested, and complies with safety standards.</li>
                 <li>Poor or incomplete records can undermine the validity of the installation certificate and expose both the installer and client to safety risks and liability.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Incomplete forms, missing signatures, vague entries like "OK".</li>
                 <li><strong>Use:</strong> Official test sheets, numerical values, proper units and signatures.</li>
@@ -235,9 +235,9 @@ const Module4Section6_6 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Explain why recording test results is required.</li>
             <li>Identify the forms and documentation used.</li>
             <li>Accurately record polarity, continuity, insulation resistance, and earth fault loop impedance results.</li>
@@ -247,23 +247,23 @@ const Module4Section6_6 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Why Records Matter */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">1. Why Records Matter</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">1. Why Records Matter</h3>
+            <p className="text-base text-white mb-4">
               Accurate record keeping serves multiple critical purposes in electrical work and forms the foundation of professional electrical practice:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">Legal and Professional Requirements</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Legal and Professional Requirements</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Provide legal proof of compliance</strong> with BS 7671 and statutory regulations - essential in legal proceedings</li>
                       <li><strong>Show the system has been tested</strong> to BS 7671 Part 6 standards with specific test values and dates</li>
                       <li><strong>Protect the contractor</strong> in case of disputes, insurance claims, or liability issues</li>
@@ -272,16 +272,16 @@ const Module4Section6_6 = () => {
                       <li><strong>Enable warranty claims</strong> and manufacturer support when issues arise</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Insurance implications:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Insurance implications:</strong></p>
+                      <p className="text-xs text-white">
                         Many insurance policies require evidence of proper installation and testing. Missing or inadequate records can void coverage, leaving both contractor and client exposed to significant financial liability in the event of electrical incidents.
                       </p>
                     </div>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Regulatory enforcement:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Regulatory enforcement:</strong></p>
+                      <p className="text-xs text-white">
                         Local authority building control and HSE inspectors routinely request test certificates. Inability to produce proper documentation can result in enforcement action, work stoppage, and potential prosecution under health and safety legislation.
                       </p>
                     </div>
@@ -302,18 +302,18 @@ const Module4Section6_6 = () => {
 
           {/* What Must Be Recorded */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">2. What Must Be Recorded</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">2. What Must Be Recorded</h3>
+            <p className="text-base text-white mb-4">
               BS 7671 requires specific test results to be documented with precise values and proper units:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
                     <p className="font-semibold text-green-600 dark:text-green-400 mb-1">Essential Test Results</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Continuity of protective conductors</strong> - resistance values in ohms (Ω), typically &lt;0.05Ω for final circuits</li>
                       <li><strong>Insulation resistance results</strong> - minimum 1MΩ at 500V DC, recorded in megohms (MΩ)</li>
                       <li><strong>Polarity confirmation</strong> - verification that line conductors connect only to line terminals</li>
@@ -322,9 +322,9 @@ const Module4Section6_6 = () => {
                       <li><strong>Visual inspection findings</strong> - comprehensive checklist of installation aspects</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Additional measurements that may be required:</strong></p>
-                      <ul className="text-xs text-muted-foreground list-disc ml-4 space-y-1">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Additional measurements that may be required:</strong></p>
+                      <ul className="text-xs text-white list-disc ml-4 space-y-1">
                         <li><strong>Phase sequence</strong> - for three-phase installations to ensure correct motor rotation</li>
                         <li><strong>Voltage measurements</strong> - supply voltage at origin and at extremities of circuits</li>
                         <li><strong>Current measurements</strong> - load currents and earth leakage currents</li>
@@ -335,8 +335,8 @@ const Module4Section6_6 = () => {
                     </div>
                     
                     <div className="mt-3 p-3 bg-amber-50/50 dark:bg-amber-900/10 rounded border border-amber-200/30">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Recording environmental conditions:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Recording environmental conditions:</strong></p>
+                      <p className="text-xs text-white">
                         Temperature and humidity during testing can affect results, particularly insulation resistance. BS 7671 requires adjustment of results for temperature where specified, and environmental conditions should be noted when measurements are taken in extreme conditions.
                       </p>
                     </div>
@@ -357,18 +357,18 @@ const Module4Section6_6 = () => {
 
           {/* Forms and Certificates */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">3. Forms and Certificates</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">3. Forms and Certificates</h3>
+            <p className="text-base text-white mb-4">
               Different types of electrical work require specific documentation with strict completion requirements:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-1">Official Documentation</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Official Documentation</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Electrical Installation Certificate (EIC)</strong> - for new installations, consumer unit replacements, and major alterations affecting the main protective bonding</li>
                       <li><strong>Minor Electrical Installation Works Certificate (MEIWC)</strong> - for additions like socket outlets, lighting points, or single circuit additions</li>
                       <li><strong>Electrical Installation Condition Report (EICR)</strong> - for periodic inspection and testing of existing installations to assess their continued safety</li>
@@ -377,9 +377,9 @@ const Module4Section6_6 = () => {
                       <li><strong>All must be signed</strong> by the responsible person with appropriate qualifications and Part P registration where applicable</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Certificate completion requirements:</strong></p>
-                      <ul className="text-xs text-muted-foreground list-disc ml-4 space-y-1">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Certificate completion requirements:</strong></p>
+                      <ul className="text-xs text-white list-disc ml-4 space-y-1">
                         <li><strong>Designer signature</strong> - person responsible for the design compliance</li>
                         <li><strong>Constructor signature</strong> - person responsible for construction compliance</li>
                         <li><strong>Inspector/tester signature</strong> - qualified person who conducted the verification</li>
@@ -391,8 +391,8 @@ const Module4Section6_6 = () => {
                     </div>
                     
                     <div className="mt-3 p-3 bg-red-50/50 dark:bg-red-900/10 rounded border border-red-200/30">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Common completion errors to avoid:</strong></p>
-                      <ul className="text-xs text-muted-foreground list-disc ml-4 space-y-1">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Common completion errors to avoid:</strong></p>
+                      <ul className="text-xs text-white list-disc ml-4 space-y-1">
                         <li>Incomplete sections left blank instead of entering "N/A" where appropriate</li>
                         <li>Missing signatures or dates - all three designer/constructor/tester signatures required</li>
                         <li>Incorrect supply characteristics copied from previous jobs</li>
@@ -417,18 +417,18 @@ const Module4Section6_6 = () => {
 
           {/* How to Record Correctly */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">4. How to Record Correctly</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">4. How to Record Correctly</h3>
+            <p className="text-base text-white mb-4">
               Professional recording requires attention to detail, proper procedures, and understanding of measurement significance:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-emerald-400 mb-1">Best Practice Recording</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Best Practice Recording</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Use the correct test forms</strong> issued by the IET (Institution of Engineering and Technology) - ensure current edition</li>
                       <li><strong>Enter results clearly</strong> in black ink or type - avoid pencil or erasable ink</li>
                       <li><strong>Record correct units:</strong> resistance in ohms (Ω), insulation resistance in megohms (MΩ), time in milliseconds (ms)</li>
@@ -437,9 +437,9 @@ const Module4Section6_6 = () => {
                       <li><strong>Cross-reference circuit numbers</strong> with distribution board labelling and as-installed drawings</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Recording methodology:</strong></p>
-                      <ul className="text-xs text-muted-foreground list-disc ml-4 space-y-1">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Recording methodology:</strong></p>
+                      <ul className="text-xs text-white list-disc ml-4 space-y-1">
                         <li><strong>Test sequence</strong> - follow BS 7671 Part 6 test sequence to ensure accurate results</li>
                         <li><strong>Instrument calibration</strong> - verify test instruments are within calibration date</li>
                         <li><strong>Test conditions</strong> - ensure installation is de-energised and isolated for dead tests</li>
@@ -450,11 +450,11 @@ const Module4Section6_6 = () => {
                     </div>
                     
                     <div className="mt-3 p-3 bg-emerald-50/50 dark:bg-blue-900/10 rounded border border-blue-200/30">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Digital vs. handwritten records:</strong></p>
-                      <p className="text-xs text-muted-foreground mb-2">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Digital vs. handwritten records:</strong></p>
+                      <p className="text-xs text-white mb-2">
                         Digital test instruments with data logging capability can improve accuracy and reduce transcription errors. However, handwritten records remain valid provided they are clear, permanent, and properly signed.
                       </p>
-                      <ul className="text-xs text-muted-foreground list-disc ml-4 space-y-1">
+                      <ul className="text-xs text-white list-disc ml-4 space-y-1">
                         <li><strong>Digital advantages:</strong> reduced errors, automatic calculations, data backup, professional presentation</li>
                         <li><strong>Handwritten advantages:</strong> no battery dependency, immediate completion, familiar to all contractors</li>
                         <li><strong>Hybrid approach:</strong> digital capture with printed hard copies for signatures and client handover</li>
@@ -468,27 +468,27 @@ const Module4Section6_6 = () => {
 
           {/* Regulatory Reference */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">5. Regulatory Reference</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">5. Regulatory Reference</h3>
+            <p className="text-base text-white mb-4">
               Key regulations governing record keeping with specific obligations and penalties:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-1">Legal Framework</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Legal Framework</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>BS 7671 Regulation 631.3</strong> – "The results of verification shall be recorded" - makes recording mandatory, not optional</li>
                       <li><strong>Electricity at Work Regulations 1989 Regulation 4(2)</strong> – Systems must be maintained to prevent danger</li>
                       <li><strong>Building Regulations Part P</strong> – Notification and certification requirements for domestic electrical work</li>
                       <li><strong>Construction (Design and Management) Regulations</strong> – Handover information requirements</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Specific regulatory obligations:</strong></p>
-                      <ul className="text-xs text-muted-foreground list-disc ml-4 space-y-1">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Specific regulatory obligations:</strong></p>
+                      <ul className="text-xs text-white list-disc ml-4 space-y-1">
                         <li><strong>Record retention periods:</strong> No statutory minimum, but professional indemnity insurance typically requires 6-15 years</li>
                         <li><strong>Competent person schemes:</strong> NICEIC, NAPIT, ECA, Certsure require compliant documentation for membership</li>
                         <li><strong>Local authority requirements:</strong> Building control may request certificates at any time during construction</li>
@@ -497,8 +497,8 @@ const Module4Section6_6 = () => {
                     </div>
                     
                     <div className="mt-3 p-3 bg-red-50/50 dark:bg-red-900/10 rounded border border-red-200/30">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Consequences of non-compliance:</strong></p>
-                      <ul className="text-xs text-muted-foreground list-disc ml-4 space-y-1">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Consequences of non-compliance:</strong></p>
+                      <ul className="text-xs text-white list-disc ml-4 space-y-1">
                         <li><strong>Criminal prosecution</strong> under EAWR for unsafe systems</li>
                         <li><strong>Professional sanctions</strong> from competent person scheme providers</li>
                         <li><strong>Insurance claim rejection</strong> for inadequate documentation</li>
@@ -514,15 +514,15 @@ const Module4Section6_6 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Wrench className="w-5 h-5" />
             Practical Guidance
           </h2>
           <div className="space-y-6">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
-              <h3 className="font-medium text-foreground mb-3">Pre-Testing Preparation</h3>
-              <ul className="text-xs sm:text-sm text-foreground space-y-2 list-disc pl-6">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
+              <h3 className="font-medium text-white mb-3">Pre-Testing Preparation</h3>
+              <ul className="text-xs sm:text-sm text-white space-y-2 list-disc pl-6">
                 <li><strong>Prepare documentation in advance:</strong> Print sufficient test sheets and ensure they are the current IET edition</li>
                 <li><strong>Check test instrument calibration:</strong> Verify calibration certificates are current (typically annual calibration required)</li>
                 <li><strong>Prepare site identification:</strong> Pre-populate certificate headers with site address, installer details, and date</li>
@@ -532,8 +532,8 @@ const Module4Section6_6 = () => {
             </div>
             
             <div className="rounded-lg p-4 bg-green-50/50 dark:bg-green-900/10 border border-green-200/30">
-              <h3 className="font-medium text-foreground mb-3">During Testing Best Practices</h3>
-              <ul className="text-xs sm:text-sm text-foreground space-y-2 list-disc pl-6">
+              <h3 className="font-medium text-white mb-3">During Testing Best Practices</h3>
+              <ul className="text-xs sm:text-sm text-white space-y-2 list-disc pl-6">
                 <li><strong>Double-check units before recording:</strong> Ω for resistance, MΩ for insulation resistance, ms for time, V for voltage</li>
                 <li><strong>Record ambient temperature:</strong> Required for insulation resistance correction and useful for future reference</li>
                 <li><strong>Take photographs of critical readings:</strong> Particularly for borderline results or unusual measurements</li>
@@ -544,8 +544,8 @@ const Module4Section6_6 = () => {
             </div>
             
             <div className="rounded-lg p-4 bg-emerald-50/50 dark:bg-blue-900/10 border border-blue-200/30">
-              <h3 className="font-medium text-foreground mb-3">Record Keeping and Storage</h3>
-              <ul className="text-xs sm:text-sm text-foreground space-y-2 list-disc pl-6">
+              <h3 className="font-medium text-white mb-3">Record Keeping and Storage</h3>
+              <ul className="text-xs sm:text-sm text-white space-y-2 list-disc pl-6">
                 <li><strong>Make multiple copies immediately:</strong> Original for client, copy for contractor, copy for competent person scheme</li>
                 <li><strong>Use waterproof storage:</strong> Physical documents in sealed filing systems, digital copies with cloud backup</li>
                 <li><strong>Index certificates systematically:</strong> By date, client name, and job reference for easy retrieval</li>
@@ -556,8 +556,8 @@ const Module4Section6_6 = () => {
             </div>
             
             <div className="rounded-lg p-4 bg-amber-50/50 dark:bg-amber-900/10 border border-amber-200/30">
-              <h3 className="font-medium text-foreground mb-3">Quality Assurance Checks</h3>
-              <ul className="text-xs sm:text-sm text-foreground space-y-2 list-disc pl-6">
+              <h3 className="font-medium text-white mb-3">Quality Assurance Checks</h3>
+              <ul className="text-xs sm:text-sm text-white space-y-2 list-disc pl-6">
                 <li><strong>Peer review critical installations:</strong> Have another qualified person check certificates for major projects</li>
                 <li><strong>Use calculation checks:</strong> Verify R1+R2 values against individual measurements where possible</li>
                 <li><strong>Compare similar circuits:</strong> Similar circuits should show similar test results - investigate significant variations</li>
@@ -568,8 +568,8 @@ const Module4Section6_6 = () => {
             </div>
             
             <div className="rounded-lg p-4 bg-red-50/50 dark:bg-red-900/10 border border-red-200/30">
-              <h3 className="font-medium text-foreground mb-3">Common Pitfalls to Avoid</h3>
-              <ul className="text-xs sm:text-sm text-foreground space-y-2 list-disc pl-6">
+              <h3 className="font-medium text-white mb-3">Common Pitfalls to Avoid</h3>
+              <ul className="text-xs sm:text-sm text-white space-y-2 list-disc pl-6">
                 <li><strong>Never falsify results:</strong> If a test fails, investigate and rectify - falsification is fraud and extremely dangerous</li>
                 <li><strong>Don't use old certificate forms:</strong> Regulations evolve - ensure you're using current edition IET forms</li>
                 <li><strong>Avoid generic results:</strong> Each installation is unique - don't copy results from previous jobs</li>
@@ -582,25 +582,25 @@ const Module4Section6_6 = () => {
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <AlertTriangle className="w-5 h-5 text-amber-500" />
             Real-World Examples
           </h2>
           
           <div className="space-y-6">
             <div className="rounded-lg p-4 bg-red-50/50 dark:bg-red-900/10 border border-red-200/30">
-              <h3 className="font-medium text-foreground mb-2">Case Study 1: The "Satisfactory" Disaster</h3>
-              <p className="text-base text-foreground mb-3">
+              <h3 className="font-medium text-white mb-2">Case Study 1: The "Satisfactory" Disaster</h3>
+              <p className="text-base text-white mb-3">
                 On a £50,000 commercial office fit-out, the contractor failed to record insulation resistance values and instead wrote "satisfactory" throughout the test schedule. Six months later, a fault developed causing equipment damage and business interruption.
               </p>
-              <p className="text-xs sm:text-sm text-foreground mb-3">
+              <p className="text-xs sm:text-sm text-white mb-3">
                 <strong>The problem:</strong> When insurance investigators requested evidence of proper installation, no numerical test results existed. The fault was traced to moisture ingress that should have been detected during initial testing.
               </p>
-              <p className="text-xs sm:text-sm text-foreground mb-3">
+              <p className="text-xs sm:text-sm text-white mb-3">
                 <strong>The consequences:</strong>
               </p>
-              <ul className="text-xs text-muted-foreground list-disc ml-6 space-y-1">
+              <ul className="text-xs text-white list-disc ml-6 space-y-1">
                 <li>£15,000 re-testing and rectification at contractor's expense</li>
                 <li>Insurance claim rejected due to inadequate installation evidence</li>
                 <li>Loss of client relationship and future contracts worth £200,000+</li>
@@ -610,17 +610,17 @@ const Module4Section6_6 = () => {
             </div>
             
             <div className="rounded-lg p-4 bg-emerald-50/50 dark:bg-blue-900/10 border border-blue-200/30">
-              <h3 className="font-medium text-foreground mb-2">Case Study 2: The Missing Signature</h3>
-              <p className="text-base text-foreground mb-3">
+              <h3 className="font-medium text-white mb-2">Case Study 2: The Missing Signature</h3>
+              <p className="text-base text-white mb-3">
                 A domestic solar installation was completed with comprehensive test results recorded, but the apprentice who conducted the testing forgot to get the supervising electrician to sign the certificate before the supervisor left for another job.
               </p>
-              <p className="text-xs sm:text-sm text-foreground mb-3">
+              <p className="text-xs sm:text-sm text-white mb-3">
                 <strong>The discovery:</strong> Local authority building control spotted the missing qualified person signature during routine inspection three weeks later.
               </p>
-              <p className="text-xs sm:text-sm text-foreground mb-3">
+              <p className="text-xs sm:text-sm text-white mb-3">
                 <strong>The resolution required:</strong>
               </p>
-              <ul className="text-xs text-muted-foreground list-disc ml-6 space-y-1">
+              <ul className="text-xs text-white list-disc ml-6 space-y-1">
                 <li>Complete system shutdown and re-testing by qualified person</li>
                 <li>New certificate issued with proper signatures</li>
                 <li>Building control re-inspection fee (£200)</li>
@@ -630,17 +630,17 @@ const Module4Section6_6 = () => {
             </div>
             
             <div className="rounded-lg p-4 bg-green-50/50 dark:bg-green-900/10 border border-green-200/30">
-              <h3 className="font-medium text-foreground mb-2">Case Study 3: The Photography Success</h3>
-              <p className="text-base text-foreground mb-3">
+              <h3 className="font-medium text-white mb-2">Case Study 3: The Photography Success</h3>
+              <p className="text-base text-white mb-3">
                 An industrial installation contractor routinely photographed all test instrument displays during commissioning. When a dispute arose over alleged poor workmanship, the photographs proved invaluable.
               </p>
-              <p className="text-xs sm:text-sm text-foreground mb-3">
+              <p className="text-xs sm:text-sm text-white mb-3">
                 <strong>The situation:</strong> Client claimed installation was faulty based on problems occurring 18 months after commissioning. They requested re-testing and threatened legal action.
               </p>
-              <p className="text-xs sm:text-sm text-foreground mb-3">
+              <p className="text-xs sm:text-sm text-white mb-3">
                 <strong>The evidence:</strong>
               </p>
-              <ul className="text-xs text-muted-foreground list-disc ml-6 space-y-1">
+              <ul className="text-xs text-white list-disc ml-6 space-y-1">
                 <li>Photographs showed all test results were well within limits at commissioning</li>
                 <li>Time-stamped images proved installation date and conditions</li>
                 <li>Comparison with current readings identified gradual deterioration due to environmental factors</li>
@@ -650,11 +650,11 @@ const Module4Section6_6 = () => {
             </div>
             
             <div className="rounded-lg p-4 bg-purple-50/50 dark:bg-purple-900/10 border border-purple-200/30">
-              <h3 className="font-medium text-foreground mb-2">Case Study 4: The Digital Documentation Advantage</h3>
-              <p className="text-base text-foreground mb-3">
+              <h3 className="font-medium text-white mb-2">Case Study 4: The Digital Documentation Advantage</h3>
+              <p className="text-base text-white mb-3">
                 A contractor using digital test equipment with cloud storage prevented a major dispute when original paper certificates were destroyed in an office flood.
               </p>
-              <p className="text-xs sm:text-sm text-foreground mb-3">
+              <p className="text-xs sm:text-sm text-white mb-3">
                 <strong>The benefit:</strong> All test data was automatically backed up and could be reproduced instantly, saving thousands in re-testing costs and maintaining client confidence during the insurance claim process.
               </p>
             </div>
@@ -662,21 +662,21 @@ const Module4Section6_6 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
-                <h3 className="font-medium text-foreground mb-2">Q: {faq.question}</h3>
-                <p className="text-xs sm:text-sm text-foreground"><strong>A:</strong> {faq.answer}</p>
+              <div key={index} className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
+                <h3 className="font-medium text-white mb-2">Q: {faq.question}</h3>
+                <p className="text-xs sm:text-sm text-white"><strong>A:</strong> {faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Book className="w-5 h-5" />
             Pocket Guide – Recording Test Results
           </h2>
@@ -725,12 +725,12 @@ const Module4Section6_6 = () => {
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Target className="w-5 h-5" />
             Recap (What You've Learned)
           </h2>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>You now understand the importance of recording inspection and test results for compliance and liability protection.</li>
             <li>You can identify the required forms and certificates.</li>
             <li>You know which test values must be documented.</li>
@@ -743,7 +743,7 @@ const Module4Section6_6 = () => {
         <Quiz questions={quizQuestions} />
 
         {/* Navigation */}
-        <div className="flex justify-between items-center mt-8 pt-6 border-t border-border/20">
+        <div className="flex justify-between items-center mt-8 pt-6 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="../6-5">
               <ArrowLeft className="w-4 h-4 mr-2" />

@@ -1,20 +1,41 @@
-import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { MobileSelectWrapper as MobileSelect } from "@/components/ui/mobile-select-wrapper";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { Lightbulb, Calculator, RotateCcw, Zap, Building, Route } from "lucide-react";
-import { 
-  calculateEmergencyLighting, 
-  occupancyProfiles, 
+import { useState, useMemo } from "react";
+import {
+  Lightbulb,
+  Calculator,
+  RotateCcw,
+  Zap,
+  Building,
+  Route,
+  ChevronDown,
+  BookOpen,
+  Info,
+} from "lucide-react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { cn } from "@/lib/utils";
+import {
+  CalculatorCard,
+  CalculatorInput,
+  CalculatorSelect,
+  CalculatorResult,
+  ResultValue,
+  ResultsGrid,
+  CALCULATOR_CONFIG,
+} from "@/components/calculators/shared";
+import {
+  calculateEmergencyLighting,
+  occupancyProfiles,
   fixtureProfiles,
-  EmergencyLightingInputs 
+  EmergencyLightingInputs,
 } from "@/lib/emergency-lighting";
 import EmergencyLightingGuidance from "./emergency/EmergencyLightingGuidance";
 
 const EmergencyLightingCalculator = () => {
+  const config = CALCULATOR_CONFIG["lighting"];
+
   // Core inputs
   const [floorArea, setFloorArea] = useState<string>("");
   const [ceilingHeight, setCeilingHeight] = useState<string>("3");
@@ -22,7 +43,7 @@ const EmergencyLightingCalculator = () => {
   const [exitRoutes, setExitRoutes] = useState<string>("2");
   const [emergencyDuration, setEmergencyDuration] = useState<string>("3");
   const [fixtureType, setFixtureType] = useState<string>("led-standard");
-  
+
   // Advanced inputs
   const [corridorLength, setCorridorLength] = useState<string>("");
   const [corridorWidth, setCorridorWidth] = useState<string>("");
@@ -31,12 +52,14 @@ const EmergencyLightingCalculator = () => {
   const [hasDisabledAccess, setHasDisabledAccess] = useState<boolean>(false);
   const [buildingHeight, setBuildingHeight] = useState<string>("");
   const [complexLayout, setComplexLayout] = useState<boolean>(false);
-  
-  const [result, setResult] = useState<any>(null);
+  const [showAdvanced, setShowAdvanced] = useState(false);
+  const [showReference, setShowReference] = useState(false);
+
+  const [result, setResult] = useState<ReturnType<typeof calculateEmergencyLighting> | null>(null);
 
   const handleCalculate = () => {
     const area = parseFloat(floorArea);
-    
+
     if (area > 0) {
       const inputs: EmergencyLightingInputs = {
         floorArea: area,
@@ -51,9 +74,9 @@ const EmergencyLightingCalculator = () => {
         exitRoutes: parseInt(exitRoutes),
         hasDisabledAccess,
         buildingHeight: buildingHeight ? parseFloat(buildingHeight) : undefined,
-        complexLayout
+        complexLayout,
       };
-      
+
       const calculationResult = calculateEmergencyLighting(inputs);
       setResult(calculationResult);
     }
@@ -76,243 +99,280 @@ const EmergencyLightingCalculator = () => {
     setResult(null);
   };
 
+  const isValid = parseFloat(floorArea) > 0;
+
+  const occupancyOptions = Object.entries(occupancyProfiles).map(([key, profile]) => ({
+    value: key,
+    label: profile.description,
+  }));
+
+  const fixtureOptions = Object.entries(fixtureProfiles).map(([key, fixture]) => ({
+    value: key,
+    label: fixture.description,
+  }));
+
+  const durationOptions = [
+    { value: "1", label: "1 Hour (Occupied premises)" },
+    { value: "3", label: "3 Hours (Unoccupied premises)" },
+    { value: "24", label: "24 Hours (High risk areas)" },
+  ];
 
   return (
-    <div className="space-y-6">
-      {/* Input Card */}
-      <Card className="border-elec-yellow/20 bg-elec-card">
-        <CardHeader>
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-elec-yellow/20 rounded-lg">
-              <Lightbulb className="h-5 w-5 text-elec-yellow" />
+    <div className="space-y-4">
+      <CalculatorCard
+        category="lighting"
+        title="Emergency Lighting Calculator"
+        description="Calculate emergency lighting requirements per BS 5266-1"
+        badge="BS 5266"
+      >
+        {/* Core Parameters */}
+        <div className="flex items-center gap-2 mb-3">
+          <Building className="h-4 w-4 text-cyan-400" />
+          <span className="text-sm font-medium text-white/80">Core Parameters</span>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3">
+          <CalculatorInput
+            label="Floor Area"
+            unit="m²"
+            type="text"
+            inputMode="decimal"
+            value={floorArea}
+            onChange={setFloorArea}
+            placeholder="e.g., 500"
+            hint="Total floor area requiring emergency lighting"
+          />
+
+          <CalculatorInput
+            label="Ceiling Height"
+            unit="m"
+            type="text"
+            inputMode="decimal"
+            value={ceilingHeight}
+            onChange={setCeilingHeight}
+            placeholder="e.g., 3.0"
+            hint="Average ceiling height"
+          />
+        </div>
+
+        <div className="grid grid-cols-2 gap-3">
+          <CalculatorSelect
+            label="Occupancy Type"
+            value={occupancyType}
+            onChange={setOccupancyType}
+            options={occupancyOptions}
+          />
+
+          <CalculatorInput
+            label="Exit Routes"
+            type="text"
+            inputMode="numeric"
+            value={exitRoutes}
+            onChange={setExitRoutes}
+            placeholder="e.g., 2"
+            hint="Primary escape routes"
+          />
+        </div>
+
+        <div className="grid grid-cols-2 gap-3">
+          <CalculatorSelect
+            label="Emergency Duration"
+            value={emergencyDuration}
+            onChange={setEmergencyDuration}
+            options={durationOptions}
+          />
+
+          <CalculatorSelect
+            label="Fixture Type"
+            value={fixtureType}
+            onChange={setFixtureType}
+            options={fixtureOptions}
+          />
+        </div>
+
+        {/* Advanced Options Toggle */}
+        <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
+          <CollapsibleTrigger className="w-full flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+            <div className="flex items-center gap-2">
+              <Zap className="h-4 w-4 text-amber-400" />
+              <span className="text-sm font-medium text-white/80">Advanced Parameters</span>
             </div>
-            <div>
-              <CardTitle className="text-elec-light">Emergency Lighting Calculator</CardTitle>
-              <CardDescription className="text-elec-light/70">
-                Calculate emergency lighting requirements according to BS 5266-1 and fire safety regulations.
-              </CardDescription>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {/* Core Parameters */}
-          <div className="space-y-4">
-            <h4 className="text-elec-light font-medium flex items-center gap-2">
-              <Building className="h-4 w-4 text-elec-yellow" />
-              Core Parameters
-            </h4>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <MobileInputWrapper
-                label="Floor Area"
-                type="text"
-                inputMode="decimal"
-                value={floorArea}
-                onChange={setFloorArea}
-                placeholder="e.g., 500"
-                unit="m²"
-                icon={<Building className="h-4 w-4" />}
-                hint="Total floor area requiring emergency lighting"
-              />
+            <ChevronDown
+              className={cn(
+                "h-4 w-4 text-white/40 transition-transform duration-200",
+                showAdvanced && "rotate-180"
+              )}
+            />
+          </CollapsibleTrigger>
 
-              <MobileInputWrapper
-                label="Ceiling Height"
-                type="text"
-                inputMode="decimal"
-                step="0.1"
-                value={ceilingHeight}
-                onChange={setCeilingHeight}
-                placeholder="e.g., 3.0"
-                unit="m"
-                hint="Average ceiling height for spacing calculations"
-              />
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <MobileSelect
-                label="Occupancy Type"
-                placeholder="Select occupancy type"
-                value={occupancyType}
-                onValueChange={setOccupancyType}
-                options={Object.entries(occupancyProfiles).map(([key, profile]) => ({
-                  value: key,
-                  label: profile.description
-                }))}
-              />
-
-              <MobileInputWrapper
-                label="Exit Routes"
-                type="text"
-                inputMode="numeric"
-                min="1"
-                value={exitRoutes}
-                onChange={setExitRoutes}
-                placeholder="e.g., 2"
-                icon={<Route className="h-4 w-4" />}
-                hint="Number of primary escape routes"
-              />
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <MobileSelect
-                label="Emergency Duration"
-                placeholder="Select duration"
-                value={emergencyDuration}
-                onValueChange={setEmergencyDuration}
-                options={[
-                  { value: "1", label: "1 Hour (Occupied premises)" },
-                  { value: "3", label: "3 Hours (Unoccupied premises)" },
-                  { value: "24", label: "24 Hours (High risk areas)" }
-                ]}
-              />
-
-              <MobileSelect
-                label="Fixture Type"
-                placeholder="Select fixture type"
-                value={fixtureType}
-                onValueChange={setFixtureType}
-                options={Object.entries(fixtureProfiles).map(([key, fixture]) => ({
-                  value: key,
-                  label: fixture.description
-                }))}
-              />
-            </div>
-          </div>
-
-          {/* Advanced Parameters */}
-          <div className="space-y-4 pt-4 border-t border-elec-gray/20">
-            <h4 className="text-elec-light font-medium flex items-center gap-2">
-              <Zap className="h-4 w-4 text-elec-yellow" />
-              Advanced Parameters (Optional)
-            </h4>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <MobileInputWrapper
+          <CollapsibleContent className="pt-4 space-y-4">
+            <div className="grid grid-cols-3 gap-3">
+              <CalculatorInput
                 label="Corridor Length"
+                unit="m"
                 type="text"
                 inputMode="decimal"
-                step="0.1"
                 value={corridorLength}
                 onChange={setCorridorLength}
-                placeholder="Auto-calculated"
-                unit="m"
-                hint="Total length of escape route corridors"
+                placeholder="Auto"
               />
 
-              <MobileInputWrapper
+              <CalculatorInput
                 label="Corridor Width"
+                unit="m"
                 type="text"
                 inputMode="decimal"
-                step="0.1"
                 value={corridorWidth}
                 onChange={setCorridorWidth}
-                placeholder="Standard width"
-                unit="m"
-                hint="Average corridor width"
+                placeholder="Standard"
               />
 
-              <MobileInputWrapper
+              <CalculatorInput
                 label="Staircase Flights"
                 type="text"
                 inputMode="numeric"
-                min="0"
                 value={staircaseFlights}
                 onChange={setStaircaseFlights}
                 placeholder="0"
-                hint="Number of staircase flights requiring lighting"
               />
             </div>
 
-            <MobileInputWrapper
+            <CalculatorInput
               label="Building Height"
+              unit="m"
               type="text"
               inputMode="decimal"
-              step="0.1"
               value={buildingHeight}
               onChange={setBuildingHeight}
               placeholder="Single storey"
-              unit="m"
               hint="Total building height (affects regulations)"
             />
 
             {/* Boolean Options */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 bg-card rounded-lg border border-elec-gray/20">
-                  <div className="space-y-1">
-                    <Label className="text-sm font-medium text-elec-light">High Risk Tasks</Label>
-                    <p className="text-xs text-elec-light/60">Areas requiring enhanced lighting levels</p>
-                  </div>
-                  <Switch 
-                    checked={hasHighRiskTasks} 
-                    onCheckedChange={setHasHighRiskTasks}
-                  />
-                </div>
+            <div className="grid grid-cols-2 gap-3">
+              <label className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
+                <input
+                  type="checkbox"
+                  checked={hasHighRiskTasks}
+                  onChange={(e) => setHasHighRiskTasks(e.target.checked)}
+                  className="rounded border-white/20 bg-white/10 text-cyan-400 focus:ring-cyan-400/50"
+                />
+                <span className="text-sm text-white/80">High Risk Tasks</span>
+              </label>
 
-                <div className="flex items-center justify-between p-3 bg-card rounded-lg border border-elec-gray/20">
-                  <div className="space-y-1">
-                    <Label className="text-sm font-medium text-elec-light">Disabled Access</Label>
-                    <p className="text-xs text-elec-light/60">Building includes accessible routes</p>
-                  </div>
-                  <Switch 
-                    checked={hasDisabledAccess} 
-                    onCheckedChange={setHasDisabledAccess}
-                  />
-                </div>
-              </div>
+              <label className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
+                <input
+                  type="checkbox"
+                  checked={hasDisabledAccess}
+                  onChange={(e) => setHasDisabledAccess(e.target.checked)}
+                  className="rounded border-white/20 bg-white/10 text-cyan-400 focus:ring-cyan-400/50"
+                />
+                <span className="text-sm text-white/80">Disabled Access</span>
+              </label>
 
-              <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 bg-card rounded-lg border border-elec-gray/20">
-                  <div className="space-y-1">
-                    <Label className="text-sm font-medium text-elec-light">Complex Layout</Label>
-                    <p className="text-xs text-elec-light/60">Non-standard or complex building geometry</p>
-                  </div>
-                  <Switch 
-                    checked={complexLayout} 
-                    onCheckedChange={setComplexLayout}
-                  />
-                </div>
-              </div>
+              <label className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition-colors col-span-2">
+                <input
+                  type="checkbox"
+                  checked={complexLayout}
+                  onChange={(e) => setComplexLayout(e.target.checked)}
+                  className="rounded border-white/20 bg-white/10 text-cyan-400 focus:ring-cyan-400/50"
+                />
+                <span className="text-sm text-white/80">Complex Layout</span>
+              </label>
             </div>
-          </div>
+          </CollapsibleContent>
+        </Collapsible>
 
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 pt-4">
-            <MobileButton 
-              onClick={handleCalculate}
-              variant="elec"
-              size="wide"
-              disabled={!floorArea}
-              className="sm:flex-1"
-            >
-              <Calculator className="h-4 w-4 mr-2" />
-              Calculate Emergency Lighting
-            </MobileButton>
-            <MobileButton 
-              onClick={reset} 
-              variant="outline" 
-              size="default"
-              className="sm:w-auto"
-            >
-              <RotateCcw className="h-4 w-4 mr-2" />
-              Reset
-            </MobileButton>
-          </div>
-        </CardContent>
-      </Card>
+        {/* Action Buttons */}
+        <div className="flex gap-2 pt-2">
+          <button
+            onClick={handleCalculate}
+            disabled={!isValid}
+            className={cn(
+              "flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation",
+              isValid
+                ? "text-black"
+                : "bg-white/10 text-white/30 cursor-not-allowed"
+            )}
+            style={
+              isValid
+                ? {
+                    background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                  }
+                : undefined
+            }
+          >
+            <Calculator className="h-5 w-5" />
+            Calculate Requirements
+          </button>
+          <button
+            onClick={reset}
+            className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 transition-colors touch-manipulation"
+          >
+            <RotateCcw className="h-5 w-5" />
+          </button>
+        </div>
+      </CalculatorCard>
 
-      {/* Results */}
+      {/* Results Section */}
       {result && (
-        <EmergencyLightingGuidance 
+        <EmergencyLightingGuidance
           result={result}
           inputs={{
             floorArea: parseFloat(floorArea),
             occupancyType,
             emergencyDuration: parseFloat(emergencyDuration),
-            fixtureType
+            fixtureType,
           }}
         />
       )}
+
+      {/* Quick Reference */}
+      <Collapsible open={showReference} onOpenChange={setShowReference}>
+        <div className="calculator-card overflow-hidden" style={{ borderColor: "#fbbf2415" }}>
+          <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+            <div className="flex items-center gap-3">
+              <BookOpen className="h-4 w-4 text-amber-400" />
+              <span className="text-sm sm:text-base font-medium text-amber-300">
+                BS 5266 Reference
+              </span>
+            </div>
+            <ChevronDown
+              className={cn(
+                "h-4 w-4 text-white/40 transition-transform duration-200",
+                showReference && "rotate-180"
+              )}
+            />
+          </CollapsibleTrigger>
+
+          <CollapsibleContent className="p-4 pt-0">
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              <div className="space-y-1">
+                <p className="text-amber-300 font-medium">Illuminance Levels</p>
+                <p className="text-amber-200/70">Escape routes: 1 lux min</p>
+                <p className="text-amber-200/70">Anti-panic: 0.5 lux min</p>
+                <p className="text-amber-200/70">High risk: 10% normal</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-amber-300 font-medium">Duration</p>
+                <p className="text-amber-200/70">Sleeping risk: 3 hours</p>
+                <p className="text-amber-200/70">Non-sleeping: 1 hour</p>
+                <p className="text-amber-200/70">High risk: 24 hours</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-amber-300 font-medium">Spacing</p>
+                <p className="text-amber-200/70">Max 2× mounting height</p>
+                <p className="text-amber-200/70">Exit signs visible</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-amber-300 font-medium">Testing</p>
+                <p className="text-amber-200/70">Monthly: brief test</p>
+                <p className="text-amber-200/70">Annual: full duration</p>
+              </div>
+            </div>
+          </CollapsibleContent>
+        </div>
+      </Collapsible>
     </div>
   );
 };

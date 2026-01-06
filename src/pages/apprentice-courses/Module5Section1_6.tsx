@@ -182,11 +182,11 @@ const Module5Section1_6 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 1
@@ -200,35 +200,35 @@ const Module5Section1_6 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <AlertTriangle className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <AlertTriangle className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 5.1.6
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Dealing with Incomplete or Conflicting Information
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Learn to identify and resolve incomplete or conflicting information in electrical drawings and specifications.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Not all drawings and specifications are perfect - information may be missing or contradictory.</li>
                 <li>Making assumptions can lead to unsafe installations and costly rework.</li>
                 <li>Always escalate unclear information to supervisors and document all clarifications.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Missing dimensions, conflicting symbols, outdated revisions.</li>
                 <li><strong>Use:</strong> Escalation procedures, formal documentation, team communication.</li>
@@ -239,9 +239,9 @@ const Module5Section1_6 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Recognise signs of incomplete or conflicting information in drawings/specifications.</li>
             <li>Apply methods to verify and resolve discrepancies.</li>
             <li>Understand who to escalate issues to on-site.</li>
@@ -251,26 +251,26 @@ const Module5Section1_6 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* Common Issues */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">1. Common Issues with Documentation</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">1. Common Issues with Documentation</h3>
+            <p className="text-base text-white mb-4">
               Documentation problems occur frequently on electrical projects:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-1">Typical Documentation Problems</p>
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Typical Documentation Problems</p>
                     <div className="grid md:grid-cols-2 gap-4 mb-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Missing information:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Missing information:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                           <li>Missing dimensions or notes</li>
                           <li>Incomplete circuit details</li>
                           <li>Absent cable specifications</li>
@@ -278,8 +278,8 @@ const Module5Section1_6 = () => {
                         </ul>
                       </div>
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Conflicting information:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Conflicting information:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                           <li>Socket marked as single in one place, double in another</li>
                           <li>Different cable types specified in drawing vs schedule</li>
                           <li>Contradictory installation methods</li>
@@ -287,8 +287,8 @@ const Module5Section1_6 = () => {
                         </ul>
                       </div>
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Version control issues:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Version control issues:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                           <li>Outdated revisions being used</li>
                           <li>Superseded drawings still in circulation</li>
                           <li>Missing revision notifications</li>
@@ -296,8 +296,8 @@ const Module5Section1_6 = () => {
                         </ul>
                       </div>
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Site condition mismatches:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Site condition mismatches:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                           <li>Drawings not matching actual site conditions</li>
                           <li>Structural changes not reflected</li>
                           <li>Access issues not considered</li>
@@ -305,7 +305,7 @@ const Module5Section1_6 = () => {
                         </ul>
                       </div>
                     </div>
-                    <div className="text-xs sm:text-sm text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Key principle:</strong> Documentation problems are common - always verify before proceeding
                     </div>
                   </div>
@@ -325,21 +325,21 @@ const Module5Section1_6 = () => {
 
           {/* Risks */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">2. Risks of Proceeding Without Clarification</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">2. Risks of Proceeding Without Clarification</h3>
+            <p className="text-base text-white mb-4">
               The consequences of assuming or guessing can be severe:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-emerald-400 mb-1">Serious Consequences</p>
+                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Serious Consequences</p>
                     <div className="grid md:grid-cols-2 gap-4 mb-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Safety risks:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Safety risks:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                           <li>Unsafe installations</li>
                           <li>Non-compliant work</li>
                           <li>Risk to life and property</li>
@@ -347,8 +347,8 @@ const Module5Section1_6 = () => {
                         </ul>
                       </div>
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Commercial impacts:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Commercial impacts:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                           <li>Failed inspections</li>
                           <li>Costly rework and delays</li>
                           <li>Material waste</li>
@@ -356,8 +356,8 @@ const Module5Section1_6 = () => {
                         </ul>
                       </div>
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Professional consequences:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Professional consequences:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                           <li>Breach of contract obligations</li>
                           <li>Damage to reputation</li>
                           <li>Potential legal action</li>
@@ -365,8 +365,8 @@ const Module5Section1_6 = () => {
                         </ul>
                       </div>
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Project impacts:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Project impacts:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                           <li>Programme delays</li>
                           <li>Budget overruns</li>
                           <li>Client dissatisfaction</li>
@@ -374,7 +374,7 @@ const Module5Section1_6 = () => {
                         </ul>
                       </div>
                     </div>
-                    <div className="text-xs sm:text-sm text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Remember:</strong> The cost of stopping to ask is always less than the cost of getting it wrong
                     </div>
                   </div>
@@ -394,21 +394,21 @@ const Module5Section1_6 = () => {
 
           {/* Resolution Methods */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">3. Methods of Resolution</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">3. Methods of Resolution</h3>
+            <p className="text-base text-white mb-4">
               Systematic approaches to identifying and resolving documentation issues:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">Verification Process</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Verification Process</p>
                     <div className="space-y-3">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Document verification:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Document verification:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                           <li>Always check the revision number of drawings</li>
                           <li>Verify drawing issue dates</li>
                           <li>Cross-reference with drawing register</li>
@@ -416,8 +416,8 @@ const Module5Section1_6 = () => {
                         </ul>
                       </div>
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Consistency checks:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Consistency checks:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                           <li>Compare drawings against specifications for consistency</li>
                           <li>Check different drawing sheets for conflicts</li>
                           <li>Verify equipment schedules match drawings</li>
@@ -425,8 +425,8 @@ const Module5Section1_6 = () => {
                         </ul>
                       </div>
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Pre-work identification:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Pre-work identification:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                           <li>Highlight discrepancies before starting work</li>
                           <li>Mark unclear areas on drawings</li>
                           <li>List all questions and uncertainties</li>
@@ -434,7 +434,7 @@ const Module5Section1_6 = () => {
                         </ul>
                       </div>
                     </div>
-                    <div className="text-xs sm:text-sm text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Best practice:</strong> Spend time at the start checking rather than fixing mistakes later
                     </div>
                   </div>
@@ -484,19 +484,19 @@ const Module5Section1_6 = () => {
         </Card>
 
         {/* Escalation Process */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">4. Escalation Process</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">4. Escalation Process</h2>
           
           <div className="space-y-4">
-            <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+            <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
               <div className="flex items-start gap-3 mb-2">
                 <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                 <div className="flex-1">
                   <p className="font-semibold text-green-600 dark:text-green-400 mb-1">Structured Escalation Path</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="text-base text-foreground mb-2"><strong>Step 1 - Site supervisor:</strong></p>
-                      <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                      <p className="text-base text-white mb-2"><strong>Step 1 - Site supervisor:</strong></p>
+                      <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                         <li>Raise questions with the site supervisor first</li>
                         <li>Explain the specific discrepancy clearly</li>
                         <li>Provide all relevant documentation</li>
@@ -504,8 +504,8 @@ const Module5Section1_6 = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="text-base text-foreground mb-2"><strong>Step 2 - Project manager:</strong></p>
-                      <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                      <p className="text-base text-white mb-2"><strong>Step 2 - Project manager:</strong></p>
+                      <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                         <li>If unresolved, escalate to the project manager</li>
                         <li>Document previous escalation attempts</li>
                         <li>Highlight project impact potential</li>
@@ -513,8 +513,8 @@ const Module5Section1_6 = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="text-base text-foreground mb-2"><strong>Step 3 - Designer/client:</strong></p>
-                      <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                      <p className="text-base text-white mb-2"><strong>Step 3 - Designer/client:</strong></p>
+                      <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                         <li>Final escalation to designer or client</li>
                         <li>Formal documentation required</li>
                         <li>Clear statement of work stoppage if needed</li>
@@ -522,8 +522,8 @@ const Module5Section1_6 = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="text-base text-foreground mb-2"><strong>Documentation requirements:</strong></p>
-                      <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                      <p className="text-base text-white mb-2"><strong>Documentation requirements:</strong></p>
+                      <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                         <li>Record all clarifications formally (emails, site instructions)</li>
                         <li>Keep copies of all correspondence</li>
                         <li>Note dates, times, and people involved</li>
@@ -531,7 +531,7 @@ const Module5Section1_6 = () => {
                       </ul>
                     </div>
                   </div>
-                  <div className="text-xs sm:text-sm text-foreground bg-background/50 p-2 rounded border">
+                  <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
                     <strong>Key rule:</strong> Always get clarifications in writing - verbal instructions can be forgotten or misunderstood
                   </div>
                 </div>
@@ -541,19 +541,19 @@ const Module5Section1_6 = () => {
         </Card>
 
         {/* Best Practice */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">5. Best Practice</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">5. Best Practice</h2>
           
           <div className="space-y-4">
-            <div className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+            <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
               <div className="flex items-start gap-3 mb-2">
                 <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                 <div className="flex-1">
-                  <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-1">Professional Standards</p>
+                  <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Professional Standards</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="text-base text-foreground mb-2"><strong>Golden rules:</strong></p>
-                      <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                      <p className="text-base text-white mb-2"><strong>Golden rules:</strong></p>
+                      <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                         <li>Never guess — stop and ask</li>
                         <li>Document everything in writing</li>
                         <li>Share information with the whole team</li>
@@ -561,8 +561,8 @@ const Module5Section1_6 = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="text-base text-foreground mb-2"><strong>Record keeping:</strong></p>
-                      <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                      <p className="text-base text-white mb-2"><strong>Record keeping:</strong></p>
+                      <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                         <li>Keep records of all discrepancies and how they were resolved</li>
                         <li>Maintain a project query log</li>
                         <li>File all email clarifications</li>
@@ -570,8 +570,8 @@ const Module5Section1_6 = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="text-base text-foreground mb-2"><strong>Team communication:</strong></p>
-                      <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                      <p className="text-base text-white mb-2"><strong>Team communication:</strong></p>
+                      <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                         <li>Share clarifications with the whole team to ensure consistency</li>
                         <li>Update all affected personnel immediately</li>
                         <li>Include clarifications in team briefings</li>
@@ -579,7 +579,7 @@ const Module5Section1_6 = () => {
                       </ul>
                     </div>
                   </div>
-                  <div className="text-xs sm:text-sm text-foreground bg-background/50 p-2 rounded border">
+                  <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
                     <strong>Professional approach:</strong> Thorough documentation and communication prevent repeated mistakes
                   </div>
                 </div>
@@ -589,16 +589,16 @@ const Module5Section1_6 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <details key={index} className="group border border-border/20 rounded-lg">
+              <details key={index} className="group border border-white/10 rounded-lg">
                 <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50 transition-colors">
-                  <span className="font-medium text-foreground">{faq.question}</span>
-                  <HelpCircle className="w-5 h-5 text-muted-foreground group-open:rotate-180 transition-transform" />
+                  <span className="font-medium text-white">{faq.question}</span>
+                  <HelpCircle className="w-5 h-5 text-white group-open:rotate-180 transition-transform" />
                 </summary>
-                <div className="px-4 pb-4 text-muted-foreground border-t border-border/20 pt-4">
+                <div className="px-4 pb-4 text-white border-t border-white/10 pt-4">
                   {faq.answer}
                 </div>
               </details>
@@ -635,21 +635,21 @@ const Module5Section1_6 = () => {
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Recap</h2>
-          <p className="text-base text-foreground mb-4">In this subsection, you learned:</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
+          <p className="text-base text-white mb-4">In this subsection, you learned:</p>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div>
-              <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+              <ul className="list-disc pl-6 space-y-2 text-base text-white">
                 <li>How to spot incomplete or conflicting information</li>
                 <li>Why it's risky to proceed without clarification</li>
                 <li>The correct escalation process for resolving issues</li>
                 <li>Best practice for ensuring safe and compliant work despite unclear documents</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card">
-              <p className="font-medium text-foreground mb-2">Key takeaway:</p>
-              <p className="text-base text-foreground">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent">
+              <p className="font-medium text-white mb-2">Key takeaway:</p>
+              <p className="text-base text-white">
                 By following these steps, you prevent mistakes and keep installations safe, compliant, and efficient. 
                 The time spent clarifying unclear information is always an investment in quality and safety.
               </p>
@@ -663,7 +663,7 @@ const Module5Section1_6 = () => {
         </div>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="../1-5">
               <ArrowLeft className="w-4 h-4 mr-2" />

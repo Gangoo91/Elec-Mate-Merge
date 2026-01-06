@@ -1,7 +1,7 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BookOpen, CheckCircle, FileText, ArrowLeft } from "lucide-react";
-import BackButton from "@/components/common/BackButton";
+import { BookOpen, CheckCircle, FileText } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import RunThroughStepsTab from "@/components/apprentice/bs7671/RunThroughStepsTab";
 import DocumentationTab from "@/components/apprentice/bs7671/DocumentationTab";
@@ -15,7 +15,7 @@ const OnJobBS7671RunThrough = () => {
         <p className="text-muted-foreground text-center max-w-2xl mb-4">
           Complete step-by-step inspection and testing procedures, guides, and documentation requirements
         </p>
-        <BackButton customUrl="/apprentice" label="Back to Apprentice Hub" />
+        <SmartBackButton />
       </div>
 
       <Tabs defaultValue="steps" className="w-full">

@@ -121,11 +121,11 @@ const Module2Section6_6: React.FC = () => {
   ] as const;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2.6
@@ -138,29 +138,29 @@ const Module2Section6_6: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Receipt className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Receipt className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">Section 2.6.6</Badge>
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">Section 2.6.6</Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">Real‑Life Applications (Energy Bills, Load Monitoring, Smart Tech)</h1>
-          <p className="text-muted-foreground">Turn the ideas into action: understand your bill, measure what matters and use smart control to reduce costs while staying safe.</p>
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">Real‑Life Applications (Energy Bills, Load Monitoring, Smart Tech)</h1>
+          <p className="text-white">Turn the ideas into action: understand your bill, measure what matters and use smart control to reduce costs while staying safe.</p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Your bill charges per kWh used plus a daily standing charge.</li>
                 <li>Monitoring shows where energy goes so you can target savings.</li>
                 <li>Smart control shifts or reduces run‑time safely.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> High‑duty heaters, always‑on IT kit, refrigeration cycling too often.</li>
                 <li><strong>Use:</strong> Plug monitors, sub‑meters, smart sockets and app dashboards.</li>
@@ -171,9 +171,9 @@ const Module2Section6_6: React.FC = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Read key items on a UK electricity bill and relate them to usage.</li>
             <li>Estimate running cost from appliance power and run‑time in plain English.</li>
             <li>Select safe, suitable monitoring methods for common loads.</li>
@@ -182,13 +182,13 @@ const Module2Section6_6: React.FC = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Understanding the bill */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2 flex items-center gap-2"><BarChart3 className="w-5 h-5" /> Understanding your bill (plain English)</h3>
-            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-2 flex items-center gap-2"><BarChart3 className="w-5 h-5" /> Understanding your bill (plain English)</h3>
+            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
               <li><strong>Unit rate (p/kWh):</strong> what you pay for each kilowatt‑hour used.</li>
               <li><strong>Standing charge:</strong> a daily fee added regardless of usage.</li>
               <li><strong>Time‑of‑use tariffs:</strong> cheaper off‑peak, pricier peak. Shift flexible loads where safe.</li>
@@ -207,8 +207,8 @@ const Module2Section6_6: React.FC = () => {
 
           {/* Monitoring and verification */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2 flex items-center gap-2"><Activity className="w-5 h-5" /> Monitoring loads</h3>
-            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Activity className="w-5 h-5" /> Monitoring loads</h3>
+            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
               <li><strong>Plug‑in monitors:</strong> Great for portable appliances. Do not exceed the device rating and avoid daisy‑chains.</li>
               <li><strong>Smart meters and IHD:</strong> Whole‑home view; useful trends day‑to‑day.</li>
               <li><strong>Sub‑metering/CT clamps:</strong> For circuits or larger loads. Install per manufacturer guidance and BS 7671.</li>
@@ -220,8 +220,8 @@ const Module2Section6_6: React.FC = () => {
 
           {/* Smart control */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2 flex items-center gap-2"><Smartphone className="w-5 h-5" /> Smart tech and automations</h3>
-            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Smartphone className="w-5 h-5" /> Smart tech and automations</h3>
+            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
               <li>Scheduling: water heating, EV charging, signage and HVAC warm‑up where appropriate.</li>
               <li>Occupancy: PIR lighting and setback temperatures in low‑use spaces.</li>
               <li>Safety and ratings first: smart devices must not replace protective devices.</li>
@@ -233,17 +233,17 @@ const Module2Section6_6: React.FC = () => {
 
           {/* Case studies */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2 flex items-center gap-2"><PlugZap className="w-5 h-5" /> Practical examples</h3>
-            <ul className="space-y-4 text-xs sm:text-sm text-foreground">
-              <li className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
+            <h3 className="font-medium text-white mb-2 flex items-center gap-2"><PlugZap className="w-5 h-5" /> Practical examples</h3>
+            <ul className="space-y-4 text-xs sm:text-sm text-white">
+              <li className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
                 <p className="font-medium">1) Household energy audit</p>
                 <p>Measure baseload overnight, then switch off/replace always‑on items such as old routers or media boxes. Use smart sockets on office gear to power down after hours.</p>
               </li>
-              <li className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
+              <li className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
                 <p className="font-medium">2) Café refrigeration</p>
                 <p>Monitor fridges/freezers for cycling and door‑left‑open alarms. Maintain seals and clear ventilation. Schedule signage lighting separately to reduce peak use.</p>
               </li>
-              <li className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
+              <li className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
                 <p className="font-medium">3) EV charging</p>
                 <p>Use the EVSE/app to schedule off‑peak charging. Confirm circuit capacity, RCD type and earthing arrangement meet BS 7671 before use.</p>
               </li>
@@ -264,26 +264,26 @@ const Module2Section6_6: React.FC = () => {
 
           {/* BS 7671 context */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2 flex items-center gap-2"><Percent className="w-5 h-5" /> BS 7671 context and good practice</h3>
-            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Percent className="w-5 h-5" /> BS 7671 context and good practice</h3>
+            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
               <li>When adding monitoring or smart control, follow manufacturer instructions and maintain disconnection times and protective coordination.</li>
               <li>Consider grouping, ambient temperature and enclosure space for any extra devices installed.</li>
               <li>Keep records of settings, schedules and any measured savings as part of the job documentation.</li>
             </ul>
-            <div className="flex items-start gap-3 bg-background/20 border-l-4 border-emerald-500 p-4 rounded mt-4" role="alert">
-              <AlertTriangle className="w-5 h-5 text-emerald-400 mt-0.5" />
-              <p className="text-foreground text-sm">Isolate, lock‑off and prove dead. Never bypass protective devices to attach monitors or controls.</p>
+            <div className="flex items-start gap-3 bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded mt-4" role="alert">
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5" />
+              <p className="text-white text-sm">Isolate, lock‑off and prove dead. Never bypass protective devices to attach monitors or controls.</p>
             </div>
           </section>
         </Card>
 
         {/* Extra content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">More real‑life tips and methods</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">More real‑life tips and methods</h2>
 
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2 flex items-center gap-2"><BarChart3 className="w-5 h-5" /> Bill deep‑dive: tariff notes</h3>
-            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-2 flex items-center gap-2"><BarChart3 className="w-5 h-5" /> Bill deep‑dive: tariff notes</h3>
+            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
               <li>Time‑of‑use tariffs favour shifting flexible loads (EV, water heating). Avoid moving safety‑critical loads.</li>
               <li>Unit rate applies to kWh; standing charge applies per day. Budget both.</li>
               <li>Small businesses may see capacity/demand charges; check the contract and avoid avoidable peaks.</li>
@@ -293,8 +293,8 @@ const Module2Section6_6: React.FC = () => {
           <Separator className="my-6" />
 
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2 flex items-center gap-2"><Activity className="w-5 h-5" /> Monitoring checklist</h3>
-            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Activity className="w-5 h-5" /> Monitoring checklist</h3>
+            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
               <li>Choose a method: plug‑in monitor (portable loads), sub‑meter/CT (circuits), smart meter data (whole site).</li>
               <li>Confirm ratings, install per manufacturer, and keep ventilation clear.</li>
               <li>Log at least a week before and after changes; compare similar conditions.</li>
@@ -314,8 +314,8 @@ const Module2Section6_6: React.FC = () => {
           <Separator className="my-6" />
 
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2 flex items-center gap-2"><Smartphone className="w-5 h-5" /> Smart tech pitfalls and fixes</h3>
-            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Smartphone className="w-5 h-5" /> Smart tech pitfalls and fixes</h3>
+            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
               <li>Underrated adaptors → use appropriately rated devices and avoid daisy‑chains.</li>
               <li>Schedules forgotten → label and review monthly; keep a simple checklist.</li>
               <li>Cloud outage → ensure local fallback or manual control is available.</li>
@@ -326,11 +326,11 @@ const Module2Section6_6: React.FC = () => {
 
           {/* Additional comprehensive content */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2">Advanced monitoring and control techniques</h3>
+            <h3 className="font-medium text-white mb-2">Advanced monitoring and control techniques</h3>
             
             <div className="space-y-4">
               <div className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border border-border/30">
-                <h4 className="font-medium mb-2 text-blue-700 dark:text-emerald-400">Data analysis and interpretation</h4>
+                <h4 className="font-medium mb-2 text-blue-700 dark:text-elec-yellow">Data analysis and interpretation</h4>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
                   <li><strong>Baseload identification:</strong> Measure overnight consumption to find always-on loads</li>
                   <li><strong>Peak demand analysis:</strong> Identify when highest power is used and potential for load shifting</li>
@@ -339,8 +339,8 @@ const Module2Section6_6: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border border-emerald-500/30">
-                <h4 className="font-medium mb-2 text-emerald-700 dark:text-emerald-400">Smart home integration</h4>
+              <div className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border border-elec-yellow/30">
+                <h4 className="font-medium mb-2 text-emerald-700 dark:text-elec-yellow">Smart home integration</h4>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
                   <li><strong>Home automation platforms:</strong> Integrate multiple smart devices for coordinated control</li>
                   <li><strong>Voice control:</strong> Use assistants for manual override of automated systems</li>
@@ -364,7 +364,7 @@ const Module2Section6_6: React.FC = () => {
           <Separator className="my-6" />
 
           <section className="mb-2">
-            <h3 className="font-medium text-foreground mb-2">Troubleshooting common monitoring issues</h3>
+            <h3 className="font-medium text-white mb-2">Troubleshooting common monitoring issues</h3>
             
             <div className="rounded-lg p-4 bg-gradient-to-r from-red-500/10 to-orange-500/10 border border-border/30">
               <div className="grid md:grid-cols-2 gap-4 text-sm">
@@ -393,16 +393,16 @@ const Module2Section6_6: React.FC = () => {
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-8 p-6 bg-gradient-to-br from-emerald-500/10 to-orange-500/10 border-2 border-emerald-500/30">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-            <Receipt className="w-5 h-5 text-emerald-400" />
+        <Card className="mb-8 p-6 bg-gradient-to-br from-emerald-500/10 to-orange-500/10 border-2 border-elec-yellow/30">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <Receipt className="w-5 h-5 text-elec-yellow" />
             Energy Monitoring & Smart Tech - Pocket Guide
           </h2>
           
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
             <div className="space-y-4">
-              <div className="bg-background/50 rounded-lg p-3 border border-border/20">
-                <h4 className="font-semibold mb-2 text-emerald-400">Bill Basics</h4>
+              <div className="bg-[#121212]/50 rounded-lg p-3 border border-white/10">
+                <h4 className="font-semibold mb-2 text-elec-yellow">Bill Basics</h4>
                 <ul className="space-y-1 text-xs">
                   <li>• Unit rate (p/kWh) × kWh used = energy cost</li>
                   <li>• Standing charge applies daily regardless of use</li>
@@ -412,7 +412,7 @@ const Module2Section6_6: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="bg-background/50 rounded-lg p-3 border border-border/20">
+              <div className="bg-[#121212]/50 rounded-lg p-3 border border-white/10">
                 <h4 className="font-semibold mb-2 text-emerald-600">Monitoring Methods</h4>
                 <ul className="space-y-1 text-xs">
                   <li>• Plug-in monitors: portable appliances only</li>
@@ -425,8 +425,8 @@ const Module2Section6_6: React.FC = () => {
             </div>
 
             <div className="space-y-4">
-              <div className="bg-background/50 rounded-lg p-3 border border-border/20">
-                <h4 className="font-semibold mb-2 text-emerald-400">Smart Control</h4>
+              <div className="bg-[#121212]/50 rounded-lg p-3 border border-white/10">
+                <h4 className="font-semibold mb-2 text-elec-yellow">Smart Control</h4>
                 <ul className="space-y-1 text-xs">
                   <li>• Schedule flexible loads for off-peak times</li>
                   <li>• Use occupancy sensors for lighting control</li>
@@ -436,7 +436,7 @@ const Module2Section6_6: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="bg-background/50 rounded-lg p-3 border border-border/20">
+              <div className="bg-[#121212]/50 rounded-lg p-3 border border-white/10">
                 <h4 className="font-semibold mb-2 text-red-600">Safety Checklist</h4>
                 <ul className="space-y-1 text-xs">
                   <li>• Check ratings before installation</li>
@@ -451,21 +451,21 @@ const Module2Section6_6: React.FC = () => {
         </Card>
 
         {/* FAQ */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">FAQs</h2>
-          <ul className="space-y-3 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
+          <ul className="space-y-3 text-xs sm:text-sm text-white">
             {faqs.map((f, i) => (
-              <li key={i} className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
+              <li key={i} className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
                 <p className="font-medium mb-1">{f.q}</p>
-                <p className="text-muted-foreground">{f.a}</p>
+                <p className="text-white">{f.a}</p>
               </li>
             ))}
           </ul>
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-16 p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quick check quiz</h2>
+        <Card className="mb-16 p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick check quiz</h2>
           <Quiz questions={quizQuestions as any} title="Real‑life applications" />
         </Card>
 

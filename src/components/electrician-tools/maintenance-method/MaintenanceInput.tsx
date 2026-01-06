@@ -1,16 +1,20 @@
 import { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { Zap, Wrench, Info } from "lucide-react";
+import { Label } from "@/components/ui/label";
+import { Zap, Wrench, Info, ChevronDown, Lightbulb } from "lucide-react";
 import { MaintenanceEquipmentDetails } from "@/types/maintenance-method";
 import { InlineMaintenanceTypeSelector } from "./InlineMaintenanceTypeSelector";
-import { CollapsibleFormSection } from "../installation-specialist/CollapsibleFormSection";
 import { MaintenanceTemplateGrid } from "./MaintenanceTemplateGrid";
 import { MaintenanceEquipmentDetailsForm } from "./MaintenanceEquipmentDetails";
-import { FormSection } from "../installation-specialist/FormSection";
 import { MaintenanceTemplate } from "@/lib/maintenance-templates";
 import { cn } from "@/lib/utils";
+import { StickySubmitButton } from "@/components/agents/shared/StickySubmitButton";
+import { AGENT_CONFIG } from "@/components/agents/shared/AgentConfig";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 interface MaintenanceInputProps {
   query: string;
@@ -32,8 +36,10 @@ export const MaintenanceInput = ({
   isProcessing
 }: MaintenanceInputProps) => {
   const [hasEquipmentDetails, setHasEquipmentDetails] = useState(false);
+  const [showTemplates, setShowTemplates] = useState(false);
+  const [showEquipmentDetails, setShowEquipmentDetails] = useState(false);
+  const config = AGENT_CONFIG['maintenance'];
   const charCount = query.length;
-  const charProgress = (charCount / MAX_CHARS) * 100;
 
   const handleTemplateSelect = (template: MaintenanceTemplate) => {
     onQueryChange(template.query);
@@ -47,117 +53,137 @@ export const MaintenanceInput = ({
       lastInspectionDate: undefined,
     });
     setHasEquipmentDetails(true);
+    setShowTemplates(false);
+  };
+
+  // Character count styling
+  const getCharCountClass = () => {
+    if (charCount < 50) return 'text-white/40';
+    if (charCount < 300) return 'text-emerald-400';
+    return 'text-amber-400';
   };
 
   const canGenerate = query.trim().length >= 50 && equipmentDetails.equipmentType && equipmentDetails.location;
 
   return (
-    <div className="space-y-0">
+    <div className="space-y-4 pb-24 sm:pb-6">
       {/* Main Query Input */}
-      <FormSection>
+      <div className="agent-card p-4 sm:p-6" style={{ borderColor: `${config.gradientFrom}15` }}>
         <div className="space-y-3">
-          <div className="flex items-center gap-2 mb-2">
-            <Wrench className="h-5 w-5 text-primary" />
-            <h2 className="text-xl sm:text-2xl font-bold">What equipment needs maintenance?</h2>
+          <div className="flex items-center justify-between">
+            <Label className="text-base sm:text-lg font-semibold flex items-center gap-2">
+              <div
+                className="p-1.5 rounded-lg"
+                style={{ background: `${config.gradientFrom}20` }}
+              >
+                <Wrench className="h-4 w-4" style={{ color: config.gradientFrom }} />
+              </div>
+              Equipment & Requirements
+            </Label>
+            <span className={cn(
+              "text-xs font-medium px-2 py-1 rounded-lg transition-colors",
+              getCharCountClass(),
+              charCount >= 50 && "bg-white/5"
+            )}>
+              {charCount} {charCount >= 50 && '✓'}
+            </span>
           </div>
-          
-          <p className="text-sm text-foreground mb-3">
-            Describe the equipment, its condition, any known issues, and the type of maintenance required. 
-            Be specific to get detailed, step-by-step maintenance instructions.
-          </p>
 
           <Textarea
             value={query}
             onChange={(e) => onQueryChange(e.target.value)}
-            placeholder="Example: Three-phase distribution board serving commercial kitchen equipment, 15 years old with visible signs of corrosion on busbar connections. Requires comprehensive inspection and testing including thermal imaging, torque checking, and earth fault loop impedance tests..."
-            className="min-h-[140px] sm:min-h-[160px] resize-none text-base"
-            rows={6}
+            placeholder="Describe the equipment, its condition, and the type of maintenance required..."
+            className="agent-input"
+            rows={5}
+            autoComplete="off"
+            spellCheck={true}
+            maxLength={MAX_CHARS}
             disabled={isProcessing}
           />
 
-            <div className="space-y-1.5">
-              <div className="flex justify-between text-xs text-foreground">
-                <span>{charCount} / {MAX_CHARS} characters</span>
-                <span className={charCount < 50 ? "text-amber-400" : "text-green-400"}>
-                  {charCount < 50 ? `${50 - charCount} more needed` : "Ready"}
-                </span>
-              </div>
-              <div className="h-1 bg-muted rounded-full overflow-hidden">
-                <div 
-                  className={cn(
-                    "h-full transition-all duration-300",
-                    charProgress > 100 
-                      ? "bg-destructive" 
-                      : "bg-elec-yellow"
-                  )}
-                  style={{ width: `${Math.min(charProgress, 100)}%` }}
-                />
-              </div>
-            </div>
+          <p className="text-xs sm:text-sm text-white/50">
+            50+ characters required for detailed maintenance instructions
+          </p>
         </div>
-      </FormSection>
+      </div>
 
       {/* Installation Type Selector */}
-      <FormSection>
-        <InlineMaintenanceTypeSelector
-          selectedType={equipmentDetails.installationType}
-          onChange={(type) => onEquipmentDetailsChange({ ...equipmentDetails, installationType: type })}
-          disabled={isProcessing}
-        />
-      </FormSection>
+      <div className="agent-card p-4 sm:p-6" style={{ borderColor: `${config.gradientFrom}15` }}>
+        <div className="space-y-3">
+          <Label className="text-base sm:text-lg font-semibold">Installation Type</Label>
+          <InlineMaintenanceTypeSelector
+            selectedType={equipmentDetails.installationType}
+            onChange={(type) => onEquipmentDetailsChange({ ...equipmentDetails, installationType: type })}
+            disabled={isProcessing}
+          />
+        </div>
+      </div>
 
       {/* Quick Start Templates */}
-      <CollapsibleFormSection
-        title="Quick Start Templates"
-        subtitle="Select a pre-configured maintenance scenario"
-        icon={<Zap className="h-5 w-5 text-amber-400" />}
-        badge="optional"
-        defaultOpen={false}
-      >
-        <MaintenanceTemplateGrid
-          selectedCategory={equipmentDetails.installationType}
-          onSelectTemplate={handleTemplateSelect}
-        />
-      </CollapsibleFormSection>
+      <Collapsible open={showTemplates} onOpenChange={setShowTemplates}>
+        <div className="agent-card overflow-hidden" style={{ borderColor: `${config.gradientFrom}15` }}>
+          <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+            <div className="flex items-center gap-3">
+              <Lightbulb className="h-4 w-4 text-white/60" />
+              <span className="text-sm sm:text-base font-medium">Quick Start Templates</span>
+              <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-white/10 text-white/50">
+                Templates
+              </span>
+            </div>
+            <ChevronDown className={cn(
+              "h-4 w-4 text-white/40 transition-transform duration-200",
+              showTemplates && "rotate-180"
+            )} />
+          </CollapsibleTrigger>
+
+          <CollapsibleContent className="p-4 pt-0">
+            <MaintenanceTemplateGrid
+              selectedCategory={equipmentDetails.installationType}
+              onSelectTemplate={handleTemplateSelect}
+            />
+          </CollapsibleContent>
+        </div>
+      </Collapsible>
 
       {/* Equipment Details */}
-      <CollapsibleFormSection
-        title="Equipment Details"
-        subtitle="Additional equipment information (optional)"
-        icon={<Info className="h-5 w-5 text-blue-400" />}
-        badge={hasEquipmentDetails ? "configured" : "optional"}
-        defaultOpen={hasEquipmentDetails}
-      >
-        <MaintenanceEquipmentDetailsForm
-          equipmentDetails={equipmentDetails}
-          onChange={onEquipmentDetailsChange}
-        />
-      </CollapsibleFormSection>
+      <Collapsible open={showEquipmentDetails} onOpenChange={setShowEquipmentDetails}>
+        <div className="agent-card overflow-hidden" style={{ borderColor: `${config.gradientFrom}15` }}>
+          <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+            <div className="flex items-center gap-3">
+              <Info className="h-4 w-4 text-white/60" />
+              <span className="text-sm sm:text-base font-medium">Equipment Details</span>
+              <span className={cn(
+                "text-[10px] sm:text-xs px-2 py-0.5 rounded-full",
+                hasEquipmentDetails ? "bg-emerald-500/20 text-emerald-400" : "bg-white/10 text-white/50"
+              )}>
+                {hasEquipmentDetails ? "✓ Configured" : "Optional"}
+              </span>
+            </div>
+            <ChevronDown className={cn(
+              "h-4 w-4 text-white/40 transition-transform duration-200",
+              showEquipmentDetails && "rotate-180"
+            )} />
+          </CollapsibleTrigger>
 
-      {/* Generate Button */}
-      <div className="pt-4 pb-2">
-        <Button
-          onClick={onGenerate}
-          disabled={!canGenerate || isProcessing}
-          className="w-full h-12 text-base font-semibold bg-gradient-to-r from-elec-yellow via-elec-yellow to-elec-yellow/90 text-black hover:scale-[1.02] active:scale-95 transition-all shadow-lg"
-          size="lg"
-        >
-          <Wrench className="mr-2 h-5 w-5" />
-          {isProcessing ? "Generating..." : "Generate Maintenance Instructions"}
-        </Button>
+          <CollapsibleContent className="p-4 pt-0">
+            <p className="text-xs text-white/50 pb-2">
+              Additional equipment information for detailed instructions
+            </p>
+            <MaintenanceEquipmentDetailsForm
+              equipmentDetails={equipmentDetails}
+              onChange={onEquipmentDetailsChange}
+            />
+          </CollapsibleContent>
+        </div>
+      </Collapsible>
 
-        {!canGenerate && (
-          <p className="text-xs text-foreground text-center mt-3">
-            {query.length < 50 && "Add at least 50 characters describing the maintenance work required. "}
-            {(!equipmentDetails.equipmentType || !equipmentDetails.location) && "Provide equipment type and location."}
-          </p>
-        )}
-
-        <p className="text-xs text-foreground text-center mt-3">
-          This will generate 15+ detailed maintenance steps with safety procedures,
-          tools required, inspection checkpoints, and BS 7671 references
-        </p>
-      </div>
+      {/* Sticky Generate Button */}
+      <StickySubmitButton
+        agentType="maintenance"
+        onClick={onGenerate}
+        isDisabled={!canGenerate}
+        isLoading={isProcessing}
+      />
     </div>
   );
 };

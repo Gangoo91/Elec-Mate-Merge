@@ -202,11 +202,11 @@ const Module4Section2_2 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2
@@ -220,35 +220,35 @@ const Module4Section2_2 = () => {
         {/* Header (matches Module 4.2.1 style) */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <FileText className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <FileText className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 4.2.2
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Setting Out for Conduit, Trunking, and Accessories
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Master precise setting out techniques to ensure aligned, level, and compliant electrical installations.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Set out from consistent reference points for accuracy.</li>
                 <li>Use correct spacing: conduit 1.2-1.5m, trunking 0.9-1.2m.</li>
                 <li>Check for obstructions and mark centre lines for alignment.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Reference points, fixing positions, potential obstructions.</li>
                 <li><strong>Use:</strong> Levels for alignment, chalk lines for marking, correct spacing.</li>
@@ -259,9 +259,9 @@ const Module4Section2_2 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Explain the importance of accurate setting out in electrical installations.</li>
             <li>Mark out positions for conduit, trunking, and accessories using correct tools.</li>
             <li>Apply spacing and alignment standards as per BS 7671 and site requirements.</li>
@@ -271,25 +271,25 @@ const Module4Section2_2 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Preparation Before Setting Out */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Preparation Before Setting Out</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Preparation Before Setting Out</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Thorough preparation prevents errors and ensures efficient, accurate installation:
             </p>
             
             <div className="space-y-4">
               {preparationSteps.map((step, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+                <div key={i} className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                   <div className="flex items-start gap-3 mb-2">
-                    <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
+                    <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">{step.step}</p>
-                      <p className="text-xs sm:text-sm text-foreground mb-2">{step.description}</p>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                      <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">{step.step}</p>
+                      <p className="text-xs sm:text-sm text-white mb-2">{step.description}</p>
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Importance:</strong> {step.importance} - Tools: {step.tools.join(', ')}
                       </div>
                     </div>
@@ -301,20 +301,20 @@ const Module4Section2_2 = () => {
 
           {/* Tools for Setting Out */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Tools for Setting Out</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Tools for Setting Out</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Selecting and using the correct tools ensures accurate and efficient setting out:
             </p>
             
             <div className="space-y-4">
               {settingOutTools.map((tool, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+                <div key={i} className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
                       <p className="font-semibold text-green-600 dark:text-green-400 mb-1">{tool.name}</p>
-                      <p className="text-xs sm:text-sm text-foreground mb-2">{tool.purpose}</p>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2">{tool.purpose}</p>
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Applications:</strong> {tool.applications.join(', ')} - {tool.bestPractice}
                       </div>
                     </div>
@@ -335,22 +335,22 @@ const Module4Section2_2 = () => {
 
           {/* Setting Out Containment Runs */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <MapPin className="w-5 h-5" /> Setting Out Containment Runs
             </h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <p className="text-xs sm:text-sm text-white mb-4">
               Systematic approach to marking containment positions for professional results:
             </p>
             
             <div className="space-y-4">
               {spacingRequirements.map((req, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+                <div key={i} className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-1">{req.type}</p>
-                      <p className="text-xs sm:text-sm text-foreground mb-2">Spacing: <strong>{req.spacing}</strong> - {req.reason}</p>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                      <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">{req.type}</p>
+                      <p className="text-xs sm:text-sm text-white mb-2">Spacing: <strong>{req.spacing}</strong> - {req.reason}</p>
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Considerations:</strong> {req.considerations.join(', ')}
                       </div>
                     </div>
@@ -359,9 +359,9 @@ const Module4Section2_2 = () => {
               ))}
             </div>
 
-            <div className="mt-4 p-4 bg-card border border-border/30 rounded-lg">
-              <p className="text-sm font-medium text-foreground mb-1">Setting Out Process</p>
-              <p className="text-xs text-foreground">
+            <div className="mt-4 p-4 bg-transparent border border-border/30 rounded-lg">
+              <p className="text-sm font-medium text-white mb-1">Setting Out Process</p>
+              <p className="text-xs text-white">
                 Start from known reference points, mark centre lines for symmetry, use consistent spacing between fixing points, 
                 and allow for bends, junctions, and expansion where necessary.
               </p>
@@ -379,20 +379,20 @@ const Module4Section2_2 = () => {
 
           {/* Avoiding Common Errors */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Avoiding Common Errors</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Avoiding Common Errors</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Learn from typical mistakes to ensure accurate and efficient setting out:
             </p>
             
             <div className="space-y-4">
               {commonErrors.map((error, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-orange-500 bg-card">
+                <div key={i} className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">!</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-orange-600 dark:text-emerald-400 mb-1">{error.error}</p>
-                      <p className="text-xs sm:text-sm text-foreground mb-2">Consequence: {error.consequence}</p>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                      <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">{error.error}</p>
+                      <p className="text-xs sm:text-sm text-white mb-2">Consequence: {error.consequence}</p>
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Prevention:</strong> {error.prevention}
                       </div>
                     </div>
@@ -413,31 +413,31 @@ const Module4Section2_2 = () => {
 
           {/* Regulatory Requirements */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5" /> Regulatory Requirements
             </h3>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-1">BS 7671 Requirements</p>
-                    <p className="text-xs sm:text-sm text-foreground mb-2">Containment must be installed in safe zones with correct support spacing.</p>
-                    <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">BS 7671 Requirements</p>
+                    <p className="text-xs sm:text-sm text-white mb-2">Containment must be installed in safe zones with correct support spacing.</p>
+                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Compliance areas:</strong> Safe zones, support spacing, cable segregation, and protection methods.
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-1">Building Regulations Part M</p>
-                    <p className="text-xs sm:text-sm text-foreground mb-2">May dictate accessory mounting heights for accessibility.</p>
-                    <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Building Regulations Part M</p>
+                    <p className="text-xs sm:text-sm text-white mb-2">May dictate accessory mounting heights for accessibility.</p>
+                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Considerations:</strong> Switch heights, socket positions, accessibility requirements, and ergonomic guidelines.
                     </div>
                   </div>
@@ -466,30 +466,30 @@ const Module4Section2_2 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-8 p-6 bg-card border-border/20">
-          <h3 className="font-semibold text-foreground mb-4">Frequently Asked Questions</h3>
+        <Card className="mb-8 p-6 bg-transparent border-white/20">
+          <h3 className="font-semibold text-white mb-4">Frequently Asked Questions</h3>
           <div className="space-y-4">
             <div>
-              <p className="font-medium text-foreground text-sm mb-1">
+              <p className="font-medium text-white text-sm mb-1">
                 Q: Can I set out directly from the floor plan dimensions?
               </p>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-white text-sm">
                 A: Only if you've verified the building matches the plan — actual site measurements may differ.
               </p>
             </div>
             <div>
-              <p className="font-medium text-foreground text-sm mb-1">
+              <p className="font-medium text-white text-sm mb-1">
                 Q: Is a chalk line better than a laser line?
               </p>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-white text-sm">
                 A: Chalk lines are quicker for marking physical reference lines, while laser lines are better for temporary guides without marking surfaces.
               </p>
             </div>
             <div>
-              <p className="font-medium text-foreground text-sm mb-1">
+              <p className="font-medium text-white text-sm mb-1">
                 Q: Should I mark every fixing point?
               </p>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-white text-sm">
                 A: Yes, especially in complex or high-visibility installations, to maintain accuracy.
               </p>
             </div>
@@ -497,12 +497,12 @@ const Module4Section2_2 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
             <TrendingUp className="w-5 h-5" />
             Summary
           </h3>
-          <p className="text-muted-foreground text-sm">
+          <p className="text-white text-sm">
             Accurate setting out ensures neat, aligned, and compliant installations. By using the correct tools, 
             following plans, and considering site conditions, you can avoid costly mistakes and deliver a professional finish. 
             Remember to work from consistent reference points and always verify site conditions before marking.
@@ -513,7 +513,7 @@ const Module4Section2_2 = () => {
         <Quiz questions={quizQuestions} title="Test Your Knowledge: Setting Out for Conduit, Trunking, and Accessories" />
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="../2-1">
               <ArrowLeft className="w-4 h-4 mr-2" />

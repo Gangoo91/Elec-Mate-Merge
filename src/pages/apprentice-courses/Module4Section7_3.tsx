@@ -178,11 +178,11 @@ const Module4Section7_3 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 7
@@ -196,35 +196,35 @@ const Module4Section7_3 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <HardHat className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <HardHat className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 4.7.3
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             PPE for Cutting, Bending, and Fixing Work
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Master proper PPE selection, use, and maintenance to protect against workplace hazards in electrical installation.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>PPE is the last line of defence against workplace hazards during cutting, bending, and fixing operations.</li>
                 <li>Legal requirements under PPE at Work Regulations 1992 mandate free provision and proper use of protective equipment.</li>
                 <li>Correct PPE selection, daily inspection, and proper maintenance are essential for effective protection.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Missing eye protection, damaged gloves, no hearing protection with power tools, worn-out safety boots.</li>
                 <li><strong>Use:</strong> Safety glasses, cut-resistant gloves, ear defenders, steel-toe boots, dust masks when needed.</li>
@@ -235,9 +235,9 @@ const Module4Section7_3 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Identify the correct PPE for different installation tasks.</li>
             <li>Understand how PPE reduces risk during cutting, bending, and fixing.</li>
             <li>Apply safe working practices alongside PPE use.</li>
@@ -247,23 +247,23 @@ const Module4Section7_3 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Legal Requirements */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">1. Legal Requirements</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">1. Legal Requirements</h3>
+            <p className="text-base text-white mb-4">
               PPE regulations establish clear legal obligations for both employers and employees to ensure adequate protection against workplace hazards:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">PPE at Work Regulations 1992</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">PPE at Work Regulations 1992</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Employer obligations</strong> - provide PPE free of charge when risks cannot be controlled by other means</li>
                       <li><strong>Suitability requirements</strong> - PPE must be appropriate for the risks and fit properly</li>
                       <li><strong>Maintenance duties</strong> - ensure PPE is maintained in good working order and hygienically clean</li>
@@ -272,16 +272,16 @@ const Module4Section7_3 = () => {
                       <li><strong>Compatibility</strong> - ensure different items of PPE work together without reducing protection</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>CE marking requirements:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>CE marking requirements:</strong></p>
+                      <p className="text-xs text-white">
                         All PPE must carry CE marking and comply with relevant European standards (EN standards). This ensures the equipment has been tested and meets minimum safety requirements for protection against specific hazards.
                       </p>
                     </div>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Risk assessment integration:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Risk assessment integration:</strong></p>
+                      <p className="text-xs text-white">
                         PPE selection must be based on proper risk assessment. The hierarchy of control means PPE is used when risks cannot be eliminated, reduced, or controlled by other means such as engineering controls or safe systems of work.
                       </p>
                     </div>
@@ -302,18 +302,18 @@ const Module4Section7_3 = () => {
 
           {/* Typical PPE for Cutting and Bending Work */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">2. Typical PPE for Cutting and Bending Work</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">2. Typical PPE for Cutting and Bending Work</h3>
+            <p className="text-base text-white mb-4">
               Different installation tasks require specific PPE combinations to protect against the unique hazards of each operation:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
                     <p className="font-semibold text-green-600 dark:text-green-400 mb-1">Essential PPE for Installation Tasks</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Safety glasses/goggles</strong> - protect eyes from sparks, dust, and flying fragments (EN 166 standard)</li>
                       <li><strong>Cut-resistant gloves</strong> - protect against sharp edges, hot surfaces, and handling hazards (EN 388 Level 3-5)</li>
                       <li><strong>Hearing protection</strong> - ear defenders or plugs when using noisy cutting tools (EN 352 standard)</li>
@@ -322,9 +322,9 @@ const Module4Section7_3 = () => {
                       <li><strong>High-visibility clothing</strong> - essential when working in shared construction areas or near traffic</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Task-specific PPE combinations:</strong></p>
-                      <ul className="text-xs text-muted-foreground list-disc ml-4 space-y-1">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Task-specific PPE combinations:</strong></p>
+                      <ul className="text-xs text-white list-disc ml-4 space-y-1">
                         <li><strong>Cutting conduit/trunking:</strong> Safety glasses, cut-resistant gloves, hearing protection</li>
                         <li><strong>Bending cable tray:</strong> Cut-resistant gloves, safety footwear, back support if heavy</li>
                         <li><strong>Drilling fixings:</strong> Safety glasses, dust mask, hearing protection, steel-toe boots</li>
@@ -333,9 +333,9 @@ const Module4Section7_3 = () => {
                       </ul>
                     </div>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>PPE standards and ratings:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>PPE standards and ratings:</strong></p>
+                      <p className="text-xs text-white">
                         Understanding PPE ratings helps select appropriate protection. EN 388 mechanical hazards (cut, puncture, tear, abrasion), EN 166 eye protection (impact, chemical, optical), EN 352 hearing protection (noise reduction ratings). Always match PPE rating to hazard severity.
                       </p>
                     </div>
@@ -356,18 +356,18 @@ const Module4Section7_3 = () => {
 
           {/* Hazards Without PPE */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">3. Hazards Without PPE</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">3. Hazards Without PPE</h3>
+            <p className="text-base text-white mb-4">
               Understanding the serious consequences of inadequate PPE helps emphasise the importance of proper protection in electrical installation work:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-1">Serious Injury Risks Without Proper PPE</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Serious Injury Risks Without Proper PPE</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Eye injuries from metal swarf</strong> - permanent vision damage or blindness from cutting and grinding operations</li>
                       <li><strong>Severe cuts and lacerations</strong> - from sharp conduit edges, cable tray, and cutting tools</li>
                       <li><strong>Noise-induced hearing loss</strong> - irreversible damage from repeated exposure to power tools without protection</li>
@@ -376,16 +376,16 @@ const Module4Section7_3 = () => {
                       <li><strong>Hand and finger injuries</strong> - burns from hot surfaces, cuts from sharp edges, impact injuries</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Long-term health consequences:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Long-term health consequences:</strong></p>
+                      <p className="text-xs text-white">
                         Many PPE-preventable injuries have long-term implications. Eye injuries can affect career prospects and quality of life. Hearing loss is progressive and irreversible. Respiratory conditions from dust exposure can develop years after initial exposure, emphasising the importance of consistent PPE use.
                       </p>
                     </div>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Project and business impact:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Project and business impact:</strong></p>
+                      <p className="text-xs text-white">
                         Injuries affect not just the individual but the entire project. Lost time incidents, HSE investigations, insurance claims, and potential prosecution create significant costs. Good PPE practice protects both personnel and business interests.
                       </p>
                     </div>
@@ -406,18 +406,18 @@ const Module4Section7_3 = () => {
 
           {/* Maintenance of PPE */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">4. Maintenance of PPE</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">4. Maintenance of PPE</h3>
+            <p className="text-base text-white mb-4">
               Proper maintenance ensures PPE remains effective throughout its service life and provides reliable protection when needed:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-amber-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-amber-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
                     <p className="font-semibold text-amber-600 dark:text-amber-400 mb-1">PPE Maintenance and Care Systems</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Daily pre-use inspection</strong> - check PPE condition before each use for damage or wear</li>
                       <li><strong>Immediate replacement</strong> - remove and replace worn or damaged items without delay</li>
                       <li><strong>Proper cleaning procedures</strong> - follow manufacturer instructions for cleaning and disinfection</li>
@@ -426,9 +426,9 @@ const Module4Section7_3 = () => {
                       <li><strong>Regular replacement schedules</strong> - replace items according to manufacturer or company schedules</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Inspection checklist for common PPE:</strong></p>
-                      <ul className="text-xs text-muted-foreground list-disc ml-4 space-y-1">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Inspection checklist for common PPE:</strong></p>
+                      <ul className="text-xs text-white list-disc ml-4 space-y-1">
                         <li><strong>Safety glasses:</strong> Scratches, cracks, loose components, clean lenses</li>
                         <li><strong>Gloves:</strong> Holes, tears, contamination, proper grip, sizing still correct</li>
                         <li><strong>Hearing protection:</strong> Foam condition, headband tension, seal integrity</li>
@@ -438,8 +438,8 @@ const Module4Section7_3 = () => {
                     </div>
                     
                     <div className="mt-3 p-3 bg-amber-50/50 dark:bg-amber-900/10 rounded border border-amber-200/30">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Storage best practices:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Storage best practices:</strong></p>
+                      <p className="text-xs text-white">
                         Store PPE in dedicated clean areas, not in tool bags where contamination and damage can occur. Use protective cases for safety glasses, keep gloves in clean containers, and ensure hearing protection is stored away from sharp objects. Label storage areas clearly and maintain inventory of spare items.
                       </p>
                     </div>
@@ -451,18 +451,18 @@ const Module4Section7_3 = () => {
 
           {/* Integrating PPE with Safe Practice */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">5. Integrating PPE with Safe Practice</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">5. Integrating PPE with Safe Practice</h3>
+            <p className="text-base text-white mb-4">
               PPE works most effectively when integrated with comprehensive safe working practices and proper risk management:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-1">Comprehensive Safety Integration</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Comprehensive Safety Integration</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Hierarchy of control</strong> - PPE is the last line of defence, not a substitute for safe methods</li>
                       <li><strong>Job planning</strong> - always plan the task first, then select appropriate PPE for identified hazards</li>
                       <li><strong>Engineering controls</strong> - use guards, clamps, and correct tools alongside PPE for maximum protection</li>
@@ -471,16 +471,16 @@ const Module4Section7_3 = () => {
                       <li><strong>Team coordination</strong> - ensure all team members understand PPE requirements for shared tasks</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>PPE selection process:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>PPE selection process:</strong></p>
+                      <p className="text-xs text-white">
                         Effective PPE selection follows a systematic approach: identify hazards through risk assessment, determine required protection levels, select appropriate standards and ratings, ensure proper fit and compatibility, provide adequate training, and establish maintenance procedures.
                       </p>
                     </div>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Behavioural factors:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Behavioural factors:</strong></p>
+                      <p className="text-xs text-white">
                         PPE effectiveness depends on consistent use. Address comfort issues through proper fitting, involve users in selection where possible, provide adequate training on benefits, and create a positive safety culture where PPE use is normal and expected behaviour.
                       </p>
                     </div>
@@ -492,15 +492,15 @@ const Module4Section7_3 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Wrench className="w-5 h-5" />
             Practical Guidance (On-Site Tips)
           </h2>
           <div className="grid gap-4">
-            <div className="p-4 bg-card rounded-lg border border-border/10">
-              <h3 className="font-medium text-foreground mb-2">Pre-Task PPE Preparation</h3>
-              <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc ml-5">
+            <div className="p-4 bg-transparent rounded-lg border border-border/10">
+              <h3 className="font-medium text-white mb-2">Pre-Task PPE Preparation</h3>
+              <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-5">
                 <li>Always de-burr conduit ends before handling to reduce cut risk even with gloves</li>
                 <li>Keep a spare pair of safety glasses in your kit for when one gets damaged</li>
                 <li>Check PPE fit and condition at the start of each day, not just before first use</li>
@@ -508,9 +508,9 @@ const Module4Section7_3 = () => {
               </ul>
             </div>
             
-            <div className="p-4 bg-card rounded-lg border border-border/10">
-              <h3 className="font-medium text-foreground mb-2">Task-Specific PPE Selection</h3>
-              <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc ml-5">
+            <div className="p-4 bg-transparent rounded-lg border border-border/10">
+              <h3 className="font-medium text-white mb-2">Task-Specific PPE Selection</h3>
+              <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-5">
                 <li>Wear ear protection when drilling into blockwork or using angle grinders</li>
                 <li>Use cut-resistant gloves (Level 3–5 EN388 standard) when cutting cable tray</li>
                 <li>Consider respiratory protection when cutting galvanised or treated materials</li>
@@ -518,9 +518,9 @@ const Module4Section7_3 = () => {
               </ul>
             </div>
             
-            <div className="p-4 bg-card rounded-lg border border-border/10">
-              <h3 className="font-medium text-foreground mb-2">PPE Management Best Practices</h3>
-              <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc ml-5">
+            <div className="p-4 bg-transparent rounded-lg border border-border/10">
+              <h3 className="font-medium text-white mb-2">PPE Management Best Practices</h3>
+              <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-5">
                 <li>Label and keep PPE personal — never swap gloves or ear protection with others</li>
                 <li>Report defective PPE immediately and remove from circulation</li>
                 <li>Clean PPE according to manufacturer instructions to maintain effectiveness</li>
@@ -531,8 +531,8 @@ const Module4Section7_3 = () => {
         </Card>
 
         {/* Real-World Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Users className="w-5 h-5" />
             Real-World Examples
           </h2>
@@ -542,11 +542,11 @@ const Module4Section7_3 = () => {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-red-600 mt-1" />
                 <div>
-                  <h3 className="font-medium text-red-800 dark:text-emerald-400 mb-2">Case Study 1: Eye Injury from Metal Fragment</h3>
-                  <p className="text-xs sm:text-sm text-foreground mb-2">
+                  <h3 className="font-medium text-red-800 dark:text-elec-yellow mb-2">Case Study 1: Eye Injury from Metal Fragment</h3>
+                  <p className="text-xs sm:text-sm text-white mb-2">
                     On a commercial site, an electrician was cutting trunking with a hacksaw without safety glasses. A small metal fragment flew into his eye, requiring hospital treatment and three days off work.
                   </p>
-                  <p className="text-xs text-muted-foreground bg-background/50 p-2 rounded">
+                  <p className="text-xs text-white bg-[#121212]/50 p-2 rounded">
                     <strong>Prevention:</strong> Safety glasses costing less than £5 would have prevented this injury entirely. The incident resulted in project delays, HSE reporting, and potential permanent vision damage.
                   </p>
                 </div>
@@ -557,11 +557,11 @@ const Module4Section7_3 = () => {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-red-600 mt-1" />
                 <div>
-                  <h3 className="font-medium text-red-800 dark:text-emerald-400 mb-2">Case Study 2: Hearing Damage from Prolonged Tool Use</h3>
-                  <p className="text-xs sm:text-sm text-foreground mb-2">
+                  <h3 className="font-medium text-red-800 dark:text-elec-yellow mb-2">Case Study 2: Hearing Damage from Prolonged Tool Use</h3>
+                  <p className="text-xs sm:text-sm text-white mb-2">
                     An experienced electrician developed significant hearing loss after years of using power tools without hearing protection. The condition was identified during a routine health check but the damage was irreversible.
                   </p>
-                  <p className="text-xs text-muted-foreground bg-background/50 p-2 rounded">
+                  <p className="text-xs text-white bg-[#121212]/50 p-2 rounded">
                     <strong>Prevention:</strong> Consistent use of hearing protection throughout his career would have prevented this occupational disease. Early intervention and regular health surveillance are crucial for long-term hearing protection.
                   </p>
                 </div>
@@ -573,10 +573,10 @@ const Module4Section7_3 = () => {
                 <CheckCircle className="w-5 h-5 text-green-600 mt-1" />
                 <div>
                   <h3 className="font-medium text-green-800 dark:text-green-300 mb-2">Case Study 3: Good PPE Practice Prevents Serious Injury</h3>
-                  <p className="text-xs sm:text-sm text-foreground mb-2">
+                  <p className="text-xs sm:text-sm text-white mb-2">
                     During cable tray installation, a worker's cut-resistant gloves prevented serious injury when a sharp edge sliced through the outer layer. The gloves were immediately replaced, and the incident was reported as a near-miss.
                   </p>
-                  <p className="text-xs text-muted-foreground bg-background/50 p-2 rounded">
+                  <p className="text-xs text-white bg-[#121212]/50 p-2 rounded">
                     <strong>Good Practice:</strong> Proper PPE selection, immediate replacement when damaged, and treating near-misses as learning opportunities. The incident led to improved edge finishing procedures for the entire team.
                   </p>
                 </div>
@@ -586,67 +586,67 @@ const Module4Section7_3 = () => {
         </Card>
 
         {/* FAQ */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Shield className="w-5 h-5" />
             Frequently Asked Questions
           </h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-border/20 pb-4 last:border-b-0">
-                <h3 className="font-medium text-foreground mb-2">{faq.question}</h3>
-                <p className="text-sm text-muted-foreground">{faq.answer}</p>
+              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
+                <h3 className="font-medium text-white mb-2">{faq.question}</h3>
+                <p className="text-sm text-white">{faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <ClipboardList className="w-5 h-5" />
             Pocket Guide (Key Takeaways)
           </h2>
           <div className="grid md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                <span className="font-medium text-foreground">PPE is legally required under PPE at Work Regulations</span>
+                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                <span className="font-medium text-white">PPE is legally required under PPE at Work Regulations</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                <span className="font-medium text-foreground">Safety glasses, gloves, boots, and hearing protection are essential</span>
+                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                <span className="font-medium text-white">Safety glasses, gloves, boots, and hearing protection are essential</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                <span className="font-medium text-foreground">Always inspect and replace PPE as needed</span>
+                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                <span className="font-medium text-white">Always inspect and replace PPE as needed</span>
               </div>
             </div>
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                <span className="font-medium text-foreground">PPE complements, not replaces, safe working methods</span>
+                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                <span className="font-medium text-white">PPE complements, not replaces, safe working methods</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                <span className="font-medium text-foreground">Never start cutting, bending, or fixing work without full PPE</span>
+                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                <span className="font-medium text-white">Never start cutting, bending, or fixing work without full PPE</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                <span className="font-medium text-foreground">Store PPE in clean, dry conditions when not in use</span>
+                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                <span className="font-medium text-white">Store PPE in clean, dry conditions when not in use</span>
               </div>
             </div>
           </div>
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Book className="w-5 h-5" />
             Recap
           </h2>
-          <p className="text-base text-foreground mb-4">In this subsection, you learned:</p>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+          <p className="text-base text-white mb-4">In this subsection, you learned:</p>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>The legal requirements for PPE in electrical installation.</li>
             <li>Typical PPE used in cutting, bending, and fixing tasks.</li>
             <li>Common hazards that PPE helps prevent.</li>
@@ -656,8 +656,8 @@ const Module4Section7_3 = () => {
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Target className="w-5 h-5" />
             Knowledge Check Quiz
           </h2>
@@ -665,7 +665,7 @@ const Module4Section7_3 = () => {
         </Card>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-6 border-t border-border/20">
+        <div className="flex justify-between items-center pt-6 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="module4-section7/subsection2" className="flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" />

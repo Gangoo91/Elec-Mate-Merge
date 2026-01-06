@@ -741,6 +741,282 @@
   .section-title {
     @apply text-lg sm:text-xl font-bold text-white;
   }
+
+  /* ===== AGENT INTERFACE UTILITIES ===== */
+
+  /* Agent interactive elements */
+  .agent-interactive {
+    @apply touch-manipulation active:scale-[0.98] transition-all duration-150;
+  }
+
+  /* Agent card styling */
+  .agent-card {
+    @apply bg-card border border-white/10 rounded-2xl overflow-hidden;
+  }
+
+  .agent-card-hover {
+    @apply bg-card border border-white/10 rounded-2xl overflow-hidden hover:border-white/20 transition-all duration-200;
+  }
+
+  /* Agent input styling - 16px font prevents iOS zoom */
+  .agent-input {
+    @apply bg-white/5 border border-white/10 rounded-xl text-base min-h-[120px]
+           focus:border-white/30 focus:ring-2 focus:ring-white/10 focus:ring-offset-0
+           placeholder:text-white/30 resize-none;
+    font-size: 16px !important; /* Prevent iOS zoom */
+  }
+
+  /* Agent project type selector */
+  .agent-type-button {
+    @apply h-12 px-4 rounded-xl font-medium transition-all duration-200
+           touch-manipulation active:scale-[0.98] border;
+  }
+
+  .agent-type-button-inactive {
+    @apply bg-white/5 border-white/10 text-white/60 hover:bg-white/10 hover:border-white/20;
+  }
+
+  /* Agent collapsible section */
+  .agent-collapsible-trigger {
+    @apply flex items-center justify-between w-full p-3 sm:p-4 rounded-xl
+           bg-white/5 border border-white/10
+           hover:bg-white/10 hover:border-white/20
+           touch-manipulation active:scale-[0.99] transition-all duration-200;
+  }
+
+  /* Agent processing card */
+  .agent-processing-card {
+    @apply bg-card border border-white/10 rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-6;
+  }
+
+  /* Agent gradient text */
+  .agent-gradient-text {
+    @apply bg-clip-text text-transparent;
+  }
+
+  /* Agent color-specific gradients */
+  .agent-gradient-amber {
+    background-image: linear-gradient(135deg, #fbbf24, #eab308);
+  }
+
+  .agent-gradient-emerald {
+    background-image: linear-gradient(135deg, #34d399, #14b8a6);
+  }
+
+  .agent-gradient-orange {
+    background-image: linear-gradient(135deg, #fb923c, #ef4444);
+  }
+
+  .agent-gradient-blue {
+    background-image: linear-gradient(135deg, #60a5fa, #2563eb);
+  }
+
+  /* Agent template card */
+  .agent-template-card {
+    @apply p-3 sm:p-4 rounded-xl bg-white/5 border border-white/10
+           hover:bg-white/10 hover:border-white/20
+           cursor-pointer touch-manipulation active:scale-[0.98] transition-all duration-200;
+  }
+
+  /* Agent stats grid */
+  .agent-stats-grid {
+    @apply grid grid-cols-2 gap-3 sm:gap-4;
+  }
+
+  .agent-stat-item {
+    @apply bg-white/5 rounded-xl p-3 sm:p-4 text-center border border-white/10;
+  }
+
+  /* Pulse glow animation for active elements */
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.5; box-shadow: 0 0 20px currentColor; }
+    50% { opacity: 1; box-shadow: 0 0 40px currentColor; }
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  /* Subtle float animation */
+  @keyframes float-subtle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
+  .animate-float-subtle {
+    animation: float-subtle 3s ease-in-out infinite;
+  }
+
+  /* Scale entrance animation */
+  @keyframes scale-in {
+    0% { transform: scale(0.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.3s ease-out forwards;
+  }
+
+  /* Slide up entrance animation */
+  @keyframes slide-up {
+    0% { transform: translateY(10px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.4s ease-out forwards;
+  }
+
+  /* Character counter colors */
+  .char-count-low {
+    @apply text-white/40;
+  }
+
+  .char-count-medium {
+    @apply text-emerald-400;
+  }
+
+  .char-count-high {
+    @apply text-amber-400;
+  }
+
+  /* ===== CALCULATOR INTERFACE UTILITIES ===== */
+
+  /* Calculator card styling - matches agent-card pattern */
+  .calculator-card {
+    @apply bg-card border border-white/10 rounded-2xl overflow-hidden;
+  }
+
+  .calculator-card-hover {
+    @apply bg-card border border-white/10 rounded-2xl overflow-hidden hover:border-white/20 transition-all duration-200;
+  }
+
+  /* Calculator input styling - 16px font prevents iOS zoom */
+  .calculator-input {
+    @apply bg-white/5 border border-white/10 rounded-xl text-base
+           focus:border-white/20 focus:ring-1 focus:ring-white/10 focus:ring-offset-0
+           placeholder:text-white/30;
+    font-size: 16px !important; /* Prevent iOS zoom */
+  }
+
+  /* Calculator result box */
+  .calculator-result {
+    @apply rounded-xl p-4 border animate-fade-in;
+  }
+
+  /* Calculator gradient value text */
+  .calculator-value {
+    @apply font-bold bg-clip-text text-transparent;
+  }
+
+  .calculator-value-amber {
+    background-image: linear-gradient(135deg, #fbbf24, #eab308);
+  }
+
+  .calculator-value-emerald {
+    background-image: linear-gradient(135deg, #34d399, #14b8a6);
+  }
+
+  .calculator-value-orange {
+    background-image: linear-gradient(135deg, #fb923c, #ef4444);
+  }
+
+  .calculator-value-green {
+    background-image: linear-gradient(135deg, #22c55e, #10b981);
+  }
+
+  .calculator-value-purple {
+    background-image: linear-gradient(135deg, #a78bfa, #6366f1);
+  }
+
+  .calculator-value-blue {
+    background-image: linear-gradient(135deg, #60a5fa, #2563eb);
+  }
+
+  .calculator-value-cyan {
+    background-image: linear-gradient(135deg, #22d3ee, #0ea5e9);
+  }
+
+  .calculator-value-slate {
+    background-image: linear-gradient(135deg, #94a3b8, #64748b);
+  }
+
+  /* Calculator collapsible trigger */
+  .calculator-collapsible-trigger {
+    @apply flex items-center justify-between w-full py-2.5 px-3 rounded-lg
+           text-sm font-medium text-white/60 hover:text-white/80
+           hover:bg-white/5 transition-all;
+  }
+
+  /* Calculator step display */
+  .calculation-step {
+    @apply flex gap-3 relative;
+  }
+
+  .calculation-step-number {
+    @apply w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-xs font-bold;
+  }
+
+  .calculation-step-content {
+    @apply flex-1 min-w-0 space-y-1;
+  }
+
+  .calculation-step-formula {
+    @apply block text-xs px-2.5 py-1.5 rounded-lg bg-black/30 text-white/70 font-mono overflow-x-auto;
+  }
+
+  /* Calculator action buttons */
+  .calculator-button-primary {
+    @apply h-12 sm:h-14 rounded-xl font-semibold
+           touch-manipulation active:scale-[0.98] transition-all
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .calculator-button-secondary {
+    @apply h-12 rounded-xl border-white/10
+           text-white/70 hover:text-white hover:bg-white/5
+           touch-manipulation active:scale-[0.98] transition-all;
+  }
+
+  /* Calculator unit badge */
+  .calculator-unit-badge {
+    @apply text-xs font-medium px-2 py-0.5 rounded-md bg-white/10 text-white/60;
+  }
+
+  /* Calculator formula reference box */
+  .calculator-formula-box {
+    @apply text-center py-3 px-4 rounded-lg bg-black/30;
+  }
+
+  .calculator-formula-text {
+    @apply text-lg sm:text-xl font-mono text-white/90;
+  }
+
+  /* Calculator input grid layouts */
+  .calculator-grid-2 {
+    @apply grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4;
+  }
+
+  .calculator-grid-3 {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4;
+  }
+
+  /* Calculator status badges */
+  .calculator-badge-pass {
+    @apply bg-green-500/20 text-green-400 border-green-500/30;
+  }
+
+  .calculator-badge-fail {
+    @apply bg-red-500/20 text-red-400 border-red-500/30;
+  }
+
+  .calculator-badge-warning {
+    @apply bg-amber-500/20 text-amber-400 border-amber-500/30;
+  }
+
+  .calculator-badge-info {
+    @apply bg-blue-500/20 text-blue-400 border-blue-500/30;
+  }
 }
 
 /* Touch optimization styles */

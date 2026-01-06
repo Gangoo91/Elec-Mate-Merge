@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, List, FileText } from "lucide-react";
+import { List, FileText } from "lucide-react";
 import { QuoteInvoiceDashboard as Dashboard } from "@/components/electrician/invoice-builder/QuoteInvoiceDashboard";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 
 const QuoteInvoiceDashboard = () => {
   const canonical = `${window.location.origin}/electrician/quote-invoice-dashboard`;
@@ -32,16 +33,7 @@ const QuoteInvoiceDashboard = () => {
               <p className="text-sm text-white/60">Manage quotes and track invoices</p>
             </div>
           </div>
-          <Link to="/electrician/business">
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to Business
-            </Button>
-          </Link>
+          <SmartBackButton />
         </header>
 
         {/* Quick Action */}

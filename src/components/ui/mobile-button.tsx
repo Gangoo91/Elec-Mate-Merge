@@ -1,3 +1,19 @@
+/**
+ * @deprecated Use the standard Button component from @/components/ui/button instead.
+ *
+ * The main Button component now includes:
+ * - Responsive mobile-first sizing (44px+ touch targets)
+ * - Consistent touch feedback (active:scale-[0.98])
+ * - All variants including `accent` (equivalent to `elec`)
+ *
+ * Migration guide:
+ * - `variant="elec"` -> `variant="accent"`
+ * - `variant="elec-outline"` -> `variant="accent-outline"`
+ * - `size="wide"` -> Use `className="w-full"` with standard Button
+ * - `loading` prop -> Add a spinner manually or use a LoadingButton component
+ *
+ * This component will be removed in a future version.
+ */
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";

@@ -107,11 +107,11 @@ export default function Module2Section3_3() {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 2.3
@@ -124,26 +124,26 @@ export default function Module2Section3_3() {
       <main className="max-w-7xl mx-auto px-6 py-12">
         {/* Hero Section */}
         <div className="flex items-center gap-4 mb-6">
-          <Split className="h-8 w-8 text-emerald-400" />
+          <Split className="h-8 w-8 text-elec-yellow" />
           <div>
-            <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+            <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
               Module 2.3.3
             </span>
-            <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+            <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
               Parallel Circuits – Current and Voltage
             </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+            <p className="text-xl text-white max-w-3xl mt-2">
               Understanding how current divides and voltage remains constant across parallel branches
             </p>
           </div>
         </div>
 
         {/* Introduction Card */}
-        <Card className="p-6 bg-card border-border/20 bg-none shadow-none mb-8">
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
+        <Card className="p-6 bg-transparent border-white/20 bg-none shadow-none mb-8">
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
             <div className="space-y-3">
-              <div className="bg-card border border-border/20 rounded-lg p-4">
-                <h3 className="font-semibold text-foreground mb-3">In 30 seconds</h3>
+              <div className="bg-card border border-white/10 rounded-lg p-4">
+                <h3 className="font-semibold text-white mb-3">In 30 seconds</h3>
                 <ul className="space-y-2 text-sm">
                   <li>• Voltage: same across each branch (Vbranch = Vs)</li>
                   <li>• Current splits: It = I1 + I2 + ...</li>
@@ -154,8 +154,8 @@ export default function Module2Section3_3() {
               </div>
             </div>
             <div className="space-y-3">
-              <div className="bg-card border border-emerald-500/30 rounded-lg p-4">
-                <h3 className="font-semibold text-foreground mb-3">Spot it / Use it</h3>
+              <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
+                <h3 className="font-semibold text-white mb-3">Spot it / Use it</h3>
                 <ul className="space-y-2 text-sm">
                   <li>• Ring finals, multiple luminaire circuits, control panels</li>
                   <li>• Load-balancing checks</li>
@@ -169,8 +169,8 @@ export default function Module2Section3_3() {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="p-6 bg-card border-border/20 bg-none shadow-none mb-8">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
+        <Card className="p-6 bg-transparent border-white/20 bg-none shadow-none mb-8">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
           <div className="space-y-3">
             {[
               "Explain that each parallel branch sees full supply voltage",
@@ -179,17 +179,17 @@ export default function Module2Section3_3() {
               "Apply checks aligned to BS 7671 (volt drop, Zs, device ratings)"
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
-                <p className="text-foreground">{outcome}</p>
+                <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <p className="text-white">{outcome}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Section 1 - Blue */}
-        <div className="border-l-4 border-emerald-500 bg-card rounded-r-lg p-6 mb-6">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">1. Parallel Circuit Fundamentals</h2>
-          <div className="space-y-4 text-foreground">
+        <div className="border-l-4 border-elec-yellow rounded-r-lg p-6 mb-6">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">1. Parallel Circuit Fundamentals</h2>
+          <div className="space-y-4 text-white">
             <p>
               In parallel circuits, each branch provides a separate path for current flow. This creates three fundamental rules:
             </p>
@@ -210,7 +210,7 @@ export default function Module2Section3_3() {
                 <p className="text-xs mt-1">Total resistance decreases</p>
               </div>
             </div>
-            <div className="bg-emerald-500/20 border border-border/30 rounded-lg p-4">
+            <div className="bg-elec-yellow/20 border border-border/30 rounded-lg p-4">
               <h4 className="font-semibold mb-2">Quick Example</h4>
               <p className="text-sm">
                 12V supply, two branches: R1 = 6Ω, R2 = 12Ω<br/>
@@ -225,12 +225,12 @@ export default function Module2Section3_3() {
         <InlineCheck {...quickCheckQuestions[0]} />
 
         {/* Section 2 - Emerald */}
-        <div className="border-l-4 border-emerald-500 bg-card rounded-r-lg p-6 mb-6">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">2. Current Division and Worked Examples</h2>
-          <div className="space-y-4 text-foreground">
+        <div className="border-l-4 border-elec-yellow rounded-r-lg p-6 mb-6">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">2. Current Division and Worked Examples</h2>
+          <div className="space-y-4 text-white">
             <p>Current divides inversely proportional to resistance - lower resistance branches draw more current.</p>
             
-            <div className="bg-card border border-emerald-500/30 rounded-lg p-4">
+            <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
               <h4 className="font-semibold mb-2">Current Divider Formula (Two Branches)</h4>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
@@ -245,7 +245,7 @@ export default function Module2Section3_3() {
               </div>
             </div>
 
-            <div className="bg-emerald-500/20 border border-emerald-500/30 rounded-lg p-4">
+            <div className="bg-elec-yellow/20 border border-elec-yellow/30 rounded-lg p-4">
               <h4 className="font-semibold mb-2">Worked Example: Three Branch Circuit</h4>
               <div className="text-sm space-y-2">
                 <p><strong>Given:</strong> 24V supply, R1=120Ω, R2=80Ω, R3=240Ω in parallel</p>
@@ -267,8 +267,8 @@ export default function Module2Section3_3() {
 
         {/* Section 3 - Teal */}
         <div className="border-l-4 border-teal-500 bg-teal-500/10 rounded-r-lg p-6 mb-6">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">3. Calculation Methods and Tools</h2>
-          <div className="space-y-4 text-foreground">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">3. Calculation Methods and Tools</h2>
+          <div className="space-y-4 text-white">
             <div className="bg-teal-500/10 border border-teal-400/30 rounded-lg p-4">
               <h4 className="font-semibold mb-2">Step-by-Step Method</h4>
               <ol className="list-decimal list-inside space-y-1 text-sm">
@@ -300,9 +300,9 @@ export default function Module2Section3_3() {
         </div>
 
         {/* Section 4 - Amber */}
-        <div className="border-l-4 border-amber-500 bg-card rounded-r-lg p-6 mb-8">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">4. Practical Applications and BS 7671 Context</h2>
-          <div className="space-y-4 text-foreground">
+        <div className="border-l-4 border-amber-500 rounded-r-lg p-6 mb-8">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">4. Practical Applications and BS 7671 Context</h2>
+          <div className="space-y-4 text-white">
             <p>Parallel circuits form the backbone of electrical installations - from socket outlets to lighting circuits.</p>
             
             <div className="grid md:grid-cols-2 gap-4">
@@ -326,7 +326,7 @@ export default function Module2Section3_3() {
               </div>
             </div>
 
-            <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4">
+            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
               <h4 className="font-semibold mb-2">⚠️ BS 7671 Design Considerations</h4>
               <ul className="list-disc list-inside space-y-1 text-sm">
                 <li><strong>Voltage Drop:</strong> Calculate for maximum demand, ensure ≤3% for lighting, ≤5% for power</li>
@@ -340,13 +340,13 @@ export default function Module2Section3_3() {
         </div>
 
         {/* FAQs */}
-        <Card className="p-6 bg-card border-border/20 bg-none shadow-none mb-8">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="p-6 bg-transparent border-white/20 bg-none shadow-none mb-8">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <div key={index} className="border-l-4 border-teal-500 pl-4">
-                <h3 className="font-semibold text-foreground mb-2">{faq.question}</h3>
-                <p className="text-muted-foreground text-sm">{faq.answer}</p>
+                <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -354,20 +354,20 @@ export default function Module2Section3_3() {
 
         {/* Units Pocket Card */}
         <div className="mb-8">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Essential Reference</h2>
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Essential Reference</h2>
           <UnitsPocketCard />
         </div>
 
         {/* Quick Reference Card */}
-        <Card className="p-6 bg-card border-border/20 bg-none shadow-none mb-8">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quick Reference: Parallel Circuit Rules</h2>
+        <Card className="p-6 bg-transparent border-white/20 bg-none shadow-none mb-8">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick Reference: Parallel Circuit Rules</h2>
           <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-sm">
             <div className="bg-card border border-border/30 rounded-lg p-3">
               <h4 className="font-semibold mb-2">Voltage</h4>
               <p>V<sub>branch</sub> = V<sub>supply</sub></p>
               <p className="text-xs">Same across all branches</p>
             </div>
-            <div className="bg-card border border-emerald-500/30 rounded-lg p-3">
+            <div className="bg-card border border-elec-yellow/30 rounded-lg p-3">
               <h4 className="font-semibold mb-2">Current</h4>
               <p>I<sub>T</sub> = I<sub>1</sub> + I<sub>2</sub> + I<sub>3</sub>...</p>
               <p className="text-xs">Branch currents add</p>
@@ -386,7 +386,7 @@ export default function Module2Section3_3() {
         </div>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to=".." className="flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" />

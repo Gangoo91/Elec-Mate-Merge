@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { ArrowLeft } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { useAuth } from "@/contexts/AuthContext";
 
 // Import components
@@ -93,10 +93,7 @@ const MockExamDetails = () => {
       <div className="max-w-4xl mx-auto px-4 py-8 space-y-8 animate-fade-in">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-3xl font-bold tracking-tight">Exam Results</h1>
-          <Button variant="outline" onClick={() => navigate("/apprentice/study/mock-exams")}>
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Exams
-          </Button>
+          <SmartBackButton />
         </div>
         
         <ExamResults 
@@ -117,10 +114,7 @@ const MockExamDetails = () => {
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold tracking-tight">{currentExam.title}</h1>
-            <Button variant="outline" onClick={handleExit}>
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Exams
-            </Button>
+            <SmartBackButton />
           </div>
           
           <ExamIntroduction exam={currentExam} onStart={startExam} />

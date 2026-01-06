@@ -128,11 +128,11 @@ const Module5Section3_4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3
@@ -146,38 +146,38 @@ const Module5Section3_4 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <UserCheck className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <UserCheck className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 5.3.4
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Minimising Disruption to Other Site Activities
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Learn to coordinate electrical work with other trades, prevent clashes, and maintain smooth site operations through effective planning.
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-6">
-            <Target className="w-6 h-6 text-foreground" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Introduction</h2>
+            <Target className="w-6 h-6 text-white" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Introduction</h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Review site programme to understand other trades' schedules.</li>
                 <li>Sequence work to avoid clashes (first fix, second fix phases).</li>
                 <li>Protect installations from damage during wet trades.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Overlapping work areas, unprotected installations.</li>
                 <li><strong>Use:</strong> Coordination meetings, protective covers, clear markings.</li>
@@ -188,18 +188,18 @@ const Module5Section3_4 = () => {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <p className="text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <p className="text-base text-white mb-4">
             Construction projects involve multiple trades working alongside each other. Electrical installation must be carefully planned to avoid disrupting others, such as plasterers, carpenters, plumbers, or decorators. Poor coordination can cause delays, damage to work, and safety hazards. Minimising disruption ensures smoother progress for all trades and helps maintain good professional relationships.
           </p>
           
           <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
             <div className="flex items-start gap-3">
-              <UserCheck className="w-5 h-5 text-emerald-400 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <UserCheck className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2">Why This Matters</p>
-                <p className="text-xs sm:text-sm text-foreground">
+                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Why This Matters</p>
+                <p className="text-xs sm:text-sm text-white">
                   Poor trade coordination is responsible for up to 30% of construction delays and 20% of cost overruns, making effective collaboration essential for project success.
                 </p>
               </div>
@@ -207,12 +207,12 @@ const Module5Section3_4 = () => {
           </div>
           
           <div className="mt-4 space-y-3">
-            <p className="text-base text-foreground">
+            <p className="text-base text-white">
               <strong>Real Impact:</strong> Well-coordinated projects show 40% fewer defects, 25% faster completion times, and significantly improved relationships between trades.
             </p>
             
             <div className="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded border border-emerald-200 dark:border-emerald-800">
-              <p className="text-xs sm:text-sm text-foreground">
+              <p className="text-xs sm:text-sm text-white">
                 <strong>Industry Standard:</strong> CDM 2015 regulations require effective coordination between trades to ensure health, safety, and quality throughout construction projects.
               </p>
             </div>
@@ -220,10 +220,10 @@ const Module5Section3_4 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-base text-foreground mb-4">By the end of this subsection, you will be able to:</p>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-base text-white mb-4">By the end of this subsection, you will be able to:</p>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Explain why minimising disruption to other trades is essential.</li>
             <li>Identify common clashes between electrical and other site activities.</li>
             <li>Apply planning methods to reduce disruption.</li>
@@ -233,27 +233,27 @@ const Module5Section3_4 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* Why Minimising Disruption Matters */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">1. Why Minimising Disruption Matters - Strategic Importance</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">1. Why Minimising Disruption Matters - Strategic Importance</h3>
+            <p className="text-base text-white mb-4">
               Effective coordination between trades is fundamental to successful construction projects:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-3">Project Management Benefits</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Project Management Benefits</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Schedule Management:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Schedule Management:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Keeps projects on schedule by preventing trade conflicts</li>
                           <li>Reduces time lost to coordination delays</li>
                           <li>Enables efficient resource utilisation across trades</li>
@@ -262,8 +262,8 @@ const Module5Section3_4 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Quality Assurance:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Quality Assurance:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Prevents rework and damage to finished work</li>
                           <li>Maintains installation integrity throughout construction</li>
                           <li>Reduces defects from rushed or compromised work</li>
@@ -272,8 +272,8 @@ const Module5Section3_4 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Safety and Risk Reduction:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Safety and Risk Reduction:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Reduces safety risks from overlapping tasks</li>
                           <li>Prevents hazardous working conditions</li>
                           <li>Minimises accidents from conflicting activities</li>
@@ -282,8 +282,8 @@ const Module5Section3_4 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Professional Relationships:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Professional Relationships:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Builds positive working relationships on site</li>
                           <li>Establishes trust and cooperation between trades</li>
                           <li>Creates a collaborative working environment</li>
@@ -293,7 +293,7 @@ const Module5Section3_4 = () => {
 
                       <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded border border-green-200 dark:border-green-800">
                         <p className="font-medium text-green-700 dark:text-green-400 mb-2">Economic Impact</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="text-xs sm:text-sm text-white">
                           Effective trade coordination can reduce project costs by 15-20% through reduced rework, faster completion, and improved efficiency.
                         </p>
                       </div>
@@ -306,8 +306,8 @@ const Module5Section3_4 = () => {
 
           {/* Site Programme Integration */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">1.1 Site Programme Integration and Analysis</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">1.1 Site Programme Integration and Analysis</h3>
+            <p className="text-base text-white mb-4">
               Understanding and integrating with the overall site programme is crucial for coordination:
             </p>
             
@@ -316,21 +316,21 @@ const Module5Section3_4 = () => {
                 <h4 className="font-medium text-yellow-800 dark:text-yellow-200 mb-3">Programme Analysis Process</h4>
                 <div className="grid gap-3">
                   <div className="flex gap-3">
-                    <div className="w-6 h-6 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs font-bold">1</div>
+                    <div className="w-6 h-6 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs font-bold">1</div>
                     <div>
                       <p className="font-medium text-yellow-800 dark:text-yellow-200">Review Master Programme</p>
                       <p className="text-sm text-yellow-700 dark:text-yellow-300">Understand overall project timeline and critical path activities</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
-                    <div className="w-6 h-6 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs font-bold">2</div>
+                    <div className="w-6 h-6 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs font-bold">2</div>
                     <div>
                       <p className="font-medium text-yellow-800 dark:text-yellow-200">Identify Trade Dependencies</p>
                       <p className="text-sm text-yellow-700 dark:text-yellow-300">Map which trades depend on electrical work and vice versa</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
-                    <div className="w-6 h-6 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs font-bold">3</div>
+                    <div className="w-6 h-6 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs font-bold">3</div>
                     <div>
                       <p className="font-medium text-yellow-800 dark:text-yellow-200">Plan Resource Allocation</p>
                       <p className="text-sm text-yellow-700 dark:text-yellow-300">Coordinate labour and equipment requirements with other trades</p>
@@ -343,14 +343,14 @@ const Module5Section3_4 = () => {
 
           {/* Common Trade Clashes */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">2. Common Trade Clashes - Detailed Analysis</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">2. Common Trade Clashes - Detailed Analysis</h3>
+            <p className="text-base text-white mb-4">
               Understanding typical conflict points helps prevent problems before they occur:
             </p>
             
             <div className="space-y-6">
               {/* Electrical vs Plastering */}
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">A</span>
                   <div className="flex-1">
@@ -359,8 +359,8 @@ const Module5Section3_4 = () => {
                     <div className="space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                          <p className="text-base text-foreground mb-2"><strong>Common Issues:</strong></p>
-                          <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                          <p className="text-base text-white mb-2"><strong>Common Issues:</strong></p>
+                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                             <li>Electricians running cables while plastering is ongoing</li>
                             <li>Socket boxes filled with plaster</li>
                             <li>Cable routes blocked by wet plaster</li>
@@ -368,8 +368,8 @@ const Module5Section3_4 = () => {
                           </ul>
                         </div>
                         <div>
-                          <p className="text-base text-foreground mb-2"><strong>Prevention Methods:</strong></p>
-                          <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                          <p className="text-base text-white mb-2"><strong>Prevention Methods:</strong></p>
+                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                             <li>Complete first fix before plastering starts</li>
                             <li>Use protective covers on all outlets</li>
                             <li>Mark cable routes clearly</li>
@@ -380,7 +380,7 @@ const Module5Section3_4 = () => {
                       
                       <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded border border-green-200 dark:border-green-800">
                         <p className="font-medium text-green-700 dark:text-green-400 mb-2">Best Practice Timing</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="text-xs sm:text-sm text-white">
                           Complete all electrical first fix work 24-48 hours before plasterers begin. This allows time for any adjustments and ensures no wet trades interfere with electrical installations.
                         </p>
                       </div>
@@ -390,17 +390,17 @@ const Module5Section3_4 = () => {
               </div>
 
               {/* Electrical vs Mechanical Services */}
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">B</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">B</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-3">Electrical vs Mechanical Services</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Electrical vs Mechanical Services</p>
                     
                     <div className="space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                          <p className="text-base text-foreground mb-2"><strong>Conflict Areas:</strong></p>
-                          <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                          <p className="text-base text-white mb-2"><strong>Conflict Areas:</strong></p>
+                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                             <li>Containment clashing with ductwork routes</li>
                             <li>Cable trays interfering with pipework</li>
                             <li>Plant room space allocation conflicts</li>
@@ -408,8 +408,8 @@ const Module5Section3_4 = () => {
                           </ul>
                         </div>
                         <div>
-                          <p className="text-base text-foreground mb-2"><strong>Coordination Solutions:</strong></p>
-                          <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                          <p className="text-base text-white mb-2"><strong>Coordination Solutions:</strong></p>
+                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                             <li>Joint planning sessions for routes</li>
                             <li>3D coordination drawings</li>
                             <li>Agreed service hierarchy protocols</li>
@@ -419,8 +419,8 @@ const Module5Section3_4 = () => {
                       </div>
                       
                       <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                        <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2">Service Hierarchy</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Service Hierarchy</p>
+                        <p className="text-xs sm:text-sm text-white">
                           Establish clear service hierarchy: gravity drainage (highest), pressurised water, HVAC ducts, cable trays, then individual cables (lowest). This prevents later conflicts over route priority.
                         </p>
                       </div>
@@ -430,17 +430,17 @@ const Module5Section3_4 = () => {
               </div>
 
               {/* Electrical vs Carpentry/Decoration */}
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">C</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-3">Electrical vs Carpentry and Decoration</p>
+                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">Electrical vs Carpentry and Decoration</p>
                     
                     <div className="space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                          <p className="text-base text-foreground mb-2"><strong>Typical Clashes:</strong></p>
-                          <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                          <p className="text-base text-white mb-2"><strong>Typical Clashes:</strong></p>
+                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                             <li>Socket outlets fitted before carpentry complete</li>
                             <li>Lighting installation clashing with ceiling work</li>
                             <li>Paint damage to new electrical fittings</li>
@@ -448,8 +448,8 @@ const Module5Section3_4 = () => {
                           </ul>
                         </div>
                         <div>
-                          <p className="text-base text-foreground mb-2"><strong>Sequencing Solutions:</strong></p>
-                          <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                          <p className="text-base text-white mb-2"><strong>Sequencing Solutions:</strong></p>
+                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                             <li>Install accessories after carpentry/decoration</li>
                             <li>Coordinate lighting with ceiling installers</li>
                             <li>Protect finished work during painting</li>
@@ -459,8 +459,8 @@ const Module5Section3_4 = () => {
                       </div>
                       
                       <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded border border-purple-200 dark:border-purple-800">
-                        <p className="font-medium text-purple-700 dark:text-emerald-400 mb-2">Second Fix Coordination</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="font-medium text-purple-700 dark:text-elec-yellow mb-2">Second Fix Coordination</p>
+                        <p className="text-xs sm:text-sm text-white">
                           Schedule electrical second fix after major carpentry and before final decoration. This minimises damage to finished work while ensuring electrical installations are properly integrated.
                         </p>
                       </div>
@@ -482,13 +482,13 @@ const Module5Section3_4 = () => {
 
           {/* Planning to Avoid Disruption */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">3. Planning to Avoid Disruption - Strategic Approaches</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">3. Planning to Avoid Disruption - Strategic Approaches</h3>
+            <p className="text-base text-white mb-4">
               Proactive planning prevents conflicts before they occur:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-amber-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-amber-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
@@ -496,8 +496,8 @@ const Module5Section3_4 = () => {
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Programme Analysis and Integration:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Programme Analysis and Integration:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Review the site programme to understand other trades' schedules</li>
                           <li>Identify critical path activities and dependencies</li>
                           <li>Map electrical work phases to construction sequence</li>
@@ -507,8 +507,8 @@ const Module5Section3_4 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Task Sequencing Strategy:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Task Sequencing Strategy:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Carry out task sequencing to avoid clashes</li>
                           <li>Plan first fix before any wet trades begin</li>
                           <li>Schedule second fix after decoration preparation</li>
@@ -518,8 +518,8 @@ const Module5Section3_4 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Phased Work Implementation:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Phased Work Implementation:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Work in phases coordinated with construction progress</li>
                           <li>Complete work by zones or floors systematically</li>
                           <li>Handover completed areas to following trades</li>
@@ -528,8 +528,8 @@ const Module5Section3_4 = () => {
                       </div>
 
                       <div className="bg-orange-50 dark:bg-orange-900/20 p-3 rounded border border-orange-200 dark:border-orange-800">
-                        <p className="font-medium text-orange-700 dark:text-emerald-400 mb-2">Digital Planning Tools</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="font-medium text-orange-700 dark:text-elec-yellow mb-2">Digital Planning Tools</p>
+                        <p className="text-xs sm:text-sm text-white">
                           Modern planning software with 4D scheduling capabilities can help visualise trade interactions over time, identifying potential conflicts before they occur on site.
                         </p>
                       </div>
@@ -542,8 +542,8 @@ const Module5Section3_4 = () => {
 
           {/* Zone-Based Planning */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">3.1 Zone-Based Planning and Work Sequencing</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">3.1 Zone-Based Planning and Work Sequencing</h3>
+            <p className="text-base text-white mb-4">
               Implementing zone-based approaches improves coordination and reduces conflicts:
             </p>
             
@@ -551,7 +551,7 @@ const Module5Section3_4 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="rounded-lg p-4 bg-sky-50 dark:bg-sky-900/20 border border-sky-200 dark:border-sky-800">
                   <h4 className="font-medium text-sky-800 dark:text-sky-200 mb-3">Zone Definition Strategies</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-foreground">
+                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li><strong>Floor-by-Floor:</strong> Complete each floor before moving up</li>
                     <li><strong>Wing/Section:</strong> Work in building sections to allow parallel activities</li>
                     <li><strong>Room Types:</strong> Group similar spaces for efficient working</li>
@@ -561,7 +561,7 @@ const Module5Section3_4 = () => {
 
                 <div className="rounded-lg p-4 bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800">
                   <h4 className="font-medium text-teal-800 dark:text-teal-200 mb-3">Handover Protocols</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-foreground">
+                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li><strong>Quality Checks:</strong> Complete inspection before handover</li>
                     <li><strong>Documentation:</strong> Provide as-built information</li>
                     <li><strong>Protection:</strong> Install temporary protection systems</li>
@@ -583,8 +583,8 @@ const Module5Section3_4 = () => {
 
           {/* Communication and Coordination */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">4. Communication and Coordination - Best Practices</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">4. Communication and Coordination - Best Practices</h3>
+            <p className="text-base text-white mb-4">
               Effective communication is the foundation of successful trade coordination:
             </p>
             
@@ -594,7 +594,7 @@ const Module5Section3_4 = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <p className="font-medium text-cyan-700 dark:text-cyan-400 mb-2">Regular Meetings:</p>
-                    <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-foreground">
+                    <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                       <li>Daily toolbox talks and coordination briefings</li>
                       <li>Weekly trade coordination meetings</li>
                       <li>Monthly progress and planning reviews</li>
@@ -603,7 +603,7 @@ const Module5Section3_4 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-cyan-700 dark:text-cyan-400 mb-2">Documentation Systems:</p>
-                    <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-foreground">
+                    <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                       <li>Updated site drawings and specifications</li>
                       <li>Work permit and notification systems</li>
                       <li>Progress tracking and reporting</li>
@@ -615,7 +615,7 @@ const Module5Section3_4 = () => {
 
               <div className="rounded-lg p-4 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800">
                 <h4 className="font-medium text-indigo-700 dark:text-indigo-400 mb-3">Practical Coordination Methods</h4>
-                <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-foreground">
+                <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                   <li><strong>Site Drawings:</strong> Use current drawings to check changes and coordinate activities</li>
                   <li><strong>Work Area Agreements:</strong> Define and agree work areas and times with other trades</li>
                   <li><strong>Resource Sharing:</strong> Coordinate use of shared equipment and facilities</li>
@@ -628,16 +628,16 @@ const Module5Section3_4 = () => {
 
           {/* Consequences of Poor Coordination */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">5. Consequences of Poor Coordination - Risk Analysis</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">5. Consequences of Poor Coordination - Risk Analysis</h3>
+            <p className="text-base text-white mb-4">
               Understanding the full impact of poor coordination helps emphasise its importance:
             </p>
             
             <div className="space-y-4">
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="rounded-lg p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
-                  <h4 className="font-medium text-red-700 dark:text-emerald-400 mb-3">Direct Consequences</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-foreground">
+                  <h4 className="font-medium text-red-700 dark:text-elec-yellow mb-3">Direct Consequences</h4>
+                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li><strong>Time Delays:</strong> Project schedule disruption and overruns</li>
                     <li><strong>Cost Increases:</strong> Rework, materials waste, extended site costs</li>
                     <li><strong>Quality Issues:</strong> Damage to installed work requiring repair</li>
@@ -646,8 +646,8 @@ const Module5Section3_4 = () => {
                 </div>
 
                 <div className="rounded-lg p-4 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800">
-                  <h4 className="font-medium text-orange-700 dark:text-emerald-400 mb-3">Indirect Consequences</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-foreground">
+                  <h4 className="font-medium text-orange-700 dark:text-elec-yellow mb-3">Indirect Consequences</h4>
+                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li><strong>Relationship Damage:</strong> Frustration and conflict between trades</li>
                     <li><strong>Reputation Impact:</strong> Reduced future work opportunities</li>
                     <li><strong>Team Morale:</strong> Stress and job satisfaction issues</li>
@@ -657,10 +657,10 @@ const Module5Section3_4 = () => {
               </div>
 
               <div className="rounded-lg p-4 bg-gray-50 dark:bg-card/50 border border-gray-200 dark:border-gray-700">
-                <h4 className="font-medium text-foreground mb-3">Financial Impact Analysis</h4>
+                <h4 className="font-medium text-white mb-3">Financial Impact Analysis</h4>
                 <div className="space-y-2">
-                  <p className="text-xs sm:text-sm text-foreground"><strong>Typical Cost Increases from Poor Coordination:</strong></p>
-                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-foreground">
+                  <p className="text-xs sm:text-sm text-white"><strong>Typical Cost Increases from Poor Coordination:</strong></p>
+                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Rework costs: 5-15% of affected work value</li>
                     <li>Schedule delays: £500-2000 per day extended site costs</li>
                     <li>Material waste: 10-20% additional material requirements</li>
@@ -682,14 +682,14 @@ const Module5Section3_4 = () => {
         </Card>
 
         {/* Advanced Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Advanced Practical Guidance</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Advanced Practical Guidance</h2>
           <div className="space-y-6">
             
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div className="rounded-lg p-4 bg-slate-50 dark:bg-card/50 border border-slate-200 dark:border-slate-700">
-                <h3 className="font-medium text-foreground mb-3">Protection Systems and Methods</h3>
-                <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+                <h3 className="font-medium text-white mb-3">Protection Systems and Methods</h3>
+                <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
                   <li>Mark out containment and accessory positions clearly for other trades</li>
                   <li>Install temporary covers to protect accessories during wet trades</li>
                   <li>Use clear signage ("Do Not Cover" tags on back boxes)</li>
@@ -700,8 +700,8 @@ const Module5Section3_4 = () => {
               </div>
 
               <div className="rounded-lg p-4 bg-slate-50 dark:bg-card/50 border border-slate-200 dark:border-slate-700">
-                <h3 className="font-medium text-foreground mb-3">Conflict Resolution Strategies</h3>
-                <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+                <h3 className="font-medium text-white mb-3">Conflict Resolution Strategies</h3>
+                <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
                   <li>Avoid working in confined spaces with multiple trades unless coordinated</li>
                   <li>Be flexible — adjust jobs to allow others to complete work first</li>
                   <li>Establish clear escalation procedures for disputes</li>
@@ -717,15 +717,15 @@ const Module5Section3_4 = () => {
               <div className="space-y-3">
                 <div>
                   <p className="font-medium text-emerald-800 dark:text-emerald-200">Mobile Apps and Platforms:</p>
-                  <p className="text-xs sm:text-sm text-foreground">Real-time communication tools, shared calendars, and progress tracking applications improve coordination efficiency.</p>
+                  <p className="text-xs sm:text-sm text-white">Real-time communication tools, shared calendars, and progress tracking applications improve coordination efficiency.</p>
                 </div>
                 <div>
                   <p className="font-medium text-emerald-800 dark:text-emerald-200">BIM (Building Information Modeling):</p>
-                  <p className="text-xs sm:text-sm text-foreground">3D models help visualise trade interactions and identify conflicts before they occur on site.</p>
+                  <p className="text-xs sm:text-sm text-white">3D models help visualise trade interactions and identify conflicts before they occur on site.</p>
                 </div>
                 <div>
                   <p className="font-medium text-emerald-800 dark:text-emerald-200">Digital Documentation:</p>
-                  <p className="text-xs sm:text-sm text-foreground">Cloud-based systems ensure all trades have access to current drawings, schedules, and updates.</p>
+                  <p className="text-xs sm:text-sm text-white">Cloud-based systems ensure all trades have access to current drawings, schedules, and updates.</p>
                 </div>
               </div>
             </div>
@@ -735,7 +735,7 @@ const Module5Section3_4 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <p className="font-medium text-purple-800 dark:text-purple-200 mb-2">Inspection Protocols:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-foreground">
+                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Joint inspections with other trades</li>
                     <li>Photographic records of completed work</li>
                     <li>Signed handover certificates</li>
@@ -744,7 +744,7 @@ const Module5Section3_4 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-purple-800 dark:text-purple-200 mb-2">Protection Maintenance:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-foreground">
+                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Regular checks of protective systems</li>
                     <li>Replacement of damaged protection</li>
                     <li>Clear responsibility for protection maintenance</li>
@@ -757,8 +757,8 @@ const Module5Section3_4 = () => {
         </Card>
 
         {/* Multiple Real-World Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-World Case Studies</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Case Studies</h2>
           
           <div className="space-y-6">
             <div className="rounded-lg p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
@@ -795,12 +795,12 @@ const Module5Section3_4 = () => {
 
             <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
               <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-3">Case Study 3: Hospital Renovation Multi-Trade Challenge</h3>
-              <p className="text-blue-700 dark:text-emerald-400 mb-3">
+              <p className="text-blue-700 dark:text-elec-yellow mb-3">
                 During a hospital renovation, electrical, mechanical, and decoration trades needed to work simultaneously in occupied areas. Detailed hour-by-hour scheduling and noise control measures enabled work to continue without disrupting patient care or creating conflicts.
               </p>
               <div className="bg-blue-100 dark:bg-blue-900/40 p-3 rounded">
                 <p className="font-medium text-blue-800 dark:text-blue-200 mb-1">Key Strategies:</p>
-                <ul className="list-disc pl-5 text-sm text-blue-700 dark:text-emerald-400">
+                <ul className="list-disc pl-5 text-sm text-blue-700 dark:text-elec-yellow">
                   <li>Hour-by-hour detailed scheduling coordination</li>
                   <li>Noise and disruption control measures</li>
                   <li>Flexible working arrangements around patient needs</li>
@@ -812,13 +812,13 @@ const Module5Section3_4 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">FAQs</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-l-4 border-l-emerald-500 pl-4">
-                <p className="font-medium text-foreground mb-2">Q: {faq.question}</p>
-                <p className="text-muted-foreground">A: {faq.answer}</p>
+              <div key={index} className="border-l-4 border-l-elec-yellow pl-4">
+                <p className="font-medium text-white mb-2">Q: {faq.question}</p>
+                <p className="text-white">A: {faq.answer}</p>
               </div>
             ))}
           </div>
@@ -827,7 +827,7 @@ const Module5Section3_4 = () => {
         {/* Pocket Guide */}
         <Card className="mb-8 p-6 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800">
           <h2 className="text-lg sm:text-xl font-semibold text-emerald-800 dark:text-emerald-200 mb-4">Pocket Guide</h2>
-          <div className="space-y-2 text-emerald-700 dark:text-emerald-400">
+          <div className="space-y-2 text-emerald-700 dark:text-elec-yellow">
             <p>✅ Review site programme regularly.</p>
             <p>✅ Sequence work with other trades.</p>
             <p>✅ Use coordination meetings to plan access.</p>
@@ -837,18 +837,18 @@ const Module5Section3_4 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
-          <p className="text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+          <p className="text-base text-white">
             In this subsection, you learned how to minimise disruption to other site activities by understanding common trade clashes, sequencing tasks properly, and communicating effectively. You saw the risks of poor coordination and explored practical methods like protective covers, clear markings, and flexible scheduling to avoid problems.
           </p>
         </Card>
 
         {/* Knowledge Check */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-4">
-            <BookOpen className="w-6 h-6 text-foreground" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Knowledge Check</h2>
+            <BookOpen className="w-6 h-6 text-white" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Knowledge Check</h2>
           </div>
           <Quiz questions={quizQuestions} />
         </Card>

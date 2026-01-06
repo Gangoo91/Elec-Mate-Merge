@@ -205,13 +205,13 @@ const Module3Section3_1: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -226,32 +226,32 @@ const Module3Section3_1: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Wrench className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Wrench className="w-6 h-6 text-white" />
             </div>
             <Badge
               variant="outline"
-              className="border-emerald-500/30 text-emerald-400"
+              className="border-elec-yellow/30 text-elec-yellow"
             >
               Section 3.3.1
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Essential Hand Tools (Strippers, Cutters, Drivers)
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Master the essential hand tools for safe, efficient electrical installation work.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Introduction
           </h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Cable strippers: remove insulation cleanly without conductor damage.</li>
                 <li>Cable cutters: clean cuts without crushing (ratchet for larger cables).</li>
@@ -259,8 +259,8 @@ const Module3Section3_1: React.FC = () => {
                 <li>Pliers: grip, twist, bend - choose type for job (long-nose for tight spaces).</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>
                   <strong>Spot:</strong> Red/yellow insulated handles (VDE), adjustable stripper jaws, ratchet mechanisms.
@@ -277,11 +277,11 @@ const Module3Section3_1: React.FC = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Learning outcomes
           </h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Identify the key hand tools required for electrical installation work.</li>
             <li>Describe their functions and typical uses.</li>
             <li>Apply correct handling techniques to ensure safe and efficient work.</li>
@@ -290,18 +290,18 @@ const Module3Section3_1: React.FC = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Cable Tools */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Scissors className="w-5 h-5" /> Cable Preparation Tools
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Cable Strippers</p>
                   <div className="space-y-3">
                     <div>
@@ -331,7 +331,7 @@ const Module3Section3_1: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                   <p className="font-medium mb-2">Cable Cutters</p>
                   <div className="space-y-3">
                     <div>
@@ -369,13 +369,13 @@ const Module3Section3_1: React.FC = () => {
 
           {/* Hand Tools */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Wrench className="w-5 h-5" /> Essential Hand Tools
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Screwdrivers</p>
                   <div className="space-y-3">
                     <div>
@@ -406,7 +406,7 @@ const Module3Section3_1: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Pliers</p>
                   <div className="space-y-3">
                     <div>
@@ -444,12 +444,12 @@ const Module3Section3_1: React.FC = () => {
 
           {/* Other Essential Tools */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Hammer className="w-5 h-5" /> Other Essential Tools
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-slate-400/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <p className="font-medium text-slate-200 mb-2">Support Tools</p>
@@ -476,12 +476,12 @@ const Module3Section3_1: React.FC = () => {
         </Card>
 
         {/* What this means on site */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Building className="w-5 h-5" /> What this means on site
           </h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2">Daily Tool Selection</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Check tool condition before starting work - damaged insulation is dangerous</li>
@@ -490,7 +490,7 @@ const Module3Section3_1: React.FC = () => {
                 <li>Use only VDE-rated tools when working near or on live electrical systems</li>
               </ul>
             </div>
-            <div className="rounded-lg p-4 bg-card border border-green-400/30">
+            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
               <p className="font-medium mb-2">Quality Installation Impact</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Proper stripping prevents conductor damage that could cause overheating</li>
@@ -503,13 +503,13 @@ const Module3Section3_1: React.FC = () => {
         </Card>
 
         {/* Installation Practices */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Settings className="w-5 h-5" /> Installation Practices
           </h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
+          <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="rounded-lg p-4 bg-card border border-amber-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
                 <p className="font-medium mb-2">Tool Maintenance</p>
                 <ul className="list-disc pl-6 space-y-1">
                   <li>Clean tools after each use to prevent contamination</li>
@@ -518,7 +518,7 @@ const Module3Section3_1: React.FC = () => {
                   <li>Test VDE insulation annually or after suspected damage</li>
                 </ul>
               </div>
-              <div className="rounded-lg p-4 bg-card border border-cyan-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-cyan-400/30">
                 <p className="font-medium mb-2">Safe Working Practices</p>
                 <ul className="list-disc pl-6 space-y-1">
                   <li>Never use damaged or non-insulated tools on live circuits</li>
@@ -532,13 +532,13 @@ const Module3Section3_1: React.FC = () => {
         </Card>
 
         {/* Common Mistakes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5 text-emerald-400" /> Common Mistakes
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <AlertTriangle className="w-5 h-5 text-elec-yellow" /> Common Mistakes
           </h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <p className="font-medium mb-2 text-emerald-400">Dangerous Practices</p>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <p className="font-medium mb-2 text-elec-yellow">Dangerous Practices</p>
               <ul className="list-disc pl-6 space-y-1 text-red-200">
                 <li><strong>Using non-VDE tools on live circuits</strong> - Risk of electric shock or electrocution</li>
                 <li><strong>Wrong size screwdrivers</strong> - Damages screw heads and reduces connection security</li>
@@ -546,8 +546,8 @@ const Module3Section3_1: React.FC = () => {
                 <li><strong>Overstripping conductors</strong> - Exposes copper that can cause short circuits</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <p className="font-medium mb-2 text-emerald-400">Quality Issues</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <p className="font-medium mb-2 text-elec-yellow">Quality Issues</p>
               <ul className="list-disc pl-6 space-y-1 text-orange-200">
                 <li><strong>Blunt cutting tools</strong> - Crush conductors and create poor connections</li>
                 <li><strong>Dirty plier jaws</strong> - Poor grip leads to slipping and component damage</li>
@@ -559,11 +559,11 @@ const Module3Section3_1: React.FC = () => {
         </Card>
 
         {/* BS 7671 Context */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Shield className="w-5 h-5" /> BS 7671 Context
           </h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
+          <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="rounded-lg p-4 bg-indigo-500/10 border border-indigo-400/30">
               <p className="font-medium mb-2">Relevant Sections</p>
               <ul className="list-disc pl-6 space-y-1">
@@ -588,11 +588,11 @@ const Module3Section3_1: React.FC = () => {
         <InlineCheck {...quickCheckQuestions[3]} />
 
         {/* Real-world Scenario */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Factory className="w-5 h-5" /> Real-world Scenario
           </h2>
-          <div className="rounded-lg p-3 sm:p-4 bg-card border border-slate-400/30">
+          <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30">
             <p className="font-medium mb-2">Scenario: Non-VDE Tool Incident</p>
             <p className="text-sm mb-4">
               An electrician used a non-insulated screwdriver when tightening a live terminal on a lighting circuit. 
@@ -610,7 +610,7 @@ const Module3Section3_1: React.FC = () => {
                 </ul>
               </div>
               <div>
-                <p className="font-medium text-emerald-400 mb-1">Consequences Avoided</p>
+                <p className="font-medium text-elec-yellow mb-1">Consequences Avoided</p>
                 <ul className="list-disc pl-4 space-y-1 text-red-200">
                   <li>Serious electric shock or electrocution</li>
                   <li>Equipment damage and downtime</li>
@@ -623,15 +623,15 @@ const Module3Section3_1: React.FC = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Frequently Asked Questions
           </h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <div key={index}>
-                <p className="font-medium text-foreground mb-1">{faq.q}</p>
-                <p className="text-sm text-muted-foreground">{faq.a}</p>
+                <p className="font-medium text-white mb-1">{faq.q}</p>
+                <p className="text-sm text-white">{faq.a}</p>
                 {index < faqs.length - 1 && <Separator className="mt-4" />}
               </div>
             ))}
@@ -639,15 +639,15 @@ const Module3Section3_1: React.FC = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
             <p>
               Essential hand tools are the backbone of electrical work. Knowing how to select, use, and maintain them 
               ensures safe, precise, and efficient installations, while also protecting both the tools and the materials you're working with.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="rounded-lg p-4 bg-card border border-green-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                 <p className="font-medium text-green-300 mb-2">Key Benefits</p>
                 <ul className="list-disc pl-4 space-y-1 text-green-200">
                   <li>Safe working with VDE-rated insulated tools</li>
@@ -656,8 +656,8 @@ const Module3Section3_1: React.FC = () => {
                   <li>Reduced material waste and rework</li>
                 </ul>
               </div>
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-                <p className="font-medium text-emerald-400 mb-2">Essential Points</p>
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+                <p className="font-medium text-elec-yellow mb-2">Essential Points</p>
                 <ul className="list-disc pl-4 space-y-1 text-blue-200">
                   <li>Match tool to task - don't compromise on quality</li>
                   <li>Regular maintenance keeps tools safe and effective</li>
@@ -670,12 +670,12 @@ const Module3Section3_1: React.FC = () => {
         </Card>
 
         {/* Apprentice Do's and Don'ts */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Target className="w-5 h-5" /> Apprentice Do's and Don'ts
           </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-            <div className="rounded-lg p-4 bg-card border border-green-400/30">
+            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
               <p className="font-medium text-green-300 mb-3 flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4" /> DO
               </p>
@@ -688,8 +688,8 @@ const Module3Section3_1: React.FC = () => {
                 <li>✓ Use proper technique to avoid damage</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <p className="font-medium text-emerald-400 mb-3 flex items-center gap-2">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <p className="font-medium text-elec-yellow mb-3 flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4" /> DON'T
               </p>
               <ul className="space-y-2 text-sm text-red-200">
@@ -705,11 +705,11 @@ const Module3Section3_1: React.FC = () => {
         </Card>
 
         {/* Pocket Card Quick Reference */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Pocket Card Quick Reference
           </h2>
-          <div className="rounded-lg p-3 sm:p-4 bg-card border border-slate-400/30 text-sm">
+          <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30 text-sm">
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <p className="font-medium mb-2">Essential Tool Checklist</p>
@@ -740,9 +740,9 @@ const Module3Section3_1: React.FC = () => {
         </Card>
 
         {/* Key References */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Key References</h2>
-          <div className="text-xs sm:text-sm text-foreground space-y-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Key References</h2>
+          <div className="text-xs sm:text-sm text-white space-y-2">
             <p><strong>BS 7671:</strong> IET Wiring Regulations (18th Edition)</p>
             <p><strong>GS38:</strong> Electrical test equipment for use by electricians</p>
             <p><strong>HSE Guidance:</strong> Safe working practices with electrical tools</p>
@@ -751,8 +751,8 @@ const Module3Section3_1: React.FC = () => {
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Knowledge Check
           </h2>
           <Quiz questions={quizQuestions} />

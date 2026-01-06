@@ -131,11 +131,11 @@ const Module2Section4_2 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 2.4
@@ -148,15 +148,15 @@ const Module2Section4_2 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <Lightbulb className="h-8 w-8 text-emerald-400" />
+            <Lightbulb className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 2.4.2
               </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
                 Sources of AC and DC
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+              <p className="text-xl text-white max-w-3xl mt-2">
                 Mains, generators, rectifiers, batteries, PV, inverters and UPS — how to identify, select and work safely
               </p>
             </div>
@@ -164,11 +164,11 @@ const Module2Section4_2 = () => {
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>AC sources:</strong> DNO mains, alternators/generators, transformers (AC↔AC only).</li>
                 <li><strong>DC sources:</strong> Batteries, rectifiers/SMPS, PV arrays, UPS DC bus, drives.</li>
@@ -177,8 +177,8 @@ const Module2Section4_2 = () => {
                 <li><strong>Selection:</strong> Headroom for surge, derating for temperature, RCD compatibility.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Where:</strong> Plant rooms, switch rooms, UPS rooms, PV isolators, control panels, EV charge points.</li>
                 <li><strong>What to do:</strong> Check nameplates, isolation points, RCD notes, discharge times, ventilation and cable sizing.</li>
@@ -188,32 +188,32 @@ const Module2Section4_2 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
-          <ul className="space-y-3 text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
+          <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Identify common AC and DC sources in domestic, commercial and industrial settings</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Explain rectification, inversion and smoothing at a practical level</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Choose suitable supplies with allowance for surge and derating</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Recognise UPS topologies and basic battery management considerations</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Reference relevant BS 7671 sections (e.g. 551, 712, 722, 414)</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Apply safe isolation and discharge procedures for various source types</span>
             </li>
           </ul>
@@ -221,12 +221,12 @@ const Module2Section4_2 = () => {
 
         {/* Section 1: AC Sources */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
+          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
               AC Sources - Mains, Generators and Transformers
             </h2>
-            <div className="space-y-6 text-foreground">
+            <div className="space-y-6 text-white">
               <p>
                 AC sources form the foundation of UK electrical infrastructure. Understanding their characteristics, 
                 limitations, and applications is essential for safe design and installation work.
@@ -234,7 +234,7 @@ const Module2Section4_2 = () => {
               
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-lg font-semibold text-emerald-400 mb-3">DNO Mains Supply Characteristics</h3>
+                  <h3 className="text-lg font-semibold text-elec-yellow mb-3">DNO Mains Supply Characteristics</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-border/30 p-4 rounded-lg">
                       <p className="text-blue-200 text-sm mb-2"><strong>UK Standard Supply Parameters:</strong></p>
@@ -260,7 +260,7 @@ const Module2Section4_2 = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-emerald-400 mb-3">Generators and Alternators</h3>
+                  <h3 className="text-lg font-semibold text-elec-yellow mb-3">Generators and Alternators</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-border/30 p-4 rounded-lg">
                       <p className="text-blue-200 text-sm mb-2"><strong>Portable and Standby Sets:</strong></p>
@@ -286,7 +286,7 @@ const Module2Section4_2 = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-emerald-400 mb-3">Transformers and Voltage Conversion</h3>
+                  <h3 className="text-lg font-semibold text-elec-yellow mb-3">Transformers and Voltage Conversion</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-border/30 p-4 rounded-lg">
                       <p className="text-blue-200 text-sm mb-2"><strong>Transformer Principles and Applications:</strong></p>
@@ -311,7 +311,7 @@ const Module2Section4_2 = () => {
                   </div>
                 </div>
 
-                <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
+                <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                   <p className="text-yellow-300">
                     <strong>Important Limitation:</strong> Transformers only work with AC - they cannot convert between AC and DC. 
                     For AC→DC conversion, you need rectification. For DC→AC, you need inversion. Transformers rely on 
@@ -320,7 +320,7 @@ const Module2Section4_2 = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-emerald-400 mb-3">Selection Criteria and Applications</h3>
+                  <h3 className="text-lg font-semibold text-elec-yellow mb-3">Selection Criteria and Applications</h3>
                   <div className="space-y-2">
                     <div className="bg-card border border-border/30 p-3 rounded">
                       <p className="text-sm text-blue-100">
@@ -348,12 +348,12 @@ const Module2Section4_2 = () => {
 
         {/* Section 2: DC Sources */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
+          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
               DC Sources - Batteries, Rectifiers and PV
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 DC sources provide steady voltage with possible ripple. Understanding their characteristics is essential for proper selection and safety.
               </p>
@@ -361,7 +361,7 @@ const Module2Section4_2 = () => {
               <div className="space-y-4">
                 <div>
                   <p className="font-bold">Types of DC sources:</p>
-                  <div className="bg-card border border-emerald-500/30 p-4 rounded-lg">
+                  <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
                     <ul className="list-disc pl-6 space-y-1 text-sm text-emerald-200">
                       <li><strong>Batteries:</strong> Lead-acid, Li-ion, NiMH; note capacity (Ah), C-rate, temperature effects</li>
                       <li><strong>Rectifiers/SMPS:</strong> AC→DC conversion; filtered output may have ripple</li>
@@ -372,7 +372,7 @@ const Module2Section4_2 = () => {
                   </div>
                 </div>
 
-                <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
+                <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                   <p className="text-yellow-300">
                     <strong>Safety Note:</strong> DC systems can store significant energy in capacitors. 
                     Always discharge before maintenance and observe polarity - reverse connections can damage equipment.
@@ -388,11 +388,11 @@ const Module2Section4_2 = () => {
         {/* Section 3: Conversion & UPS */}
         <div className="mb-8">
           <div className="border-l-4 border-teal-500 bg-teal-500/10 dark:bg-teal-500/10 p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
               Conversion Pathways and UPS Systems
             </h2>
-            <div className="space-y-6 text-foreground">
+            <div className="space-y-6 text-white">
               
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold text-teal-300">AC↔DC Conversion</h3>
@@ -445,12 +445,12 @@ const Module2Section4_2 = () => {
 
         {/* Section 4: Selection & On-site Safety */}
         <div className="mb-8">
-          <div className="border-l-4 border-amber-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="border-l-4 border-amber-500 dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">4</span>
               Selection Criteria and On-site Safety
             </h2>
-            <div className="space-y-6 text-foreground">
+            <div className="space-y-6 text-white">
               
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold text-amber-300">Selection Guidelines</h3>
@@ -483,8 +483,8 @@ const Module2Section4_2 = () => {
         </div>
 
         {/* Real-world Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">Real-world Examples</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Real-world Examples</h2>
           
           <div className="space-y-6">
             <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
@@ -513,53 +513,53 @@ const Module2Section4_2 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-border/20 pb-4 last:border-b-0">
-                <h3 className="font-medium text-foreground mb-2">{faq.question}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{faq.answer}</p>
+              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
+                <h3 className="font-medium text-white mb-2">{faq.question}</h3>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Sources & Conversion — Pocket Guide</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Sources & Conversion — Pocket Guide</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
             <div className="space-y-3">
-              <div className="bg-background/20 border border-border/20 p-3 rounded">
-                <p className="font-medium text-foreground mb-1">AC Sources</p>
-                <p className="text-muted-foreground">Mains (DNO) | Generator | Transformer | Inverter (DC→AC)</p>
+              <div className="bg-[#121212]/20 border border-white/10 p-3 rounded">
+                <p className="font-medium text-white mb-1">AC Sources</p>
+                <p className="text-white">Mains (DNO) | Generator | Transformer | Inverter (DC→AC)</p>
               </div>
-              <div className="bg-background/20 border border-border/20 p-3 rounded">
-                <p className="font-medium text-foreground mb-1">DC Sources</p>
-                <p className="text-muted-foreground">Battery | Rectifier/SMPS | PV array | UPS DC bus</p>
+              <div className="bg-[#121212]/20 border border-white/10 p-3 rounded">
+                <p className="font-medium text-white mb-1">DC Sources</p>
+                <p className="text-white">Battery | Rectifier/SMPS | PV array | UPS DC bus</p>
               </div>
-              <div className="bg-background/20 border border-border/20 p-3 rounded">
-                <p className="font-medium text-foreground mb-1">Conversion Paths</p>
-                <p className="text-muted-foreground">AC →(rectifier)→ DC | DC →(inverter)→ AC</p>
+              <div className="bg-[#121212]/20 border border-white/10 p-3 rounded">
+                <p className="font-medium text-white mb-1">Conversion Paths</p>
+                <p className="text-white">AC →(rectifier)→ DC | DC →(inverter)→ AC</p>
               </div>
             </div>
             <div className="space-y-3">
-              <div className="bg-background/20 border border-border/20 p-3 rounded">
-                <p className="font-medium text-foreground mb-1">UPS Types</p>
-                <p className="text-muted-foreground">Offline | Line-interactive | Online (double-conversion)</p>
+              <div className="bg-[#121212]/20 border border-white/10 p-3 rounded">
+                <p className="font-medium text-white mb-1">UPS Types</p>
+                <p className="text-white">Offline | Line-interactive | Online (double-conversion)</p>
               </div>
-              <div className="bg-background/20 border border-border/20 p-3 rounded">
-                <p className="font-medium text-foreground mb-1">Selection Rules</p>
-                <p className="text-muted-foreground">20-30% headroom | Derate for temperature | Check RCD compatibility</p>
+              <div className="bg-[#121212]/20 border border-white/10 p-3 rounded">
+                <p className="font-medium text-white mb-1">Selection Rules</p>
+                <p className="text-white">20-30% headroom | Derate for temperature | Check RCD compatibility</p>
               </div>
-              <div className="bg-background/20 border border-border/20 p-3 rounded">
-                <p className="font-medium text-foreground mb-1">Safety Notes</p>
-                <p className="text-muted-foreground">Discharge stored energy | Check polarity | Follow Section 712/551/722</p>
+              <div className="bg-[#121212]/20 border border-white/10 p-3 rounded">
+                <p className="font-medium text-white mb-1">Safety Notes</p>
+                <p className="text-white">Discharge stored energy | Check polarity | Follow Section 712/551/722</p>
               </div>
             </div>
           </div>
-          <div className="mt-4 p-3 bg-emerald-500/10 rounded border border-emerald-500/30">
-            <p className="text-xs sm:text-sm text-foreground">
+          <div className="mt-4 p-3 bg-elec-yellow/10 rounded border border-elec-yellow/30">
+            <p className="text-xs sm:text-sm text-white">
               <strong>Quick Selection:</strong> PSU headroom ~25% | UPS: offline (basic), online (critical loads) | 
               RCD: Check manufacturer notes for Type A/B requirements.
             </p>
@@ -572,7 +572,7 @@ const Module2Section4_2 = () => {
         </section>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />

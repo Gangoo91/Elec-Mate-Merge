@@ -140,11 +140,11 @@ const Module6Section3_3 = () => {
    ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6.3
@@ -158,62 +158,62 @@ const Module6Section3_3 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Eye className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Eye className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 6.3.3
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Setting Up and Zeroing Instruments
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Proper preparation and calibration of test equipment
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-6">
-            <Target className="w-6 h-6 text-foreground" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Spot it in 30 Seconds</h2>
+            <Target className="w-6 h-6 text-white" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-3">In 30 seconds</p>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Zero check: short leads for continuity (0 Ω reading)</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Open circuit check: IR tester shows infinity (∞)</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Battery and fuse verification in test instruments</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Physical inspection: cracks, damage, lead integrity</span>
                 </li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/20">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/20">
               <p className="font-medium mb-3">Spot it / Use it / Check it</p>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Spot:</strong> Non-zeroed meters, damaged leads, drift after drops or temperature change</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Use:</strong> Proper zeroing sequence before every test; prove-zero-test routine</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Check:</strong> Re-zero after movement; calibration dates; accurate baseline readings</span>
                 </li>
               </ul>
@@ -222,21 +222,21 @@ const Module6Section3_3 = () => {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <p className="text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <p className="text-base text-white mb-4">
             Before any electrical testing can be carried out, instruments must be properly prepared and checked. Zeroing ensures that the instrument reads accurately and that environmental or internal resistance factors are accounted for.
           </p>
-          <p className="text-base text-foreground">
+          <p className="text-base text-white">
             Incorrect setup or failure to zero instruments can lead to false readings, misdiagnosis of faults, or unsafe conditions. This process is fundamental to reliable electrical testing and safety compliance.
           </p>
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-base text-foreground mb-4">By the end of this subsection, you will be able to:</p>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-base text-white mb-4">By the end of this subsection, you will be able to:</p>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Explain why setting up and zeroing instruments is essential.</li>
             <li>Perform a pre-use check on test instruments.</li>
             <li>Zero instruments correctly before use.</li>
@@ -246,22 +246,22 @@ const Module6Section3_3 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* 1. Why Zero Instruments? */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-3">Why Zero Instruments?</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Why Zero Instruments?</p>
                     
                     <div className="space-y-4">
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Internal Resistance Factors:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Internal Resistance Factors:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>All instruments have internal resistance that affects readings (typically 0.1-2.0 Ω)</li>
                            <li>Test leads add resistance that varies with length and condition (0.02-0.5 Ω per metre)</li>
                            <li>Connection resistance at probe tips can introduce errors (0.01-0.1 Ω per connection)</li>
@@ -272,8 +272,8 @@ const Module6Section3_3 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Calibration and Accuracy Requirements:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Calibration and Accuracy Requirements:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Zeroing corrects the instrument to a known reference point (0 Ω baseline)</li>
                            <li>Ensures accurate continuity and insulation resistance readings within ±5% tolerance</li>
                            <li>Eliminates offset errors that can mask or create false faults in circuits</li>
@@ -284,8 +284,8 @@ const Module6Section3_3 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>BS 7671 Compliance:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>BS 7671 Compliance:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Section 643 requires test equipment to be verified before use</li>
                            <li>Accurate measurements essential for protective device coordination calculations</li>
                            <li>Incorrect readings can lead to non-compliant certification and legal issues</li>
@@ -311,16 +311,16 @@ const Module6Section3_3 = () => {
           {/* 2. Pre-Use Checks */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-3">Pre-Use Checks</p>
+                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">Pre-Use Checks</p>
                     
                     <div className="space-y-4">
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Physical Inspection Checklist:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Physical Inspection Checklist:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Inspect for physical damage: cracked casing, worn leads, damaged insulation</li>
                            <li>Check test leads for cuts, nicks, or exposed conductors that could cause shock</li>
                            <li>Verify probe tips are not damaged, bent, or excessively worn</li>
@@ -332,8 +332,8 @@ const Module6Section3_3 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Functional Verification Steps:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Functional Verification Steps:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Verify batteries are charged and fuses are intact (check indicator lights)</li>
                            <li>Confirm GS38 compliance: shrouded tips (≤4mm exposed), fused leads, proper CAT rating</li>
                            <li>Test range selection and display operation across all measurement functions</li>
@@ -345,8 +345,8 @@ const Module6Section3_3 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Documentation and Records:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Documentation and Records:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Record serial numbers and calibration due dates in equipment log</li>
                            <li>Note any defects or concerns discovered during inspection</li>
                            <li>Verify instrument is assigned to qualified personnel only</li>
@@ -372,16 +372,16 @@ const Module6Section3_3 = () => {
           {/* 3. Zeroing a Continuity Tester or Multimeter */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-3">Zeroing a Continuity Tester or Multimeter</p>
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Zeroing a Continuity Tester or Multimeter</p>
                     
                     <div className="space-y-4">
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Step-by-Step Zeroing Procedure:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Step-by-Step Zeroing Procedure:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li><strong>Step 1:</strong> Select resistance/continuity function on instrument</li>
                            <li><strong>Step 2:</strong> Choose appropriate measurement range (auto or manual)</li>
                            <li><strong>Step 3:</strong> Short the test leads together firmly at the probe tips</li>
@@ -392,8 +392,8 @@ const Module6Section3_3 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Verification and Testing:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Verification and Testing:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Confirm zero reading is stable and consistent over 10-15 seconds</li>
                            <li>Separate leads to verify open circuit shows OL (overload) or high resistance</li>
                            <li>Re-short leads to confirm zero reading returns immediately</li>
@@ -404,8 +404,8 @@ const Module6Section3_3 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Common Zeroing Issues:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Common Zeroing Issues:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Instrument won&apos;t zero: check battery level and lead connections</li>
                            <li>Unstable zero reading: clean probe tips and check for loose connections</li>
                            <li>Cannot achieve exact zero: may indicate calibration drift - service required</li>
@@ -422,7 +422,7 @@ const Module6Section3_3 = () => {
            {/* 4. Zeroing an Insulation Resistance Tester */}
            <section className="mb-6">
              <div className="space-y-6">
-               <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+               <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
@@ -430,8 +430,8 @@ const Module6Section3_3 = () => {
                     
                     <div className="space-y-4">
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>IR Tester Setup:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>IR Tester Setup:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Ensure leads are separated (no load connected to avoid damage)</li>
                            <li>Select appropriate test voltage (250V for SELV, 500V for 230V circuits, 1000V for 400V+)</li>
                            <li>Confirm that meter reads infinity (∞) before applying test voltage</li>
@@ -442,8 +442,8 @@ const Module6Section3_3 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Pre-Test Verification Steps:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Pre-Test Verification Steps:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Display shows infinity (∞) or overload (OL) indication with open leads</li>
                            <li>Test leads checked for damage, contamination, or moisture</li>
                            <li>Circuit proven dead using appropriate voltage indicator</li>
@@ -454,8 +454,8 @@ const Module6Section3_3 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Critical Safety Checks:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Critical Safety Checks:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Never apply insulation test voltage to live circuits</li>
                            <li>Remove or isolate electronic equipment before testing</li>
                            <li>Ensure adequate clearance distances from personnel</li>
@@ -481,7 +481,7 @@ const Module6Section3_3 = () => {
           {/* 5. Common Problems from Not Zeroing */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-amber-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-amber-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
@@ -489,8 +489,8 @@ const Module6Section3_3 = () => {
                     
                     <div className="space-y-4">
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Common Zeroing Problems:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Common Zeroing Problems:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>False "open-circuit" readings on continuity tests due to lead resistance</li>
                            <li>Misinterpretation of insulation values caused by instrument drift</li>
                            <li>Safety hazards from incorrect fault diagnosis and wrong remedial action</li>
@@ -501,8 +501,8 @@ const Module6Section3_3 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Impact on Safety and Testing:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Impact on Safety and Testing:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Inaccurate readings leading to wrong conclusions about circuit integrity</li>
                            <li>Potential danger from undetected high resistance connections</li>
                            <li>Non-compliance with BS 7671 testing requirements and certification</li>
@@ -513,8 +513,8 @@ const Module6Section3_3 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Real-World Consequences:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Real-World Consequences:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Electricians strip and re-terminate healthy circuits unnecessarily</li>
                            <li>Good circuits failed due to instrument error, not actual faults</li>
                            <li>Time and material costs from chasing phantom problems</li>
@@ -530,13 +530,13 @@ const Module6Section3_3 = () => {
         </Card>
 
          {/* Practical Guidance */}
-         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Practical Guidance</h2>
+         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
            
            <div className="space-y-6">
              <div>
-               <h3 className="font-medium text-foreground mb-3">Essential Pre-Testing Steps</h3>
-               <ul className="space-y-3 text-base text-foreground">
+               <h3 className="font-medium text-white mb-3">Essential Pre-Testing Steps</h3>
+               <ul className="space-y-3 text-base text-white">
                  <li className="flex items-start gap-3">
                    <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                    <span><strong>Always prove dead</strong> using appropriate voltage indicator before connecting test instruments</span>
@@ -557,8 +557,8 @@ const Module6Section3_3 = () => {
              </div>
 
              <div>
-               <h3 className="font-medium text-foreground mb-3">Zeroing Best Practices</h3>
-               <ul className="space-y-3 text-base text-foreground">
+               <h3 className="font-medium text-white mb-3">Zeroing Best Practices</h3>
+               <ul className="space-y-3 text-base text-white">
                  <li className="flex items-start gap-3">
                    <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                    <span><strong>Zero instruments at the test location</strong>, not in the van or office</span>
@@ -579,8 +579,8 @@ const Module6Section3_3 = () => {
              </div>
 
              <div>
-               <h3 className="font-medium text-foreground mb-3">Storage and Maintenance</h3>
-               <ul className="space-y-3 text-base text-foreground">
+               <h3 className="font-medium text-white mb-3">Storage and Maintenance</h3>
+               <ul className="space-y-3 text-base text-white">
                  <li className="flex items-start gap-3">
                    <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                    <span><strong>Store instruments properly</strong> in protective cases to prevent calibration drift and physical damage</span>
@@ -603,45 +603,45 @@ const Module6Section3_3 = () => {
          </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-World Example</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Example</h2>
           
           <div className="rounded-lg p-5 bg-amber-950/20 border border-amber-700/30 mb-4">
-            <p className="text-base text-foreground mb-4">
+            <p className="text-base text-white mb-4">
               <strong>Scenario:</strong> During fault-finding, an electrician skipped zeroing a continuity tester. The meter showed a resistance reading of 1.5 Ω on a new circuit, suggesting a potential loose connection. The circuit was unnecessarily stripped and re-terminated, wasting time.
             </p>
-            <p className="text-base text-foreground">
+            <p className="text-base text-white">
               The issue was later found to be the tester itself, which had not been zeroed properly. The 1.5 Ω was simply the resistance of the test leads.
             </p>
           </div>
 
           <div className="rounded-lg p-4 bg-emerald-950/20 border border-blue-700/30">
-            <p className="text-base text-foreground">
+            <p className="text-base text-white">
               <strong>Professional Insight:</strong> Always zero before use to avoid misdiagnosis and wasted work. A simple 30-second zeroing procedure can save hours of unnecessary troubleshooting.
             </p>
           </div>
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Frequently Asked Questions</h2>
           <div className="space-y-6">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-l-4 border-l-emerald-500/50 pl-4">
-                <h3 className="font-medium text-foreground mb-2">Q: {faq.question}</h3>
-                <p className="text-sm text-muted-foreground">A: {faq.answer}</p>
+              <div key={index} className="border-l-4 border-l-elec-yellow/50 pl-4">
+                <h3 className="font-medium text-white mb-2">Q: {faq.question}</h3>
+                <p className="text-sm text-white">A: {faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-8 p-6 bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-transparent border-emerald-500/30">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-8 p-6 bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-transparent border-elec-yellow/30">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <span>📋</span>
             Pocket Guide: Zeroing Essentials
           </h2>
-          <div className="space-y-2 text-base text-foreground">
+          <div className="space-y-2 text-base text-white">
             <div className="flex items-start gap-2">
               <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
               <span>Zero before every test.</span>
@@ -666,35 +666,35 @@ const Module6Section3_3 = () => {
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">Recap</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Recap</h2>
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4 text-center">
-            <div className="p-4 rounded-lg bg-muted/50 border border-border/20">
-              <p className="text-sm font-medium text-foreground mb-1">Accuracy</p>
-              <p className="text-xs text-muted-foreground">Zeroing ensures accurate, reliable measurements</p>
+            <div className="p-4 rounded-lg bg-muted/50 border border-white/10">
+              <p className="text-sm font-medium text-white mb-1">Accuracy</p>
+              <p className="text-xs text-white">Zeroing ensures accurate, reliable measurements</p>
             </div>
-            <div className="p-4 rounded-lg bg-muted/50 border border-border/20">
-              <p className="text-sm font-medium text-foreground mb-1">Continuity 0 Ω</p>
-              <p className="text-xs text-muted-foreground">Continuity testers should read 0 Ω when shorted</p>
+            <div className="p-4 rounded-lg bg-muted/50 border border-white/10">
+              <p className="text-sm font-medium text-white mb-1">Continuity 0 Ω</p>
+              <p className="text-xs text-white">Continuity testers should read 0 Ω when shorted</p>
             </div>
-            <div className="p-4 rounded-lg bg-muted/50 border border-border/20">
-              <p className="text-sm font-medium text-foreground mb-1">IR ∞ Open</p>
-              <p className="text-xs text-muted-foreground">Insulation resistance testers should show ∞ with open leads</p>
+            <div className="p-4 rounded-lg bg-muted/50 border border-white/10">
+              <p className="text-sm font-medium text-white mb-1">IR ∞ Open</p>
+              <p className="text-xs text-white">Insulation resistance testers should show ∞ with open leads</p>
             </div>
-            <div className="p-4 rounded-lg bg-muted/50 border border-border/20">
-              <p className="text-sm font-medium text-foreground mb-1">Re-check</p>
-              <p className="text-xs text-muted-foreground">Poor zeroing = wasted time, false faults, unsafe conclusions</p>
+            <div className="p-4 rounded-lg bg-muted/50 border border-white/10">
+              <p className="text-sm font-medium text-white mb-1">Re-check</p>
+              <p className="text-xs text-white">Poor zeroing = wasted time, false faults, unsafe conclusions</p>
             </div>
-            <div className="p-4 rounded-lg bg-muted/50 border border-border/20">
-              <p className="text-sm font-medium text-foreground mb-1">Prove-Zero-Check</p>
-              <p className="text-xs text-muted-foreground">Always prove, zero, and re-check instruments for safety</p>
+            <div className="p-4 rounded-lg bg-muted/50 border border-white/10">
+              <p className="text-sm font-medium text-white mb-1">Prove-Zero-Check</p>
+              <p className="text-xs text-white">Always prove, zero, and re-check instruments for safety</p>
             </div>
           </div>
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">Test Your Knowledge</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Test Your Knowledge</h2>
           <Quiz questions={quizQuestions} />
         </Card>
 

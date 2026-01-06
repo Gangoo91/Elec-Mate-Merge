@@ -178,11 +178,11 @@ const Module4Section7_5 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 7
@@ -196,35 +196,35 @@ const Module4Section7_5 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <ClipboardList className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <ClipboardList className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 4.7.5
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Keeping the Work Area Safe and Organised
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Master workplace organisation and housekeeping practices to maintain safety, efficiency, and legal compliance.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>A clean, organised work area prevents accidents and improves efficiency in electrical installation work.</li>
                 <li>Legal duties under HASAWA 1974 and CDM 2015 require maintaining safe and organised workspaces.</li>
                 <li>Proper tool storage, waste management, and 'clear as you go' practices are essential for site safety.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Trailing cables, scattered tools, waste accumulation, blocked access routes, poor material storage.</li>
                 <li><strong>Use:</strong> Tool belts, cable stands, waste bins, designated storage areas, daily tidy-up routines.</li>
@@ -235,9 +235,9 @@ const Module4Section7_5 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Recognise the risks of a disorganised workspace.</li>
             <li>Apply safe systems for storage and housekeeping.</li>
             <li>Manage waste materials responsibly on site.</li>
@@ -247,23 +247,23 @@ const Module4Section7_5 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Hazards of a Poorly Managed Workspace */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">1. Hazards of a Poorly Managed Workspace</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">1. Hazards of a Poorly Managed Workspace</h3>
+            <p className="text-base text-white mb-4">
               Disorganised workspaces create multiple serious hazards that can lead to accidents, injuries, and project delays:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-1">Safety and Productivity Hazards</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Safety and Productivity Hazards</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Slips, trips, and falls</strong> - from trailing cables, scattered tools, packaging materials, and debris</li>
                       <li><strong>Fire hazards</strong> - flammable waste materials left near heat sources, electrical equipment, or ignition points</li>
                       <li><strong>Projectile risks</strong> - loose materials and tools that can fall from heights or be displaced by movement</li>
@@ -272,16 +272,16 @@ const Module4Section7_5 = () => {
                       <li><strong>Security risks</strong> - valuable tools and materials left unattended and vulnerable to theft</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Productivity impacts:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Productivity impacts:</strong></p>
+                      <p className="text-xs text-white">
                         Poor organisation directly affects work efficiency. Time lost searching for tools, delays from damaged materials, and work disruption from accident investigations all contribute to increased project costs and reduced competitiveness.
                       </p>
                     </div>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Psychological effects:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Psychological effects:</strong></p>
+                      <p className="text-xs text-white">
                         Cluttered, disorganised workspaces increase stress levels, reduce concentration, and contribute to fatigue. This can lead to poor decision-making and increased accident risk, creating a cycle of declining safety standards.
                       </p>
                     </div>
@@ -302,18 +302,18 @@ const Module4Section7_5 = () => {
 
           {/* Legal Duties */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">2. Legal Duties</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">2. Legal Duties</h3>
+            <p className="text-base text-white mb-4">
               Workplace organisation and housekeeping are legal requirements backed by comprehensive legislation and enforcement:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">Legislative Requirements and Responsibilities</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Legislative Requirements and Responsibilities</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Health and Safety at Work Act 1974</strong> - employers and employees have duty to keep workplaces safe and without risks to health</li>
                       <li><strong>CDM Regulations 2015</strong> - require housekeeping standards to be maintained throughout construction projects</li>
                       <li><strong>Workplace Regulations 1992</strong> - specify requirements for workplace cleanliness, lighting, and organisation</li>
@@ -322,16 +322,16 @@ const Module4Section7_5 = () => {
                       <li><strong>Employer obligations</strong> - provide adequate facilities, training, and systems for maintaining workplace organisation</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Employee responsibilities:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Employee responsibilities:</strong></p>
+                      <p className="text-xs text-white">
                         Workers have legal duties to cooperate with housekeeping requirements, use provided facilities properly, report hazards, and take reasonable care for their own and others' safety through maintaining tidy work areas.
                       </p>
                     </div>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Enforcement and consequences:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Enforcement and consequences:</strong></p>
+                      <p className="text-xs text-white">
                         HSE inspectors regularly assess housekeeping standards during site visits. Poor organisation can result in improvement notices, prohibition notices, prosecution, and significant financial penalties for both companies and individuals.
                       </p>
                     </div>
@@ -352,18 +352,18 @@ const Module4Section7_5 = () => {
 
           {/* Good Housekeeping Practices */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">3. Good Housekeeping Practices</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">3. Good Housekeeping Practices</h3>
+            <p className="text-base text-white mb-4">
               Effective housekeeping requires systematic approaches and consistent application of proven organisational principles:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
                     <p className="font-semibold text-green-600 dark:text-green-400 mb-1">Systematic Organisation Standards</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Designated storage areas</strong> - store tools and materials neatly in allocated locations with clear identification</li>
                       <li><strong>Progressive clearance</strong> - clear packaging and waste as work progresses, not at end of shift only</li>
                       <li><strong>Route maintenance</strong> - keep walkways, access points, and fire exits free from obstruction at all times</li>
@@ -372,9 +372,9 @@ const Module4Section7_5 = () => {
                       <li><strong>Daily inspection</strong> - conduct end-of-shift checks to identify and address potential hazards</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>5S methodology application:</strong></p>
-                      <ul className="text-xs text-muted-foreground list-disc ml-4 space-y-1">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>5S methodology application:</strong></p>
+                      <ul className="text-xs text-white list-disc ml-4 space-y-1">
                         <li><strong>Sort:</strong> Remove unnecessary items from work area</li>
                         <li><strong>Set in order:</strong> Organise remaining items logically</li>
                         <li><strong>Shine:</strong> Clean and maintain the work area</li>
@@ -383,9 +383,9 @@ const Module4Section7_5 = () => {
                       </ul>
                     </div>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Visual management techniques:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Visual management techniques:</strong></p>
+                      <p className="text-xs text-white">
                         Use colour coding, labels, floor markings, and designated areas to make organisation standards visible and easy to maintain. Clear visual cues help all site personnel understand and maintain housekeeping requirements consistently.
                       </p>
                     </div>
@@ -406,18 +406,18 @@ const Module4Section7_5 = () => {
 
           {/* Tool and Material Organisation */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">4. Tool and Material Organisation</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">4. Tool and Material Organisation</h3>
+            <p className="text-base text-white mb-4">
               Proper tool and material organisation prevents damage, reduces handling risks, and improves work efficiency:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-amber-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-amber-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
                     <p className="font-semibold text-amber-600 dark:text-amber-400 mb-1">Systematic Tool and Material Management</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Personal tool organisation</strong> - use tool belts, pouches, or boxes to keep hand tools accessible and secure</li>
                       <li><strong>Cable reel management</strong> - label reels clearly and store off the floor using stands or designated areas</li>
                       <li><strong>Ergonomic storage</strong> - keep heavy items at waist level to reduce manual handling injury risk</li>
@@ -426,9 +426,9 @@ const Module4Section7_5 = () => {
                       <li><strong>Security measures</strong> - secure valuable items in lockable storage or supervised areas</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Tool storage hierarchy:</strong></p>
-                      <ul className="text-xs text-muted-foreground list-disc ml-4 space-y-1">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Tool storage hierarchy:</strong></p>
+                      <ul className="text-xs text-white list-disc ml-4 space-y-1">
                         <li><strong>Daily use tools:</strong> Tool belt, pouch, or personal toolbox</li>
                         <li><strong>Regular use tools:</strong> Secure vehicle storage or site toolbox</li>
                         <li><strong>Occasional use tools:</strong> Lockable site storage with check-out system</li>
@@ -437,8 +437,8 @@ const Module4Section7_5 = () => {
                     </div>
                     
                     <div className="mt-3 p-3 bg-amber-50/50 dark:bg-amber-900/10 rounded border border-amber-200/30">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Material storage considerations:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Material storage considerations:</strong></p>
+                      <p className="text-xs text-white">
                         Consider material characteristics when planning storage: cable sensitivity to crushing and moisture, conduit susceptibility to dents and corrosion, electrical accessories requiring protection from contamination, and hazardous materials needing special storage conditions.
                       </p>
                     </div>
@@ -450,18 +450,18 @@ const Module4Section7_5 = () => {
 
           {/* Waste Management */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">5. Waste Management</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">5. Waste Management</h3>
+            <p className="text-base text-white mb-4">
               Responsible waste management is essential for safety, environmental protection, and regulatory compliance:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-1">Comprehensive Waste Management Systems</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Comprehensive Waste Management Systems</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Waste segregation</strong> - separate materials by type (metal, plastic, general) where recycling facilities are provided</li>
                       <li><strong>Designated disposal</strong> - use provided skips and bins, avoid accumulating waste near work areas</li>
                       <li><strong>Hazardous waste management</strong> - follow special procedures for contaminated or dangerous materials</li>
@@ -470,9 +470,9 @@ const Module4Section7_5 = () => {
                       <li><strong>Environmental responsibility</strong> - minimise waste generation and maximise recycling opportunities</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Common electrical waste categories:</strong></p>
-                      <ul className="text-xs text-muted-foreground list-disc ml-4 space-y-1">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Common electrical waste categories:</strong></p>
+                      <ul className="text-xs text-white list-disc ml-4 space-y-1">
                         <li><strong>Metal waste:</strong> Cable offcuts, conduit, trunking, and metal accessories</li>
                         <li><strong>Plastic waste:</strong> Cable insulation, conduit, trunking, and plastic accessories</li>
                         <li><strong>Packaging:</strong> Cardboard, plastic wrapping, and protective materials</li>
@@ -480,9 +480,9 @@ const Module4Section7_5 = () => {
                       </ul>
                     </div>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Legal compliance requirements:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Legal compliance requirements:</strong></p>
+                      <p className="text-xs text-white">
                         Waste management is regulated under Environmental Protection Act, Waste Regulations, and site-specific licenses. Improper disposal can result in prosecution, fines, and environmental damage claims. Always follow established procedures and seek guidance when uncertain.
                       </p>
                     </div>
@@ -494,15 +494,15 @@ const Module4Section7_5 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Wrench className="w-5 h-5" />
             Practical Guidance (On-Site Tips)
           </h2>
           <div className="grid gap-4">
-            <div className="p-4 bg-card rounded-lg border border-border/10">
-              <h3 className="font-medium text-foreground mb-2">Continuous Housekeeping Practices</h3>
-              <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc ml-5">
+            <div className="p-4 bg-transparent rounded-lg border border-border/10">
+              <h3 className="font-medium text-white mb-2">Continuous Housekeeping Practices</h3>
+              <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-5">
                 <li>Always "clear as you go" – never leave cuttings, insulation, or packaging to build up during work</li>
                 <li>Keep a small brush and pan for quickly clearing debris from confined workspaces</li>
                 <li>At the end of every shift, spend 5 minutes checking the area for potential hazards</li>
@@ -510,9 +510,9 @@ const Module4Section7_5 = () => {
               </ul>
             </div>
             
-            <div className="p-4 bg-card rounded-lg border border-border/10">
-              <h3 className="font-medium text-foreground mb-2">Tool and Material Management</h3>
-              <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc ml-5">
+            <div className="p-4 bg-transparent rounded-lg border border-border/10">
+              <h3 className="font-medium text-white mb-2">Tool and Material Management</h3>
+              <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-5">
                 <li>Use cable stands to prevent drums rolling loose around site and creating hazards</li>
                 <li>Coil and hang extension leads when not in use to prevent trip hazards and cable damage</li>
                 <li>Label personal tools clearly to prevent mix-ups and potential theft</li>
@@ -520,9 +520,9 @@ const Module4Section7_5 = () => {
               </ul>
             </div>
             
-            <div className="p-4 bg-card rounded-lg border border-border/10">
-              <h3 className="font-medium text-foreground mb-2">Safety and Compliance</h3>
-              <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc ml-5">
+            <div className="p-4 bg-transparent rounded-lg border border-border/10">
+              <h3 className="font-medium text-white mb-2">Safety and Compliance</h3>
+              <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-5">
                 <li>Keep fire exits and escape routes completely clear at all times</li>
                 <li>Never store materials in building voids or service areas</li>
                 <li>Use appropriate waste bins and recycling facilities as provided</li>
@@ -533,8 +533,8 @@ const Module4Section7_5 = () => {
         </Card>
 
         {/* Real-World Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Users className="w-5 h-5" />
             Real-World Examples
           </h2>
@@ -544,11 +544,11 @@ const Module4Section7_5 = () => {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-red-600 mt-1" />
                 <div>
-                  <h3 className="font-medium text-red-800 dark:text-emerald-400 mb-2">Case Study 1: Trip Hazard Injury</h3>
-                  <p className="text-xs sm:text-sm text-foreground mb-2">
+                  <h3 className="font-medium text-red-800 dark:text-elec-yellow mb-2">Case Study 1: Trip Hazard Injury</h3>
+                  <p className="text-xs sm:text-sm text-white mb-2">
                     On a refurbishment project, an apprentice left offcuts of twin-and-earth cable and packaging across a corridor. A site supervisor tripped over the debris and injured his wrist, requiring hospital treatment and time off work.
                   </p>
-                  <p className="text-xs text-muted-foreground bg-background/50 p-2 rounded">
+                  <p className="text-xs text-white bg-[#121212]/50 p-2 rounded">
                     <strong>Prevention:</strong> Following "clear as you go" principles would have prevented this accident. The incident led to stricter housekeeping enforcement and highlighted how poor organisation can cause serious injuries to any site personnel.
                   </p>
                 </div>
@@ -559,11 +559,11 @@ const Module4Section7_5 = () => {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-red-600 mt-1" />
                 <div>
-                  <h3 className="font-medium text-red-800 dark:text-emerald-400 mb-2">Case Study 2: Fire Hazard from Poor Waste Management</h3>
-                  <p className="text-xs sm:text-sm text-foreground mb-2">
+                  <h3 className="font-medium text-red-800 dark:text-elec-yellow mb-2">Case Study 2: Fire Hazard from Poor Waste Management</h3>
+                  <p className="text-xs sm:text-sm text-white mb-2">
                     Flammable packaging materials were left near a temporary electrical distribution board on a construction site. Overheating equipment ignited the materials, causing a significant fire that damaged work already completed and delayed the project by several weeks.
                   </p>
-                  <p className="text-xs text-muted-foreground bg-background/50 p-2 rounded">
+                  <p className="text-xs text-white bg-[#121212]/50 p-2 rounded">
                     <strong>Prevention:</strong> Proper waste disposal and maintaining clear areas around electrical equipment would have prevented this fire. The incident resulted in substantial financial losses and HSE investigation.
                   </p>
                 </div>
@@ -575,10 +575,10 @@ const Module4Section7_5 = () => {
                 <CheckCircle className="w-5 h-5 text-green-600 mt-1" />
                 <div>
                   <h3 className="font-medium text-green-800 dark:text-green-300 mb-2">Case Study 3: Effective Organisation System</h3>
-                  <p className="text-xs sm:text-sm text-foreground mb-2">
+                  <p className="text-xs sm:text-sm text-white mb-2">
                     A large office installation project implemented systematic housekeeping procedures with designated storage areas, daily clean-up routines, and clear responsibility assignments. The project completed ahead of schedule with zero housekeeping-related incidents.
                   </p>
-                  <p className="text-xs text-muted-foreground bg-background/50 p-2 rounded">
+                  <p className="text-xs text-white bg-[#121212]/50 p-2 rounded">
                     <strong>Good Practice:</strong> Systematic organisation improved efficiency, reduced material waste, and created a positive safety culture. The client praised the professional appearance and minimal disruption to their ongoing operations.
                   </p>
                 </div>
@@ -588,67 +588,67 @@ const Module4Section7_5 = () => {
         </Card>
 
         {/* FAQ */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Shield className="w-5 h-5" />
             Frequently Asked Questions
           </h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-border/20 pb-4 last:border-b-0">
-                <h3 className="font-medium text-foreground mb-2">{faq.question}</h3>
-                <p className="text-sm text-muted-foreground">{faq.answer}</p>
+              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
+                <h3 className="font-medium text-white mb-2">{faq.question}</h3>
+                <p className="text-sm text-white">{faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <ClipboardList className="w-5 h-5" />
             Pocket Guide (Key Takeaways)
           </h2>
           <div className="grid md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                <span className="font-medium text-foreground">Clear as you go – don't leave clutter</span>
+                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                <span className="font-medium text-white">Clear as you go – don't leave clutter</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                <span className="font-medium text-foreground">Store tools and materials neatly</span>
+                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                <span className="font-medium text-white">Store tools and materials neatly</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                <span className="font-medium text-foreground">Keep access routes and exits clear</span>
+                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                <span className="font-medium text-white">Keep access routes and exits clear</span>
               </div>
             </div>
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                <span className="font-medium text-foreground">Manage waste responsibly</span>
+                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                <span className="font-medium text-white">Manage waste responsibly</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                <span className="font-medium text-foreground">End every shift with a tidy-up check</span>
+                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                <span className="font-medium text-white">End every shift with a tidy-up check</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                <span className="font-medium text-foreground">Everyone is responsible for site housekeeping</span>
+                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                <span className="font-medium text-white">Everyone is responsible for site housekeeping</span>
               </div>
             </div>
           </div>
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Book className="w-5 h-5" />
             Recap
           </h2>
-          <p className="text-base text-foreground mb-4">In this subsection, you learned:</p>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+          <p className="text-base text-white mb-4">In this subsection, you learned:</p>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>The hazards of cluttered and disorganised workspaces.</li>
             <li>Legal obligations under HASAWA and CDM for safe housekeeping.</li>
             <li>Best practice for tool and material organisation.</li>
@@ -658,8 +658,8 @@ const Module4Section7_5 = () => {
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Target className="w-5 h-5" />
             Knowledge Check Quiz
           </h2>
@@ -667,7 +667,7 @@ const Module4Section7_5 = () => {
         </Card>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-6 border-t border-border/20">
+        <div className="flex justify-between items-center pt-6 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="module4-section7/subsection4" className="flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" />

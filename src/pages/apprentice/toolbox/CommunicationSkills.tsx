@@ -1,5 +1,5 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MessageCircle, Users, AlertTriangle, Lightbulb, Heart } from "lucide-react";
@@ -16,7 +16,7 @@ const CommunicationSkills = () => {
         <p className="text-muted-foreground text-center max-w-2xl mb-4">
           Master essential communication skills for the electrical trade - from site conversations to client interactions and difficult situations
         </p>
-        <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
+        <SmartBackButton />
       </div>
 
       <Tabs defaultValue="workplace" className="w-full">

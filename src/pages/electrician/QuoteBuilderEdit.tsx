@@ -4,8 +4,9 @@ import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
 import { QuoteWizard } from '@/components/electrician/quote-builder/QuoteWizard';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
 
 const QuoteBuilderEdit = () => {
   const { id } = useParams<{ id: string }>();
@@ -95,14 +96,7 @@ const QuoteBuilderEdit = () => {
   if (error || !quote) {
     return (
       <div className="space-y-6">
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/electrician/quote-builder')}
-          className="gap-2"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to Quotes
-        </Button>
+        <SmartBackButton />
         <div className="text-center py-12 space-y-4">
           <h2 className="text-2xl font-bold">Quote Not Found</h2>
           <p className="text-muted-foreground">
@@ -119,14 +113,7 @@ const QuoteBuilderEdit = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4">
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/electrician/quote-builder')}
-          className="gap-2"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to Quotes
-        </Button>
+        <SmartBackButton />
         <div>
           <h1 className="text-2xl font-bold">Edit Quote {quote.quoteNumber}</h1>
           <p className="text-sm text-muted-foreground">

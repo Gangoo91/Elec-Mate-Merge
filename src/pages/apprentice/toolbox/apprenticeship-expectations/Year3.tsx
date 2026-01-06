@@ -14,7 +14,7 @@ import {
   TrendingUp,
   Award
 } from "lucide-react";
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 
 const Year3 = () => {
   const monthlyBreakdown = [
@@ -201,7 +201,7 @@ const Year3 = () => {
         <p className="text-muted-foreground text-center max-w-2xl mb-4 text-sm sm:text-base">
           Advanced installations, fault-finding, and preparing for your End Point Assessment
         </p>
-        <BackButton customUrl="/apprentice/toolbox/apprenticeship-expectations" label="Back to Expectations" />
+        <SmartBackButton />
       </div>
 
       {/* Overview Card */}

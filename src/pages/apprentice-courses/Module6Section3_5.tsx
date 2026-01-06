@@ -132,11 +132,11 @@ const Module6Section3_5 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6.3
@@ -150,62 +150,62 @@ const Module6Section3_5 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Zap className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Zap className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 6.3.5
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Using a Proving Unit and Two-Pole Voltage Tester
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             The most reliable way to confirm circuits are dead using proper testing equipment
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-6">
-            <Target className="w-6 h-6 text-foreground" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Spot it in 30 Seconds</h2>
+            <Target className="w-6 h-6 text-white" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-3">In 30 seconds</p>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Two-pole voltage tester with fused, shrouded leads (GS38)</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Proving unit to verify tester operation before and after</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Live-dead-live sequence: prove → test → re-prove</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Never use neon screwdrivers or voltage pens for proving dead</span>
                 </li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/20">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/20">
               <p className="font-medium mb-3">Spot it / Use it / Check it</p>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Spot:</strong> GS38-compliant testers; proving units; damaged leads; unsafe tools</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Use:</strong> Live-dead-live sequence; test all conductor combinations; proper PPE</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Check:</strong> Tester function; lead condition; consistent readings; re-prove after use</span>
                 </li>
               </ul>
@@ -214,21 +214,21 @@ const Module6Section3_5 = () => {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <p className="text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <p className="text-base text-white mb-4">
             The most reliable way to confirm that a circuit is dead and safe to work on is by using a two-pole voltage tester in combination with a proving unit. This method ensures your tester is functioning correctly before and after use, and that circuits are properly verified.
           </p>
-          <p className="text-base text-foreground">
+          <p className="text-base text-white">
             This subsection will guide you through correct procedures, safety practices, and common pitfalls when using these essential pieces of safety equipment.
           </p>
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-base text-foreground mb-4">By the end of this subsection, you will be able to:</p>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-base text-white mb-4">By the end of this subsection, you will be able to:</p>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Identify the purpose of a proving unit and two-pole tester.</li>
             <li>Use both devices together as part of safe isolation.</li>
             <li>Follow the correct sequence for proving before and after testing.</li>
@@ -238,22 +238,22 @@ const Module6Section3_5 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* 1. Why Use a Proving Unit? */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-3">Why Use a Proving Unit?</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Why Use a Proving Unit?</p>
                     
                     <div className="space-y-4">
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Confirms Tester Operation:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Confirms Tester Operation:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Verifies that your voltage tester is working correctly before use</li>
                            <li>Provides a known voltage source for testing tester function</li>
                            <li>Confirms tester sensitivity and response to live circuits</li>
@@ -263,8 +263,8 @@ const Module6Section3_5 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Ensures Live-Dead-Live Check:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Ensures Live-Dead-Live Check:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Proves tester works before testing the circuit (live)</li>
                            <li>Tests the circuit to confirm it's dead (dead)</li>
                            <li>Re-proves tester still works after testing (live)</li>
@@ -274,8 +274,8 @@ const Module6Section3_5 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Prevents False Results:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Prevents False Results:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Detects faulty testers that might give false 'dead' readings</li>
                            <li>Identifies testers with flat batteries or internal faults</li>
                            <li>Prevents dangerous assumptions about circuit condition</li>
@@ -302,7 +302,7 @@ const Module6Section3_5 = () => {
           {/* 2. Why a Two-Pole Voltage Tester? */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
@@ -310,8 +310,8 @@ const Module6Section3_5 = () => {
                     
                     <div className="space-y-4">
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Direct Voltage Indication:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Direct Voltage Indication:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Provides direct measurement between two specific points</li>
                            <li>Shows actual voltage present across conductors</li>
                            <li>Clear visual and/or audible indication of voltage presence</li>
@@ -321,8 +321,8 @@ const Module6Section3_5 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Safety and Reliability:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Safety and Reliability:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Much safer than neon screwdrivers or single-pole devices</li>
                            <li>Doesn't rely on your body to complete the circuit</li>
                            <li>Provides consistent results regardless of user</li>
@@ -332,8 +332,8 @@ const Module6Section3_5 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>GS38 Compliance:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>GS38 Compliance:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Meets all GS38 safety requirements for test equipment</li>
                            <li>Features fused test leads to limit fault current</li>
                            <li>Has shrouded or protected probe tips</li>
@@ -360,16 +360,16 @@ const Module6Section3_5 = () => {
           {/* 3. The Correct Sequence */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-3">The Correct Sequence (Live-Dead-Live)</p>
+                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">The Correct Sequence (Live-Dead-Live)</p>
                     
                     <div className="space-y-4">
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Step 1: Prove Tester (LIVE)</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Step 1: Prove Tester (LIVE)</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Switch on the proving unit to provide known voltage</li>
                            <li>Test your voltage tester on the proving unit terminals</li>
                            <li>Verify both visual and audible indications work</li>
@@ -379,8 +379,8 @@ const Module6Section3_5 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Step 2: Test Circuit (DEAD)</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Step 2: Test Circuit (DEAD)</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Test L–N (Live to Neutral) at the point of work</li>
                            <li>Test L–E (Live to Earth) at the point of work</li>
                            <li>Test N–E (Neutral to Earth) at the point of work</li>
@@ -390,8 +390,8 @@ const Module6Section3_5 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Step 3: Re-prove Tester (LIVE)</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Step 3: Re-prove Tester (LIVE)</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Return to the proving unit immediately after testing</li>
                            <li>Test your voltage tester again on the proving unit</li>
                            <li>Confirm tester still responds to live voltage</li>
@@ -418,16 +418,16 @@ const Module6Section3_5 = () => {
           {/* 4. Unsafe Practices to Avoid */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-3">Unsafe Practices to Avoid</p>
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Unsafe Practices to Avoid</p>
                     
                     <div className="space-y-4">
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Never Use Neon Screwdrivers:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Never Use Neon Screwdrivers:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Rely on your body to complete the circuit - unsafe design</li>
                            <li>Don't meet GS38 safety requirements</li>
                            <li>Can give false readings due to induced voltages</li>
@@ -437,8 +437,8 @@ const Module6Section3_5 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Don't Skip Re-proving:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Don't Skip Re-proving:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Tester could have failed during the proving process</li>
                            <li>Internal fuses may have blown due to fault conditions</li>
                            <li>Test leads could have been damaged</li>
@@ -448,8 +448,8 @@ const Module6Section3_5 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Avoid Non-GS38 Equipment:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Avoid Non-GS38 Equipment:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Damaged or non-compliant test leads are dangerous</li>
                            <li>Wrong CAT rating could lead to equipment failure</li>
                            <li>Unfused leads don't provide fault current protection</li>
@@ -476,12 +476,12 @@ const Module6Section3_5 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Practical Guidance</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div>
-              <h3 className="font-semibold text-foreground mb-3">Equipment Requirements</h3>
-              <ul className="space-y-2 text-xs sm:text-sm text-foreground">
+              <h3 className="font-semibold text-white mb-3">Equipment Requirements</h3>
+              <ul className="space-y-2 text-xs sm:text-sm text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                   <span>Always carry a GS38-compliant two-pole tester and proving unit</span>
@@ -501,22 +501,22 @@ const Module6Section3_5 = () => {
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold text-foreground mb-3">Safe Working Practices</h3>
-              <ul className="space-y-2 text-xs sm:text-sm text-foreground">
+              <h3 className="font-semibold text-white mb-3">Safe Working Practices</h3>
+              <ul className="space-y-2 text-xs sm:text-sm text-white">
                 <li className="flex items-start gap-2">
-                  <Shield className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <Shield className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Treat all circuits as live until proven otherwise</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Shield className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <Shield className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Inspect test equipment before each use</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Shield className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <Shield className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Follow manufacturer's instructions for all equipment</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Shield className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <Shield className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Stop work immediately if equipment fails re-prove test</span>
                 </li>
               </ul>
@@ -525,17 +525,17 @@ const Module6Section3_5 = () => {
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-World Example</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Example</h2>
           <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 p-6 rounded-lg">
             <h3 className="text-amber-700 dark:text-amber-400 font-semibold mb-4">Case Study: The Hidden Tester Failure</h3>
             <div className="space-y-4">
-              <p className="text-foreground">
+              <p className="text-white">
                 An electrician isolated a distribution board but skipped the re-prove stage after testing. Unknown to him, the tester's internal fuse had blown during the proving process. He assumed the circuit was dead, but it was still live. He suffered a minor electric shock that could have been fatal.
               </p>
               <div className="bg-amber-50/50 dark:bg-amber-900/10 p-4 rounded-lg border-l-4 border-l-amber-500">
-                <p className="font-semibold text-foreground mb-2">Lesson learned:</p>
-                <p className="text-foreground">
+                <p className="font-semibold text-white mb-2">Lesson learned:</p>
+                <p className="text-white">
                   Always perform the complete live-dead-live testing sequence with a proving unit. The re-prove step is not optional—it's a safety-critical verification that your tester is still functioning correctly.
                 </p>
               </div>
@@ -544,16 +544,16 @@ const Module6Section3_5 = () => {
         </Card>
 
         {/* Micro-challenge */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Micro-Challenge</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Micro-Challenge</h2>
           <div className="bg-emerald-50/50 dark:bg-blue-900/20 border border-blue-200/50 p-6 rounded-lg">
             <div className="space-y-4">
-              <p className="text-foreground">
+              <p className="text-white">
                 You arrive at a job and your colleague says "Don't worry, I've already tested it with my voltage pen - it's definitely dead." What do you do?
               </p>
-              <div className="bg-emerald-50/50 dark:bg-blue-900/10 p-4 rounded-lg border-l-4 border-l-emerald-500">
-                <p className="font-semibold text-foreground mb-2">Answer:</p>
-                <p className="text-foreground">
+              <div className="bg-emerald-50/50 dark:bg-blue-900/10 p-4 rounded-lg border-l-4 border-l-elec-yellow">
+                <p className="font-semibold text-white mb-2">Answer:</p>
+                <p className="text-white">
                   Never trust another person's testing, especially with non-GS38 equipment. Always perform your own complete live-dead-live procedure using proper two-pole voltage tester and proving unit. Voltage pens are not acceptable for proving dead.
                 </p>
               </div>
@@ -562,68 +562,68 @@ const Module6Section3_5 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-6">
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-border/30 pb-4 last:border-b-0">
-                <h3 className="font-semibold text-foreground mb-2">Q: {faq.question}</h3>
-                <p className="text-muted-foreground">{faq.answer}</p>
+                <h3 className="font-semibold text-white mb-2">Q: {faq.question}</h3>
+                <p className="text-white">{faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Summary Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Recap</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
             <div className="text-center">
-              <div className="w-12 h-12 bg-emerald-500 rounded-lg flex items-center justify-center mx-auto mb-3">
+              <div className="w-12 h-12 bg-elec-yellow rounded-lg flex items-center justify-center mx-auto mb-3">
                 <Shield className="w-6 h-6 text-white" />
               </div>
-              <h3 className="font-semibold text-foreground mb-2">Proving Units</h3>
-              <p className="text-sm text-muted-foreground">Confirm testers are functional</p>
+              <h3 className="font-semibold text-white mb-2">Proving Units</h3>
+              <p className="text-sm text-white">Confirm testers are functional</p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mx-auto mb-3">
                 <Zap className="w-6 h-6 text-white" />
               </div>
-              <h3 className="font-semibold text-foreground mb-2">Two-Pole Testers</h3>
-              <p className="text-sm text-muted-foreground">Only safe method for proving dead</p>
+              <h3 className="font-semibold text-white mb-2">Two-Pole Testers</h3>
+              <p className="text-sm text-white">Only safe method for proving dead</p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mx-auto mb-3">
                 <CheckCircle className="w-6 h-6 text-white" />
               </div>
-              <h3 className="font-semibold text-foreground mb-2">Live-Dead-Live</h3>
-              <p className="text-sm text-muted-foreground">Sequence is mandatory</p>
+              <h3 className="font-semibold text-white mb-2">Live-Dead-Live</h3>
+              <p className="text-sm text-white">Sequence is mandatory</p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center mx-auto mb-3">
                 <AlertTriangle className="w-6 h-6 text-white" />
               </div>
-              <h3 className="font-semibold text-foreground mb-2">Unsafe Practices</h3>
-              <p className="text-sm text-muted-foreground">Neon screwdrivers prohibited</p>
+              <h3 className="font-semibold text-white mb-2">Unsafe Practices</h3>
+              <p className="text-sm text-white">Neon screwdrivers prohibited</p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-amber-500 rounded-lg flex items-center justify-center mx-auto mb-3">
                 <Eye className="w-6 h-6 text-white" />
               </div>
-              <h3 className="font-semibold text-foreground mb-2">Re-proving</h3>
-              <p className="text-sm text-muted-foreground">Prevents reliance on faulty instruments</p>
+              <h3 className="font-semibold text-white mb-2">Re-proving</h3>
+              <p className="text-sm text-white">Prevents reliance on faulty instruments</p>
             </div>
           </div>
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Pocket Guide</h2>
-          <div className="bg-card border border-emerald-500/20 p-6 rounded-lg">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Guide</h2>
+          <div className="bg-card border border-elec-yellow/20 p-6 rounded-lg">
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div>
-                <h3 className="font-semibold text-emerald-700 dark:text-emerald-400 mb-3">Equipment Checklist</h3>
-                <ul className="space-y-1 text-xs sm:text-sm text-foreground">
+                <h3 className="font-semibold text-emerald-700 dark:text-elec-yellow mb-3">Equipment Checklist</h3>
+                <ul className="space-y-1 text-xs sm:text-sm text-white">
                   <li>• Use two-pole testers only</li>
                   <li>• GS38-compliant with fused, shrouded leads</li>
                   <li>• Proving unit for tester verification</li>
@@ -631,8 +631,8 @@ const Module6Section3_5 = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold text-emerald-700 dark:text-emerald-400 mb-3">Testing Sequence</h3>
-                <ul className="space-y-1 text-xs sm:text-sm text-foreground">
+                <h3 className="font-semibold text-emerald-700 dark:text-elec-yellow mb-3">Testing Sequence</h3>
+                <ul className="space-y-1 text-xs sm:text-sm text-white">
                   <li>• Always follow live-dead-live sequence</li>
                   <li>• Prove tester → Test circuit → Re-prove tester</li>
                   <li>• Test L–N, L–E, N–E combinations</li>
@@ -655,7 +655,7 @@ const Module6Section3_5 = () => {
             <Link to="../3-4" className="flex items-center justify-center text-center">
               <ArrowLeft className="w-4 h-4 mr-2 flex-shrink-0" />
               <span className="flex-1">
-                <span className="block text-xs text-muted-foreground">Previous</span>
+                <span className="block text-xs text-white">Previous</span>
                 <span className="block font-medium">Proving Dead and Safe to Test</span>
               </span>
             </Link>

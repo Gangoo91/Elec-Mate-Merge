@@ -3,14 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calculator, Percent, SquareDot, Pi, Divide } from "lucide-react";
 import { Link } from "react-router-dom";
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 
 const MathsRefresher = () => {
   return (
     <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-4 px-2">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 sm:mb-4">Maths Refresher</h1>
-        <BackButton customUrl="/apprentice/study" label="Back to Study Centre" />
+        <SmartBackButton />
       </div>
 
       <div className="text-center mb-6 sm:mb-8 px-2">

@@ -1,5 +1,5 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Shield, Zap, AlertTriangle, CheckCircle } from "lucide-react";
@@ -81,7 +81,7 @@ const SafetyFundamentals = () => {
         <p className="text-sm sm:text-base text-muted-foreground text-center max-w-2xl mb-3 sm:mb-4">
           Critical safety information for electrical work - your life depends on following these rules
         </p>
-        <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
+        <SmartBackButton />
       </div>
 
       <Card className="border-red-500/50 bg-card">

@@ -117,11 +117,11 @@ const Module2Section6_4: React.FC = () => {
   ] as const;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2.6
@@ -134,29 +134,29 @@ const Module2Section6_4: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <ThermometerSun className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <ThermometerSun className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">Section 2.6.4</Badge>
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">Section 2.6.4</Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">Losses in electrical systems (heat and load)</h1>
-          <p className="text-muted-foreground">Where energy goes when it is not doing useful work, how to spot problem areas, and practical ways to keep losses low.</p>
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">Losses in electrical systems (heat and load)</h1>
+          <p className="text-white">Where energy goes when it is not doing useful work, how to spot problem areas, and practical ways to keep losses low.</p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Losses are unavoidable, but good design and installation minimise them.</li>
                 <li>Most unwanted loss shows up as heat in cables, transformers, motors and terminations.</li>
                 <li>Lower losses mean cooler kit, better performance and lower energy bills.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Warm cables, discoloured terminations, humming transformers, devices warm when idle.</li>
                 <li><strong>Use:</strong> Choose suitable cable sizes, routes and efficient equipment.</li>
@@ -167,9 +167,9 @@ const Module2Section6_4: React.FC = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Identify common sources of electrical losses and their signs.</li>
             <li>Explain why long runs, small conductors and loose terminations increase heating.</li>
             <li>Relate losses to current draw, voltage drop, equipment life and energy cost.</li>
@@ -178,13 +178,13 @@ const Module2Section6_4: React.FC = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Types of loss (plain English) */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2 flex items-center gap-2"><Plug className="w-5 h-5" /> Common losses you will see</h3>
-            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Plug className="w-5 h-5" /> Common losses you will see</h3>
+            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
               <li><strong>Cable heating:</strong> All cables have some resistance. More current and longer runs mean more heat and voltage drop.</li>
               <li><strong>Loose/dirty terminations:</strong> Poor contact area increases local heating and risk of damage or fire.</li>
               <li><strong>Transformer and motor losses:</strong> Heat in windings and magnetic parts; motors also have mechanical losses.</li>
@@ -206,8 +206,8 @@ const Module2Section6_4: React.FC = () => {
 
           {/* Reducing losses */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2 flex items-center gap-2"><Settings className="w-5 h-5" /> Practical ways to reduce losses</h3>
-            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Settings className="w-5 h-5" /> Practical ways to reduce losses</h3>
+            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
               <li>Use suitable cable size for run length and load; avoid unnecessary long routes.</li>
               <li>Follow torque settings; keep terminations clean and well‑made.</li>
               <li>Allow for ambient temperature, grouping and insulation (derating as required).</li>
@@ -221,13 +221,13 @@ const Module2Section6_4: React.FC = () => {
 
           {/* Examples */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2">Worked examples (conceptual)</h3>
-            <ul className="space-y-4 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-2">Worked examples (conceptual)</h3>
+            <ul className="space-y-4 text-xs sm:text-sm text-white">
               <li className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border border-border/30">
                 <p className="font-medium">Long garden supply</p>
                 <p>A small cable over a long distance feeds outdoor sockets. Users report warm cable and dim lights under load. Upgrading cable size and route reduces heating and voltage drop.</p>
               </li>
-              <li className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border border-emerald-500/30">
+              <li className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border border-elec-yellow/30">
                 <p className="font-medium">Loose connection at a spur</p>
                 <p>Brown discolouration is seen on a terminal. Re‑make the joint to the correct torque and check adjacent connections for damage or heat marks.</p>
               </li>
@@ -253,11 +253,11 @@ const Module2Section6_4: React.FC = () => {
 
           {/* Environmental and installation factors */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2">Environmental factors affecting losses</h3>
+            <h3 className="font-medium text-white mb-2">Environmental factors affecting losses</h3>
             
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div className="rounded-lg p-4 bg-gradient-to-br from-orange-500/10 to-red-500/10 border border-border/30">
-                <h4 className="font-medium mb-2 text-orange-700 dark:text-emerald-400">Temperature effects</h4>
+                <h4 className="font-medium mb-2 text-orange-700 dark:text-elec-yellow">Temperature effects</h4>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
                   <li>Higher ambient temperature = higher conductor resistance</li>
                   <li>Grouping cables reduces heat dissipation</li>
@@ -268,7 +268,7 @@ const Module2Section6_4: React.FC = () => {
               </div>
               
               <div className="rounded-lg p-4 bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-border/30">
-                <h4 className="font-medium mb-2 text-purple-700 dark:text-emerald-400">Installation quality</h4>
+                <h4 className="font-medium mb-2 text-purple-700 dark:text-elec-yellow">Installation quality</h4>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
                   <li>Cable routing: unnecessary bends and length increase resistance</li>
                   <li>Termination quality: proper torque and clean connections essential</li>
@@ -284,13 +284,13 @@ const Module2Section6_4: React.FC = () => {
 
           {/* Cost and energy impact */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2">Economic impact of losses</h3>
+            <h3 className="font-medium text-white mb-2">Economic impact of losses</h3>
             
             <div className="rounded-lg p-4 bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-400/30">
               <p className="text-sm mb-3">Understanding the financial impact helps justify better design and installation practices:</p>
               
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="bg-background/50 rounded p-3 border border-border/20">
+                <div className="bg-[#121212]/50 rounded p-3 border border-white/10">
                   <h5 className="font-medium mb-2">Direct costs</h5>
                   <ul className="text-xs space-y-1">
                     <li>• Higher energy bills from wasted power</li>
@@ -300,7 +300,7 @@ const Module2Section6_4: React.FC = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-background/50 rounded p-3 border border-border/20">
+                <div className="bg-[#121212]/50 rounded p-3 border border-white/10">
                   <h5 className="font-medium mb-2">Hidden costs</h5>
                   <ul className="text-xs space-y-1">
                     <li>• Reduced equipment lifespan from overheating</li>
@@ -317,10 +317,10 @@ const Module2Section6_4: React.FC = () => {
 
           {/* Troubleshooting losses */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2">Identifying and troubleshooting excessive losses</h3>
+            <h3 className="font-medium text-white mb-2">Identifying and troubleshooting excessive losses</h3>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-amber-500/10 border border-emerald-500/30">
+              <div className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-amber-500/10 border border-elec-yellow/30">
                 <h4 className="font-medium mb-2 text-yellow-700 dark:text-yellow-300">Warning signs to look for</h4>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <ul className="list-disc pl-6 space-y-1">
@@ -339,7 +339,7 @@ const Module2Section6_4: React.FC = () => {
               </div>
 
               <div className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 border border-border/30">
-                <h4 className="font-medium mb-2 text-blue-700 dark:text-emerald-400">Investigation approach</h4>
+                <h4 className="font-medium mb-2 text-blue-700 dark:text-elec-yellow">Investigation approach</h4>
                 <ol className="list-decimal pl-6 space-y-1 text-sm">
                   <li><strong>Visual inspection:</strong> Look for signs of overheating, damage, poor workmanship</li>
                   <li><strong>Thermal imaging:</strong> Identify hot spots in cables, connections, equipment</li>
@@ -351,10 +351,10 @@ const Module2Section6_4: React.FC = () => {
             </div>
           </section>
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2 flex items-center gap-2"><Settings className="w-5 h-5" /> Advanced loss reduction strategies</h3>
-            <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-4 bg-gradient-to-br from-card/10 to-card/5 border border-border/20">
-                <p className="font-medium mb-2 text-emerald-400">Design stage considerations</p>
+            <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Settings className="w-5 h-5" /> Advanced loss reduction strategies</h3>
+            <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-4 bg-gradient-to-br from-card/10 to-card/5 border border-white/10">
+                <p className="font-medium mb-2 text-elec-yellow">Design stage considerations</p>
                 <ul className="list-disc pl-6 space-y-1">
                   <li>Calculate voltage drop early in design process</li>
                   <li>Consider cable routes: avoid unnecessary length</li>
@@ -363,8 +363,8 @@ const Module2Section6_4: React.FC = () => {
                   <li>Consider higher voltage distributions for long runs</li>
                 </ul>
               </div>
-              <div className="rounded-lg p-4 bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 border border-emerald-500/30">
-                <p className="font-medium mb-2 text-emerald-700 dark:text-emerald-400">Installation best practices</p>
+              <div className="rounded-lg p-4 bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 border border-elec-yellow/30">
+                <p className="font-medium mb-2 text-emerald-700 dark:text-elec-yellow">Installation best practices</p>
                 <ul className="list-disc pl-6 space-y-1">
                   <li>Use calibrated torque tools for terminations</li>
                   <li>Allow adequate spacing between grouped cables</li>
@@ -380,7 +380,7 @@ const Module2Section6_4: React.FC = () => {
 
           {/* Quantifying losses */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2">Quantifying losses - practical examples</h3>
+            <h3 className="font-medium text-white mb-2">Quantifying losses - practical examples</h3>
             <div className="rounded-lg p-4 bg-gradient-to-r from-slate-500/10 to-slate-600/10 border border-slate-400/30">
               <p className="font-medium mb-3">Cable loss calculation example</p>
               <p className="mb-2"><strong>Scenario:</strong> 25A load, 30m run, 4mm² T&E cable (resistance ≈ 4.6mΩ/m)</p>
@@ -405,35 +405,35 @@ const Module2Section6_4: React.FC = () => {
 
           {/* Safety & BS 7671 context */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2 flex items-center gap-2"><Gauge className="w-5 h-5" /> BS 7671 context and good practice</h3>
-            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Gauge className="w-5 h-5" /> BS 7671 context and good practice</h3>
+            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
               <li>Current‑carrying capacity and correction factors: Appendix 4 (ambient, grouping, thermal insulation).</li>
               <li>Voltage drop limits for final circuits: follow BS 7671 guidance to protect performance and safety.</li>
               <li>Connections: workmanship and accessibility matter; poor joints are a common source of overheating.</li>
             </ul>
-            <div className="flex items-start gap-3 bg-background/20 border-l-4 border-emerald-500 p-4 rounded mt-4" role="alert">
-              <AlertTriangle className="w-5 h-5 text-emerald-400 mt-0.5" />
-              <p className="text-foreground text-sm">Isolate, lock‑off and prove dead before work. Follow manufacturer instructions and BS 7671.</p>
+            <div className="flex items-start gap-3 bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded mt-4" role="alert">
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5" />
+              <p className="text-white text-sm">Isolate, lock‑off and prove dead before work. Follow manufacturer instructions and BS 7671.</p>
             </div>
           </section>
         </Card>
 
         {/* FAQ */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">FAQs</h2>
-          <ul className="space-y-3 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
+          <ul className="space-y-3 text-xs sm:text-sm text-white">
             {faqs.map((f, i) => (
-              <li key={i} className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
+              <li key={i} className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
                 <p className="font-medium mb-1">{f.q}</p>
-                <p className="text-muted-foreground">{f.a}</p>
+                <p className="text-white">{f.a}</p>
               </li>
             ))}
           </ul>
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-16 p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quick check quiz</h2>
+        <Card className="mb-16 p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick check quiz</h2>
           <Quiz questions={quizQuestions as any} title="Losses in electrical systems" />
         </Card>
 

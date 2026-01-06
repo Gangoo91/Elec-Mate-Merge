@@ -112,11 +112,11 @@ const Module6Section5_2 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-0 text-sm sm:text-base" asChild>
+          <Button variant="ghost" className="text-white hover:text-white p-0 text-sm sm:text-base" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6.5
@@ -130,62 +130,62 @@ const Module6Section5_2 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-            <div className="p-1.5 sm:p-2 rounded-lg bg-card">
-              <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
+            <div className="p-1.5 sm:p-2 rounded-lg ">
+              <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 text-xs sm:text-sm">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs sm:text-sm">
               Section 6.5.2
             </Badge>
           </div>
-          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Test Equipment and Safety Considerations
           </h1>
-          <p className="text-muted-foreground text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Understanding the correct equipment and safety precautions for insulation resistance testing
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-            <Target className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground">Spot it in 30 Seconds</h2>
+            <Target className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 sm:mb-3">In 30 seconds</p>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Use insulation resistance tester (megger)</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Always isolate and prove dead first</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Disconnect sensitive equipment before testing</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Discharge circuit after testing</span>
                 </li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/20">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/20">
               <p className="font-medium mb-2 sm:mb-3">Spot it / Use it / Check it</p>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Spot:</strong> Calibrated tester, good test leads, warning lights</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Use:</strong> Correct test voltage (250V/500V/1000V DC)</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Check:</strong> Circuit isolated, equipment disconnected, PPE worn</span>
                 </li>
               </ul>
@@ -194,18 +194,18 @@ const Module6Section5_2 = () => {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Introduction</h2>
-          <p className="text-sm sm:text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Introduction</h2>
+          <p className="text-sm sm:text-base text-white mb-4">
             Before carrying out insulation resistance (IR) testing, electricians must be familiar with the correct equipment and understand the safety precautions involved. Using the wrong instrument, or failing to follow safe procedures, can result in inaccurate readings, damage to sensitive equipment, or even personal injury. This subsection explains the types of test instruments used, how to prepare for safe testing, and the key considerations that protect both the electrician and the installation.
           </p>
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Learning Outcomes</h2>
-          <p className="text-sm sm:text-base text-foreground mb-3 sm:mb-4">By the end of this subsection, learners will be able to:</p>
-          <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Learning Outcomes</h2>
+          <p className="text-sm sm:text-base text-white mb-3 sm:mb-4">By the end of this subsection, learners will be able to:</p>
+          <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-white">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" />
               <span>Identify the correct instruments used for insulation resistance testing</span>
@@ -226,24 +226,24 @@ const Module6Section5_2 = () => {
         </Card>
 
         {/* Content / Learning */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Content / Learning</h2>
 
           {/* 1. Test Instruments Used for Insulation Resistance Testing */}
           <section className="mb-4 sm:mb-6">
             <div className="space-y-4 sm:space-y-6">
-              <div className="rounded-lg p-3 sm:p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-3 sm:p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-2 sm:gap-3 mb-2">
-                  <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-2 sm:mb-3 text-sm sm:text-base">Test Instruments Used for Insulation Resistance Testing</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2 sm:mb-3 text-sm sm:text-base">Test Instruments Used for Insulation Resistance Testing</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-xs sm:text-sm text-foreground mb-3">
+                        <p className="text-xs sm:text-sm text-white mb-3">
                           The main instrument used is the insulation resistance tester, often referred to as a "megger." This device applies a high DC voltage (commonly 250 V, 500 V, or 1000 V depending on the installation being tested) across the conductors and measures the resistance to current flow. A high resistance reading indicates good insulation, while a low resistance suggests damage, contamination, or deterioration.
                         </p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="text-xs sm:text-sm text-white">
                           Modern testers are digital, lightweight, and include additional functions such as continuity testing. However, electricians must ensure the instrument is properly calibrated and rated for the voltage being tested.
                         </p>
                       </div>
@@ -265,17 +265,17 @@ const Module6Section5_2 = () => {
           {/* 2. Preparing for Safe Testing */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
                     <p className="font-semibold text-green-600 dark:text-green-400 mb-3 text-base">Preparing for Safe Testing</p>
                     
                     <div className="space-y-4">
-                      <p className="text-xs sm:text-sm text-foreground">
+                      <p className="text-xs sm:text-sm text-white">
                         Before connecting the tester, the circuit must be isolated and proved dead. This involves switching off the supply, locking it off where possible, and verifying with a suitable voltage indicator that no voltage is present. All appliances, electronic devices, and sensitive equipment should be disconnected from the circuit to prevent damage from the test voltage. Failure to do this could result in equipment being permanently damaged or giving false readings.
                       </p>
-                      <p className="text-xs sm:text-sm text-foreground">
+                      <p className="text-xs sm:text-sm text-white">
                         It is also important to ensure that the circuit is free from temporary connections, such as borrowed neutrals, which could interfere with the test.
                       </p>
                     </div>
@@ -296,17 +296,17 @@ const Module6Section5_2 = () => {
           {/* 3. Safe Use of the Test Equipment */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-emerald-400 mb-3 text-base">Safe Use of the Test Equipment</p>
+                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3 text-base">Safe Use of the Test Equipment</p>
                     
                     <div className="space-y-4">
-                      <p className="text-xs sm:text-sm text-foreground">
+                      <p className="text-xs sm:text-sm text-white">
                         When using an insulation resistance tester, always connect the leads securely to the conductors under test. The tester will generate a high DC voltage, so it should only be applied once all persons are clear of the circuit and informed that testing is about to begin. Many testers include a warning light to show that a test voltage is present. Once the test is complete, the circuit must be discharged to earth to remove any stored charge before it is reconnected.
                       </p>
-                      <p className="text-xs sm:text-sm text-foreground">
+                      <p className="text-xs sm:text-sm text-white">
                         Electricians should also follow the manufacturer's operating instructions and wear suitable PPE such as insulated gloves when required.
                       </p>
                     </div>
@@ -327,14 +327,14 @@ const Module6Section5_2 = () => {
           {/* 4. Risks and Safety Considerations */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-3 text-base">Risks and Safety Considerations</p>
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3 text-base">Risks and Safety Considerations</p>
                     
                     <div className="space-y-4">
-                      <p className="text-xs sm:text-sm text-foreground">
+                      <p className="text-xs sm:text-sm text-white">
                         The main risks during insulation resistance testing are accidental contact with the test voltage and damage to connected equipment. Although the current output from the tester is low, the voltage is high enough to cause discomfort or harm if mishandled. There is also the risk of recording misleading results if the circuit has not been properly prepared. To minimise these risks, electricians must follow safe isolation procedures, double-check all disconnections, and ensure test leads are in good condition. Maintaining concentration during testing is vital to avoid mistakes that could compromise safety.
                       </p>
                     </div>
@@ -354,9 +354,9 @@ const Module6Section5_2 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Practical Guidance</h2>
-          <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Practical Guidance</h2>
+          <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-white">
             <li className="flex items-start gap-2">
               <span className="text-primary">•</span>
               <span>Always verify that the circuit is isolated before connecting the tester</span>
@@ -381,13 +381,13 @@ const Module6Section5_2 = () => {
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Real-World Example</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Real-World Example</h2>
           <div className="space-y-4">
-            <p className="text-sm sm:text-base text-foreground">
+            <p className="text-sm sm:text-base text-white">
               On a commercial site, an apprentice connected an insulation resistance tester to a circuit without disconnecting several computers still plugged into sockets. The 500 V DC test voltage damaged the computers' power supplies, costing the contractor several thousand pounds in replacement equipment. The incident could have been avoided by isolating properly, disconnecting all sensitive equipment, and confirming the circuit was safe to test.
             </p>
-            <div className="p-3 sm:p-4 bg-card border border-green-500/20 rounded-lg">
+            <div className="p-3 sm:p-4 bg-transparent border border-green-500/20 rounded-lg">
               <p className="text-sm font-medium text-green-700 dark:text-green-300">
                 ✅ <strong>Lesson:</strong> Preparing the circuit correctly before testing is just as important as carrying out the test itself.
               </p>
@@ -396,15 +396,15 @@ const Module6Section5_2 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">FAQs</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">FAQs</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <div key={index} className="border-l-2 border-l-primary/20 pl-4">
-                <p className="font-medium text-foreground mb-2 text-sm sm:text-base">
+                <p className="font-medium text-white mb-2 text-sm sm:text-base">
                   <strong>Q:</strong> {faq.question}
                 </p>
-                <p className="text-muted-foreground text-sm">
+                <p className="text-white text-sm">
                   <strong>A:</strong> {faq.answer}
                 </p>
               </div>
@@ -414,11 +414,11 @@ const Module6Section5_2 = () => {
 
         {/* Pocket Guide */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-gradient-to-r from-primary/5 to-secondary/5 border-primary/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">📋 Pocket Guide: IR Testing Equipment & Safety</h2>
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">📋 Pocket Guide: IR Testing Equipment & Safety</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div className="space-y-2">
-              <h3 className="font-medium text-foreground">Essential Equipment:</h3>
-              <ul className="space-y-1 text-foreground">
+              <h3 className="font-medium text-white">Essential Equipment:</h3>
+              <ul className="space-y-1 text-white">
                 <li>• Insulation resistance tester (megger)</li>
                 <li>• Voltage indicator</li>
                 <li>• Test leads in good condition</li>
@@ -427,8 +427,8 @@ const Module6Section5_2 = () => {
               </ul>
             </div>
             <div className="space-y-2">
-              <h3 className="font-medium text-foreground">Safety Checklist:</h3>
-              <ul className="space-y-1 text-foreground">
+              <h3 className="font-medium text-white">Safety Checklist:</h3>
+              <ul className="space-y-1 text-white">
                 <li>• Isolate and prove dead</li>
                 <li>• Disconnect sensitive equipment</li>
                 <li>• Check test lead condition</li>
@@ -440,30 +440,30 @@ const Module6Section5_2 = () => {
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Recap</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-            <div className="p-3 sm:p-4 rounded-lg bg-card border border-emerald-500/20">
-              <h3 className="font-medium text-blue-700 dark:text-emerald-400 mb-2 text-sm">Equipment</h3>
-              <p className="text-xs text-foreground">Use calibrated insulation resistance tester (megger) with correct test voltage ratings</p>
+            <div className="p-3 sm:p-4 rounded-lg border border-elec-yellow/20">
+              <h3 className="font-medium text-blue-700 dark:text-elec-yellow mb-2 text-sm">Equipment</h3>
+              <p className="text-xs text-white">Use calibrated insulation resistance tester (megger) with correct test voltage ratings</p>
             </div>
-            <div className="p-3 sm:p-4 rounded-lg bg-card border border-green-500/20">
+            <div className="p-3 sm:p-4 rounded-lg border border-green-500/20">
               <h3 className="font-medium text-green-700 dark:text-green-300 mb-2 text-sm">Preparation</h3>
-              <p className="text-xs text-foreground">Always isolate, prove dead, and disconnect sensitive equipment before testing</p>
+              <p className="text-xs text-white">Always isolate, prove dead, and disconnect sensitive equipment before testing</p>
             </div>
-            <div className="p-3 sm:p-4 rounded-lg bg-card border border-orange-500/20">
-              <h3 className="font-medium text-orange-700 dark:text-emerald-400 mb-2 text-sm">Safety</h3>
-              <p className="text-xs text-foreground">Follow manufacturer instructions, use PPE, and clear all personnel before testing</p>
+            <div className="p-3 sm:p-4 rounded-lg border border-orange-500/20">
+              <h3 className="font-medium text-orange-700 dark:text-elec-yellow mb-2 text-sm">Safety</h3>
+              <p className="text-xs text-white">Follow manufacturer instructions, use PPE, and clear all personnel before testing</p>
             </div>
-            <div className="p-3 sm:p-4 rounded-lg bg-card border border-red-500/20">
-              <h3 className="font-medium text-red-700 dark:text-emerald-400 mb-2 text-sm">After Testing</h3>
-              <p className="text-xs text-foreground">Discharge circuit to earth to remove stored energy before reconnection</p>
+            <div className="p-3 sm:p-4 rounded-lg border border-red-500/20">
+              <h3 className="font-medium text-red-700 dark:text-elec-yellow mb-2 text-sm">After Testing</h3>
+              <p className="text-xs text-white">Discharge circuit to earth to remove stored energy before reconnection</p>
             </div>
           </div>
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <Quiz
             title="Test Equipment and Safety Considerations Quiz"
             questions={quizQuestions}
@@ -471,7 +471,7 @@ const Module6Section5_2 = () => {
         </Card>
 
         {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-border/20">
+        <div className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-white/10">
           <Button variant="outline" className="order-2 sm:order-1" asChild>
             <Link to="../5-1">
               <ArrowLeft className="w-4 h-4 mr-2" />

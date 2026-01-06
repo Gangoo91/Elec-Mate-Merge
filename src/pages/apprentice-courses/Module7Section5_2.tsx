@@ -89,11 +89,11 @@ const Module7Section5_2 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-0 text-sm sm:text-base" asChild>
+          <Button variant="ghost" className="text-white hover:text-white p-0 text-sm sm:text-base" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 7.5
@@ -107,62 +107,62 @@ const Module7Section5_2 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-            <div className="p-1.5 sm:p-2 rounded-lg bg-card">
-              <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
+            <div className="p-1.5 sm:p-2 rounded-lg ">
+              <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 text-xs sm:text-sm">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs sm:text-sm">
               Section 7.5.2
             </Badge>
           </div>
-          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Checking Instruments for Safety and Accuracy
           </h1>
-          <p className="text-muted-foreground text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Essential procedures for verifying test equipment safety and accuracy before use
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-            <Target className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground">Spot it in 30 Seconds</h2>
+            <Target className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 sm:mb-3">In 30 seconds</p>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Visual inspection: casing, leads, probes, fuses</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Prove functionality with proving unit or known supply</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Check calibration certificates and dates</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Verify category rating matches test environment</span>
                 </li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/20">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/20">
               <p className="font-medium mb-2 sm:mb-3">Spot it / Use it / Check it</p>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Spot:</strong> Damaged casings, cut leads, missing shrouds</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Use:</strong> Prove-Test-Prove procedure; correct CAT rating</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Check:</strong> Remove faulty equipment; report immediately</span>
                 </li>
               </ul>
@@ -171,18 +171,18 @@ const Module7Section5_2 = () => {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Introduction</h2>
-          <p className="text-sm sm:text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Introduction</h2>
+          <p className="text-sm sm:text-base text-white mb-4">
             Even the best test equipment is only useful if it is safe to use and provides accurate readings. Faulty or poorly maintained instruments can give misleading results, leading to unsafe conclusions, or worse, expose the user to electric shock. For apprentices, learning how to check equipment before use is just as important as learning how to operate it. Instruments must be inspected, proven safe, and verified for accuracy before any testing begins.
           </p>
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Learning Outcomes</h2>
-          <p className="text-sm sm:text-base text-foreground mb-3 sm:mb-4">By the end of this subsection, you should be able to:</p>
-          <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Learning Outcomes</h2>
+          <p className="text-sm sm:text-base text-white mb-3 sm:mb-4">By the end of this subsection, you should be able to:</p>
+          <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-white">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" />
               <span>Explain why checking instruments is essential for safe electrical work</span>
@@ -199,18 +199,18 @@ const Module7Section5_2 = () => {
         </Card>
 
         {/* Content / Learning */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Content / Learning</h2>
 
           {/* Section 1 — Visual Inspection */}
           <section className="mb-6 sm:mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-emerald-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-elec-yellow ">
               <div className="flex items-start gap-3 mb-4">
-                <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-emerald-400 dark:text-emerald-400 mb-4 text-base">Visual Inspection and GS38 Compliance</h3>
+                  <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-4 text-base">Visual Inspection and GS38 Compliance</h3>
                   
-                  <div className="space-y-4 text-xs sm:text-sm text-foreground">
+                  <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p><strong>Instrument casing integrity:</strong> Check for cracks, missing battery covers, damaged displays, or broken selector switches that could expose internal components. Any damage to the casing can compromise both safety and measurement accuracy. Look for signs of impact damage, overheating, or chemical corrosion that might affect the instrument's operation.</p>
                     
                     <p><strong>Test lead condition:</strong> Examine the entire length for cuts, kinks, or damage. Pay special attention to connection points where stress concentrates, particularly at the instrument and probe ends. Damaged insulation can expose conductors, creating shock risks and affecting measurement integrity.</p>
@@ -234,13 +234,13 @@ const Module7Section5_2 = () => {
 
           {/* Section 2 — Proving Functionality */}
           <section className="mb-6 sm:mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-green-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-green-500 ">
               <div className="flex items-start gap-3 mb-4">
                 <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                 <div className="flex-1">
                   <h3 className="font-semibold text-green-600 dark:text-green-400 mb-4 text-base">Proving Functionality - The Prove-Test-Prove Method</h3>
                   
-                  <div className="space-y-4 text-xs sm:text-sm text-foreground">
+                  <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p><strong>Proving units and their importance:</strong> Dedicated devices that generate known voltages to test instrument response. Essential for voltage indicators and non-contact testers. Proving units provide a controlled, safe means of verifying instrument operation without relying on live electrical systems that may themselves be faulty.</p>
                     
                     <p><strong>Known live supply verification:</strong> Using a confirmed live source (like a socket outlet known to be energised) to verify the instrument detects voltage correctly. This method requires certainty that the supply is indeed live — never assume a supply is live without independent verification.</p>
@@ -269,13 +269,13 @@ const Module7Section5_2 = () => {
 
           {/* Section 3 — Calibration Requirements */}
           <section className="mb-6 sm:mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-amber-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-amber-500 ">
               <div className="flex items-start gap-3 mb-4">
                 <span className="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                 <div className="flex-1">
                   <h3 className="font-semibold text-amber-600 dark:text-amber-400 mb-4 text-base">Calibration and Accuracy Standards</h3>
                   
-                  <div className="space-y-4 text-xs sm:text-sm text-foreground">
+                  <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p><strong>Calibration certificates and documentation:</strong> Formal documentation proving the instrument meets accuracy standards within specified tolerance limits. Required for certification work and compliance with quality management systems. Certificates must show traceability to national standards through an unbroken chain of comparisons.</p>
                     
                     <p><strong>Calibration intervals and schedules:</strong> Typically 12 months for precision instruments used in electrical installation testing, though manufacturers may specify different periods based on usage patterns and environmental conditions. Heavy use or harsh environments may require more frequent calibration to maintain accuracy.</p>
@@ -299,13 +299,13 @@ const Module7Section5_2 = () => {
 
           {/* Section 4 — Safety Category Ratings */}
           <section className="mb-6 sm:mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-red-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-red-500 ">
               <div className="flex items-start gap-3 mb-4">
                 <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-red-600 dark:text-emerald-400 mb-4 text-base">Safety Category Ratings and Energy Withstand</h3>
+                  <h3 className="font-semibold text-red-600 dark:text-elec-yellow mb-4 text-base">Safety Category Ratings and Energy Withstand</h3>
                   
-                  <div className="space-y-4 text-xs sm:text-sm text-foreground">
+                  <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p><strong>CAT II - Local level equipment:</strong> Designed for socket outlets, portable appliances, and similar loads. Maximum working voltage 300V to earth. Suitable for final circuit testing but not distribution systems. Limited transient energy withstand capability suitable for loads connected to the fixed installation.</p>
                     
                     <p><strong>CAT III - Distribution level systems:</strong> Required for fixed installations, distribution boards, and feeder circuits. Designed for higher energy transients that can occur in distribution systems. Essential for testing at consumer units, distribution boards, and fixed wiring systems where fault currents and switching transients are higher.</p>
@@ -329,68 +329,68 @@ const Module7Section5_2 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Practical Guidance</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/20">
-              <h3 className="font-semibold text-emerald-400 dark:text-emerald-400 mb-2 sm:mb-3">Before Testing</h3>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Practical Guidance</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/20">
+              <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2 sm:mb-3">Before Testing</h3>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Visual inspection of all equipment components</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Verify calibration certificates are current</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Check category rating matches test environment</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Test functionality with proving unit</span>
                 </li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-amber-500/20">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-amber-500/20">
               <h3 className="font-semibold text-amber-600 dark:text-amber-400 mb-2 sm:mb-3">During Testing</h3>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Follow Prove-Test-Prove procedure</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Handle instruments carefully and safely</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Monitor for unusual readings or behaviour</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Stop immediately if equipment behaves abnormally</span>
                 </li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-green-500/20">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-green-500/20">
               <h3 className="font-semibold text-green-600 dark:text-green-400 mb-2 sm:mb-3">After Testing</h3>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Complete final proving check</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Store instruments safely and securely</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Report any faults or concerns immediately</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Tag faulty equipment clearly out of service</span>
                 </li>
               </ul>
@@ -399,18 +399,18 @@ const Module7Section5_2 = () => {
         </Card>
 
         {/* Real-World Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Real-World Examples</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Real-World Examples</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-red-500/20">
-              <h3 className="font-semibold text-red-600 dark:text-emerald-400 mb-2 sm:mb-3">Case Study: Instrument Failure Leads to Shock</h3>
-              <p className="text-xs sm:text-xs sm:text-sm text-foreground leading-relaxed">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-red-500/20">
+              <h3 className="font-semibold text-red-600 dark:text-elec-yellow mb-2 sm:mb-3">Case Study: Instrument Failure Leads to Shock</h3>
+              <p className="text-xs sm:text-xs sm:text-sm text-white leading-relaxed">
                 On a commercial site, an electrician used a voltage indicator that had not been verified on a proving unit. It failed to register live voltage, and he mistakenly believed the circuit was safe. He received an electric shock, fortunately without serious injury. Investigation showed the instrument's internal fuse had blown months earlier, but because no checks were carried out, the fault went unnoticed.
               </p>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-green-500/20">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-green-500/20">
               <h3 className="font-semibold text-green-600 dark:text-green-400 mb-2 sm:mb-3">Case Study: Proper Procedure Prevents Accident</h3>
-              <p className="text-xs sm:text-xs sm:text-sm text-foreground leading-relaxed">
+              <p className="text-xs sm:text-xs sm:text-sm text-white leading-relaxed">
                 In contrast, on another site, an apprentice followed the correct procedure. Before isolation testing, he proved his voltage indicator on a proving unit, confirmed the circuit was live, then rechecked after isolating to confirm it was dead. By doing so, he ensured there was no chance of a false reading. This method provided absolute confidence that the circuit was safe to work on.
               </p>
             </div>
@@ -418,47 +418,47 @@ const Module7Section5_2 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">FAQs</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">FAQs</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
             <div className="space-y-3 sm:space-y-4">
               <div>
-                <h3 className="font-medium text-foreground mb-1">Why must instruments be checked before use?</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">To ensure they are safe and provide accurate readings.</p>
+                <h3 className="font-medium text-white mb-1">Why must instruments be checked before use?</h3>
+                <p className="text-xs sm:text-sm text-white">To ensure they are safe and provide accurate readings.</p>
               </div>
               <div>
-                <h3 className="font-medium text-foreground mb-1">What should be inspected visually?</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">The casing, leads, probes, and fuses.</p>
+                <h3 className="font-medium text-white mb-1">What should be inspected visually?</h3>
+                <p className="text-xs sm:text-sm text-white">The casing, leads, probes, and fuses.</p>
               </div>
             </div>
             <div className="space-y-3 sm:space-y-4">
               <div>
-                <h3 className="font-medium text-foreground mb-1">How can accuracy be verified?</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">By testing the instrument against a proving unit or known supply.</p>
+                <h3 className="font-medium text-white mb-1">How can accuracy be verified?</h3>
+                <p className="text-xs sm:text-sm text-white">By testing the instrument against a proving unit or known supply.</p>
               </div>
               <div>
-                <h3 className="font-medium text-foreground mb-1">What should be done if an instrument fails a check?</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">Remove it from service and report it immediately.</p>
+                <h3 className="font-medium text-white mb-1">What should be done if an instrument fails a check?</h3>
+                <p className="text-xs sm:text-sm text-white">Remove it from service and report it immediately.</p>
               </div>
             </div>
           </div>
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Recap</h2>
-          <p className="text-sm sm:text-base text-foreground leading-relaxed">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Recap</h2>
+          <p className="text-sm sm:text-base text-white leading-relaxed">
             Checking instruments for safety and accuracy is a non-negotiable part of electrical testing. Visual checks confirm the integrity of casings, leads, and probes. Proving units or known supplies confirm instruments display correct readings. Calibration ensures accuracy over time, and instruments must always be category-rated for the system under test. Using unchecked or faulty instruments puts electricians and clients at risk. A disciplined checking routine ensures safe, reliable results every time.
           </p>
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <Quiz questions={quizQuestions} title="Test Your Knowledge: Checking Instruments for Safety and Accuracy" />
         </Card>
 
         {/* Footer Navigation */}
-        <div className="flex justify-between items-center pt-4 sm:pt-6 border-t border-border/20">
+        <div className="flex justify-between items-center pt-4 sm:pt-6 border-t border-white/10">
           <Button variant="outline" className="text-sm" asChild>
             <Link to="../5-1">
               <ArrowLeft className="w-4 h-4 mr-2" />

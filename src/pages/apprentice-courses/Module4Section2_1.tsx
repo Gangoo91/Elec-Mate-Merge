@@ -237,11 +237,11 @@ const Module4Section2_1 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2
@@ -255,35 +255,35 @@ const Module4Section2_1 = () => {
         {/* Header (matches Module 4.1.2 style) */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Ruler className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Ruler className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 4.2.1
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Using Measurement Tools and Marking Equipment
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Master the foundation of precise electrical installations through proper tool selection, use, and maintenance.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Always measure twice before cutting or drilling.</li>
                 <li>Use the same tape measure throughout a project for consistency.</li>
                 <li>Keep tools clean and check accuracy regularly for precision.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Measurement requirements, marking surfaces, tool condition.</li>
                 <li><strong>Use:</strong> Appropriate tools for task, correct marking method, proper maintenance.</li>
@@ -294,9 +294,9 @@ const Module4Section2_1 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Identify common measurement and marking tools used in electrical installation.</li>
             <li>Select the right tool for specific measurement tasks.</li>
             <li>Use tools correctly to achieve accurate measurements and markings.</li>
@@ -306,25 +306,25 @@ const Module4Section2_1 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Common Measurement Tools */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Common Measurement Tools</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Common Measurement Tools</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Proper tool selection ensures accurate measurement and professional results:
             </p>
             
             <div className="space-y-4">
               {measurementTools.map((tool, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+                <div key={i} className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                   <div className="flex items-start gap-3 mb-2">
-                    <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
+                    <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">{tool.name}</p>
-                      <p className="text-xs sm:text-sm text-foreground mb-2">{tool.purpose}</p>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                      <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">{tool.name}</p>
+                      <p className="text-xs sm:text-sm text-white mb-2">{tool.purpose}</p>
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Applications:</strong> {tool.applications.join(', ')} - {tool.bestPractices[0]}
                       </div>
                     </div>
@@ -333,9 +333,9 @@ const Module4Section2_1 = () => {
               ))}
             </div>
 
-            <div className="mt-4 p-4 bg-card border border-border/30 rounded-lg">
-              <p className="text-sm font-medium text-foreground mb-1">Tool Selection Tips</p>
-              <p className="text-xs text-foreground">
+            <div className="mt-4 p-4 bg-transparent border border-border/30 rounded-lg">
+              <p className="text-sm font-medium text-white mb-1">Tool Selection Tips</p>
+              <p className="text-xs text-white">
                 Choose tools based on precision requirements: tape measures for general work, steel rules for precision, 
                 spirit levels for alignment, laser levels for long distances, and calipers for component measurement.
               </p>
@@ -344,20 +344,20 @@ const Module4Section2_1 = () => {
 
           {/* Marking Equipment */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Marking Equipment</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Marking Equipment</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Selecting appropriate marking tools ensures clear, lasting reference points:
             </p>
             
             <div className="space-y-4">
               {markingEquipment.map((equipment, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+                <div key={i} className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
                       <p className="font-semibold text-green-600 dark:text-green-400 mb-1">{equipment.name}</p>
-                      <p className="text-xs sm:text-sm text-foreground mb-2">{equipment.purpose}</p>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2">{equipment.purpose}</p>
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Best for:</strong> {equipment.applications.join(', ')} - {equipment.advantages[0]}
                       </div>
                     </div>
@@ -378,20 +378,20 @@ const Module4Section2_1 = () => {
 
           {/* Best Practices for Accurate Measurement */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Best Practices for Accurate Measurement</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Best Practices for Accurate Measurement</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Following proven practices ensures consistent accuracy and professional results:
             </p>
             
             <div className="space-y-4">
               {bestPractices.map((practice, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+                <div key={i} className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-1">{practice.practice}</p>
-                      <p className="text-xs sm:text-sm text-foreground mb-2">{practice.reason}</p>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                      <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">{practice.practice}</p>
+                      <p className="text-xs sm:text-sm text-white mb-2">{practice.reason}</p>
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Application:</strong> {practice.application} - {practice.compliance}
                       </div>
                     </div>
@@ -412,20 +412,20 @@ const Module4Section2_1 = () => {
 
           {/* Maintaining Accuracy */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Maintaining Accuracy</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Maintaining Accuracy</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Regular maintenance ensures tools remain accurate and reliable:
             </p>
             
             <div className="space-y-4">
               {maintenanceRequirements.map((requirement, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-orange-500 bg-card">
+                <div key={i} className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-orange-600 dark:text-emerald-400 mb-1">{requirement.aspect}</p>
-                      <p className="text-xs sm:text-sm text-foreground mb-2">{requirement.requirement}</p>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                      <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">{requirement.aspect}</p>
+                      <p className="text-xs sm:text-sm text-white mb-2">{requirement.requirement}</p>
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Frequency:</strong> {requirement.frequency} - {requirement.purpose}
                       </div>
                     </div>
@@ -446,17 +446,17 @@ const Module4Section2_1 = () => {
 
           {/* Regulatory Considerations */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5" /> Regulatory Considerations (BS 7671)
             </h3>
             
-            <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+            <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
               <div className="flex items-start gap-3 mb-2">
                 <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">!</span>
                 <div className="flex-1">
-                  <p className="font-semibold text-red-600 dark:text-emerald-400 mb-1">BS 7671 Compliance Requirements</p>
-                  <p className="text-xs sm:text-sm text-foreground mb-2">Accurate measurement is essential for safety and regulatory compliance.</p>
-                  <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                  <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">BS 7671 Compliance Requirements</p>
+                  <p className="text-xs sm:text-sm text-white mb-2">Accurate measurement is essential for safety and regulatory compliance.</p>
+                  <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                     <strong>Critical areas:</strong> Safe zone compliance, spacing requirements, and professional workmanship standards. 
                     Poor measurement can create safety hazards and regulation breaches.
                   </div>
@@ -486,31 +486,31 @@ const Module4Section2_1 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-8 p-6 bg-card border-border/20">
-          <h3 className="font-semibold text-foreground mb-4">Frequently Asked Questions</h3>
+        <Card className="mb-8 p-6 bg-transparent border-white/20">
+          <h3 className="font-semibold text-white mb-4">Frequently Asked Questions</h3>
           <div className="space-y-4">
             <div>
-              <p className="font-medium text-foreground text-sm mb-1">
+              <p className="font-medium text-white text-sm mb-1">
                 Q: Can I use a pen instead of a pencil for marking?
               </p>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-white text-sm">
                 A: Yes, but ensure the mark is visible and appropriate for the surface. Pencil is preferred 
                 for surfaces where permanent marks are not desired.
               </p>
             </div>
             <div>
-              <p className="font-medium text-foreground text-sm mb-1">
+              <p className="font-medium text-white text-sm mb-1">
                 Q: Are laser levels worth the investment?
               </p>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-white text-sm">
                 A: For larger projects, yes. They save time and improve accuracy over long distances.
               </p>
             </div>
             <div>
-              <p className="font-medium text-foreground text-sm mb-1">
+              <p className="font-medium text-white text-sm mb-1">
                 Q: Should I trust measurements on pre-marked building plans?
               </p>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-white text-sm">
                 A: Always verify on-site before cutting or fixing. Plans may not reflect actual conditions.
               </p>
             </div>
@@ -518,12 +518,12 @@ const Module4Section2_1 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
             <TrendingUp className="w-5 h-5" />
             Summary
           </h3>
-          <p className="text-muted-foreground text-sm">
+          <p className="text-white text-sm">
             Accurate measurement and marking underpin every successful electrical installation. Using the correct tools, 
             maintaining them properly, and applying best practices ensures precision, compliance, and a professional finish. 
             Remember: measure twice, cut once, and always verify your work against BS 7671 requirements.
@@ -534,7 +534,7 @@ const Module4Section2_1 = () => {
         <Quiz questions={quizQuestions} title="Test Your Knowledge: Measurement Tools and Marking Equipment" />
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="../1-5">
               <ArrowLeft className="w-4 h-4 mr-2" />

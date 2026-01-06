@@ -162,11 +162,11 @@ const Module4Section6_1 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6
@@ -180,35 +180,35 @@ const Module4Section6_1 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Eye className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Eye className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 4.6.1
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Performing a Visual Inspection
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Master systematic visual inspection techniques to ensure electrical installations are safe, compliant, and ready for testing.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Visual inspection is the mandatory first step before electrical testing begins.</li>
                 <li>It identifies visible defects and ensures compliance with BS 7671 requirements.</li>
                 <li>Systematic inspection prevents costly rework and ensures safety standards.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Damaged components, incorrect installations, missing safety features.</li>
                 <li><strong>Use:</strong> Systematic approach, proper documentation, categorisation methods.</li>
@@ -219,9 +219,9 @@ const Module4Section6_1 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Explain the purpose and regulatory requirements of visual inspection in electrical installation work.</li>
             <li>Identify common defects and safety hazards that can be detected through visual examination.</li>
             <li>Follow a structured, systematic approach to carry out compliant visual inspections.</li>
@@ -231,44 +231,44 @@ const Module4Section6_1 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Purpose of Visual Inspection */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Purpose and Regulatory Framework for Visual Inspection</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Purpose and Regulatory Framework for Visual Inspection</h3>
+            <p className="text-base text-white mb-4">
               Visual inspection forms the foundation of electrical installation verification, ensuring safety and compliance before energisation:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">Regulatory Requirements and Compliance Framework</p>
-                    <p className="text-base text-foreground mb-2"><strong>BS 7671 compliance verification:</strong> Ensuring installations meet current wiring regulations.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Regulatory Requirements and Compliance Framework</p>
+                    <p className="text-base text-white mb-2"><strong>BS 7671 compliance verification:</strong> Ensuring installations meet current wiring regulations.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Regulation 611.3: Visual inspection shall precede testing and be carried out with the installation de-energised</li>
                       <li>Verification of compliance with Chapters 13-15 of BS 7671 covering design and installation requirements</li>
                       <li>Confirmation that installation methods align with manufacturer instructions and guidance notes</li>
                       <li>Assessment of workmanship standards against industry best practice and regulatory expectations</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Safety standard verification:</strong> Ensuring installations are free from visible hazards before energisation.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Safety standard verification:</strong> Ensuring installations are free from visible hazards before energisation.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Identification of immediate danger conditions requiring urgent attention</li>
                       <li>Verification of protection against electric shock through proper installation methods</li>
                       <li>Assessment of fire risk factors including proper cable support and containment</li>
                       <li>Confirmation of environmental protection appropriate to installation location</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Quality assurance processes:</strong> Maintaining professional standards throughout installation.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Quality assurance processes:</strong> Maintaining professional standards throughout installation.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Verification that installation meets both technical and aesthetic project requirements</li>
                       <li>Confirmation of proper coordination with other building services and trades</li>
                       <li>Assessment of accessibility for future maintenance and inspection activities</li>
                       <li>Documentation of installation quality for certification and warranty purposes</li>
                     </ul>
-                    <div className="text-xs sm:text-sm text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Legal requirement:</strong> Visual inspection is mandatory under BS 7671 and cannot be omitted or deferred
                     </div>
                   </div>
@@ -288,46 +288,46 @@ const Module4Section6_1 = () => {
 
           {/* What to Look For */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Comprehensive Defect Identification and Assessment</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Comprehensive Defect Identification and Assessment</h3>
+            <p className="text-base text-white mb-4">
               Systematic examination of all installation elements ensures comprehensive defect identification:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">Critical Safety and Compliance Checkpoints</p>
-                    <p className="text-base text-foreground mb-2"><strong>Accessory verification:</strong> Ensuring correct type, rating, and installation of electrical accessories.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Critical Safety and Compliance Checkpoints</p>
+                    <p className="text-base text-white mb-2"><strong>Accessory verification:</strong> Ensuring correct type, rating, and installation of electrical accessories.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Socket outlets: Correct type for location, proper earthing, secure mounting, and appropriate IP rating</li>
                       <li>Switches: Correct rating for load, proper orientation, secure fixing, and appropriate height</li>
                       <li>Light fittings: Suitable for environment, correctly supported, and proper lamp compatibility</li>
                       <li>Distribution boards: Appropriate size, correct labelling, and secure cable terminations</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Cable installation assessment:</strong> Verifying proper cable routing, support, and protection.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Cable installation assessment:</strong> Verifying proper cable routing, support, and protection.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Safe zone compliance: Cables routed in prescribed zones to prevent accidental damage</li>
                       <li>Support spacing: Adequate fixings at intervals compliant with BS 7671 requirements</li>
                       <li>Bend radius protection: Cables not subject to excessive bending or stress</li>
                       <li>Environmental suitability: Cable types appropriate for installation conditions</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Termination quality control:</strong> Ensuring safe and reliable electrical connections.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Termination quality control:</strong> Ensuring safe and reliable electrical connections.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>No exposed copper: All live conductors properly insulated with no bare metal visible</li>
                       <li>Proper cable preparation: Correct stripping lengths and undamaged conductor cores</li>
                       <li>Secure connections: All terminations tight and properly secured according to manufacturer specifications</li>
                       <li>Correct polarity: Live, neutral, and earth conductors connected to appropriate terminals</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Environmental protection verification:</strong> Confirming appropriate protection levels for location.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Environmental protection verification:</strong> Confirming appropriate protection levels for location.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>IP rating compliance: Enclosures suitable for moisture, dust, and impact conditions</li>
                       <li>Corrosion protection: Appropriate materials for environmental conditions</li>
                       <li>Temperature considerations: Components rated for ambient temperature conditions</li>
                       <li>Fire barriers: Proper sealing of penetrations to maintain compartmentation</li>
                     </ul>
-                    <div className="text-xs sm:text-sm text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Systematic approach:</strong> Every element must be checked methodically to ensure nothing is missed
                     </div>
                   </div>
@@ -347,46 +347,46 @@ const Module4Section6_1 = () => {
 
           {/* Inspection Sequence */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Systematic Inspection Methodology and Procedures</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Systematic Inspection Methodology and Procedures</h3>
+            <p className="text-base text-white mb-4">
               Following a structured sequence ensures comprehensive coverage and maintains safety throughout inspection:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
                     <p className="font-semibold text-green-600 dark:text-green-400 mb-1">Professional Inspection Sequence and Best Practices</p>
-                    <p className="text-base text-foreground mb-2"><strong>Origin and distribution assessment:</strong> Starting from the main supply and working systematically outward.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Origin and distribution assessment:</strong> Starting from the main supply and working systematically outward.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Main supply connection: Verify proper earthing, bonding, and supply characteristics</li>
                       <li>Consumer unit inspection: Check RCD operation, MCB ratings, and circuit identification</li>
                       <li>Circuit distribution: Follow each circuit from origin to final connection point</li>
                       <li>Sub-distribution verification: Additional boards correctly fed and protected</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Containment system verification:</strong> Ensuring mechanical protection and support systems are adequate.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Containment system verification:</strong> Ensuring mechanical protection and support systems are adequate.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Trunking systems: Proper joints, adequate support, and correct lid retention</li>
                       <li>Conduit installations: Smooth bore, proper bending, and appropriate material selection</li>
                       <li>Cable tray systems: Adequate support, proper earthing, and appropriate loading</li>
                       <li>Clip and cleat fixing: Correct spacing, appropriate materials, and secure mounting</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Accessory installation standards:</strong> Comprehensive checking of all electrical accessories.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Accessory installation standards:</strong> Comprehensive checking of all electrical accessories.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Mounting security: All accessories properly fixed with no movement or damage</li>
                       <li>Alignment accuracy: Consistent heights, horizontal alignment, and aesthetic standards</li>
                       <li>Functional accessibility: Easy operation and maintenance access maintained</li>
                       <li>Environmental suitability: Appropriate IP ratings and material selection</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Earthing and bonding verification:</strong> Critical safety system inspection and validation.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Earthing and bonding verification:</strong> Critical safety system inspection and validation.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Main earthing connections: Secure, accessible, and properly identified connections</li>
                       <li>Equipotential bonding: All required metalwork bonded with appropriate conductors</li>
                       <li>Circuit protective conductors: Continuous throughout installation with proper termination</li>
                       <li>Bonding continuity: Visual verification of effective electrical connection</li>
                     </ul>
-                    <div className="text-xs sm:text-sm text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Methodical progression:</strong> Work systematically to avoid missing critical safety elements
                     </div>
                   </div>
@@ -406,46 +406,46 @@ const Module4Section6_1 = () => {
 
           {/* Documentation Requirements */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Comprehensive Documentation and Reporting Standards</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Comprehensive Documentation and Reporting Standards</h3>
+            <p className="text-base text-white mb-4">
               Accurate documentation ensures traceability, supports certification, and maintains quality standards:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-1">Professional Documentation and Quality Assurance</p>
-                    <p className="text-base text-foreground mb-2"><strong>Observation recording standards:</strong> Clear, accurate, and comprehensive defect documentation.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Professional Documentation and Quality Assurance</p>
+                    <p className="text-base text-white mb-2"><strong>Observation recording standards:</strong> Clear, accurate, and comprehensive defect documentation.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Location specification: Precise identification of defect location for rectification</li>
                       <li>Description accuracy: Clear description of defect nature and potential consequences</li>
                       <li>Photographic evidence: Visual documentation supporting written observations</li>
                       <li>Reference standards: Citation of relevant regulations or standards violated</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Defect categorisation system:</strong> Systematic classification based on safety and compliance impact.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Defect categorisation system:</strong> Systematic classification based on safety and compliance impact.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Dangerous: Immediate risk to safety requiring urgent action before any further work</li>
                       <li>Requires improvement: Non-compliance with regulations requiring correction before certification</li>
                       <li>Minor: Aesthetic or minor non-compliance issues that should be addressed</li>
                       <li>Recommendation: Suggestions for improvement beyond minimum compliance requirements</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Certification and sign-off procedures:</strong> Formal completion and accountability processes.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Certification and sign-off procedures:</strong> Formal completion and accountability processes.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Inspector identification: Clear identification of qualified person conducting inspection</li>
                       <li>Date and time recording: Accurate timing for audit trail and scheduling purposes</li>
                       <li>Scope documentation: Clear statement of areas and systems inspected</li>
                       <li>Limitation identification: Any areas not inspected or requiring further investigation</li>
                     </ul>
-                    <p className="text-base text-foreground mb-2"><strong>Communication and follow-up protocols:</strong> Ensuring appropriate action on inspection findings.</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Communication and follow-up protocols:</strong> Ensuring appropriate action on inspection findings.</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Immediate notifications: Prompt communication of dangerous conditions to relevant personnel</li>
                       <li>Rectification scheduling: Planning and coordination of defect correction activities</li>
                       <li>Progress monitoring: Tracking correction work and verification of completion</li>
                       <li>Final verification: Confirmation that all identified defects have been properly addressed</li>
                     </ul>
-                    <div className="text-xs sm:text-sm text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Legal importance:</strong> Documentation provides evidence of due diligence and supports certification
                     </div>
                   </div>
@@ -456,16 +456,16 @@ const Module4Section6_1 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Practical Guidance</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
           
           {/* Tools and Equipment */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Essential Tools and Equipment for Effective Inspection</h3>
+            <h3 className="font-medium text-white mb-4">Essential Tools and Equipment for Effective Inspection</h3>
             <div className="space-y-4">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-                <p className="font-medium text-foreground mb-2">Required Tools and Equipment</p>
-                <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc pl-4">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+                <p className="font-medium text-white mb-2">Required Tools and Equipment</p>
+                <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-4">
                   <li>High-quality torch or headlamp for illuminating dark spaces and recesses</li>
                   <li>Inspection mirror for viewing inaccessible areas behind accessories and in tight spaces</li>
                   <li>Basic screwdriver set for opening enclosures and checking connection security</li>
@@ -475,9 +475,9 @@ const Module4Section6_1 = () => {
                 </ul>
               </div>
 
-              <div className="rounded-lg p-4 bg-card border border-green-400/30">
-                <p className="font-medium text-foreground mb-2">Professional Inspection Techniques</p>
-                <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc pl-4">
+              <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
+                <p className="font-medium text-white mb-2">Professional Inspection Techniques</p>
+                <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-4">
                   <li>Maintain systematic approach - work left to right or top to bottom consistently</li>
                   <li>Use adequate lighting to identify defects that may not be visible in normal conditions</li>
                   <li>Document findings immediately using photographs and written notes</li>
@@ -487,9 +487,9 @@ const Module4Section6_1 = () => {
                 </ul>
               </div>
 
-              <div className="rounded-lg p-4 bg-card border border-amber-400/30">
-                <p className="font-medium text-foreground mb-2">Quality Assurance Checklist</p>
-                <ol className="text-xs sm:text-sm text-foreground space-y-1 list-decimal pl-4">
+              <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
+                <p className="font-medium text-white mb-2">Quality Assurance Checklist</p>
+                <ol className="text-xs sm:text-sm text-white space-y-1 list-decimal pl-4">
                   <li>Are all accessories securely fixed with no movement or damage visible?</li>
                   <li>Are grommets or bushes fitted at all cable entry points into enclosures?</li>
                   <li>Are all circuit protective conductors (CPCs) properly terminated and secure?</li>
@@ -503,22 +503,22 @@ const Module4Section6_1 = () => {
         </Card>
 
         {/* What this means on site */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">What this means on site</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">What this means on site</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div className="space-y-4">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-                <h3 className="font-medium text-foreground mb-2">Immediate Actions</h3>
-                <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc pl-4">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+                <h3 className="font-medium text-white mb-2">Immediate Actions</h3>
+                <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-4">
                   <li>Schedule visual inspection before any electrical testing begins</li>
                   <li>Ensure adequate lighting and access for comprehensive examination</li>
                   <li>Prepare documentation sheets and photographic equipment</li>
                   <li>Coordinate with other trades to avoid interference during inspection</li>
                 </ul>
               </div>
-              <div className="rounded-lg p-4 bg-card border border-green-400/30">
-                <h3 className="font-medium text-foreground mb-2">Quality Control Measures</h3>
-                <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc pl-4">
+              <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
+                <h3 className="font-medium text-white mb-2">Quality Control Measures</h3>
+                <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-4">
                   <li>Use systematic approach to avoid missing critical areas</li>
                   <li>Document all findings with precise location information</li>
                   <li>Categorise defects by severity for appropriate prioritisation</li>
@@ -527,18 +527,18 @@ const Module4Section6_1 = () => {
               </div>
             </div>
             <div className="space-y-4">
-              <div className="rounded-lg p-4 bg-card border border-amber-400/30">
-                <h3 className="font-medium text-foreground mb-2">Risk Management</h3>
-                <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc pl-4">
+              <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
+                <h3 className="font-medium text-white mb-2">Risk Management</h3>
+                <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-4">
                   <li>Stop all work if dangerous conditions are identified</li>
                   <li>Report safety hazards immediately to site management</li>
                   <li>Secure areas where dangerous defects have been identified</li>
                   <li>Ensure no energisation until all defects are rectified</li>
                 </ul>
               </div>
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-                <h3 className="font-medium text-foreground mb-2">Project Coordination</h3>
-                <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc pl-4">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+                <h3 className="font-medium text-white mb-2">Project Coordination</h3>
+                <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-4">
                   <li>Schedule defect rectification to minimise project delays</li>
                   <li>Coordinate with suppliers for any replacement materials needed</li>
                   <li>Plan re-inspection following defect correction</li>
@@ -550,15 +550,15 @@ const Module4Section6_1 = () => {
         </Card>
 
         {/* Installation Practices */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Installation Practices</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Installation Practices</h2>
           <div className="space-y-6">
-            <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+            <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
               <h3 className="font-medium text-green-600 dark:text-green-400 mb-3">Best Practice Implementation</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <p className="font-medium text-foreground mb-2">Pre-inspection Preparation</p>
-                  <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc pl-4">
+                  <p className="font-medium text-white mb-2">Pre-inspection Preparation</p>
+                  <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-4">
                     <li>Ensure installation is complete and ready for inspection</li>
                     <li>Verify all covers and accessories are fitted</li>
                     <li>Confirm adequate access to all areas requiring inspection</li>
@@ -566,8 +566,8 @@ const Module4Section6_1 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium text-foreground mb-2">Systematic Inspection Process</p>
-                  <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc pl-4">
+                  <p className="font-medium text-white mb-2">Systematic Inspection Process</p>
+                  <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-4">
                     <li>Follow logical sequence from main board to final circuits</li>
                     <li>Use checklist to ensure comprehensive coverage</li>
                     <li>Document findings immediately to avoid errors</li>
@@ -577,12 +577,12 @@ const Module4Section6_1 = () => {
               </div>
             </div>
 
-            <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
-              <h3 className="font-medium text-emerald-400 dark:text-emerald-400 mb-3">Professional Standards</h3>
+            <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
+              <h3 className="font-medium text-elec-yellow dark:text-elec-yellow mb-3">Professional Standards</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <p className="font-medium text-foreground mb-2">Documentation Excellence</p>
-                  <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc pl-4">
+                  <p className="font-medium text-white mb-2">Documentation Excellence</p>
+                  <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-4">
                     <li>Record all observations clearly and accurately</li>
                     <li>Use industry-standard terminology consistently</li>
                     <li>Provide specific location details for all defects</li>
@@ -590,8 +590,8 @@ const Module4Section6_1 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium text-foreground mb-2">Communication Protocols</p>
-                  <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc pl-4">
+                  <p className="font-medium text-white mb-2">Communication Protocols</p>
+                  <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-4">
                     <li>Report dangerous conditions immediately</li>
                     <li>Discuss findings with installation team</li>
                     <li>Coordinate rectification work scheduling</li>
@@ -604,15 +604,15 @@ const Module4Section6_1 = () => {
         </Card>
 
         {/* Common Mistakes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Common Mistakes</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Common Mistakes</h2>
           <div className="space-y-4">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <h3 className="font-medium text-red-600 dark:text-emerald-400 mb-3">Inspection Process Errors</h3>
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <h3 className="font-medium text-red-600 dark:text-elec-yellow mb-3">Inspection Process Errors</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <p className="font-medium text-foreground mb-2">❌ Avoid These Mistakes:</p>
-                  <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc pl-4">
+                  <p className="font-medium text-white mb-2">❌ Avoid These Mistakes:</p>
+                  <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-4">
                     <li>Rushing inspection to meet deadlines</li>
                     <li>Inadequate lighting during examination</li>
                     <li>Missing areas due to poor access preparation</li>
@@ -620,8 +620,8 @@ const Module4Section6_1 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium text-foreground mb-2">✅ Do This Instead:</p>
-                  <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc pl-4">
+                  <p className="font-medium text-white mb-2">✅ Do This Instead:</p>
+                  <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-4">
                     <li>Allow adequate time for thorough inspection</li>
                     <li>Use proper lighting and inspection tools</li>
                     <li>Ensure complete access before starting</li>
@@ -631,12 +631,12 @@ const Module4Section6_1 = () => {
               </div>
             </div>
 
-            <div className="rounded-lg p-4 bg-card border border-amber-400/30">
+            <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
               <h3 className="font-medium text-amber-600 dark:text-amber-400 mb-3">Documentation and Communication Errors</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <p className="font-medium text-foreground mb-2">❌ Poor Practices:</p>
-                  <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc pl-4">
+                  <p className="font-medium text-white mb-2">❌ Poor Practices:</p>
+                  <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-4">
                     <li>Vague or incomplete defect descriptions</li>
                     <li>Failing to categorise defects by severity</li>
                     <li>Poor quality photographic evidence</li>
@@ -644,8 +644,8 @@ const Module4Section6_1 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium text-foreground mb-2">✅ Professional Approach:</p>
-                  <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc pl-4">
+                  <p className="font-medium text-white mb-2">✅ Professional Approach:</p>
+                  <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-4">
                     <li>Provide clear, specific defect descriptions</li>
                     <li>Properly categorise all findings</li>
                     <li>Take clear, well-lit photographs</li>
@@ -658,12 +658,12 @@ const Module4Section6_1 = () => {
         </Card>
 
         {/* BS 7671 Context */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">BS 7671 Context</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">BS 7671 Context</h2>
           <div className="space-y-4">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
-              <h3 className="font-medium text-foreground mb-2">Key Regulatory Requirements</h3>
-              <ul className="text-xs sm:text-sm text-foreground space-y-2 list-disc pl-4">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
+              <h3 className="font-medium text-white mb-2">Key Regulatory Requirements</h3>
+              <ul className="text-xs sm:text-sm text-white space-y-2 list-disc pl-4">
                 <li><strong>Regulation 611.3:</strong> Visual inspection shall precede testing and be carried out with the installation de-energised</li>
                 <li><strong>Chapter 61:</strong> Initial verification requirements including visual inspection and testing procedures</li>
                 <li><strong>Regulation 132.16:</strong> Accessibility for inspection, testing, and maintenance throughout installation life</li>
@@ -671,9 +671,9 @@ const Module4Section6_1 = () => {
                 <li><strong>Regulation 514.9:</strong> Identification and marking requirements for circuits and equipment</li>
               </ul>
             </div>
-            <div className="rounded-lg p-4 bg-card border border-green-400/30">
+            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
               <h3 className="font-medium text-green-600 dark:text-green-400 mb-2">Compliance Verification Points</h3>
-              <ul className="text-xs sm:text-sm text-foreground space-y-2 list-disc pl-4">
+              <ul className="text-xs sm:text-sm text-white space-y-2 list-disc pl-4">
                 <li>Verification that installation methods comply with manufacturer instructions</li>
                 <li>Confirmation of appropriate IP ratings for environmental conditions</li>
                 <li>Assessment of cable support spacing against Table 4A2A requirements</li>
@@ -685,29 +685,29 @@ const Module4Section6_1 = () => {
         </Card>
 
         {/* Real-world Scenarios */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-world Scenario</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-world Scenario</h2>
           <div className="space-y-4">
-            <div className="rounded-lg p-5 border-l-4 border-l-amber-500 bg-card">
+            <div className="rounded-lg p-5 border-l-4 border-l-amber-500 ">
               <h3 className="font-medium text-amber-600 dark:text-amber-400 mb-3">Housing Development Project - Critical Defect Prevention</h3>
               <div className="space-y-3">
-                <p className="text-base text-foreground">
+                <p className="text-base text-white">
                   <strong>Situation:</strong> During a large housing development project, visual inspection was scheduled before the electrical testing phase. The inspection was being conducted across 30 properties simultaneously to meet tight completion deadlines.
                 </p>
-                <p className="text-base text-foreground">
+                <p className="text-base text-white">
                   <strong>Discovery:</strong> The visual inspection revealed that several socket back boxes throughout multiple properties were missing grommets at cable entry holes. This defect was consistent across multiple properties, suggesting a systematic installation error.
                 </p>
-                <p className="text-base text-foreground">
+                <p className="text-base text-white">
                   <strong>Immediate Action:</strong> All electrical work was halted, and a comprehensive site survey was conducted to identify the extent of the problem. The installation team was briefed on proper grommet installation procedures.
                 </p>
-                <p className="text-base text-foreground">
+                <p className="text-base text-white">
                   <strong>Resolution:</strong> All affected socket boxes were retrofitted with appropriate grommets before testing commenced. Additional quality checks were implemented for the remaining properties.
                 </p>
-                <p className="text-base text-foreground">
+                <p className="text-base text-white">
                   <strong>Outcome:</strong> The early identification during visual inspection prevented potential long-term insulation damage, safety hazards, and costly post-testing rework. The project ultimately completed on time with improved quality standards.
                 </p>
-                <div className="rounded-lg p-3 bg-card border border-green-400/30 mt-3">
-                  <p className="text-xs sm:text-sm text-foreground font-medium">
+                <div className="rounded-lg p-3 border border-green-400/30 mt-3">
+                  <p className="text-xs sm:text-sm text-white font-medium">
                     💡 Key Learning: Visual inspection acts as a critical quality gate, preventing systemic issues from progressing to later stages where rectification becomes more expensive and time-consuming.
                   </p>
                 </div>
@@ -717,48 +717,48 @@ const Module4Section6_1 = () => {
         </Card>
 
         {/* Frequently Asked Questions */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="rounded-lg p-4 bg-muted/30 border border-border/20">
-                <h3 className="font-medium text-foreground mb-2">Q: {faq.question}</h3>
-                <p className="text-xs sm:text-sm text-foreground">{faq.answer}</p>
+              <div key={index} className="rounded-lg p-4 bg-muted/30 border border-white/10">
+                <h3 className="font-medium text-white mb-2">Q: {faq.question}</h3>
+                <p className="text-xs sm:text-sm text-white">{faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
           <div className="space-y-4">
-            <p className="text-base text-foreground">
+            <p className="text-base text-white">
               Visual inspection forms the foundation of electrical installation verification, providing the first line of defence against safety hazards and non-compliance issues. By systematically examining installations before testing begins, potential problems are identified early when correction is most cost-effective.
             </p>
             
             <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-                <h3 className="font-medium text-emerald-400 dark:text-emerald-400 mb-2">Key Benefits</h3>
-                <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc pl-4">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+                <h3 className="font-medium text-elec-yellow dark:text-elec-yellow mb-2">Key Benefits</h3>
+                <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-4">
                   <li>Early defect identification</li>
                   <li>Cost-effective problem resolution</li>
                   <li>Enhanced safety standards</li>
                   <li>Regulatory compliance assurance</li>
                 </ul>
               </div>
-              <div className="rounded-lg p-4 bg-card border border-green-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                 <h3 className="font-medium text-green-600 dark:text-green-400 mb-2">Critical Success Factors</h3>
-                <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc pl-4">
+                <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-4">
                   <li>Systematic approach</li>
                   <li>Proper documentation</li>
                   <li>Immediate action on defects</li>
                   <li>Clear communication</li>
                 </ul>
               </div>
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-                <h3 className="font-medium text-purple-600 dark:text-emerald-400 mb-2">Quality Outcomes</h3>
-                <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc pl-4">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+                <h3 className="font-medium text-purple-600 dark:text-elec-yellow mb-2">Quality Outcomes</h3>
+                <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-4">
                   <li>Safer installations</li>
                   <li>Reduced rework costs</li>
                   <li>Improved project timelines</li>
@@ -770,12 +770,12 @@ const Module4Section6_1 = () => {
         </Card>
 
         {/* Apprentice Do's and Don'ts */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Apprentice Do's and Don'ts</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Apprentice Do's and Don'ts</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div className="space-y-3">
               <h3 className="font-medium text-green-600 dark:text-green-400">✅ DO</h3>
-              <ul className="space-y-2 text-xs sm:text-sm text-foreground">
+              <ul className="space-y-2 text-xs sm:text-sm text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                   Follow systematic inspection sequence from main board to final circuits
@@ -799,26 +799,26 @@ const Module4Section6_1 = () => {
               </ul>
             </div>
             <div className="space-y-3">
-              <h3 className="font-medium text-red-600 dark:text-emerald-400">❌ DON'T</h3>
-              <ul className="space-y-2 text-xs sm:text-sm text-foreground">
+              <h3 className="font-medium text-red-600 dark:text-elec-yellow">❌ DON'T</h3>
+              <ul className="space-y-2 text-xs sm:text-sm text-white">
                 <li className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Rush inspection process to meet deadlines - quality is paramount
                 </li>
                 <li className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Skip areas that are difficult to access - use proper equipment
                 </li>
                 <li className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Assume minor defects can be ignored - document everything
                 </li>
                 <li className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Proceed with testing if dangerous conditions are found
                 </li>
                 <li className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Rely on memory for documentation - record findings immediately
                 </li>
               </ul>
@@ -827,12 +827,12 @@ const Module4Section6_1 = () => {
         </Card>
 
         {/* Pocket Card Quick Reference */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Pocket Card Quick Reference</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Card Quick Reference</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
-              <h3 className="font-medium text-foreground mb-3">Visual Inspection Checklist</h3>
-              <ul className="text-xs text-foreground space-y-1 list-disc pl-4">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
+              <h3 className="font-medium text-white mb-3">Visual Inspection Checklist</h3>
+              <ul className="text-xs text-white space-y-1 list-disc pl-4">
                 <li>✓ All accessories securely fixed and properly aligned</li>
                 <li>✓ Grommets fitted at all cable entry points</li>
                 <li>✓ No exposed copper conductors visible</li>
@@ -843,9 +843,9 @@ const Module4Section6_1 = () => {
                 <li>✓ No signs of damage or overheating</li>
               </ul>
             </div>
-            <div className="rounded-lg p-4 bg-card border border-green-400/30">
+            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
               <h3 className="font-medium text-green-600 dark:text-green-400 mb-3">Essential Tools</h3>
-              <ul className="text-xs text-foreground space-y-1 list-disc pl-4">
+              <ul className="text-xs text-white space-y-1 list-disc pl-4">
                 <li>🔦 High-quality torch or headlamp</li>
                 <li>🪞 Inspection mirror for tight spaces</li>
                 <li>🔧 Basic screwdriver set</li>
@@ -860,12 +860,12 @@ const Module4Section6_1 = () => {
         </Card>
 
         {/* Key References */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Key References</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Key References</h2>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <h3 className="font-medium text-foreground mb-2">Regulatory Standards</h3>
-              <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc pl-4">
+              <h3 className="font-medium text-white mb-2">Regulatory Standards</h3>
+              <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-4">
                 <li>BS 7671:2018+A2:2022 - Wiring Regulations</li>
                 <li>Electricity at Work Regulations 1989</li>
                 <li>Building Regulations Part P</li>
@@ -873,8 +873,8 @@ const Module4Section6_1 = () => {
               </ul>
             </div>
             <div>
-              <h3 className="font-medium text-foreground mb-2">Guidance Documents</h3>
-              <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc pl-4">
+              <h3 className="font-medium text-white mb-2">Guidance Documents</h3>
+              <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-4">
                 <li>IET Guidance Note 3 - Inspection & Testing</li>
                 <li>IET On-Site Guide</li>
                 <li>City & Guilds 2391 Course Materials</li>
@@ -885,13 +885,13 @@ const Module4Section6_1 = () => {
         </Card>
 
         {/* Knowledge Check */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Knowledge Check</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Knowledge Check</h2>
           <Quiz questions={quizQuestions} />
         </Card>
 
         {/* Navigation */}
-        <div className="flex justify-between pt-8 border-t border-border/20">
+        <div className="flex justify-between pt-8 border-t border-white/10">
           <Button asChild variant="outline">
             <Link to="../5-8" className="flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" />

@@ -140,11 +140,11 @@ const Module2Section3_1 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 2.3
@@ -157,15 +157,15 @@ const Module2Section3_1 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <Zap className="h-8 w-8 text-emerald-400" />
+            <Zap className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 2.3.1
               </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
                 Series and Parallel Circuits
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+              <p className="text-xl text-white max-w-3xl mt-2">
                 Master circuit types and their characteristics for UK electrical installations
               </p>
             </div>
@@ -173,11 +173,11 @@ const Module2Section3_1 = () => {
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Series:</strong> Components connected end-to-end, current same everywhere, voltage divides.</li>
                 <li><strong>Parallel:</strong> Components side-by-side, voltage same everywhere, current divides.</li>
@@ -186,8 +186,8 @@ const Module2Section3_1 = () => {
                 <li><strong>UK practice:</strong> Most building circuits are parallel for independent operation.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Christmas lights (series), household sockets (parallel), car headlights (parallel).</li>
                 <li><strong>Use:</strong> Circuit design, fault finding, load calculations, cable sizing.</li>
@@ -198,36 +198,36 @@ const Module2Section3_1 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
-          <ul className="space-y-3 text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
+          <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Distinguish between series and parallel circuit configurations</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Calculate total resistance for both series and parallel arrangements</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Predict voltage and current behaviour in different circuit types</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Apply Ohm's Law to series and parallel circuit calculations</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Recognise series and parallel configurations in UK installations</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Understand the advantages and disadvantages of each circuit type</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Apply circuit knowledge to fault finding and troubleshooting</span>
             </li>
           </ul>
@@ -235,12 +235,12 @@ const Module2Section3_1 = () => {
 
         {/* Section 1: Series Circuits */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
+          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
               Series Circuits - One Path for Current
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 In series circuits, components are connected end-to-end in a single path. 
                 Current has only one route to follow, so it must be the same through every component.
@@ -257,7 +257,7 @@ const Module2Section3_1 = () => {
                   </ul>
                 </div>
 
-                <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
+                <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                   <p className="text-yellow-300">
                     <strong>Real Example:</strong> Old-style Christmas lights were wired in series. 
                     When one bulb failed, all the lights went out because the circuit path was broken.
@@ -272,12 +272,12 @@ const Module2Section3_1 = () => {
 
         {/* Section 2: Parallel Circuits */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
+          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
               Parallel Circuits - Multiple Paths for Current
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 In parallel circuits, components are connected side-by-side across common points. 
                 This creates multiple paths for current to flow, like lanes on a motorway.
@@ -294,7 +294,7 @@ const Module2Section3_1 = () => {
                   </ul>
                 </div>
 
-                <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
+                <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                   <p className="text-yellow-300">
                     <strong>Real Example:</strong> Household sockets are wired in parallel. 
                     Each appliance gets full 230V and if one fails, the others keep working.
@@ -309,15 +309,15 @@ const Module2Section3_1 = () => {
 
         {/* Section 3: Calculations and Formulas */}
         <div className="mb-8">
-          <div className="border-l-4 border-purple-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="border-l-4 border-purple-500 dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
               Circuit Calculations
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="space-y-3">
-                  <h4 className="font-bold text-emerald-400">Series Calculations</h4>
+                  <h4 className="font-bold text-elec-yellow">Series Calculations</h4>
                   <div className="bg-card border border-border/30 p-4 rounded-lg">
                     <ul className="list-disc pl-6 space-y-1 text-sm">
                       <li>Total resistance: Rtotal = R₁ + R₂ + R₃...</li>
@@ -329,8 +329,8 @@ const Module2Section3_1 = () => {
                 </div>
                 
                 <div className="space-y-3">
-                  <h4 className="font-bold text-emerald-400">Parallel Calculations</h4>
-                  <div className="bg-card border border-emerald-500/30 p-4 rounded-lg">
+                  <h4 className="font-bold text-elec-yellow">Parallel Calculations</h4>
+                  <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
                     <ul className="list-disc pl-6 space-y-1 text-sm">
                       <li>Total resistance: 1/Rtotal = 1/R₁ + 1/R₂ + 1/R₃...</li>
                       <li>Current in each branch: I = V/R</li>
@@ -341,7 +341,7 @@ const Module2Section3_1 = () => {
                 </div>
               </div>
               
-              <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
+              <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-yellow-300">
                   <strong>Important:</strong> In parallel, total resistance is always less than the smallest individual resistance. 
                   Adding more parallel branches decreases total resistance and increases total current.
@@ -355,12 +355,12 @@ const Module2Section3_1 = () => {
 
         {/* Section 4: UK Installation Context */}
         <div className="mb-8">
-          <div className="border-l-4 border-amber-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="border-l-4 border-amber-500 dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">4</span>
               UK Installation Applications
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 Understanding series and parallel circuits is essential for UK electrical installations 
                 and BS 7671 compliance.
@@ -368,7 +368,7 @@ const Module2Section3_1 = () => {
               
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="space-y-3">
-                  <h4 className="font-bold text-emerald-400">Common Series Applications</h4>
+                  <h4 className="font-bold text-elec-yellow">Common Series Applications</h4>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li>LED strip lighting (low voltage)</li>
                     <li>Some decorative lighting chains</li>
@@ -378,7 +378,7 @@ const Module2Section3_1 = () => {
                 </div>
                 
                 <div className="space-y-3">
-                  <h4 className="font-bold text-emerald-400">Common Parallel Applications</h4>
+                  <h4 className="font-bold text-elec-yellow">Common Parallel Applications</h4>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li>Socket outlet circuits (ring and radial)</li>
                     <li>Lighting circuits with independent switching</li>
@@ -389,7 +389,7 @@ const Module2Section3_1 = () => {
               </div>
 
               <div className="bg-card border border-border/30 p-4 rounded-lg">
-                <p className="text-emerald-400">
+                <p className="text-elec-yellow">
                   <strong>BS 7671 Considerations:</strong> Circuit design must consider voltage drop, 
                   protective device coordination, and load diversity - all dependent on understanding 
                   series and parallel behaviour.
@@ -400,14 +400,14 @@ const Module2Section3_1 = () => {
         </div>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Practical Guidance for Apprentices</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance for Apprentices</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-lg font-semibold text-foreground mb-3">On Site Application</h3>
+              <h3 className="text-lg font-semibold text-white mb-3">On Site Application</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-emerald-400 mb-2">When Designing Circuits</h4>
+                  <h4 className="font-semibold text-elec-yellow mb-2">When Designing Circuits</h4>
                   <ul className="list-disc pl-4 space-y-1 text-sm text-blue-200">
                     <li>Use parallel for independence and full voltage supply</li>
                     <li>Consider total current when adding parallel loads</li>
@@ -415,9 +415,9 @@ const Module2Section3_1 = () => {
                     <li>Size cables for total expected current</li>
                   </ul>
                 </div>
-                <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-emerald-400 mb-2">When Fault Finding</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-emerald-400/80">
+                <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
+                  <h4 className="font-semibold text-elec-yellow mb-2">When Fault Finding</h4>
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-elec-yellow/80">
                     <li>In series: one fault affects whole circuit</li>
                     <li>In parallel: faults usually affect one branch only</li>
                     <li>Check connections at junction points</li>
@@ -428,7 +428,7 @@ const Module2Section3_1 = () => {
             </div>
             
             <div>
-              <h3 className="text-lg font-semibold text-foreground mb-3">Common Mistakes to Avoid</h3>
+              <h3 className="text-lg font-semibold text-white mb-3">Common Mistakes to Avoid</h3>
               <div className="bg-card border border-border/30 p-4 rounded-lg">
                 <ul className="list-disc pl-4 space-y-2 text-sm text-red-200">
                   <li><strong>Confusing voltage and current behaviour:</strong> Remember voltage divides in series, current divides in parallel</li>
@@ -441,9 +441,9 @@ const Module2Section3_1 = () => {
             </div>
 
             <div>
-              <h3 className="text-lg font-semibold text-foreground mb-3">Building Your Understanding</h3>
-              <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
-                <ul className="list-disc pl-4 space-y-2 text-sm text-emerald-400/80">
+              <h3 className="text-lg font-semibold text-white mb-3">Building Your Understanding</h3>
+              <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
+                <ul className="list-disc pl-4 space-y-2 text-sm text-elec-yellow/80">
                   <li><strong>Practice calculations:</strong> Work through examples until formulas become natural</li>
                   <li><strong>Identify circuits:</strong> Look at real installations and identify series/parallel sections</li>
                   <li><strong>Use test equipment:</strong> Measure voltage and current to verify your understanding</li>
@@ -456,15 +456,15 @@ const Module2Section3_1 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-8 p-0 bg-card border-border/20 bg-none shadow-none overflow-hidden">
-          <div className="p-6 border-b border-border/20">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Frequently Asked Questions</h2>
+        <Card className="mb-8 p-0 bg-transparent border-white/20 bg-none shadow-none overflow-hidden">
+          <div className="p-6 border-b border-white/10">
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Frequently Asked Questions</h2>
           </div>
           <div className="divide-y divide-border/20">
             {faqs.map((faq, index) => (
               <div key={index} className="p-6">
-                <h3 className="font-semibold text-foreground mb-2">{faq.question}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{faq.answer}</p>
+                <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -474,18 +474,18 @@ const Module2Section3_1 = () => {
         <div className="mb-8 space-y-6">
           <UnitsPocketCard />
           
-          <Card className="p-6 bg-card border-border/20 bg-none shadow-none">
+          <Card className="p-6 bg-transparent border-white/20 bg-none shadow-none">
             <div className="mb-4">
-              <h2 className="text-lg sm:text-xl font-semibold text-foreground">Quick Reference Card</h2>
+              <h2 className="text-lg sm:text-xl font-semibold text-white">Quick Reference Card</h2>
             </div>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm text-white mb-4">
               Essential series and parallel circuit facts
             </p>
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
               <div className="space-y-3">
                 <div>
-                  <h4 className="font-semibold text-foreground">Series Circuits</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-muted-foreground">
+                  <h4 className="font-semibold text-white">Series Circuits</h4>
+                  <ul className="list-disc pl-4 space-y-1 text-white">
                     <li>Current same everywhere</li>
                     <li>Voltage divides between components</li>
                     <li>Resistance: Rtotal = R₁ + R₂ + R₃</li>
@@ -493,8 +493,8 @@ const Module2Section3_1 = () => {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-foreground">Series Examples</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-muted-foreground">
+                  <h4 className="font-semibold text-white">Series Examples</h4>
+                  <ul className="list-disc pl-4 space-y-1 text-white">
                     <li>Old Christmas lights</li>
                     <li>LED strip sections</li>
                     <li>Cable resistance</li>
@@ -504,8 +504,8 @@ const Module2Section3_1 = () => {
               </div>
               <div className="space-y-3">
                 <div>
-                  <h4 className="font-semibold text-foreground">Parallel Circuits</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-muted-foreground">
+                  <h4 className="font-semibold text-white">Parallel Circuits</h4>
+                  <ul className="list-disc pl-4 space-y-1 text-white">
                     <li>Voltage same across all branches</li>
                     <li>Current divides between branches</li>
                     <li>Resistance: 1/Rtotal = 1/R₁ + 1/R₂</li>
@@ -513,8 +513,8 @@ const Module2Section3_1 = () => {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-foreground">Parallel Examples</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-muted-foreground">
+                  <h4 className="font-semibold text-white">Parallel Examples</h4>
+                  <ul className="list-disc pl-4 space-y-1 text-white">
                     <li>Household sockets</li>
                     <li>Car headlights</li>
                     <li>Lighting circuits</li>
@@ -533,7 +533,7 @@ const Module2Section3_1 = () => {
         />
 
         {/* Navigation */}
-        <div className="flex justify-between items-center mt-12 pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center mt-12 pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />

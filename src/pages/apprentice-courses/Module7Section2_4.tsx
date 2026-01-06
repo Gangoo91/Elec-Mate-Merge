@@ -148,11 +148,11 @@ const Module7Section2_4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               <span className="hidden sm:inline">Back to Section 2</span>
@@ -165,24 +165,24 @@ const Module7Section2_4 = () => {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <div className="mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             2.4 Overload Current and Protection
           </h1>
-          <p className="text-sm sm:text-base text-muted-foreground max-w-3xl">
+          <p className="text-sm sm:text-base text-white max-w-3xl">
             Understanding overload currents, protection devices, and circuit design considerations
           </p>
         </div>
 
         {/* In 30 seconds */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <Zap className="w-5 h-5 text-emerald-400" />
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <Zap className="w-5 h-5 text-elec-yellow" />
               In 30 seconds
             </h2>
-            <div className="grid gap-4 sm:gap-6 md:grid-cols-2 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
-                <h3 className="font-medium text-foreground mb-2">Spot it</h3>
+            <div className="grid gap-4 sm:gap-6 md:grid-cols-2 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
+                <h3 className="font-medium text-white mb-2">Spot it</h3>
                 <ul className="list-disc pl-4 space-y-1">
                   <li>Warm cables, connections, or equipment</li>
                   <li>MCBs or fuses operating frequently</li>
@@ -191,8 +191,8 @@ const Module7Section2_4 = () => {
                 </ul>
               </div>
               
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/30">
-                <h3 className="font-medium text-foreground mb-2">Use it</h3>
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
+                <h3 className="font-medium text-white mb-2">Use it</h3>
                 <ul className="list-disc pl-4 space-y-1">
                   <li>Clamp meter for current measurement</li>
                   <li>Thermal imaging for heat detection</li>
@@ -205,10 +205,10 @@ const Module7Section2_4 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
               <li>Understand overload fundamentals and distinguish from fault conditions</li>
               <li>Select and coordinate appropriate protection systems and devices</li>
               <li>Apply current rating relationships and cable design principles</li>
@@ -220,20 +220,20 @@ const Module7Section2_4 = () => {
         {/* Content Sections */}
         
         {/* Section 1: Overload Fundamentals and Characteristics */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardHeader className="p-0 pb-4">
-            <CardTitle className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground flex items-center gap-2">
-              <Zap className="w-5 h-5 text-emerald-400" />
+            <CardTitle className="text-lg sm:text-lg sm:text-xl font-semibold text-white flex items-center gap-2">
+              <Zap className="w-5 h-5 text-elec-yellow" />
               1. Overload Fundamentals and Characteristics
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-0 space-y-4 text-xs sm:text-sm text-foreground">
+          <CardContent className="p-0 space-y-4 text-xs sm:text-sm text-white">
             <div>
               <h4 className="font-medium mb-2">Definition and Nature</h4>
               <p className="mb-3">An overload condition occurs when a circuit carries more current than it is designed for, without a fault being present. Unlike short circuits which create very low resistance paths, overloads result from legitimate loads that exceed circuit capacity.</p>
               
               <div className="bg-card border border-border/30 rounded-lg p-3">
-                <h5 className="font-medium text-emerald-400 dark:text-emerald-400 mb-2">Key Characteristics:</h5>
+                <h5 className="font-medium text-elec-yellow dark:text-elec-yellow mb-2">Key Characteristics:</h5>
                 <ul className="list-disc pl-4 space-y-1">
                   <li><strong>Gradual development:</strong> Current builds up over time as loads are added</li>
                   <li><strong>Finite current levels:</strong> Higher than design but not infinite like short circuits</li>
@@ -246,8 +246,8 @@ const Module7Section2_4 = () => {
             <div>
               <h4 className="font-medium mb-2">Common Causes</h4>
               <div className="grid gap-3 sm:grid-cols-2">
-                <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3">
-                  <h5 className="font-medium text-emerald-400 dark:text-emerald-400 mb-2">Design Issues:</h5>
+                <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-3">
+                  <h5 className="font-medium text-elec-yellow dark:text-elec-yellow mb-2">Design Issues:</h5>
                   <ul className="list-disc pl-4 space-y-1 text-xs">
                     <li>Inadequate load calculations</li>
                     <li>Incorrect diversity factors</li>
@@ -256,7 +256,7 @@ const Module7Section2_4 = () => {
                   </ul>
                 </div>
                 <div className="bg-card border border-border/30 rounded-lg p-3">
-                  <h5 className="font-medium text-orange-600 dark:text-emerald-400 mb-2">Operational Issues:</h5>
+                  <h5 className="font-medium text-orange-600 dark:text-elec-yellow mb-2">Operational Issues:</h5>
                   <ul className="list-disc pl-4 space-y-1 text-xs">
                     <li>Multiple portable appliances</li>
                     <li>Extension lead abuse</li>
@@ -272,7 +272,7 @@ const Module7Section2_4 = () => {
               <p className="mb-3">Overload currents cause heating in conductors following the I²R relationship. Even small overloads can cause significant temperature rises over time, leading to insulation damage, connection deterioration, and fire risk.</p>
               
               <div className="bg-card border border-border/30 rounded-lg p-3">
-                <h5 className="font-medium text-red-600 dark:text-emerald-400 mb-2">Progressive Damage:</h5>
+                <h5 className="font-medium text-red-600 dark:text-elec-yellow mb-2">Progressive Damage:</h5>
                 <ul className="list-disc pl-4 space-y-1">
                   <li><strong>Immediate:</strong> Voltage drop, reduced performance, warm connections</li>
                   <li><strong>Short-term:</strong> Insulation softening, connection expansion</li>
@@ -297,14 +297,14 @@ const Module7Section2_4 = () => {
         </Card>
 
         {/* Section 2: Protection Systems and Device Selection */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardHeader className="p-0 pb-4">
-            <CardTitle className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground flex items-center gap-2">
-              <Shield className="w-5 h-5 text-emerald-400" />
+            <CardTitle className="text-lg sm:text-lg sm:text-xl font-semibold text-white flex items-center gap-2">
+              <Shield className="w-5 h-5 text-elec-yellow" />
               2. Protection Systems and Device Selection
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-0 space-y-4 text-xs sm:text-sm text-foreground">
+          <CardContent className="p-0 space-y-4 text-xs sm:text-sm text-white">
             <div>
               <h4 className="font-medium mb-2">Time/Current Characteristics</h4>
               <p className="mb-3">Overload protection operates on inverse time characteristics - the higher the overload current, the faster the protective device operates. This allows for normal starting currents while protecting against sustained overloads.</p>
@@ -348,7 +348,7 @@ const Module7Section2_4 = () => {
               <p className="mb-3">Proper coordination ensures only the protective device closest to the overload operates, maintaining supply to unaffected circuits. This requires careful selection of device ratings and characteristics.</p>
               
               <div className="bg-card border border-border/30 rounded-lg p-3">
-                <h5 className="font-medium text-purple-600 dark:text-emerald-400 mb-2">Coordination Principles:</h5>
+                <h5 className="font-medium text-purple-600 dark:text-elec-yellow mb-2">Coordination Principles:</h5>
                 <ul className="list-disc pl-4 space-y-1">
                   <li>Downstream devices must operate before upstream devices</li>
                   <li>Time/current curves must not overlap in fault region</li>
@@ -374,18 +374,18 @@ const Module7Section2_4 = () => {
         </Card>
 
         {/* Section 3: Current Ratings and Cable Design */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardHeader className="p-0 pb-4">
-            <CardTitle className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground flex items-center gap-2">
-              <Settings className="w-5 h-5 text-emerald-400" />
+            <CardTitle className="text-lg sm:text-lg sm:text-xl font-semibold text-white flex items-center gap-2">
+              <Settings className="w-5 h-5 text-elec-yellow" />
               3. Current Ratings and Cable Design
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-0 space-y-4 text-xs sm:text-sm text-foreground">
+          <CardContent className="p-0 space-y-4 text-xs sm:text-sm text-white">
             <div>
               <h4 className="font-medium mb-2">Fundamental Design Relationship</h4>
               <div className="bg-card border border-border/30 rounded-lg p-4 mb-3">
-                <h5 className="font-medium text-emerald-400 dark:text-emerald-400 mb-2 text-center">Ib ≤ In ≤ Iz</h5>
+                <h5 className="font-medium text-elec-yellow dark:text-elec-yellow mb-2 text-center">Ib ≤ In ≤ Iz</h5>
                 <ul className="list-disc pl-4 space-y-1">
                   <li><strong>Ib (Design current):</strong> Maximum current circuit will carry in normal service</li>
                   <li><strong>In (Nominal current):</strong> Current rating of protective device</li>
@@ -400,8 +400,8 @@ const Module7Section2_4 = () => {
               <p className="mb-3">Cable current-carrying capacity must be adjusted for installation conditions. The corrected capacity (Iz) = It times Ca times Cg times Ci times Cc</p>
               
               <div className="grid gap-3 sm:grid-cols-2">
-                <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3">
-                  <h5 className="font-medium text-emerald-400 dark:text-emerald-400 mb-2">Environmental Factors:</h5>
+                <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-3">
+                  <h5 className="font-medium text-elec-yellow dark:text-elec-yellow mb-2">Environmental Factors:</h5>
                   <ul className="list-disc pl-4 space-y-1 text-xs">
                     <li><strong>Ca:</strong> Ambient temperature (0.87-1.15)</li>
                     <li><strong>Cs:</strong> Soil thermal resistivity (0.7-1.0)</li>
@@ -409,7 +409,7 @@ const Module7Section2_4 = () => {
                   </ul>
                 </div>
                 <div className="bg-card border border-border/30 rounded-lg p-3">
-                  <h5 className="font-medium text-orange-600 dark:text-emerald-400 mb-2">Installation Factors:</h5>
+                  <h5 className="font-medium text-orange-600 dark:text-elec-yellow mb-2">Installation Factors:</h5>
                   <ul className="list-disc pl-4 space-y-1 text-xs">
                     <li><strong>Cg:</strong> Grouping factor (0.5-1.0)</li>
                     <li><strong>Ci:</strong> Installation method varies by type</li>
@@ -466,21 +466,21 @@ const Module7Section2_4 = () => {
         </Card>
 
         {/* Section 4: Detection, Testing and Load Management */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardHeader className="p-0 pb-4">
-            <CardTitle className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground flex items-center gap-2">
-              <Search className="w-5 h-5 text-emerald-400" />
+            <CardTitle className="text-lg sm:text-lg sm:text-xl font-semibold text-white flex items-center gap-2">
+              <Search className="w-5 h-5 text-elec-yellow" />
               4. Detection, Testing and Load Management
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-0 space-y-4 text-xs sm:text-sm text-foreground">
+          <CardContent className="p-0 space-y-4 text-xs sm:text-sm text-white">
             <div>
               <h4 className="font-medium mb-2">Load Survey Techniques</h4>
               <p className="mb-3">Regular load surveys are essential for identifying potential overload conditions before they cause damage. These should be conducted during peak demand periods to capture maximum loading.</p>
               
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="bg-card border border-border/30 rounded-lg p-3">
-                  <h5 className="font-medium text-emerald-400 dark:text-emerald-400 mb-2">Measurement Methods:</h5>
+                  <h5 className="font-medium text-elec-yellow dark:text-elec-yellow mb-2">Measurement Methods:</h5>
                   <ul className="list-disc pl-4 space-y-1 text-xs">
                     <li>Clamp meter readings on main cables</li>
                     <li>Data logging for 24-hour profiles</li>
@@ -489,7 +489,7 @@ const Module7Section2_4 = () => {
                   </ul>
                 </div>
                 <div className="bg-card border border-border/30 rounded-lg p-3">
-                  <h5 className="font-medium text-purple-600 dark:text-emerald-400 mb-2">Key Parameters:</h5>
+                  <h5 className="font-medium text-purple-600 dark:text-elec-yellow mb-2">Key Parameters:</h5>
                   <ul className="list-disc pl-4 space-y-1 text-xs">
                     <li>Maximum demand current per circuit</li>
                     <li>Load factor and diversity</li>
@@ -513,8 +513,8 @@ const Module7Section2_4 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3">
-                  <h5 className="font-medium text-emerald-400 dark:text-emerald-400 mb-2">Documentation Requirements:</h5>
+                <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-3">
+                  <h5 className="font-medium text-elec-yellow dark:text-elec-yellow mb-2">Documentation Requirements:</h5>
                   <ul className="list-disc pl-4 space-y-1 text-xs">
                     <li>Record actual load currents and diversity factors</li>
                     <li>Document any deviations from design assumptions</li>
@@ -540,7 +540,7 @@ const Module7Section2_4 = () => {
                   </ul>
                 </div>
                 <div className="bg-card border border-border/30 rounded-lg p-3">
-                  <h5 className="font-medium text-orange-600 dark:text-emerald-400 mb-2">Operational Controls:</h5>
+                  <h5 className="font-medium text-orange-600 dark:text-elec-yellow mb-2">Operational Controls:</h5>
                   <ul className="list-disc pl-4 space-y-1 text-xs">
                     <li>Load scheduling and peak shaving</li>
                     <li>Automatic load shedding systems</li>
@@ -554,7 +554,7 @@ const Module7Section2_4 = () => {
             <div>
               <h4 className="font-medium mb-2">Corrective Actions</h4>
               <div className="bg-card border border-border/30 rounded-lg p-3">
-                <h5 className="font-medium text-red-600 dark:text-emerald-400 mb-2">When Overload is Detected:</h5>
+                <h5 className="font-medium text-red-600 dark:text-elec-yellow mb-2">When Overload is Detected:</h5>
                 <ul className="list-disc pl-4 space-y-1">
                   <li><strong>Immediate:</strong> Reduce load by redistributing or disconnecting non-essential equipment</li>
                   <li><strong>Short-term:</strong> Install additional circuits to share loading</li>
@@ -580,10 +580,10 @@ const Module7Section2_4 = () => {
         </Card>
 
         {/* Real-world Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Real-world Example</h2>
-            <div className="bg-card border border-border/30 rounded-lg p-4 text-xs sm:text-sm text-foreground">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Real-world Example</h2>
+            <div className="bg-card border border-border/30 rounded-lg p-4 text-xs sm:text-sm text-white">
               <h3 className="font-medium mb-3">Office Kitchen Circuit Overload</h3>
               <p className="mb-3"><strong>Situation:</strong> An office kitchen circuit rated at 20A (Type B MCB) serving a 2.5mm² cable keeps tripping during lunch periods when multiple appliances operate simultaneously.</p>
               
@@ -615,14 +615,14 @@ const Module7Section2_4 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
             <div className="space-y-4">
               {faqs.map((faq, index) => (
-                <div key={index} className="border-l-4 border-l-emerald-500 bg-card p-4 rounded-r-lg">
-                  <h3 className="font-medium text-foreground mb-2">{faq.question}</h3>
-                  <p className="text-sm text-muted-foreground">{faq.answer}</p>
+                <div key={index} className="border-l-4 border-l-elec-yellow p-4 rounded-r-lg">
+                  <h3 className="font-medium text-white mb-2">{faq.question}</h3>
+                  <p className="text-sm text-white">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -630,10 +630,10 @@ const Module7Section2_4 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-gradient-to-r from-emerald-500/10 to-purple-500/10 border border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-gradient-to-r from-emerald-500/10 to-purple-500/10 border border-white/10">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Key Points Summary</h2>
-            <div className="grid gap-4 sm:grid-cols-2 text-xs sm:text-sm text-foreground">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Key Points Summary</h2>
+            <div className="grid gap-4 sm:grid-cols-2 text-xs sm:text-sm text-white">
               <ul className="list-disc pl-6 space-y-2">
                 <li>Overloads result from legitimate loads exceeding circuit design capacity</li>
                 <li>The relationship Ib ≤ In ≤ Iz must always be maintained</li>

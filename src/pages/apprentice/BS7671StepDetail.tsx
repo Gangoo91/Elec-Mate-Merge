@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, ArrowRight, CheckSquare, AlertTriangle, BookOpen, Calculator, Timer, ClipboardCheck } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
@@ -110,12 +111,7 @@ const BS7671StepDetail = () => {
             <span>Estimated time: 10-20 minutes</span>
           </div>
         </div>
-        <Link to="/apprentice/on-job-tools/bs7671-runthrough">
-          <Button variant="outline">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Overview
-          </Button>
-        </Link>
+        <SmartBackButton />
       </div>
 
       {/* System Type Selection - Show for first step or testing steps */}

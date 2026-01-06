@@ -134,11 +134,11 @@ const Module2Section3_5 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 2.3
@@ -151,15 +151,15 @@ const Module2Section3_5 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <Scale className="h-8 w-8 text-emerald-400" />
+            <Scale className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 2.3.5
               </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
                 Series vs Parallel: Pros and Cons
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+              <p className="text-xl text-white max-w-3xl mt-2">
                 Compare advantages and disadvantages to choose the right circuit configuration
               </p>
             </div>
@@ -167,11 +167,11 @@ const Module2Section3_5 = () => {
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Series:</strong> Simple, low cost, but one failure stops all.</li>
                 <li><strong>Parallel:</strong> Independent operation, full voltage, fault tolerant.</li>
@@ -180,8 +180,8 @@ const Module2Section3_5 = () => {
                 <li><strong>BS 7671:</strong> Favours parallel for circuit division and reliability.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Socket outlets, lighting points, radial/ring finals.</li>
                 <li><strong>Use:</strong> Circuit design decisions, fault tolerance planning.</li>
@@ -192,32 +192,32 @@ const Module2Section3_5 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
-          <ul className="space-y-3 text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
+          <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Compare advantages and disadvantages of series and parallel circuits</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Select appropriate circuit configurations for different applications</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Evaluate fault tolerance and reliability implications</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Apply BS 7671 requirements for circuit division</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Consider cost and complexity factors in circuit design</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Justify circuit type choices for real installations</span>
             </li>
           </ul>
@@ -225,19 +225,19 @@ const Module2Section3_5 = () => {
 
         {/* Section 1: Series Circuit Analysis */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
+          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
               Series Circuits - Advantages and Disadvantages
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 Series circuits connect components end-to-end in a single chain. This simple arrangement has both benefits and significant limitations.
               </p>
               
               <div className="space-y-4">
                 <div>
-                  <p className="font-bold text-emerald-400">Advantages of series circuits:</p>
+                  <p className="font-bold text-elec-yellow">Advantages of series circuits:</p>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li><strong>Simple design:</strong> Easy to understand and wire</li>
                     <li><strong>Low material cost:</strong> Minimal cabling required</li>
@@ -247,7 +247,7 @@ const Module2Section3_5 = () => {
                 </div>
 
                 <div>
-                  <p className="font-bold text-emerald-400">Disadvantages of series circuits:</p>
+                  <p className="font-bold text-elec-yellow">Disadvantages of series circuits:</p>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li><strong>Poor fault tolerance:</strong> One failure stops entire circuit</li>
                     <li><strong>Voltage sharing:</strong> Components don't get full supply voltage</li>
@@ -256,7 +256,7 @@ const Module2Section3_5 = () => {
                   </ul>
                 </div>
 
-                <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
+                <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                   <p className="text-yellow-300">
                     <strong>Real example:</strong> Christmas lights with 50 LEDs in series on 230V means each LED gets about 4.6V.
                     If one LED fails open-circuit, the entire string goes dark.
@@ -271,19 +271,19 @@ const Module2Section3_5 = () => {
 
         {/* Section 2: Parallel Circuit Analysis */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
+          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
               Parallel Circuits - Advantages and Disadvantages
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 Parallel circuits provide separate paths for current to each component. This configuration is standard for most electrical installations.
               </p>
               
               <div className="space-y-4">
                 <div>
-                  <p className="font-bold text-emerald-400">Advantages of parallel circuits:</p>
+                  <p className="font-bold text-elec-yellow">Advantages of parallel circuits:</p>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li><strong>Independent operation:</strong> Each component works separately</li>
                     <li><strong>Full voltage:</strong> Every component gets full supply voltage</li>
@@ -294,7 +294,7 @@ const Module2Section3_5 = () => {
                 </div>
 
                 <div>
-                  <p className="font-bold text-emerald-400">Disadvantages of parallel circuits:</p>
+                  <p className="font-bold text-elec-yellow">Disadvantages of parallel circuits:</p>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li><strong>Complex wiring:</strong> More cables and connections needed</li>
                     <li><strong>Higher cost:</strong> More materials and labour required</li>
@@ -303,8 +303,8 @@ const Module2Section3_5 = () => {
                   </ul>
                 </div>
 
-                <div className="bg-card border border-emerald-500/30 p-4 rounded-lg">
-                  <p className="text-emerald-400">
+                <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
+                  <p className="text-elec-yellow">
                     <strong>Circuit calculation example:</strong><br/>
                     Three 100W loads in parallel on 230V:<br/>
                     • Each load: I = 100W ÷ 230V = 0.43A<br/>
@@ -322,11 +322,11 @@ const Module2Section3_5 = () => {
         {/* Section 3: Decision Matrix and Comparison */}
         <div className="mb-8">
           <div className="border-l-4 border-teal-500 bg-teal-500/10 dark:bg-teal-500/10 p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
               Circuit Selection Decision Matrix
             </h2>
-            <div className="space-y-6 text-foreground">
+            <div className="space-y-6 text-white">
               
               {/* Decision criteria */}
               <div className="space-y-4">
@@ -404,12 +404,12 @@ const Module2Section3_5 = () => {
 
         {/* Section 4: BS 7671 Context and Safety */}
         <div className="mb-8">
-          <div className="border-l-4 border-amber-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="border-l-4 border-amber-500 dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">4</span>
               BS 7671 Requirements and Practical Application
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 BS 7671 strongly influences circuit configuration choices through regulations on circuit division, protection, and reliability.
               </p>
@@ -428,7 +428,7 @@ const Module2Section3_5 = () => {
                 
                 <h3 className="text-lg font-semibold text-amber-300">Safety and Maintenance</h3>
                 
-                <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
+                <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                   <p className="text-yellow-300">
                     <strong>Important:</strong> Always consider the impact of circuit configuration on:
                     • Fault finding and maintenance access • Emergency lighting and essential services
@@ -441,13 +441,13 @@ const Module2Section3_5 = () => {
         </div>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-border/20 pb-4 last:border-b-0">
-                <h3 className="font-semibold text-foreground mb-2">{faq.question}</h3>
-                <p className="text-muted-foreground text-sm">{faq.answer}</p>
+              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
+                <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -455,16 +455,16 @@ const Module2Section3_5 = () => {
 
         {/* Circuit Selection Pocket Guide */}
         <div className="mb-8">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Circuit Selection Quick Guide</h2>
-          <Card className="p-6 bg-card border-border/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Circuit Selection Quick Guide</h2>
+          <Card className="p-6 bg-transparent border-white/20 bg-none shadow-none">
             <div className="grid md:grid-cols-3 gap-6 text-sm">
               <div className="space-y-3">
-                <h3 className="font-semibold text-foreground flex items-center gap-2">
-                  <span className="bg-emerald-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">S</span>
+                <h3 className="font-semibold text-white flex items-center gap-2">
+                  <span className="bg-elec-yellow text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">S</span>
                   Series Selection
                 </h3>
                 <div className="bg-card border border-border/30 p-3 rounded">
-                  <p className="font-medium text-emerald-400 mb-2">Use When:</p>
+                  <p className="font-medium text-elec-yellow mb-2">Use When:</p>
                   <ul className="list-disc pl-4 space-y-1 text-blue-200 text-xs">
                     <li>Decorative lighting chains</li>
                     <li>Voltage division needed</li>
@@ -475,12 +475,12 @@ const Module2Section3_5 = () => {
               </div>
               
               <div className="space-y-3">
-                <h3 className="font-semibold text-foreground flex items-center gap-2">
-                  <span className="bg-emerald-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">P</span>
+                <h3 className="font-semibold text-white flex items-center gap-2">
+                  <span className="bg-elec-yellow text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">P</span>
                   Parallel Selection
                 </h3>
-                <div className="bg-card border border-emerald-500/30 p-3 rounded">
-                  <p className="font-medium text-emerald-400 mb-2">Use When:</p>
+                <div className="bg-card border border-elec-yellow/30 p-3 rounded">
+                  <p className="font-medium text-elec-yellow mb-2">Use When:</p>
                   <ul className="list-disc pl-4 space-y-1 text-emerald-200 text-xs">
                     <li>Socket outlet circuits</li>
                     <li>Lighting final circuits</li>
@@ -491,7 +491,7 @@ const Module2Section3_5 = () => {
               </div>
 
               <div className="space-y-3">
-                <h3 className="font-semibold text-foreground flex items-center gap-2">
+                <h3 className="font-semibold text-white flex items-center gap-2">
                   <span className="bg-amber-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">!</span>
                   Key Questions
                 </h3>
@@ -507,8 +507,8 @@ const Module2Section3_5 = () => {
               </div>
             </div>
             
-            <div className="mt-6 pt-4 border-t border-border/20">
-              <p className="text-center text-muted-foreground text-sm">
+            <div className="mt-6 pt-4 border-t border-white/10">
+              <p className="text-center text-white text-sm">
                 <strong>BS 7671 Reminder:</strong> Regulation 314.1 requires circuit division to minimise inconvenience - parallel circuits are preferred for final circuits
               </p>
             </div>
@@ -516,12 +516,12 @@ const Module2Section3_5 = () => {
         </div>
 
         {/* Quick Reference Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quick Reference: Circuit Selection Guide</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick Reference: Circuit Selection Guide</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
             <div className="space-y-3">
-              <h3 className="font-semibold text-foreground">Series Circuit Checklist</h3>
-              <ul className="list-disc pl-6 space-y-1 text-foreground">
+              <h3 className="font-semibold text-white">Series Circuit Checklist</h3>
+              <ul className="list-disc pl-6 space-y-1 text-white">
                 <li>Simple installation acceptable?</li>
                 <li>Voltage division required?</li>
                 <li>Low current draw needed?</li>
@@ -530,8 +530,8 @@ const Module2Section3_5 = () => {
               </ul>
             </div>
             <div className="space-y-3">
-              <h3 className="font-semibold text-foreground">Parallel Circuit Checklist</h3>
-              <ul className="list-disc pl-6 space-y-1 text-foreground">
+              <h3 className="font-semibold text-white">Parallel Circuit Checklist</h3>
+              <ul className="list-disc pl-6 space-y-1 text-white">
                 <li>Full voltage to all loads?</li>
                 <li>Independent operation required?</li>
                 <li>Fault tolerance important?</li>
@@ -543,12 +543,12 @@ const Module2Section3_5 = () => {
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
           <Quiz title="Circuit Configuration Knowledge Check" questions={quizQuestions} />
         </Card>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to=".." className="flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" />

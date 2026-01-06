@@ -1,8 +1,6 @@
 
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { ReactNode } from "react";
 
 interface MentalHealthPageLayoutProps {
@@ -13,17 +11,13 @@ interface MentalHealthPageLayoutProps {
   color?: string;
 }
 
-const MentalHealthPageLayout = ({ 
-  title, 
-  description, 
-  children, 
+const MentalHealthPageLayout = ({
+  title,
+  description,
+  children,
   icon,
-  color = "purple" 
+  color = "purple"
 }: MentalHealthPageLayoutProps) => {
-  const location = useLocation();
-  const isElectricianPath = location.pathname.startsWith('/electrician/');
-  const basePath = isElectricianPath ? '/electrician/mental-health' : '/apprentice/mental-health';
-  
   const colorClasses = {
     purple: "border-purple-500/20 from-purple-500/10 border-purple-500/10",
     yellow: "border-elec-yellow/20 from-elec-yellow/10 border-elec-yellow/10",
@@ -40,12 +34,9 @@ const MentalHealthPageLayout = ({
             {description}
           </p>
         </div>
-        <Link to={basePath} className="self-start sm:self-auto">
-          <Button variant="outline" size="sm" className="w-full sm:w-auto flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            Back to Mental Health Hub
-          </Button>
-        </Link>
+        <div className="self-start sm:self-auto">
+          <SmartBackButton />
+        </div>
       </div>
       
       <Card className={`${colorClasses[color as keyof typeof colorClasses]} bg-elec-gray`}>

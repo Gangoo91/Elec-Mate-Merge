@@ -199,11 +199,11 @@ const Module2Section1_5 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 2.1
@@ -216,15 +216,15 @@ const Module2Section1_5 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <Search className="h-8 w-8 text-emerald-400" />
+            <Search className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 2.1.5
               </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
                 Multimeters: Safe Use and Core Functions
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+              <p className="text-xl text-white max-w-3xl mt-2">
                 Master digital multimeter operation for safe electrical measurements and fault diagnosis
               </p>
             </div>
@@ -232,11 +232,11 @@ const Module2Section1_5 = () => {
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Multimeter:</strong> Measures voltage, current, resistance in one device.</li>
                 <li><strong>Digital vs Analogue:</strong> Digital displays are easier to read accurately.</li>
@@ -246,8 +246,8 @@ const Module2Section1_5 = () => {
                 <li><strong>Professional Tool:</strong> Quality meter lasts entire career.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Every electrical job needs measurement - installation, testing, fault-finding.</li>
                 <li><strong>Use:</strong> Voltage testing before work, continuity checks, current measurement, component testing.</li>
@@ -258,32 +258,32 @@ const Module2Section1_5 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
-          <ul className="space-y-3 text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
+          <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Distinguish between digital and analogue multimeters and their applications</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Select correct input jacks and understand fusing protection for different measurements</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Differentiate between AC and DC measurements and choose appropriate ranges</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Follow best practice for resistance and continuity testing including circuit isolation</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Implement safe workflow: isolate, prove dead, test, work, test, energise</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Identify appropriate CAT ratings and avoid common measurement mistakes</span>
             </li>
           </ul>
@@ -291,12 +291,12 @@ const Module2Section1_5 = () => {
 
         {/* Section 1: Multimeter Types & Features */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
+          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
               Multimeter Types & Features
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 Understanding different multimeter types helps you choose the right tool for electrical work. 
                 Modern digital meters offer advantages over older analogue types for most applications.
@@ -304,7 +304,7 @@ const Module2Section1_5 = () => {
               
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-foreground">Digital Multimeters (DMM)</h3>
+                  <h3 className="text-lg font-semibold text-white">Digital Multimeters (DMM)</h3>
                   <div className="bg-card border border-border/30 p-4 rounded-lg">
                     <ul className="text-blue-200 space-y-1 text-sm">
                       <li>• <strong>LCD Display:</strong> Clear numerical readings</li>
@@ -317,7 +317,7 @@ const Module2Section1_5 = () => {
                 </div>
                 
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-foreground">Analogue Multimeters</h3>
+                  <h3 className="text-lg font-semibold text-white">Analogue Multimeters</h3>
                   <div className="bg-card border border-border/30 p-4 rounded-lg">
                     <ul className="text-orange-200 space-y-1 text-sm">
                       <li>• <strong>Moving Coil Display:</strong> Needle and scale</li>
@@ -331,10 +331,10 @@ const Module2Section1_5 = () => {
               </div>
               
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-foreground">Key Features to Consider</h3>
+                <h3 className="text-lg font-semibold text-white">Key Features to Consider</h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="bg-card border border-border/30 p-4 rounded-lg">
-                    <h4 className="text-emerald-400 font-medium mb-2">Display & Resolution</h4>
+                    <h4 className="text-elec-yellow font-medium mb-2">Display & Resolution</h4>
                     <ul className="text-purple-200 space-y-1 text-sm">
                       <li>• <strong>3½ digit:</strong> 1999 count (basic)</li>
                       <li>• <strong>4½ digit:</strong> 19,999 count (precise)</li>
@@ -357,12 +357,12 @@ const Module2Section1_5 = () => {
 
         {/* Section 2: Controls & Connections */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
+          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
               Controls & Connections
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 Correct use of multimeter controls and input jacks is essential for accurate readings 
                 and meter protection. Understanding the layout prevents costly mistakes.
@@ -370,22 +370,22 @@ const Module2Section1_5 = () => {
               
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-foreground">Main Controls</h3>
-                  <div className="bg-background/20 p-4 rounded-lg space-y-3">
+                  <h3 className="text-lg font-semibold text-white">Main Controls</h3>
+                  <div className="bg-[#121212]/20 p-4 rounded-lg space-y-3">
                     <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></div>
+                      <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
                       <div>
                         <strong>Digital Display:</strong> Shows measurement value and units
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></div>
+                      <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
                       <div>
                         <strong>Rotary Switch:</strong> Selects function (V, A, Ω) and range
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></div>
+                      <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
                       <div>
                         <strong>Function Buttons:</strong> Hold, min/max, relative, range
                       </div>
@@ -394,8 +394,8 @@ const Module2Section1_5 = () => {
                 </div>
                 
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-foreground">Input Jacks</h3>
-                  <div className="bg-background/20 p-4 rounded-lg space-y-3">
+                  <h3 className="text-lg font-semibold text-white">Input Jacks</h3>
+                  <div className="bg-[#121212]/20 p-4 rounded-lg space-y-3">
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-red-500 mt-2 flex-shrink-0"></div>
                       <div>
@@ -425,7 +425,7 @@ const Module2Section1_5 = () => {
               </div>
               
               <div className="bg-card border border-border/30 p-4 rounded-lg">
-                <h3 className="font-semibold mb-2 text-emerald-400">Pro Tip: Pre-use Checks</h3>
+                <h3 className="font-semibold mb-2 text-elec-yellow">Pro Tip: Pre-use Checks</h3>
                 <ul className="text-orange-200 space-y-1 text-sm">
                   <li>• Check test lead condition - cracked insulation is dangerous</li>
                   <li>• Verify lead ratings match your working voltage</li>
@@ -440,20 +440,20 @@ const Module2Section1_5 = () => {
 
         {/* Section 3: Measuring Voltage */}
         <div className="mb-8">
-          <div className="border-l-4 border-purple-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="border-l-4 border-purple-500 dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
               Measuring Voltage
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 Voltage measurement is the most common multimeter function. Always connect in parallel 
                 (across) the component or circuit you're testing.
               </p>
               
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-foreground">Step-by-Step Voltage Measurement</h3>
-                <div className="bg-background/20 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-white">Step-by-Step Voltage Measurement</h3>
+                <div className="bg-[#121212]/20 p-4 rounded-lg">
                   <ol className="space-y-2 text-sm">
                     <li><strong>1.</strong> Connect black lead to COM jack</li>
                     <li><strong>2.</strong> Connect red lead to VΩ jack</li>
@@ -467,7 +467,7 @@ const Module2Section1_5 = () => {
               
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-foreground">Expected Values</h3>
+                  <h3 className="text-lg font-semibold text-white">Expected Values</h3>
                   <div className="bg-card border border-border/30 p-4 rounded-lg">
                     <ul className="text-blue-200 space-y-1 text-sm">
                       <li>• <strong>UK Mains:</strong> 230V AC (±10%)</li>
@@ -480,7 +480,7 @@ const Module2Section1_5 = () => {
                 </div>
                 
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-foreground">Common Mistakes</h3>
+                  <h3 className="text-lg font-semibold text-white">Common Mistakes</h3>
                   <div className="bg-card border border-border/30 p-4 rounded-lg">
                     <ul className="text-red-200 space-y-1 text-sm">
                       <li>• Using DC setting on AC supply (reads low/zero)</li>
@@ -501,18 +501,18 @@ const Module2Section1_5 = () => {
         {/* Section 4: Resistance & Continuity */}
         <div className="mb-8">
           <div className="border-l-4 border-teal-500 bg-teal-500/10 dark:bg-teal-500/10 p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">4</span>
               Resistance & Continuity Testing
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 Resistance and continuity testing requires complete circuit isolation. The meter 
                 applies a small test voltage, so any external voltage will give false readings.
               </p>
               
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-foreground">Essential Safety Steps</h3>
+                <h3 className="text-lg font-semibold text-white">Essential Safety Steps</h3>
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
                   <ol className="text-red-200 space-y-2 text-sm">
                     <li><strong>1.</strong> Isolate circuit - switch off, lock off, tag out</li>
@@ -527,7 +527,7 @@ const Module2Section1_5 = () => {
               
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-foreground">Resistance Testing</h3>
+                  <h3 className="text-lg font-semibold text-white">Resistance Testing</h3>
                   <div className="bg-card border border-green-400/30 p-4 rounded-lg">
                     <ul className="text-green-200 space-y-1 text-sm">
                       <li>• <strong>Cable Resistance:</strong> Should be very low (mΩ range)</li>
@@ -540,7 +540,7 @@ const Module2Section1_5 = () => {
                 </div>
                 
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-foreground">Continuity Testing</h3>
+                  <h3 className="text-lg font-semibold text-white">Continuity Testing</h3>
                   <div className="bg-card border border-cyan-400/30 p-4 rounded-lg">
                     <ul className="text-cyan-200 space-y-1 text-sm">
                       <li>• <strong>Beep Function:</strong> Sounds below ~50Ω threshold</li>
@@ -558,20 +558,20 @@ const Module2Section1_5 = () => {
 
         {/* Section 5: Measuring Current */}
         <div className="mb-8">
-          <div className="border-l-4 border-red-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="border-l-4 border-red-500 dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">5</span>
               Measuring Current
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 Current measurement requires series insertion - the meter becomes part of the circuit. 
                 This is the most dangerous measurement as incorrect connection can create short circuits.
               </p>
               
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-foreground">Current Measurement Procedure</h3>
-                <div className="bg-background/20 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-white">Current Measurement Procedure</h3>
+                <div className="bg-[#121212]/20 p-4 rounded-lg">
                   <ol className="space-y-2 text-sm">
                     <li><strong>1.</strong> Estimate expected current to choose correct jack</li>
                     <li><strong>2.</strong> Black lead to COM, red lead to mA or A jack</li>
@@ -585,7 +585,7 @@ const Module2Section1_5 = () => {
               
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-foreground">Jack Selection</h3>
+                  <h3 className="text-lg font-semibold text-white">Jack Selection</h3>
                   <div className="bg-card border border-border/30 p-4 rounded-lg">
                     <ul className="text-blue-200 space-y-1 text-sm">
                       <li>• <strong>mA Jack:</strong> Up to 200-400mA (fused)</li>
@@ -598,7 +598,7 @@ const Module2Section1_5 = () => {
                 </div>
                 
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-foreground">When to Use Clamp Meter</h3>
+                  <h3 className="text-lg font-semibold text-white">When to Use Clamp Meter</h3>
                   <div className="bg-card border border-border/30 p-4 rounded-lg">
                     <ul className="text-purple-200 space-y-1 text-sm">
                       <li>• <strong>High Currents:</strong> Above 10A safely</li>
@@ -618,12 +618,12 @@ const Module2Section1_5 = () => {
 
         {/* Section 6: AC vs DC & True RMS */}
         <div className="mb-8">
-          <div className="border-l-4 border-cyan-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="border-l-4 border-cyan-500 dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-cyan-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">6</span>
               AC vs DC & True RMS
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 Understanding AC and DC measurement modes is crucial for accurate readings. 
                 True RMS capability becomes essential with modern electronic loads.
@@ -631,7 +631,7 @@ const Module2Section1_5 = () => {
               
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-foreground">AC Measurement (V~, A~)</h3>
+                  <h3 className="text-lg font-semibold text-white">AC Measurement (V~, A~)</h3>
                   <div className="bg-card border border-cyan-400/30 p-4 rounded-lg">
                     <ul className="text-cyan-200 space-y-1 text-sm">
                       <li>• <strong>Symbol:</strong> ~ (sine wave) for alternating</li>
@@ -644,7 +644,7 @@ const Module2Section1_5 = () => {
                 </div>
                 
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-foreground">DC Measurement (V⎓, A⎓)</h3>
+                  <h3 className="text-lg font-semibold text-white">DC Measurement (V⎓, A⎓)</h3>
                   <div className="bg-card border border-border/30 p-4 rounded-lg">
                     <ul className="text-orange-200 space-y-1 text-sm">
                       <li>• <strong>Symbol:</strong> ⎓ (straight lines) for direct</li>
@@ -658,8 +658,8 @@ const Module2Section1_5 = () => {
               </div>
               
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-foreground">True RMS vs Average-Responding</h3>
-                <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-white">True RMS vs Average-Responding</h3>
+                <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                   <div className="text-yellow-200 space-y-2 text-sm">
                     <p><strong>Average-Responding:</strong> Assumes perfect sine wave, accurate for traditional loads</p>
                     <p><strong>True RMS:</strong> Calculates actual heating effect, essential for:</p>
@@ -680,13 +680,13 @@ const Module2Section1_5 = () => {
         {/* Section 7: Safety and Common Mistakes */}
         <div className="mb-8">
           <div className="border-l-4 border-red-600 bg-red-600/10 dark:bg-red-600/10 p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">7</span>
               Safety and Common Mistakes
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <div className="bg-red-500/20 border border-red-400/50 p-4 rounded-lg">
-                <h3 className="text-lg font-semibold text-emerald-400 mb-3 flex items-center gap-2">
+                <h3 className="text-lg font-semibold text-elec-yellow mb-3 flex items-center gap-2">
                   <AlertTriangle className="h-5 w-5" />
                   Critical Safety Mistakes
                 </h3>
@@ -702,7 +702,7 @@ const Module2Section1_5 = () => {
               
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-foreground">Before You Measure</h3>
+                  <h3 className="text-lg font-semibold text-white">Before You Measure</h3>
                   <div className="bg-card border border-green-400/30 p-4 rounded-lg">
                     <ul className="text-green-200 space-y-1 text-sm">
                       <li>✓ Check meter CAT rating matches work</li>
@@ -716,7 +716,7 @@ const Module2Section1_5 = () => {
                 </div>
                 
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-foreground">Common Reading Errors</h3>
+                  <h3 className="text-lg font-semibold text-white">Common Reading Errors</h3>
                   <div className="bg-card border border-border/30 p-4 rounded-lg">
                     <ul className="text-blue-200 space-y-1 text-sm">
                       <li>• Ghost voltages on high-impedance inputs</li>
@@ -734,16 +734,16 @@ const Module2Section1_5 = () => {
         </div>
 
         {/* Section 8: Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-            <BookOpen className="h-5 w-5 text-emerald-400" />
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <BookOpen className="h-5 w-5 text-elec-yellow" />
             Multimeter Pocket Guide
           </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
             <div className="space-y-4">
               <div>
-                <h3 className="font-semibold text-foreground mb-2">Jack Selection Rules</h3>
-                <ul className="space-y-1 text-muted-foreground">
+                <h3 className="font-semibold text-white mb-2">Jack Selection Rules</h3>
+                <ul className="space-y-1 text-white">
                   <li>• <strong>Voltage/Resistance:</strong> COM + VΩ jacks</li>
                   <li>• <strong>Current ≤400mA:</strong> COM + mA jacks</li>
                   <li>• <strong>Current {'>'}400mA:</strong> COM + A jacks</li>
@@ -752,8 +752,8 @@ const Module2Section1_5 = () => {
               </div>
               
               <div>
-                <h3 className="font-semibold text-foreground mb-2">Symbol Quick Reference</h3>
-                <ul className="space-y-1 text-muted-foreground font-mono">
+                <h3 className="font-semibold text-white mb-2">Symbol Quick Reference</h3>
+                <ul className="space-y-1 text-white font-mono">
                   <li>• <strong>V~:</strong> AC voltage measurement</li>
                   <li>• <strong>V⎓:</strong> DC voltage measurement</li>
                   <li>• <strong>A~:</strong> AC current measurement</li>
@@ -766,8 +766,8 @@ const Module2Section1_5 = () => {
             
             <div className="space-y-4">
               <div>
-                <h3 className="font-semibold text-foreground mb-2">Before You Measure Checklist</h3>
-                <ul className="space-y-1 text-muted-foreground">
+                <h3 className="font-semibold text-white mb-2">Before You Measure Checklist</h3>
+                <ul className="space-y-1 text-white">
                   <li>□ Check meter CAT rating</li>
                   <li>□ Inspect test leads</li>
                   <li>□ Select correct function</li>
@@ -778,8 +778,8 @@ const Module2Section1_5 = () => {
               </div>
               
               <div>
-                <h3 className="font-semibold text-foreground mb-2">Typical UK Values</h3>
-                <ul className="space-y-1 text-muted-foreground">
+                <h3 className="font-semibold text-white mb-2">Typical UK Values</h3>
+                <ul className="space-y-1 text-white">
                   <li>• <strong>Domestic supply:</strong> 230V AC ±10%</li>
                   <li>• <strong>Three-phase:</strong> 400V AC line-to-line</li>
                   <li>• <strong>RCD rating:</strong> 30mA typical</li>
@@ -793,13 +793,13 @@ const Module2Section1_5 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Frequently Asked Questions</h2>
           <div className="space-y-6">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-border/20 pb-4 last:border-b-0 last:pb-0">
-                <h3 className="font-semibold text-foreground mb-2">{faq.question}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{faq.answer}</p>
+              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
+                <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

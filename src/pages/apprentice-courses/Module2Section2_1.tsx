@@ -74,11 +74,11 @@ const Module2Section2_1: React.FC = () => {
   ] as const;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2
@@ -91,15 +91,15 @@ const Module2Section2_1: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <Calculator className="h-8 w-8 text-emerald-400" />
+            <Calculator className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 2.2.1
               </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
                 Ohm's Law in Plain English
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+              <p className="text-xl text-white max-w-3xl mt-2">
                 Understanding V = I×R for practical electrical work
               </p>
             </div>
@@ -107,11 +107,11 @@ const Module2Section2_1: React.FC = () => {
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Ohm's Law:</strong> V = I×R shows voltage, current, resistance relationship.</li>
                 <li><strong>Triangle Method:</strong> Cover what you want to find, read the formula.</li>
@@ -121,8 +121,8 @@ const Module2Section2_1: React.FC = () => {
                 <li><strong>Foundation:</strong> Basis for power calculations and circuit analysis.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Every circuit calculation, fault finding, cable sizing needs this.</li>
                 <li><strong>Use:</strong> Calculating current for MCB sizing, voltage drop checks, component selection.</li>
@@ -133,32 +133,32 @@ const Module2Section2_1: React.FC = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
-          <ul className="space-y-3 text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
+          <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Explain the relationship between voltage, current, and resistance</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Convert between different electrical units (mA, kΩ, etc.)</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Apply Ohm's Law to practical electrical scenarios</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Use the formula triangle method effectively</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Perform sanity checks on your calculations</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Identify when measurements don't match theoretical calculations</span>
             </li>
           </ul>
@@ -166,16 +166,16 @@ const Module2Section2_1: React.FC = () => {
 
         {/* Section 1: Understanding V, I, and R */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
+          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
               Understanding V, I, and R
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                 <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
                   <div className="flex items-center gap-2 mb-2">
-                    <Zap className="w-5 h-5 text-emerald-400" />
+                    <Zap className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-semibold">Voltage (V)</h3>
                   </div>
                   <p className="text-sm">Electrical pressure or "push". UK mains is nominally 230V. Think of it like water pressure in pipes.</p>
@@ -201,9 +201,9 @@ const Module2Section2_1: React.FC = () => {
 
         {/* Section 2: The Formula Triangle */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-background/80 ring-1 ring-white/5 p-6 rounded-r-lg">
+          <div className="border-l-4 border-elec-yellow bg-[#121212]/80 ring-1 ring-white/5 p-6 rounded-r-lg">
             <h2 className="text-lg sm:text-xl font-semibold text-white mb-6 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
               The Formula Triangle & Rearrangements
             </h2>
             <div className="space-y-6 text-white">
@@ -227,16 +227,16 @@ const Module2Section2_1: React.FC = () => {
                 </div>
               </div>
               <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-sm">
-                <div className="text-center p-4 bg-emerald-600/20 border border-emerald-500/30 rounded-lg">
-                  <p className="font-semibold text-emerald-400 mb-2">To find V:</p>
+                <div className="text-center p-4 bg-emerald-600/20 border border-elec-yellow/30 rounded-lg">
+                  <p className="font-semibold text-elec-yellow mb-2">To find V:</p>
                   <p className="text-white text-lg font-mono">V = I × R</p>
                 </div>
-                <div className="text-center p-4 bg-emerald-500/20 border border-border/30 rounded-lg">
-                  <p className="font-semibold text-emerald-400 mb-2">To find I:</p>
+                <div className="text-center p-4 bg-elec-yellow/20 border border-border/30 rounded-lg">
+                  <p className="font-semibold text-elec-yellow mb-2">To find I:</p>
                   <p className="text-white text-lg font-mono">I = V ÷ R</p>
                 </div>
                 <div className="text-center p-4 bg-orange-600/20 border border-border/30 rounded-lg">
-                  <p className="font-semibold text-emerald-400 mb-2">To find R:</p>
+                  <p className="font-semibold text-elec-yellow mb-2">To find R:</p>
                   <p className="text-white text-lg font-mono">R = V ÷ I</p>
                 </div>
               </div>
@@ -260,12 +260,12 @@ const Module2Section2_1: React.FC = () => {
 
         {/* Section 3: Unit Conversions */}
         <div className="mb-8">
-          <div className="border-l-4 border-green-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="border-l-4 border-green-500 dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
               Unit Conversions & Prefixes
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
                   <h3 className="font-semibold mb-3">Current Conversions</h3>
@@ -307,17 +307,17 @@ const Module2Section2_1: React.FC = () => {
         {/* Section 4: Worked Examples */}
         <div className="mb-8">
           <div className="border-l-4 border-teal-500 bg-teal-500/10 dark:bg-teal-500/10 p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">4</span>
               Worked Examples
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <div className="grid gap-4">
                 <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
                   <h3 className="font-semibold text-teal-600 mb-2">Example 1: Finding Current</h3>
                   <p className="text-sm mb-2"><strong>Given:</strong> V = 230V, R = 920Ω. Find I.</p>
                   <p className="text-sm mb-2"><strong>Solution:</strong> I = V ÷ R = 230 ÷ 920 = 0.25 A (250 mA)</p>
-                  <p className="text-sm text-muted-foreground"><strong>Check:</strong> V = I × R = 0.25 × 920 = 230V ✓</p>
+                  <p className="text-sm text-white"><strong>Check:</strong> V = I × R = 0.25 × 920 = 230V ✓</p>
                 </div>
                 <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
                   <h3 className="font-semibold text-teal-600 mb-2">Example 2: Finding Voltage</h3>
@@ -329,7 +329,7 @@ const Module2Section2_1: React.FC = () => {
                   <h3 className="font-semibold text-teal-600 mb-2">Example 3: Finding Resistance</h3>
                   <p className="text-sm mb-2"><strong>Given:</strong> V = 24V, I = 0.12A. Find R.</p>
                   <p className="text-sm mb-2"><strong>Solution:</strong> R = V ÷ I = 24 ÷ 0.12 = 200Ω</p>
-                  <p className="text-sm text-muted-foreground"><strong>Check:</strong> V = I × R = 0.12 × 200 = 24V ✓</p>
+                  <p className="text-sm text-white"><strong>Check:</strong> V = I × R = 0.12 × 200 = 24V ✓</p>
                 </div>
               </div>
             </div>
@@ -338,32 +338,32 @@ const Module2Section2_1: React.FC = () => {
 
         {/* Section 5: Common Mistakes */}
         <div className="mb-8">
-          <div className="border-l-4 border-red-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="border-l-4 border-red-500 dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">5</span>
               Common Mistakes to Avoid
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <div className="grid gap-3">
                 <div className="flex items-start gap-3 p-3 bg-red-50 dark:bg-red-950/30 rounded border border-red-200 dark:border-red-800">
                   <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-sm">Forgetting Unit Conversions</p>
-                    <p className="text-sm text-muted-foreground">Using mA with Ω without converting to A first. This gives answers 1000× wrong!</p>
+                    <p className="text-sm text-white">Using mA with Ω without converting to A first. This gives answers 1000× wrong!</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 p-3 bg-red-50 dark:bg-red-950/30 rounded border border-red-200 dark:border-red-800">
                   <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-sm">Wrong Formula Rearrangement</p>
-                    <p className="text-sm text-muted-foreground">Using I = R ÷ V instead of I = V ÷ R. Always double-check your rearrangement.</p>
+                    <p className="text-sm text-white">Using I = R ÷ V instead of I = V ÷ R. Always double-check your rearrangement.</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 p-3 bg-red-50 dark:bg-red-950/30 rounded border border-red-200 dark:border-red-800">
                   <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-sm">No Sanity Check</p>
-                    <p className="text-sm text-muted-foreground">Getting 2000A for a light bulb and not questioning it. Always check if the answer makes sense.</p>
+                    <p className="text-sm text-white">Getting 2000A for a light bulb and not questioning it. Always check if the answer makes sense.</p>
                   </div>
                 </div>
               </div>
@@ -373,12 +373,12 @@ const Module2Section2_1: React.FC = () => {
 
         {/* Section 6: Real-World Applications */}
         <div className="mb-8">
-          <div className="border-l-4 border-orange-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="border-l-4 border-orange-500 dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">6</span>
               Real-World Applications
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <div className="grid gap-4">
                 <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
                   <h3 className="font-semibold text-orange-600 mb-2">Checking Appliance Current Draw</h3>
@@ -404,11 +404,11 @@ const Module2Section2_1: React.FC = () => {
         {/* Section 7: Sanity Checks */}
         <div className="mb-8">
           <div className="border-l-4 border-indigo-500 bg-indigo-500/10 dark:bg-indigo-500/10 p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-indigo-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">7</span>
               Sanity Checks That Work On Site
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <div className="grid gap-3">
                 <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
                   <h3 className="font-semibold text-indigo-600 mb-2">Order of Magnitude Check</h3>
@@ -434,7 +434,7 @@ const Module2Section2_1: React.FC = () => {
 
         {/* Pocket Guide */}
         <div className="mb-8">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <BookOpen className="w-5 h-5" />
             Pocket Guide
           </h2>
@@ -443,15 +443,15 @@ const Module2Section2_1: React.FC = () => {
 
         {/* FAQ Section */}
         <Card className="mb-8 p-6">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <HelpCircle className="w-5 h-5" />
             Frequently Asked Questions
           </h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <div key={index} className="border-l-4 border-blue-200 dark:border-blue-800 bg-emerald-50/50 dark:bg-emerald-950/20 p-4 rounded-r-lg">
-                <p className="font-medium text-foreground mb-2">{faq.q}</p>
-                <p className="text-sm text-muted-foreground">{faq.a}</p>
+                <p className="font-medium text-white mb-2">{faq.q}</p>
+                <p className="text-sm text-white">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -459,12 +459,12 @@ const Module2Section2_1: React.FC = () => {
 
         {/* Summary */}
         <Card className="mb-8 p-6 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 border-green-200 dark:border-green-800">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <CheckCircle className="w-5 h-5 text-green-600" />
             Key Takeaways
           </h2>
           <div className="grid md:grid-cols-2 gap-4">
-            <ul className="space-y-2 text-xs sm:text-sm text-foreground">
+            <ul className="space-y-2 text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                 Ohm's Law (V = I×R) is fundamental to all electrical calculations
@@ -478,7 +478,7 @@ const Module2Section2_1: React.FC = () => {
                 Use the triangle method for easy rearrangement
               </li>
             </ul>
-            <ul className="space-y-2 text-xs sm:text-sm text-foreground">
+            <ul className="space-y-2 text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                 Always perform sanity checks on your results
@@ -495,8 +495,8 @@ const Module2Section2_1: React.FC = () => {
           </div>
           <div className="mt-4 p-4 bg-yellow-100 dark:bg-yellow-900/30 border border-yellow-300 dark:border-yellow-700 rounded-lg">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-emerald-400 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
-              <p className="text-xs sm:text-sm text-foreground">
+              <AlertTriangle className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+              <p className="text-xs sm:text-sm text-white">
                 <strong>Safety Reminder:</strong> Always isolate and prove dead before work. Follow BS 7671 and manufacturer instructions.
               </p>
             </div>
@@ -505,7 +505,7 @@ const Module2Section2_1: React.FC = () => {
 
         {/* Quiz Section */}
         <Card className="mb-8 p-6">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Users className="w-5 h-5" />
             Test Your Knowledge
           </h2>
@@ -513,7 +513,7 @@ const Module2Section2_1: React.FC = () => {
         </Card>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to=".." className="flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" />

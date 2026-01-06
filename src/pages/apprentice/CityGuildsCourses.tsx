@@ -1,10 +1,11 @@
 
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { ArrowLeft, BookOpen, Loader2 } from "lucide-react";
+import { BookOpen, Loader2 } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useQualifications } from "@/hooks/qualification/useQualifications";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
+import { Button } from "@/components/ui/button";
 
 const CityGuildsCourses = () => {
   const isMobile = useIsMobile();
@@ -25,15 +26,7 @@ const CityGuildsCourses = () => {
               Industry-standard vocational qualifications for electrical professionals
             </p>
           </div>
-          <Link to="/apprentice/study" className="w-full sm:w-auto">
-            <Button
-              variant="ghost"
-              className="text-muted-foreground hover:text-foreground hover:bg-card transition-all duration-200 w-full sm:w-auto"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Study Centre
-            </Button>
-          </Link>
+<SmartBackButton />
         </div>
 
         {loading ? (

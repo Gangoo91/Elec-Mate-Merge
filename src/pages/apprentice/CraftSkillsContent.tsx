@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { BookOpen } from "lucide-react";
 import { craftSkillsContent } from "@/data/craftSkills/index";
 import type { SectionData, Subsection } from "@/data/healthAndSafety/types";
-import BackButton from "@/components/apprentice/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 
 const CraftSkillsContent = () => {
   const { sectionId, courseSlug, unitSlug } = useParams();
@@ -48,11 +48,7 @@ const CraftSkillsContent = () => {
   return (
     <div className="space-y-6 animate-fade-in px-4 md:px-0">
       <div className="mb-6">
-        <BackButton 
-          courseSlug={courseSlug} 
-          unitSlug={unitSlug} 
-          sectionId={sectionId}
-        />
+        <SmartBackButton />
       </div>
       
       <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-6">

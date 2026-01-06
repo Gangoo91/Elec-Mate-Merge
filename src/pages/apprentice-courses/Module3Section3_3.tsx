@@ -206,13 +206,13 @@ const Module3Section3_3: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -227,32 +227,32 @@ const Module3Section3_3: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Activity className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Activity className="w-6 h-6 text-white" />
             </div>
             <Badge
               variant="outline"
-              className="border-emerald-500/30 text-emerald-400"
+              className="border-elec-yellow/30 text-elec-yellow"
             >
               Section 3.3.3
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Test Equipment for Installation Work (Overview Only)
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Essential electrical test equipment for safe, compliant installations and professional testing practices.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Introduction
           </h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Multimeters: measure voltage, current, resistance for general testing.</li>
                 <li>Insulation testers: verify cable insulation quality before energising.</li>
@@ -260,8 +260,8 @@ const Module3Section3_3: React.FC = () => {
                 <li>Voltage indicators: essential for safe isolation confirmation.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>
                   <strong>Spot:</strong> Digital displays, test leads, range selectors, calibration labels.
@@ -278,11 +278,11 @@ const Module3Section3_3: React.FC = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Learning outcomes
           </h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Identify the main types of electrical test equipment used in installations.</li>
             <li>Understand the basic function of each piece of equipment.</li>
             <li>Recognise key safety practices when using electrical testers.</li>
@@ -291,17 +291,17 @@ const Module3Section3_3: React.FC = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Multimeter */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Activity className="w-5 h-5" /> Multimeter
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-2">Universal Measuring Instrument</p>
                 <div className="space-y-3">
                   <div>
@@ -341,12 +341,12 @@ const Module3Section3_3: React.FC = () => {
 
           {/* Insulation Resistance Tester */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Shield className="w-5 h-5" /> Insulation Resistance Tester (Megger)
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-2">Insulation Quality Testing</p>
                 <div className="space-y-3">
                   <div>
@@ -386,13 +386,13 @@ const Module3Section3_3: React.FC = () => {
 
           {/* Continuity and Voltage Testing */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Zap className="w-5 h-5" /> Continuity & Voltage Testing
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                   <p className="font-medium mb-2">Continuity Tester</p>
                   <div className="space-y-3">
                     <div>
@@ -422,7 +422,7 @@ const Module3Section3_3: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Voltage Indicator (Two-Pole)</p>
                   <div className="space-y-3">
                     <div>
@@ -460,12 +460,12 @@ const Module3Section3_3: React.FC = () => {
 
           {/* RCD Tester */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Settings className="w-5 h-5" /> RCD Tester
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-4 bg-card border border-amber-400/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
                 <p className="font-medium mb-2">RCD Performance Verification</p>
                 <div className="space-y-3">
                   <div>
@@ -504,12 +504,12 @@ const Module3Section3_3: React.FC = () => {
         </Card>
 
         {/* What this means on site */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Building className="w-5 h-5" /> What this means on site
           </h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2">Testing Sequence Planning</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Plan testing sequence before starting installation work</li>
@@ -518,7 +518,7 @@ const Module3Section3_3: React.FC = () => {
                 <li>Allow adequate time for thorough testing and documentation</li>
               </ul>
             </div>
-            <div className="rounded-lg p-4 bg-card border border-green-400/30">
+            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
               <p className="font-medium mb-2">Professional Standards</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Testing validates installation quality and compliance</li>
@@ -531,13 +531,13 @@ const Module3Section3_3: React.FC = () => {
         </Card>
 
         {/* Installation Practices */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Settings className="w-5 h-5" /> Installation Practices
           </h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
+          <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="rounded-lg p-4 bg-card border border-amber-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
                 <p className="font-medium mb-2">Equipment Management</p>
                 <ul className="list-disc pl-6 space-y-1">
                   <li>Maintain calibration certificates for all test equipment</li>
@@ -546,7 +546,7 @@ const Module3Section3_3: React.FC = () => {
                   <li>Keep backup batteries for battery-powered instruments</li>
                 </ul>
               </div>
-              <div className="rounded-lg p-4 bg-card border border-cyan-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-cyan-400/30">
                 <p className="font-medium mb-2">Testing Procedures</p>
                 <ul className="list-disc pl-6 space-y-1">
                   <li>Follow manufacturer instructions for each instrument</li>
@@ -560,13 +560,13 @@ const Module3Section3_3: React.FC = () => {
         </Card>
 
         {/* Common Mistakes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5 text-emerald-400" /> Common Mistakes
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <AlertTriangle className="w-5 h-5 text-elec-yellow" /> Common Mistakes
           </h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <p className="font-medium mb-2 text-emerald-400">Dangerous Practices</p>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <p className="font-medium mb-2 text-elec-yellow">Dangerous Practices</p>
               <ul className="list-disc pl-6 space-y-1 text-red-200">
                 <li><strong>Using uncalibrated equipment</strong> - Inaccurate results, compliance failures</li>
                 <li><strong>Testing live circuits with insulation tester</strong> - Equipment damage, safety risk</li>
@@ -574,8 +574,8 @@ const Module3Section3_3: React.FC = () => {
                 <li><strong>Wrong test lead connections</strong> - Meter damage, incorrect readings</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <p className="font-medium mb-2 text-emerald-400">Quality Issues</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <p className="font-medium mb-2 text-elec-yellow">Quality Issues</p>
               <ul className="list-disc pl-6 space-y-1 text-orange-200">
                 <li><strong>Inadequate record keeping</strong> - Compliance problems, traceability issues</li>
                 <li><strong>Skipping continuity tests</strong> - Undetected earth faults, safety risks</li>
@@ -587,11 +587,11 @@ const Module3Section3_3: React.FC = () => {
         </Card>
 
         {/* BS 7671 Context */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Shield className="w-5 h-5" /> BS 7671 Context
           </h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
+          <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="rounded-lg p-4 bg-indigo-500/10 border border-indigo-400/30">
               <p className="font-medium mb-2">Testing Requirements</p>
               <ul className="list-disc pl-6 space-y-1">
@@ -614,11 +614,11 @@ const Module3Section3_3: React.FC = () => {
         </Card>
 
         {/* Real-world Scenario */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Factory className="w-5 h-5" /> Real-world Scenario
           </h2>
-          <div className="rounded-lg p-3 sm:p-4 bg-card border border-slate-400/30">
+          <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30">
             <p className="font-medium mb-2">Scenario: Insulation Test Prevents Major Fault</p>
             <p className="text-sm mb-4">
               On a commercial fit-out, an electrician used an insulation resistance tester before energising the lighting circuits. 
@@ -636,7 +636,7 @@ const Module3Section3_3: React.FC = () => {
                 </ul>
               </div>
               <div>
-                <p className="font-medium text-emerald-400 mb-1">Professional Practice</p>
+                <p className="font-medium text-elec-yellow mb-1">Professional Practice</p>
                 <ul className="list-disc pl-4 space-y-1 text-blue-200">
                   <li>Systematic testing approach identified issue</li>
                   <li>Problem resolved during installation phase</li>
@@ -649,15 +649,15 @@ const Module3Section3_3: React.FC = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Frequently Asked Questions
           </h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <div key={index}>
-                <p className="font-medium text-foreground mb-1">{faq.q}</p>
-                <p className="text-sm text-muted-foreground">{faq.a}</p>
+                <p className="font-medium text-white mb-1">{faq.q}</p>
+                <p className="text-sm text-white">{faq.a}</p>
                 {index < faqs.length - 1 && <Separator className="mt-4" />}
               </div>
             ))}
@@ -665,15 +665,15 @@ const Module3Section3_3: React.FC = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
             <p>
               Test equipment is vital for ensuring installations are safe, compliant, and fault-free. Knowing which tester to use, 
               how to operate it correctly, and how to interpret results is a fundamental skill for all electricians.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="rounded-lg p-4 bg-card border border-green-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                 <p className="font-medium text-green-300 mb-2">Key Benefits</p>
                 <ul className="list-disc pl-4 space-y-1 text-green-200">
                   <li>Verifies installation safety before energisation</li>
@@ -682,8 +682,8 @@ const Module3Section3_3: React.FC = () => {
                   <li>Provides documentation for professional liability</li>
                 </ul>
               </div>
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-                <p className="font-medium text-emerald-400 mb-2">Essential Points</p>
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+                <p className="font-medium text-elec-yellow mb-2">Essential Points</p>
                 <ul className="list-disc pl-4 space-y-1 text-blue-200">
                   <li>Different testers for different applications</li>
                   <li>Calibration essential for accurate results</li>
@@ -696,12 +696,12 @@ const Module3Section3_3: React.FC = () => {
         </Card>
 
         {/* Apprentice Do's and Don'ts */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Target className="w-5 h-5" /> Apprentice Do's and Don'ts
           </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-            <div className="rounded-lg p-4 bg-card border border-green-400/30">
+            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
               <p className="font-medium text-green-300 mb-3 flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4" /> DO
               </p>
@@ -714,8 +714,8 @@ const Module3Section3_3: React.FC = () => {
                 <li>✓ Follow manufacturer operating instructions</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <p className="font-medium text-emerald-400 mb-3 flex items-center gap-2">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <p className="font-medium text-elec-yellow mb-3 flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4" /> DON'T
               </p>
               <ul className="space-y-2 text-sm text-red-200">
@@ -731,11 +731,11 @@ const Module3Section3_3: React.FC = () => {
         </Card>
 
         {/* Pocket Card Quick Reference */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Pocket Card Quick Reference
           </h2>
-          <div className="rounded-lg p-3 sm:p-4 bg-card border border-slate-400/30 text-sm">
+          <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30 text-sm">
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <p className="font-medium mb-2">Test Equipment Guide</p>
@@ -764,9 +764,9 @@ const Module3Section3_3: React.FC = () => {
         </Card>
 
         {/* Key References */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Key References</h2>
-          <div className="text-xs sm:text-sm text-foreground space-y-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Key References</h2>
+          <div className="text-xs sm:text-sm text-white space-y-2">
             <p><strong>BS 7671:</strong> IET Wiring Regulations (18th Edition) - Part 6</p>
             <p><strong>GS38:</strong> Electrical test equipment for use by electricians</p>
             <p><strong>BS EN 61557:</strong> Electrical safety in low voltage distribution systems</p>
@@ -775,8 +775,8 @@ const Module3Section3_3: React.FC = () => {
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Knowledge Check
           </h2>
           <Quiz questions={quizQuestions} />

@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, BookOpen, CheckCircle, Shield, Users, FileText, Info, Construction, AlertTriangle, Play, LightbulbIcon, Cable, CircuitBoard } from "lucide-react";
+import { BookOpen, CheckCircle, Shield, Users, FileText, Info, Construction, AlertTriangle, Play, LightbulbIcon, Cable, CircuitBoard } from "lucide-react";
 import { getCourseUnitById } from "@/data/courseUnits";
-import BackButton from "@/components/apprentice/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import HealthSafetyUnit from "@/components/apprentice/units/HealthSafetyUnit";
 import ElectricalTheoryUnit from "@/components/apprentice/units/ElectricalTheoryUnit";
 import InstallationMethodsUnit from "@/components/apprentice/units/InstallationMethodsUnit";
@@ -49,7 +49,7 @@ const UnitContent = () => {
             {unitData?.code || ''}: {unitData?.description || ''}
           </p>
         </div>
-        <BackButton courseSlug="level-2-diploma" />
+        <SmartBackButton />
       </div>
 
       {/* Unit content based on type */}

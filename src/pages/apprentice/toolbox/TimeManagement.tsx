@@ -1,5 +1,5 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calendar, Clock, Heart, Target, Wrench, CheckSquare, AlertCircle } from "lucide-react";
@@ -21,7 +21,7 @@ const TimeManagement = () => {
           Master the art of balancing your apprenticeship demands with personal wellbeing. Learn effective time management strategies, stress reduction techniques, and how to maintain a healthy work-life balance throughout your electrical career journey.
         </p>
         <div className="flex justify-center">
-          <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
+          <SmartBackButton />
         </div>
       </div>
 

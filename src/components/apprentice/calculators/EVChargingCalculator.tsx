@@ -1,19 +1,31 @@
-
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { ResultCard } from "@/components/ui/result-card";
-import WhyThisMatters from "@/components/common/WhyThisMatters";
-import { Calculator, Car, Zap, AlertTriangle, CheckCircle, Info, PoundSterling, Clock, Lightbulb } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
+import { Car, Info, BookOpen, ChevronDown, AlertTriangle, CheckCircle, Zap, Clock, PoundSterling, Calculator } from "lucide-react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { cn } from "@/lib/utils";
+import {
+  CalculatorCard,
+  CalculatorInputGrid,
+  CalculatorInput,
+  CalculatorSelect,
+  CalculatorActions,
+  CalculatorResult,
+  ResultValue,
+  ResultsGrid,
+  CALCULATOR_CONFIG,
+} from "@/components/calculators/shared";
 import { calculateEVCharging, type EVCalculationInputs } from "@/lib/ev-calculations";
 import { CHARGER_TYPES, EARTHING_SYSTEMS, DIVERSITY_FACTORS, INSTALLATION_LOCATIONS } from "@/lib/ev-constants";
 import { formatCurrency } from "@/lib/format";
 import { toast } from "@/hooks/use-toast";
 
 const EVChargingCalculator = () => {
+  const config = CALCULATOR_CONFIG['ev_storage'];
+
   const [inputs, setInputs] = useState({
     batteryCapacity: "",
     chargerType: "7kw-ac" as keyof typeof CHARGER_TYPES,
@@ -29,6 +41,28 @@ const EVChargingCalculator = () => {
   });
 
   const [results, setResults] = useState<ReturnType<typeof calculateEVCharging> | null>(null);
+  const [showFormula, setShowFormula] = useState(false);
+  const [showRegs, setShowRegs] = useState(false);
+
+  const chargerOptions = Object.entries(CHARGER_TYPES).map(([key, value]) => ({
+    value: key,
+    label: value.label
+  }));
+
+  const earthingOptions = Object.entries(EARTHING_SYSTEMS).map(([key, value]) => ({
+    value: key,
+    label: value.label
+  }));
+
+  const diversityOptions = Object.entries(DIVERSITY_FACTORS).map(([key, value]) => ({
+    value: value.value.toString(),
+    label: value.label
+  }));
+
+  const locationOptions = Object.entries(INSTALLATION_LOCATIONS).map(([key, value]) => ({
+    value: key,
+    label: value.label
+  }));
 
   const calculateEVChargingResults = () => {
     const calculationInputs: EVCalculationInputs = {
@@ -45,7 +79,6 @@ const EVChargingCalculator = () => {
       existingLoadCurrent: parseFloat(inputs.existingLoadCurrent)
     };
 
-    // Validate inputs
     if (!calculationInputs.batteryCapacity || calculationInputs.currentCharge >= calculationInputs.targetCharge) {
       toast({
         title: "Invalid Input",
@@ -58,24 +91,18 @@ const EVChargingCalculator = () => {
     try {
       const calculationResults = calculateEVCharging(calculationInputs);
       setResults(calculationResults);
-      
+
       if (!calculationResults.installationCompliant) {
         toast({
           title: "Installation Issues Detected",
-          description: "The calculation shows potential compliance issues. Review the warnings below.",
+          description: "Review the warnings below.",
           variant: "destructive"
-        });
-      } else {
-        toast({
-          title: "Calculation Complete",
-          description: "EV charging requirements calculated successfully.",
-          variant: "success"
         });
       }
     } catch (error) {
       toast({
         title: "Calculation Error",
-        description: "Unable to complete calculation. Please check your inputs.",
+        description: "Unable to complete calculation.",
         variant: "destructive"
       });
     }
@@ -98,409 +125,283 @@ const EVChargingCalculator = () => {
     setResults(null);
   };
 
-  const chargerOptions = Object.entries(CHARGER_TYPES).map(([key, value]) => ({
-    value: key,
-    label: value.label
-  }));
-
-  const earthingOptions = Object.entries(EARTHING_SYSTEMS).map(([key, value]) => ({
-    value: key,
-    label: value.label
-  }));
-
-  const diversityOptions = Object.entries(DIVERSITY_FACTORS).map(([key, value]) => ({
-    value: value.value.toString(),
-    label: value.label
-  }));
-
-  const locationOptions = Object.entries(INSTALLATION_LOCATIONS).map(([key, value]) => ({
-    value: key,
-    label: value.label
-  }));
+  const hasValidInputs = () => inputs.batteryCapacity && parseFloat(inputs.batteryCapacity) > 0;
 
   return (
-    <div className="space-y-6 bg-elec-gray min-h-screen p-4">
-      <Card className="border-elec-yellow/20 bg-elec-card">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-elec-yellow">
-            <Car className="h-5 w-5" />
-            EV Charging Station Calculator
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          {/* Vehicle & Charging Details */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium text-elec-yellow border-b border-elec-yellow/20 pb-2">
-              Vehicle & Charging Details
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <MobileInputWrapper
-                label="Battery Capacity"
-                placeholder="Enter vehicle battery capacity"
-                value={inputs.batteryCapacity}
-                onChange={(value) => setInputs({...inputs, batteryCapacity: value})}
-                type="text"
-                inputMode="decimal"
-                unit="kWh"
-              />
-              <MobileSelectWrapper
-                label="Charger Type"
-                placeholder="Select charger type"
-                value={inputs.chargerType}
-                onValueChange={(value) => setInputs({...inputs, chargerType: value as keyof typeof CHARGER_TYPES})}
-                options={chargerOptions}
-              />
-              <MobileInputWrapper
-                label="Current Charge"
-                placeholder="Current battery level"
-                value={inputs.currentCharge}
-                onChange={(value) => setInputs({...inputs, currentCharge: value})}
-                type="text"
-                inputMode="decimal"
-                unit="%"
-                min="0"
-                max="100"
-              />
-              <MobileInputWrapper
-                label="Target Charge"
-                placeholder="Desired battery level"
-                value={inputs.targetCharge}
-                onChange={(value) => setInputs({...inputs, targetCharge: value})}
-                type="text"
-                inputMode="decimal"
-                unit="%"
-                min="0"
-                max="100"
-              />
-            </div>
-          </div>
+    <div className="space-y-4">
+      <CalculatorCard
+        category="ev_storage"
+        title="EV Charging Calculator"
+        description="Design compliant EV charging installations per BS 7671"
+        badge="Section 722"
+      >
+        {/* Vehicle & Charging Details */}
+        <div className="space-y-3">
+          <p className="text-sm font-medium text-white/80">Vehicle & Charging</p>
+          <CalculatorInputGrid columns={2}>
+            <CalculatorInput
+              label="Battery Capacity"
+              unit="kWh"
+              type="text"
+              inputMode="decimal"
+              value={inputs.batteryCapacity}
+              onChange={(value) => setInputs({...inputs, batteryCapacity: value})}
+              placeholder="e.g., 64"
+            />
+            <CalculatorSelect
+              label="Charger Type"
+              value={inputs.chargerType}
+              onChange={(value) => setInputs({...inputs, chargerType: value as keyof typeof CHARGER_TYPES})}
+              options={chargerOptions}
+            />
+            <CalculatorInput
+              label="Current Charge"
+              unit="%"
+              type="text"
+              inputMode="decimal"
+              value={inputs.currentCharge}
+              onChange={(value) => setInputs({...inputs, currentCharge: value})}
+              placeholder="20"
+            />
+            <CalculatorInput
+              label="Target Charge"
+              unit="%"
+              type="text"
+              inputMode="decimal"
+              value={inputs.targetCharge}
+              onChange={(value) => setInputs({...inputs, targetCharge: value})}
+              placeholder="80"
+            />
+          </CalculatorInputGrid>
+        </div>
 
-          {/* Installation Details */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium text-elec-yellow border-b border-elec-yellow/20 pb-2">
-              Installation Details
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <MobileSelectWrapper
-                label="Supply Type"
-                placeholder="Select earthing system"
-                value={inputs.supplyType}
-                onValueChange={(value) => setInputs({...inputs, supplyType: value as keyof typeof EARTHING_SYSTEMS})}
-                options={earthingOptions}
-              />
-              <MobileSelectWrapper
-                label="Installation Location"
-                placeholder="Select installation location"
-                value={inputs.installationLocation}
-                onValueChange={(value) => setInputs({...inputs, installationLocation: value})}
-                options={locationOptions}
-              />
-              <MobileInputWrapper
-                label="Cable Run Length"
-                placeholder="Distance from consumer unit"
-                value={inputs.runLength}
-                onChange={(value) => setInputs({...inputs, runLength: value})}
-                type="text"
-                inputMode="decimal"
-                unit="m"
-              />
-              <MobileInputWrapper
-                label="Ambient Temperature"
-                placeholder="Installation ambient temperature"
-                value={inputs.ambientTemp}
-                onChange={(value) => setInputs({...inputs, ambientTemp: value})}
-                type="text"
-                inputMode="decimal"
-                unit="°C"
-              />
-            </div>
-          </div>
+        {/* Installation Details */}
+        <div className="space-y-3">
+          <p className="text-sm font-medium text-white/80">Installation Details</p>
+          <CalculatorInputGrid columns={2}>
+            <CalculatorSelect
+              label="Supply Type"
+              value={inputs.supplyType}
+              onChange={(value) => setInputs({...inputs, supplyType: value as keyof typeof EARTHING_SYSTEMS})}
+              options={earthingOptions}
+            />
+            <CalculatorSelect
+              label="Installation Location"
+              value={inputs.installationLocation}
+              onChange={(value) => setInputs({...inputs, installationLocation: value})}
+              options={locationOptions}
+            />
+            <CalculatorInput
+              label="Cable Run Length"
+              unit="m"
+              type="text"
+              inputMode="decimal"
+              value={inputs.runLength}
+              onChange={(value) => setInputs({...inputs, runLength: value})}
+              placeholder="20"
+            />
+            <CalculatorInput
+              label="Ambient Temperature"
+              unit="°C"
+              type="text"
+              inputMode="decimal"
+              value={inputs.ambientTemp}
+              onChange={(value) => setInputs({...inputs, ambientTemp: value})}
+              placeholder="30"
+            />
+          </CalculatorInputGrid>
+        </div>
 
-          {/* Load & Cost Details */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium text-elec-yellow border-b border-elec-yellow/20 pb-2">
-              Load & Cost Details
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <MobileSelectWrapper
-                label="Diversity Factor"
-                placeholder="Select diversity factor"
-                value={inputs.diversityFactor}
-                onValueChange={(value) => setInputs({...inputs, diversityFactor: value})}
-                options={diversityOptions}
-              />
-              <MobileInputWrapper
-                label="Existing Load Current"
-                placeholder="Current installation load"
-                value={inputs.existingLoadCurrent}
-                onChange={(value) => setInputs({...inputs, existingLoadCurrent: value})}
-                type="text"
-                inputMode="decimal"
-                unit="A"
-              />
-              <MobileInputWrapper
-                label="Electricity Rate"
-                placeholder="Cost per unit of electricity"
-                value={inputs.electricityRate}
-                onChange={(value) => setInputs({...inputs, electricityRate: value})}
-                type="text"
-                inputMode="decimal"
-                step="0.01"
-                unit="£/kWh"
-              />
-            </div>
-          </div>
+        {/* Load & Cost */}
+        <div className="space-y-3">
+          <p className="text-sm font-medium text-white/80">Load & Cost</p>
+          <CalculatorInputGrid columns={2}>
+            <CalculatorSelect
+              label="Diversity Factor"
+              value={inputs.diversityFactor}
+              onChange={(value) => setInputs({...inputs, diversityFactor: value})}
+              options={diversityOptions}
+            />
+            <CalculatorInput
+              label="Existing Load Current"
+              unit="A"
+              type="text"
+              inputMode="decimal"
+              value={inputs.existingLoadCurrent}
+              onChange={(value) => setInputs({...inputs, existingLoadCurrent: value})}
+              placeholder="0"
+            />
+          </CalculatorInputGrid>
+          <CalculatorInput
+            label="Electricity Rate"
+            unit="£/kWh"
+            type="text"
+            inputMode="decimal"
+            value={inputs.electricityRate}
+            onChange={(value) => setInputs({...inputs, electricityRate: value})}
+            placeholder="0.30"
+          />
+        </div>
 
-          {/* Calculate Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 pt-4">
-            <MobileButton
-              onClick={calculateEVChargingResults}
-              variant="elec"
-              size="default"
-              className="sm:w-auto w-full"
-            >
-              <Calculator className="h-4 w-4 mr-2" />
-              Calculate EV Charging
-            </MobileButton>
-            <MobileButton
-              onClick={resetCalculator}
-              variant="outline"
-              size="default"
-              className="sm:w-auto w-full"
-            >
-              Reset
-            </MobileButton>
-          </div>
-        </CardContent>
-      </Card>
+        <CalculatorActions
+          category="ev_storage"
+          onCalculate={calculateEVChargingResults}
+          onReset={resetCalculator}
+          isDisabled={!hasValidInputs()}
+          calculateLabel="Calculate"
+        />
+      </CalculatorCard>
 
       {results && (
-        <div className="space-y-6">
-          {/* Primary Results */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <ResultCard
-              title="Energy Required"
-              value={results.energyRequired}
-              unit="kWh"
-              status={results.energyRequired > 50 ? "warning" : "success"}
-              icon={<Zap className="h-5 w-5" />}
-            />
-            <ResultCard
-              title="Charging Time"
-              value={results.chargingTime}
-              unit="hours"
-              status={results.chargingTime > 8 ? "warning" : "success"}
-              icon={<Clock className="h-5 w-5" />}
-            />
-            <ResultCard
-              title="Charging Cost"
-              value={formatCurrency(results.cost)}
-              status={results.cost > 20 ? "warning" : "success"}
-              icon={<PoundSterling className="h-5 w-5" />}
-            />
-            <ResultCard
-              title="Installation Compliance"
-              value={results.installationCompliant ? "Compliant" : "Issues Found"}
-              status={results.installationCompliant ? "success" : "error"}
-              icon={results.installationCompliant ? <CheckCircle className="h-5 w-5" /> : <AlertTriangle className="h-5 w-5" />}
-            />
-          </div>
+        <div className="space-y-4 animate-fade-in">
+          {/* Main Results */}
+          <CalculatorResult category="ev_storage">
+            <div className="flex items-center justify-between pb-3 border-b border-white/10">
+              <span className="text-sm text-white/60">EV Charging Analysis</span>
+              <Badge variant="outline" className={cn(
+                results.installationCompliant ? "text-green-400 border-green-400/50" : "text-red-400 border-red-400/50"
+              )}>
+                {results.installationCompliant ? <><CheckCircle className="h-3 w-3 mr-1" /> Compliant</> : <><AlertTriangle className="h-3 w-3 mr-1" /> Issues Found</>}
+              </Badge>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 py-4">
+              <div className="text-center">
+                <p className="text-sm text-white/60 mb-1">Energy Required</p>
+                <div className="text-3xl font-bold bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}>
+                  {results.energyRequired.toFixed(1)}
+                </div>
+                <p className="text-xs text-white/50">kWh</p>
+              </div>
+              <div className="text-center">
+                <p className="text-sm text-white/60 mb-1">Charging Time</p>
+                <div className="text-3xl font-bold bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}>
+                  {results.chargingTime.toFixed(1)}
+                </div>
+                <p className="text-xs text-white/50">hours</p>
+              </div>
+            </div>
+
+            <ResultsGrid columns={2}>
+              <ResultValue label="Charging Cost" value={formatCurrency(results.cost)} category="ev_storage" size="sm" />
+              <ResultValue label="Peak Demand" value={results.peakDemand.toFixed(1)} unit="kW" category="ev_storage" size="sm" />
+            </ResultsGrid>
+          </CalculatorResult>
 
           {/* Technical Results */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <ResultCard
-              title="Peak Demand"
-              value={results.peakDemand}
-              unit="kW"
-              subtitle="Maximum power requirement"
-              status="success"
-            />
-            <ResultCard
-              title="Circuit Current"
-              value={results.circuitCurrent}
-              unit="A"
-              subtitle="Design current including safety factors"
-              status={results.circuitCurrent > 32 ? "warning" : "success"}
-            />
-            <ResultCard
-              title="Recommended Cable"
-              value={results.recommendedCable}
-              subtitle={`Voltage drop: ${results.voltageDrop.toFixed(1)}V (${((results.voltageDrop / 230) * 100).toFixed(1)}%)`}
-              status={results.voltageDrop / 230 > 0.05 ? "warning" : "success"}
-            />
-            <ResultCard
-              title="Earth Fault Loop"
-              value={results.actualZs}
-              unit="Ω"
-              subtitle={`Max allowed: ${results.maxZs}Ω`}
-              status={results.actualZs > results.maxZs ? "error" : "success"}
-            />
-            <ResultCard
-              title="Protection Required"
-              value={results.protectionRequired}
-              subtitle="Required protective devices"
-              status="info"
-            />
-          </div>
-
-          {/* How It Worked Out */}
-          <Card className="border-purple-500/20 bg-purple-500/10">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-purple-200">
-                <Calculator className="h-5 w-5 text-purple-400" />
-                How It Worked Out
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3 text-sm font-mono">
-              <div className="text-purple-300">
-                <div className="text-xs text-purple-400 mb-1">Step 1: Energy Required</div>
-                <div>E = Battery × (Target% - Current%) ÷ 100</div>
-                <div>E = {inputs.batteryCapacity}kWh × ({inputs.targetCharge}% - {inputs.currentCharge}%) ÷ 100</div>
-                <div>E = <span className="text-purple-200 font-bold">{results.energyRequired.toFixed(2)} kWh</span></div>
-              </div>
-
-              <Separator className="bg-purple-500/20" />
-
-              <div className="text-purple-300">
-                <div className="text-xs text-purple-400 mb-1">Step 2: Charging Time</div>
-                <div>t = E ÷ (Power × Efficiency)</div>
-                <div>t = {results.energyRequired.toFixed(2)}kWh ÷ ({CHARGER_TYPES[inputs.chargerType].power}kW × {CHARGER_TYPES[inputs.chargerType].efficiency})</div>
-                <div>t = <span className="text-purple-200 font-bold">{results.chargingTime.toFixed(2)} hours</span></div>
-              </div>
-
-              <Separator className="bg-purple-500/20" />
-
-              <div className="text-purple-300">
-                <div className="text-xs text-purple-400 mb-1">Step 3: Design Current</div>
-                {CHARGER_TYPES[inputs.chargerType].phases === 3 ? (
-                  <>
-                    <div>I = (P × 1000) ÷ (√3 × V)</div>
-                    <div>I = ({results.peakDemand.toFixed(2)} × 1000) ÷ (1.732 × {CHARGER_TYPES[inputs.chargerType].voltage}V)</div>
-                  </>
-                ) : (
-                  <>
-                    <div>I = (P × 1000) ÷ V</div>
-                    <div>I = ({results.peakDemand.toFixed(2)} × 1000) ÷ {CHARGER_TYPES[inputs.chargerType].voltage}V</div>
-                  </>
-                )}
-                <div>I = <span className="text-purple-200 font-bold">{results.designCurrent.toFixed(1)}A</span></div>
-              </div>
-
-              <Separator className="bg-purple-500/20" />
-
-              <div className="text-purple-300">
-                <div className="text-xs text-purple-400 mb-1">Step 4: Circuit Current (with safety factors)</div>
-                <div>Ic = I × SafetyFactor × DiversityFactor</div>
-                <div>Ic = {results.designCurrent.toFixed(1)}A × 1.25 × {inputs.diversityFactor}</div>
-                <div>Ic = <span className="text-purple-200 font-bold">{results.circuitCurrent.toFixed(1)}A</span> (derated for {inputs.ambientTemp}°C)</div>
-              </div>
-
-              <Separator className="bg-purple-500/20" />
-
-              <div className="text-purple-300">
-                <div className="text-xs text-purple-400 mb-1">Step 5: Voltage Drop</div>
-                {CHARGER_TYPES[inputs.chargerType].phases === 3 ? (
-                  <div>ΔV = (√3 × I × L × z) ÷ 1000</div>
-                ) : (
-                  <div>ΔV = (2 × I × L × z) ÷ 1000</div>
-                )}
-                <div>ΔV = <span className="text-purple-200 font-bold">{results.voltageDrop.toFixed(1)}V</span> ({((results.voltageDrop / CHARGER_TYPES[inputs.chargerType].voltage) * 100).toFixed(1)}%)</div>
-              </div>
-
-              <Separator className="bg-purple-500/20" />
-
-              <div className="text-purple-300">
-                <div className="text-xs text-purple-400 mb-1">Step 6: Earth Fault Loop Impedance</div>
-                <div>Zs = Ze + (cable impedance × L / 1000)</div>
-                <div>Zs = <span className="text-purple-200 font-bold">{results.actualZs.toFixed(2)}Ω</span></div>
-                <div className="text-xs mt-1">Max allowed for {inputs.supplyType.toUpperCase()}: {results.maxZs}Ω</div>
-              </div>
-
-              <Separator className="bg-purple-500/20" />
-
-              <div className="text-purple-300">
-                <div className="text-xs text-purple-400 mb-1">Step 7: Cost Estimate</div>
-                <div>Cost = Energy × Rate</div>
-                <div>Cost = {results.energyRequired.toFixed(2)}kWh × £{inputs.electricityRate}/kWh</div>
-                <div>Cost = <span className="text-purple-200 font-bold">{formatCurrency(results.cost)}</span></div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Review Summary */}
-          <Card className="border-elec-yellow/20 bg-elec-card">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-elec-yellow">
-                <Info className="h-5 w-5" />
-                Installation Review Summary
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-4">
-                <div className="p-4 bg-elec-gray/50 rounded-lg border border-elec-yellow/10">
-                  <h4 className="font-medium text-elec-yellow mb-2">Load Analysis</h4>
-                  <p className="text-sm text-elec-light/90 leading-relaxed">{results.reviewFindings.loadAnalysis}</p>
-                </div>
-                <div className="p-4 bg-elec-gray/50 rounded-lg border border-elec-yellow/10">
-                  <h4 className="font-medium text-elec-yellow mb-2">Cable Assessment</h4>
-                  <p className="text-sm text-elec-light/90 leading-relaxed">{results.reviewFindings.cableAssessment}</p>
-                </div>
-                <div className="p-4 bg-elec-gray/50 rounded-lg border border-elec-yellow/10">
-                  <h4 className="font-medium text-elec-yellow mb-2">Protection Compliance</h4>
-                  <p className="text-sm text-elec-light/90 leading-relaxed">{results.reviewFindings.protectionCompliance}</p>
-                </div>
-                <div className="p-4 bg-elec-gray/50 rounded-lg border border-elec-yellow/10">
-                  <h4 className="font-medium text-elec-yellow mb-2">Installation Requirements</h4>
-                  <p className="text-sm text-elec-light/90 leading-relaxed">{results.reviewFindings.installationRequirements}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Recommendations */}
-          {results.recommendations.length > 0 && (
-            <WhyThisMatters
-              title="Recommendations"
-              points={results.recommendations}
-            />
-          )}
+          <CalculatorResult category="ev_storage">
+            <div className="flex items-center gap-2 pb-3 border-b border-white/10">
+              <Zap className="h-4 w-4 text-blue-400" />
+              <span className="text-sm font-medium text-white">Technical Specifications</span>
+            </div>
+            <ResultsGrid columns={2}>
+              <ResultValue label="Circuit Current" value={results.circuitCurrent.toFixed(1)} unit="A" category="ev_storage" size="sm" />
+              <ResultValue label="Design Current" value={results.designCurrent.toFixed(1)} unit="A" category="ev_storage" size="sm" />
+              <ResultValue label="Cable Size" value={results.recommendedCable} category="ev_storage" size="sm" />
+              <ResultValue label="Voltage Drop" value={`${results.voltageDrop.toFixed(1)}V (${((results.voltageDrop / 230) * 100).toFixed(1)}%)`} category="ev_storage" size="sm" />
+              <ResultValue label="Earth Fault (Zs)" value={results.actualZs.toFixed(2)} unit="Ω" category="ev_storage" size="sm" />
+              <ResultValue label="Max Zs" value={results.maxZs} unit="Ω" category="ev_storage" size="sm" />
+            </ResultsGrid>
+            <div className="mt-3 p-2 rounded-lg bg-white/5">
+              <p className="text-sm text-white/80"><strong>Protection:</strong> {results.protectionRequired}</p>
+            </div>
+          </CalculatorResult>
 
           {/* Warnings */}
           {results.warnings.length > 0 && (
-            <Card className="border-red-500/30 bg-red-500/5">
-              <CardHeader>
-                <CardTitle className="text-red-300 flex items-center gap-2">
-                  <AlertTriangle className="h-5 w-5" />
-                  Installation Warnings
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {results.warnings.map((warning, index) => (
-                    <div key={index} className="flex items-start gap-3 p-3 bg-red-500/10 rounded-lg border border-red-500/20">
-                      <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
-                      <p className="text-red-200 text-sm leading-relaxed">{warning}</p>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+            <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/30">
+              <div className="flex items-center gap-2 mb-2">
+                <AlertTriangle className="h-4 w-4 text-red-400" />
+                <p className="text-sm font-medium text-red-300">Installation Warnings</p>
+              </div>
+              <ul className="space-y-1 text-sm text-red-200/80">
+                {results.warnings.map((warning, idx) => (
+                  <li key={idx}>• {warning}</li>
+                ))}
+              </ul>
+            </div>
           )}
+
+          {/* Recommendations */}
+          {results.recommendations.length > 0 && (
+            <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/30">
+              <div className="flex items-center gap-2 mb-2">
+                <Info className="h-4 w-4 text-blue-400" />
+                <p className="text-sm font-medium text-blue-300">Recommendations</p>
+              </div>
+              <ul className="space-y-1 text-sm text-blue-200/80">
+                {results.recommendations.map((rec, idx) => (
+                  <li key={idx}>• {rec}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* How It Worked Out */}
+          <Collapsible open={showFormula} onOpenChange={setShowFormula}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#a78bfa15' }}>
+              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                <div className="flex items-center gap-3">
+                  <Calculator className="h-4 w-4 text-purple-400" />
+                  <span className="text-sm sm:text-base font-medium text-purple-300">How It Worked Out</span>
+                </div>
+                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showFormula && "rotate-180")} />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="p-4 pt-0 space-y-3 font-mono text-sm">
+                <div className="p-2 rounded bg-white/5">
+                  <p className="text-xs text-purple-400 mb-1">Step 1: Energy Required</p>
+                  <p className="text-purple-200">E = {inputs.batteryCapacity}kWh × ({inputs.targetCharge}% - {inputs.currentCharge}%) ÷ 100</p>
+                  <p className="text-purple-300 font-semibold">E = {results.energyRequired.toFixed(2)} kWh</p>
+                </div>
+                <div className="p-2 rounded bg-white/5">
+                  <p className="text-xs text-purple-400 mb-1">Step 2: Charging Time</p>
+                  <p className="text-purple-200">t = E ÷ (Power × Efficiency)</p>
+                  <p className="text-purple-300 font-semibold">t = {results.chargingTime.toFixed(2)} hours</p>
+                </div>
+                <div className="p-2 rounded bg-white/5">
+                  <p className="text-xs text-purple-400 mb-1">Step 3: Design Current</p>
+                  <p className="text-purple-200">I = (P × 1000) ÷ V</p>
+                  <p className="text-purple-300 font-semibold">I = {results.designCurrent.toFixed(1)}A</p>
+                </div>
+                <div className="p-2 rounded bg-white/5">
+                  <p className="text-xs text-purple-400 mb-1">Step 4: Voltage Drop</p>
+                  <p className="text-purple-200">ΔV = (2 × I × L × z) ÷ 1000</p>
+                  <p className="text-purple-300 font-semibold">ΔV = {results.voltageDrop.toFixed(1)}V ({((results.voltageDrop / 230) * 100).toFixed(1)}%)</p>
+                </div>
+              </CollapsibleContent>
+            </div>
+          </Collapsible>
+
+          {/* BS 7671 Reference */}
+          <Collapsible open={showRegs} onOpenChange={setShowRegs}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
+              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                <div className="flex items-center gap-3">
+                  <BookOpen className="h-4 w-4 text-amber-400" />
+                  <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 Section 722</span>
+                </div>
+                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showRegs && "rotate-180")} />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="p-4 pt-0 space-y-2 text-sm text-amber-200/80">
+                <p><strong className="text-amber-300">722.531.2:</strong> RCD protection (30mA Type A minimum) mandatory</p>
+                <p><strong className="text-amber-300">722.411.4.1:</strong> DC fault protection required for AC charging</p>
+                <p><strong className="text-amber-300">722.55:</strong> Earth electrode may be required for outdoor installations</p>
+                <p><strong className="text-amber-300">BS EN 61851:</strong> Charging equipment safety and performance standards</p>
+                <p><strong className="text-amber-300">Part P:</strong> Notification required for new circuits &gt;3.68kW</p>
+              </CollapsibleContent>
+            </div>
+          </Collapsible>
         </div>
       )}
 
-      <WhyThisMatters
-        title="EV Charging Installation Requirements"
-        points={[
-          "Dedicated circuit with RCD protection (Type A or B) ensures safety and prevents nuisance tripping from vehicle charging systems",
-          "DC fault protection required for AC charging points to detect dangerous DC leakage currents that standard RCDs cannot detect",
-          "Earth electrode may be required for outdoor installations, particularly on TT earthing systems or long cable runs",
-          "Load balancing considerations prevent supply overload when multiple charge points operate simultaneously",
-          "BS EN 61851 series compliance ensures charging equipment meets rigorous safety and performance standards",
-          "Building Regulations Part P notification required for new circuits and installations over 3.68kW capacity",
-          "DNO notification for high-power installations prevents supply network issues and ensures grid stability"
-        ]}
-      />
+      <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
+        <div className="flex items-start gap-2">
+          <Car className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
+          <p className="text-sm text-blue-200">
+            <strong>Dedicated circuit required.</strong> RCD protection and DC fault detection mandatory per BS 7671.
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

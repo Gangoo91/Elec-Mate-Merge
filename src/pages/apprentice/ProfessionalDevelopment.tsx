@@ -1,15 +1,15 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  TrendingUp, 
-  Users, 
-  BookOpen, 
-  Award, 
+import {
+  TrendingUp,
+  Users,
+  BookOpen,
+  Award,
   Target,
   Lightbulb
 } from "lucide-react";
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import CareerPathwaysTab from "@/components/apprentice/professional-development/CareerPathwaysTab";
 import CertificationsTab from "@/components/apprentice/professional-development/CertificationsTab";
 import ContinuingEducationTab from "@/components/apprentice/professional-development/ContinuingEducationTab";
@@ -25,7 +25,7 @@ const ProfessionalDevelopment = () => {
         <p className="text-muted-foreground text-center max-w-2xl mb-4 text-sm sm:text-base">
           Your comprehensive career development resource centre - explore pathways, learn about certifications, and build the skills needed for success in the electrical industry
         </p>
-        <BackButton customUrl="/apprentice" label="Back to Apprentice Hub" />
+        <SmartBackButton />
       </div>
 
       {/* Mobile View */}

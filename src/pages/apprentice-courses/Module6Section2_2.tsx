@@ -139,11 +139,11 @@ const Module6Section2_2 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6.2
@@ -157,30 +157,30 @@ const Module6Section2_2 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Eye className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Eye className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 6.2.2
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Signs of Damage, Wear, or Incorrect Installation
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Identifying physical damage, deterioration and installation faults in electrical systems
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-6">
-            <Target className="w-6 h-6 text-foreground" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Spot it in 30 Seconds</h2>
+            <Target className="w-6 h-6 text-white" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Physical damage: cracks, chips, scorch marks on accessories</li>
                 <li>Wear signs: loose fittings, corrosion, brittle insulation</li>
@@ -188,8 +188,8 @@ const Module6Section2_2 = () => {
                 <li>Safety hazards: exposed conductors, overheating, sharp edges</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Scorch marks, cracks, loose fittings, exposed copper, corrosion, overcrowding</li>
                 <li><strong>Use:</strong> Good lighting, careful inspection, thermal detection, systematic checking</li>
@@ -200,18 +200,18 @@ const Module6Section2_2 = () => {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <p className="text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <p className="text-base text-white mb-4">
             Even a correctly designed system can become unsafe if it suffers from damage, deterioration, or poor installation practices. Visual inspections must identify these issues before testing or energising the system. Early detection reduces the risk of electrical fires, shocks, and system failures.
           </p>
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-base text-foreground mb-4">By the end of this subsection, learners will be able to:</p>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-base text-white mb-4">By the end of this subsection, learners will be able to:</p>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Recognise physical signs of electrical damage and deterioration.</li>
             <li>Identify common installation faults.</li>
             <li>Understand how wear and incorrect installation affect safety.</li>
@@ -221,27 +221,27 @@ const Module6Section2_2 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* 1. Physical Damage */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">1. Physical Damage</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">1. Physical Damage</h3>
+            <p className="text-base text-white mb-4">
               Physical damage to electrical equipment poses immediate safety risks. Visual inspection must identify all forms of physical damage that could compromise electrical safety or system integrity.
             </p>
             
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-3">Physical Damage Assessment</p>
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Physical Damage Assessment</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Accessory Damage:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Accessory Damage:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Cracked, chipped, or broken faceplates and mounting boxes</li>
                           <li>Missing screws or damaged fixings allowing loose mounting</li>
                           <li>Impact damage from furniture, tools, or building work</li>
@@ -251,8 +251,8 @@ const Module6Section2_2 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Insulation Damage:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Insulation Damage:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Cuts, nicks, or gouges in cable sheathing exposing conductors</li>
                           <li>Crushed or flattened cables causing internal conductor damage</li>
                           <li>Rodent damage to cable insulation</li>
@@ -262,8 +262,8 @@ const Module6Section2_2 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Heat Damage Indicators:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Heat Damage Indicators:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Discolouration around terminals and connection points</li>
                           <li>Scorch marks on accessories, faceplates, or surrounding surfaces</li>
                           <li>Melted or distorted plastic components</li>
@@ -273,8 +273,8 @@ const Module6Section2_2 = () => {
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-emerald-400 mb-2">Critical Safety Alert</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Critical Safety Alert</p>
+                        <p className="text-xs sm:text-sm text-white">
                           Any physical damage that exposes live conductors or shows signs of overheating must be treated as an immediate safety hazard. Isolate the circuit and make safe before proceeding.
                         </p>
                       </div>
@@ -296,22 +296,22 @@ const Module6Section2_2 = () => {
 
           {/* 2. Wear and Deterioration */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">2. Wear and Deterioration</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">2. Wear and Deterioration</h3>
+            <p className="text-base text-white mb-4">
               Electrical installations deteriorate over time due to environmental factors, usage patterns, and material aging. Recognising deterioration patterns helps predict and prevent failures.
             </p>
             
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-3">Deterioration and Wear Patterns</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Deterioration and Wear Patterns</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Mechanical Wear:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Mechanical Wear:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Loose or worn socket outlets from repeated plug insertion/removal</li>
                           <li>Worn switch mechanisms with poor contact or operation</li>
                           <li>Loose terminal connections due to thermal cycling</li>
@@ -321,8 +321,8 @@ const Module6Section2_2 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Environmental Deterioration:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Environmental Deterioration:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Corrosion on terminals, enclosures, and metallic fixings</li>
                           <li>UV degradation of outdoor cables and equipment</li>
                           <li>Moisture-induced degradation of insulation materials</li>
@@ -332,8 +332,8 @@ const Module6Section2_2 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Age-Related Degradation:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Age-Related Degradation:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Brittle insulation that cracks or crumbles when handled</li>
                           <li>Faded or illegible markings on cables and equipment</li>
                           <li>Perished rubber and plastic components</li>
@@ -359,13 +359,13 @@ const Module6Section2_2 = () => {
 
           {/* 3. Incorrect Installation Practices */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">3. Incorrect Installation Practices</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">3. Incorrect Installation Practices</h3>
+            <p className="text-base text-white mb-4">
               Poor installation practices compromise safety and can lead to premature failure. Visual inspection must identify workmanship issues that violate standards or create hazards.
             </p>
             
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
@@ -373,8 +373,8 @@ const Module6Section2_2 = () => {
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Electrical Connection Faults:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Electrical Connection Faults:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Reversed polarity in socket outlets (live and neutral swapped)</li>
                           <li>Incorrect conductor identification and termination</li>
                           <li>Mixed cable types within the same circuit</li>
@@ -384,8 +384,8 @@ const Module6Section2_2 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Protection and Safety Faults:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Protection and Safety Faults:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Missing grommets, bushes, or cable glands allowing sharp edges</li>
                           <li>Inadequate strain relief on flexible cables</li>
                           <li>Missing or incorrect protective devices</li>
@@ -395,8 +395,8 @@ const Module6Section2_2 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Installation Quality Issues:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Installation Quality Issues:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Overcrowded enclosures preventing proper heat dissipation</li>
                           <li>Poor cable management causing stress and damage</li>
                           <li>Inadequate fixing and support arrangements</li>
@@ -422,22 +422,22 @@ const Module6Section2_2 = () => {
 
           {/* 4. Safety Hazards from Incorrect Workmanship */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">4. Safety Hazards from Incorrect Workmanship</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">4. Safety Hazards from Incorrect Workmanship</h3>
+            <p className="text-base text-white mb-4">
               Poor workmanship creates specific safety hazards that can lead to fire, electric shock, or injury. Understanding these hazards helps prioritise remedial actions.
             </p>
             
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-3">Workmanship-Related Safety Hazards</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Workmanship-Related Safety Hazards</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Fire and Overheating Risks:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Fire and Overheating Risks:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Loose terminations causing high resistance and heating</li>
                           <li>Overcrowded consumer units restricting heat dissipation</li>
                           <li>Overloaded circuits with inadequate protection</li>
@@ -447,8 +447,8 @@ const Module6Section2_2 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Shock and Electrocution Hazards:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Shock and Electrocution Hazards:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Exposed trailing cables creating trip and contact hazards</li>
                           <li>Missing or inadequate earthing arrangements</li>
                           <li>Lack of strain relief allowing conductor pullout</li>
@@ -458,8 +458,8 @@ const Module6Section2_2 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Mechanical and Physical Hazards:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Mechanical and Physical Hazards:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Sharp edges from missing grommets or poor cutting</li>
                           <li>Loose mountings creating falling hazards</li>
                           <li>Inadequate cable protection in high-traffic areas</li>
@@ -485,22 +485,22 @@ const Module6Section2_2 = () => {
 
           {/* 5. Differentiating Cosmetic vs. Safety Issues */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">5. Differentiating Cosmetic vs. Safety Issues</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">5. Differentiating Cosmetic vs. Safety Issues</h3>
+            <p className="text-base text-white mb-4">
               Not all defects are safety-critical. Inspectors must distinguish between cosmetic issues and genuine safety concerns to prioritise remedial actions appropriately.
             </p>
             
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-3">Safety vs. Cosmetic Assessment</p>
+                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">Safety vs. Cosmetic Assessment</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Cosmetic Issues (Usually Non-Critical):</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Cosmetic Issues (Usually Non-Critical):</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Minor scratches on faceplates that don't affect integrity</li>
                           <li>Slight discolouration from age or cleaning products</li>
                           <li>Paint splashes that don't impair function</li>
@@ -510,8 +510,8 @@ const Module6Section2_2 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Safety-Critical Issues (Must Be Recorded/Rectified):</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Safety-Critical Issues (Must Be Recorded/Rectified):</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Any cracks that could expose live parts or compromise IP rating</li>
                           <li>Signs of overheating including scorch marks and discolouration</li>
                           <li>Exposed copper conductors or damaged insulation</li>
@@ -522,8 +522,8 @@ const Module6Section2_2 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Assessment Criteria:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Assessment Criteria:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Does the defect affect electrical safety or system integrity?</li>
                           <li>Could the defect lead to progressive deterioration?</li>
                           <li>Does it compromise protection against electric shock or fire?</li>
@@ -533,8 +533,8 @@ const Module6Section2_2 = () => {
                       </div>
 
                       <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                        <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2">Professional Judgement</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Professional Judgement</p>
+                        <p className="text-xs sm:text-sm text-white">
                           When in doubt, err on the side of safety. Document all observations and seek advice from senior colleagues or regulatory bodies if uncertain about the significance of any defect.
                         </p>
                       </div>
@@ -547,9 +547,9 @@ const Module6Section2_2 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Practical Guidance</h2>
-          <ul className="space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
+          <ul className="space-y-2 text-base text-white">
             <li>• Always inspect under good lighting conditions to clearly see damage and wear patterns.</li>
             <li>• Remove covers carefully to check behind accessories for hidden damage or poor connections.</li>
             <li>• Use non-contact thermometers to identify overheating areas without direct contact.</li>
@@ -560,20 +560,20 @@ const Module6Section2_2 = () => {
         </Card>
 
         {/* Knowledge Check Questions */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quick Knowledge Check</h2>
-          <div className="space-y-4 text-base text-foreground">
-            <div className="p-4 border-l-4 border-red-500 bg-card">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick Knowledge Check</h2>
+          <div className="space-y-4 text-base text-white">
+            <div className="p-4 border-l-4 border-red-500 ">
               <p className="font-semibold mb-2">Q: What are scorch marks on a socket a sign of?</p>
               <p>A: Overheating, typically caused by loose connections, overloading, or faulty components that require immediate investigation and rectification.</p>
             </div>
             
-            <div className="p-4 border-l-4 border-emerald-500 bg-card">
+            <div className="p-4 border-l-4 border-elec-yellow ">
               <p className="font-semibold mb-2">Q: Give one example of wear that can affect safety.</p>
               <p>A: Loose socket outlets or switches, brittle cable insulation, corroded terminals, or worn protective devices that may fail to operate correctly.</p>
             </div>
             
-            <div className="p-4 border-l-4 border-emerald-500 bg-card">
+            <div className="p-4 border-l-4 border-elec-yellow ">
               <p className="font-semibold mb-2">Q: Why must incorrect polarity be rectified immediately?</p>
               <p>A: Because it means switches disconnect the neutral instead of live, leaving equipment energised when apparently switched off, creating shock risks.</p>
             </div>
@@ -581,53 +581,53 @@ const Module6Section2_2 = () => {
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-World Case Study</h2>
-          <div className="p-4 border-l-4 border-amber-500 bg-card">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Case Study</h2>
+          <div className="p-4 border-l-4 border-amber-500 ">
             <h3 className="font-semibold text-amber-700 dark:text-amber-400 mb-2">Distribution Board Fire Risk</h3>
-            <p className="text-base text-foreground mb-2">
+            <p className="text-base text-white mb-2">
               <strong>Situation:</strong> During an office rewire inspection, inspectors found a distribution board with scorch marks and melted insulation around one terminal.
             </p>
-            <p className="text-base text-foreground mb-2">
+            <p className="text-base text-white mb-2">
               <strong>Investigation:</strong> Detailed examination revealed a loose neutral connection that had been arcing and overheating for some time, gradually carbonising the surrounding materials.
             </p>
-            <p className="text-base text-foreground mb-2">
+            <p className="text-base text-white mb-2">
               <strong>Outcome:</strong> The entire distribution board was replaced and the circuit was rewired. Fire investigation showed the defect could have resulted in a significant electrical fire.
             </p>
-            <p className="text-base text-foreground">
+            <p className="text-base text-white">
               <strong>Learning Point:</strong> Visual inspection of distribution boards must include careful examination of all terminal connections for signs of overheating, even when access is limited.
             </p>
           </div>
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">FAQs</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
           <div className="space-y-4">
             <div>
-              <p className="font-medium text-foreground mb-2">Q: Is discolouration always a serious issue?</p>
-              <p className="text-base text-foreground">A: Not always, but any signs of overheating must be investigated immediately. Light discolouration from age or cleaning may be cosmetic, but brown or black marks typically indicate dangerous overheating.</p>
+              <p className="font-medium text-white mb-2">Q: Is discolouration always a serious issue?</p>
+              <p className="text-base text-white">A: Not always, but any signs of overheating must be investigated immediately. Light discolouration from age or cleaning may be cosmetic, but brown or black marks typically indicate dangerous overheating.</p>
             </div>
             <Separator />
             
             <div>
-              <p className="font-medium text-foreground mb-2">Q: What if accessories are slightly loose but still functional?</p>
-              <p className="text-base text-foreground">A: Loose fittings must be tightened or replaced immediately. They pose a risk of overheating, arcing, and potential fire, regardless of current functionality.</p>
+              <p className="font-medium text-white mb-2">Q: What if accessories are slightly loose but still functional?</p>
+              <p className="text-base text-white">A: Loose fittings must be tightened or replaced immediately. They pose a risk of overheating, arcing, and potential fire, regardless of current functionality.</p>
             </div>
             <Separator />
             
             <div>
-              <p className="font-medium text-foreground mb-2">Q: Should corrosion always be reported?</p>
-              <p className="text-base text-foreground">A: Yes, because corrosion weakens connections, increases resistance, and can lead to failure. It also indicates environmental conditions that may affect other parts of the installation.</p>
+              <p className="font-medium text-white mb-2">Q: Should corrosion always be reported?</p>
+              <p className="text-base text-white">A: Yes, because corrosion weakens connections, increases resistance, and can lead to failure. It also indicates environmental conditions that may affect other parts of the installation.</p>
             </div>
           </div>
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Pocket Guide – Key Signs of Damage and Incorrect Installation</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Guide – Key Signs of Damage and Incorrect Installation</h2>
           <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border border-green-200 dark:border-green-800">
-            <ul className="space-y-2 text-base text-foreground">
+            <ul className="space-y-2 text-base text-white">
               <li>✅ Cracks, breaks, or scorch marks on accessories.</li>
               <li>✅ Exposed copper from damaged insulation.</li>
               <li>✅ Loose fittings or worn connections.</li>
@@ -641,9 +641,9 @@ const Module6Section2_2 = () => {
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Recap</h2>
-          <ul className="space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
+          <ul className="space-y-2 text-base text-white">
             <li>• Inspectors must look for physical damage, wear, and poor installation practices.</li>
             <li>• Overheating signs, cracks, and corrosion are all safety-critical issues.</li>
             <li>• Cosmetic defects can be noted but are not usually immediate safety concerns.</li>
@@ -655,14 +655,14 @@ const Module6Section2_2 = () => {
         {/* Quiz Section */}
         <div className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-6">
-            <FileText className="w-6 h-6 text-foreground" />
-            <h2 className="text-2xl font-semibold text-foreground">Quiz (10 Questions)</h2>
+            <FileText className="w-6 h-6 text-white" />
+            <h2 className="text-2xl font-semibold text-white">Quiz (10 Questions)</h2>
           </div>
           <Quiz questions={quizQuestions} />
         </div>
 
         {/* Navigation */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-between pt-8 border-t border-border/20">
+        <div className="flex flex-col sm:flex-row gap-4 justify-between pt-8 border-t border-white/10">
           <Button variant="outline" className="sm:w-auto" asChild>
             <Link to="../2-1">
               <ArrowLeft className="w-4 h-4 mr-2" />

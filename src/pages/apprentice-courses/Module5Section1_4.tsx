@@ -184,11 +184,11 @@ const Module5Section1_4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 1
@@ -202,35 +202,35 @@ const Module5Section1_4 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Lightbulb className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Lightbulb className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 5.1.4
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Interpreting Floorplans, Circuit Layouts, and Cable Routes
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Master the interpretation of building-integrated electrical drawings for accurate and safe installation work.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Electrical installations must integrate with building structures using floorplans.</li>
                 <li>Circuit layouts show equipment positions, cable routes, and connections.</li>
                 <li>Always follow safe cable zones and verify site conditions match drawings.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Equipment positions, circuit numbers, cable routes, safe zones.</li>
                 <li><strong>Use:</strong> Measurements for positioning, circuit codes for identification.</li>
@@ -241,9 +241,9 @@ const Module5Section1_4 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Read and interpret electrical floorplans effectively.</li>
             <li>Understand circuit layouts and their numbering systems.</li>
             <li>Identify cable routes and containment pathways.</li>
@@ -318,7 +318,7 @@ const Module5Section1_4 = () => {
               </div>
 
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="bg-gray-50 dark:bg-background/30 p-3 rounded-lg">
+                <div className="bg-gray-50 dark:bg-[#121212]/30 p-3 rounded-lg">
                   <h4 className="font-semibold mb-2">Circuit Coding Examples:</h4>
                   <ul className="space-y-1 text-sm">
                     <li>L1/01 - Lighting circuit 1</li>
@@ -327,7 +327,7 @@ const Module5Section1_4 = () => {
                     <li>P2/04 - Power circuit 2</li>
                   </ul>
                 </div>
-                <div className="bg-gray-50 dark:bg-background/30 p-3 rounded-lg">
+                <div className="bg-gray-50 dark:bg-[#121212]/30 p-3 rounded-lg">
                   <h4 className="font-semibold mb-2">Layout Information:</h4>
                   <ul className="space-y-1 text-sm">
                     <li>Circuit routes and paths</li>
@@ -548,19 +548,19 @@ const Module5Section1_4 = () => {
             <div className="space-y-3">
               <div>
                 <p className="font-semibold">Q: Do circuit layouts always show cable sizes?</p>
-                <p className="text-muted-foreground">A: Not always — cable sizes and ratings are often detailed in the specification document rather than cluttering the layout drawings.</p>
+                <p className="text-white">A: Not always — cable sizes and ratings are often detailed in the specification document rather than cluttering the layout drawings.</p>
               </div>
               <div>
                 <p className="font-semibold">Q: What if the floorplan doesn't match the building?</p>
-                <p className="text-muted-foreground">A: Raise the issue immediately with the site supervisor. Never make assumptions or changes without proper authorization.</p>
+                <p className="text-white">A: Raise the issue immediately with the site supervisor. Never make assumptions or changes without proper authorization.</p>
               </div>
               <div>
                 <p className="font-semibold">Q: How accurate should position measurements be?</p>
-                <p className="text-muted-foreground">A: Follow drawing dimensions precisely. Typical accuracy should be within ±5mm for critical positions like switch heights and socket spacing.</p>
+                <p className="text-white">A: Follow drawing dimensions precisely. Typical accuracy should be within ±5mm for critical positions like switch heights and socket spacing.</p>
               </div>
               <div>
                 <p className="font-semibold">Q: Can I run cables outside safe zones if protected?</p>
-                <p className="text-muted-foreground">A: Protection may be required outside safe zones, but always follow BS 7671 requirements and get approval for any deviations from planned routes.</p>
+                <p className="text-white">A: Protection may be required outside safe zones, but always follow BS 7671 requirements and get approval for any deviations from planned routes.</p>
               </div>
             </div>
           </CardContent>

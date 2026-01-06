@@ -151,11 +151,11 @@ const Module3Section1_5: React.FC = () => {
   } as const;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.1
@@ -168,29 +168,29 @@ const Module3Section1_5: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Cable className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Cable className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">Section 3.1.5</Badge>
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">Section 3.1.5</Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">Flexible Cords and Flex Outlets</h1>
-          <p className="text-muted-foreground">Multi-stranded cables designed for movement, portability and flexible connections to equipment.</p>
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">Flexible Cords and Flex Outlets</h1>
+          <p className="text-white">Multi-stranded cables designed for movement, portability and flexible connections to equipment.</p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Multi-stranded copper conductors designed for repeated bending and movement.</li>
                 <li>Various types: PVC, heat-resistant, HOFR rubber, and artic for different environments.</li>
                 <li>Must use proper flex outlets with strain relief - cannot be used for fixed wiring.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Multi-stranded conductors, flexible outer sheath, used with cord grips.</li>
                 <li><strong>Use:</strong> Portable appliances, pendant lights, extension leads, equipment connections.</li>
@@ -201,9 +201,9 @@ const Module3Section1_5: React.FC = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Describe the construction of flexible cords and why they differ from fixed wiring cables.</li>
             <li>Identify common types of flexible cords and their specific applications.</li>
             <li>Understand the limitations of flexible cords in fixed installations.</li>
@@ -214,17 +214,17 @@ const Module3Section1_5: React.FC = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Construction */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2"><Wrench className="w-5 h-5" /> Construction of Flexible Cords</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><Wrench className="w-5 h-5" /> Construction of Flexible Cords</h3>
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <p><strong>Description:</strong> Flexible cords use fine multi-stranded conductors that can withstand repeated bending and movement without conductor fatigue or breakage.</p>
               
               <div className="space-y-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Core Construction</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>Conductors:</strong> Class 5 or Class 6 multi-stranded copper for maximum flexibility</li>
@@ -236,7 +236,7 @@ const Module3Section1_5: React.FC = () => {
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                  <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                     <p className="font-medium mb-2">Standard Conductor Classes</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li><strong>Class 5:</strong> Flexible conductors for fixed installation connections</li>
@@ -245,7 +245,7 @@ const Module3Section1_5: React.FC = () => {
                       <li><strong>Tinning:</strong> Often tin-plated to resist corrosion and ease termination</li>
                     </ul>
                   </div>
-                  <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                     <p className="font-medium mb-2">Insulation Materials</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li><strong>PVC:</strong> Standard domestic and commercial use up to 70°C</li>
@@ -270,11 +270,11 @@ const Module3Section1_5: React.FC = () => {
 
           {/* Types and Applications */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2"><CheckCircle2 className="w-5 h-5" /> Common Types and Applications</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><CheckCircle2 className="w-5 h-5" /> Common Types and Applications</h3>
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">PVC Insulated and Sheathed Flex</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>Temperature:</strong> Up to 70°C continuous operation</li>
@@ -284,7 +284,7 @@ const Module3Section1_5: React.FC = () => {
                     <li><strong>Colours:</strong> White, black, or coloured sheaths available</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Heat-Resistant Flex</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>Temperature:</strong> Up to 90°C, 105°C or higher ratings available</li>
@@ -297,7 +297,7 @@ const Module3Section1_5: React.FC = () => {
               </div>
 
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                   <p className="font-medium mb-2">Rubber-Sheathed Flex (HOFR)</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>HOFR:</strong> Heavy duty Oil and Flame Resistant</li>
@@ -307,7 +307,7 @@ const Module3Section1_5: React.FC = () => {
                     <li><strong>Durability:</strong> Superior to PVC for harsh conditions</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Artic Flex</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>Temperature:</strong> Remains flexible down to -40°C or lower</li>
@@ -319,7 +319,7 @@ const Module3Section1_5: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4">
+              <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
                 <p className="font-medium mb-2">Specialist Flex Types:</p>
                 <div className="grid md:grid-cols-2 gap-4 mt-3">
                   <ul className="list-disc pl-4 space-y-1">
@@ -350,10 +350,10 @@ const Module3Section1_5: React.FC = () => {
 
           {/* Flex Outlets and Termination */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2"><Settings className="w-5 h-5" /> Flex Outlets and Termination</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><Settings className="w-5 h-5" /> Flex Outlets and Termination</h3>
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-2">Purpose of Flex Outlets</p>
                 <ul className="list-disc pl-4 space-y-1">
                   <li>Provide secure termination point between fixed wiring and flexible cord</li>
@@ -365,7 +365,7 @@ const Module3Section1_5: React.FC = () => {
               </div>
 
               <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-                <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                   <p className="font-medium mb-2">Ceiling Rose Types</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Loop-in ceiling rose with cord grip</li>
@@ -374,7 +374,7 @@ const Module3Section1_5: React.FC = () => {
                     <li>Heat-resistant roses for high-wattage lighting</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Flex Outlet Plates</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Surface-mounted outlet plates</li>
@@ -383,7 +383,7 @@ const Module3Section1_5: React.FC = () => {
                     <li>Weatherproof outlets for outdoor use</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Adaptable Box Solutions</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Metallic boxes with cord grips</li>
@@ -407,10 +407,10 @@ const Module3Section1_5: React.FC = () => {
 
           {/* Practical Installation Guide */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2"><Scissors className="w-5 h-5" /> Practical Installation Guide</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><Scissors className="w-5 h-5" /> Practical Installation Guide</h3>
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               
-              <div className="rounded-lg p-4 bg-emerald-500/10 border border-emerald-500/30">
+              <div className="rounded-lg p-4 bg-elec-yellow/10 border border-elec-yellow/30">
                 <p className="font-medium mb-3">Essential Tools and Materials</p>
                 <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                   <div>
@@ -444,7 +444,7 @@ const Module3Section1_5: React.FC = () => {
               </div>
 
               <div className="space-y-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-3">Flexible Cord Preparation Process</p>
                   <ol className="list-decimal pl-4 space-y-2">
                     <li><strong>Measure and cut:</strong> Allow sufficient length for strain relief loop inside outlet</li>
@@ -456,7 +456,7 @@ const Module3Section1_5: React.FC = () => {
                   </ol>
                 </div>
 
-                <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                   <p className="font-medium mb-3">Flex Outlet Installation & Termination</p>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
@@ -489,7 +489,7 @@ const Module3Section1_5: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-3">Common Termination Issues & Solutions</p>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
@@ -529,8 +529,8 @@ const Module3Section1_5: React.FC = () => {
         </Card>
 
         {/* Quick Knowledge Checks */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quick knowledge checks</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick knowledge checks</h2>
           <div className="space-y-6">
             {quickCheckQuestions.map((q) => (
               <InlineCheck key={q.id} {...q} />
@@ -539,9 +539,9 @@ const Module3Section1_5: React.FC = () => {
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-8 p-6 bg-card border border-green-400/30">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-world example</h2>
-          <div className="text-xs sm:text-sm text-foreground space-y-3">
+        <Card className="mb-8 p-6 border border-green-400/30">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-world example</h2>
+          <div className="text-xs sm:text-sm text-white space-y-3">
             <p><strong>Commercial Kitchen Pendant Light Failure</strong></p>
             <p>
               A pendant light in a commercial kitchen was initially connected using standard PVC flex. 
@@ -571,13 +571,13 @@ const Module3Section1_5: React.FC = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently asked questions</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently asked questions</h2>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
             {faqs.map((faq, index) => (
               <div key={index}>
                 <p className="font-medium mb-1">{faq.q}</p>
-                <p className="text-muted-foreground">{faq.a}</p>
+                <p className="text-white">{faq.a}</p>
                 {index < faqs.length - 1 && <Separator className="mt-4" />}
               </div>
             ))}
@@ -585,15 +585,15 @@ const Module3Section1_5: React.FC = () => {
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Test your knowledge</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Test your knowledge</h2>
           <Quiz questions={quizQuestions} title="Flexible Cords Knowledge Test" />
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border border-border/30">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
-          <div className="text-xs sm:text-sm text-foreground space-y-3">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border border-border/30">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+          <div className="text-xs sm:text-sm text-white space-y-3">
             <p>
               Flexible cords are essential for connecting portable or movable equipment safely whilst 
               providing the flexibility needed for repeated movement and positioning. Correct selection, 

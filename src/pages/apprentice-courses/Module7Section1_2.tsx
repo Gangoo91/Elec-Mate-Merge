@@ -135,11 +135,11 @@ const Module7Section1_2 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 1
@@ -153,38 +153,38 @@ const Module7Section1_2 = () => {
         {/* Header */}
         <header className="mb-6 md:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Settings className="w-5 h-5 md:w-6 md:h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Settings className="w-5 h-5 md:w-6 md:h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 text-xs md:text-sm">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs md:text-sm">
               Section 7.1.2
             </Badge>
           </div>
-          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Why Faults Occur in Electrical Installations
           </h1>
-          <p className="text-sm md:text-base text-muted-foreground max-w-3xl">
+          <p className="text-sm md:text-base text-white max-w-3xl">
             Understanding the common causes of electrical faults and how to prevent them through proper practices.
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-card border-border/20">
+        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-4 md:mb-6">
-            <Target className="w-5 h-5 md:w-6 md:h-6 text-foreground" />
-            <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-foreground">Introduction</h2>
+            <Target className="w-5 h-5 md:w-6 md:h-6 text-white" />
+            <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-white">Introduction</h2>
           </div>
-          <div className="grid gap-4 md:grid-cols-2 md:gap-6 text-sm md:text-base text-foreground">
-            <div className="rounded-lg p-3 md:p-4 bg-card border border-border/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+          <div className="grid gap-4 md:grid-cols-2 md:gap-6 text-sm md:text-base text-white">
+            <div className="rounded-lg p-3 md:p-4 bg-transparent border border-border/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Faults occur due to poor workmanship, material failure, and environmental factors.</li>
                 <li>Most faults are preventable with correct practices.</li>
                 <li>Understanding causes helps prevent future problems.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 md:p-4 bg-card border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 md:p-4 bg-transparent border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Loose connections, wrong materials, environmental stress.</li>
                 <li><strong>Use:</strong> Proper installation techniques, suitable materials, maintenance.</li>
@@ -195,18 +195,18 @@ const Module7Section1_2 = () => {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-card border-border/20">
-          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <p className="text-sm md:text-base text-foreground mb-4">
+        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <p className="text-sm md:text-base text-white mb-4">
             Electrical faults don't happen by accident — they occur because of underlying causes such as poor workmanship, material failure, or external influences like heat, water, or physical damage. Understanding why faults occur helps electricians prevent them in the first place and recognise the conditions that increase risk. This knowledge is essential for developing professional competence and ensuring long-term system reliability.
           </p>
           
           <div className="rounded-lg p-4 bg-emerald-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
             <div className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-emerald-400 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2">Why This Matters</p>
-                <p className="text-xs md:text-xs sm:text-sm text-foreground">
+                <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Why This Matters</p>
+                <p className="text-xs md:text-xs sm:text-sm text-white">
                   Industry research shows that over 80% of electrical faults are caused by preventable factors during installation or maintenance. 
                   Understanding these causes enables electricians to implement prevention strategies that can reduce fault occurrence by up to 90% in properly managed installations.
                 </p>
@@ -215,20 +215,20 @@ const Module7Section1_2 = () => {
           </div>
           
           <div className="mt-4 space-y-3">
-            <p className="text-sm md:text-base text-foreground">
+            <p className="text-sm md:text-base text-white">
               <strong>Economic Impact:</strong> The average cost of rectifying electrical faults in commercial installations ranges from £500-£5,000 per incident, 
               not including potential business disruption, safety risks, or legal costs. Prevention through understanding root causes is always more cost-effective than correction.
             </p>
             
             <div className="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded border border-emerald-200 dark:border-emerald-800">
-              <p className="text-xs md:text-xs sm:text-sm text-foreground">
+              <p className="text-xs md:text-xs sm:text-sm text-white">
                 <strong>Industry Standard:</strong> BS 7671:2018+A2:2022 Section 134 requires that installations be designed and installed to facilitate proper inspection, testing, and maintenance. 
                 Understanding potential fault causes is essential for meeting these requirements and ensuring compliance throughout the installation's operational life.
               </p>
             </div>
             
             <div className="bg-amber-50 dark:bg-amber-900/20 p-3 rounded border border-amber-200 dark:border-amber-800">
-              <p className="text-xs md:text-xs sm:text-sm text-foreground">
+              <p className="text-xs md:text-xs sm:text-sm text-white">
                 <strong>Professional Responsibility:</strong> Under the Construction (Design and Management) Regulations 2015, designers and installers have a duty to consider foreseeable risks. 
                 Understanding fault causes is essential for fulfilling this legal obligation and protecting both workers and end users.
               </p>
@@ -237,10 +237,10 @@ const Module7Section1_2 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-card border-border/20">
-          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-sm md:text-base text-foreground mb-4">By the end of this subsection, learners will be able to:</p>
-          <ul className="list-disc pl-6 space-y-2 text-sm md:text-base text-foreground">
+        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-sm md:text-base text-white mb-4">By the end of this subsection, learners will be able to:</p>
+          <ul className="list-disc pl-6 space-y-2 text-sm md:text-base text-white">
             <li>Explain the common causes of electrical faults.</li>
             <li>Understand how poor installation practices create faults.</li>
             <li>Recognise how materials and equipment can deteriorate over time.</li>
@@ -249,53 +249,53 @@ const Module7Section1_2 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-card border-border/20">
-          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* Poor Workmanship */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">1. Poor Workmanship and Installation Practices</h3>
-            <p className="text-sm md:text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">1. Poor Workmanship and Installation Practices</h3>
+            <p className="text-sm md:text-base text-white mb-4">
               Poor installation practices are the leading cause of electrical faults in new installations, accounting for approximately 45% of all faults discovered during initial testing and commissioning:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-3">Installation Quality Impact</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Installation Quality Impact</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-sm md:text-base text-foreground mb-2"><strong>Common Installation Faults and Their Consequences:</strong></p>
+                        <p className="text-sm md:text-base text-white mb-2"><strong>Common Installation Faults and Their Consequences:</strong></p>
                         <div className="grid gap-3 sm:grid-cols-2 mb-3">
-                          <div className="bg-background/50 p-3 rounded border">
-                            <p className="font-medium text-foreground mb-1 text-sm md:text-base">Loose Connections</p>
-                            <p className="text-xs md:text-xs sm:text-sm text-foreground">Terminal screws not tightened to manufacturer's torque settings</p>
-                            <p className="text-xs text-red-600 dark:text-emerald-400 mt-1">→ Overheating, arcing, fire risk</p>
+                          <div className="bg-[#121212]/50 p-3 rounded border">
+                            <p className="font-medium text-white mb-1 text-sm md:text-base">Loose Connections</p>
+                            <p className="text-xs md:text-xs sm:text-sm text-white">Terminal screws not tightened to manufacturer's torque settings</p>
+                            <p className="text-xs text-red-600 dark:text-elec-yellow mt-1">→ Overheating, arcing, fire risk</p>
                           </div>
-                          <div className="bg-background/50 p-3 rounded border">
-                            <p className="font-medium text-foreground mb-1 text-sm md:text-base">Poor Terminations</p>
-                            <p className="text-xs md:text-xs sm:text-sm text-foreground">Inadequate conductor preparation or wrong terminal type</p>
-                            <p className="text-xs text-red-600 dark:text-emerald-400 mt-1">→ High resistance joints, equipment failure</p>
+                          <div className="bg-[#121212]/50 p-3 rounded border">
+                            <p className="font-medium text-white mb-1 text-sm md:text-base">Poor Terminations</p>
+                            <p className="text-xs md:text-xs sm:text-sm text-white">Inadequate conductor preparation or wrong terminal type</p>
+                            <p className="text-xs text-red-600 dark:text-elec-yellow mt-1">→ High resistance joints, equipment failure</p>
                           </div>
-                          <div className="bg-background/50 p-3 rounded border">
-                            <p className="font-medium text-foreground mb-1 text-sm md:text-base">Polarity Errors</p>
-                            <p className="text-xs md:text-xs sm:text-sm text-foreground">Line and neutral conductors incorrectly connected</p>
-                            <p className="text-xs text-red-600 dark:text-emerald-400 mt-1">→ Shock risk, equipment malfunction</p>
+                          <div className="bg-[#121212]/50 p-3 rounded border">
+                            <p className="font-medium text-white mb-1 text-sm md:text-base">Polarity Errors</p>
+                            <p className="text-xs md:text-xs sm:text-sm text-white">Line and neutral conductors incorrectly connected</p>
+                            <p className="text-xs text-red-600 dark:text-elec-yellow mt-1">→ Shock risk, equipment malfunction</p>
                           </div>
-                          <div className="bg-background/50 p-3 rounded border">
-                            <p className="font-medium text-foreground mb-1 text-sm md:text-base">Installation Damage</p>
-                            <p className="text-xs md:text-xs sm:text-sm text-foreground">Cable insulation damaged during installation</p>
-                            <p className="text-xs text-red-600 dark:text-emerald-400 mt-1">→ Earth faults, insulation failure</p>
+                          <div className="bg-[#121212]/50 p-3 rounded border">
+                            <p className="font-medium text-white mb-1 text-sm md:text-base">Installation Damage</p>
+                            <p className="text-xs md:text-xs sm:text-sm text-white">Cable insulation damaged during installation</p>
+                            <p className="text-xs text-red-600 dark:text-elec-yellow mt-1">→ Earth faults, insulation failure</p>
                           </div>
                         </div>
                       </div>
 
                       <div>
-                        <p className="text-sm md:text-base text-foreground mb-2"><strong>Root Causes of Poor Workmanship:</strong></p>
-                        <ul className="text-xs md:text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-sm md:text-base text-white mb-2"><strong>Root Causes of Poor Workmanship:</strong></p>
+                        <ul className="text-xs md:text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li><strong>Inadequate training:</strong> Insufficient knowledge of BS 7671 requirements and proper techniques</li>
                           <li><strong>Time pressure:</strong> Rushing work to meet unrealistic deadlines</li>
                           <li><strong>Poor supervision:</strong> Lack of quality control and inspection during installation</li>
@@ -306,7 +306,7 @@ const Module7Section1_2 = () => {
 
                       <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded border border-green-200 dark:border-green-800">
                         <p className="font-medium text-green-700 dark:text-green-400 mb-2">Prevention Key</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="text-xs sm:text-sm text-white">
                           Careful workmanship and adherence to BS 7671 standards prevent many faults before they occur. Quality installation is the first line of defence.
                         </p>
                       </div>
@@ -328,13 +328,13 @@ const Module7Section1_2 = () => {
 
           {/* Material Failure */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">2. Material Failure and Deterioration</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">2. Material Failure and Deterioration</h3>
+            <p className="text-base text-white mb-4">
               Even correctly installed materials can deteriorate over time due to various factors:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
@@ -342,12 +342,12 @@ const Module7Section1_2 = () => {
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-sm md:text-base text-foreground mb-2"><strong>Material Degradation Mechanisms:</strong></p>
-                        <div className="bg-background/50 p-3 rounded border mb-3">
+                        <p className="text-sm md:text-base text-white mb-2"><strong>Material Degradation Mechanisms:</strong></p>
+                        <div className="bg-[#121212]/50 p-3 rounded border mb-3">
                           <div className="grid gap-3 lg:grid-cols-2">
                             <div>
-                              <p className="font-medium text-foreground mb-2 text-sm md:text-base">Environmental Factors</p>
-                              <ul className="list-disc ml-4 space-y-1 text-xs md:text-xs sm:text-sm text-foreground">
+                              <p className="font-medium text-white mb-2 text-sm md:text-base">Environmental Factors</p>
+                              <ul className="list-disc ml-4 space-y-1 text-xs md:text-xs sm:text-sm text-white">
                                 <li><strong>Heat Exposure:</strong> Accelerates polymer degradation, causes insulation to become brittle</li>
                                 <li><strong>UV Radiation:</strong> Breaks down molecular bonds in outdoor cable sheaths</li>
                                 <li><strong>Moisture:</strong> Causes metal corrosion and reduces insulation properties</li>
@@ -355,8 +355,8 @@ const Module7Section1_2 = () => {
                               </ul>
                             </div>
                             <div>
-                              <p className="font-medium text-foreground mb-2 text-sm md:text-base">Mechanical Stress</p>
-                              <ul className="list-disc ml-4 space-y-1 text-xs md:text-xs sm:text-sm text-foreground">
+                              <p className="font-medium text-white mb-2 text-sm md:text-base">Mechanical Stress</p>
+                              <ul className="list-disc ml-4 space-y-1 text-xs md:text-xs sm:text-sm text-white">
                                 <li><strong>Vibration:</strong> Gradual loosening of connections and conductor fatigue</li>
                                 <li><strong>Thermal Cycling:</strong> Expansion and contraction causing stress</li>
                                 <li><strong>Cable Movement:</strong> Flexing in service causing conductor breakage</li>
@@ -368,19 +368,19 @@ const Module7Section1_2 = () => {
                       </div>
 
                       <div>
-                        <p className="text-sm md:text-base text-foreground mb-2"><strong>Predictable Failure Patterns:</strong></p>
+                        <p className="text-sm md:text-base text-white mb-2"><strong>Predictable Failure Patterns:</strong></p>
                         <div className="space-y-3">
                           <div className="bg-amber-50 dark:bg-amber-900/20 p-3 rounded border border-amber-200 dark:border-amber-800">
                             <p className="font-medium text-amber-700 dark:text-amber-400 mb-2 text-sm md:text-base">PVC Cable Insulation (Typical Lifespan: 25-30 years)</p>
-                            <ul className="list-disc ml-4 space-y-1 text-xs md:text-xs sm:text-sm text-foreground">
+                            <ul className="list-disc ml-4 space-y-1 text-xs md:text-xs sm:text-sm text-white">
                               <li>Years 1-10: Minimal degradation under normal conditions</li>
                               <li>Years 10-20: Gradual hardening and loss of flexibility</li>
                               <li>Years 20+: Cracking, especially at terminations and bends</li>
                             </ul>
                           </div>
                           <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                            <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2 text-sm md:text-base">Protective Devices (Typical Lifespan: 20-25 years)</p>
-                            <ul className="list-disc ml-4 space-y-1 text-xs md:text-xs sm:text-sm text-foreground">
+                            <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2 text-sm md:text-base">Protective Devices (Typical Lifespan: 20-25 years)</p>
+                            <ul className="list-disc ml-4 space-y-1 text-xs md:text-xs sm:text-sm text-white">
                               <li>Years 1-15: Reliable operation with minimal maintenance</li>
                               <li>Years 15-20: Increased operating times, contact wear</li>
                               <li>Years 20+: Risk of failure to operate or nuisance tripping</li>
@@ -406,50 +406,50 @@ const Module7Section1_2 = () => {
 
           {/* Environmental Influences */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">3. Environmental and External Influences</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">3. Environmental and External Influences</h3>
+            <p className="text-base text-white mb-4">
               External factors are another major cause of electrical faults:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-3">Environmental Hazards</p>
+                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3">Environmental Hazards</p>
                     
                     <div className="space-y-4">
                       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                        <div className="bg-background/50 p-3 rounded border">
-                          <p className="font-medium text-foreground mb-2 text-sm md:text-base">Moisture Problems</p>
-                          <ul className="text-xs md:text-xs sm:text-sm text-foreground list-disc ml-4 space-y-1">
+                        <div className="bg-[#121212]/50 p-3 rounded border">
+                          <p className="font-medium text-white mb-2 text-sm md:text-base">Moisture Problems</p>
+                          <ul className="text-xs md:text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                             <li>Water ingress from leaks or flooding</li>
                             <li>Condensation in cold environments</li>
                             <li>High humidity reducing insulation resistance</li>
                             <li>Corrosion of metalwork and connections</li>
                           </ul>
                         </div>
-                        <div className="bg-background/50 p-3 rounded border">
-                          <p className="font-medium text-foreground mb-2 text-sm md:text-base">Heat Problems</p>
-                          <ul className="text-xs md:text-xs sm:text-sm text-foreground list-disc ml-4 space-y-1">
+                        <div className="bg-[#121212]/50 p-3 rounded border">
+                          <p className="font-medium text-white mb-2 text-sm md:text-base">Heat Problems</p>
+                          <ul className="text-xs md:text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                             <li>Excessive ambient temperatures</li>
                             <li>Heat from nearby equipment or processes</li>
                             <li>Solar heating of outdoor installations</li>
                             <li>Poor ventilation in enclosures</li>
                           </ul>
                         </div>
-                        <div className="bg-background/50 p-3 rounded border">
-                          <p className="font-medium text-foreground mb-2 text-sm md:text-base">Physical Damage</p>
-                          <ul className="text-xs md:text-xs sm:text-sm text-foreground list-disc ml-4 space-y-1">
+                        <div className="bg-[#121212]/50 p-3 rounded border">
+                          <p className="font-medium text-white mb-2 text-sm md:text-base">Physical Damage</p>
+                          <ul className="text-xs md:text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                             <li>Rodents chewing cable insulation</li>
                             <li>Accidental drilling or nailing</li>
                             <li>Impact damage during construction</li>
                             <li>Excavation damage to underground cables</li>
                           </ul>
                         </div>
-                        <div className="bg-background/50 p-3 rounded border">
-                          <p className="font-medium text-foreground mb-2 text-sm md:text-base">Chemical Attack</p>
-                          <ul className="text-xs md:text-xs sm:text-sm text-foreground list-disc ml-4 space-y-1">
+                        <div className="bg-[#121212]/50 p-3 rounded border">
+                          <p className="font-medium text-white mb-2 text-sm md:text-base">Chemical Attack</p>
+                          <ul className="text-xs md:text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                             <li>Corrosive atmospheres in industrial areas</li>
                             <li>Salt spray in coastal locations</li>
                             <li>Chemical spills and contamination</li>
@@ -459,8 +459,8 @@ const Module7Section1_2 = () => {
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 dark:text-emerald-400 mb-2">Design Consideration</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Design Consideration</p>
+                        <p className="text-xs sm:text-sm text-white">
                           Electrical systems must be designed and installed with environmental risks in mind, using suitable materials and protective measures.
                         </p>
                       </div>
@@ -482,22 +482,22 @@ const Module7Section1_2 = () => {
 
           {/* Overloading and Misuse */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">4. Overloading and Misuse</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">4. Overloading and Misuse</h3>
+            <p className="text-base text-white mb-4">
               Circuits are designed with specific limits, and exceeding those limits creates fault conditions:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-emerald-400 mb-3">Usage-Related Faults</p>
+                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3">Usage-Related Faults</p>
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Common Misuse Examples:</strong></p>
-                        <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                        <p className="text-base text-white mb-2"><strong>Common Misuse Examples:</strong></p>
+                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                           <li>Overloading socket outlets with too many appliances</li>
                           <li>Running equipment beyond its rated capacity</li>
                           <li>Modifying circuits without proper knowledge or approval</li>
@@ -507,9 +507,9 @@ const Module7Section1_2 = () => {
                       </div>
 
                       <div>
-                        <p className="text-base text-foreground mb-2"><strong>Consequences of Overloading:</strong></p>
-                        <div className="bg-background/50 p-3 rounded border mb-2">
-                          <ul className="list-disc ml-4 space-y-1 text-xs sm:text-sm text-foreground">
+                        <p className="text-base text-white mb-2"><strong>Consequences of Overloading:</strong></p>
+                        <div className="bg-[#121212]/50 p-3 rounded border mb-2">
+                          <ul className="list-disc ml-4 space-y-1 text-xs sm:text-sm text-white">
                             <li>Overheating of conductors and accessories</li>
                             <li>Accelerated insulation breakdown</li>
                             <li>Increased fire risk</li>
@@ -520,8 +520,8 @@ const Module7Section1_2 = () => {
                       </div>
 
                       <div className="bg-emerald-50 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                        <p className="font-medium text-blue-700 dark:text-emerald-400 mb-2">Education Importance</p>
-                        <p className="text-xs sm:text-sm text-foreground">
+                        <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Education Importance</p>
+                        <p className="text-xs sm:text-sm text-white">
                           Educating clients and users about proper electrical usage is just as important as correct installation for preventing faults.
                         </p>
                       </div>
@@ -542,9 +542,9 @@ const Module7Section1_2 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-card border-border/20">
-          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-foreground mb-4">Practical Guidance</h2>
-          <ul className="list-disc pl-6 space-y-2 text-sm md:text-base text-foreground">
+        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
+          <ul className="list-disc pl-6 space-y-2 text-sm md:text-base text-white">
             <li>Always carry out neat, accurate, and careful installation work to minimise future faults.</li>
             <li>Select materials suited to the environment (e.g., armoured cable outdoors, heat-resistant cable near boilers).</li>
             <li>Encourage clients to avoid misuse, such as overloading extensions or modifying circuits.</li>
@@ -553,15 +553,15 @@ const Module7Section1_2 = () => {
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-card border-border/20">
-          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-foreground mb-4">Real-World Example</h2>
+        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-white mb-4">Real-World Example</h2>
           <div className="rounded-lg p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
-            <p className="text-base text-foreground mb-4">
+            <p className="text-base text-white mb-4">
               A community centre experienced repeated tripping on its kitchen ring circuit. Investigation revealed that the cable insulation had degraded near a cooker point. The original installation used standard PVC cable too close to a heat source, which accelerated deterioration. The installer had not considered the environmental conditions. The cable had to be replaced with heat-resistant cable at extra cost.
             </p>
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
-              <p className="text-xs sm:text-sm text-foreground">
+              <p className="text-xs sm:text-sm text-white">
                 <strong>Lesson:</strong> Most faults are not random — they are caused by preventable factors such as poor installation practices, unsuitable materials, or environmental stress.
               </p>
             </div>
@@ -569,25 +569,25 @@ const Module7Section1_2 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-card border-border/20">
-          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <div key={index} className="rounded-lg p-4 bg-muted/50 border border-border/30">
-                <p className="font-medium text-foreground mb-2">Q: {faq.question}</p>
-                <p className="text-xs sm:text-sm text-foreground">A: {faq.answer}</p>
+                <p className="font-medium text-white mb-2">Q: {faq.question}</p>
+                <p className="text-xs sm:text-sm text-white">A: {faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-card border-border/20">
-          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-foreground mb-4">Pocket Guide</h2>
+        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-white mb-4">Pocket Guide</h2>
           <div className="grid gap-4 md:grid-cols-2 md:gap-6">
-            <div className="rounded-lg p-3 md:p-4 bg-card border border-emerald-500/30">
-              <h3 className="font-medium text-foreground mb-3 text-sm md:text-base">Prevention Checklist</h3>
-              <ul className="text-xs md:text-xs sm:text-sm text-foreground space-y-1">
+            <div className="rounded-lg p-3 md:p-4 bg-transparent border border-elec-yellow/30">
+              <h3 className="font-medium text-white mb-3 text-sm md:text-base">Prevention Checklist</h3>
+              <ul className="text-xs md:text-xs sm:text-sm text-white space-y-1">
                 <li>• Use proper installation techniques</li>
                 <li>• Select environment-appropriate materials</li>
                 <li>• Make secure, tight connections</li>
@@ -595,9 +595,9 @@ const Module7Section1_2 = () => {
                 <li>• Consider heat, moisture, and chemical exposure</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 md:p-4 bg-card border border-border/30">
-              <h3 className="font-medium text-foreground mb-3 text-sm md:text-base">Warning Signs</h3>
-              <ul className="text-xs md:text-xs sm:text-sm text-foreground space-y-1">
+            <div className="rounded-lg p-3 md:p-4 bg-transparent border border-border/30">
+              <h3 className="font-medium text-white mb-3 text-sm md:text-base">Warning Signs</h3>
+              <ul className="text-xs md:text-xs sm:text-sm text-white space-y-1">
                 <li>• Overheating at connections</li>
                 <li>• Discoloration or burning smells</li>
                 <li>• Brittle or cracked insulation</li>
@@ -609,16 +609,16 @@ const Module7Section1_2 = () => {
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-card border-border/20">
-          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-foreground mb-4">Recap</h2>
-          <p className="text-sm md:text-base text-foreground">
+        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
+          <p className="text-sm md:text-base text-white">
             Faults occur because of poor workmanship, material failure, environmental influences, or misuse. They are rarely random — most are predictable and preventable. Understanding why faults occur helps electricians design better, install carefully, and maintain systems safely. The key is to consider all factors during installation and to educate users about proper electrical system use.
           </p>
         </Card>
 
         {/* Knowledge Check */}
-        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-card border-border/20">
-          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-foreground mb-4">Knowledge Check</h2>
+        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-white mb-4">Knowledge Check</h2>
           <Quiz questions={quizQuestions} title="Test your understanding of why electrical faults occur" />
         </Card>
 

@@ -1,5 +1,5 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, AlertTriangle, Clock, Users } from "lucide-react";
@@ -82,7 +82,7 @@ const ApprenticeshipExpectations = () => {
         <p className="text-muted-foreground text-center max-w-2xl mb-4">
           Essential guidance for starting your electrical apprenticeship and succeeding from day one
         </p>
-        <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
+        <SmartBackButton />
       </div>
 
       <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">

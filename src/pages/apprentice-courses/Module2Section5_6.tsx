@@ -115,11 +115,11 @@ const Module2Section5_6: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2.5
@@ -132,15 +132,15 @@ const Module2Section5_6: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <AlertTriangle className="h-8 w-8 text-emerald-400" />
+            <AlertTriangle className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 2.5.6
               </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
                 Real-World Impacts of Resistance
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+              <p className="text-xl text-white max-w-3xl mt-2">
                 Identifying and solving resistance problems: overheating, voltage drop, and equipment failures
               </p>
             </div>
@@ -148,11 +148,11 @@ const Module2Section5_6: React.FC = () => {
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Real problems:</strong> Overheating, dim lights, equipment failures</li>
                 <li><strong>Root cause:</strong> Excessive resistance in cables and connections</li>
@@ -160,8 +160,8 @@ const Module2Section5_6: React.FC = () => {
                 <li><strong>Solutions:</strong> Proper sizing, good connections, regular checks</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Warm outlets, dim lights, nuisance tripping</li>
                 <li><strong>Use:</strong> Thermal imaging, voltage measurements, torque checks</li>
@@ -172,8 +172,8 @@ const Module2Section5_6: React.FC = () => {
         </Card>
 
         {/* Learning Objectives */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
           <div className="space-y-3">
             {[
               "Identify signs of excessive resistance and overheating in electrical installations",
@@ -185,19 +185,19 @@ const Module2Section5_6: React.FC = () => {
               "Implement preventive measures to avoid resistance-related failures"
             ].map((goal, i) => (
               <div key={i} className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
-                <p className="text-foreground">{goal}</p>
+                <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <p className="text-white">{goal}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* The Problem: What Goes Wrong */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">The Problem: What Goes Wrong</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <h3 className="font-semibold text-emerald-400 mb-2 flex items-center gap-2"><Thermometer className="w-4 h-4"/> Overheating Issues</h3>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">The Problem: What Goes Wrong</h2>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <h3 className="font-semibold text-elec-yellow mb-2 flex items-center gap-2"><Thermometer className="w-4 h-4"/> Overheating Issues</h3>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Loose connections create high contact resistance → I²R heating</li>
                 <li>Undersized cables carrying high currents heat up excessively</li>
@@ -205,7 +205,7 @@ const Module2Section5_6: React.FC = () => {
                 <li>Thermal cycling loosens connections over time</li>
               </ul>
             </div>
-            <div className="rounded-lg p-4 bg-card border border-amber-400/30">
+            <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
               <h3 className="font-semibold text-amber-300 mb-2 flex items-center gap-2"><TrendingDown className="w-4 h-4"/> Voltage Drop Problems</h3>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Long cable runs with small CSA cause excessive voltage drop</li>
@@ -214,8 +214,8 @@ const Module2Section5_6: React.FC = () => {
                 <li>LED drivers and electronic equipment may malfunction</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <h3 className="font-semibold text-emerald-400 mb-2 flex items-center gap-2"><Zap className="w-4 h-4"/> Protection Issues</h3>
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <h3 className="font-semibold text-elec-yellow mb-2 flex items-center gap-2"><Zap className="w-4 h-4"/> Protection Issues</h3>
               <ul className="list-disc pl-6 space-y-1">
                 <li>High resistance increases Zs → slower fault disconnection</li>
                 <li>Undervoltage causes nuisance tripping of sensitive loads</li>
@@ -227,20 +227,20 @@ const Module2Section5_6: React.FC = () => {
         </Card>
 
         {/* Comprehensive Real-World Scenarios */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Comprehensive Real-World Scenarios</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Comprehensive Real-World Scenarios</h2>
           
           <div className="space-y-6">
             {/* Scenario 1: Office Building */}
-            <div className="border border-emerald-500/30 rounded-lg p-4 bg-emerald-500/5">
-              <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-                <Eye className="w-4 h-4 text-emerald-400"/>
+            <div className="border border-elec-yellow/30 rounded-lg p-4 bg-elec-yellow/5">
+              <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                <Eye className="w-4 h-4 text-elec-yellow"/>
                 Scenario 1: Office Building - Dim Corridor Lighting
               </h3>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
-                  <p className="font-medium text-foreground mb-2">The Problem:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-foreground">
+                  <p className="font-medium text-white mb-2">The Problem:</p>
+                  <ul className="list-disc pl-6 space-y-1 text-white">
                     <li>Staff complain about dim lighting at the far end of a 60m corridor</li>
                     <li>LED fittings are flickering intermittently</li>
                     <li>Some LED drivers are shutting down randomly</li>
@@ -248,8 +248,8 @@ const Module2Section5_6: React.FC = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium text-foreground mb-2">Investigation:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-foreground">
+                  <p className="font-medium text-white mb-2">Investigation:</p>
+                  <ul className="list-disc pl-6 space-y-1 text-white">
                     <li>Circuit: 60m run, 1.5mm² T&E, 8A lighting load</li>
                     <li>Voltage at origin: 230V</li>
                     <li>Voltage at far end under load: 210V</li>
@@ -258,30 +258,30 @@ const Module2Section5_6: React.FC = () => {
                 </div>
               </div>
               <Collapsible>
-                <CollapsibleTrigger className="mt-3 inline-flex text-emerald-400 text-sm underline">Show solution & calculation</CollapsibleTrigger>
-                <CollapsibleContent className="mt-3 p-3 bg-card border border-emerald-500/30 rounded text-sm">
+                <CollapsibleTrigger className="mt-3 inline-flex text-elec-yellow text-sm underline">Show solution & calculation</CollapsibleTrigger>
+                <CollapsibleContent className="mt-3 p-3 border border-elec-yellow/30 rounded text-sm">
                   <p className="font-medium mb-2">Solution Analysis:</p>
                   <div className="space-y-2">
                     <p><strong>Current calculation:</strong> mV/A/m = 29 for 1.5mm² T&E</p>
                     <p><strong>Voltage drop:</strong> (29 × 8 × 120) ÷ 1000 = 27.8V = 12.1%</p>
                     <p><strong>Fix:</strong> Upgrade to 2.5mm² (18 mV/A/m) → (18 × 8 × 120) ÷ 1000 = 17.3V = 7.5%</p>
                     <p><strong>Better fix:</strong> Upgrade to 4mm² (11 mV/A/m) → (11 × 8 × 120) ÷ 1000 = 10.6V = 4.6% ✓</p>
-                    <p className="text-emerald-400 font-medium">Result: Proper lighting levels restored, no more driver shutdowns</p>
+                    <p className="text-elec-yellow font-medium">Result: Proper lighting levels restored, no more driver shutdowns</p>
                   </div>
                 </CollapsibleContent>
               </Collapsible>
             </div>
 
             {/* Scenario 2: Industrial Workshop */}
-            <div className="border border-border/30 rounded-lg p-4 bg-card">
-              <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-                <Wrench className="w-4 h-4 text-emerald-400"/>
+            <div className="border border-border/30 rounded-lg p-4 bg-transparent">
+              <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                <Wrench className="w-4 h-4 text-elec-yellow"/>
                 Scenario 2: Industrial Workshop - Motor Starting Problems
               </h3>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
-                  <p className="font-medium text-foreground mb-2">The Problem:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-foreground">
+                  <p className="font-medium text-white mb-2">The Problem:</p>
+                  <ul className="list-disc pl-6 space-y-1 text-white">
                     <li>3-phase motor (5.5kW) won't start reliably</li>
                     <li>Motor draws excessive current and overheats</li>
                     <li>MCB trips during starting attempts</li>
@@ -289,8 +289,8 @@ const Module2Section5_6: React.FC = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium text-foreground mb-2">Investigation:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-foreground">
+                  <p className="font-medium text-white mb-2">Investigation:</p>
+                  <ul className="list-disc pl-6 space-y-1 text-white">
                     <li>Supply cable: 80m SWA, 4mm² per core</li>
                     <li>Normal running current: 11A per phase</li>
                     <li>Starting current: 66A (6 × full load)</li>
@@ -299,8 +299,8 @@ const Module2Section5_6: React.FC = () => {
                 </div>
               </div>
               <Collapsible>
-                <CollapsibleTrigger className="mt-3 inline-flex text-emerald-400 text-sm underline">Show solution & calculation</CollapsibleTrigger>
-                <CollapsibleContent className="mt-3 p-3 bg-card border border-emerald-500/30 rounded text-sm">
+                <CollapsibleTrigger className="mt-3 inline-flex text-elec-yellow text-sm underline">Show solution & calculation</CollapsibleTrigger>
+                <CollapsibleContent className="mt-3 p-3 border border-elec-yellow/30 rounded text-sm">
                   <p className="font-medium mb-2">Solution Analysis:</p>
                   <div className="space-y-2">
                     <p><strong>Starting voltage drop:</strong> 4mm² SWA = 11 mV/A/m</p>
@@ -309,22 +309,22 @@ const Module2Section5_6: React.FC = () => {
                     <p><strong>Fix:</strong> Upgrade to 16mm² SWA (2.8 mV/A/m)</p>
                     <p><strong>New drop:</strong> (2.8 × 66 × 160) ÷ 1000 = 29.6V drop</p>
                     <p><strong>New voltage:</strong> 230V - 29.6V = 200.4V (87% - acceptable)</p>
-                    <p className="text-emerald-400 font-medium">Result: Motor starts reliably, no more nuisance tripping</p>
+                    <p className="text-elec-yellow font-medium">Result: Motor starts reliably, no more nuisance tripping</p>
                   </div>
                 </CollapsibleContent>
               </Collapsible>
             </div>
 
             {/* Scenario 3: Residential EV Charging */}
-            <div className="border border-emerald-500/30 rounded-lg p-4 bg-emerald-500/5">
-              <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-                <Plug className="w-4 h-4 text-emerald-400"/>
+            <div className="border border-elec-yellow/30 rounded-lg p-4 bg-elec-yellow/5">
+              <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                <Plug className="w-4 h-4 text-elec-yellow"/>
                 Scenario 3: Residential - EV Charger Issues
               </h3>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
-                  <p className="font-medium text-foreground mb-2">The Problem:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-foreground">
+                  <p className="font-medium text-white mb-2">The Problem:</p>
+                  <ul className="list-disc pl-6 space-y-1 text-white">
                     <li>New 7kW EV charger keeps derating to 3.5kW</li>
                     <li>Charging takes twice as long as expected</li>
                     <li>House lights dim when charging starts</li>
@@ -332,8 +332,8 @@ const Module2Section5_6: React.FC = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium text-foreground mb-2">Investigation:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-foreground">
+                  <p className="font-medium text-white mb-2">Investigation:</p>
+                  <ul className="list-disc pl-6 space-y-1 text-white">
                     <li>Supply to garage: 40m 6mm² SWA buried</li>
                     <li>Charger rated at 32A single phase</li>
                     <li>Voltage at house CU: 240V</li>
@@ -342,8 +342,8 @@ const Module2Section5_6: React.FC = () => {
                 </div>
               </div>
               <Collapsible>
-                <CollapsibleTrigger className="mt-3 inline-flex text-emerald-400 text-sm underline">Show solution & calculation</CollapsibleTrigger>
-                <CollapsibleContent className="mt-3 p-3 bg-card border border-emerald-500/30 rounded text-sm">
+                <CollapsibleTrigger className="mt-3 inline-flex text-elec-yellow text-sm underline">Show solution & calculation</CollapsibleTrigger>
+                <CollapsibleContent className="mt-3 p-3 border border-elec-yellow/30 rounded text-sm">
                   <p className="font-medium mb-2">Solution Analysis:</p>
                   <div className="space-y-2">
                     <p><strong>Current setup:</strong> 6mm² SWA buried = 7.8 mV/A/m</p>
@@ -353,22 +353,22 @@ const Module2Section5_6: React.FC = () => {
                     <p><strong>Fix:</strong> Upgrade to 10mm² SWA (4.7 mV/A/m)</p>
                     <p><strong>New drop:</strong> (4.7 × 32 × 80) ÷ 1000 = 12V drop</p>
                     <p><strong>New voltage:</strong> 240V - 12V = 228V (5% - acceptable)</p>
-                    <p className="text-emerald-400 font-medium">Result: Full 7kW charging restored, no more derating</p>
+                    <p className="text-elec-yellow font-medium">Result: Full 7kW charging restored, no more derating</p>
                   </div>
                 </CollapsibleContent>
               </Collapsible>
             </div>
 
             {/* Scenario 4: Overheating Connections */}
-            <div className="border border-border/30 rounded-lg p-4 bg-card">
-              <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-                <Thermometer className="w-4 h-4 text-emerald-400"/>
+            <div className="border border-border/30 rounded-lg p-4 bg-transparent">
+              <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                <Thermometer className="w-4 h-4 text-elec-yellow"/>
                 Scenario 4: Commercial Kitchen - Dangerous Overheating
               </h3>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
-                  <p className="font-medium text-foreground mb-2">The Problem:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-foreground">
+                  <p className="font-medium text-white mb-2">The Problem:</p>
+                  <ul className="list-disc pl-6 space-y-1 text-white">
                     <li>Burning smell from electrical panel</li>
                     <li>Socket outlet plate is hot to touch</li>
                     <li>Discolouration around terminals</li>
@@ -376,8 +376,8 @@ const Module2Section5_6: React.FC = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium text-foreground mb-2">Investigation:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-foreground">
+                  <p className="font-medium text-white mb-2">Investigation:</p>
+                  <ul className="list-disc pl-6 space-y-1 text-white">
                     <li>Circuit: 32A radial to commercial ovens</li>
                     <li>Load current: 28A continuous</li>
                     <li>Thermal imaging: 95°C at connection point</li>
@@ -386,9 +386,9 @@ const Module2Section5_6: React.FC = () => {
                 </div>
               </div>
               <Collapsible>
-                <CollapsibleTrigger className="mt-3 inline-flex text-emerald-400 text-sm underline">Show solution & safety action</CollapsibleTrigger>
-                <CollapsibleContent className="mt-3 p-3 bg-card border border-border/30 rounded text-sm">
-                  <p className="font-medium mb-2 text-emerald-400">IMMEDIATE DANGER - ISOLATE SUPPLY</p>
+                <CollapsibleTrigger className="mt-3 inline-flex text-elec-yellow text-sm underline">Show solution & safety action</CollapsibleTrigger>
+                <CollapsibleContent className="mt-3 p-3 border border-border/30 rounded text-sm">
+                  <p className="font-medium mb-2 text-elec-yellow">IMMEDIATE DANGER - ISOLATE SUPPLY</p>
                   <div className="space-y-2">
                     <p><strong>Problem:</strong> Loose terminal has contact resistance ~0.01Ω</p>
                     <p><strong>Power loss:</strong> P = I²R = 28² × 0.01 = 7.8W of heat at connection</p>
@@ -396,7 +396,7 @@ const Module2Section5_6: React.FC = () => {
                     <p><strong>Immediate action:</strong> Isolate circuit, lock off, investigate safely</p>
                     <p><strong>Solution:</strong> Replace damaged components, re-terminate to correct torque</p>
                     <p><strong>Prevention:</strong> Regular thermal surveys, torque checking schedule</p>
-                    <p className="text-emerald-400 font-medium">Result: Fire risk eliminated, equipment operates safely</p>
+                    <p className="text-elec-yellow font-medium">Result: Fire risk eliminated, equipment operates safely</p>
                   </div>
                 </CollapsibleContent>
               </Collapsible>
@@ -405,11 +405,11 @@ const Module2Section5_6: React.FC = () => {
         </Card>
 
         {/* Diagnostic Techniques */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Diagnostic Techniques</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Diagnostic Techniques</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
             <div className="bg-card border border-border/30 p-4 rounded-lg">
-              <h3 className="font-semibold text-emerald-400 mb-2">Visual Inspection</h3>
+              <h3 className="font-semibold text-elec-yellow mb-2">Visual Inspection</h3>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Look for:</strong> Discolouration, burning marks, melted plastic</li>
                 <li><strong>Check:</strong> Terminal tightness, cable entry points</li>
@@ -426,8 +426,8 @@ const Module2Section5_6: React.FC = () => {
                 <li><strong>Regular:</strong> Schedule surveys for critical circuits</li>
               </ul>
             </div>
-            <div className="bg-card border border-emerald-500/30 p-4 rounded-lg">
-              <h3 className="font-semibold text-emerald-400 mb-2">Electrical Testing</h3>
+            <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
+              <h3 className="font-semibold text-elec-yellow mb-2">Electrical Testing</h3>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Voltage drop:</strong> Measure at load under normal current</li>
                 <li><strong>Zs testing:</strong> Check earth fault loop impedance</li>
@@ -436,7 +436,7 @@ const Module2Section5_6: React.FC = () => {
               </ul>
             </div>
             <div className="bg-card border border-border/30 p-4 rounded-lg">
-              <h3 className="font-semibold text-emerald-400 mb-2">Connection Testing</h3>
+              <h3 className="font-semibold text-elec-yellow mb-2">Connection Testing</h3>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Torque check:</strong> Use calibrated torque tools</li>
                 <li><strong>Pull test:</strong> Verify mechanical integrity</li>
@@ -448,11 +448,11 @@ const Module2Section5_6: React.FC = () => {
         </Card>
 
         {/* Troubleshooting Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Step-by-Step Troubleshooting Guide</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Step-by-Step Troubleshooting Guide</h2>
           
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <div className="bg-card border border-border/20 p-4 rounded-lg">
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <div className="bg-card border border-white/10 p-4 rounded-lg">
               <h3 className="font-semibold mb-2">Problem: Equipment Operating Below Par</h3>
               <ol className="list-decimal pl-6 space-y-1">
                 <li><strong>Check voltage:</strong> Measure at equipment terminals under load</li>
@@ -464,7 +464,7 @@ const Module2Section5_6: React.FC = () => {
               </ol>
             </div>
             
-            <div className="bg-card border border-border/20 p-4 rounded-lg">
+            <div className="bg-card border border-white/10 p-4 rounded-lg">
               <h3 className="font-semibold mb-2">Problem: Overheating Components</h3>
               <ol className="list-decimal pl-6 space-y-1">
                 <li><strong>ISOLATE IMMEDIATELY:</strong> Safety first - dangerous temperatures</li>
@@ -476,7 +476,7 @@ const Module2Section5_6: React.FC = () => {
               </ol>
             </div>
             
-            <div className="bg-card border border-border/20 p-4 rounded-lg">
+            <div className="bg-card border border-white/10 p-4 rounded-lg">
               <h3 className="font-semibold mb-2">Problem: Nuisance Tripping</h3>
               <ol className="list-decimal pl-6 space-y-1">
                 <li><strong>Check voltage drop:</strong> High drop can cause high starting currents</li>
@@ -491,11 +491,11 @@ const Module2Section5_6: React.FC = () => {
         </Card>
 
         {/* Solutions and Prevention */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Solutions and Prevention</h2>
-          <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm text-foreground">
-            <div className="bg-card border border-emerald-500/30 p-4 rounded-lg">
-              <h3 className="font-semibold text-emerald-400 mb-2">Design Solutions</h3>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Solutions and Prevention</h2>
+          <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm text-white">
+            <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
+              <h3 className="font-semibold text-elec-yellow mb-2">Design Solutions</h3>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Use voltage drop calculations in design</li>
                 <li>Keep cable runs as short as practical</li>
@@ -505,7 +505,7 @@ const Module2Section5_6: React.FC = () => {
               </ul>
             </div>
             <div className="bg-card border border-border/30 p-4 rounded-lg">
-              <h3 className="font-semibold text-emerald-400 mb-2">Installation Quality</h3>
+              <h3 className="font-semibold text-elec-yellow mb-2">Installation Quality</h3>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Use correct termination techniques</li>
                 <li>Apply manufacturer torque settings</li>
@@ -528,11 +528,11 @@ const Module2Section5_6: React.FC = () => {
         </Card>
 
         {/* Industry Case Studies */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Industry Case Studies</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Industry Case Studies</h2>
           
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <div className="border border-border/20 rounded-lg p-4">
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <div className="border border-white/10 rounded-lg p-4">
               <h3 className="font-semibold mb-2">Manufacturing: Production Line Downtime</h3>
               <p><strong>Issue:</strong> Critical production machinery kept shutting down unexpectedly, costing £1000s per hour.</p>
               <p><strong>Investigation:</strong> Voltage drop on 100m feeder during high-demand periods caused control systems to reset.</p>
@@ -540,7 +540,7 @@ const Module2Section5_6: React.FC = () => {
               <p><strong>Result:</strong> Zero unplanned shutdowns, improved product quality, investment paid back in 6 months.</p>
             </div>
             
-            <div className="border border-border/20 rounded-lg p-4">
+            <div className="border border-white/10 rounded-lg p-4">
               <h3 className="font-semibold mb-2">Healthcare: Operating Theatre Safety</h3>
               <p><strong>Issue:</strong> Critical medical equipment showing power quality alarms during operations.</p>
               <p><strong>Investigation:</strong> Aging connections in IT supply system creating voltage variations.</p>
@@ -548,7 +548,7 @@ const Module2Section5_6: React.FC = () => {
               <p><strong>Result:</strong> Rock-solid power quality, patient safety maintained, regulatory compliance achieved.</p>
             </div>
             
-            <div className="border border-border/20 rounded-lg p-4">
+            <div className="border border-white/10 rounded-lg p-4">
               <h3 className="font-semibold mb-2">Retail: Energy Cost Reduction</h3>
               <p><strong>Issue:</strong> High electricity bills and frequent lamp replacements in large retail space.</p>
               <p><strong>Investigation:</strong> Poor power factor and voltage drop causing inefficient operation of lighting and HVAC.</p>
@@ -559,10 +559,10 @@ const Module2Section5_6: React.FC = () => {
         </Card>
 
         {/* BS 7671 Compliance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">BS 7671 Compliance Requirements</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="bg-card border border-border/20 p-4 rounded-lg">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">BS 7671 Compliance Requirements</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="bg-card border border-white/10 p-4 rounded-lg">
               <h3 className="font-semibold mb-2">Key Regulations</h3>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Section 525:</strong> Voltage drop limits and calculations</li>
@@ -586,36 +586,36 @@ const Module2Section5_6: React.FC = () => {
         </Card>
 
         {/* Practice Exercises */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Practice Exercises</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practice Exercises</h2>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
               <p className="font-medium">Exercise 1: School Extension - Voltage Drop Analysis</p>
               <p>New classroom block 45m from main panel. 20A lighting load, using 2.5mm² T&E clipped direct. Calculate voltage drop and determine if acceptable for lighting circuit.</p>
               <Collapsible>
-                <CollapsibleTrigger className="mt-2 inline-flex text-emerald-400 text-sm underline">Show solution</CollapsibleTrigger>
+                <CollapsibleTrigger className="mt-2 inline-flex text-elec-yellow text-sm underline">Show solution</CollapsibleTrigger>
                 <CollapsibleContent className="mt-2">
                   <p>mV/A/m = 18, Length = 90m total, Vd = (18 × 20 × 90) ÷ 1000 = 32.4V = 14.1%. FAILS - needs 4mm² minimum.</p>
                 </CollapsibleContent>
               </Collapsible>
             </div>
 
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
               <p className="font-medium">Exercise 2: Overheating Investigation</p>
               <p>Socket outlet reads 85°C on thermal camera, serving 25A load. Normal temperature should be &lt;60°C. What's the most likely cause and solution?</p>
               <Collapsible>
-                <CollapsibleTrigger className="mt-2 inline-flex text-emerald-400 text-sm underline">Show solution</CollapsibleTrigger>
+                <CollapsibleTrigger className="mt-2 inline-flex text-elec-yellow text-sm underline">Show solution</CollapsibleTrigger>
                 <CollapsibleContent className="mt-2">
                   <p>Likely cause: Loose connection creating contact resistance. Solution: Isolate, check/retighten all connections, replace any heat-damaged components, retest.</p>
                 </CollapsibleContent>
               </Collapsible>
             </div>
 
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
               <p className="font-medium">Exercise 3: Motor Starting Problem</p>
               <p>15kW motor won't start on 70m cable run. Starting current 90A, cable is 10mm² SWA. Calculate starting voltage and suggest solutions.</p>
               <Collapsible>
-                <CollapsibleTrigger className="mt-2 inline-flex text-emerald-400 text-sm underline">Show solution</CollapsibleTrigger>
+                <CollapsibleTrigger className="mt-2 inline-flex text-elec-yellow text-sm underline">Show solution</CollapsibleTrigger>
                 <CollapsibleContent className="mt-2">
                   <p>Vd = (4.4 × 90 × 140) ÷ 1000 = 55.4V. Starting voltage = 175V (24% drop). Solutions: 25mm² cable, star-delta starter, or soft starter.</p>
                 </CollapsibleContent>
@@ -625,16 +625,16 @@ const Module2Section5_6: React.FC = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, i) => (
               <Collapsible key={i}>
-                <CollapsibleTrigger className="flex items-center justify-between w-full p-3 text-left bg-card hover:bg-background/20 rounded-lg border border-border/20 transition-colors">
-                  <span className="font-medium text-foreground">{faq.q}</span>
-                  <TrendingDown className="w-4 h-4 text-muted-foreground" />
+                <CollapsibleTrigger className="flex items-center justify-between w-full p-3 text-left hover:bg-[#121212]/20 rounded-lg border border-white/10 transition-colors">
+                  <span className="font-medium text-white">{faq.q}</span>
+                  <TrendingDown className="w-4 h-4 text-white" />
                 </CollapsibleTrigger>
-                <CollapsibleContent className="mt-2 p-3 text-xs sm:text-sm text-foreground bg-card/50 rounded-lg border border-border/10">
+                <CollapsibleContent className="mt-2 p-3 text-xs sm:text-sm text-white bg-card/50 rounded-lg border border-border/10">
                   {faq.a}
                 </CollapsibleContent>
               </Collapsible>
@@ -643,11 +643,11 @@ const Module2Section5_6: React.FC = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
             <div>
-              <h3 className="font-semibold text-emerald-400 mb-2">Key Problems</h3>
+              <h3 className="font-semibold text-elec-yellow mb-2">Key Problems</h3>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Overheating from poor connections and undersized cables</li>
                 <li>Voltage drop causing equipment malfunction</li>
@@ -657,7 +657,7 @@ const Module2Section5_6: React.FC = () => {
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold text-emerald-400 mb-2">Best Practices</h3>
+              <h3 className="font-semibold text-elec-yellow mb-2">Best Practices</h3>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Calculate voltage drop at design stage</li>
                 <li>Use proper connection techniques and torque settings</li>
@@ -670,8 +670,8 @@ const Module2Section5_6: React.FC = () => {
         </Card>
 
         {/* Comprehensive Quiz */}
-        <Card className="mb-20 p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Knowledge Check Quiz (10 Questions)</h2>
+        <Card className="mb-20 p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Knowledge Check Quiz (10 Questions)</h2>
           <Quiz questions={quizQuestions} />
         </Card>
 

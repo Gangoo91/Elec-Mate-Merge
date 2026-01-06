@@ -2,7 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Plus, FileText, Clock, CheckCircle, TrendingUp, ArrowLeft, XCircle, Brain } from "lucide-react";
+import { Plus, FileText, Clock, CheckCircle, TrendingUp, XCircle, Brain } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import RecentQuotesList from "@/components/electrician/quote-builder/RecentQuotesList";
 import { useQuoteStorage } from "@/hooks/useQuoteStorage";
 import FinancialSnapshot from "@/components/electrician/quote-builder/FinancialSnapshot";
@@ -101,14 +102,9 @@ const QuoteBuilder = () => {
       </Helmet>
 
       {/* Floating Mobile Back Button */}
-      <Button
-        variant="ghost"
-        size="icon"
-        className="fixed top-4 left-4 z-50 md:hidden bg-elec-card/90 backdrop-blur-sm border border-elec-yellow/20 shadow-lg h-10 w-10"
-        onClick={() => navigate('/electrician')}
-      >
-        <ArrowLeft className="h-5 w-5" />
-      </Button>
+      <div className="fixed top-4 left-4 z-50 md:hidden">
+        <SmartBackButton className="bg-elec-card/90 backdrop-blur-sm border border-elec-yellow/20 shadow-lg" />
+      </div>
 
       {/* Enhanced Header */}
       <header className="relative bg-elec-card/90 backdrop-blur-sm border-b border-primary/20">
@@ -133,20 +129,7 @@ const QuoteBuilder = () => {
                 Create professional electrical quotes with ease
               </p>
             </div>
-            <Button 
-              variant="secondary" 
-              size="lg" 
-              className="hidden md:flex shadow-lg"
-              onClick={() => {
-                if (window.history.length > 1) {
-                  navigate(-1);
-                } else {
-                  navigate('/electrician/business');
-                }
-              }}
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" /> Back to Business Hub
-            </Button>
+            <SmartBackButton className="hidden md:flex shadow-lg" size="lg" />
           </div>
         </div>
       </header>

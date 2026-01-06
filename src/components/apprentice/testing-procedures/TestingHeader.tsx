@@ -1,6 +1,6 @@
 
-import { ArrowLeft, TestTube, BookOpen, Download } from "lucide-react";
-import BackButton from "@/components/common/BackButton";
+import { TestTube, BookOpen, Download } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Button } from "@/components/ui/button";
 
 const TestingHeader = () => {
@@ -22,7 +22,7 @@ const TestingHeader = () => {
             <Download className="h-4 w-4" />
             <span className="hidden sm:inline">PDF Guide</span>
           </Button>
-          <BackButton customUrl="/apprentice/on-job-tools" label="Back" />
+          <SmartBackButton />
         </div>
       </div>
       <p className="text-muted-foreground text-sm max-w-3xl">

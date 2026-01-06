@@ -138,13 +138,13 @@ export default function Module3Section6_2() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -159,30 +159,30 @@ export default function Module3Section6_2() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <MapPin className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <MapPin className="w-6 h-6 text-white" />
             </div>
             <Badge
               variant="outline"
-              className="border-emerald-500/30 text-emerald-400"
+              className="border-elec-yellow/30 text-elec-yellow"
             >
               Section 3.6.2
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Routing Cables in Walls and Floors (Zones and Depths)
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Understanding BS 7671 safe zones and depth requirements for concealed cable routing to prevent accidental damage and ensure electrical safety compliance.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Safe zones define predictable areas where concealed cables may be present.</li>
                 <li>Cables outside safe zones need 50mm depth or mechanical protection.</li>
@@ -190,8 +190,8 @@ export default function Module3Section6_2() {
                 <li>BS 7671 specifies clear rules to prevent accidental cable damage.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Diagonal routes, shallow depths, unprotected cables outside zones.</li>
                 <li><strong>Use:</strong> 150mm safe zones, 50mm minimum depth, steel conduit protection.</li>
@@ -202,9 +202,9 @@ export default function Module3Section6_2() {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Identify the prescribed safe zones for cable routing in walls and ceilings.</li>
             <li>State the permitted depths for buried cables without additional protection.</li>
             <li>Apply protective measures when cables are installed outside safe zones.</li>
@@ -213,24 +213,24 @@ export default function Module3Section6_2() {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* 1. Safe Zones in Walls and Ceilings */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Home className="w-5 h-5" /> 1. Safe Zones in Walls and Ceilings (BS 7671 Section 522)
             </h3>
             
             <div className="mb-6">
-              <h4 className="font-medium text-foreground mb-3">Understanding Safe Zone Principles</h4>
-              <div className="p-4 bg-card border border-border/30 rounded-lg mb-4">
-                <p className="text-xs sm:text-sm text-foreground mb-3">
+              <h4 className="font-medium text-white mb-3">Understanding Safe Zone Principles</h4>
+              <div className="p-4 bg-transparent border border-border/30 rounded-lg mb-4">
+                <p className="text-xs sm:text-sm text-white mb-3">
                   <strong>Safe Zone Philosophy:</strong> Safe zones are predetermined areas where cables are expected to be present. Anyone working on a building should assume cables exist in these zones and take appropriate precautions. This predictability is the key to preventing accidental damage during maintenance, renovation, or decoration work.
                 </p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Zone Definition Criteria</h6>
+                    <h6 className="font-medium text-white mb-2">Zone Definition Criteria</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Logical routing paths:</strong> Direct connections between accessories</li>
                       <li>• <strong>Structural boundaries:</strong> Related to building geometry</li>
@@ -240,7 +240,7 @@ export default function Module3Section6_2() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Historical Development</h6>
+                    <h6 className="font-medium text-white mb-2">Historical Development</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Pre-regulation era:</strong> Random cable routing caused injuries</li>
                       <li>• <strong>Industry feedback:</strong> Building trades requested predictable zones</li>
@@ -252,47 +252,47 @@ export default function Module3Section6_2() {
                 </div>
               </div>
 
-              <div className="p-4 bg-card border border-green-400/30 rounded-lg mb-4">
+              <div className="p-4 bg-transparent border border-green-400/30 rounded-lg mb-4">
                 <h5 className="font-medium text-green-400 mb-3">Vertical Safe Zones - Detailed Specifications</h5>
                 <div className="overflow-x-auto">
-                  <table className="w-full border-collapse border border-border/20 text-sm">
+                  <table className="w-full border-collapse border border-white/10 text-sm">
                     <thead>
-                      <tr className="bg-card">
-                        <th className="border border-border/20 p-3 text-left">Zone Type</th>
-                        <th className="border border-border/20 p-3 text-left">Location</th>
-                        <th className="border border-border/20 p-3 text-left">Width</th>
-                        <th className="border border-border/20 p-3 text-left">Height Extent</th>
-                        <th className="border border-border/20 p-3 text-left">Typical Applications</th>
+                      <tr className="">
+                        <th className="border border-white/10 p-3 text-left">Zone Type</th>
+                        <th className="border border-white/10 p-3 text-left">Location</th>
+                        <th className="border border-white/10 p-3 text-left">Width</th>
+                        <th className="border border-white/10 p-3 text-left">Height Extent</th>
+                        <th className="border border-white/10 p-3 text-left">Typical Applications</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="border border-border/20 p-3"><strong>Ceiling Line Zone</strong></td>
-                        <td className="border border-border/20 p-3">From ceiling/wall junction</td>
-                        <td className="border border-border/20 p-3">150mm down from ceiling</td>
-                        <td className="border border-border/20 p-3">Horizontal around room</td>
-                        <td className="border border-border/20 p-3">Lighting circuits, ceiling feeds</td>
+                        <td className="border border-white/10 p-3"><strong>Ceiling Line Zone</strong></td>
+                        <td className="border border-white/10 p-3">From ceiling/wall junction</td>
+                        <td className="border border-white/10 p-3">150mm down from ceiling</td>
+                        <td className="border border-white/10 p-3">Horizontal around room</td>
+                        <td className="border border-white/10 p-3">Lighting circuits, ceiling feeds</td>
                       </tr>
                       <tr className="bg-muted/5">
-                        <td className="border border-border/20 p-3"><strong>Corner Zone</strong></td>
-                        <td className="border border-border/20 p-3">Internal/external corners</td>
-                        <td className="border border-border/20 p-3">150mm from corner angle</td>
-                        <td className="border border-border/20 p-3">Full height floor to ceiling</td>
-                        <td className="border border-border/20 p-3">Distribution feeds, riser cables</td>
+                        <td className="border border-white/10 p-3"><strong>Corner Zone</strong></td>
+                        <td className="border border-white/10 p-3">Internal/external corners</td>
+                        <td className="border border-white/10 p-3">150mm from corner angle</td>
+                        <td className="border border-white/10 p-3">Full height floor to ceiling</td>
+                        <td className="border border-white/10 p-3">Distribution feeds, riser cables</td>
                       </tr>
                       <tr>
-                        <td className="border border-border/20 p-3"><strong>Accessory Zone</strong></td>
-                        <td className="border border-border/20 p-3">Above/below accessories</td>
-                        <td className="border border-border/20 p-3">Within accessory width</td>
-                        <td className="border border-border/20 p-3">To ceiling or floor level</td>
-                        <td className="border border-border/20 p-3">Socket feeds, switch drops</td>
+                        <td className="border border-white/10 p-3"><strong>Accessory Zone</strong></td>
+                        <td className="border border-white/10 p-3">Above/below accessories</td>
+                        <td className="border border-white/10 p-3">Within accessory width</td>
+                        <td className="border border-white/10 p-3">To ceiling or floor level</td>
+                        <td className="border border-white/10 p-3">Socket feeds, switch drops</td>
                       </tr>
                       <tr className="bg-muted/5">
-                        <td className="border border-border/20 p-3"><strong>Floor Line Zone</strong></td>
-                        <td className="border border-border/20 p-3">From floor/wall junction</td>
-                        <td className="border border-border/20 p-3">150mm up from floor</td>
-                        <td className="border border-border/20 p-3">Horizontal around room</td>
-                        <td className="border border-border/20 p-3">Underfloor heating, skirting outlets</td>
+                        <td className="border border-white/10 p-3"><strong>Floor Line Zone</strong></td>
+                        <td className="border border-white/10 p-3">From floor/wall junction</td>
+                        <td className="border border-white/10 p-3">150mm up from floor</td>
+                        <td className="border border-white/10 p-3">Horizontal around room</td>
+                        <td className="border border-white/10 p-3">Underfloor heating, skirting outlets</td>
                       </tr>
                     </tbody>
                   </table>
@@ -300,7 +300,7 @@ export default function Module3Section6_2() {
 
                 <div className="mt-4 grid md:grid-cols-2 gap-4">
                   <div className="p-3 bg-white/5 rounded-lg">
-                    <h6 className="font-medium text-foreground mb-2">Measurement Rules</h6>
+                    <h6 className="font-medium text-white mb-2">Measurement Rules</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• Measure from finished surface, not structural elements</li>
                       <li>• Include plaster, tile, or decorative finishes in measurements</li>
@@ -310,7 +310,7 @@ export default function Module3Section6_2() {
                     </ul>
                   </div>
                   <div className="p-3 bg-white/5 rounded-lg">
-                    <h6 className="font-medium text-foreground mb-2">Special Considerations</h6>
+                    <h6 className="font-medium text-white mb-2">Special Considerations</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• Sloped ceilings: zones follow the ceiling line angle</li>
                       <li>• Stairwells: zones continue up/down the sloped surfaces</li>
@@ -322,11 +322,11 @@ export default function Module3Section6_2() {
                 </div>
               </div>
 
-              <div className="p-4 bg-card border border-border/30 rounded-lg mb-4">
-                <h5 className="font-medium text-emerald-400 mb-3">Horizontal Safe Zones and Cross-Connections</h5>
+              <div className="p-4 bg-transparent border border-border/30 rounded-lg mb-4">
+                <h5 className="font-medium text-elec-yellow mb-3">Horizontal Safe Zones and Cross-Connections</h5>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Horizontal Zone Applications</h6>
+                    <h6 className="font-medium text-white mb-2">Horizontal Zone Applications</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Accessory interconnection:</strong> Direct horizontal routes between accessories</li>
                       <li>• <strong>Ring circuit routing:</strong> Horizontal paths around room perimeter</li>
@@ -336,7 +336,7 @@ export default function Module3Section6_2() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Zone Intersection Rules</h6>
+                    <h6 className="font-medium text-white mb-2">Zone Intersection Rules</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Overlapping zones:</strong> Cable can be placed in intersection areas</li>
                       <li>• <strong>Zone boundaries:</strong> Cables must remain within defined limits</li>
@@ -348,8 +348,8 @@ export default function Module3Section6_2() {
                 </div>
 
                 <div className="mt-4 p-3 bg-white/5 rounded-lg">
-                  <h6 className="font-medium text-foreground mb-2">Real-World Zone Mapping Exercise</h6>
-                  <p className="text-xs sm:text-sm text-foreground mb-2">
+                  <h6 className="font-medium text-white mb-2">Real-World Zone Mapping Exercise</h6>
+                  <p className="text-xs sm:text-sm text-white mb-2">
                     <strong>Example Room Analysis:</strong> A typical 4m × 3m room with a door, window, and electrical accessories.
                   </p>
                   <div className="grid md:grid-cols-2 gap-4">
@@ -376,17 +376,17 @@ export default function Module3Section6_2() {
 
           {/* 2. Depth Requirements and Protection Methods */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Layers className="w-5 h-5" /> 2. Depth Requirements and Protection Methods
             </h3>
 
             <div className="mb-6">
-              <h4 className="font-medium text-foreground mb-3">Engineering Basis for Depth Requirements</h4>
-              <div className="p-4 bg-card border border-amber-400/30 rounded-lg mb-4">
+              <h4 className="font-medium text-white mb-3">Engineering Basis for Depth Requirements</h4>
+              <div className="p-4 bg-transparent border border-amber-400/30 rounded-lg mb-4">
                 <h5 className="font-medium text-amber-400 mb-3">Penetration Risk Analysis</h5>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Common Penetration Hazards</h6>
+                    <h6 className="font-medium text-white mb-2">Common Penetration Hazards</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Picture fixing:</strong> 25-40mm typical screw/nail penetration</li>
                       <li>• <strong>Shelf brackets:</strong> 50-75mm rawlplug and screw depth</li>
@@ -396,7 +396,7 @@ export default function Module3Section6_2() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Statistical Safety Analysis</h6>
+                    <h6 className="font-medium text-white mb-2">Statistical Safety Analysis</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>50mm minimum:</strong> Protects against 95% of penetrations</li>
                       <li>• <strong>25mm depth:</strong> Only 60% protection level</li>
@@ -408,59 +408,59 @@ export default function Module3Section6_2() {
                 </div>
               </div>
 
-              <div className="p-4 bg-card border border-border/30 rounded-lg mb-4">
-                <h5 className="font-medium text-emerald-400 mb-3">Protection Methods for Non-Compliant Routing</h5>
+              <div className="p-4 bg-transparent border border-border/30 rounded-lg mb-4">
+                <h5 className="font-medium text-elec-yellow mb-3">Protection Methods for Non-Compliant Routing</h5>
                 <div className="overflow-x-auto">
-                  <table className="w-full border-collapse border border-border/20 text-sm">
+                  <table className="w-full border-collapse border border-white/10 text-sm">
                     <thead>
-                      <tr className="bg-card">
-                        <th className="border border-border/20 p-3 text-left">Protection Method</th>
-                        <th className="border border-border/20 p-3 text-left">Applications</th>
-                        <th className="border border-border/20 p-3 text-left">Effectiveness</th>
-                        <th className="border border-border/20 p-3 text-left">Installation Notes</th>
+                      <tr className="">
+                        <th className="border border-white/10 p-3 text-left">Protection Method</th>
+                        <th className="border border-white/10 p-3 text-left">Applications</th>
+                        <th className="border border-white/10 p-3 text-left">Effectiveness</th>
+                        <th className="border border-white/10 p-3 text-left">Installation Notes</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="border border-border/20 p-3"><strong>Steel Conduit</strong></td>
-                        <td className="border border-border/20 p-3">Individual cable protection</td>
-                        <td className="border border-border/20 p-3">Excellent mechanical protection</td>
-                        <td className="border border-border/20 p-3">Requires earthing, expansion joints</td>
+                        <td className="border border-white/10 p-3"><strong>Steel Conduit</strong></td>
+                        <td className="border border-white/10 p-3">Individual cable protection</td>
+                        <td className="border border-white/10 p-3">Excellent mechanical protection</td>
+                        <td className="border border-white/10 p-3">Requires earthing, expansion joints</td>
                       </tr>
                       <tr className="bg-muted/5">
-                        <td className="border border-border/20 p-3"><strong>Steel Trunking</strong></td>
-                        <td className="border border-border/20 p-3">Multiple cable runs</td>
-                        <td className="border border-border/20 p-3">High protection level</td>
-                        <td className="border border-border/20 p-3">Good for cable segregation</td>
+                        <td className="border border-white/10 p-3"><strong>Steel Trunking</strong></td>
+                        <td className="border border-white/10 p-3">Multiple cable runs</td>
+                        <td className="border border-white/10 p-3">High protection level</td>
+                        <td className="border border-white/10 p-3">Good for cable segregation</td>
                       </tr>
                       <tr>
-                        <td className="border border-border/20 p-3"><strong>SWA Cable</strong></td>
-                        <td className="border border-border/20 p-3">Direct burial applications</td>
-                        <td className="border border-border/20 p-3">Self-protecting armour</td>
-                        <td className="border border-border/20 p-3">Requires appropriate termination</td>
+                        <td className="border border-white/10 p-3"><strong>SWA Cable</strong></td>
+                        <td className="border border-white/10 p-3">Direct burial applications</td>
+                        <td className="border border-white/10 p-3">Self-protecting armour</td>
+                        <td className="border border-white/10 p-3">Requires appropriate termination</td>
                       </tr>
                       <tr className="bg-muted/5">
-                        <td className="border border-border/20 p-3"><strong>RCD Protection</strong></td>
-                        <td className="border border-border/20 p-3">Supplementary protection</td>
-                        <td className="border border-border/20 p-3">Reduces shock risk</td>
-                        <td className="border border-border/20 p-3">≤30mA, does not prevent damage</td>
+                        <td className="border border-white/10 p-3"><strong>RCD Protection</strong></td>
+                        <td className="border border-white/10 p-3">Supplementary protection</td>
+                        <td className="border border-white/10 p-3">Reduces shock risk</td>
+                        <td className="border border-white/10 p-3">≤30mA, does not prevent damage</td>
                       </tr>
                       <tr>
-                        <td className="border border-border/20 p-3"><strong>Plastic Capping</strong></td>
-                        <td className="border border-border/20 p-3">Visual warning only</td>
-                        <td className="border border-border/20 p-3">Limited protection</td>
-                        <td className="border border-border/20 p-3">Not acceptable as sole protection</td>
+                        <td className="border border-white/10 p-3"><strong>Plastic Capping</strong></td>
+                        <td className="border border-white/10 p-3">Visual warning only</td>
+                        <td className="border border-white/10 p-3">Limited protection</td>
+                        <td className="border border-white/10 p-3">Not acceptable as sole protection</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
 
-              <div className="p-4 bg-card border border-cyan-400/30 rounded-lg">
+              <div className="p-4 bg-transparent border border-cyan-400/30 rounded-lg">
                 <h5 className="font-medium text-cyan-400 mb-3">Installation Depth Measurement and Verification</h5>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Measurement Techniques</h6>
+                    <h6 className="font-medium text-white mb-2">Measurement Techniques</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Surface reference:</strong> Measure from final finished surface</li>
                       <li>• <strong>Multi-layer walls:</strong> Consider plaster, tiles, cladding</li>
@@ -470,7 +470,7 @@ export default function Module3Section6_2() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Verification Methods</h6>
+                    <h6 className="font-medium text-white mb-2">Verification Methods</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Physical measurement:</strong> Depth gauge during installation</li>
                       <li>• <strong>Cable detection:</strong> Electronic locators for verification</li>
@@ -489,17 +489,17 @@ export default function Module3Section6_2() {
 
           {/* 3. Floor and Ceiling Routing Considerations */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Drill className="w-5 h-5" /> 3. Floor and Ceiling Routing Considerations
             </h3>
 
             <div className="mb-6">
-              <h4 className="font-medium text-foreground mb-3">Structural Integration and Protection</h4>
-              <div className="p-4 bg-card border border-green-400/30 rounded-lg mb-4">
+              <h4 className="font-medium text-white mb-3">Structural Integration and Protection</h4>
+              <div className="p-4 bg-transparent border border-green-400/30 rounded-lg mb-4">
                 <h5 className="font-medium text-green-400 mb-3">Floor Construction Methods and Cable Routing</h5>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Suspended Timber Floors</h6>
+                    <h6 className="font-medium text-white mb-2">Suspended Timber Floors</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Above joists:</strong> Route in notches or above top surface</li>
                       <li>• <strong>Through joists:</strong> Drill at neutral axis (mid-depth)</li>
@@ -509,7 +509,7 @@ export default function Module3Section6_2() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Concrete Floor Systems</h6>
+                    <h6 className="font-medium text-white mb-2">Concrete Floor Systems</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Screed routing:</strong> Install before concrete pour</li>
                       <li>• <strong>Conduit protection:</strong> Prevent concrete ingress</li>
@@ -521,50 +521,50 @@ export default function Module3Section6_2() {
                 </div>
 
                 <div className="mt-4 overflow-x-auto">
-                  <table className="w-full border-collapse border border-border/20 text-sm">
+                  <table className="w-full border-collapse border border-white/10 text-sm">
                     <thead>
-                      <tr className="bg-card">
-                        <th className="border border-border/20 p-3 text-left">Floor Type</th>
-                        <th className="border border-border/20 p-3 text-left">Preferred Route</th>
-                        <th className="border border-border/20 p-3 text-left">Protection Required</th>
-                        <th className="border border-border/20 p-3 text-left">Special Considerations</th>
+                      <tr className="">
+                        <th className="border border-white/10 p-3 text-left">Floor Type</th>
+                        <th className="border border-white/10 p-3 text-left">Preferred Route</th>
+                        <th className="border border-white/10 p-3 text-left">Protection Required</th>
+                        <th className="border border-white/10 p-3 text-left">Special Considerations</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="border border-border/20 p-3">Suspended Timber</td>
-                        <td className="border border-border/20 p-3">Above joists in notches</td>
-                        <td className="border border-border/20 p-3">Steel plates over notches</td>
-                        <td className="border border-border/20 p-3">Structural integrity maintained</td>
+                        <td className="border border-white/10 p-3">Suspended Timber</td>
+                        <td className="border border-white/10 p-3">Above joists in notches</td>
+                        <td className="border border-white/10 p-3">Steel plates over notches</td>
+                        <td className="border border-white/10 p-3">Structural integrity maintained</td>
                       </tr>
                       <tr className="bg-muted/5">
-                        <td className="border border-border/20 p-3">Concrete Slab</td>
-                        <td className="border border-border/20 p-3">Conduit in screed layer</td>
-                        <td className="border border-border/20 p-3">Heavy-duty conduit</td>
-                        <td className="border border-border/20 p-3">Install before concrete pour</td>
+                        <td className="border border-white/10 p-3">Concrete Slab</td>
+                        <td className="border border-white/10 p-3">Conduit in screed layer</td>
+                        <td className="border border-white/10 p-3">Heavy-duty conduit</td>
+                        <td className="border border-white/10 p-3">Install before concrete pour</td>
                       </tr>
                       <tr>
-                        <td className="border border-border/20 p-3">Raised Access Floor</td>
-                        <td className="border border-border/20 p-3">Under floor void</td>
-                        <td className="border border-border/20 p-3">Cable tray/basket</td>
-                        <td className="border border-border/20 p-3">Services segregation required</td>
+                        <td className="border border-white/10 p-3">Raised Access Floor</td>
+                        <td className="border border-white/10 p-3">Under floor void</td>
+                        <td className="border border-white/10 p-3">Cable tray/basket</td>
+                        <td className="border border-white/10 p-3">Services segregation required</td>
                       </tr>
                       <tr className="bg-muted/5">
-                        <td className="border border-border/20 p-3">Beam and Block</td>
-                        <td className="border border-border/20 p-3">Service ducts/voids</td>
-                        <td className="border border-border/20 p-3">Designated service routes</td>
-                        <td className="border border-border/20 p-3">Coordinate with structure</td>
+                        <td className="border border-white/10 p-3">Beam and Block</td>
+                        <td className="border border-white/10 p-3">Service ducts/voids</td>
+                        <td className="border border-white/10 p-3">Designated service routes</td>
+                        <td className="border border-white/10 p-3">Coordinate with structure</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
 
-              <div className="p-4 bg-card border border-border/30 rounded-lg mb-4">
-                <h5 className="font-medium text-emerald-400 mb-3">Ceiling and Roof Space Applications</h5>
+              <div className="p-4 bg-transparent border border-border/30 rounded-lg mb-4">
+                <h5 className="font-medium text-elec-yellow mb-3">Ceiling and Roof Space Applications</h5>
                 <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Suspended Ceilings</h6>
+                    <h6 className="font-medium text-white mb-2">Suspended Ceilings</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• Cable tray systems above grid</li>
                       <li>• Fire-rated cable support in plenum</li>
@@ -574,7 +574,7 @@ export default function Module3Section6_2() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Roof Space Routing</h6>
+                    <h6 className="font-medium text-white mb-2">Roof Space Routing</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• Avoid laying on insulation</li>
                       <li>• Route away from foot traffic areas</li>
@@ -584,7 +584,7 @@ export default function Module3Section6_2() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Service Integration</h6>
+                    <h6 className="font-medium text-white mb-2">Service Integration</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• Coordinate with HVAC systems</li>
                       <li>• Maintain fire compartmentation</li>
@@ -596,11 +596,11 @@ export default function Module3Section6_2() {
                 </div>
               </div>
 
-              <div className="p-4 bg-card border border-border/30 rounded-lg">
-                <h5 className="font-medium text-emerald-400 mb-3">Special Location Considerations</h5>
+              <div className="p-4 bg-transparent border border-border/30 rounded-lg">
+                <h5 className="font-medium text-elec-yellow mb-3">Special Location Considerations</h5>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Bathroom and Wet Area Routing</h6>
+                    <h6 className="font-medium text-white mb-2">Bathroom and Wet Area Routing</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Zone compliance:</strong> Routes must respect bathroom zones</li>
                       <li>• <strong>Waterproof protection:</strong> IP-rated cable glands</li>
@@ -610,7 +610,7 @@ export default function Module3Section6_2() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Commercial and Industrial Routing</h6>
+                    <h6 className="font-medium text-white mb-2">Commercial and Industrial Routing</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Surface containment:</strong> Preferred over concealed routing</li>
                       <li>• <strong>Cable segregation:</strong> Power, data, control system separation</li>
@@ -622,8 +622,8 @@ export default function Module3Section6_2() {
                 </div>
 
                 <div className="mt-4 p-3 bg-white/5 rounded-lg">
-                  <h6 className="font-medium text-foreground mb-2">Case Study: Multi-Storey Office Building</h6>
-                  <p className="text-xs sm:text-sm text-foreground mb-2">
+                  <h6 className="font-medium text-white mb-2">Case Study: Multi-Storey Office Building</h6>
+                  <p className="text-xs sm:text-sm text-white mb-2">
                     <strong>Project Requirements:</strong> 4-storey office with mixed services and future flexibility needs.
                   </p>
                   <div className="grid md:grid-cols-2 gap-4">
@@ -649,30 +649,30 @@ export default function Module3Section6_2() {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
-            <div className="p-4 bg-card border border-border/20 rounded-lg">
-              <h3 className="font-medium text-foreground mb-2">Q: Are safe zones the same for internal and external walls?</h3>
-              <p className="text-xs sm:text-sm text-foreground">
+            <div className="p-4 bg-transparent border border-white/10 rounded-lg">
+              <h3 className="font-medium text-white mb-2">Q: Are safe zones the same for internal and external walls?</h3>
+              <p className="text-xs sm:text-sm text-white">
                 A: Yes. BS 7671 applies safe zones to both internal and external walls to ensure consistent protection regardless of wall type or construction method.
               </p>
             </div>
-            <div className="p-4 bg-card border border-border/20 rounded-lg">
-              <h3 className="font-medium text-foreground mb-2">Q: Does an RCD make it safe to route cables anywhere?</h3>
-              <p className="text-xs sm:text-sm text-foreground">
+            <div className="p-4 bg-transparent border border-white/10 rounded-lg">
+              <h3 className="font-medium text-white mb-2">Q: Does an RCD make it safe to route cables anywhere?</h3>
+              <p className="text-xs sm:text-sm text-white">
                 A: No. RCD protection reduces shock risk but does not prevent cable damage. Cables must still be in safe zones or mechanically protected - RCD is supplementary protection only.
               </p>
             </div>
-            <div className="p-4 bg-card border border-border/20 rounded-lg">
-              <h3 className="font-medium text-foreground mb-2">Q: Can safe zones be ignored in industrial wiring?</h3>
-              <p className="text-xs sm:text-sm text-foreground">
+            <div className="p-4 bg-transparent border border-white/10 rounded-lg">
+              <h3 className="font-medium text-white mb-2">Q: Can safe zones be ignored in industrial wiring?</h3>
+              <p className="text-xs sm:text-sm text-white">
                 A: No. While industrial installations often use surface containment instead of concealed wiring, safe zone principles still apply where cables are concealed in walls or floors.
               </p>
             </div>
-            <div className="p-4 bg-card border border-border/20 rounded-lg">
-              <h3 className="font-medium text-foreground mb-2">Q: What if I need to route diagonally between accessories?</h3>
-              <p className="text-xs sm:text-sm text-foreground">
+            <div className="p-4 bg-transparent border border-white/10 rounded-lg">
+              <h3 className="font-medium text-white mb-2">Q: What if I need to route diagonally between accessories?</h3>
+              <p className="text-xs sm:text-sm text-white">
                 A: Diagonal routing is prohibited as it's unpredictable. Use vertical and horizontal safe zone routes, even if this requires more cable length and installation time.
               </p>
             </div>
@@ -680,21 +680,21 @@ export default function Module3Section6_2() {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
-          <p className="text-foreground/90">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+          <p className="text-white/90">
             Safe zones and correct burial depths are fundamental to preventing accidental cable damage during building work. BS 7671 defines clear rules for concealed cable routing that balance installation practicality with long-term safety. Understanding and applying these requirements protects both the electrical installation and future building occupants from the hazards of accidental cable strikes.
           </p>
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quiz (8 Questions)</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quiz (8 Questions)</h2>
           <Quiz questions={quizQuestions} />
         </Card>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="../6-1">
               <ArrowLeft className="w-4 h-4 mr-2" />

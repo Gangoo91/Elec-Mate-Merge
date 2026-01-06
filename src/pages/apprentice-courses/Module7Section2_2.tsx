@@ -136,11 +136,11 @@ const Module7Section2_2 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               <span className="hidden sm:inline">Back to Section 2</span>
@@ -153,28 +153,28 @@ const Module7Section2_2 = () => {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-start gap-4">
-          <div className="p-2 rounded-lg bg-card self-start">
-            <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
+          <div className="p-2 rounded-lg self-start">
+            <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </div>
           <div className="flex-1">
-            <Badge variant="outline" className="mb-2 sm:mb-3 border-emerald-500/30 text-emerald-400 text-xs sm:text-sm">
+            <Badge variant="outline" className="mb-2 sm:mb-3 border-elec-yellow/30 text-elec-yellow text-xs sm:text-sm">
               Section 7.2.2
             </Badge>
-            <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+            <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
               2.2 Short Circuits
             </h1>
-            <p className="text-sm sm:text-base text-muted-foreground max-w-3xl">
+            <p className="text-sm sm:text-base text-white max-w-3xl">
               Understanding detection, causes, and rectification of short circuit faults
             </p>
           </div>
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-            <div className="grid gap-4 sm:gap-6 md:grid-cols-2 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+            <div className="grid gap-4 sm:gap-6 md:grid-cols-2 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
                 <ul className="list-disc pl-4 space-y-1 sm:space-y-2">
                   <li>A <strong>short circuit fault</strong> occurs when current flows along an unintended path</li>
                   <li>Creates very low resistance path bypassing the normal load</li>
@@ -184,8 +184,8 @@ const Module7Section2_2 = () => {
                 </ul>
               </div>
               
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/30">
-                <h3 className="font-medium text-foreground mb-2">Spot / Use / Check</h3>
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
+                <h3 className="font-medium text-white mb-2">Spot / Use / Check</h3>
                 <ul className="list-disc pl-4 space-y-1">
                   <li><strong>Spot:</strong> Tripped protective devices, burning smells</li>
                   <li><strong>Use:</strong> Insulation resistance tester, visual inspection</li>
@@ -197,10 +197,10 @@ const Module7Section2_2 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
               <li>Identify the characteristics and dangers of short circuit faults</li>
               <li>Understand the common causes of short circuits in electrical installations</li>
               <li>Apply safe testing methods to locate short circuit faults</li>
@@ -212,25 +212,25 @@ const Module7Section2_2 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-6">Content</h2>
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">Content</h2>
             
             {/* Section 1: Definition and Characteristics */}
-            <div className="border-l-4 border-l-red-500 bg-card p-4 sm:p-6 rounded-r-lg mb-6">
+            <div className="border-l-4 border-l-red-500 p-4 sm:p-6 rounded-r-lg mb-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-6 h-6 sm:w-8 sm:h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</div>
-                <h3 className="text-base sm:text-lg font-semibold text-foreground">Definition and Characteristics</h3>
+                <h3 className="text-base sm:text-lg font-semibold text-white">Definition and Characteristics</h3>
               </div>
               
-              <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+              <p className="text-sm text-white mb-4 leading-relaxed">
                 A short circuit occurs when live conductors at different potentials come into direct contact, either physically or through a conductive path with very low resistance. This creates an unintended path that bypasses the normal load, allowing current to flow at levels far exceeding the circuit's design capacity.
               </p>
 
               <div className="space-y-3 mb-4">
-                <div className="bg-background/50 p-3 rounded border border-border/20">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
                   <h4 className="font-medium text-sm mb-2">Key Characteristics</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>• Extremely low resistance path (typically less than 1 ohm)</li>
                     <li>• Fault current many times higher than normal operating current</li>
                     <li>• Immediate operation of protective devices (fuses, MCBs)</li>
@@ -239,9 +239,9 @@ const Module7Section2_2 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-background/50 p-3 rounded border border-border/20">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
                   <h4 className="font-medium text-sm mb-2">Types of Short Circuit Faults</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>• <strong>Line to Neutral:</strong> Most common in single-phase systems</li>
                     <li>• <strong>Line to Line:</strong> Between phase conductors in three-phase systems</li>
                     <li>• <strong>Line to Earth:</strong> Phase conductor touching earthed metalwork</li>
@@ -253,10 +253,10 @@ const Module7Section2_2 = () => {
 
               <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 p-3 rounded-lg mb-4">
                 <div className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-red-600 dark:text-emerald-400 mt-0.5" />
+                  <AlertTriangle className="w-4 h-4 text-red-600 dark:text-elec-yellow mt-0.5" />
                   <div>
-                    <h4 className="font-medium text-sm text-red-700 dark:text-emerald-400 mb-1">Immediate Danger</h4>
-                    <p className="text-xs text-red-600 dark:text-emerald-400">
+                    <h4 className="font-medium text-sm text-red-700 dark:text-elec-yellow mb-1">Immediate Danger</h4>
+                    <p className="text-xs text-red-600 dark:text-elec-yellow">
                       Short circuits can generate fault currents of thousands of amperes within milliseconds, creating intense heat, dangerous arcing, and potential for explosion or fire.
                     </p>
                   </div>
@@ -280,20 +280,20 @@ const Module7Section2_2 = () => {
             <Separator className="my-6" />
 
             {/* Section 2: Causes and Contributing Factors */}
-            <div className="border-l-4 border-l-orange-500 bg-card p-4 sm:p-6 rounded-r-lg mb-6">
+            <div className="border-l-4 border-l-orange-500 p-4 sm:p-6 rounded-r-lg mb-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-6 h-6 sm:w-8 sm:h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">2</div>
-                <h3 className="text-base sm:text-lg font-semibold text-foreground">Causes and Contributing Factors</h3>
+                <h3 className="text-base sm:text-lg font-semibold text-white">Causes and Contributing Factors</h3>
               </div>
               
-              <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+              <p className="text-sm text-white mb-4 leading-relaxed">
                 Short circuits can result from numerous factors, often involving a combination of installation errors, environmental conditions, and equipment failures:
               </p>
 
               <div className="grid gap-3 sm:grid-cols-2 mb-4">
-                <div className="bg-background/50 p-3 rounded border border-border/20">
-                  <h4 className="font-medium text-sm mb-2 text-red-600 dark:text-emerald-400">Installation Faults</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
+                  <h4 className="font-medium text-sm mb-2 text-red-600 dark:text-elec-yellow">Installation Faults</h4>
+                  <ul className="text-xs text-white space-y-1">
                     <li>• Incorrect or careless installation practices</li>
                     <li>• Stripped insulation left too long at terminations</li>
                     <li>• Poor cable management causing conductor contact</li>
@@ -302,9 +302,9 @@ const Module7Section2_2 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-background/50 p-3 rounded border border-border/20">
-                  <h4 className="font-medium text-sm mb-2 text-orange-600 dark:text-emerald-400">Mechanical Damage</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
+                  <h4 className="font-medium text-sm mb-2 text-orange-600 dark:text-elec-yellow">Mechanical Damage</h4>
+                  <ul className="text-xs text-white space-y-1">
                     <li>• Drilling or nailing through cables</li>
                     <li>• Cable crushing during construction work</li>
                     <li>• Impact damage from vehicles or machinery</li>
@@ -313,9 +313,9 @@ const Module7Section2_2 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-background/50 p-3 rounded border border-border/20">
-                  <h4 className="font-medium text-sm mb-2 text-purple-600 dark:text-emerald-400">Environmental Factors</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
+                  <h4 className="font-medium text-sm mb-2 text-purple-600 dark:text-elec-yellow">Environmental Factors</h4>
+                  <ul className="text-xs text-white space-y-1">
                     <li>• Moisture ingress causing tracking and flashover</li>
                     <li>• Overheating leading to insulation failure</li>
                     <li>• UV radiation degrading cable insulation</li>
@@ -324,9 +324,9 @@ const Module7Section2_2 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-background/50 p-3 rounded border border-border/20">
-                  <h4 className="font-medium text-sm mb-2 text-emerald-400 dark:text-emerald-400">Equipment Failures</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
+                  <h4 className="font-medium text-sm mb-2 text-elec-yellow dark:text-elec-yellow">Equipment Failures</h4>
+                  <ul className="text-xs text-white space-y-1">
                     <li>• Internal faults in electrical equipment</li>
                     <li>• Insulation breakdown in motors and transformers</li>
                     <li>• Failed switching devices creating short paths</li>
@@ -353,20 +353,20 @@ const Module7Section2_2 = () => {
             <Separator className="my-6" />
 
             {/* Section 3: Dangers and Immediate Effects */}
-            <div className="border-l-4 border-l-purple-500 bg-card p-4 sm:p-6 rounded-r-lg mb-6">
+            <div className="border-l-4 border-l-purple-500 p-4 sm:p-6 rounded-r-lg mb-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-6 h-6 sm:w-8 sm:h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">3</div>
-                <h3 className="text-base sm:text-lg font-semibold text-foreground">Dangers and Immediate Effects</h3>
+                <h3 className="text-base sm:text-lg font-semibold text-white">Dangers and Immediate Effects</h3>
               </div>
               
-              <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+              <p className="text-sm text-white mb-4 leading-relaxed">
                 Short circuits represent one of the most dangerous electrical fault conditions, capable of causing immediate and severe consequences:
               </p>
 
               <div className="space-y-3 mb-4">
-                <div className="bg-background/50 p-3 rounded border border-border/20">
-                  <h4 className="font-medium text-sm mb-2 text-red-600 dark:text-emerald-400">Immediate Physical Dangers</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
+                  <h4 className="font-medium text-sm mb-2 text-red-600 dark:text-elec-yellow">Immediate Physical Dangers</h4>
+                  <ul className="text-xs text-white space-y-1">
                     <li>• <strong>Arcing:</strong> Intense electrical arcs reaching thousands of degrees</li>
                     <li>• <strong>Fire risk:</strong> Ignition of surrounding materials</li>
                     <li>• <strong>Explosion:</strong> Rapid heating causing metal expansion and arc blast</li>
@@ -375,9 +375,9 @@ const Module7Section2_2 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-background/50 p-3 rounded border border-border/20">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
                   <h4 className="font-medium text-sm mb-2 text-amber-600 dark:text-amber-400">Equipment and System Effects</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>• <strong>Equipment destruction:</strong> Severe damage to electrical components</li>
                     <li>• <strong>System instability:</strong> Voltage dips affecting other circuits</li>
                     <li>• <strong>Power outages:</strong> Protective device operation causing loss of supply</li>
@@ -386,9 +386,9 @@ const Module7Section2_2 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-background/50 p-3 rounded border border-border/20">
-                  <h4 className="font-medium text-sm mb-2 text-emerald-400 dark:text-emerald-400">Economic Consequences</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
+                  <h4 className="font-medium text-sm mb-2 text-elec-yellow dark:text-elec-yellow">Economic Consequences</h4>
+                  <ul className="text-xs text-white space-y-1">
                     <li>• Equipment replacement and repair costs</li>
                     <li>• Business interruption and lost productivity</li>
                     <li>• Insurance claims and potential premium increases</li>
@@ -400,10 +400,10 @@ const Module7Section2_2 = () => {
 
               <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 p-3 rounded-lg">
                 <div className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-red-600 dark:text-emerald-400 mt-0.5" />
+                  <AlertTriangle className="w-4 h-4 text-red-600 dark:text-elec-yellow mt-0.5" />
                   <div>
-                    <h4 className="font-medium text-sm text-red-700 dark:text-emerald-400 mb-1">Arc Flash Hazard</h4>
-                    <p className="text-xs text-red-600 dark:text-emerald-400">
+                    <h4 className="font-medium text-sm text-red-700 dark:text-elec-yellow mb-1">Arc Flash Hazard</h4>
+                    <p className="text-xs text-red-600 dark:text-elec-yellow">
                       Arc flash incidents can reach temperatures of 20,000°C (four times hotter than the sun's surface) and produce pressure waves capable of causing severe burns and hearing damage. Proper PPE and safety procedures are essential when working on live equipment.
                     </p>
                   </div>
@@ -430,17 +430,17 @@ const Module7Section2_2 = () => {
             <div className="border-l-4 border-l-teal-500 bg-teal-500/5 p-4 sm:p-6 rounded-r-lg mb-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-6 h-6 sm:w-8 sm:h-8 bg-teal-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">4</div>
-                <h3 className="text-base sm:text-lg font-semibold text-foreground">Protective Devices and Standards</h3>
+                <h3 className="text-base sm:text-lg font-semibold text-white">Protective Devices and Standards</h3>
               </div>
               
-              <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+              <p className="text-sm text-white mb-4 leading-relaxed">
                 BS 7671 requires appropriate protection against short circuit currents with specific performance criteria:
               </p>
 
               <div className="space-y-3 mb-4">
-                <div className="bg-background/50 p-3 rounded border border-border/20">
-                  <h4 className="font-medium text-sm mb-2 text-emerald-400 dark:text-emerald-400">Protective Device Types</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
+                  <h4 className="font-medium text-sm mb-2 text-elec-yellow dark:text-elec-yellow">Protective Device Types</h4>
+                  <ul className="text-xs text-white space-y-1">
                     <li>• <strong>Fuses (BS 88, BS 1361):</strong> Reliable interruption, high breaking capacity</li>
                     <li>• <strong>MCBs (BS EN 60898):</strong> Automatic reset, precise characteristics</li>
                     <li>• <strong>MCCBs (BS EN 60947):</strong> High current ratings, adjustable settings</li>
@@ -448,9 +448,9 @@ const Module7Section2_2 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-background/50 p-3 rounded border border-border/20">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
                   <h4 className="font-medium text-sm mb-2 text-green-600 dark:text-green-400">BS 7671 Requirements</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>• <strong>Breaking capacity:</strong> Must exceed prospective short circuit current</li>
                     <li>• <strong>Discrimination:</strong> Selective operation between protective devices</li>
                     <li>• <strong>Disconnection times:</strong> Maximum times specified for safety</li>
@@ -458,9 +458,9 @@ const Module7Section2_2 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-background/50 p-3 rounded border border-border/20">
-                  <h4 className="font-medium text-sm mb-2 text-purple-600 dark:text-emerald-400">Key Performance Criteria</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
+                  <h4 className="font-medium text-sm mb-2 text-purple-600 dark:text-elec-yellow">Key Performance Criteria</h4>
+                  <ul className="text-xs text-white space-y-1">
                     <li>• <strong>Prospective fault current (PFC):</strong> Maximum current available</li>
                     <li>• <strong>Breaking capacity (Icn/Icu):</strong> Maximum current device can interrupt</li>
                     <li>• <strong>Operating time:</strong> Speed of operation under fault conditions</li>
@@ -489,17 +489,17 @@ const Module7Section2_2 = () => {
             <div className="border-l-4 border-l-indigo-500 bg-indigo-500/5 p-4 sm:p-6 rounded-r-lg">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-6 h-6 sm:w-8 sm:h-8 bg-indigo-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">5</div>
-                <h3 className="text-base sm:text-lg font-semibold text-foreground">Detection and Emergency Response</h3>
+                <h3 className="text-base sm:text-lg font-semibold text-white">Detection and Emergency Response</h3>
               </div>
               
-              <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+              <p className="text-sm text-white mb-4 leading-relaxed">
                 Proper detection methods and emergency procedures are critical for managing short circuit incidents safely:
               </p>
 
               <div className="space-y-3 mb-4">
-                <div className="bg-background/50 p-3 rounded border border-border/20">
-                  <h4 className="font-medium text-sm mb-2 text-emerald-400 dark:text-emerald-400">Detection Methods</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
+                  <h4 className="font-medium text-sm mb-2 text-elec-yellow dark:text-elec-yellow">Detection Methods</h4>
+                  <ul className="text-xs text-white space-y-1">
                     <li>• <strong>Insulation resistance testing:</strong> Low readings indicate potential problems</li>
                     <li>• <strong>Visual inspection:</strong> Signs of overheating, burning, or damage</li>
                     <li>• <strong>Thermal imaging:</strong> Hot spots indicating high resistance joints</li>
@@ -507,9 +507,9 @@ const Module7Section2_2 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-background/50 p-3 rounded border border-border/20">
-                  <h4 className="font-medium text-sm mb-2 text-orange-600 dark:text-emerald-400">Emergency Response</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
+                  <h4 className="font-medium text-sm mb-2 text-orange-600 dark:text-elec-yellow">Emergency Response</h4>
+                  <ul className="text-xs text-white space-y-1">
                     <li>• <strong>Immediate isolation:</strong> Switch off supply if safe to do so</li>
                     <li>• <strong>Evacuation:</strong> Clear area of personnel if arc flash risk</li>
                     <li>• <strong>Fire suppression:</strong> Use appropriate extinguishing methods</li>
@@ -517,9 +517,9 @@ const Module7Section2_2 = () => {
                   </ul>
                 </div>
                 
-                <div className="bg-background/50 p-3 rounded border border-border/20">
-                  <h4 className="font-medium text-sm mb-2 text-red-600 dark:text-emerald-400">Investigation Rules</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
+                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
+                  <h4 className="font-medium text-sm mb-2 text-red-600 dark:text-elec-yellow">Investigation Rules</h4>
+                  <ul className="text-xs text-white space-y-1">
                     <li>• <strong>Never re-energise:</strong> Until fault is found and rectified</li>
                     <li>• <strong>Systematic approach:</strong> Logical fault-finding methodology</li>
                     <li>• <strong>Safe isolation:</strong> Proper isolation and verification procedures</li>
@@ -545,9 +545,9 @@ const Module7Section2_2 = () => {
         </Card>
 
         {/* Real World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-background border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-[#121212] border-white/10">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-6">Real World Example</h2>
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">Real World Example</h2>
             
             <div className="space-y-4">
               <div className="rounded-lg p-4 border-l-4 border-l-red-400 bg-red-400/20">
@@ -556,8 +556,8 @@ const Module7Section2_2 = () => {
                     <Flame className="w-4 h-4" />
                   </span>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-emerald-400 mb-2">Case Study: Lighting Circuit Short Circuit</h3>
-                    <p className="text-xs sm:text-sm text-foreground">
+                    <h3 className="font-semibold text-elec-yellow mb-2">Case Study: Lighting Circuit Short Circuit</h3>
+                    <p className="text-xs sm:text-sm text-white">
                       During the installation of new LED downlights in an office ceiling, an electrician experienced a dramatic short circuit that tripped the lighting MCB and caused a small fire in the ceiling void.
                     </p>
                   </div>
@@ -570,8 +570,8 @@ const Module7Section2_2 = () => {
                     <Zap className="w-4 h-4" />
                   </span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 mb-2">The Incident:</p>
-                    <p className="text-xs sm:text-sm text-foreground">
+                    <p className="font-semibold text-elec-yellow mb-2">The Incident:</p>
+                    <p className="text-xs sm:text-sm text-white">
                       While fixing a recessed LED fitting to the ceiling, the electrician used a screw that was too long. The screw penetrated through the plasterboard and pinched the twin and earth cable supplying the lighting circuit. There was a loud bang, bright flash, and the lighting MCB tripped immediately.
                     </p>
                   </div>
@@ -584,8 +584,8 @@ const Module7Section2_2 = () => {
                     <Target className="w-4 h-4" />
                   </span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 mb-2">What Happened:</p>
-                    <p className="text-xs sm:text-sm text-foreground">
+                    <p className="font-semibold text-elec-yellow mb-2">What Happened:</p>
+                    <p className="text-xs sm:text-sm text-white">
                       The screw had penetrated the cable insulation, causing the line and neutral conductors to come into contact through the metal screw. This created a short circuit with extremely low resistance, allowing a fault current of approximately 1,500A to flow for the brief moment before the 6A Type B MCB operated.
                     </p>
                   </div>
@@ -598,8 +598,8 @@ const Module7Section2_2 = () => {
                     <AlertTriangle className="w-4 h-4" />
                   </span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 mb-2">The Damage:</p>
-                    <p className="text-xs sm:text-sm text-foreground">
+                    <p className="font-semibold text-elec-yellow mb-2">The Damage:</p>
+                    <p className="text-xs sm:text-sm text-white">
                       The intense heat generated by the fault current caused the cable insulation to burn, creating smoke and a small fire in the ceiling void. The screw was welded to the cable by the arcing, and approximately 500mm of cable was damaged by heat. Fortunately, the ceiling insulation was mineral wool which did not ignite.
                     </p>
                   </div>
@@ -613,7 +613,7 @@ const Module7Section2_2 = () => {
                   </span>
                   <div className="flex-1">
                     <p className="font-semibold text-yellow-300 mb-2">The Investigation:</p>
-                    <p className="text-xs sm:text-sm text-foreground">
+                    <p className="text-xs sm:text-sm text-white">
                       The electrician immediately isolated the main switch and called the fire brigade as a precaution. Investigation revealed that the cable route had not been marked on the ceiling plan, and the electrician had not used a cable detector. The damaged section of cable was replaced, and all other new fixings were checked.
                     </p>
                   </div>
@@ -627,7 +627,7 @@ const Module7Section2_2 = () => {
                   </span>
                   <div className="flex-1">
                     <p className="font-semibold text-green-300 mb-2">Lessons Learned:</p>
-                    <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                    <ul className="text-xs sm:text-sm text-white space-y-1">
                       <li>• Always use cable detection equipment before drilling or screwing</li>
                       <li>• Mark cable routes clearly on installation drawings</li>
                       <li>• Use appropriate screw lengths for the application</li>
@@ -644,47 +644,47 @@ const Module7Section2_2 = () => {
 
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-6">FAQs</h2>
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">FAQs</h2>
             <div className="space-y-4">
               <div>
-                <h3 className="font-medium text-foreground mb-2 text-sm">What's the main difference between a short circuit and an overload?</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">A short circuit creates an unintended low-resistance path with very high current, while an overload is excessive current through the intended path due to too much load.</p>
+                <h3 className="font-medium text-white mb-2 text-sm">What's the main difference between a short circuit and an overload?</h3>
+                <p className="text-xs sm:text-sm text-white">A short circuit creates an unintended low-resistance path with very high current, while an overload is excessive current through the intended path due to too much load.</p>
               </div>
               
               <Separator />
               
               <div>
-                <h3 className="font-medium text-foreground mb-2 text-sm">How quickly do protective devices respond to short circuits?</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">MCBs and fuses can respond in milliseconds to short circuits, but the exact time depends on the fault current magnitude and device characteristics.</p>
+                <h3 className="font-medium text-white mb-2 text-sm">How quickly do protective devices respond to short circuits?</h3>
+                <p className="text-xs sm:text-sm text-white">MCBs and fuses can respond in milliseconds to short circuits, but the exact time depends on the fault current magnitude and device characteristics.</p>
               </div>
               
               <Separator />
               
               <div>
-                <h3 className="font-medium text-foreground mb-2 text-sm">Can I test for short circuits with the power on?</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">No, never test for short circuits on live circuits. Always isolate, verify isolation, and use insulation resistance testing methods.</p>
+                <h3 className="font-medium text-white mb-2 text-sm">Can I test for short circuits with the power on?</h3>
+                <p className="text-xs sm:text-sm text-white">No, never test for short circuits on live circuits. Always isolate, verify isolation, and use insulation resistance testing methods.</p>
               </div>
               
               <Separator />
               
               <div>
-                <h3 className="font-medium text-foreground mb-2 text-sm">What causes most short circuit faults?</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">Common causes include damaged cable insulation, moisture ingress, incorrect connections, and physical damage to conductors.</p>
+                <h3 className="font-medium text-white mb-2 text-sm">What causes most short circuit faults?</h3>
+                <p className="text-xs sm:text-sm text-white">Common causes include damaged cable insulation, moisture ingress, incorrect connections, and physical damage to conductors.</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <CheckCircle className="w-5 h-5 text-green-500" />
               Summary
             </h2>
-            <p className="text-xs sm:text-sm text-foreground">
+            <p className="text-xs sm:text-sm text-white">
               Short circuit faults represent the most dangerous type of electrical fault, creating extremely low resistance paths that allow dangerous fault currents to flow. These can result from installation errors, mechanical damage, and equipment failures, causing intense arcing, fire risks, and potential injury. BS 7671 requires appropriate protective devices with sufficient breaking capacity to interrupt fault currents safely. Prevention relies on quality installation practices and proper maintenance, while systematic investigation following safe isolation procedures is crucial when faults occur.
             </p>
           </CardContent>

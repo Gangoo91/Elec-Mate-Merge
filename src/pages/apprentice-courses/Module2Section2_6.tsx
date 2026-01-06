@@ -101,11 +101,11 @@ const Module2Section2_6: React.FC = () => {
   ] as const;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2
@@ -118,15 +118,15 @@ const Module2Section2_6: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <AlertTriangle className="h-8 w-8 text-emerald-400" />
+            <AlertTriangle className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 2.2.6
               </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
                 Common Mistakes and How to Avoid Them
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+              <p className="text-xl text-white max-w-3xl mt-2">
                 Avoid unit traps, wrong rearrangements and early rounding. Use a simple checklist every time.
               </p>
             </div>
@@ -134,11 +134,11 @@ const Module2Section2_6: React.FC = () => {
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Unit Traps:</strong> mA vs A, kΩ vs Ω cause 1000× errors.</li>
                 <li><strong>Wrong Formulas:</strong> Rearrangement mistakes create massive errors.</li>
@@ -148,8 +148,8 @@ const Module2Section2_6: React.FC = () => {
                 <li><strong>The Checklist:</strong> 6 steps to error-free calculations.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Wild results, unit inconsistencies, rushed calculations.</li>
                 <li><strong>Use:</strong> 6-step checklist for all electrical calculations.</li>
@@ -160,49 +160,49 @@ const Module2Section2_6: React.FC = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
-          <ul className="space-y-3 text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
+          <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Identify and avoid the five most common calculation errors</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Convert units correctly before every calculation</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Apply the professional 6-step error prevention checklist</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Perform quick sanity checks on calculated results</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Identify when results affect safety and require verification</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Document calculations clearly for professional verification</span>
             </li>
           </ul>
         </Card>
 
         {/* Why This Matters */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Why This Matters</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Why This Matters</h2>
           <div className="space-y-4">
             <div className="bg-card border-l-4 border-orange-500 p-4 rounded">
-              <p className="text-foreground font-medium mb-2">Real Scenario:</p>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-white font-medium mb-2">Real Scenario:</p>
+              <p className="text-white text-sm">
                 An apprentice calculated that a 13A socket circuit could handle 13,000W instead of 13W because they used 
                 milliamps as amps. The resulting overload damaged equipment and created a safety hazard.
               </p>
             </div>
-            <p className="text-foreground">
+            <p className="text-white">
               Calculation errors in electrical work aren't just embarrassing - they're dangerous and expensive. 
               This section teaches you systematic error-prevention strategies used by experienced electricians.
             </p>
@@ -211,12 +211,12 @@ const Module2Section2_6: React.FC = () => {
 
         {/* Section 1: Unit Prefix Confusion */}
         <div className="mb-8">
-          <div className="border-l-4 border-red-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="border-l-4 border-red-500 dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
               Unit Prefix Confusion
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
                   <div className="flex items-center gap-2 mb-2">
@@ -250,12 +250,12 @@ const Module2Section2_6: React.FC = () => {
 
         {/* Section 2: Formula Rearrangement Errors */}
         <div className="mb-8">
-          <div className="border-l-4 border-orange-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="border-l-4 border-orange-500 dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
               Formula Rearrangement Errors
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <div className="grid gap-4">
                 <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
                   <h3 className="font-semibold text-orange-600 mb-2">Wrong: I = V × R</h3>
@@ -283,12 +283,12 @@ const Module2Section2_6: React.FC = () => {
 
         {/* Section 3: Professional 6-Step Checklist */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
+          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
               Professional 6-Step Checklist
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <div className="grid gap-3">
                 {[
                   {
@@ -330,13 +330,13 @@ const Module2Section2_6: React.FC = () => {
                 ].map((item, index) => (
                   <div key={index} className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
                     <div className="flex items-start gap-3">
-                      <span className="bg-emerald-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                      <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                         {item.step}
                       </span>
                       <div className="space-y-1">
                         <h3 className="font-semibold">{item.title}</h3>
-                        <p className="text-sm text-muted-foreground">{item.description}</p>
-                        <p className="text-xs font-mono text-emerald-400">{item.example}</p>
+                        <p className="text-sm text-white">{item.description}</p>
+                        <p className="text-xs font-mono text-elec-yellow">{item.example}</p>
                       </div>
                     </div>
                   </div>
@@ -359,12 +359,12 @@ const Module2Section2_6: React.FC = () => {
 
         {/* Section 4: Common Mistake Examples */}
         <div className="mb-8">
-          <div className="border-l-4 border-purple-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="border-l-4 border-purple-500 dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">4</span>
               Real-World Mistake Examples
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <div className="grid gap-4">
                 <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
                   <h3 className="font-semibold text-purple-600 mb-2">Hot Plug Top</h3>
@@ -397,11 +397,11 @@ const Module2Section2_6: React.FC = () => {
         {/* Section 5: Sanity Checks */}
         <div className="mb-8">
           <div className="border-l-4 border-indigo-500 bg-indigo-500/10 dark:bg-indigo-500/10 p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-indigo-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">5</span>
               Quick Sanity Checks
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <div className="grid gap-3">
                 <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
                   <h3 className="font-semibold text-indigo-600 mb-2">Order of Magnitude Check</h3>
@@ -433,12 +433,12 @@ const Module2Section2_6: React.FC = () => {
 
         {/* Section 6: When to Get Help */}
         <div className="mb-8">
-          <div className="border-l-4 border-green-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="border-l-4 border-green-500 dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">6</span>
               When to Get Help
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <div className="grid gap-4">
                 <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
                   <h3 className="font-semibold text-green-600 mb-2">Safety-Critical Results</h3>
@@ -466,7 +466,7 @@ const Module2Section2_6: React.FC = () => {
 
         {/* Pocket Guide */}
         <div className="mb-8">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <BookOpen className="w-5 h-5" />
             Pocket Guide
           </h2>
@@ -475,15 +475,15 @@ const Module2Section2_6: React.FC = () => {
 
         {/* FAQ Section */}
         <Card className="mb-8 p-6">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <HelpCircle className="w-5 h-5" />
             Frequently Asked Questions
           </h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <div key={index} className="border-l-4 border-blue-200 dark:border-blue-800 bg-emerald-50/50 dark:bg-emerald-950/20 p-4 rounded-r-lg">
-                <p className="font-medium text-foreground mb-2">{faq.q}</p>
-                <p className="text-sm text-muted-foreground">{faq.a}</p>
+                <p className="font-medium text-white mb-2">{faq.q}</p>
+                <p className="text-sm text-white">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -491,12 +491,12 @@ const Module2Section2_6: React.FC = () => {
 
         {/* Summary */}
         <Card className="mb-8 p-6 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 border-green-200 dark:border-green-800">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <CheckCircle className="w-5 h-5 text-green-600" />
             Key Takeaways
           </h2>
           <div className="grid md:grid-cols-2 gap-4">
-            <ul className="space-y-2 text-xs sm:text-sm text-foreground">
+            <ul className="space-y-2 text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                 Unit prefix errors cause 1000× mistakes - convert first
@@ -510,7 +510,7 @@ const Module2Section2_6: React.FC = () => {
                 Always perform quick sanity checks on results
               </li>
             </ul>
-            <ul className="space-y-2 text-xs sm:text-sm text-foreground">
+            <ul className="space-y-2 text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                 Use the 6-step checklist for error prevention
@@ -527,8 +527,8 @@ const Module2Section2_6: React.FC = () => {
           </div>
           <div className="mt-4 p-4 bg-yellow-100 dark:bg-yellow-900/30 border border-yellow-300 dark:border-yellow-700 rounded-lg">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-emerald-400 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
-              <p className="text-xs sm:text-sm text-foreground">
+              <AlertTriangle className="w-5 h-5 text-elec-yellow dark:text-elec-yellow mt-0.5 flex-shrink-0" />
+              <p className="text-xs sm:text-sm text-white">
                 <strong>Safety Reminder:</strong> Always isolate and prove dead before work. Follow BS 7671 and manufacturer instructions.
               </p>
             </div>
@@ -537,7 +537,7 @@ const Module2Section2_6: React.FC = () => {
 
         {/* Quiz Section */}
         <Card className="mb-8 p-6">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Users className="w-5 h-5" />
             Test Your Knowledge
           </h2>
@@ -545,7 +545,7 @@ const Module2Section2_6: React.FC = () => {
         </Card>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to=".." className="flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" />

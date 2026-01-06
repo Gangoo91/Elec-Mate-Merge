@@ -189,11 +189,11 @@ const Module7Section4_4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-0 text-sm sm:text-base" asChild>
+          <Button variant="ghost" className="text-white hover:text-white p-0 text-sm sm:text-base" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 4
@@ -207,34 +207,34 @@ const Module7Section4_4 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card w-fit">
-              <Search className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg w-fit">
+              <Search className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 w-fit">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow w-fit">
               Section 7.4.4
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl lg:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl lg:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Dividing the Circuit into Zones (Split and Isolate)
           </h1>
-          <p className="text-muted-foreground text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Systematic approach to fault location by dividing circuits into manageable sections for efficient diagnosis
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Splitting circuits into zones quickly narrows down fault locations.</li>
                 <li>Halving the problem each time leads to efficient diagnosis.</li>
                 <li>Essential for ring final circuits and large installations.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
               <p className="font-medium mb-2">Spot it / Use it / Check</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Natural division points like junction boxes and distribution boards.</li>
@@ -246,9 +246,9 @@ const Module7Section4_4 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-sm sm:text-base text-foreground">
+        <Card className="mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-sm sm:text-base text-white">
             <li>Describe what it means to split a circuit into zones.</li>
             <li>Explain how this method helps locate faults efficiently.</li>
             <li>Apply the principle to both small and large installations.</li>
@@ -259,26 +259,26 @@ const Module7Section4_4 = () => {
 
         {/* Content - 4 main blocks with inline checks after each */}
         <div className="mb-8">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-6">Content / Learning</h2>
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">Content / Learning</h2>
 
           {/* Block 1: Concept - Halving Method */}
           <section className="mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-emerald-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-elec-yellow ">
               <div className="flex items-start gap-3">
-                <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-emerald-400 dark:text-emerald-400 mb-4 text-base sm:text-lg">The Halving Method: Divide and Conquer</h3>
-                  <p className="text-sm sm:text-base text-foreground mb-4">
+                  <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-4 text-base sm:text-lg">The Halving Method: Divide and Conquer</h3>
+                  <p className="text-sm sm:text-base text-white mb-4">
                     Dividing circuits into zones is essentially about halving the problem repeatedly. Instead of testing an entire circuit, electricians isolate sections and test each half separately, quickly determining which contains the fault.
                   </p>
                   
                   <div className="space-y-4">
                     <div>
-                      <p className="font-medium text-foreground mb-3">Mathematical Efficiency of Zone Division</p>
+                      <p className="font-medium text-white mb-3">Mathematical Efficiency of Zone Division</p>
                       <div className="grid sm:grid-cols-2 gap-4">
-                        <div className="bg-background/30 p-3 rounded-lg">
+                        <div className="bg-[#121212]/30 p-3 rounded-lg">
                           <p className="font-medium text-sm mb-2">Halving Progression</p>
-                          <ul className="text-xs text-foreground space-y-1">
+                          <ul className="text-xs text-white space-y-1">
                             <li>• 1st division: 50% of circuit eliminated</li>
                             <li>• 2nd division: 75% eliminated (25% remaining)</li>
                             <li>• 3rd division: 87.5% eliminated (12.5% remaining)</li>
@@ -286,9 +286,9 @@ const Module7Section4_4 = () => {
                             <li>• Each step dramatically reduces search area</li>
                           </ul>
                         </div>
-                        <div className="bg-background/30 p-3 rounded-lg">
+                        <div className="bg-[#121212]/30 p-3 rounded-lg">
                           <p className="font-medium text-sm mb-2">Time Efficiency Benefits</p>
-                          <ul className="text-xs text-foreground space-y-1">
+                          <ul className="text-xs text-white space-y-1">
                             <li>• Exponential reduction in testing time</li>
                             <li>• Prevents exhaustive component checking</li>
                             <li>• Focuses effort on fault-containing sections</li>
@@ -300,12 +300,12 @@ const Module7Section4_4 = () => {
                     </div>
 
                     <div>
-                      <p className="font-medium text-foreground mb-3">Strategic Zone Selection Principles</p>
-                      <div className="bg-background/30 p-4 rounded-lg">
+                      <p className="font-medium text-white mb-3">Strategic Zone Selection Principles</p>
+                      <div className="bg-[#121212]/30 p-4 rounded-lg">
                         <div className="grid sm:grid-cols-2 gap-4">
                           <div>
                             <p className="font-medium text-sm mb-2">Logical Division Points</p>
-                            <ul className="text-xs text-foreground space-y-1">
+                            <ul className="text-xs text-white space-y-1">
                               <li>• Junction boxes and connection points</li>
                               <li>• Distribution board outgoing ways</li>
                               <li>• Mid-point accessible locations</li>
@@ -314,7 +314,7 @@ const Module7Section4_4 = () => {
                           </div>
                           <div>
                             <p className="font-medium text-sm mb-2">Testing Strategy</p>
-                            <ul className="text-xs text-foreground space-y-1">
+                            <ul className="text-xs text-white space-y-1">
                               <li>• Test both halves to confirm fault location</li>
                               <li>• Isolate faulty half for further division</li>
                               <li>• Repeat process until exact fault found</li>
@@ -326,7 +326,7 @@ const Module7Section4_4 = () => {
                     </div>
                   </div>
 
-                  <div className="text-xs sm:text-xs sm:text-sm text-foreground bg-background/50 p-3 rounded border mt-4">
+                  <div className="text-xs sm:text-xs sm:text-sm text-white bg-[#121212]/50 p-3 rounded border mt-4">
                     <strong>Core principle:</strong> By halving the search area with each test, electricians can locate faults in large, complex circuits with remarkably few testing steps, making this the most efficient diagnostic method available.
                   </div>
                 </div>
@@ -345,23 +345,23 @@ const Module7Section4_4 = () => {
 
           {/* Block 2: Ring Final Application */}
           <section className="mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-green-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-green-500 ">
               <div className="flex items-start gap-3">
                 <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                 <div className="flex-1">
                   <h3 className="font-semibold text-green-600 dark:text-green-400 mb-4 text-base sm:text-lg">Ring Final Circuit Application</h3>
-                  <p className="text-sm sm:text-base text-foreground mb-4">
+                  <p className="text-sm sm:text-base text-white mb-4">
                     Ring final circuits are ideal for zone division testing. By disconnecting at strategic mid-points and testing each half independently, faults can be located with precision and minimal disruption.
                   </p>
                   
                   <div className="space-y-4">
                     <div>
-                      <p className="font-medium text-foreground mb-3">Strategic Mid-Point Selection</p>
-                      <div className="bg-background/30 p-4 rounded-lg">
+                      <p className="font-medium text-white mb-3">Strategic Mid-Point Selection</p>
+                      <div className="bg-[#121212]/30 p-4 rounded-lg">
                         <div className="grid sm:grid-cols-2 gap-4">
                           <div>
                             <p className="font-medium text-sm mb-2">Optimal Division Points</p>
-                            <ul className="text-xs text-foreground space-y-1">
+                            <ul className="text-xs text-white space-y-1">
                               <li>• Socket outlet roughly halfway around ring</li>
                               <li>• Accessible junction boxes or connection points</li>
                               <li>• FCU (fused connection unit) locations</li>
@@ -371,7 +371,7 @@ const Module7Section4_4 = () => {
                           </div>
                           <div>
                             <p className="font-medium text-sm mb-2">Testing Procedure</p>
-                            <ol className="text-xs text-foreground space-y-1 list-decimal pl-4">
+                            <ol className="text-xs text-white space-y-1 list-decimal pl-4">
                               <li>Isolate circuit at consumer unit</li>
                               <li>Disconnect at chosen mid-point</li>
                               <li>Test continuity of each half separately</li>
@@ -384,20 +384,20 @@ const Module7Section4_4 = () => {
                     </div>
 
                     <div>
-                      <p className="font-medium text-foreground mb-3">Interpreting Ring Final Test Results</p>
+                      <p className="font-medium text-white mb-3">Interpreting Ring Final Test Results</p>
                       <div className="grid sm:grid-cols-2 gap-4">
-                        <div className="bg-background/30 p-3 rounded-lg">
+                        <div className="bg-[#121212]/30 p-3 rounded-lg">
                           <p className="font-medium text-sm mb-2">Healthy Half Results</p>
-                          <ul className="text-xs text-foreground space-y-1">
+                          <ul className="text-xs text-white space-y-1">
                             <li>• Continuity present on all conductors</li>
                             <li>• Resistance values within expected range</li>
                             <li>• No indication of damage or deterioration</li>
                             <li>• Can be eliminated from further investigation</li>
                           </ul>
                         </div>
-                        <div className="bg-background/30 p-3 rounded-lg">
+                        <div className="bg-[#121212]/30 p-3 rounded-lg">
                           <p className="font-medium text-sm mb-2">Faulty Half Indicators</p>
-                          <ul className="text-xs text-foreground space-y-1">
+                          <ul className="text-xs text-white space-y-1">
                             <li>• Open circuit readings on one or more conductors</li>
                             <li>• Abnormally high resistance values</li>
                             <li>• Intermittent continuity readings</li>
@@ -408,9 +408,9 @@ const Module7Section4_4 = () => {
                     </div>
 
                     <div>
-                      <p className="font-medium text-foreground mb-3">Progressive Fault Narrowing Process</p>
-                      <div className="bg-background/30 p-3 rounded-lg">
-                        <ul className="text-xs text-foreground space-y-1">
+                      <p className="font-medium text-white mb-3">Progressive Fault Narrowing Process</p>
+                      <div className="bg-[#121212]/30 p-3 rounded-lg">
+                        <ul className="text-xs text-white space-y-1">
                           <li>• <strong>First division:</strong> Fault located to specific half of ring (50% reduction)</li>
                           <li>• <strong>Second division:</strong> Faulty half subdivided again (75% total elimination)</li>
                           <li>• <strong>Third division:</strong> Further subdivision narrows to small section (87.5% elimination)</li>
@@ -421,7 +421,7 @@ const Module7Section4_4 = () => {
                     </div>
                   </div>
 
-                  <div className="text-xs sm:text-xs sm:text-sm text-foreground bg-background/50 p-3 rounded border mt-4">
+                  <div className="text-xs sm:text-xs sm:text-sm text-white bg-[#121212]/50 p-3 rounded border mt-4">
                     <strong>Ring final advantage:</strong> The loop nature of ring circuits makes them ideal for zone division, as each half can be tested independently while maintaining circuit integrity for progressive fault location.
                   </div>
                 </div>
@@ -440,22 +440,22 @@ const Module7Section4_4 = () => {
 
           {/* Block 3: Lighting and Large Installations */}
           <section className="mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-orange-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-orange-500 ">
               <div className="flex items-start gap-3">
                 <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-orange-600 dark:text-emerald-400 mb-4 text-base sm:text-lg">Lighting Circuits and Large Installations</h3>
-                  <p className="text-sm sm:text-base text-foreground mb-4">
+                  <h3 className="font-semibold text-orange-600 dark:text-elec-yellow mb-4 text-base sm:text-lg">Lighting Circuits and Large Installations</h3>
+                  <p className="text-sm sm:text-base text-white mb-4">
                     Zone division extends beyond ring finals to lighting circuits and large installations. Junction boxes, distribution boards, and sub-boards provide natural splitting points for systematic fault location.
                   </p>
                   
                   <div className="space-y-4">
                     <div>
-                      <p className="font-medium text-foreground mb-3">Lighting Circuit Zone Division</p>
+                      <p className="font-medium text-white mb-3">Lighting Circuit Zone Division</p>
                       <div className="grid sm:grid-cols-2 gap-4">
-                        <div className="bg-background/30 p-3 rounded-lg">
+                        <div className="bg-[#121212]/30 p-3 rounded-lg">
                           <p className="font-medium text-sm mb-2">Natural Division Points</p>
-                          <ul className="text-xs text-foreground space-y-1">
+                          <ul className="text-xs text-white space-y-1">
                             <li>• Junction boxes between groups of lights</li>
                             <li>• Intermediate switch positions in two-way circuits</li>
                             <li>• Emergency lighting control points</li>
@@ -463,9 +463,9 @@ const Module7Section4_4 = () => {
                             <li>• Isolator switch locations</li>
                           </ul>
                         </div>
-                        <div className="bg-background/30 p-3 rounded-lg">
+                        <div className="bg-[#121212]/30 p-3 rounded-lg">
                           <p className="font-medium text-sm mb-2">Testing Strategy</p>
-                          <ul className="text-xs text-foreground space-y-1">
+                          <ul className="text-xs text-white space-y-1">
                             <li>• Isolate groups of lighting points</li>
                             <li>• Test each group independently</li>
                             <li>• Identify non-functioning group</li>
@@ -477,12 +477,12 @@ const Module7Section4_4 = () => {
                     </div>
 
                     <div>
-                      <p className="font-medium text-foreground mb-3">Large Installation Hierarchical Approach</p>
-                      <div className="bg-background/30 p-4 rounded-lg">
+                      <p className="font-medium text-white mb-3">Large Installation Hierarchical Approach</p>
+                      <div className="bg-[#121212]/30 p-4 rounded-lg">
                         <div className="grid sm:grid-cols-2 gap-4">
                           <div>
                             <p className="font-medium text-sm mb-2">Distribution System Levels</p>
-                            <ul className="text-xs text-foreground space-y-1">
+                            <ul className="text-xs text-white space-y-1">
                               <li>• <strong>Level 1:</strong> Main distribution board zones</li>
                               <li>• <strong>Level 2:</strong> Sub-distribution board areas</li>
                               <li>• <strong>Level 3:</strong> Floor or wing sections</li>
@@ -492,7 +492,7 @@ const Module7Section4_4 = () => {
                           </div>
                           <div>
                             <p className="font-medium text-sm mb-2">Progressive Testing Method</p>
-                            <ol className="text-xs text-foreground space-y-1 list-decimal pl-4">
+                            <ol className="text-xs text-white space-y-1 list-decimal pl-4">
                               <li>Test at highest level first (main DB)</li>
                               <li>Identify affected sub-distribution area</li>
                               <li>Isolate and test sub-board sections</li>
@@ -505,9 +505,9 @@ const Module7Section4_4 = () => {
                     </div>
 
                     <div>
-                      <p className="font-medium text-foreground mb-3">Commercial and Industrial Zone Planning</p>
-                      <div className="bg-background/30 p-3 rounded-lg">
-                        <ul className="text-xs text-foreground space-y-1">
+                      <p className="font-medium text-white mb-3">Commercial and Industrial Zone Planning</p>
+                      <div className="bg-[#121212]/30 p-3 rounded-lg">
+                        <ul className="text-xs text-white space-y-1">
                           <li>• <strong>Office buildings:</strong> Floor-by-floor or department-based zones</li>
                           <li>• <strong>Factories:</strong> Production line or process area divisions</li>
                           <li>• <strong>Retail spaces:</strong> Trading area or department zones</li>
@@ -519,7 +519,7 @@ const Module7Section4_4 = () => {
                     </div>
                   </div>
 
-                  <div className="text-xs sm:text-xs sm:text-sm text-foreground bg-background/50 p-3 rounded border mt-4">
+                  <div className="text-xs sm:text-xs sm:text-sm text-white bg-[#121212]/50 p-3 rounded border mt-4">
                     <strong>Large installation benefit:</strong> Natural hierarchical structure of large installations provides multiple logical division points, making zone-based fault location highly efficient for complex systems.
                   </div>
                 </div>
@@ -538,22 +538,22 @@ const Module7Section4_4 = () => {
 
           {/* Block 4: Practical Guidance */}
           <section className="mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-purple-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-purple-500 ">
               <div className="flex items-start gap-3">
                 <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-purple-600 dark:text-emerald-400 mb-4 text-base sm:text-lg">Practical Guidance and Safety Considerations</h3>
-                  <p className="text-sm sm:text-base text-foreground mb-4">
+                  <h3 className="font-semibold text-purple-600 dark:text-elec-yellow mb-4 text-base sm:text-lg">Practical Guidance and Safety Considerations</h3>
+                  <p className="text-sm sm:text-base text-white mb-4">
                     Successful zone division requires meticulous labelling, careful record-keeping, and proper safety procedures. Working systematically with clear documentation prevents confusion and ensures safety.
                   </p>
                   
                   <div className="space-y-4">
                     <div>
-                      <p className="font-medium text-foreground mb-3">Essential Labelling and Documentation</p>
+                      <p className="font-medium text-white mb-3">Essential Labelling and Documentation</p>
                       <div className="grid sm:grid-cols-2 gap-4">
-                        <div className="bg-background/30 p-3 rounded-lg">
+                        <div className="bg-[#121212]/30 p-3 rounded-lg">
                           <p className="font-medium text-sm mb-2">Labelling Requirements</p>
-                          <ul className="text-xs text-foreground space-y-1">
+                          <ul className="text-xs text-white space-y-1">
                             <li>• Mark each zone clearly with tape or labels</li>
                             <li>• Use consistent numbering or lettering system</li>
                             <li>• Indicate tested/untested status visually</li>
@@ -561,9 +561,9 @@ const Module7Section4_4 = () => {
                             <li>• Document division points on circuit diagrams</li>
                           </ul>
                         </div>
-                        <div className="bg-background/30 p-3 rounded-lg">
+                        <div className="bg-[#121212]/30 p-3 rounded-lg">
                           <p className="font-medium text-sm mb-2">Record-Keeping System</p>
-                          <ul className="text-xs text-foreground space-y-1">
+                          <ul className="text-xs text-white space-y-1">
                             <li>• Zone identification and boundaries</li>
                             <li>• Test results for each zone (pass/fail)</li>
                             <li>• Time and sequence of testing</li>
@@ -575,12 +575,12 @@ const Module7Section4_4 = () => {
                     </div>
 
                     <div>
-                      <p className="font-medium text-foreground mb-3">Working in Pairs for Complex Systems</p>
-                      <div className="bg-background/30 p-4 rounded-lg">
+                      <p className="font-medium text-white mb-3">Working in Pairs for Complex Systems</p>
+                      <div className="bg-[#121212]/30 p-4 rounded-lg">
                         <div className="grid sm:grid-cols-2 gap-4">
                           <div>
                             <p className="font-medium text-sm mb-2">Role Division</p>
-                            <ul className="text-xs text-foreground space-y-1">
+                            <ul className="text-xs text-white space-y-1">
                               <li>• <strong>Tester:</strong> Carries out measurements and tests</li>
                               <li>• <strong>Recorder:</strong> Documents results and progress</li>
                               <li>• <strong>Both:</strong> Verify isolation and safety procedures</li>
@@ -589,7 +589,7 @@ const Module7Section4_4 = () => {
                           </div>
                           <div>
                             <p className="font-medium text-sm mb-2">Benefits of Pair Working</p>
-                            <ul className="text-xs text-foreground space-y-1">
+                            <ul className="text-xs text-white space-y-1">
                               <li>• Reduces errors and oversight</li>
                               <li>• Ensures systematic progression</li>
                               <li>• Provides safety backup and verification</li>
@@ -601,9 +601,9 @@ const Module7Section4_4 = () => {
                     </div>
 
                     <div>
-                      <p className="font-medium text-foreground mb-3">Safety and Isolation Procedures</p>
-                      <div className="bg-background/30 p-3 rounded-lg">
-                        <ul className="text-xs text-foreground space-y-1">
+                      <p className="font-medium text-white mb-3">Safety and Isolation Procedures</p>
+                      <div className="bg-[#121212]/30 p-3 rounded-lg">
+                        <ul className="text-xs text-white space-y-1">
                           <li>• <strong>Safe isolation:</strong> Verify each zone is properly isolated before testing</li>
                           <li>• <strong>Proving unit:</strong> Test voltage indicators before and after each measurement</li>
                           <li>• <strong>Lockout/tagout:</strong> Secure isolation points to prevent accidental re-energisation</li>
@@ -615,7 +615,7 @@ const Module7Section4_4 = () => {
                     </div>
                   </div>
 
-                  <div className="text-xs sm:text-xs sm:text-sm text-foreground bg-background/50 p-3 rounded border mt-4">
+                  <div className="text-xs sm:text-xs sm:text-sm text-white bg-[#121212]/50 p-3 rounded border mt-4">
                     <strong>Critical success factor:</strong> The effectiveness of zone division depends entirely on systematic approach, clear labelling, and accurate record-keeping - these administrative tasks are as important as the technical testing itself.
                   </div>
                 </div>
@@ -634,34 +634,34 @@ const Module7Section4_4 = () => {
         </div>
 
         {/* Real-World Examples */}
-        <Card className="mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-6">Real-World Examples</h2>
+        <Card className="mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">Real-World Examples</h2>
           
           <div className="grid gap-6 sm:gap-8">
             {/* Case Study 1 */}
-            <div className="rounded-lg p-4 sm:p-6 border border-border/20 bg-background/30">
+            <div className="rounded-lg p-4 sm:p-6 border border-white/10 bg-[#121212]/30">
               <div className="flex items-start gap-3 mb-4">
-                <div className="p-2 rounded-lg bg-card">
-                  <FileText className="w-5 h-5 text-emerald-400" />
+                <div className="p-2 rounded-lg ">
+                  <FileText className="w-5 h-5 text-elec-yellow" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground text-base sm:text-lg">Case Study 1: New-Build Housing Site Ring Final Circuit</h3>
-                  <p className="text-sm text-muted-foreground">CPC fault located through systematic halving</p>
+                  <h3 className="font-semibold text-white text-base sm:text-lg">Case Study 1: New-Build Housing Site Ring Final Circuit</h3>
+                  <p className="text-sm text-white">CPC fault located through systematic halving</p>
                 </div>
               </div>
 
               <div className="space-y-4">
                 <div>
-                  <h4 className="font-medium text-foreground mb-2">Scenario</h4>
-                  <p className="text-xs sm:text-sm text-foreground">
+                  <h4 className="font-medium text-white mb-2">Scenario</h4>
+                  <p className="text-xs sm:text-sm text-white">
                     On a new-build housing site, a ring final circuit failed continuity testing during commissioning. The circuit served multiple socket outlets across a large property, making visual inspection impractical.
                   </p>
                 </div>
 
                 <div>
-                  <h4 className="font-medium text-foreground mb-2">Zone Division Process</h4>
-                  <div className="bg-background/50 p-3 rounded">
-                    <ol className="text-xs sm:text-sm text-foreground space-y-1 list-decimal pl-4">
+                  <h4 className="font-medium text-white mb-2">Zone Division Process</h4>
+                  <div className="bg-[#121212]/50 p-3 rounded">
+                    <ol className="text-xs sm:text-sm text-white space-y-1 list-decimal pl-4">
                       <li><strong>Initial division:</strong> Split circuit into two halves at consumer unit - one half tested correctly, other showed open circuit on CPC</li>
                       <li><strong>Second division:</strong> Faulty half split again at socket roughly midway along run - second half tested fine</li>
                       <li><strong>Final location:</strong> Fault narrowed to specific section between two sockets</li>
@@ -672,8 +672,8 @@ const Module7Section4_4 = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-medium text-foreground mb-2">Time and Efficiency Benefits</h4>
-                  <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc pl-6">
+                  <h4 className="font-medium text-white mb-2">Time and Efficiency Benefits</h4>
+                  <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-6">
                     <li>Fault located in under one hour using systematic division</li>
                     <li>Avoided testing every socket individually (would have taken much longer)</li>
                     <li>Prevented unnecessary damage to walls or installations</li>
@@ -684,29 +684,29 @@ const Module7Section4_4 = () => {
             </div>
 
             {/* Case Study 2 */}
-            <div className="rounded-lg p-4 sm:p-6 border border-border/20 bg-background/30">
+            <div className="rounded-lg p-4 sm:p-6 border border-white/10 bg-[#121212]/30">
               <div className="flex items-start gap-3 mb-4">
-                <div className="p-2 rounded-lg bg-card">
-                  <Wrench className="w-5 h-5 text-emerald-400" />
+                <div className="p-2 rounded-lg ">
+                  <Wrench className="w-5 h-5 text-elec-yellow" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground text-base sm:text-lg">Case Study 2: Commercial Warehouse Lighting Failures</h3>
-                  <p className="text-sm text-muted-foreground">Zone isolation locates neutral conductor fault</p>
+                  <h3 className="font-semibold text-white text-base sm:text-lg">Case Study 2: Commercial Warehouse Lighting Failures</h3>
+                  <p className="text-sm text-white">Zone isolation locates neutral conductor fault</p>
                 </div>
               </div>
 
               <div className="space-y-4">
                 <div>
-                  <h4 className="font-medium text-foreground mb-2">Scenario</h4>
-                  <p className="text-xs sm:text-sm text-foreground">
+                  <h4 className="font-medium text-white mb-2">Scenario</h4>
+                  <p className="text-xs sm:text-sm text-white">
                     A commercial warehouse reported frequent lighting failures affecting dozens of fittings across a large space. Random failures made pattern identification difficult.
                   </p>
                 </div>
 
                 <div>
-                  <h4 className="font-medium text-foreground mb-2">Systematic Zone Approach</h4>
-                  <div className="bg-background/50 p-3 rounded">
-                    <ol className="text-xs sm:text-sm text-foreground space-y-1 list-decimal pl-4">
+                  <h4 className="font-medium text-white mb-2">Systematic Zone Approach</h4>
+                  <div className="bg-[#121212]/50 p-3 rounded">
+                    <ol className="text-xs sm:text-sm text-white space-y-1 list-decimal pl-4">
                       <li><strong>Level 1 division:</strong> Isolated one half of warehouse lighting at distribution board</li>
                       <li><strong>Fault identification:</strong> Problems only occurred in isolated half, confirming fault location</li>
                       <li><strong>Level 2 division:</strong> Further divided faulty half into smaller zones using sub-circuits</li>
@@ -717,8 +717,8 @@ const Module7Section4_4 = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-medium text-foreground mb-2">Alternative Scenario Without Zone Division</h4>
-                  <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc pl-6">
+                  <h4 className="font-medium text-white mb-2">Alternative Scenario Without Zone Division</h4>
+                  <ul className="text-xs sm:text-sm text-white space-y-1 list-disc pl-6">
                     <li>Testing each individual light fitting would have taken days</li>
                     <li>Random fault pattern made visual inspection ineffective</li>
                     <li>Zone division identified fault area within hours</li>
@@ -732,22 +732,22 @@ const Module7Section4_4 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-6">Frequently Asked Questions</h2>
+        <Card className="mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-border/20 pb-4 last:border-b-0 last:pb-0">
-                <h3 className="font-medium text-foreground mb-2 text-sm sm:text-base">{faq.question}</h3>
-                <p className="text-muted-foreground text-sm">{faq.answer}</p>
+              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
+                <h3 className="font-medium text-white mb-2 text-sm sm:text-base">{faq.question}</h3>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Key Takeaways */}
-        <Card className="mb-8 p-4 sm:p-6 bg-card border border-border/40">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Recap</h2>
-          <p className="text-sm sm:text-base text-foreground mb-4">
+        <Card className="mb-8 p-4 sm:p-6 border border-border/40">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
+          <p className="text-sm sm:text-base text-white mb-4">
             Dividing the circuit into zones, or splitting and isolating, is a methodical way of locating faults in large or complex installations. By testing each half of the circuit separately, electricians can quickly determine which part contains the fault. The process is repeated, narrowing down the faulty zone until the exact fault location is found. This approach saves time, avoids unnecessary work, and ensures accuracy in diagnosis.
           </p>
         </Card>
@@ -756,7 +756,7 @@ const Module7Section4_4 = () => {
         <Quiz questions={quizQuestions} title="Test Your Knowledge: Zone Division and Fault Isolation" />
 
         {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 pt-6 border-t border-border/20">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 pt-6 border-t border-white/10">
           <Button variant="outline" className="w-full sm:w-auto" asChild>
             <Link to="../4-3">
               <ArrowLeft className="w-4 h-4 mr-2" />

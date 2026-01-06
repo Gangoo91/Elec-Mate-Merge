@@ -34,7 +34,7 @@ const Module8 = () => {
         </div>
         
         <div className="mb-8">
-          <h1 className="text-xl sm:text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
             Module 8: Mock Examinations & Assessment
           </h1>
         </div>

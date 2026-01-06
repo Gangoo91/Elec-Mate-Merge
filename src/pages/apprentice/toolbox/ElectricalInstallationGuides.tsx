@@ -1,8 +1,9 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Home, Building, Factory, MapPin, ChevronRight, Zap } from "lucide-react";
+import { Home, Building, Factory, MapPin, ChevronRight, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 
 const ElectricalInstallationGuides = () => {
   const installationTypes = [
@@ -43,12 +44,7 @@ const ElectricalInstallationGuides = () => {
           <h1 className="text-3xl font-bold tracking-tight">Electrical Installation Guides</h1>
           <p className="text-neutral-300">Step-by-step guides for different types of electrical installations</p>
         </div>
-        <Link to="/apprentice/on-job-tools" className="flex-shrink-0">
-          <Button variant="outline">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to On-Job Tools
-          </Button>
-        </Link>
+        <SmartBackButton />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

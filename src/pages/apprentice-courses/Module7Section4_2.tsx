@@ -189,11 +189,11 @@ const Module7Section4_2 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-0 text-sm sm:text-base" asChild>
+          <Button variant="ghost" className="text-white hover:text-white p-0 text-sm sm:text-base" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 4
@@ -207,34 +207,34 @@ const Module7Section4_2 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card w-fit">
-              <Search className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg w-fit">
+              <Search className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 w-fit">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow w-fit">
               Section 7.4.2
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl lg:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl lg:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Understanding the Sequence of Operation
           </h1>
-          <p className="text-muted-foreground text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Analysing how electrical circuits should function normally to identify where faults occur
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Understanding normal circuit operation is essential for effective fault diagnosis.</li>
                 <li>Sequence of operation describes how electrical systems should function step-by-step.</li>
                 <li>Faults interrupt normal sequences, making deviations key diagnostic indicators.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
               <p className="font-medium mb-2">Spot it / Use it / Check</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Deviations from expected operational flow.</li>
@@ -246,9 +246,9 @@ const Module7Section4_2 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-sm sm:text-base text-foreground">
+        <Card className="mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-sm sm:text-base text-white">
             <li>Explain what sequence of operation means in electrical systems.</li>
             <li>Describe how understanding normal operation aids fault diagnosis.</li>
             <li>Analyse simple and complex circuit operational sequences.</li>
@@ -258,27 +258,27 @@ const Module7Section4_2 = () => {
         </Card>
 
         {/* Content - 4 main blocks with inline checks after 1 and 4 */}
-        <Card className="mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-6">Content / Learning</h2>
+        <Card className="mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">Content / Learning</h2>
 
           {/* Block 1: Core concepts */}
           <section className="mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-emerald-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-elec-yellow ">
               <div className="flex items-start gap-3">
-                <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-emerald-400 dark:text-emerald-400 mb-4 text-base sm:text-lg">Understanding Sequence of Operation</h3>
-                  <p className="text-sm sm:text-base text-foreground mb-4">
+                  <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-4 text-base sm:text-lg">Understanding Sequence of Operation</h3>
+                  <p className="text-sm sm:text-base text-white mb-4">
                     The sequence of operation describes the intended flow of electrical events in a circuit, from initial energisation through normal operation to controlled shutdown. This understanding forms the foundation of effective fault diagnosis.
                   </p>
                   
                   <div className="space-y-4">
                     <div>
-                      <p className="font-medium text-foreground mb-3">Fundamental Components of Operational Sequence</p>
+                      <p className="font-medium text-white mb-3">Fundamental Components of Operational Sequence</p>
                       <div className="grid sm:grid-cols-2 gap-4">
-                        <div className="bg-background/30 p-3 rounded-lg">
+                        <div className="bg-[#121212]/30 p-3 rounded-lg">
                           <p className="font-medium text-sm mb-2">Temporal Elements</p>
-                          <ul className="text-xs text-foreground space-y-1">
+                          <ul className="text-xs text-white space-y-1">
                             <li>• Chronological order of events</li>
                             <li>• Time delays and sequencing</li>
                             <li>• Startup and shutdown procedures</li>
@@ -286,9 +286,9 @@ const Module7Section4_2 = () => {
                             <li>• Maintenance windows and schedules</li>
                           </ul>
                         </div>
-                        <div className="bg-background/30 p-3 rounded-lg">
+                        <div className="bg-[#121212]/30 p-3 rounded-lg">
                           <p className="font-medium text-sm mb-2">Functional Dependencies</p>
-                          <ul className="text-xs text-foreground space-y-1">
+                          <ul className="text-xs text-white space-y-1">
                             <li>• Component interdependencies</li>
                             <li>• Control signal pathways</li>
                             <li>• Feedback loops and monitoring</li>
@@ -300,12 +300,12 @@ const Module7Section4_2 = () => {
                     </div>
 
                     <div>
-                      <p className="font-medium text-foreground mb-3">Control Logic and Decision Making</p>
-                      <div className="bg-background/30 p-4 rounded-lg">
+                      <p className="font-medium text-white mb-3">Control Logic and Decision Making</p>
+                      <div className="bg-[#121212]/30 p-4 rounded-lg">
                         <div className="grid sm:grid-cols-2 gap-4">
                           <div>
                             <p className="font-medium text-sm mb-2">Input Processing</p>
-                            <ul className="text-xs text-foreground space-y-1">
+                            <ul className="text-xs text-white space-y-1">
                               <li>• Sensor data interpretation (temperature, pressure, position)</li>
                               <li>• Digital and analogue signal processing</li>
                               <li>• User interface inputs and commands</li>
@@ -314,7 +314,7 @@ const Module7Section4_2 = () => {
                           </div>
                           <div>
                             <p className="font-medium text-sm mb-2">Decision Algorithms</p>
-                            <ul className="text-xs text-foreground space-y-1">
+                            <ul className="text-xs text-white space-y-1">
                               <li>• Boolean logic operations (AND, OR, NOT)</li>
                               <li>• Conditional statements and branches</li>
                               <li>• Priority management and arbitration</li>
@@ -326,9 +326,9 @@ const Module7Section4_2 = () => {
                     </div>
 
                     <div>
-                      <p className="font-medium text-foreground mb-3">Safety Integration and Protection</p>
-                      <div className="bg-background/30 p-3 rounded-lg">
-                        <ul className="text-xs text-foreground space-y-1">
+                      <p className="font-medium text-white mb-3">Safety Integration and Protection</p>
+                      <div className="bg-[#121212]/30 p-3 rounded-lg">
+                        <ul className="text-xs text-white space-y-1">
                           <li>• Safety interlock verification before operation commencement</li>
                           <li>• Protective device coordination and selectivity principles</li>
                           <li>• Emergency stop sequences and safe shutdown procedures</li>
@@ -340,7 +340,7 @@ const Module7Section4_2 = () => {
                     </div>
                   </div>
 
-                  <div className="text-xs sm:text-xs sm:text-sm text-foreground bg-background/50 p-3 rounded border mt-4">
+                  <div className="text-xs sm:text-xs sm:text-sm text-white bg-[#121212]/50 p-3 rounded border mt-4">
                     <strong>Critical insight:</strong> Every electrical system tells an operational story. Understanding this narrative enables electricians to identify precisely where faults disrupt normal function and guides systematic diagnostic approaches.
                   </div>
                 </div>
@@ -359,23 +359,23 @@ const Module7Section4_2 = () => {
 
           {/* Block 2: Simple circuits */}
           <section className="mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-green-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-green-500 ">
               <div className="flex items-start gap-3">
                 <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                 <div className="flex-1">
                   <h3 className="font-semibold text-green-600 dark:text-green-400 mb-4 text-base sm:text-lg">Simple Circuit Operational Sequences</h3>
-                  <p className="text-sm sm:text-base text-foreground mb-4">
+                  <p className="text-sm sm:text-base text-white mb-4">
                     Basic circuits follow predictable sequences that form the foundation for understanding complex systems. Mastering these fundamental patterns enables effective diagnosis of sophisticated installations.
                   </p>
                   
                   <div className="space-y-4">
                     <div>
-                      <p className="font-medium text-foreground mb-3">Detailed Lighting Circuit Analysis</p>
-                      <div className="bg-background/30 p-4 rounded-lg">
+                      <p className="font-medium text-white mb-3">Detailed Lighting Circuit Analysis</p>
+                      <div className="bg-[#121212]/30 p-4 rounded-lg">
                         <div className="grid sm:grid-cols-2 gap-4">
                           <div>
                             <p className="font-medium text-sm mb-2">Normal Operational Flow</p>
-                            <ol className="text-xs text-foreground space-y-1 list-decimal pl-4">
+                            <ol className="text-xs text-white space-y-1 list-decimal pl-4">
                               <li>Supply voltage present at distribution board (230V ±10%)</li>
                               <li>Current flows through protective device (MCB rating matched to load)</li>
                               <li>Switch operation completes circuit path to luminaire</li>
@@ -386,7 +386,7 @@ const Module7Section4_2 = () => {
                           </div>
                           <div>
                             <p className="font-medium text-sm mb-2">Fault Manifestations</p>
-                            <ul className="text-xs text-foreground space-y-1 list-disc pl-4">
+                            <ul className="text-xs text-white space-y-1 list-disc pl-4">
                               <li>Complete failure = open circuit in live or neutral path</li>
                               <li>Reduced brightness = high resistance joints or connections</li>
                               <li>Flickering = loose connections causing intermittent contact</li>
@@ -399,14 +399,14 @@ const Module7Section4_2 = () => {
                     </div>
                     
                     <div>
-                      <p className="font-medium text-foreground mb-3">Socket Circuit Comprehensive Analysis</p>
+                      <p className="font-medium text-white mb-3">Socket Circuit Comprehensive Analysis</p>
                       <div className="space-y-3">
-                        <div className="bg-background/30 p-4 rounded-lg">
+                        <div className="bg-[#121212]/30 p-4 rounded-lg">
                           <p className="font-medium text-sm mb-2">Ring Final Circuit Sequence</p>
                           <div className="grid sm:grid-cols-2 gap-3">
                             <div>
                               <p className="text-xs font-medium mb-1">Normal Operation:</p>
-                              <ol className="text-xs text-foreground space-y-1 list-decimal pl-4">
+                              <ol className="text-xs text-white space-y-1 list-decimal pl-4">
                                 <li>Ring energised from both ends at distribution board</li>
                                 <li>Live and neutral rings provide parallel paths</li>
                                 <li>Load current divides according to cable resistances</li>
@@ -417,7 +417,7 @@ const Module7Section4_2 = () => {
                             </div>
                             <div>
                               <p className="text-xs font-medium mb-1">Fault Indicators:</p>
-                              <ul className="text-xs text-foreground space-y-1 list-disc pl-4">
+                              <ul className="text-xs text-white space-y-1 list-disc pl-4">
                                 <li>Voltage drop = high resistance or open neutral</li>
                                 <li>Some sockets dead = break in ring continuity</li>
                                 <li>RCD tripping = earth leakage or N-E fault</li>
@@ -427,12 +427,12 @@ const Module7Section4_2 = () => {
                           </div>
                         </div>
 
-                        <div className="bg-background/30 p-4 rounded-lg">
+                        <div className="bg-[#121212]/30 p-4 rounded-lg">
                           <p className="font-medium text-sm mb-2">Radial Circuit Sequence</p>
                           <div className="grid sm:grid-cols-2 gap-3">
                             <div>
                               <p className="text-xs font-medium mb-1">Sequential Flow:</p>
-                              <ol className="text-xs text-foreground space-y-1 list-decimal pl-4">
+                              <ol className="text-xs text-white space-y-1 list-decimal pl-4">
                                 <li>Single supply cable feeds first socket outlet</li>
                                 <li>Current flows through each outlet in sequence</li>
                                 <li>Each socket depends on integrity of previous connections</li>
@@ -443,7 +443,7 @@ const Module7Section4_2 = () => {
                             </div>
                             <div>
                               <p className="text-xs font-medium mb-1">Characteristics:</p>
-                              <ul className="text-xs text-foreground space-y-1 list-disc pl-4">
+                              <ul className="text-xs text-white space-y-1 list-disc pl-4">
                                 <li>Single point failure affects all downstream outlets</li>
                                 <li>Higher current density than ring circuits</li>
                                 <li>Simpler fault location due to linear topology</li>
@@ -456,11 +456,11 @@ const Module7Section4_2 = () => {
                     </div>
 
                     <div>
-                      <p className="font-medium text-foreground mb-3">Advanced Switching Arrangements</p>
+                      <p className="font-medium text-white mb-3">Advanced Switching Arrangements</p>
                       <div className="grid sm:grid-cols-2 gap-4">
-                        <div className="bg-background/30 p-3 rounded-lg">
+                        <div className="bg-[#121212]/30 p-3 rounded-lg">
                           <p className="font-medium text-sm mb-2">Two-Way Switching Logic</p>
-                          <ul className="text-xs text-foreground space-y-1">
+                          <ul className="text-xs text-white space-y-1">
                             <li>• Common terminal maintains permanent live connection</li>
                             <li>• L1 and L2 terminals provide alternative switched paths</li>
                             <li>• Switch positions determine circuit completion logic</li>
@@ -468,9 +468,9 @@ const Module7Section4_2 = () => {
                             <li>• Either switch can control the load from its location</li>
                           </ul>
                         </div>
-                        <div className="bg-background/30 p-3 rounded-lg">
+                        <div className="bg-[#121212]/30 p-3 rounded-lg">
                           <p className="font-medium text-sm mb-2">Intermediate Switching</p>
-                          <ul className="text-xs text-foreground space-y-1">
+                          <ul className="text-xs text-white space-y-1">
                             <li>• Intermediate switches perform cross-connection of L1 and L2</li>
                             <li>• Each operation reverses the connection polarity</li>
                             <li>• Multiple intermediate switches can be cascaded in series</li>
@@ -482,7 +482,7 @@ const Module7Section4_2 = () => {
                     </div>
                   </div>
 
-                  <div className="text-xs sm:text-xs sm:text-sm text-foreground bg-background/50 p-3 rounded border mt-4">
+                  <div className="text-xs sm:text-xs sm:text-sm text-white bg-[#121212]/50 p-3 rounded border mt-4">
                     <strong>Diagnostic principle:</strong> Understanding these basic sequences allows electricians to identify exactly where normal operation breaks down, enabling efficient fault location without extensive testing.
                   </div>
                 </div>
@@ -501,23 +501,23 @@ const Module7Section4_2 = () => {
 
           {/* Block 3: Complex systems */}
           <section className="mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-orange-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-orange-500 ">
               <div className="flex items-start gap-3">
                 <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-orange-600 dark:text-emerald-400 mb-4 text-base sm:text-lg">Complex Control System Sequences</h3>
-                  <p className="text-sm sm:text-base text-foreground mb-4">
+                  <h3 className="font-semibold text-orange-600 dark:text-elec-yellow mb-4 text-base sm:text-lg">Complex Control System Sequences</h3>
+                  <p className="text-sm sm:text-base text-white mb-4">
                     Industrial and commercial systems involve intricate sequences with multiple decision points, safety interlocks, and coordinated operations that require systematic analysis for effective fault diagnosis.
                   </p>
                   
                   <div className="space-y-4">
                     <div>
-                      <p className="font-medium text-foreground mb-3">Motor Control System Analysis</p>
-                      <div className="bg-background/30 p-4 rounded-lg">
+                      <p className="font-medium text-white mb-3">Motor Control System Analysis</p>
+                      <div className="bg-[#121212]/30 p-4 rounded-lg">
                         <div className="grid sm:grid-cols-2 gap-4">
                           <div>
                             <p className="font-medium text-sm mb-2">Startup Sequence</p>
-                            <ol className="text-xs text-foreground space-y-1 list-decimal pl-4">
+                            <ol className="text-xs text-white space-y-1 list-decimal pl-4">
                               <li>Safety interlock verification (guards, stops, permissions)</li>
                               <li>Control signal validation and processing</li>
                               <li>Auxiliary contactor energisation for control circuits</li>
@@ -529,7 +529,7 @@ const Module7Section4_2 = () => {
                           </div>
                           <div>
                             <p className="font-medium text-sm mb-2">Protection Integration</p>
-                            <ul className="text-xs text-foreground space-y-1 list-disc pl-4">
+                            <ul className="text-xs text-white space-y-1 list-disc pl-4">
                               <li>Overload protection monitors current and temperature</li>
                               <li>Short circuit protection provides rapid disconnection</li>
                               <li>Phase failure detection prevents single-phasing</li>
@@ -543,12 +543,12 @@ const Module7Section4_2 = () => {
                     </div>
 
                     <div>
-                      <p className="font-medium text-foreground mb-3">HVAC Control System Operations</p>
-                      <div className="bg-background/30 p-4 rounded-lg">
+                      <p className="font-medium text-white mb-3">HVAC Control System Operations</p>
+                      <div className="bg-[#121212]/30 p-4 rounded-lg">
                         <div className="grid sm:grid-cols-2 gap-4">
                           <div>
                             <p className="font-medium text-sm mb-2">Temperature Control Sequence</p>
-                            <ol className="text-xs text-foreground space-y-1 list-decimal pl-4">
+                            <ol className="text-xs text-white space-y-1 list-decimal pl-4">
                               <li>Temperature sensor monitoring and signal conditioning</li>
                               <li>Setpoint comparison and deviation calculation</li>
                               <li>Control algorithm processing (PID control logic)</li>
@@ -559,7 +559,7 @@ const Module7Section4_2 = () => {
                           </div>
                           <div>
                             <p className="font-medium text-sm mb-2">System Coordination</p>
-                            <ul className="text-xs text-foreground space-y-1 list-disc pl-4">
+                            <ul className="text-xs text-white space-y-1 list-disc pl-4">
                               <li>Multiple zone coordination and prioritisation</li>
                               <li>Time-based scheduling and occupancy sensing</li>
                               <li>Energy optimisation and demand management</li>
@@ -573,12 +573,12 @@ const Module7Section4_2 = () => {
                     </div>
 
                     <div>
-                      <p className="font-medium text-foreground mb-3">Fire Safety and Emergency Systems</p>
-                      <div className="bg-background/30 p-4 rounded-lg">
+                      <p className="font-medium text-white mb-3">Fire Safety and Emergency Systems</p>
+                      <div className="bg-[#121212]/30 p-4 rounded-lg">
                         <div className="grid sm:grid-cols-2 gap-4">
                           <div>
                             <p className="font-medium text-sm mb-2">Detection and Alarm Sequence</p>
-                            <ol className="text-xs text-foreground space-y-1 list-decimal pl-4">
+                            <ol className="text-xs text-white space-y-1 list-decimal pl-4">
                               <li>Smoke/heat detector activation and signal transmission</li>
                               <li>Fire alarm panel processing and zone identification</li>
                               <li>Audible and visual alarm activation throughout building</li>
@@ -589,7 +589,7 @@ const Module7Section4_2 = () => {
                           </div>
                           <div>
                             <p className="font-medium text-sm mb-2">Safety System Integration</p>
-                            <ul className="text-xs text-foreground space-y-1 list-disc pl-4">
+                            <ul className="text-xs text-white space-y-1 list-disc pl-4">
                               <li>Lift recall to ground floor and service shutdown</li>
                               <li>Air conditioning system shutdown to prevent smoke spread</li>
                               <li>Fire door release and automatic closure systems</li>
@@ -603,9 +603,9 @@ const Module7Section4_2 = () => {
                     </div>
 
                     <div>
-                      <p className="font-medium text-foreground mb-3">Industrial Process Control</p>
-                      <div className="bg-background/30 p-3 rounded-lg">
-                        <ul className="text-xs text-foreground space-y-1">
+                      <p className="font-medium text-white mb-3">Industrial Process Control</p>
+                      <div className="bg-[#121212]/30 p-3 rounded-lg">
+                        <ul className="text-xs text-white space-y-1">
                           <li>• Multi-stage process sequencing with precise timing control</li>
                           <li>• Sensor feedback integration for closed-loop process control</li>
                           <li>• Quality control monitoring and automatic adjustment systems</li>
@@ -617,7 +617,7 @@ const Module7Section4_2 = () => {
                     </div>
                   </div>
 
-                  <div className="text-xs sm:text-xs sm:text-sm text-foreground bg-background/50 p-3 rounded border mt-4">
+                  <div className="text-xs sm:text-xs sm:text-sm text-white bg-[#121212]/50 p-3 rounded border mt-4">
                     <strong>Complex system principle:</strong> Even the most sophisticated control systems can be broken down into simple, logical sequences. Understanding these building blocks enables systematic fault diagnosis of complex installations.
                   </div>
                 </div>
@@ -636,19 +636,19 @@ const Module7Section4_2 = () => {
 
           {/* Block 4: Application to fault finding */}
           <section className="mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-purple-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-purple-500 ">
               <div className="flex items-start gap-3">
                 <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-purple-600 dark:text-emerald-400 mb-4 text-base sm:text-lg">Applying Sequence Analysis to Fault Finding</h3>
-                  <p className="text-sm sm:text-base text-foreground mb-4">
+                  <h3 className="font-semibold text-purple-600 dark:text-elec-yellow mb-4 text-base sm:text-lg">Applying Sequence Analysis to Fault Finding</h3>
+                  <p className="text-sm sm:text-base text-white mb-4">
                     Understanding normal sequences allows systematic identification of where faults interrupt expected operation.
                   </p>
                   
                   <div className="space-y-4">
-                    <div className="bg-background/30 p-4 rounded-lg">
+                    <div className="bg-[#121212]/30 p-4 rounded-lg">
                       <p className="font-medium text-sm mb-2">Systematic Approach</p>
-                      <ol className="text-xs text-foreground space-y-1 list-decimal pl-4">
+                      <ol className="text-xs text-white space-y-1 list-decimal pl-4">
                         <li>Map the expected operational sequence</li>
                         <li>Identify where the sequence breaks down</li>
                         <li>Test systematically from that point</li>
@@ -657,18 +657,18 @@ const Module7Section4_2 = () => {
                     </div>
                     
                     <div className="grid sm:grid-cols-2 gap-3">
-                      <div className="bg-background/30 p-3 rounded-lg">
+                      <div className="bg-[#121212]/30 p-3 rounded-lg">
                         <p className="font-medium text-sm mb-2">Documentation Sources</p>
-                        <ul className="text-xs text-foreground space-y-1">
+                        <ul className="text-xs text-white space-y-1">
                           <li>• Circuit diagrams</li>
                           <li>• Control schematics</li>
                           <li>• Operation manuals</li>
                           <li>• Previous test records</li>
                         </ul>
                       </div>
-                      <div className="bg-background/30 p-3 rounded-lg">
+                      <div className="bg-[#121212]/30 p-3 rounded-lg">
                         <p className="font-medium text-sm mb-2">Benefits</p>
-                        <ul className="text-xs text-foreground space-y-1">
+                        <ul className="text-xs text-white space-y-1">
                           <li>• Faster fault location</li>
                           <li>• Logical test progression</li>
                           <li>• Prevents missed faults</li>
@@ -692,24 +692,24 @@ const Module7Section4_2 = () => {
         </Card>
 
         {/* Real-World Examples */}
-        <Card className="mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-6">Real-World Examples</h2>
+        <Card className="mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">Real-World Examples</h2>
           
           <div className="space-y-8">
             <div className="bg-card rounded-lg p-4 sm:p-6 border border-border/10">
               <div className="flex flex-col lg:flex-row gap-4 sm:gap-6">
                 <div className="flex-shrink-0">
-                  <div className="p-3 rounded-lg bg-card border border-border/30">
-                    <HardHat className="w-6 h-6 text-emerald-400" />
+                  <div className="p-3 rounded-lg border border-border/30">
+                    <HardHat className="w-6 h-6 text-elec-yellow" />
                   </div>
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-medium text-foreground mb-4 text-base sm:text-lg">Case Study 1: Manufacturing Conveyor System Failure</h3>
+                  <h3 className="font-medium text-white mb-4 text-base sm:text-lg">Case Study 1: Manufacturing Conveyor System Failure</h3>
                   <div className="grid lg:grid-cols-2 gap-4 sm:gap-6 text-sm">
                     <div className="space-y-4">
                       <div>
-                        <p className="font-medium mb-2 text-foreground">Reported Problem:</p>
-                        <ul className="text-foreground space-y-1 list-disc pl-4">
+                        <p className="font-medium mb-2 text-white">Reported Problem:</p>
+                        <ul className="text-white space-y-1 list-disc pl-4">
                           <li>Conveyor belt stops randomly during operation</li>
                           <li>No obvious pattern to failures - sometimes works for hours</li>
                           <li>Emergency stop button seems functional</li>
@@ -719,8 +719,8 @@ const Module7Section4_2 = () => {
                       </div>
                       
                       <div>
-                        <p className="font-medium mb-2 text-foreground">Expected Normal Sequence:</p>
-                        <ol className="text-foreground space-y-1 list-decimal pl-4">
+                        <p className="font-medium mb-2 text-white">Expected Normal Sequence:</p>
+                        <ol className="text-white space-y-1 list-decimal pl-4">
                           <li>Safety guards verified closed and locked</li>
                           <li>Emergency stop circuit continuity confirmed</li>
                           <li>Start button pressed, control signal sent</li>
@@ -734,8 +734,8 @@ const Module7Section4_2 = () => {
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="font-medium mb-2 text-foreground">Sequence Analysis Application:</p>
-                        <ol className="text-foreground space-y-1 list-decimal pl-4">
+                        <p className="font-medium mb-2 text-white">Sequence Analysis Application:</p>
+                        <ol className="text-white space-y-1 list-decimal pl-4">
                           <li><strong>Step 1:</strong> Traced expected sequence from start to stop</li>
                           <li><strong>Step 2:</strong> Identified sequence broke at safety guard verification</li>
                           <li><strong>Step 3:</strong> Found intermittent guard switch operation</li>
@@ -744,10 +744,10 @@ const Module7Section4_2 = () => {
                         </ol>
                       </div>
                       
-                      <div className="bg-background/50 p-3 rounded border">
-                        <p className="font-medium mb-2 text-foreground">Result and Learning:</p>
-                        <p className="text-foreground mb-2">By following the operational sequence rather than random testing, the fault was located in 20 minutes instead of potentially hours of motor and control system diagnostics.</p>
-                        <p className="text-xs text-muted-foreground"><strong>Key insight:</strong> Safety interlocks are often overlooked but critical in the operational sequence.</p>
+                      <div className="bg-[#121212]/50 p-3 rounded border">
+                        <p className="font-medium mb-2 text-white">Result and Learning:</p>
+                        <p className="text-white mb-2">By following the operational sequence rather than random testing, the fault was located in 20 minutes instead of potentially hours of motor and control system diagnostics.</p>
+                        <p className="text-xs text-white"><strong>Key insight:</strong> Safety interlocks are often overlooked but critical in the operational sequence.</p>
                       </div>
                     </div>
                   </div>
@@ -758,17 +758,17 @@ const Module7Section4_2 = () => {
             <div className="bg-card rounded-lg p-4 sm:p-6 border border-border/10">
               <div className="flex flex-col lg:flex-row gap-4 sm:gap-6">
                 <div className="flex-shrink-0">
-                  <div className="p-3 rounded-lg bg-card border border-green-400/30">
+                  <div className="p-3 rounded-lg border border-green-400/30">
                     <Wrench className="w-6 h-6 text-green-500" />
                   </div>
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-medium text-foreground mb-4 text-base sm:text-lg">Case Study 2: Office Building HVAC Control Malfunction</h3>
+                  <h3 className="font-medium text-white mb-4 text-base sm:text-lg">Case Study 2: Office Building HVAC Control Malfunction</h3>
                   <div className="grid lg:grid-cols-2 gap-4 sm:gap-6 text-sm">
                     <div className="space-y-4">
                       <div>
-                        <p className="font-medium mb-2 text-foreground">Symptoms Reported:</p>
-                        <ul className="text-foreground space-y-1 list-disc pl-4">
+                        <p className="font-medium mb-2 text-white">Symptoms Reported:</p>
+                        <ul className="text-white space-y-1 list-disc pl-4">
                           <li>No heating in east wing despite thermostat calling for heat</li>
                           <li>Boiler operates normally and shows no faults</li>
                           <li>Other zones in building heat correctly</li>
@@ -778,8 +778,8 @@ const Module7Section4_2 = () => {
                       </div>
                       
                       <div>
-                        <p className="font-medium mb-2 text-foreground">Normal HVAC Control Sequence:</p>
-                        <ol className="text-foreground space-y-1 list-decimal pl-4">
+                        <p className="font-medium mb-2 text-white">Normal HVAC Control Sequence:</p>
+                        <ol className="text-white space-y-1 list-decimal pl-4">
                           <li>Zone thermostat detects temperature below setpoint</li>
                           <li>Control signal sent to building management system</li>
                           <li>BMS validates demand and checks system status</li>
@@ -794,11 +794,11 @@ const Module7Section4_2 = () => {
                     
                     <div className="space-y-4">
                       <div>
-                        <p className="font-medium mb-2 text-foreground">Sequence-Based Diagnosis:</p>
+                        <p className="font-medium mb-2 text-white">Sequence-Based Diagnosis:</p>
                         <div className="space-y-2">
-                          <div className="bg-background/30 p-3 rounded">
+                          <div className="bg-[#121212]/30 p-3 rounded">
                             <p className="font-medium text-xs mb-1">Investigation Steps:</p>
-                            <ol className="text-foreground space-y-1 list-decimal pl-4 text-xs">
+                            <ol className="text-white space-y-1 list-decimal pl-4 text-xs">
                               <li>Verified thermostat operation and setpoint</li>
                               <li>Confirmed BMS receiving demand signal</li>
                               <li>Checked boiler operation - confirmed running</li>
@@ -808,17 +808,17 @@ const Module7Section4_2 = () => {
                             </ol>
                           </div>
                           
-                          <div className="bg-background/30 p-3 rounded">
+                          <div className="bg-[#121212]/30 p-3 rounded">
                             <p className="font-medium text-xs mb-1">Root Cause:</p>
-                            <p className="text-foreground text-xs">Maintenance team had isolated the east wing pump during weekend work but failed to reopen the flow isolation valve. The sequence helped identify this quickly as pump was running but no heat transfer occurred.</p>
+                            <p className="text-white text-xs">Maintenance team had isolated the east wing pump during weekend work but failed to reopen the flow isolation valve. The sequence helped identify this quickly as pump was running but no heat transfer occurred.</p>
                           </div>
                         </div>
                       </div>
                       
-                      <div className="bg-background/50 p-3 rounded border">
-                        <p className="font-medium mb-2 text-foreground">Professional Outcome:</p>
-                        <p className="text-foreground mb-2">Following the heating sequence revealed the issue within 15 minutes. Without sequence analysis, extensive boiler and pump diagnostics would have been performed unnecessarily.</p>
-                        <p className="text-xs text-muted-foreground"><strong>Learning point:</strong> Always verify the complete operational path, not just electrical operation.</p>
+                      <div className="bg-[#121212]/50 p-3 rounded border">
+                        <p className="font-medium mb-2 text-white">Professional Outcome:</p>
+                        <p className="text-white mb-2">Following the heating sequence revealed the issue within 15 minutes. Without sequence analysis, extensive boiler and pump diagnostics would have been performed unnecessarily.</p>
+                        <p className="text-xs text-white"><strong>Learning point:</strong> Always verify the complete operational path, not just electrical operation.</p>
                       </div>
                     </div>
                   </div>
@@ -829,25 +829,25 @@ const Module7Section4_2 = () => {
         </Card>
 
         {/* FAQ */}
-        <Card className="mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-6">Frequently Asked Questions</h2>
+        <Card className="mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-border/20 pb-4 last:border-b-0">
-                <h3 className="font-medium text-foreground mb-2">{faq.question}</h3>
-                <p className="text-sm sm:text-base text-muted-foreground">{faq.answer}</p>
+              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
+                <h3 className="font-medium text-white mb-2">{faq.question}</h3>
+                <p className="text-sm sm:text-base text-white">{faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Recap */}
-        <Card className="mb-8 p-4 sm:p-6 bg-card border border-border/40">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Recap</h2>
+        <Card className="mb-8 p-4 sm:p-6 border border-border/40">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
           <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
             <div>
-              <h3 className="font-medium text-foreground mb-3">Key Takeaways</h3>
-              <ul className="text-sm sm:text-base text-foreground space-y-2">
+              <h3 className="font-medium text-white mb-3">Key Takeaways</h3>
+              <ul className="text-sm sm:text-base text-white space-y-2">
                 <li>• Sequence of operation describes how systems should function normally</li>
                 <li>• Understanding normal flow helps identify where faults occur</li>
                 <li>• Simple circuits provide foundation for complex system analysis</li>
@@ -855,8 +855,8 @@ const Module7Section4_2 = () => {
               </ul>
             </div>
             <div>
-              <h3 className="font-medium text-foreground mb-3">Remember</h3>
-              <ul className="text-sm sm:text-base text-foreground space-y-2">
+              <h3 className="font-medium text-white mb-3">Remember</h3>
+              <ul className="text-sm sm:text-base text-white space-y-2">
                 <li>• Map sequences before starting fault diagnosis</li>
                 <li>• Follow logical progression through systems</li>
                 <li>• Any deviation indicates potential fault location</li>
@@ -867,12 +867,12 @@ const Module7Section4_2 = () => {
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <Quiz questions={quizQuestions} title="Knowledge Check: Sequence of Operation" />
         </Card>
 
         {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 pt-6 border-t border-border/20">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 pt-6 border-t border-white/10">
           <Button variant="outline" className="w-full sm:w-auto" asChild>
             <Link to="../4-1">
               <ArrowLeft className="w-4 h-4 mr-2" />

@@ -214,11 +214,11 @@ const Module4Section3_1 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3
@@ -232,35 +232,35 @@ const Module4Section3_1 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Package className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Package className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 4.3.1
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Types of Bends and When to Use Them
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Learn about different types of conduit bends, their applications, and when to use each bend type for optimal cable routing.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Six main bend types: 90-degree, offset, saddle, back-to-back, kick bends.</li>
                 <li>Each bend serves specific purposes: direction changes, obstacle avoidance, alignment.</li>
                 <li>Selection depends on cable size, material, space, and aesthetic requirements.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Route requirements, obstacles, space constraints, alignment needs.</li>
                 <li><strong>Use:</strong> Appropriate bend type, correct tools, proper technique.</li>
@@ -271,9 +271,9 @@ const Module4Section3_1 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Identify the main bend types used in electrical conduit installations.</li>
             <li>Understand the applications and benefits of each bend type.</li>
             <li>Apply correct bend selection to various site conditions.</li>
@@ -283,28 +283,28 @@ const Module4Section3_1 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Common Bend Types */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Common Bend Types and Applications</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Common Bend Types and Applications</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Understanding the different bend types and their specific applications:
             </p>
             
             <div className="space-y-4">
               {bendTypes.map((bend, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+                <div key={i} className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                   <div className="flex items-start gap-3 mb-2">
-                    <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
+                    <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">{bend.type}</p>
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Purpose:</strong> {bend.purpose}</p>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border mb-2">
+                      <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">{bend.type}</p>
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Purpose:</strong> {bend.purpose}</p>
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border mb-2">
                         <strong>Applications:</strong> {bend.applications.join(", ")}
                       </div>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Considerations:</strong> {bend.considerations}
                       </div>
                     </div>
@@ -316,20 +316,20 @@ const Module4Section3_1 = () => {
 
           {/* Factors Influencing Selection */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Factors Influencing Bend Selection</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Factors Influencing Bend Selection</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Multiple factors determine the most appropriate bend type for each situation:
             </p>
             
             <div className="space-y-4">
               {selectionFactors.map((factor, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+                <div key={i} className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
                       <p className="font-semibold text-green-600 dark:text-green-400 mb-1">{factor.factor}</p>
-                      <p className="text-xs sm:text-sm text-foreground mb-2">{factor.description}</p>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2">{factor.description}</p>
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Consideration:</strong> {factor.consideration} - <strong>Impact:</strong> {factor.impact}
                       </div>
                     </div>
@@ -350,20 +350,20 @@ const Module4Section3_1 = () => {
 
           {/* Best Practice in Bend Production */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Best Practice in Bend Production</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Best Practice in Bend Production</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Following best practices ensures professional results and compliance:
             </p>
             
             <div className="space-y-4">
               {bestPractices.map((practice, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+                <div key={i} className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-1">{practice.practice}</p>
-                      <p className="text-xs sm:text-sm text-foreground mb-2">{practice.description}</p>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                      <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">{practice.practice}</p>
+                      <p className="text-xs sm:text-sm text-white mb-2">{practice.description}</p>
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Application:</strong> {practice.application} - <strong>Benefit:</strong> {practice.benefit}
                       </div>
                     </div>
@@ -397,43 +397,43 @@ const Module4Section3_1 = () => {
             <Eye className="w-5 h-5" />
             Real-World Example
           </h3>
-          <p className="text-sm text-blue-700 dark:text-emerald-400">
+          <p className="text-sm text-blue-700 dark:text-elec-yellow">
             During an office refit, the electrical team had to run conduit above suspended ceilings, with multiple water pipes crossing the planned route. Instead of rerouting the entire run, the installer used double saddle bends, maintaining neatness and avoiding unnecessary joints. The run was installed in half the time compared to an alternative route.
           </p>
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-8 p-6 bg-card border-border/20">
-          <h3 className="font-semibold text-foreground mb-4">Frequently Asked Questions</h3>
+        <Card className="mb-8 p-6 bg-transparent border-white/20">
+          <h3 className="font-semibold text-white mb-4">Frequently Asked Questions</h3>
           <div className="space-y-4">
             <div>
-              <p className="font-medium text-foreground mb-1">Q: Can I form bends by hand without tools?</p>
-              <p className="text-xs sm:text-sm text-foreground">A: Only with small adjustments in flexible conduit. Rigid steel or PVC conduit requires bending tools.</p>
+              <p className="font-medium text-white mb-1">Q: Can I form bends by hand without tools?</p>
+              <p className="text-xs sm:text-sm text-white">A: Only with small adjustments in flexible conduit. Rigid steel or PVC conduit requires bending tools.</p>
             </div>
             <div>
-              <p className="font-medium text-foreground mb-1">Q: What happens if I bend conduit too tightly?</p>
-              <p className="text-xs sm:text-sm text-foreground">A: It can damage the cable insulation, reduce internal space, and breach BS 7671 requirements.</p>
+              <p className="font-medium text-white mb-1">Q: What happens if I bend conduit too tightly?</p>
+              <p className="text-xs sm:text-sm text-white">A: It can damage the cable insulation, reduce internal space, and breach BS 7671 requirements.</p>
             </div>
             <div>
-              <p className="font-medium text-foreground mb-1">Q: How can I make sure my bends match?</p>
-              <p className="text-xs sm:text-sm text-foreground">A: Use consistent measurement marks and the same tool settings each time.</p>
+              <p className="font-medium text-white mb-1">Q: How can I make sure my bends match?</p>
+              <p className="text-xs sm:text-sm text-white">A: Use consistent measurement marks and the same tool settings each time.</p>
             </div>
           </div>
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h3 className="font-semibold text-foreground mb-3">Summary</h3>
-          <p className="text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h3 className="font-semibold text-white mb-3">Summary</h3>
+          <p className="text-xs sm:text-sm text-white">
             Each bend type serves a specific function. Selecting the correct bend based on site conditions, obstacles, and design requirements is key to efficiency, safety, and compliance. Accurate bending keeps cables safe, maintains installation standards, and creates a professional finish.
           </p>
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-8 bg-card border-border/20">
-          <div className="p-6 border-b border-border/20">
-            <h3 className="text-lg sm:text-xl font-semibold text-foreground">Quiz</h3>
-            <p className="text-sm text-muted-foreground mt-2">Test your knowledge of conduit bend types</p>
+        <Card className="mb-8 bg-transparent border-white/20">
+          <div className="p-6 border-b border-white/10">
+            <h3 className="text-lg sm:text-xl font-semibold text-white">Quiz</h3>
+            <p className="text-sm text-white mt-2">Test your knowledge of conduit bend types</p>
           </div>
           <Quiz questions={quizQuestions} />
         </Card>

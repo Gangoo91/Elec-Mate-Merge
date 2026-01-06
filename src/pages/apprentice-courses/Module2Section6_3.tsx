@@ -119,11 +119,11 @@ const Module2Section6_3: React.FC = () => {
   ] as const;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2.6
@@ -136,29 +136,29 @@ const Module2Section6_3: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <TrendingUp className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <TrendingUp className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">Section 2.6.3</Badge>
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">Section 2.6.3</Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">Efficiency – what it means and why it matters</h1>
-          <p className="text-muted-foreground">Plain‑English efficiency for Level 2: input vs useful output, where losses go, and how it affects current, sizing and costs.</p>
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">Efficiency – what it means and why it matters</h1>
+          <p className="text-white">Plain‑English efficiency for Level 2: input vs useful output, where losses go, and how it affects current, sizing and costs.</p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Efficiency tells you how much of the input becomes useful output.</li>
                 <li>Losses (mainly heat) mean efficiency is always below 100%.</li>
                 <li>Better efficiency → less input power for the same job → lower current and cost.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Motor and transformer datasheets list efficiency.</li>
                 <li><strong>Use:</strong> Compare equipment and estimate running cost/current draw.</li>
@@ -169,9 +169,9 @@ const Module2Section6_3: React.FC = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Define efficiency and identify common losses (I²R, core losses, friction).</li>
             <li>Calculate efficiency (%) from input and output power.</li>
             <li>Estimate output from known input and efficiency (and vice‑versa).</li>
@@ -180,14 +180,14 @@ const Module2Section6_3: React.FC = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Plain-English overview */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2 flex items-center gap-2"><Calculator className="w-5 h-5" /> Plain-English overview</h3>
-            <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
+            <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Calculator className="w-5 h-5" /> Plain-English overview</h3>
+            <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
                 <p className="font-medium mb-2">What is efficiency?</p>
                 <ul className="list-disc pl-6 space-y-1">
                   <li>How much of the input becomes useful output (heat, light, motion, etc.).</li>
@@ -195,7 +195,7 @@ const Module2Section6_3: React.FC = () => {
                   <li>Example: A motor taking 1000 W and delivering 800 W is about 80% efficient.</li>
                 </ul>
               </div>
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/30">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
                 <p className="font-medium mb-2">Why it matters on site</p>
                 <ul className="list-disc pl-6 space-y-1">
                   <li>Lower efficiency → more input power for the same job, so higher current.</li>
@@ -207,7 +207,7 @@ const Module2Section6_3: React.FC = () => {
             
             {/* Key terminology */}
             <div className="mt-4 p-4 bg-gradient-to-r from-emerald-500/10 to-indigo-500/10 border border-border/30 rounded-lg">
-              <p className="font-medium mb-2 text-blue-700 dark:text-emerald-400">Key terminology you'll see:</p>
+              <p className="font-medium mb-2 text-blue-700 dark:text-elec-yellow">Key terminology you'll see:</p>
               <ul className="grid md:grid-cols-2 gap-2 text-sm">
                 <li><strong>P<sub>in</sub> (or Pin):</strong> Input power - total electrical power consumed</li>
                 <li><strong>P<sub>out</sub> (or Pout):</strong> Output power - useful power delivered</li>
@@ -216,7 +216,7 @@ const Module2Section6_3: React.FC = () => {
               </ul>
             </div>
             
-            <p className="mt-3 text-xs text-muted-foreground">Tip: Good ventilation and correct installation help equipment run cooler and more efficiently.</p>
+            <p className="mt-3 text-xs text-white">Tip: Good ventilation and correct installation help equipment run cooler and more efficiently.</p>
           </section>
 
           <InlineCheck
@@ -230,8 +230,8 @@ const Module2Section6_3: React.FC = () => {
 
           {/* Try it: Efficiency calculator */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2 flex items-center gap-2"><Settings className="w-5 h-5" /> Try it: Efficiency calculator</h3>
-            <p className="text-sm text-muted-foreground mb-3">Quickly estimate efficiency from input/output or find expected output from a known efficiency.</p>
+            <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Settings className="w-5 h-5" /> Try it: Efficiency calculator</h3>
+            <p className="text-sm text-white mb-3">Quickly estimate efficiency from input/output or find expected output from a known efficiency.</p>
             <EfficiencyCalculator />
           </section>
 
@@ -239,14 +239,14 @@ const Module2Section6_3: React.FC = () => {
 
           {/* Examples */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2">Worked examples</h3>
-            <ul className="space-y-4 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-2">Worked examples</h3>
+            <ul className="space-y-4 text-xs sm:text-sm text-white">
               <li className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border border-border/30">
                 <p className="font-medium">Small motor</p>
                 <p><strong>Given:</strong> P<sub>in</sub> = 1200 W, η = 85%. <strong>Find P<sub>out</sub></strong></p>
                 <p><strong>P<sub>out</sub></strong> ≈ 1200 × 0.85 = 1020 W. <strong>Loss</strong> ≈ 180 W (heat) – ensure ventilation.</p>
               </li>
-              <li className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border border-emerald-500/30">
+              <li className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border border-elec-yellow/30">
                 <p className="font-medium">Transformer</p>
                 <p><strong>Given:</strong> P<sub>in</sub> = 2.0 kW, P<sub>out</sub> = 1.92 kW. <strong>Find η</strong></p>
                 <p><strong>η</strong> ≈ 1.92/2.0 × 100 = 96%.</p>
@@ -274,10 +274,10 @@ const Module2Section6_3: React.FC = () => {
 
           {/* Real-world applications */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2 flex items-center gap-2"><Settings className="w-5 h-5" /> Real-world applications and considerations</h3>
-            <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-4 bg-gradient-to-br from-card/10 to-card/5 border border-border/20">
-                <p className="font-medium mb-2 text-emerald-400">Domestic installations</p>
+            <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Settings className="w-5 h-5" /> Real-world applications and considerations</h3>
+            <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-4 bg-gradient-to-br from-card/10 to-card/5 border border-white/10">
+                <p className="font-medium mb-2 text-elec-yellow">Domestic installations</p>
                 <ul className="list-disc pl-6 space-y-1">
                   <li>LED lamps: 80-90% vs old incandescent 5-10%</li>
                   <li>Boiler circulation pumps: A-rated vs older models</li>
@@ -285,8 +285,8 @@ const Module2Section6_3: React.FC = () => {
                   <li>Standby power: TVs, chargers, electronics drawing power when "off"</li>
                 </ul>
               </div>
-              <div className="rounded-lg p-4 bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 border border-emerald-500/30">
-                <p className="font-medium mb-2 text-emerald-700 dark:text-emerald-400">Commercial/industrial</p>
+              <div className="rounded-lg p-4 bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 border border-elec-yellow/30">
+                <p className="font-medium mb-2 text-emerald-700 dark:text-elec-yellow">Commercial/industrial</p>
                 <ul className="list-disc pl-6 space-y-1">
                   <li>Motor efficiency classes: IE1, IE2, IE3, IE4 (higher = more efficient)</li>
                   <li>Transformers: 95-98% typical, but 2-5% loss on large systems is significant</li>
@@ -301,11 +301,11 @@ const Module2Section6_3: React.FC = () => {
 
           {/* Detailed efficiency concepts */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2">Understanding efficiency in different equipment types</h3>
+            <h3 className="font-medium text-white mb-2">Understanding efficiency in different equipment types</h3>
             
             <div className="space-y-4">
               <div className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border border-border/30">
-                <h4 className="font-medium mb-2 text-blue-700 dark:text-emerald-400">Electric Motors</h4>
+                <h4 className="font-medium mb-2 text-blue-700 dark:text-elec-yellow">Electric Motors</h4>
                 <p className="text-sm mb-2">Motor efficiency varies with load, speed, and design quality.</p>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
                   <li><strong>Efficiency classes:</strong> IE1 (standard), IE2 (high), IE3 (premium), IE4 (super premium)</li>
@@ -315,8 +315,8 @@ const Module2Section6_3: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border border-emerald-500/30">
-                <h4 className="font-medium mb-2 text-emerald-700 dark:text-emerald-400">Transformers</h4>
+              <div className="rounded-lg p-4 bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border border-elec-yellow/30">
+                <h4 className="font-medium mb-2 text-emerald-700 dark:text-elec-yellow">Transformers</h4>
                 <p className="text-sm mb-2">High efficiency devices but losses matter on large installations.</p>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
                   <li><strong>No-load losses:</strong> Core losses occur even when unloaded</li>
@@ -343,7 +343,7 @@ const Module2Section6_3: React.FC = () => {
 
           {/* Economic and environmental impact */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2">Economic and environmental considerations</h3>
+            <h3 className="font-medium text-white mb-2">Economic and environmental considerations</h3>
             
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div className="rounded-lg p-4 bg-gradient-to-br from-green-500/10 to-green-600/10 border border-green-400/30">
@@ -357,7 +357,7 @@ const Module2Section6_3: React.FC = () => {
               </div>
               
               <div className="rounded-lg p-4 bg-gradient-to-br from-purple-500/10 to-purple-600/10 border border-border/30">
-                <h4 className="font-medium mb-2 text-purple-700 dark:text-emerald-400">Carbon footprint</h4>
+                <h4 className="font-medium mb-2 text-purple-700 dark:text-elec-yellow">Carbon footprint</h4>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
                   <li>Lower energy consumption = reduced carbon emissions</li>
                   <li>UK grid becoming cleaner, but efficiency still matters</li>
@@ -372,7 +372,7 @@ const Module2Section6_3: React.FC = () => {
 
           {/* Measurement and testing */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2">Measuring and verifying efficiency</h3>
+            <h3 className="font-medium text-white mb-2">Measuring and verifying efficiency</h3>
             
             <div className="rounded-lg p-4 bg-gradient-to-r from-slate-500/10 to-slate-600/10 border border-slate-400/30">
               <p className="text-sm mb-3">While Level 2 electricians don't typically perform detailed efficiency measurements, understanding the concepts helps with:</p>
@@ -383,7 +383,7 @@ const Module2Section6_3: React.FC = () => {
                 <li><strong>Client advice:</strong> Explain energy-saving opportunities</li>
               </ul>
               
-              <div className="mt-4 p-3 bg-background/20 rounded border border-emerald-500/30">
+              <div className="mt-4 p-3 bg-[#121212]/20 rounded border border-elec-yellow/30">
                 <p className="text-sm"><strong>Simple check:</strong> If equipment runs much hotter than expected, efficiency may be poor. Always check ventilation, loading, and supply voltage first.</p>
               </div>
             </div>
@@ -402,35 +402,35 @@ const Module2Section6_3: React.FC = () => {
 
           {/* Safety & BS 7671 context */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-2 flex items-center gap-2"><ThermometerSun className="w-5 h-5" /> BS 7671 context and good practice</h3>
-            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-2 flex items-center gap-2"><ThermometerSun className="w-5 h-5" /> BS 7671 context and good practice</h3>
+            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
               <li>Lower efficiency → higher current for same useful output. Verify cable sizing, voltage drop and Zs (Appendix 4 guidance).</li>
               <li>Consider heat build‑up: enclosures and lofts can reduce efficiency further; allow for ventilation and manufacturer instructions.</li>
               <li>Document choices; where motors are involved, note efficiency class where available.</li>
             </ul>
-            <div className="flex items-start gap-3 bg-background/20 border-l-4 border-emerald-500 p-4 rounded mt-4" role="alert">
-              <AlertTriangle className="w-5 h-5 text-emerald-400 mt-0.5" />
-              <p className="text-foreground text-sm">Isolate, lock‑off and prove dead before work. Follow manufacturer instructions and BS 7671.</p>
+            <div className="flex items-start gap-3 bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded mt-4" role="alert">
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5" />
+              <p className="text-white text-sm">Isolate, lock‑off and prove dead before work. Follow manufacturer instructions and BS 7671.</p>
             </div>
           </section>
         </Card>
 
         {/* FAQ */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">FAQs</h2>
-          <ul className="space-y-3 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
+          <ul className="space-y-3 text-xs sm:text-sm text-white">
             {faqs.map((f, i) => (
-              <li key={i} className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
+              <li key={i} className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
                 <p className="font-medium mb-1">{f.q}</p>
-                <p className="text-muted-foreground">{f.a}</p>
+                <p className="text-white">{f.a}</p>
               </li>
             ))}
           </ul>
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-16 p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quick check quiz</h2>
+        <Card className="mb-16 p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick check quiz</h2>
           <Quiz questions={quizQuestions as any} title="Efficiency – why it matters" />
         </Card>
 

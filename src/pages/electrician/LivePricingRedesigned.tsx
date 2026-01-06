@@ -5,13 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { 
-  PoundSterling, 
-  ArrowLeft, 
-  RefreshCw, 
-  TrendingUp, 
-  MapPin, 
-  Users, 
+import {
+  PoundSterling,
+  RefreshCw,
+  TrendingUp,
+  MapPin,
+  Users,
   Recycle,
   Search,
   Bell,
@@ -20,6 +19,7 @@ import {
   AlertTriangle
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { useLiveMetalPrices } from "@/hooks/useLiveMetalPrices";
 import { useToast } from "@/hooks/use-toast";
 
@@ -175,13 +175,9 @@ const LivePricingRedesigned = () => {
           </div>
           
           <div className="flex gap-2">
-            <Link to="/electrician">
-              <Button variant="outline" size="sm" className="hidden sm:flex items-center gap-1">
-                <ArrowLeft className="h-4 w-4" /> Back
-              </Button>
-            </Link>
-            
-            <Button 
+            <SmartBackButton className="hidden sm:flex" />
+
+            <Button
               variant="outline" 
               size="sm"
               onClick={() => refreshPrices(true)}

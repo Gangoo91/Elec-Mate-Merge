@@ -89,11 +89,11 @@ const Module7Section5_1 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-0 text-sm sm:text-base" asChild>
+          <Button variant="ghost" className="text-white hover:text-white p-0 text-sm sm:text-base" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 7.5
@@ -107,62 +107,62 @@ const Module7Section5_1 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-            <div className="p-1.5 sm:p-2 rounded-lg bg-card">
-              <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
+            <div className="p-1.5 sm:p-2 rounded-lg ">
+              <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 text-xs sm:text-sm">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs sm:text-sm">
               Section 7.5.1
             </Badge>
           </div>
-          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Selection of Test Equipment for Basic Fault-Finding
           </h1>
-          <p className="text-muted-foreground text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Learn to select the correct test equipment for electrical fault-finding
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-            <Target className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground">Spot it in 30 Seconds</h2>
+            <Target className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 sm:mb-3">In 30 seconds</p>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Correct equipment prevents inaccurate results and safety risks</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Continuity testers confirm conductor integrity</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Insulation resistance testers assess insulation quality</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Socket testers are quick checks only — not a substitute</span>
                 </li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/20">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/20">
               <p className="font-medium mb-2 sm:mb-3">Spot it / Use it / Check it</p>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Spot:</strong> Suspected fault type and environment</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Use:</strong> Instrument rated for circuit category; complies with BS EN 61557</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Check:</strong> Results meet expected values; record outcomes</span>
                 </li>
               </ul>
@@ -171,18 +171,18 @@ const Module7Section5_1 = () => {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Introduction</h2>
-          <p className="text-sm sm:text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Introduction</h2>
+          <p className="text-sm sm:text-base text-white mb-4">
             Effective fault finding begins with choosing the right tools. Electrical testing is not guesswork; it relies on instruments designed to provide reliable and safe measurements. Selecting the wrong piece of equipment can lead to inaccurate results, wasted time, and even danger for the user. For apprentices at Level 2, understanding the types of test equipment available and their correct use is essential to developing professional competence in diagnosing faults.
           </p>
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Learning Outcomes</h2>
-          <p className="text-sm sm:text-base text-foreground mb-3 sm:mb-4">By the end of this subsection, you should be able to:</p>
-          <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Learning Outcomes</h2>
+          <p className="text-sm sm:text-base text-white mb-3 sm:mb-4">By the end of this subsection, you should be able to:</p>
+          <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-white">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" />
               <span>Explain why the correct selection of test equipment is essential</span>
@@ -199,18 +199,18 @@ const Module7Section5_1 = () => {
         </Card>
 
         {/* Content / Learning */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Content / Learning</h2>
 
           {/* Section 1 — Selecting the Right Instrument */}
           <section className="mb-6 sm:mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-emerald-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-elec-yellow ">
               <div className="flex items-start gap-3 mb-4">
-                <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-emerald-400 dark:text-emerald-400 mb-4 text-base">Selecting the Right Instrument</h3>
+                  <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-4 text-base">Selecting the Right Instrument</h3>
                   
-                  <div className="space-y-4 text-xs sm:text-sm text-foreground">
+                  <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p><strong>Match the instrument to the fault hypothesis:</strong> Different faults require different tests. Use continuity testers for suspected broken connections, insulation resistance testers for earth leakage or damp problems, loop impedance testers for protective device verification, and voltage indicators for proving dead or live.</p>
                     
                     <p><strong>Confirm compliance and safety:</strong> Equipment must comply with BS EN 61557 for installation testers. Check the measurement category (CAT II for outlets, CAT III for distribution boards, CAT IV for service entries) and voltage rating match your work environment. Inspect test leads for intact finger guards, probe shrouds, and internal fuses where applicable.</p>
@@ -234,13 +234,13 @@ const Module7Section5_1 = () => {
 
           {/* Section 2 — Continuity and Polarity in Practice */}
           <section className="mb-6 sm:mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-green-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-green-500 ">
               <div className="flex items-start gap-3 mb-4">
                 <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                 <div className="flex-1">
                   <h3 className="font-semibold text-green-600 dark:text-green-400 mb-4 text-base">Continuity and Polarity in Practice</h3>
                   
-                  <div className="space-y-4 text-xs sm:text-sm text-foreground">
+                  <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p><strong>Understanding low-ohm continuity measurement:</strong> Modern MFTs provide null/lead compensation to remove test lead resistance from readings. Always verify near-zero resistance (typically &lt;0.01Ω) on a direct short circuit before testing. This ensures accurate measurement of circuit resistance only. The test current is usually around 200mA, sufficient to detect poor connections but safe for most circuits.</p>
                     
                     <p><strong>Protective conductor continuity (r2) methodology:</strong> Test from the consumer unit earth terminal to each point requiring earthing protection. Record the highest reading as this represents the worst-case scenario for fault current flow. For socket circuits, measure to the furthest socket. For lighting circuits, test to each switch position and luminaire location.</p>
@@ -268,13 +268,13 @@ const Module7Section5_1 = () => {
 
           {/* Section 3 — Insulation Resistance for Diagnosis */}
           <section className="mb-6 sm:mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-amber-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-amber-500 ">
               <div className="flex items-start gap-3 mb-4">
                 <span className="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                 <div className="flex-1">
                   <h3 className="font-semibold text-amber-600 dark:text-amber-400 mb-4 text-base">Insulation Resistance for Diagnosis</h3>
                   
-                  <div className="space-y-4 text-xs sm:text-sm text-foreground">
+                  <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p><strong>Understanding test voltage selection:</strong> Use 500 V DC for most low voltage circuits as specified in BS 7671. Apply 250 V DC where sensitive electronics are present (SELV/PELV systems, electronic ballasts, smart switches, or equipment at risk of damage). Use 1000 V DC for certain higher-rated equipment as per manufacturer guidance, typically motors and industrial equipment.</p>
                     
                     <p><strong>Comprehensive preparation requirements:</strong> Disconnect sensitive devices including electronic ballasts, LED drivers, dimmers, SPDs, and surge protection devices per manufacturer instructions. Remove fluorescent and LED lamps which can give false readings. Isolate neutrals from earth if testing individual subcircuits to avoid parallel paths affecting results.</p>
@@ -302,13 +302,13 @@ const Module7Section5_1 = () => {
 
           {/* Section 4 — Earth Fault Loop and RCD Verification */}
           <section className="mb-6 sm:mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-purple-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-purple-500 ">
               <div className="flex items-start gap-3 mb-4">
                 <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-purple-600 dark:text-emerald-400 mb-4 text-base">Earth Fault Loop and RCD Verification</h3>
+                  <h3 className="font-semibold text-purple-600 dark:text-elec-yellow mb-4 text-base">Earth Fault Loop and RCD Verification</h3>
                   
-                  <div className="space-y-4 text-xs sm:text-sm text-foreground">
+                  <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p><strong>Understanding loop impedance (Zs) verification:</strong> This test confirms protective devices can achieve required disconnection times under earth fault conditions. The measurement combines the resistance of the supply (Ze), line conductor (R1), and protective conductor (R2). Compare measured Zs values to tabulated maximum values for the specific protective device type, rating, and required disconnection time (0.4s for socket circuits, 5s for fixed equipment).</p>
                     
                     <p><strong>Test methodology and accuracy:</strong> Ensure good probe contact at the test point — poor connections give falsely high readings. Allow readings to stabilise, particularly on long circuits or where supply impedance varies. Temperature affects conductor resistance, so consider ambient conditions when interpreting results. Some instruments provide temperature compensation features.</p>
@@ -336,41 +336,41 @@ const Module7Section5_1 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Practical Guidance</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Practical Guidance</h2>
           
           <div className="space-y-6">
             {/* Before You Test */}
-            <div className="rounded-lg p-4 bg-card border border-emerald-500/20">
-              <h3 className="font-semibold text-emerald-400 dark:text-emerald-400 mb-3 text-sm sm:text-base">Before You Test</h3>
-              <ul className="space-y-2 text-xs sm:text-sm text-foreground">
+            <div className="rounded-lg p-4 bg-transparent border border-elec-yellow/20">
+              <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3 text-sm sm:text-base">Before You Test</h3>
+              <ul className="space-y-2 text-xs sm:text-sm text-white">
                 <li className="flex items-start gap-2">
-                  <span className="text-emerald-400 font-bold">•</span>
+                  <span className="text-elec-yellow font-bold">•</span>
                   <span>Apply LOTO (Lock Out Tag Out) procedures and identify the specific circuit to be tested</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-emerald-400 font-bold">•</span>
+                  <span className="text-elec-yellow font-bold">•</span>
                   <span>Select instruments with correct measurement category (CAT II/III/IV) and voltage rating</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-emerald-400 font-bold">•</span>
+                  <span className="text-elec-yellow font-bold">•</span>
                   <span>Check calibration certificates are current and within validity period</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-emerald-400 font-bold">•</span>
+                  <span className="text-elec-yellow font-bold">•</span>
                   <span>Visually inspect test leads, probes, and accessories for damage, worn insulation, or missing safety features</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-emerald-400 font-bold">•</span>
+                  <span className="text-elec-yellow font-bold">•</span>
                   <span>Verify instrument batteries are healthy and fuses (if fitted) are intact</span>
                 </li>
               </ul>
             </div>
 
             {/* During Testing */}
-            <div className="rounded-lg p-4 bg-card border border-green-500/20">
+            <div className="rounded-lg p-4 bg-transparent border border-green-500/20">
               <h3 className="font-semibold text-green-600 dark:text-green-400 mb-3 text-sm sm:text-base">During Testing</h3>
-              <ul className="space-y-2 text-xs sm:text-sm text-foreground">
+              <ul className="space-y-2 text-xs sm:text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-500 font-bold">•</span>
                   <span>Perform prove-test-prove sequence for voltage indicators; null test leads for continuity measurements</span>
@@ -395,9 +395,9 @@ const Module7Section5_1 = () => {
             </div>
 
             {/* After Testing */}
-            <div className="rounded-lg p-4 bg-card border border-amber-500/20">
+            <div className="rounded-lg p-4 bg-transparent border border-amber-500/20">
               <h3 className="font-semibold text-amber-600 dark:text-amber-400 mb-3 text-sm sm:text-base">After Testing</h3>
-              <ul className="space-y-2 text-xs sm:text-sm text-foreground">
+              <ul className="space-y-2 text-xs sm:text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-amber-500 font-bold">•</span>
                   <span>Discharge any capacitive circuits using instrument discharge facility or appropriate leads</span>
@@ -423,18 +423,18 @@ const Module7Section5_1 = () => {
 
             {/* Do/Don't Quick Reference */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="rounded-lg p-3 bg-emerald-500/5 border border-emerald-500/20">
-                <h4 className="font-semibold text-emerald-600 dark:text-emerald-400 mb-2 text-sm">✓ DO</h4>
-                <ul className="space-y-1 text-xs text-foreground">
+              <div className="rounded-lg p-3 bg-elec-yellow/5 border border-elec-yellow/20">
+                <h4 className="font-semibold text-emerald-600 dark:text-elec-yellow mb-2 text-sm">✓ DO</h4>
+                <ul className="space-y-1 text-xs text-white">
                   <li>• Check calibration before use</li>
                   <li>• Match instrument to circuit category</li>
                   <li>• Null continuity test leads</li>
                   <li>• Use prove-test-prove sequence</li>
                 </ul>
               </div>
-              <div className="rounded-lg p-3 bg-card border border-red-500/20">
-                <h4 className="font-semibold text-red-600 dark:text-emerald-400 mb-2 text-sm">✗ DON'T</h4>
-                <ul className="space-y-1 text-xs text-foreground">
+              <div className="rounded-lg p-3 border border-red-500/20">
+                <h4 className="font-semibold text-red-600 dark:text-elec-yellow mb-2 text-sm">✗ DON'T</h4>
+                <ul className="space-y-1 text-xs text-white">
                   <li>• Test live circuits with IR testers</li>
                   <li>• Use damaged test leads</li>
                   <li>• Ignore environmental conditions</li>
@@ -446,22 +446,22 @@ const Module7Section5_1 = () => {
         </Card>
 
         {/* Real-World Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Real-World Examples</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Real-World Examples</h2>
           
           <div className="space-y-6">
             {/* Lighting Circuit Fault - Expanded */}
-            <div className="rounded-lg p-4 bg-card border border-emerald-500/30">
-              <h3 className="font-semibold text-emerald-400 dark:text-emerald-400 mb-3 text-base">Case 1: Lighting Circuit Fault</h3>
+            <div className="rounded-lg p-4 bg-transparent border border-elec-yellow/30">
+              <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3 text-base">Case 1: Lighting Circuit Fault</h3>
               
-              <div className="space-y-3 text-xs sm:text-sm text-foreground">
+              <div className="space-y-3 text-xs sm:text-sm text-white">
                 <div>
-                  <p className="font-medium text-emerald-400 dark:text-emerald-400 mb-1">Situation:</p>
+                  <p className="font-medium text-elec-yellow dark:text-elec-yellow mb-1">Situation:</p>
                   <p>Multiple lighting fittings on a ground floor circuit became inoperative after recent decorating work. The customer reported that "some lights work, others don't" and suspected damaged cables.</p>
                 </div>
                 
                 <div>
-                  <p className="font-medium text-red-600 dark:text-emerald-400 mb-1">Wrong Approach:</p>
+                  <p className="font-medium text-red-600 dark:text-elec-yellow mb-1">Wrong Approach:</p>
                   <p>An apprentice used a basic plug-in socket tester borrowed from a colleague. The device indicated "OK" when plugged into nearby sockets, leading to the incorrect assumption that the circuit wiring was sound. The lighting fault remained unresolved.</p>
                 </div>
                 
@@ -471,7 +471,7 @@ const Module7Section5_1 = () => {
                 </div>
                 
                 <div>
-                  <p className="font-medium text-emerald-400 dark:text-emerald-400 mb-1">Result:</p>
+                  <p className="font-medium text-elec-yellow dark:text-elec-yellow mb-1">Result:</p>
                   <p>The neutral connection was restored and secured. Follow-up testing verified polarity, insulation resistance, and earth fault loop impedance were all within acceptable limits. All lighting fittings were restored to operation and properly documented.</p>
                 </div>
                 
@@ -483,17 +483,17 @@ const Module7Section5_1 = () => {
             </div>
 
             {/* RCD Tripping Issue - Expanded */}
-            <div className="rounded-lg p-4 bg-card border border-red-500/20">
-              <h3 className="font-semibold text-red-600 dark:text-emerald-400 mb-3 text-base">Case 2: RCD Tripping Issue</h3>
+            <div className="rounded-lg p-4 bg-transparent border border-red-500/20">
+              <h3 className="font-semibold text-red-600 dark:text-elec-yellow mb-3 text-base">Case 2: RCD Tripping Issue</h3>
               
-              <div className="space-y-3 text-xs sm:text-sm text-foreground">
+              <div className="space-y-3 text-xs sm:text-sm text-white">
                 <div>
-                  <p className="font-medium text-red-600 dark:text-emerald-400 mb-1">Situation:</p>
+                  <p className="font-medium text-red-600 dark:text-elec-yellow mb-1">Situation:</p>
                   <p>A domestic RCD protecting garden circuits tripped intermittently during damp weather conditions. The customer reported that the trips occurred mainly after rain and seemed to affect exterior lighting and a pond pump circuit.</p>
                 </div>
                 
                 <div>
-                  <p className="font-medium text-red-600 dark:text-emerald-400 mb-1">Wrong Approach:</p>
+                  <p className="font-medium text-red-600 dark:text-elec-yellow mb-1">Wrong Approach:</p>
                   <p>A contractor initially used an old digital multimeter to check voltages and resistances. The basic measurements appeared normal, and without RCD testing capability, the results were inconclusive. The RCD continued to trip randomly, leaving the customer frustrated.</p>
                 </div>
                 
@@ -503,13 +503,13 @@ const Module7Section5_1 = () => {
                 </div>
                 
                 <div>
-                  <p className="font-medium text-emerald-400 dark:text-emerald-400 mb-1">Result:</p>
+                  <p className="font-medium text-elec-yellow dark:text-elec-yellow mb-1">Result:</p>
                   <p>The junction box was replaced with a higher IP-rated enclosure and proper cable glands fitted. Insulation resistance values returned to &gt;999MΩ, and no further RCD trips occurred during subsequent wet weather testing.</p>
                 </div>
                 
                 <div className="bg-red-100 dark:bg-red-900/20 p-3 rounded border border-red-300 dark:border-red-700">
                   <p className="font-medium text-red-800 dark:text-red-200 mb-1">Lesson Learned:</p>
-                  <p className="text-red-700 dark:text-emerald-400">Use the correct instrument mode for each diagnostic requirement. Isolating subcircuits during testing helps pinpoint moisture-related insulation breakdown that standard multimeters cannot detect.</p>
+                  <p className="text-red-700 dark:text-elec-yellow">Use the correct instrument mode for each diagnostic requirement. Isolating subcircuits during testing helps pinpoint moisture-related insulation breakdown that standard multimeters cannot detect.</p>
                 </div>
               </div>
             </div>
@@ -519,32 +519,32 @@ const Module7Section5_1 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Frequently Asked Questions</h2>
           <div className="space-y-3 sm:space-y-4">
             <div className="rounded-lg p-3 sm:p-4 bg-muted/50 border border-border/30">
-              <p className="font-medium text-foreground mb-1 sm:mb-2 text-sm sm:text-base">Why is correct test equipment selection important?</p>
-              <p className="text-xs sm:text-sm text-muted-foreground">Because using the wrong instrument can give misleading results and create safety risks.</p>
+              <p className="font-medium text-white mb-1 sm:mb-2 text-sm sm:text-base">Why is correct test equipment selection important?</p>
+              <p className="text-xs sm:text-sm text-white">Because using the wrong instrument can give misleading results and create safety risks.</p>
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-muted/50 border border-border/30">
-              <p className="font-medium text-foreground mb-1 sm:mb-2 text-sm sm:text-base">What does a continuity tester measure?</p>
-              <p className="text-xs sm:text-sm text-muted-foreground">Whether conductors are continuous and properly connected.</p>
+              <p className="font-medium text-white mb-1 sm:mb-2 text-sm sm:text-base">What does a continuity tester measure?</p>
+              <p className="text-xs sm:text-sm text-white">Whether conductors are continuous and properly connected.</p>
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-muted/50 border border-border/30">
-              <p className="font-medium text-foreground mb-1 sm:mb-2 text-sm sm:text-base">Why are multifunction testers widely used?</p>
-              <p className="text-xs sm:text-sm text-muted-foreground">They combine several essential tests into one instrument.</p>
+              <p className="font-medium text-white mb-1 sm:mb-2 text-sm sm:text-base">Why are multifunction testers widely used?</p>
+              <p className="text-xs sm:text-sm text-white">They combine several essential tests into one instrument.</p>
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-muted/50 border border-border/30">
-              <p className="font-medium text-foreground mb-1 sm:mb-2 text-sm sm:text-base">Are plug-in socket testers reliable on their own?</p>
-              <p className="text-xs sm:text-sm text-muted-foreground">No. They are useful for quick checks but cannot replace proper calibrated testing.</p>
+              <p className="font-medium text-white mb-1 sm:mb-2 text-sm sm:text-base">Are plug-in socket testers reliable on their own?</p>
+              <p className="text-xs sm:text-sm text-white">No. They are useful for quick checks but cannot replace proper calibrated testing.</p>
             </div>
           </div>
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Recap</h2>
-          <p className="text-sm sm:text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Recap</h2>
+          <p className="text-sm sm:text-base text-white">
             The selection of test equipment is the foundation of safe and accurate fault diagnosis. Different instruments serve different purposes: continuity testers confirm conductor integrity, insulation testers measure insulation quality, loop impedance testers verify disconnection times, and multifunction testers combine these capabilities. Choosing the wrong equipment can waste time, delay repairs, or mask serious faults. Professional electricians always match the tool to the task and confirm it is safe and appropriate for use.
           </p>
         </Card>
@@ -555,7 +555,7 @@ const Module7Section5_1 = () => {
         </div>
 
         {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6 p-4 sm:p-6 bg-muted/30 rounded-lg border border-border/20">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6 p-4 sm:p-6 bg-muted/30 rounded-lg border border-white/10">
           <Button variant="outline" asChild className="w-full sm:w-auto">
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
@@ -563,7 +563,7 @@ const Module7Section5_1 = () => {
             </Link>
           </Button>
           
-          <span className="text-xs sm:text-sm text-muted-foreground text-center">
+          <span className="text-xs sm:text-sm text-white text-center">
             Module 7 - Section 5.1
           </span>
           

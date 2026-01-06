@@ -178,11 +178,11 @@ const Module4Section7_1 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 7
@@ -196,35 +196,35 @@ const Module4Section7_1 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Shield className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Shield className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 4.7.1
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Safe Manual Handling of Equipment and Materials
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Master safe lifting techniques and manual handling practices to prevent workplace injuries.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Manual handling injuries are a major cause of workplace accidents in electrical work, including back strains, muscle injuries, and dropped load accidents.</li>
                 <li>Proper lifting techniques, mechanical aids, and team lifting can prevent most manual handling injuries.</li>
                 <li>Legal requirements under MHOR 1992 place duties on both employers and employees to ensure safe handling practices.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Heavy cable drums being carried by one person, awkward lifting positions, no lifting aids available.</li>
                 <li><strong>Use:</strong> Sack trucks, drum jacks, team lifting, proper lifting technique.</li>
@@ -235,9 +235,9 @@ const Module4Section7_1 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Explain the risks associated with poor manual handling.</li>
             <li>Apply correct lifting techniques to reduce injury risk.</li>
             <li>Use handling aids and equipment where appropriate.</li>
@@ -247,23 +247,23 @@ const Module4Section7_1 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Risks of Poor Manual Handling */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">1. Risks of Poor Manual Handling</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">1. Risks of Poor Manual Handling</h3>
+            <p className="text-base text-white mb-4">
               Manual handling injuries represent one of the most significant safety risks in electrical work, affecting thousands of workers annually and causing substantial personal and financial costs:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-1">Health and Safety Consequences</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Health and Safety Consequences</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Back injuries and spinal damage</strong> - herniated discs, muscle strains, and chronic pain conditions</li>
                       <li><strong>Repetitive strain injuries (RSI)</strong> - affecting shoulders, wrists, and knees from poor handling techniques</li>
                       <li><strong>Acute injuries from dropped loads</strong> - crushing injuries to feet, cuts from sharp materials</li>
@@ -272,16 +272,16 @@ const Module4Section7_1 = () => {
                       <li><strong>Fatigue-related incidents</strong> - increased accident risk from overexertion</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>HSE statistics:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>HSE statistics:</strong></p>
+                      <p className="text-xs text-white">
                         Manual handling accounts for over 40% of all workplace injuries reported under RIDDOR. In the construction industry, including electrical work, back injuries alone result in an average of 12 days lost per incident, with severe cases requiring months of recovery.
                       </p>
                     </div>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Project impact:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Project impact:</strong></p>
+                      <p className="text-xs text-white">
                         Manual handling injuries don't just affect the individual worker. Project delays, replacement worker costs, potential HSE investigations, and increased insurance premiums can cost contractors thousands of pounds per incident.
                       </p>
                     </div>
@@ -302,18 +302,18 @@ const Module4Section7_1 = () => {
 
           {/* The Legal Framework */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">2. The Legal Framework</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">2. The Legal Framework</h3>
+            <p className="text-base text-white mb-4">
               Manual handling safety is governed by comprehensive legislation that places specific duties on both employers and employees:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">Legal Requirements and Responsibilities</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Legal Requirements and Responsibilities</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Manual Handling Operations Regulations 1992 (MHOR)</strong> - primary legislation covering all manual handling activities</li>
                       <li><strong>Employer duties</strong> - assess risks, provide training, supply equipment, and monitor compliance</li>
                       <li><strong>Employee responsibilities</strong> - follow safe systems, use provided equipment, report hazards</li>
@@ -322,9 +322,9 @@ const Module4Section7_1 = () => {
                       <li><strong>Equipment provision</strong> - supply of appropriate lifting aids and mechanical assistance</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>MHOR hierarchy of control:</strong></p>
-                      <ul className="text-xs text-muted-foreground list-disc ml-4 space-y-1">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>MHOR hierarchy of control:</strong></p>
+                      <ul className="text-xs text-white list-disc ml-4 space-y-1">
                         <li><strong>Avoid</strong> - eliminate manual handling where reasonably practicable</li>
                         <li><strong>Assess</strong> - evaluate unavoidable manual handling operations</li>
                         <li><strong>Reduce</strong> - implement measures to reduce risk of injury</li>
@@ -333,8 +333,8 @@ const Module4Section7_1 = () => {
                     </div>
                     
                     <div className="mt-3 p-3 bg-amber-50/50 dark:bg-amber-900/10 rounded border border-amber-200/30">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Legal consequences of non-compliance:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Legal consequences of non-compliance:</strong></p>
+                      <p className="text-xs text-white">
                         Failure to comply with MHOR can result in HSE enforcement action, unlimited fines for corporate offences, and potential imprisonment for individuals. Additionally, inadequate manual handling procedures can void insurance coverage and result in successful personal injury claims.
                       </p>
                     </div>
@@ -355,18 +355,18 @@ const Module4Section7_1 = () => {
 
           {/* Correct Lifting Technique */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">3. Correct Lifting Technique</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">3. Correct Lifting Technique</h3>
+            <p className="text-base text-white mb-4">
               Proper lifting technique is fundamental to preventing injury and forms the basis of all safe manual handling practices:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
                     <p className="font-semibold text-green-600 dark:text-green-400 mb-1">Safe Lifting Steps</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Plan the lift</strong> - assess the load, plan the route, clear obstacles, and ensure safe footing</li>
                       <li><strong>Position yourself correctly</strong> - feet shoulder-width apart, close to the load</li>
                       <li><strong>Adopt the right posture</strong> - squat down, keep back straight, head up</li>
@@ -375,9 +375,9 @@ const Module4Section7_1 = () => {
                       <li><strong>Move carefully</strong> - turn with feet not spine, avoid twisting while loaded</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>The kinetic lifting chain:</strong></p>
-                      <ul className="text-xs text-muted-foreground list-disc ml-4 space-y-1">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>The kinetic lifting chain:</strong></p>
+                      <ul className="text-xs text-white list-disc ml-4 space-y-1">
                         <li><strong>Feet</strong> - provide stable base, positioned to avoid overreaching</li>
                         <li><strong>Legs</strong> - strongest muscles do the lifting work, not the back</li>
                         <li><strong>Core</strong> - abdominal muscles support spine during lift</li>
@@ -388,8 +388,8 @@ const Module4Section7_1 = () => {
                     </div>
                     
                     <div className="mt-3 p-3 bg-red-50/50 dark:bg-red-900/10 rounded border border-red-200/30">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Common lifting errors to avoid:</strong></p>
-                      <ul className="text-xs text-muted-foreground list-disc ml-4 space-y-1">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Common lifting errors to avoid:</strong></p>
+                      <ul className="text-xs text-white list-disc ml-4 space-y-1">
                         <li>Bending from the waist instead of squatting</li>
                         <li>Lifting while twisting the spine</li>
                         <li>Attempting to lift loads that are too heavy</li>
@@ -415,18 +415,18 @@ const Module4Section7_1 = () => {
 
           {/* Handling Electrical Materials */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">4. Handling Electrical Materials</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">4. Handling Electrical Materials</h3>
+            <p className="text-base text-white mb-4">
               Electrical installations involve specific materials and equipment that require specialised handling techniques:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-emerald-400 mb-1">Material-Specific Techniques</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">Material-Specific Techniques</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Cable drums and reels</strong> - use drum jacks, trolleys, or mechanical lifts for weights over 25kg</li>
                       <li><strong>Conduit and trunking</strong> - carry long lengths with two people, support at multiple points</li>
                       <li><strong>Cable trays and ladders</strong> - balance load evenly, use team lifting for large sections</li>
@@ -435,9 +435,9 @@ const Module4Section7_1 = () => {
                       <li><strong>Boxes of accessories</strong> - break down into smaller loads rather than carrying full boxes</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Cable handling considerations:</strong></p>
-                      <ul className="text-xs text-muted-foreground list-disc ml-4 space-y-1">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Cable handling considerations:</strong></p>
+                      <ul className="text-xs text-white list-disc ml-4 space-y-1">
                         <li><strong>SWA cable drums</strong> - can weigh 100kg+, always use mechanical aids</li>
                         <li><strong>Fibre optic cables</strong> - sensitive to bending radius, support carefully</li>
                         <li><strong>High voltage cables</strong> - special handling procedures, trained personnel only</li>
@@ -446,8 +446,8 @@ const Module4Section7_1 = () => {
                     </div>
                     
                     <div className="mt-3 p-3 bg-emerald-50/50 dark:bg-blue-900/10 rounded border border-blue-200/30">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Environmental considerations:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Environmental considerations:</strong></p>
+                      <p className="text-xs text-white">
                         Weather conditions significantly affect manual handling safety. Wet surfaces increase slip risk, cold weather reduces grip strength and flexibility, while hot conditions increase fatigue. Always adjust handling techniques and use appropriate PPE for conditions.
                       </p>
                     </div>
@@ -459,18 +459,18 @@ const Module4Section7_1 = () => {
 
           {/* Mechanical Aids and Assistance */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">5. Mechanical Aids and Assistance</h3>
-            <p className="text-base text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">5. Mechanical Aids and Assistance</h3>
+            <p className="text-base text-white mb-4">
               The use of mechanical aids and team lifting techniques can eliminate most manual handling risks:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-1">Equipment and Teamwork Solutions</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">Equipment and Teamwork Solutions</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
                       <li><strong>Wheeled aids</strong> - sack trucks, platform trolleys, pallet trucks for ground-level transport</li>
                       <li><strong>Lifting equipment</strong> - hoists, cranes, and lifting tables for heavy items</li>
                       <li><strong>Specialist tools</strong> - drum jacks, cable pulling systems, panel lifts</li>
@@ -479,9 +479,9 @@ const Module4Section7_1 = () => {
                       <li><strong>Conveyor systems</strong> - for repetitive material movement tasks</li>
                     </ul>
                     
-                    <div className="mt-3 p-3 bg-background/50 rounded border">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Selecting the right aid:</strong></p>
-                      <ul className="text-xs text-muted-foreground list-disc ml-4 space-y-1">
+                    <div className="mt-3 p-3 bg-[#121212]/50 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Selecting the right aid:</strong></p>
+                      <ul className="text-xs text-white list-disc ml-4 space-y-1">
                         <li><strong>Load characteristics</strong> - weight, size, shape, and fragility</li>
                         <li><strong>Route conditions</strong> - stairs, narrow passages, surface quality</li>
                         <li><strong>Frequency of use</strong> - one-off lifts vs repeated operations</li>
@@ -491,8 +491,8 @@ const Module4Section7_1 = () => {
                     </div>
                     
                     <div className="mt-3 p-3 bg-green-50/50 dark:bg-green-900/10 rounded border border-green-200/30">
-                      <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Team lifting protocols:</strong></p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Team lifting protocols:</strong></p>
+                      <p className="text-xs text-white">
                         Successful team lifting requires a designated leader, clear communication signals, matching personnel by height and strength where possible, and coordinated movement with agreed signals for lift, move, and lower commands.
                       </p>
                     </div>
@@ -506,23 +506,23 @@ const Module4Section7_1 = () => {
         <Separator className="my-8" />
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Practical Guidance</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
           
           <div className="space-y-6">
             <div>
-              <h3 className="font-medium text-foreground mb-4">On-Site Manual Handling Best Practices</h3>
-              <p className="text-base text-foreground mb-4">
+              <h3 className="font-medium text-white mb-4">On-Site Manual Handling Best Practices</h3>
+              <p className="text-base text-white mb-4">
                 Implementing effective manual handling practices requires attention to detail and consistent application of safety principles:
               </p>
               
               <div className="space-y-4">
                 <div className="rounded-lg p-4 bg-emerald-50/50 dark:bg-blue-900/10 border border-blue-200/30">
                   <div className="flex items-start gap-3">
-                    <HardHat className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <div>
-                      <h4 className="font-medium text-foreground mb-2">PPE and Protection</h4>
-                      <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc ml-4">
+                      <h4 className="font-medium text-white mb-2">PPE and Protection</h4>
+                      <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-4">
                         <li>Always wear appropriate gloves when handling sharp-edged trunking, cable trays, or metalwork</li>
                         <li>Use safety glasses when moving materials overhead or in confined spaces</li>
                         <li>Ensure work boots have good grip and ankle support for load carrying</li>
@@ -537,8 +537,8 @@ const Module4Section7_1 = () => {
                   <div className="flex items-start gap-3">
                     <Target className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
                     <div>
-                      <h4 className="font-medium text-foreground mb-2">Route Planning and Environment</h4>
-                      <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc ml-4">
+                      <h4 className="font-medium text-white mb-2">Route Planning and Environment</h4>
+                      <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-4">
                         <li>Use rope or lifting slings to move materials up scaffolding instead of carrying them</li>
                         <li>Store heavy items at waist height to reduce bending and lifting strain</li>
                         <li>Keep work boots clean to avoid slips while carrying heavy objects</li>
@@ -553,8 +553,8 @@ const Module4Section7_1 = () => {
                   <div className="flex items-start gap-3">
                     <Users className="w-5 h-5 text-purple-600 mt-0.5 flex-shrink-0" />
                     <div>
-                      <h4 className="font-medium text-foreground mb-2">Communication and Coordination</h4>
-                      <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc ml-4">
+                      <h4 className="font-medium text-white mb-2">Communication and Coordination</h4>
+                      <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-4">
                         <li>When moving long conduit runs through a building, communicate clearly with your partner before turning corners</li>
                         <li>Establish clear verbal signals for team lifting operations</li>
                         <li>Designate a lead person for coordinated lifts and material movement</li>
@@ -569,8 +569,8 @@ const Module4Section7_1 = () => {
                   <div className="flex items-start gap-3">
                     <AlertTriangle className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" />
                     <div>
-                      <h4 className="font-medium text-foreground mb-2">Risk Assessment and Monitoring</h4>
-                      <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc ml-4">
+                      <h4 className="font-medium text-white mb-2">Risk Assessment and Monitoring</h4>
+                      <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-4">
                         <li>Conduct task-specific risk assessments for unusual or heavy lifting operations</li>
                         <li>Monitor workers for signs of fatigue or strain throughout the day</li>
                         <li>Rotate personnel on physically demanding tasks to prevent overexertion</li>
@@ -585,8 +585,8 @@ const Module4Section7_1 = () => {
                   <div className="flex items-start gap-3">
                     <Wrench className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
                     <div>
-                      <h4 className="font-medium text-foreground mb-2">Equipment Maintenance and Selection</h4>
-                      <ul className="text-xs sm:text-sm text-foreground space-y-1 list-disc ml-4">
+                      <h4 className="font-medium text-white mb-2">Equipment Maintenance and Selection</h4>
+                      <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-4">
                         <li>Regularly inspect manual handling aids for damage or wear</li>
                         <li>Ensure lifting equipment is within certification dates</li>
                         <li>Provide training on correct use of all manual handling equipment</li>
@@ -602,18 +602,18 @@ const Module4Section7_1 = () => {
         </Card>
 
         {/* Real-World Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-World Examples</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Examples</h2>
           <div className="space-y-4">
             <div className="rounded-lg p-4 bg-red-50/50 dark:bg-red-900/10 border border-red-200/30">
-              <h3 className="font-medium text-foreground mb-2">Case Study 1: The Cable Drum Incident</h3>
-              <p className="text-base text-foreground mb-3">
+              <h3 className="font-medium text-white mb-2">Case Study 1: The Cable Drum Incident</h3>
+              <p className="text-base text-white mb-3">
                 On a commercial site, an experienced electrician attempted to carry a full drum of 6mm² SWA cable up a staircase alone. The 45kg drum was awkward to grip and the electrician lost balance on the third step.
               </p>
-              <p className="text-xs sm:text-sm text-foreground mb-3">
+              <p className="text-xs sm:text-sm text-white mb-3">
                 <strong>The consequences:</strong>
               </p>
-              <ul className="text-xs text-muted-foreground list-disc ml-6 space-y-1">
+              <ul className="text-xs text-white list-disc ml-6 space-y-1">
                 <li>Twisted back requiring 10 days off work</li>
                 <li>Damaged cable drum costing £300 to replace</li>
                 <li>Project delay of 2 days while replacement worker was found</li>
@@ -626,14 +626,14 @@ const Module4Section7_1 = () => {
             </div>
             
             <div className="rounded-lg p-4 bg-emerald-50/50 dark:bg-blue-900/10 border border-blue-200/30">
-              <h3 className="font-medium text-foreground mb-2">Case Study 2: The Successful Team Approach</h3>
-              <p className="text-base text-foreground mb-3">
+              <h3 className="font-medium text-white mb-2">Case Study 2: The Successful Team Approach</h3>
+              <p className="text-base text-white mb-3">
                 A data centre installation required moving 200+ metres of heavy cable tray through a complex route. The contractor implemented a coordinated team approach with designated roles.
               </p>
-              <p className="text-xs sm:text-sm text-foreground mb-3">
+              <p className="text-xs sm:text-sm text-white mb-3">
                 <strong>The approach:</strong>
               </p>
-              <ul className="text-xs text-muted-foreground list-disc ml-6 space-y-1">
+              <ul className="text-xs text-white list-disc ml-6 space-y-1">
                 <li>Pre-planned route with obstacle removal</li>
                 <li>Teams of 4 people per 3-metre tray section</li>
                 <li>Radio communication between teams</li>
@@ -646,14 +646,14 @@ const Module4Section7_1 = () => {
             </div>
             
             <div className="rounded-lg p-4 bg-green-50/50 dark:bg-green-900/10 border border-green-200/30">
-              <h3 className="font-medium text-foreground mb-2">Case Study 3: The Mechanical Aid Investment</h3>
-              <p className="text-base text-foreground mb-3">
+              <h3 className="font-medium text-white mb-2">Case Study 3: The Mechanical Aid Investment</h3>
+              <p className="text-base text-white mb-3">
                 A small electrical contractor invested £2,000 in a powered stair-climbing trolley after several back strain incidents. The equipment was used on a hospital refurbishment project requiring movement of heavy distribution boards.
               </p>
-              <p className="text-xs sm:text-sm text-foreground mb-3">
+              <p className="text-xs sm:text-sm text-white mb-3">
                 <strong>The benefits:</strong>
               </p>
-              <ul className="text-xs text-muted-foreground list-disc ml-6 space-y-1">
+              <ul className="text-xs text-white list-disc ml-6 space-y-1">
                 <li>Eliminated manual lifting of 50kg+ distribution boards</li>
                 <li>Reduced labour time by 40% on material handling</li>
                 <li>Zero manual handling injuries on the project</li>
@@ -663,14 +663,14 @@ const Module4Section7_1 = () => {
             </div>
             
             <div className="rounded-lg p-4 bg-purple-50/50 dark:bg-purple-900/10 border border-purple-200/30">
-              <h3 className="font-medium text-foreground mb-2">Case Study 4: The Training Success</h3>
-              <p className="text-base text-foreground mb-3">
+              <h3 className="font-medium text-white mb-2">Case Study 4: The Training Success</h3>
+              <p className="text-base text-white mb-3">
                 Following a series of minor manual handling incidents, a medium-sized electrical contractor implemented comprehensive manual handling training for all operatives.
               </p>
-              <p className="text-xs sm:text-sm text-foreground mb-3">
+              <p className="text-xs sm:text-sm text-white mb-3">
                 <strong>The programme included:</strong>
               </p>
-              <ul className="text-xs text-muted-foreground list-disc ml-6 space-y-1">
+              <ul className="text-xs text-white list-disc ml-6 space-y-1">
                 <li>Hands-on lifting technique training</li>
                 <li>Equipment familiarisation sessions</li>
                 <li>Risk assessment training</li>
@@ -685,21 +685,21 @@ const Module4Section7_1 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
-                <h3 className="font-medium text-foreground mb-2">Q: {faq.question}</h3>
-                <p className="text-xs sm:text-sm text-foreground"><strong>A:</strong> {faq.answer}</p>
+              <div key={index} className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
+                <h3 className="font-medium text-white mb-2">Q: {faq.question}</h3>
+                <p className="text-xs sm:text-sm text-white"><strong>A:</strong> {faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Book className="w-5 h-5" />
             Pocket Guide – Manual Handling Safety
           </h2>
@@ -748,12 +748,12 @@ const Module4Section7_1 = () => {
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Target className="w-5 h-5" />
             Recap (What You've Learned)
           </h2>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>You now understand the serious health and safety risks associated with poor manual handling practices.</li>
             <li>You know the legal requirements under MHOR 1992 and the responsibilities of employers and employees.</li>
             <li>You can apply correct lifting techniques to reduce injury risk in electrical work.</li>
@@ -766,7 +766,7 @@ const Module4Section7_1 = () => {
         <Quiz questions={quizQuestions} title="Manual Handling Safety Quiz" />
 
         {/* Navigation */}
-        <div className="flex justify-between items-center mt-8 pt-6 border-t border-border/20">
+        <div className="flex justify-between items-center mt-8 pt-6 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />

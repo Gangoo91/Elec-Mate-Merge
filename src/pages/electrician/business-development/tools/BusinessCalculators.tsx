@@ -13,10 +13,10 @@ import {
   Scale,
   Users,
   ClipboardList,
-  Percent,
-  ArrowLeft
+  Percent
 } from "lucide-react";
 import { Helmet } from "react-helmet";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 
 const BusinessCalculators = () => {
   const calculators = [
@@ -128,16 +128,7 @@ const BusinessCalculators = () => {
               <p className="text-sm text-white/60">Financial planning tools</p>
             </div>
           </div>
-          <Link to="/electrician/business">
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to Business
-            </Button>
-          </Link>
+          <SmartBackButton />
         </header>
 
         {/* Subtitle */}

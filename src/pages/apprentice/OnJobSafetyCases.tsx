@@ -1,6 +1,6 @@
 
 import React from "react";
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AlertTriangle, BookOpen, Target, Users, Brain, Shield } from "lucide-react";
@@ -17,7 +17,7 @@ const OnJobSafetyCases = () => {
         <p className="text-muted-foreground text-center max-w-2xl mb-4">
           Learn from real-world electrical safety scenarios through interactive case studies, comprehensive assessments, and detailed safety knowledge modules
         </p>
-        <BackButton customUrl="/apprentice/on-job-tools" label="Back to On-Job Tools" />
+        <SmartBackButton />
       </div>
 
       <Tabs defaultValue="scenarios" className="w-full">

@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ModuleCard } from "@/components/shared/ModuleCard";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Search, Zap, BookOpen, Shield, Award, GraduationCap, ArrowLeft, CheckCircle, Settings, Info, AlertTriangle } from "lucide-react";
+import { Search, Zap, BookOpen, Shield, Award, GraduationCap, CheckCircle, Settings, Info, AlertTriangle } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 
 export default function StudyCentreHome() {
   const navigate = useNavigate();
@@ -138,14 +138,7 @@ export default function StudyCentreHome() {
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">
       {/* Back Button */}
-      <Button
-        variant="ghost"
-        className="text-muted-foreground hover:text-foreground p-0 h-auto"
-        onClick={() => navigate("/study-centre")}
-      >
-        <ArrowLeft className="w-4 h-4 mr-2" />
-        Back to Study Centre
-      </Button>
+      <SmartBackButton />
 
       {/* Header */}
       <div className="space-y-1">

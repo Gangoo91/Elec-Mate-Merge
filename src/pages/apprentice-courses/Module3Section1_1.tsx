@@ -123,11 +123,11 @@ const Module3Section1_1: React.FC = () => {
   } as const;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.1
@@ -140,29 +140,29 @@ const Module3Section1_1: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Cable className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Cable className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">Section 3.1.1</Badge>
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">Section 3.1.1</Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">Common Wiring Systems Overview</h1>
-          <p className="text-muted-foreground">Understanding surface wiring, conduit, trunking, SWA and flexible systems for practical UK installations.</p>
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">Common Wiring Systems Overview</h1>
+          <p className="text-white">Understanding surface wiring, conduit, trunking, SWA and flexible systems for practical UK installations.</p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Choose wiring systems based on protection needed, environment, and accessibility requirements.</li>
                 <li>Surface = quick/temporary; Conduit = protection; Trunking = access; SWA = outdoor/underground.</li>
                 <li>All systems must comply with BS 7671 and maintain earth continuity.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Look for environmental conditions, mechanical risk, and access needs.</li>
                 <li><strong>Use:</strong> Match system to application: industrial = steel conduit, office = trunking.</li>
@@ -173,9 +173,9 @@ const Module3Section1_1: React.FC = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Compare and select appropriate wiring systems for different applications and environments.</li>
             <li>Understand installation requirements, advantages and limitations of each system type.</li>
             <li>Apply BS 7671 requirements for cable support, protection and earthing continuity.</li>
@@ -186,17 +186,17 @@ const Module3Section1_1: React.FC = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Surface Wiring */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2"><Wrench className="w-5 h-5" /> Surface Wiring Systems</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><Wrench className="w-5 h-5" /> Surface Wiring Systems</h3>
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <p><strong>Description:</strong> Cables run on the surface of walls, ceilings or structures, secured with clips or cleats.</p>
               
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Advantages</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Quick installation and low cost</li>
@@ -206,7 +206,7 @@ const Module3Section1_1: React.FC = () => {
                     <li>Easy cable identification</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-4 bg-card border border-amber-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
                   <p className="font-medium mb-2">Limitations</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Poor aesthetic appearance</li>
@@ -218,7 +218,7 @@ const Module3Section1_1: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-card border border-border/20 rounded-lg p-4">
+              <div className="bg-card border border-white/10 rounded-lg p-4">
                 <p className="font-medium mb-2">BS 7671 Requirements:</p>
                 <ul className="list-disc pl-4 space-y-1">
                   <li>Cable clips maximum 300mm apart horizontally, 400mm vertically</li>
@@ -228,7 +228,7 @@ const Module3Section1_1: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="bg-card border border-emerald-500/30 rounded-lg p-4">
+              <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
                 <p className="font-medium mb-2">Typical Applications:</p>
                 <ul className="list-disc pl-4 space-y-1">
                   <li>Temporary installations and building sites</li>
@@ -252,12 +252,12 @@ const Module3Section1_1: React.FC = () => {
 
           {/* PVC Conduit */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2"><Shield className="w-5 h-5" /> PVC Conduit Systems</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><Shield className="w-5 h-5" /> PVC Conduit Systems</h3>
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <p><strong>Description:</strong> Plastic conduit providing mechanical protection and allowing cable changes. Available in heavy and light gauge versions.</p>
               
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Construction Features</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Corrosion resistant PVC material</li>
@@ -267,7 +267,7 @@ const Module3Section1_1: React.FC = () => {
                     <li>Light and heavy gauge options</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                   <p className="font-medium mb-2">Installation Benefits</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Easy to cut and join</li>
@@ -293,12 +293,12 @@ const Module3Section1_1: React.FC = () => {
 
           {/* Steel Conduit */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3">Steel Conduit Systems</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-3">Steel Conduit Systems</h3>
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <p><strong>Description:</strong> Metal conduit providing maximum mechanical and fire protection. Requires careful earthing and corrosion protection.</p>
               
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Superior Protection</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Excellent mechanical protection</li>
@@ -308,7 +308,7 @@ const Module3Section1_1: React.FC = () => {
                     <li>Long service life when properly installed</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Installation Requirements</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Continuous earth path essential</li>
@@ -344,12 +344,12 @@ const Module3Section1_1: React.FC = () => {
 
           {/* Trunking Systems */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3">Trunking Systems</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-3">Trunking Systems</h3>
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <p><strong>Description:</strong> Large rectangular cable containment allowing easy access for cable management, changes and additions.</p>
               
               <div className="space-y-3">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Cable Management Advantages</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Easy cable additions and changes</li>
@@ -361,7 +361,7 @@ const Module3Section1_1: React.FC = () => {
                   </ul>
                 </div>
 
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Derating Considerations</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Apply grouping factors for multiple cables</li>
@@ -388,12 +388,12 @@ const Module3Section1_1: React.FC = () => {
 
           {/* SWA Cable */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3">SWA (Steel Wire Armoured) Cable</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-3">SWA (Steel Wire Armoured) Cable</h3>
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <p><strong>Description:</strong> Armoured cable with integral protection suitable for direct burial, outdoor installation and high-risk environments.</p>
               
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-4 bg-card border border-cyan-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-cyan-400/30">
                   <p className="font-medium mb-2">Construction</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Copper or aluminium conductors</li>
@@ -430,8 +430,8 @@ const Module3Section1_1: React.FC = () => {
 
           {/* Flexible Cord */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3">Flexible Cord and Cable</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-3">Flexible Cord and Cable</h3>
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <p><strong>Description:</strong> Flexible cables for temporary connections and movable equipment. Not suitable for permanent fixed wiring.</p>
               
               <div className="bg-card border border-amber-400/30 rounded-lg p-4">
@@ -460,11 +460,11 @@ const Module3Section1_1: React.FC = () => {
         </Card>
 
         {/* System Comparison */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">System Comparison Matrix</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">System Comparison Matrix</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
-              <thead className="text-muted-foreground border-b border-border/20">
+              <thead className="text-white border-b border-white/10">
                 <tr>
                   <th className="py-3 pr-4">System</th>
                   <th className="py-3 pr-4">Protection</th>
@@ -474,8 +474,8 @@ const Module3Section1_1: React.FC = () => {
                   <th className="py-3 pr-4">Best Use</th>
                 </tr>
               </thead>
-              <tbody className="text-foreground">
-                <tr className="border-t border-border/20">
+              <tbody className="text-white">
+                <tr className="border-t border-white/10">
                   <td className="py-3 pr-4 font-medium">Surface</td>
                   <td className="py-3 pr-4">Low</td>
                   <td className="py-3 pr-4">Low</td>
@@ -483,7 +483,7 @@ const Module3Section1_1: React.FC = () => {
                   <td className="py-3 pr-4">Excellent</td>
                   <td className="py-3 pr-4">Temporary/Industrial</td>
                 </tr>
-                <tr className="border-t border-border/20">
+                <tr className="border-t border-white/10">
                   <td className="py-3 pr-4 font-medium">PVC Conduit</td>
                   <td className="py-3 pr-4">Good</td>
                   <td className="py-3 pr-4">Medium</td>
@@ -491,7 +491,7 @@ const Module3Section1_1: React.FC = () => {
                   <td className="py-3 pr-4">Limited</td>
                   <td className="py-3 pr-4">Domestic/Light Commercial</td>
                 </tr>
-                <tr className="border-t border-border/20">
+                <tr className="border-t border-white/10">
                   <td className="py-3 pr-4 font-medium">Steel Conduit</td>
                   <td className="py-3 pr-4">Excellent</td>
                   <td className="py-3 pr-4">High</td>
@@ -499,7 +499,7 @@ const Module3Section1_1: React.FC = () => {
                   <td className="py-3 pr-4">Limited</td>
                   <td className="py-3 pr-4">Industrial/High Risk</td>
                 </tr>
-                <tr className="border-t border-border/20">
+                <tr className="border-t border-white/10">
                   <td className="py-3 pr-4 font-medium">Trunking</td>
                   <td className="py-3 pr-4">Good</td>
                   <td className="py-3 pr-4">Medium-High</td>
@@ -507,7 +507,7 @@ const Module3Section1_1: React.FC = () => {
                   <td className="py-3 pr-4">Excellent</td>
                   <td className="py-3 pr-4">Commercial/Office</td>
                 </tr>
-                <tr className="border-t border-border/20">
+                <tr className="border-t border-white/10">
                   <td className="py-3 pr-4 font-medium">SWA</td>
                   <td className="py-3 pr-4">Excellent</td>
                   <td className="py-3 pr-4">High</td>
@@ -515,7 +515,7 @@ const Module3Section1_1: React.FC = () => {
                   <td className="py-3 pr-4">Poor</td>
                   <td className="py-3 pr-4">Underground/Outdoor</td>
                 </tr>
-                <tr className="border-t border-border/20">
+                <tr className="border-t border-white/10">
                   <td className="py-3 pr-4 font-medium">Flexible</td>
                   <td className="py-3 pr-4">Variable</td>
                   <td className="py-3 pr-4">Low</td>
@@ -529,11 +529,11 @@ const Module3Section1_1: React.FC = () => {
         </Card>
 
         {/* Real-world scenario */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-world scenario: Commercial Kitchen Renovation</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <div className="flex items-start gap-3 bg-card border-l-4 border-emerald-400 p-4 rounded">
-              <Home className="w-5 h-5 text-emerald-400 mt-0.5" />
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-world scenario: Commercial Kitchen Renovation</h2>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <div className="flex items-start gap-3 border-l-4 border-emerald-400 p-4 rounded">
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5" />
               <div>
                 <p className="font-medium mb-2">The Challenge</p>
                 <p>A restaurant kitchen needs complete electrical renovation. The space includes:</p>
@@ -550,7 +550,7 @@ const Module3Section1_1: React.FC = () => {
             <div className="space-y-3">
               <p className="font-medium">Wiring System Selection Strategy:</p>
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                   <p className="font-medium mb-2">Main Distribution</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>SWA cable</strong> for supply from external meter</li>
@@ -558,7 +558,7 @@ const Module3Section1_1: React.FC = () => {
                     <li>Mechanical protection in high-traffic areas</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Equipment Circuits</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>Steel conduit</strong> for fixed cooking equipment</li>
@@ -566,7 +566,7 @@ const Module3Section1_1: React.FC = () => {
                     <li>Separate circuits for each major appliance</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Lighting & Sockets</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>Trunking system</strong> above service areas</li>
@@ -574,7 +574,7 @@ const Module3Section1_1: React.FC = () => {
                     <li>Segregated power and data routes</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-4 bg-card border border-amber-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
                   <p className="font-medium mb-2">Temporary/Flexible</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>Armoured flexibles</strong> to mobile equipment</li>
@@ -585,7 +585,7 @@ const Module3Section1_1: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-background/20 border-l-4 border-emerald-500 p-4 rounded">
+            <div className="bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded">
               <p className="font-medium mb-2">Key Success Factors:</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Match system to specific environmental demands</li>
@@ -599,10 +599,10 @@ const Module3Section1_1: React.FC = () => {
         </Card>
 
         {/* Common mistakes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Common Mistakes and How to Avoid Them</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Common Mistakes and How to Avoid Them</h2>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 flex items-center gap-2"><AlertTriangle className="w-4 h-4" /> System Selection Errors</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li><strong>Wrong:</strong> Using surface wiring in areas requiring concealment</li>
@@ -612,7 +612,7 @@ const Module3Section1_1: React.FC = () => {
               </ul>
             </div>
 
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 flex items-center gap-2"><AlertTriangle className="w-4 h-4" /> Installation Mistakes</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li><strong>Wrong:</strong> Poor earthing continuity in steel conduit systems</li>
@@ -622,7 +622,7 @@ const Module3Section1_1: React.FC = () => {
               </ul>
             </div>
 
-            <div className="rounded-lg p-4 bg-emerald-500/10 border border-emerald-500/30">
+            <div className="rounded-lg p-4 bg-elec-yellow/10 border border-elec-yellow/30">
               <p className="font-medium mb-2 flex items-center gap-2"><CheckCircle2 className="w-4 h-4" /> Best Practice Tips</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li>Always consider future access and maintenance requirements</li>
@@ -636,10 +636,10 @@ const Module3Section1_1: React.FC = () => {
         </Card>
 
         {/* BS 7671 Context */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">BS 7671 Context and Compliance</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">BS 7671 Context and Compliance</h2>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2">Selection and Erection (Part 5)</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li>Wiring systems must suit environmental conditions</li>
@@ -649,7 +649,7 @@ const Module3Section1_1: React.FC = () => {
               </ul>
             </div>
 
-            <div className="rounded-lg p-4 bg-card border border-green-400/30">
+            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
               <p className="font-medium mb-2">Current-carrying Capacity (Appendix 4)</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li>Apply grouping factors for multiple cables</li>
@@ -659,29 +659,29 @@ const Module3Section1_1: React.FC = () => {
               </ul>
             </div>
 
-            <div className="flex items-start gap-3 bg-background/20 border-l-4 border-emerald-500 p-4 rounded mt-4" role="alert">
-              <AlertTriangle className="w-5 h-5 text-emerald-400 mt-0.5" />
-              <p className="text-foreground">Isolate, lock-off and prove dead before work. Follow manufacturer instructions and BS 7671 requirements for all wiring systems.</p>
+            <div className="flex items-start gap-3 bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded mt-4" role="alert">
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5" />
+              <p className="text-white">Isolate, lock-off and prove dead before work. Follow manufacturer instructions and BS 7671 requirements for all wiring systems.</p>
             </div>
           </div>
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">FAQs</h2>
-          <ul className="space-y-3 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
+          <ul className="space-y-3 text-xs sm:text-sm text-white">
             {faqs.map((f, i) => (
-              <li key={i} className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
+              <li key={i} className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
                 <p className="font-medium mb-1">{f.q}</p>
-                <p className="text-muted-foreground">{f.a}</p>
+                <p className="text-white">{f.a}</p>
               </li>
             ))}
           </ul>
         </Card>
 
         {/* Quick Knowledge Check */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quick Knowledge Check</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick Knowledge Check</h2>
           <div className="space-y-6">
             {quickCheckQuestions.map((q, index) => (
               <InlineCheck
@@ -697,13 +697,13 @@ const Module3Section1_1: React.FC = () => {
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-16 p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Section Quiz</h2>
+        <Card className="mb-16 p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Section Quiz</h2>
           <Quiz questions={quizQuestions as any} title="Wiring Systems Knowledge Check" />
         </Card>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />

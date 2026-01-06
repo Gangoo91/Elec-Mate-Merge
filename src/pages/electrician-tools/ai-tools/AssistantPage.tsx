@@ -1,39 +1,36 @@
 import { ArrowLeft, MessageSquare } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ConversationalSearch from "@/components/electrician-tools/ai-tools/ConversationalSearch";
-import AnimatedBackground from "@/components/electrician-tools/ai-tools/AnimatedBackground";
 
 const AssistantPage = () => {
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark relative overflow-hidden">
-      <AnimatedBackground />
+  const navigate = useNavigate();
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 pb-safe relative z-10">
-        {/* Header */}
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-purple-500/10 border border-purple-500/20 backdrop-blur-sm">
-              <MessageSquare className="h-6 w-6 sm:h-7 sm:w-7 text-purple-400" />
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                AI Assistant
-              </h1>
-              <p className="text-sm text-white/60">Conversational electrical support</p>
-            </div>
+  return (
+    <div className="min-h-screen bg-background pb-24">
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
+        <div className="px-4 py-3">
+          <button
+            onClick={() => navigate('/electrician-tools/ai-tooling')}
+            className="flex items-center gap-2 text-white active:opacity-70 transition-opacity touch-manipulation"
+          >
+            <ArrowLeft className="h-5 w-5" />
+            <span className="text-sm font-medium">AI Tools</span>
+          </button>
+        </div>
+      </div>
+
+      <main className="px-4 py-4 space-y-5">
+        {/* Hero Header */}
+        <div className="flex items-center gap-3">
+          <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-500/10 border border-purple-500/20">
+            <MessageSquare className="h-6 w-6 text-purple-400" />
           </div>
-          <Link to="/electrician-tools/ai-tooling">
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation backdrop-blur-sm"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to AI Tools
-            </Button>
-          </Link>
-        </header>
+          <div>
+            <h1 className="text-xl font-bold text-white">AI Assistant</h1>
+            <p className="text-sm text-white/50">Conversational electrical support</p>
+          </div>
+        </div>
 
         {/* Content */}
         <ConversationalSearch />

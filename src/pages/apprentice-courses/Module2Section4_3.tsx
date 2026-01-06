@@ -148,11 +148,11 @@ const Module2Section4_3 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 2.4
@@ -165,15 +165,15 @@ const Module2Section4_3 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <Lightbulb className="h-8 w-8 text-emerald-400" />
+            <Lightbulb className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 2.4.3
               </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
                 AC Waveforms & RMS
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+              <p className="text-xl text-white max-w-3xl mt-2">
                 Sine, square, triangle waves and RMS values — understanding peaks, effective values and measurement techniques
               </p>
             </div>
@@ -181,11 +181,11 @@ const Module2Section4_3 = () => {
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>AC waveforms:</strong> Sine (most common), square, triangle from drives/controls.</li>
                 <li><strong>RMS:</strong> Effective value for power/heating - the nameplate number, not peak.</li>
@@ -194,8 +194,8 @@ const Module2Section4_3 = () => {
                 <li><strong>Safety:</strong> Peak voltage affects insulation and clearance requirements.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Where:</strong> Drive outputs, LED driver supplies, UPS outputs, generator waveforms, control panels.</li>
                 <li><strong>What to do:</strong> Use true-RMS meters, check waveform quality, verify peak ratings, assess harmonic content.</li>
@@ -205,32 +205,32 @@ const Module2Section4_3 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
-          <ul className="space-y-3 text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
+          <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Recognise common AC waveforms: sine, square, and triangle waves</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Convert between peak and RMS values for sinusoidal waveforms</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Understand why RMS is used for equipment ratings and nameplates</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Select appropriate measurement techniques for different waveform types</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Apply safety considerations related to peak voltages and insulation</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Reference relevant BS 7671 sections for measurement and protection</span>
             </li>
           </ul>
@@ -238,19 +238,19 @@ const Module2Section4_3 = () => {
 
         {/* Section 1: Waveform Types and Characteristics */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
+          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
               Waveform Types and Basic Properties
             </h2>
-            <div className="space-y-6 text-foreground">
+            <div className="space-y-6 text-white">
               <p>
                 AC waveforms come in various shapes, each with distinct characteristics affecting power, measurement, and equipment performance.
               </p>
               
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-lg font-semibold text-emerald-400 mb-3">Sine Waves - The Standard</h3>
+                  <h3 className="text-lg font-semibold text-elec-yellow mb-3">Sine Waves - The Standard</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-border/30 p-4 rounded-lg">
                       <p className="text-blue-200 text-sm mb-2"><strong>UK Mains Characteristics:</strong></p>
@@ -276,7 +276,7 @@ const Module2Section4_3 = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-emerald-400 mb-3">Square and Triangle Waves</h3>
+                  <h3 className="text-lg font-semibold text-elec-yellow mb-3">Square and Triangle Waves</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-border/30 p-4 rounded-lg">
                       <p className="text-blue-200 text-sm mb-2"><strong>Common Sources:</strong></p>
@@ -301,7 +301,7 @@ const Module2Section4_3 = () => {
                   </div>
                 </div>
 
-                <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
+                <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                   <p className="text-yellow-300">
                     <strong>Critical Point:</strong> The relationship Vrms = Vp/√2 only applies to pure sine waves. 
                     For any other waveform shape, you must use true-RMS measurement to get accurate values.
@@ -319,21 +319,21 @@ const Module2Section4_3 = () => {
 
         {/* Section 2: RMS and Effective Values */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
+          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
               RMS Values and Power Relationships
             </h2>
-            <div className="space-y-6 text-foreground">
+            <div className="space-y-6 text-white">
               <p>
                 RMS (Root Mean Square) represents the effective value - the DC equivalent that produces the same heating effect in a resistor.
               </p>
               
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-lg font-semibold text-emerald-400 mb-3">Why RMS Matters</h3>
+                  <h3 className="text-lg font-semibold text-elec-yellow mb-3">Why RMS Matters</h3>
                   <div className="space-y-3">
-                    <div className="bg-card border border-emerald-500/30 p-4 rounded-lg">
+                    <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
                       <p className="text-emerald-200 text-sm mb-2"><strong>Power and Energy:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-emerald-100">
                         <li><strong>Heating effect:</strong> RMS voltage in AC produces same heat as DC voltage of same value</li>
@@ -357,9 +357,9 @@ const Module2Section4_3 = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-emerald-400 mb-3">Converting Between Peak and RMS</h3>
+                  <h3 className="text-lg font-semibold text-elec-yellow mb-3">Converting Between Peak and RMS</h3>
                   <div className="space-y-3">
-                    <div className="bg-card border border-emerald-500/30 p-4 rounded-lg">
+                    <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
                       <p className="text-emerald-200 text-sm mb-2"><strong>Sine Wave Relationships:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-emerald-100">
                         <li><strong>RMS to Peak:</strong> Vpeak = Vrms × √2 ≈ Vrms × 1.414</li>
@@ -371,7 +371,7 @@ const Module2Section4_3 = () => {
                   </div>
                 </div>
 
-                <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
+                <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                   <p className="text-yellow-300">
                     <strong>Safety Alert:</strong> Peak voltages are significantly higher than RMS. A 230V RMS supply 
                     reaches 325V peak - ensure adequate insulation and clearances for the peak value.
@@ -390,11 +390,11 @@ const Module2Section4_3 = () => {
         {/* Section 3: Measurement Techniques */}
         <div className="mb-8">
           <div className="border-l-4 border-teal-500 bg-teal-500/10 dark:bg-teal-500/10 p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
               Measurement Techniques and Instrument Selection
             </h2>
-            <div className="space-y-6 text-foreground">
+            <div className="space-y-6 text-white">
               <p>
                 Accurate measurement requires the right instrument for the waveform type. Wrong meter choice can give dangerously misleading readings.
               </p>
@@ -449,12 +449,12 @@ const Module2Section4_3 = () => {
 
         {/* Section 4: Practical Applications and Safety */}
         <div className="mb-8">
-          <div className="border-l-4 border-amber-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="border-l-4 border-amber-500 dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">4</span>
               Practical Applications and Safety Considerations
             </h2>
-            <div className="space-y-6 text-foreground">
+            <div className="space-y-6 text-white">
               <p>
                 Understanding waveforms and RMS values is essential for safe installation, accurate troubleshooting, and proper equipment selection.
               </p>
@@ -503,7 +503,7 @@ const Module2Section4_3 = () => {
                 </div>
 
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
-                  <p className="text-emerald-400">
+                  <p className="text-elec-yellow">
                     <strong>Safety Warning:</strong> Never assume waveform type without measurement. Modern installations 
                     often contain non-sinusoidal sources that require true-RMS measurement and appropriate protection devices.
                   </p>
@@ -514,16 +514,16 @@ const Module2Section4_3 = () => {
         </div>
 
         {/* Waveform Diagram */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Waveform Examples</h2>
-          <div className="space-y-4 text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Waveform Examples</h2>
+          <div className="space-y-4 text-white">
             <img
               src="/lovable-uploads/cacf4155-ab2f-4eb1-a676-3048dc3a24aa.png"
               alt="Simple diagram showing Direct Current (flat line) and Alternating Current (sine wave) against time"
               loading="lazy"
               className="w-full rounded-lg"
             />
-            <p className="text-muted-foreground">
+            <p className="text-white">
               Look for three key concepts: the <strong>peak</strong> (maximum instantaneous value), the <strong>RMS</strong> level (effective value for power calculations), 
               and <strong>one complete cycle (T)</strong> along the time axis.
             </p>
@@ -531,11 +531,11 @@ const Module2Section4_3 = () => {
         </Card>
 
         {/* Real-world Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">Real-world Examples</h2>
-          <div className="space-y-6 text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Real-world Examples</h2>
+          <div className="space-y-6 text-white">
             <div className="bg-card border border-border/30 p-4 rounded-lg">
-              <h3 className="text-emerald-400 font-semibold mb-2">LED Driver Troubleshooting</h3>
+              <h3 className="text-elec-yellow font-semibold mb-2">LED Driver Troubleshooting</h3>
               <p className="text-blue-100 text-sm">
                 <strong>Situation:</strong> Commercial LED installation showing flicker complaints. Initial meter readings seemed normal at 230V.
                 <br /><br />
@@ -547,8 +547,8 @@ const Module2Section4_3 = () => {
               </p>
             </div>
             
-            <div className="bg-card border border-emerald-500/30 p-4 rounded-lg">
-              <h3 className="text-emerald-400 font-semibold mb-2">VFD Installation and RCD Issues</h3>
+            <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
+              <h3 className="text-elec-yellow font-semibold mb-2">VFD Installation and RCD Issues</h3>
               <p className="text-emerald-100 text-sm">
                 <strong>Situation:</strong> New variable frequency drive causing RCD trips during motor starting.
                 <br /><br />
@@ -563,25 +563,25 @@ const Module2Section4_3 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-border/20 last:border-b-0 pb-4 last:pb-0">
-                <h3 className="font-semibold text-foreground mb-2">{faq.question}</h3>
-                <p className="text-muted-foreground text-sm">{faq.answer}</p>
+              <div key={index} className="border-b border-white/10 last:border-b-0 pb-4 last:pb-0">
+                <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">RMS & Waveforms — Pocket Guide</h2>
-          <div className="grid md:grid-cols-2 gap-4 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">RMS & Waveforms — Pocket Guide</h2>
+          <div className="grid md:grid-cols-2 gap-4 text-xs sm:text-sm text-white">
             <div className="space-y-2">
-              <h3 className="font-semibold text-foreground">Quick Conversions (Sine Wave Only)</h3>
-              <ul className="list-disc pl-6 space-y-1 text-muted-foreground">
+              <h3 className="font-semibold text-white">Quick Conversions (Sine Wave Only)</h3>
+              <ul className="list-disc pl-6 space-y-1 text-white">
                 <li>Peak = RMS × 1.414</li>
                 <li>RMS = Peak × 0.707</li>
                 <li>UK: 230V RMS → 325V peak</li>
@@ -589,8 +589,8 @@ const Module2Section4_3 = () => {
               </ul>
             </div>
             <div className="space-y-2">
-              <h3 className="font-semibold text-foreground">Measurement Rules</h3>
-              <ul className="list-disc pl-6 space-y-1 text-muted-foreground">
+              <h3 className="font-semibold text-white">Measurement Rules</h3>
+              <ul className="list-disc pl-6 space-y-1 text-white">
                 <li>Sine waves: Any meter OK</li>
                 <li>Non-sine: True-RMS essential</li>
                 <li>Square wave: RMS = amplitude</li>
@@ -606,7 +606,7 @@ const Module2Section4_3 = () => {
         </section>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />

@@ -139,11 +139,11 @@ const Module4Section5_6 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 5
@@ -157,35 +157,35 @@ const Module4Section5_6 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Wrench className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Wrench className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 4.5.6
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Testing for Polarity and Continuity During Install
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Master essential testing procedures to ensure electrical systems are connected correctly and safely before energisation.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Polarity testing checks that conductors are connected to correct terminals.</li>
                 <li>Continuity testing confirms unbroken electrical paths through conductors.</li>
                 <li>Testing before energisation prevents faults and ensures BS 7671 compliance.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Wiring connections, test points, circuit identification needs.</li>
                 <li><strong>Use:</strong> Proper test instruments, correct procedures, approved methods.</li>
@@ -196,9 +196,9 @@ const Module4Section5_6 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Explain the purpose and importance of polarity and continuity testing in electrical installations.</li>
             <li>Identify and correctly use the tools and instruments required for accurate testing procedures.</li>
             <li>Perform polarity and continuity tests to industry standards and BS 7671 requirements.</li>
@@ -208,44 +208,44 @@ const Module4Section5_6 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Importance of Testing */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Critical Importance of Installation Testing</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Critical Importance of Installation Testing</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Testing during installation is fundamental to electrical safety and system reliability:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">Safety and Compliance Benefits</p>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Prevents dangerous cross-connections:</strong> Identifies reversed polarity before energisation.</p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Safety and Compliance Benefits</p>
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Prevents dangerous cross-connections:</strong> Identifies reversed polarity before energisation.</p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Prevents live conductors connected to neutral terminals</li>
                       <li>Ensures protective conductors maintain earth continuity</li>
                       <li>Eliminates shock risk from incorrectly wired accessories</li>
                       <li>Prevents equipment damage from wrong polarity connections</li>
                     </ul>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>BS 7671 Part 6 compliance:</strong> Mandatory initial verification requirements.</p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>BS 7671 Part 6 compliance:</strong> Mandatory initial verification requirements.</p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Legal requirement for all new electrical installations</li>
                       <li>Required for electrical installation certificates</li>
                       <li>Essential for insurance and warranty validity</li>
                       <li>Demonstrates professional competence and due diligence</li>
                     </ul>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Economic benefits:</strong> Early fault detection prevents costly rework.</p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Economic benefits:</strong> Early fault detection prevents costly rework.</p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Identifies problems before system commissioning</li>
                       <li>Prevents equipment damage during first energisation</li>
                       <li>Reduces callback visits and warranty claims</li>
                       <li>Maintains project schedules and client confidence</li>
                     </ul>
-                    <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Professional standard:</strong> Systematic testing demonstrates competence and builds client trust
                     </div>
                   </div>
@@ -265,46 +265,46 @@ const Module4Section5_6 = () => {
 
           {/* Testing Tools and Equipment */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Professional Testing Tools and Equipment</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Professional Testing Tools and Equipment</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Accurate testing requires appropriate instruments and proper calibration:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">Essential Testing Instruments</p>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Low resistance ohmmeter:</strong> Primary instrument for continuity testing.</p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Essential Testing Instruments</p>
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Low resistance ohmmeter:</strong> Primary instrument for continuity testing.</p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Test current: Minimum 200mA for accurate readings</li>
                       <li>Resolution: 0.01Ω or better for precise measurements</li>
                       <li>Range: 0-2000Ω typically sufficient for most installations</li>
                       <li>Calibration: Annual calibration certificate required</li>
                     </ul>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Digital multimeter:</strong> Versatile instrument for polarity and continuity testing.</p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Digital multimeter:</strong> Versatile instrument for polarity and continuity testing.</p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Resistance measurement capability to 0.1Ω resolution</li>
                       <li>Voltage measurement for polarity verification</li>
                       <li>Audible continuity indication for quick checks</li>
                       <li>Safety category rating appropriate for electrical work (CAT III minimum)</li>
                     </ul>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Proving unit:</strong> Essential safety device for instrument verification.</p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Proving unit:</strong> Essential safety device for instrument verification.</p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Known resistance values for instrument verification</li>
                       <li>Battery-powered for independent operation</li>
                       <li>Multiple test points for comprehensive checking</li>
                       <li>Regular calibration to maintain accuracy</li>
                     </ul>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Test leads and accessories:</strong> High-quality connections for reliable testing.</p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Test leads and accessories:</strong> High-quality connections for reliable testing.</p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Low-resistance test leads with known resistance values</li>
                       <li>Insulated crocodile clips rated for working voltage</li>
                       <li>Sharp probes for secure connections to terminals</li>
                       <li>Temporary links for continuity testing procedures</li>
                     </ul>
-                    <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Maintenance requirement:</strong> All test equipment must be regularly calibrated and maintained to ensure accuracy
                     </div>
                   </div>
@@ -324,72 +324,72 @@ const Module4Section5_6 = () => {
 
           {/* Testing Procedures */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Professional Testing Procedures</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Professional Testing Procedures</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Systematic procedures ensure accurate results and maintain safety throughout testing:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">Polarity Testing Procedure</p>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Pre-test safety checks:</strong> Essential preparation before testing begins.</p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Polarity Testing Procedure</p>
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Pre-test safety checks:</strong> Essential preparation before testing begins.</p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Isolate circuit completely from all sources of supply</li>
                       <li>Lock off isolation switches and apply warning notices</li>
                       <li>Verify isolation using approved voltage indicator</li>
                       <li>Check proving unit functionality before and after use</li>
                     </ul>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Systematic testing approach:</strong> Methodical verification of all connections.</p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Systematic testing approach:</strong> Methodical verification of all connections.</p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Test at distribution board: phase to phase, neutral to neutral, earth to earth</li>
                       <li>Verify correct conductor identification throughout installation</li>
                       <li>Test each outlet point: live terminal to live conductor, neutral to neutral</li>
                       <li>Check switching arrangements: ensure switches operate live conductors only</li>
                     </ul>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Special considerations:</strong> Address specific installation requirements.</p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Special considerations:</strong> Address specific installation requirements.</p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Two-way switching: verify correct common and strappers</li>
                       <li>Multi-gang accessories: test each gang independently</li>
                       <li>Three-phase installations: verify phase sequence and identification</li>
                       <li>Emergency lighting: check maintained and non-maintained circuits</li>
                     </ul>
-                    <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Documentation:</strong> Record all test results on appropriate certificates and retain for future reference
                     </div>
                   </div>
                 </div>
               </div>
               
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">Continuity Testing Procedure</p>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Circuit preparation:</strong> Ensure safe and accurate testing conditions.</p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">Continuity Testing Procedure</p>
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Circuit preparation:</strong> Ensure safe and accurate testing conditions.</p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Verify complete isolation from all supply sources</li>
                       <li>Disconnect all loads and electronic devices</li>
                       <li>Remove any parallel paths that could affect readings</li>
                       <li>Check test instrument calibration and lead resistance</li>
                     </ul>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>R1 + R2 method:</strong> Combined testing of line and CPC conductors.</p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>R1 + R2 method:</strong> Combined testing of line and CPC conductors.</p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Link line and CPC conductors at distribution board</li>
                       <li>Test between line and CPC terminals at each outlet</li>
                       <li>Record readings for earth fault loop impedance calculations</li>
                       <li>Compare results with design values and cable manufacturer data</li>
                     </ul>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Individual conductor testing:</strong> Verification of each conductor integrity.</p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Individual conductor testing:</strong> Verification of each conductor integrity.</p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Test each conductor separately from end to end</li>
                       <li>Use temporary links to complete circuit under test</li>
                       <li>Account for connector resistances in final calculations</li>
                       <li>Verify readings against expected values based on cable specifications</li>
                     </ul>
-                    <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Quality assurance:</strong> Double-check any unusual readings and investigate discrepancies immediately
                     </div>
                   </div>
@@ -409,39 +409,39 @@ const Module4Section5_6 = () => {
 
           {/* Results and Compliance */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Recording Results and Ensuring Compliance</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Recording Results and Ensuring Compliance</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Proper documentation and interpretation ensure regulatory compliance and system safety:
             </p>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
                   <div className="flex-1">
                     <p className="font-semibold text-green-600 dark:text-green-400 mb-1">Result Interpretation and Documentation</p>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Acceptable values:</strong> Establish criteria for pass/fail decisions.</p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Acceptable values:</strong> Establish criteria for pass/fail decisions.</p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Continuity: Typically &lt;0.05Ω for short runs, calculated for longer circuits</li>
                       <li>Polarity: Correct identification at all connection points</li>
                       <li>R1+R2 values: Must align with earth fault loop impedance requirements</li>
                       <li>Compare all readings with design calculations and manufacturer specifications</li>
                     </ul>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Documentation requirements:</strong> Complete and accurate record keeping.</p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Documentation requirements:</strong> Complete and accurate record keeping.</p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>Record all test results on electrical installation certificate</li>
                       <li>Include instrument details, calibration dates, and test conditions</li>
                       <li>Note any deviations from standard procedures or values</li>
                       <li>Provide clear remedial action records for any failures</li>
                     </ul>
-                    <p className="text-xs sm:text-sm text-foreground mb-2"><strong>Fault investigation procedures:</strong> Systematic approach to problem solving.</p>
-                    <ul className="text-xs text-foreground ml-4 mb-2 list-disc space-y-1">
+                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Fault investigation procedures:</strong> Systematic approach to problem solving.</p>
+                    <ul className="text-xs text-white ml-4 mb-2 list-disc space-y-1">
                       <li>High resistance readings: Check connections, joints, and cable integrity</li>
                       <li>Open circuits: Locate breaks using sectional testing methods</li>
                       <li>Incorrect polarity: Trace wiring and correct at source of error</li>
                       <li>Intermittent faults: Check for loose connections and poor terminations</li>
                     </ul>
-                    <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Professional practice:</strong> Never energise circuits until all tests pass and certificates are complete
                     </div>
                   </div>
@@ -452,16 +452,16 @@ const Module4Section5_6 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Practical Guidance</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
           
           {/* Testing Strategy and Planning */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Strategic Testing Approach and Planning</h3>
+            <h3 className="font-medium text-white mb-4">Strategic Testing Approach and Planning</h3>
             <div className="space-y-4">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-                <p className="font-medium text-foreground mb-2">Pre-Testing Preparation</p>
-                <ul className="text-xs text-foreground space-y-1 list-disc pl-4">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+                <p className="font-medium text-white mb-2">Pre-Testing Preparation</p>
+                <ul className="text-xs text-white space-y-1 list-disc pl-4">
                   <li>Complete visual inspection before any testing to identify obvious errors</li>
                   <li>Verify all circuit documentation and labelling is accurate and up-to-date</li>
                   <li>Ensure test instruments are calibrated and proving unit is functional</li>
@@ -471,9 +471,9 @@ const Module4Section5_6 = () => {
                 </ul>
               </div>
 
-              <div className="rounded-lg p-4 bg-card border border-green-400/30">
-                <p className="font-medium text-foreground mb-2">Efficient Testing Techniques</p>
-                <ul className="text-xs text-foreground space-y-1 list-disc pl-4">
+              <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
+                <p className="font-medium text-white mb-2">Efficient Testing Techniques</p>
+                <ul className="text-xs text-white space-y-1 list-disc pl-4">
                   <li>Use approved temporary links for continuity testing to ensure accurate connections</li>
                   <li>Keep test leads as short as possible to reduce measurement errors</li>
                   <li>Test both ends of long cable runs to confirm no hidden breaks or high resistance joints</li>
@@ -483,9 +483,9 @@ const Module4Section5_6 = () => {
                 </ul>
               </div>
 
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-                <p className="font-medium text-foreground mb-2">Specialised Testing Considerations</p>
-                <ul className="text-xs text-foreground space-y-1 list-disc pl-4">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+                <p className="font-medium text-white mb-2">Specialised Testing Considerations</p>
+                <ul className="text-xs text-white space-y-1 list-disc pl-4">
                   <li>Socket testing: Use dedicated socket testers for initial checks but confirm with multimeter</li>
                   <li>Multi-way switching: Verify correct operation in all switch positions</li>
                   <li>Emergency lighting: Test both maintained and non-maintained circuits separately</li>
@@ -499,12 +499,12 @@ const Module4Section5_6 = () => {
 
           {/* Step-by-Step Procedures */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Detailed Step-by-Step Procedures</h3>
+            <h3 className="font-medium text-white mb-4">Detailed Step-by-Step Procedures</h3>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-4 bg-card border border-amber-400/30">
-                <p className="font-medium text-foreground mb-2">Standard Polarity Testing Sequence</p>
-                <ol className="text-xs text-foreground space-y-1 list-decimal pl-4">
+              <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
+                <p className="font-medium text-white mb-2">Standard Polarity Testing Sequence</p>
+                <ol className="text-xs text-white space-y-1 list-decimal pl-4">
                   <li>Isolate circuit at distribution board and apply lock-off procedures</li>
                   <li>Display warning notices and inform all personnel of testing activities</li>
                   <li>Verify isolation using approved voltage indicator and proving unit</li>
@@ -518,9 +518,9 @@ const Module4Section5_6 = () => {
                 </ol>
               </div>
 
-              <div className="rounded-lg p-4 bg-card border border-cyan-400/30">
-                <p className="font-medium text-foreground mb-2">Comprehensive Continuity Testing Process</p>
-                <ol className="text-xs text-foreground space-y-1 list-decimal pl-4">
+              <div className="rounded-lg p-4 bg-transparent border border-cyan-400/30">
+                <p className="font-medium text-white mb-2">Comprehensive Continuity Testing Process</p>
+                <ol className="text-xs text-white space-y-1 list-decimal pl-4">
                   <li>Ensure complete isolation and remove all loads from circuit</li>
                   <li>Identify start and end points of each conductor to be tested</li>
                   <li>Measure and record test lead resistance for later calculation correction</li>
@@ -535,8 +535,8 @@ const Module4Section5_6 = () => {
               </div>
 
               <div className="rounded-lg p-4 bg-indigo-500/10 border border-indigo-400/30">
-                <p className="font-medium text-foreground mb-2">Fault Investigation and Resolution</p>
-                <ol className="text-xs text-foreground space-y-1 list-decimal pl-4">
+                <p className="font-medium text-white mb-2">Fault Investigation and Resolution</p>
+                <ol className="text-xs text-white space-y-1 list-decimal pl-4">
                   <li>Identify nature of fault: high resistance, open circuit, or incorrect polarity</li>
                   <li>Use sectional testing to isolate fault location within the circuit</li>
                   <li>Check all accessible connection points for loose or corroded terminals</li>
@@ -554,10 +554,10 @@ const Module4Section5_6 = () => {
 
           {/* Quality Assurance Framework */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Quality Assurance and Best Practices</h3>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <p className="text-xs sm:text-sm text-foreground mb-3"><strong>Professional testing standards checklist:</strong></p>
-              <div className="grid md:grid-cols-2 gap-4 text-xs text-foreground">
+            <h3 className="font-medium text-white mb-4">Quality Assurance and Best Practices</h3>
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <p className="text-xs sm:text-sm text-white mb-3"><strong>Professional testing standards checklist:</strong></p>
+              <div className="grid md:grid-cols-2 gap-4 text-xs text-white">
                 <div>
                   <p className="font-medium mb-2">Safety Compliance:</p>
                   <ul className="list-disc pl-4 space-y-1">
@@ -579,41 +579,41 @@ const Module4Section5_6 = () => {
                   </ul>
                 </div>
               </div>
-              <div className="mt-3 p-2 bg-background/50 rounded border">
-                <p className="text-xs text-foreground"><strong>Certification requirement:</strong> No circuit should be energised until testing is complete and certificates signed off.</p>
+              <div className="mt-3 p-2 bg-[#121212]/50 rounded border">
+                <p className="text-xs text-white"><strong>Certification requirement:</strong> No circuit should be energised until testing is complete and certificates signed off.</p>
               </div>
             </div>
           </section>
         </Card>
 
         {/* Real-World Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-World Examples</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Examples</h2>
           
           <div className="space-y-4">
-            <div className="rounded-lg p-4 bg-card border border-amber-400/30">
-              <p className="text-xs sm:text-sm text-foreground mb-2">
+            <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
+              <p className="text-xs sm:text-sm text-white mb-2">
                 <strong>Case Study 1: Commercial Socket Circuit Polarity Error</strong>
               </p>
-              <p className="text-xs sm:text-sm text-foreground">
+              <p className="text-xs sm:text-sm text-white">
                 On a commercial site, a run of sockets was wired with reversed polarity due to a wiring error at a junction box. The error occurred when cables were extended and the electrician incorrectly identified the conductors. Because systematic polarity testing was performed before energising, the fault was found immediately during the verification process. The resistance readings were correct, but the polarity test revealed live and neutral conductors were swapped. The fault was corrected in minutes by rewiring the junction box connections, avoiding a potential safety hazard and costly rework after energisation.
               </p>
             </div>
 
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
-              <p className="text-xs sm:text-sm text-foreground mb-2">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
+              <p className="text-xs sm:text-sm text-white mb-2">
                 <strong>Case Study 2: High Resistance Connection Discovery</strong>
               </p>
-              <p className="text-xs sm:text-sm text-foreground">
+              <p className="text-xs sm:text-sm text-white">
                 During continuity testing of a lighting circuit in an office building, one circuit showed unusually high R1+R2 readings (0.8Ω compared to expected 0.3Ω). Investigation revealed a loose connection in a ceiling void where a junction had been poorly made during cable pulling. The high resistance would have caused voltage drop issues and potential overheating once energised. The connection was remade properly and re-tested, showing correct values. This early detection prevented service calls and potential fire hazards.
               </p>
             </div>
 
-            <div className="rounded-lg p-4 bg-card border border-green-400/30">
-              <p className="text-xs sm:text-sm text-foreground mb-2">
+            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
+              <p className="text-xs sm:text-sm text-white mb-2">
                 <strong>Case Study 3: Complex Three-Phase Installation Success</strong>
               </p>
-              <p className="text-xs sm:text-sm text-foreground">
+              <p className="text-xs sm:text-sm text-white">
                 A manufacturing facility installation involved 40 three-phase circuits with complex switching arrangements. Systematic polarity and continuity testing identified three phase sequence errors and two earth continuity issues before energisation. The methodical approach, using proper documentation and sequential testing, ensured all circuits were correctly wired. When the facility was commissioned, all equipment operated correctly from day one, with no protection device nuisance tripping or equipment damage. The systematic testing approach saved weeks of fault-finding time.
               </p>
             </div>
@@ -621,43 +621,43 @@ const Module4Section5_6 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">FAQs</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
           <div className="space-y-4">
             <div>
-              <h4 className="font-medium text-foreground mb-2">Q: Can I use a socket tester as my only polarity check?</h4>
-              <p className="text-sm text-muted-foreground">A: No — while socket testers are useful for quick checks, BS 7671 requires more detailed testing with calibrated multimeters or approved test instruments for certification purposes.</p>
+              <h4 className="font-medium text-white mb-2">Q: Can I use a socket tester as my only polarity check?</h4>
+              <p className="text-sm text-white">A: No — while socket testers are useful for quick checks, BS 7671 requires more detailed testing with calibrated multimeters or approved test instruments for certification purposes.</p>
             </div>
             <Separator />
             <div>
-              <h4 className="font-medium text-foreground mb-2">Q: Do I need to disconnect all loads before testing continuity?</h4>
-              <p className="text-sm text-muted-foreground">A: Yes — loads can create parallel paths that affect readings and give false results. All equipment, electronic devices, and accessories should be disconnected before continuity testing.</p>
+              <h4 className="font-medium text-white mb-2">Q: Do I need to disconnect all loads before testing continuity?</h4>
+              <p className="text-sm text-white">A: Yes — loads can create parallel paths that affect readings and give false results. All equipment, electronic devices, and accessories should be disconnected before continuity testing.</p>
             </div>
             <Separator />
             <div>
-              <h4 className="font-medium text-foreground mb-2">Q: Is it safe to test continuity on a live circuit?</h4>
-              <p className="text-sm text-muted-foreground">A: No — continuity testing must always be performed with the circuit completely isolated. Live circuit testing can damage instruments and create serious safety hazards.</p>
+              <h4 className="font-medium text-white mb-2">Q: Is it safe to test continuity on a live circuit?</h4>
+              <p className="text-sm text-white">A: No — continuity testing must always be performed with the circuit completely isolated. Live circuit testing can damage instruments and create serious safety hazards.</p>
             </div>
             <Separator />
             <div>
-              <h4 className="font-medium text-foreground mb-2">Q: What should I do if I get inconsistent continuity readings?</h4>
-              <p className="text-sm text-muted-foreground">A: Check test lead connections, verify instrument calibration, ensure all parallel paths are disconnected, and investigate for intermittent connections or damaged cables. Inconsistent readings always indicate a problem requiring investigation.</p>
+              <h4 className="font-medium text-white mb-2">Q: What should I do if I get inconsistent continuity readings?</h4>
+              <p className="text-sm text-white">A: Check test lead connections, verify instrument calibration, ensure all parallel paths are disconnected, and investigate for intermittent connections or damaged cables. Inconsistent readings always indicate a problem requiring investigation.</p>
             </div>
           </div>
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
-          <p className="text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+          <p className="text-xs sm:text-sm text-white">
             Polarity and continuity testing ensures that circuits are wired correctly and are electrically sound before energising. Using correct tools, following standard procedures, and recording accurate results are critical for compliance, safety, and professional installation standards. Systematic testing prevents dangerous faults, protects equipment, and demonstrates professional competence in electrical installation work.
           </p>
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quiz (8 Questions)</h2>
-          <p className="text-sm text-muted-foreground mb-6">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quiz (8 Questions)</h2>
+          <p className="text-sm text-white mb-6">
             Test your understanding of polarity and continuity testing procedures
           </p>
           <Quiz questions={quizQuestions} />

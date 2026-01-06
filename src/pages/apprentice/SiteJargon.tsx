@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -238,7 +238,7 @@ const SiteJargon = () => {
         <p className="text-sm sm:text-base text-muted-foreground text-center max-w-2xl mb-3 sm:mb-4 px-2">
           Master the language of the trade and communicate confidently on any UK construction site
         </p>
-        <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
+        <SmartBackButton />
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">

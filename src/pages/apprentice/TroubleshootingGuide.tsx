@@ -1,5 +1,5 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -110,7 +110,7 @@ const TroubleshootingGuide = () => {
         <p className="text-muted-foreground text-center max-w-2xl mb-4">
           Common electrical problems, their causes, and systematic approaches to diagnosis and resolution
         </p>
-        <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
+        <SmartBackButton />
       </div>
 
       <Card className="border-red-500/50 bg-card">

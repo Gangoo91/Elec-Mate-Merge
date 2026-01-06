@@ -1,40 +1,58 @@
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { MobileSelectWrapper as MobileSelect } from "@/components/ui/mobile-select-wrapper";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { AlertTriangle, Calculator, RotateCcw, Shield, Info, Lightbulb, HelpCircle } from "lucide-react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { RequiredFieldTooltip } from "@/components/ui/required-field-tooltip";
 import { Slider } from "@/components/ui/slider";
-import WhyThisMatters from "@/components/common/WhyThisMatters";
-import InfoBox from "@/components/common/InfoBox";
-import { 
-  calculateArcFlash, 
-  getEquipmentDefaults, 
-  EQUIPMENT_TYPE_LABELS, 
+import { AlertTriangle, Calculator, Shield, Info, Lightbulb, HelpCircle, BookOpen, ChevronDown, Zap } from "lucide-react";
+import { cn } from "@/lib/utils";
+import {
+  calculateArcFlash,
+  getEquipmentDefaults,
+  EQUIPMENT_TYPE_LABELS,
   ELECTRODE_CONFIG_LABELS,
   type EquipmentType,
   type ElectrodeConfig,
   type EnclosureType,
-  type ArcFlashResult 
+  type ArcFlashResult
 } from "@/lib/arcflash";
+import {
+  CalculatorCard,
+  CalculatorInputGrid,
+  CalculatorInput,
+  CalculatorSelect,
+  CalculatorActions,
+  CalculatorResult,
+  ResultsGrid,
+  CALCULATOR_CONFIG,
+} from "@/components/calculators/shared";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
-// Voltage options for UK electrical systems (IEEE 1584 compliant: 208-15000V)
 const voltageOptions = [
-  { value: "230", label: "230V", description: "Single phase domestic/commercial" },
-  { value: "400", label: "400V", description: "3-phase standard (new)" },
-  { value: "415", label: "415V", description: "3-phase standard (legacy)" },
-  { value: "690", label: "690V", description: "3-phase industrial" },
-  { value: "1000", label: "1000V", description: "LV maximum" },
-  { value: "3300", label: "3.3kV", description: "HV distribution" },
-  { value: "6600", label: "6.6kV", description: "HV distribution" },
-  { value: "11000", label: "11kV", description: "HV primary (IEEE 1584 max)" }
+  { value: "230", label: "230V - Single phase" },
+  { value: "400", label: "400V - 3-phase (new)" },
+  { value: "415", label: "415V - 3-phase (legacy)" },
+  { value: "690", label: "690V - 3-phase industrial" },
+  { value: "1000", label: "1000V - LV maximum" },
+  { value: "3300", label: "3.3kV - HV distribution" },
+  { value: "6600", label: "6.6kV - HV distribution" },
+  { value: "11000", label: "11kV - HV primary" }
 ];
 
+const equipmentOptions = Object.entries(EQUIPMENT_TYPE_LABELS).map(([key, label]) => ({
+  value: key,
+  label
+}));
+
+const electrodeOptions = Object.entries(ELECTRODE_CONFIG_LABELS).map(([key, label]) => ({
+  value: key,
+  label
+}));
+
 const ArcFlashCalculator = () => {
+  const config = CALCULATOR_CONFIG['protection'];
+
   const [voltage, setVoltage] = useState<string>("415");
   const [faultCurrent, setFaultCurrent] = useState<string>("");
   const [clearingTime, setClearingTime] = useState<string>("");
@@ -49,7 +67,11 @@ const ArcFlashCalculator = () => {
   const [whatIfDistance, setWhatIfDistance] = useState<number>(450);
   const [whatIfTime, setWhatIfTime] = useState<number>(0.1);
 
-  // Equipment type change handler
+  // Collapsible states
+  const [showGuidance, setShowGuidance] = useState(false);
+  const [showRegs, setShowRegs] = useState(false);
+  const [showWhatIf, setShowWhatIf] = useState(false);
+
   useEffect(() => {
     const defaults = getEquipmentDefaults(equipmentType);
     setWorkingDistance(defaults.workingDistance.toString());
@@ -59,31 +81,27 @@ const ArcFlashCalculator = () => {
 
   const validateInputs = () => {
     const newErrors: Record<string, string> = {};
-    
     const V = parseFloat(voltage);
     const I = parseFloat(faultCurrent);
     const t = parseFloat(clearingTime);
     const D = parseFloat(workingDistance);
-    
+
     if (!V || V <= 0) newErrors.voltage = "Voltage must be positive";
-    if (V < 208 || V > 15000) newErrors.voltage = "Voltage outside IEEE 1584 range (208-15000V)";
-    
+    if (V < 208 || V > 15000) newErrors.voltage = "Outside IEEE 1584 range (208-15000V)";
     if (!I || I <= 0) newErrors.faultCurrent = "Fault current must be positive";
-    if (I < 700 || I > 106000) newErrors.faultCurrent = "Fault current outside typical range (700-106000A)";
-    
+    if (I < 700 || I > 106000) newErrors.faultCurrent = "Outside typical range (700-106000A)";
     if (!t || t <= 0) newErrors.clearingTime = "Clearing time must be positive";
-    if (t > 2.0) newErrors.clearingTime = "Clearing time >2s indicates sustained arc risk";
-    
+    if (t > 2.0) newErrors.clearingTime = ">2s indicates sustained arc risk";
     if (!D || D <= 0) newErrors.workingDistance = "Working distance must be positive";
-    if (D < 200) newErrors.workingDistance = "Working distance below 200mm not recommended";
-    
+    if (D < 200) newErrors.workingDistance = "Below 200mm not recommended";
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const performCalculation = () => {
     if (!validateInputs()) return;
-    
+
     const inputs = {
       voltage: parseFloat(voltage),
       boltedFaultCurrent: parseFloat(faultCurrent),
@@ -94,7 +112,7 @@ const ArcFlashCalculator = () => {
       enclosureType,
       conductorGap: useAutoGap ? undefined : parseFloat(conductorGap)
     };
-    
+
     const calcResult = calculateArcFlash(inputs);
     setResult(calcResult);
     setWhatIfDistance(parseFloat(workingDistance));
@@ -103,7 +121,7 @@ const ArcFlashCalculator = () => {
 
   const calculateWhatIf = (newDistance?: number, newTime?: number) => {
     if (!result) return null;
-    
+
     const inputs = {
       voltage: parseFloat(voltage),
       boltedFaultCurrent: parseFloat(faultCurrent),
@@ -114,23 +132,23 @@ const ArcFlashCalculator = () => {
       enclosureType,
       conductorGap: useAutoGap ? undefined : parseFloat(conductorGap)
     };
-    
+
     return calculateArcFlash(inputs);
   };
 
   const getMostImpactfulLever = () => {
     if (!result) return "";
-    
+
     const baseEnergy = result.incidentEnergy;
     const timeReduced = calculateWhatIf(undefined, whatIfTime * 0.5);
     const distanceIncreased = calculateWhatIf(whatIfDistance * 1.5, undefined);
-    
+
     if (!timeReduced || !distanceIncreased) return "";
-    
+
     const timeReduction = ((baseEnergy - timeReduced.incidentEnergy) / baseEnergy) * 100;
     const distanceReduction = ((baseEnergy - distanceIncreased.incidentEnergy) / baseEnergy) * 100;
-    
-    return timeReduction > distanceReduction 
+
+    return timeReduction > distanceReduction
       ? `Reducing clearing time by 50% would decrease energy by ${timeReduction.toFixed(0)}%`
       : `Increasing working distance by 50% would decrease energy by ${distanceReduction.toFixed(0)}%`;
   };
@@ -149,412 +167,335 @@ const ArcFlashCalculator = () => {
     setErrors({});
   };
 
+  const canCalculate = faultCurrent && clearingTime && workingDistance;
+
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
-      <CardHeader>
-        <div className="flex items-center gap-2">
-          <AlertTriangle className="h-5 w-5 text-elec-yellow" />
-          <CardTitle>Arc Flash Energy Calculator</CardTitle>
-        </div>
-        <CardDescription>
-          Calculate arc flash incident energy and determine minimum arc rating requirements according to IEEE 1584-2018 and BS 7671 18th Edition.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-6">
-          {/* Input Section */}
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium">System Voltage (V)</span>
-                  <RequiredFieldTooltip content="System line-to-line voltage. IEEE 1584 valid range: 208-15000V. Common UK values: 415V (3-phase), 230V (single-phase)." />
-                </div>
-                <MobileSelect
-                  label=""
-                  placeholder="Select voltage"
-                  value={voltage}
-                  onValueChange={setVoltage}
-                  options={voltageOptions}
-                  error={errors.voltage}
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <span className="text-sm font-medium">Equipment Type</span>
-                <MobileSelect
-                  label=""
-                  placeholder="Select equipment"
-                  value={equipmentType}
-                  onValueChange={(value) => setEquipmentType(value as EquipmentType)}
-                  options={Object.entries(EQUIPMENT_TYPE_LABELS).map(([key, label]) => ({
-                    value: key,
-                    label
-                  }))}
-                />
-              </div>
-            </div>
+    <div className="space-y-4">
+      <CalculatorCard
+        category="protection"
+        title="Arc Flash Energy Calculator"
+        description="Calculate arc flash incident energy and PPE requirements per IEEE 1584-2018"
+      >
+        <CalculatorInputGrid columns={2}>
+          <CalculatorSelect
+            label="System Voltage"
+            value={voltage}
+            onChange={setVoltage}
+            options={voltageOptions}
+            error={errors.voltage}
+          />
+          <CalculatorSelect
+            label="Equipment Type"
+            value={equipmentType}
+            onChange={(value) => setEquipmentType(value as EquipmentType)}
+            options={equipmentOptions}
+          />
+        </CalculatorInputGrid>
 
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-medium">Prospective Fault Current (A)</span>
-                <RequiredFieldTooltip content="Available short-circuit current at the point of work. Obtain from electrical drawings or fault studies. Typical range: 1-100kA." />
-              </div>
-              <MobileInput
-                label=""
-                type="text"
-                inputMode="decimal"
-                value={faultCurrent}
-                onChange={(e) => setFaultCurrent(e.target.value)}
-                placeholder="25000"
-                unit="A"
-                error={errors.faultCurrent}
-              />
-            </div>
+        <CalculatorInput
+          label="Prospective Fault Current"
+          unit="A"
+          type="text"
+          inputMode="decimal"
+          value={faultCurrent}
+          onChange={setFaultCurrent}
+          placeholder="25000"
+          error={errors.faultCurrent}
+          hint="Available short-circuit current at work point"
+        />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium">Arc Clearing Time (s)</span>
-                  <RequiredFieldTooltip content="Time for protective device to clear the arc fault. Check device time-current curves. Values >2s indicate sustained arc risk." />
-                </div>
-                <MobileInput
-                  label=""
-                  type="text"
-                  inputMode="decimal"
-                  step="0.01"
-                  value={clearingTime}
-                  onChange={(e) => setClearingTime(e.target.value)}
-                  placeholder="0.1"
-                  unit="s"
-                  error={errors.clearingTime}
+        <CalculatorInputGrid columns={2}>
+          <CalculatorInput
+            label="Arc Clearing Time"
+            unit="s"
+            type="text"
+            inputMode="decimal"
+            value={clearingTime}
+            onChange={setClearingTime}
+            placeholder="0.1"
+            error={errors.clearingTime}
+            hint="Time for protective device to clear"
+          />
+          <CalculatorInput
+            label="Working Distance"
+            unit="mm"
+            type="text"
+            inputMode="decimal"
+            value={workingDistance}
+            onChange={setWorkingDistance}
+            placeholder="450"
+            error={errors.workingDistance}
+            hint="Distance from worker to arc source"
+          />
+        </CalculatorInputGrid>
+
+        <CalculatorSelect
+          label="Electrode Configuration"
+          value={electrodeConfig}
+          onChange={(value) => setElectrodeConfig(value as ElectrodeConfig)}
+          options={electrodeOptions}
+        />
+
+        <div
+          className="p-4 rounded-xl border space-y-3"
+          style={{ borderColor: `${config.gradientFrom}30`, background: `${config.gradientFrom}08` }}
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-medium text-white">Conductor Gap</span>
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-white/60">Auto</span>
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={useAutoGap}
+                  onChange={(e) => setUseAutoGap(e.target.checked)}
+                  className="sr-only peer"
                 />
-              </div>
-              
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium">Working Distance (mm)</span>
-                  <RequiredFieldTooltip content="Distance from worker's face/chest to potential arc source. Minimum 200mm recommended. Equipment defaults applied automatically." />
-                </div>
-                <MobileInput
-                  label=""
-                  type="text"
-                  inputMode="decimal"
-                  value={workingDistance}
-                  onChange={(e) => setWorkingDistance(e.target.value)}
-                  placeholder="450"
-                  unit="mm"
-                  error={errors.workingDistance}
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <span className="text-sm font-medium">Electrode Configuration</span>
-              <MobileSelect
-                label=""
-                placeholder="Select configuration"
-                value={electrodeConfig}
-                onValueChange={(value) => setElectrodeConfig(value as ElectrodeConfig)}
-                options={Object.entries(ELECTRODE_CONFIG_LABELS).map(([key, label]) => ({
-                  value: key,
-                  label
-                }))}
-              />
-            </div>
-
-            <div className="bg-elec-dark/30 p-4 rounded-lg space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">Conductor Gap</span>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs text-muted-foreground">Auto</span>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={useAutoGap}
-                      onChange={(e) => setUseAutoGap(e.target.checked)}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-elec-yellow"></div>
-                  </label>
-                </div>
-              </div>
-              
-              {!useAutoGap && (
-                <MobileInput
-                  label="Conductor Gap (mm)"
-                  type="text"
-                  inputMode="decimal"
-                  value={conductorGap}
-                  onChange={(e) => setConductorGap(e.target.value)}
-                  placeholder="25"
-                  unit="mm"
-                />
-              )}
-            </div>
-
-            <div className="flex flex-col gap-3 pt-2">
-              <MobileButton 
-                onClick={performCalculation} 
-                variant="elec"
-                size="wide"
-                className="w-full"
-                disabled={Object.keys(errors).length > 0}
-              >
-                <Calculator className="h-4 w-4 mr-2" />
-                Calculate Arc Flash
-              </MobileButton>
-              <MobileButton 
-                onClick={reset} 
-                variant="outline" 
-                size="default"
-                className="w-full"
-              >
-                <RotateCcw className="h-4 w-4 mr-2" />
-                Reset
-              </MobileButton>
+                <div className="w-11 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-500"></div>
+              </label>
             </div>
           </div>
 
-          {/* Results Section */}
-          <div className="space-y-4">
-            <div className="rounded-lg bg-elec-dark p-4 sm:p-6 min-h-[400px]">
-              {result ? (
-                  <div className="space-y-4">
-                    <div className="text-center">
-                      <h3 className="text-lg font-semibold text-elec-yellow mb-2">Arc Flash Analysis</h3>
-                      <div className="flex flex-col gap-2 mb-4">
-                        <Badge 
-                          variant={result.incidentEnergy <= 8 ? "default" : result.incidentEnergy <= 25 ? "secondary" : "destructive"}
-                          className="mx-auto"
-                        >
-                          {result.isUnrealistic ? "Dangerous Energy Level" : `Min Arc Rating: ${result.minArcRatingRequired} cal/cm²`}
-                        </Badge>
-                        {result.isUnrealistic && (
-                          <Badge variant="destructive" className="mx-auto text-xs">
-                            ⚠ Exceeds practical PPE limits
-                          </Badge>
-                        )}
-                      </div>
-                      
-                      {result.warnings.length > 0 && (
-                        <div className="text-xs text-orange-400 mb-2">
-                          {result.warnings.map((warning, i) => (
-                            <div key={i}>⚠ {warning}</div>
-                          ))}
-                        </div>
-                      )}
-                      
-                      {result.advisoryMessages.length > 0 && (
-                        <div className="text-xs text-blue-400 mb-2">
-                          {result.advisoryMessages.map((message, i) => (
-                            <div key={i}>💡 {message}</div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  
-                  <Separator />
-                  
-                  <div className="space-y-4 text-sm">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="text-center sm:text-left">
-                        <span className="text-muted-foreground block mb-1">Incident Energy:</span>
-                        <div className="font-mono text-elec-yellow text-xl sm:text-2xl font-bold">
-                          {result.incidentEnergy.toFixed(2)}
-                        </div>
-                        <div className="text-xs text-muted-foreground">
-                          cal/cm² ({result.incidentEnergyJoules.toFixed(1)} J/cm²)
-                        </div>
-                      </div>
-                      
-                      <div className="text-center sm:text-left">
-                        <span className="text-muted-foreground block mb-1">Arc Flash Boundary:</span>
-                        <div className="font-mono text-elec-yellow text-xl sm:text-2xl font-bold">
-                          {Math.round(result.arcFlashBoundary)}
-                        </div>
-                        <div className="text-xs text-muted-foreground">
-                          mm ({(result.arcFlashBoundary/1000).toFixed(2)} m)
-                        </div>
-                      </div>
-                    </div>
+          {!useAutoGap && (
+            <CalculatorInput
+              label="Conductor Gap"
+              unit="mm"
+              type="text"
+              inputMode="decimal"
+              value={conductorGap}
+              onChange={setConductorGap}
+              placeholder="25"
+            />
+          )}
+        </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                      <div className="text-center sm:text-left">
-                        <span className="text-muted-foreground block mb-1">Arcing Current:</span>
-                        <div className="font-mono text-elec-yellow text-lg font-semibold">
-                          {result.arcingCurrent.toFixed(1)} kA
-                        </div>
-                      </div>
+        <CalculatorActions
+          category="protection"
+          onCalculate={performCalculation}
+          onReset={reset}
+          isDisabled={!canCalculate}
+          calculateLabel="Calculate Arc Flash"
+        />
+      </CalculatorCard>
 
-                      <div className="text-center sm:text-left">
-                        <span className="text-muted-foreground block mb-1">Method:</span>
-                        <div className="text-xs text-muted-foreground">
-                          {result.calculationMethod}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+      {/* Critical Warning */}
+      <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/30">
+        <div className="flex items-start gap-2">
+          <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 shrink-0" />
+          <p className="text-sm text-red-200">
+            <strong>Warning:</strong> This calculation is for estimation only.
+            Formal arc flash studies must be conducted by qualified engineers.
+          </p>
+        </div>
+      </div>
 
-                   <Separator />
+      {/* Results */}
+      {result && (
+        <div className="space-y-4 animate-fade-in">
+          <CalculatorResult category="protection">
+            <div className="text-center pb-3 border-b border-white/10">
+              <p className="text-sm text-white/60 mb-1">Incident Energy</p>
+              <div
+                className="text-4xl font-bold bg-clip-text text-transparent"
+                style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}
+              >
+                {result.incidentEnergy.toFixed(2)}
+              </div>
+              <p className="text-sm text-white/60">cal/cm² ({result.incidentEnergyJoules.toFixed(1)} J/cm²)</p>
+              <Badge
+                variant="outline"
+                className={cn(
+                  "mt-2",
+                  result.incidentEnergy <= 8 ? "border-green-500/50 text-green-400" :
+                  result.incidentEnergy <= 25 ? "border-yellow-500/50 text-yellow-400" :
+                  "border-red-500/50 text-red-400"
+                )}
+              >
+                {result.isUnrealistic ? "Dangerous Energy Level" : `Min Arc Rating: ${result.minArcRatingRequired} cal/cm²`}
+              </Badge>
+            </div>
 
-                   <div>
-                     <div className="flex items-center gap-2 mb-2">
-                       <Shield className="h-4 w-4 text-blue-400" />
-                       <span className="font-medium">PPE Requirements:</span>
-                     </div>
-                     {result.isUnrealistic ? (
-                       <div className="bg-red-900/20 p-3 rounded-lg border border-red-500/30">
-                         <p className="text-sm text-red-300 mb-2">
-                           ⚠ <strong>Energy level exceeds safe PPE limits</strong>
-                         </p>
-                         <p className="text-xs text-red-400">
-                           Consider: De-energisation • Remote operation • Engineering controls
-                         </p>
-                       </div>
-                     ) : (
-                       <ul className="space-y-2 text-sm">
-                         {result.ppeRecommendations.map((rec, index) => (
-                           <li key={index} className="flex items-start gap-3">
-                             <span className="flex-shrink-0 w-2 h-2 bg-blue-400 rounded-full mt-2"></span>
-                             <span className="text-muted-foreground">{rec}</span>
-                           </li>
-                         ))}
-                       </ul>
-                     )}
-                     {result.incidentEnergy > 8 && !result.isUnrealistic && (
-                       <div className="mt-2 text-xs text-yellow-400">
-                         Note: PPE rating is thermal protection only. Blast pressure effects not included.
-                       </div>
-                     )}
-                   </div>
+            {result.warnings.length > 0 && (
+              <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 space-y-1">
+                {result.warnings.map((warning, i) => (
+                  <p key={i} className="text-xs text-amber-300 flex items-start gap-2">
+                    <AlertTriangle className="h-3 w-3 mt-0.5 shrink-0" />
+                    {warning}
+                  </p>
+                ))}
+              </div>
+            )}
 
-                  {getMostImpactfulLever() && (
-                    <>
-                      <Separator />
-                      <div className="bg-elec-yellow/10 p-3 sm:p-4 rounded-lg">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Lightbulb className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                          <span className="text-sm font-medium">Most Impactful Change:</span>
-                        </div>
-                        <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                          {getMostImpactfulLever()}
-                        </p>
-                      </div>
-                    </>
-                  )}
+            <ResultsGrid columns={2}>
+              <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-center">
+                <p className="text-xs text-white/60 mb-1">Arc Flash Boundary</p>
+                <p className="text-xl font-bold text-white font-mono">{Math.round(result.arcFlashBoundary)}mm</p>
+                <p className="text-xs text-white/50">({(result.arcFlashBoundary/1000).toFixed(2)}m)</p>
+              </div>
+              <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-center">
+                <p className="text-xs text-white/60 mb-1">Arcing Current</p>
+                <p className="text-xl font-bold text-white font-mono">{result.arcingCurrent.toFixed(1)} kA</p>
+                <p className="text-xs text-white/50">{result.calculationMethod}</p>
+              </div>
+            </ResultsGrid>
 
-                  {/* What-if Section */}
-                  <Separator />
-                  <div className="space-y-4">
-                    <h4 className="text-sm font-medium flex items-center gap-2">
-                      <HelpCircle className="h-4 w-4 text-elec-yellow" />
-                      What-if Analysis
-                    </h4>
-                    
-                    <div className="space-y-4">
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="text-muted-foreground">Working Distance:</span>
-                          <span className="font-mono text-elec-yellow">{whatIfDistance}mm</span>
-                        </div>
-                        <Slider
-                          value={[whatIfDistance]}
-                          onValueChange={(value) => setWhatIfDistance(value[0])}
-                          min={200}
-                          max={1200}
-                          step={50}
-                          className="w-full"
-                        />
-                      </div>
-                      
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="text-muted-foreground">Clearing Time:</span>
-                          <span className="font-mono text-elec-yellow">{whatIfTime.toFixed(2)}s</span>
-                        </div>
-                        <Slider
-                          value={[whatIfTime]}
-                          onValueChange={(value) => setWhatIfTime(value[0])}
-                          min={0.02}
-                          max={2.0}
-                          step={0.01}
-                          className="w-full"
-                        />
-                      </div>
-                      
-                      {(() => {
-                        const whatIfResult = calculateWhatIf(whatIfDistance, whatIfTime);
-                        return whatIfResult ? (
-                          <div className="bg-elec-dark/50 p-3 rounded-lg border border-elec-yellow/20">
-                            <div className="text-center">
-                              <div className="text-sm text-muted-foreground mb-1">What-if Energy:</div>
-                              <div className="font-mono text-elec-yellow text-lg font-semibold">
-                                {whatIfResult.incidentEnergy.toFixed(2)} cal/cm²
-                              </div>
-                              <div className="text-xs text-muted-foreground">
-                                PPE Category {whatIfResult.ppeCategory}
-                              </div>
-                            </div>
-                          </div>
-                        ) : null;
-                      })()}
-                    </div>
-                  </div>
+            {/* PPE Requirements */}
+            <div className="pt-3 border-t border-white/10">
+              <div className="flex items-center gap-2 mb-2">
+                <Shield className="h-4 w-4" style={{ color: config.gradientFrom }} />
+                <span className="font-medium text-white text-sm">PPE Requirements</span>
+              </div>
+              {result.isUnrealistic ? (
+                <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/30">
+                  <p className="text-sm text-red-300 mb-2">
+                    <strong>Energy level exceeds safe PPE limits</strong>
+                  </p>
+                  <p className="text-xs text-red-200">
+                    Consider: De-energisation, Remote operation, Engineering controls
+                  </p>
                 </div>
               ) : (
-                <div className="flex items-center justify-center h-full text-muted-foreground">
-                  Enter system parameters to calculate arc flash energy
-                </div>
+                <ul className="space-y-1">
+                  {result.ppeRecommendations.map((rec, index) => (
+                    <li key={index} className="flex items-start gap-2 text-sm text-white/70">
+                      <span className="w-1.5 h-1.5 rounded-full mt-2 shrink-0" style={{ backgroundColor: config.gradientFrom }} />
+                      {rec}
+                    </li>
+                  ))}
+                </ul>
               )}
             </div>
 
-            <Alert className="border-red-500/20 bg-red-500/10">
-              <AlertTriangle className="h-4 w-4 text-red-500 flex-shrink-0" />
-              <AlertDescription className="text-red-200">
-                <strong>Warning:</strong> This calculation is for estimation only. 
-                Formal arc flash studies must be conducted by qualified engineers for safety compliance.
-              </AlertDescription>
-            </Alert>
+            {/* Most Impactful Change */}
+            {getMostImpactfulLever() && (
+              <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
+                <div className="flex items-center gap-2 mb-1">
+                  <Lightbulb className="h-4 w-4 text-amber-400" />
+                  <span className="text-sm font-medium text-amber-300">Most Impactful Change</span>
+                </div>
+                <p className="text-xs text-amber-200">{getMostImpactfulLever()}</p>
+              </div>
+            )}
+          </CalculatorResult>
+
+          {/* What-if Analysis */}
+          <Collapsible open={showWhatIf} onOpenChange={setShowWhatIf}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#a78bfa15' }}>
+              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                <div className="flex items-center gap-3">
+                  <HelpCircle className="h-4 w-4 text-purple-400" />
+                  <span className="text-sm sm:text-base font-medium text-purple-300">What-if Analysis</span>
+                </div>
+                <ChevronDown className={cn(
+                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  showWhatIf && "rotate-180"
+                )} />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="p-4 pt-0 space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-white/60">Working Distance:</span>
+                    <span className="font-mono text-purple-400">{whatIfDistance}mm</span>
+                  </div>
+                  <Slider
+                    value={[whatIfDistance]}
+                    onValueChange={(value) => setWhatIfDistance(value[0])}
+                    min={200}
+                    max={1200}
+                    step={50}
+                    className="w-full"
+                  />
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-white/60">Clearing Time:</span>
+                    <span className="font-mono text-purple-400">{whatIfTime.toFixed(2)}s</span>
+                  </div>
+                  <Slider
+                    value={[whatIfTime]}
+                    onValueChange={(value) => setWhatIfTime(value[0])}
+                    min={0.02}
+                    max={2.0}
+                    step={0.01}
+                    className="w-full"
+                  />
+                </div>
+
+                {(() => {
+                  const whatIfResult = calculateWhatIf(whatIfDistance, whatIfTime);
+                  return whatIfResult ? (
+                    <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 text-center">
+                      <p className="text-xs text-white/60 mb-1">What-if Energy</p>
+                      <p className="text-xl font-bold text-purple-400 font-mono">
+                        {whatIfResult.incidentEnergy.toFixed(2)} cal/cm²
+                      </p>
+                      <p className="text-xs text-white/50">PPE Category {whatIfResult.ppeCategory}</p>
+                    </div>
+                  ) : null;
+                })()}
+              </CollapsibleContent>
+            </div>
+          </Collapsible>
+        </div>
+      )}
+
+      {/* Why This Matters */}
+      <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+        <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
+          <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+            <div className="flex items-center gap-3">
+              <Info className="h-4 w-4 text-blue-400" />
+              <span className="text-sm sm:text-base font-medium text-blue-300">Why This Matters</span>
+            </div>
+            <ChevronDown className={cn(
+              "h-4 w-4 text-white/40 transition-transform duration-200",
+              showGuidance && "rotate-180"
+            )} />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="p-4 pt-0 space-y-2 text-sm text-blue-200/80">
+            <p>• Arc flash assessment required for electrical work on live systems above 50V AC</p>
+            <p>• Energy calculations determine minimum PPE requirements</p>
+            <p>• Arc flash boundary calculated at 1.2 cal/cm² threshold per UK standards</p>
+            <p>• High energy readings (&gt;40 cal/cm²) may indicate calculation errors</p>
+            <p>• Consider de-energisation as primary control for high-energy situations</p>
+          </CollapsibleContent>
+        </div>
+      </Collapsible>
+
+      {/* Regulations */}
+      <Collapsible open={showRegs} onOpenChange={setShowRegs}>
+        <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
+          <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+            <div className="flex items-center gap-3">
+              <BookOpen className="h-4 w-4 text-amber-400" />
+              <span className="text-sm sm:text-base font-medium text-amber-300">Regulations & Standards</span>
+            </div>
+            <ChevronDown className={cn(
+              "h-4 w-4 text-white/40 transition-transform duration-200",
+              showRegs && "rotate-180"
+            )} />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="p-4 pt-0 space-y-2 text-sm text-amber-200/80">
+            <p><strong className="text-amber-300">IEEE 1584-2018:</strong> International standard for arc flash calculations</p>
+            <p><strong className="text-amber-300">NFPA 70E:</strong> PPE categories and safety requirements</p>
+            <p><strong className="text-amber-300">UK EAWR 1989:</strong> Electrical safety regulations</p>
+            <p><strong className="text-amber-300">BS 7671 (18th Ed):</strong> UK wiring regulations for fault clearing</p>
+          </CollapsibleContent>
+        </div>
+      </Collapsible>
+
+      {/* Formula Reference */}
+      <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
+        <div className="flex items-start gap-2">
+          <Info className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
+          <div className="text-sm text-orange-200">
+            <p><strong>IEEE 1584-2018:</strong> E = 4.184 × Cf × En × (t/0.2) × (610^x / D^x)</p>
+            <p className="text-xs mt-1">Where E = incident energy (cal/cm²), t = clearing time, D = working distance</p>
           </div>
         </div>
-        
-        {/* Educational Content */}
-        <div className="grid grid-cols-1 gap-6 mt-8">
-          <WhyThisMatters
-            title="BS 7671 18th Edition Compliance"
-            points={[
-              "Arc flash assessment required for electrical work on live systems above 50V AC",
-              "Energy calculations determine minimum PPE requirements and safe working procedures", 
-              "Arc flash boundary calculated at 1.2 cal/cm² threshold per UK standards",
-              "High energy readings (>40 cal/cm²) indicate potential calculation errors or extremely hazardous conditions",
-              "Results should be reviewed by competent person and documented",
-              "Consider de-energisation as primary control measure for high-energy situations"
-            ]}
-          />
-          
-          <InfoBox
-            title="Regulations & Standards"
-            icon={<Info className="h-5 w-5 text-elec-yellow" />}
-            as="section"
-          >
-            <div className="space-y-4 text-sm text-elec-light">
-              <div className="space-y-2">
-                <div><strong className="text-elec-yellow">IEEE 1584-2018:</strong> International standard for arc flash calculations providing empirical models for incident energy and arc flash boundary determination.</div>
-                <div><strong className="text-elec-yellow">NFPA 70E:</strong> PPE categories and safety requirements for electrical work (US standard, often referenced in UK).</div>
-                <div><strong className="text-elec-yellow">UK EAWR 1989:</strong> Electrical safety regulations requiring competent persons and appropriate precautions.</div>
-                <div><strong className="text-elec-yellow">BS 7671 (18th Edition):</strong> UK wiring regulations requiring protective devices for fault clearing.</div>
-              </div>
-              <div className="border-t border-elec-yellow/20 pt-3">
-                <p className="text-xs text-elec-light/70">
-                  <strong>Important:</strong> This tool provides estimates only. Professional arc flash studies by qualified engineers are required for safety-critical applications and formal risk assessments.
-                </p>
-              </div>
-            </div>
-          </InfoBox>
-        </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

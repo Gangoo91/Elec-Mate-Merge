@@ -1,5 +1,5 @@
 import React from 'react';
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { BookOpen, Clock, Target, CheckCircle, AlertCircle, Trophy } from "lucide-react";
@@ -90,7 +90,7 @@ const ExamPreparation = () => {
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">
       {/* Back Button */}
-      <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
+      <SmartBackButton />
 
       {/* Header */}
       <div className="space-y-1">

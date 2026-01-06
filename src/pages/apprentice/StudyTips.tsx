@@ -1,5 +1,5 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { BookOpen, Clock, Target, Brain } from "lucide-react";
@@ -91,7 +91,7 @@ const StudyTips = () => {
         <p className="text-sm sm:text-base text-muted-foreground text-center max-w-2xl mb-3 sm:mb-4">
           Proven revision strategies for 18th Edition and Level 3 exams, plus free resources to help you succeed
         </p>
-        <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
+        <SmartBackButton />
       </div>
 
       <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">

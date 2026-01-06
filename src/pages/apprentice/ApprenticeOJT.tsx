@@ -1,6 +1,6 @@
 
 import React from "react";
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import { Clock, FileText, Target, Award, BarChart3 } from "lucide-react";
 import TimeTrackingTab from "@/components/apprentice/ojt/TimeTrackingTab";
@@ -27,7 +27,7 @@ const ApprenticeOJT = () => {
         <p className="text-muted-foreground text-center max-w-2xl mb-4">
           Comprehensive portfolio building and management of your 20% off-the-job training requirements, evidence tracking, and apprenticeship progression
         </p>
-        <BackButton customUrl="/apprentice" label="Back to Apprentice Hub" />
+        <SmartBackButton />
       </div>
 
       <div className="w-full space-y-6">

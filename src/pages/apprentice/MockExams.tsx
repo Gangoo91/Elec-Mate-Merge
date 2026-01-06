@@ -7,6 +7,7 @@ import { FileText, Clock, Award, CheckCircle, Star, Zap, Lock, ArrowRight, Gradu
 import { Link } from "react-router-dom";
 import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import { useAuth } from "@/contexts/AuthContext";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 
 interface MockExam {
   id: string;
@@ -137,7 +138,8 @@ const ExamCard = ({ exam, isSubscribed }: { exam: MockExam; isSubscribed: boolea
         ) : (
           <Button
             asChild
-            className="w-full bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold group/btn"
+            variant="accent"
+            className="w-full font-semibold group/btn"
           >
             <Link to={`/apprentice/study/mock-exams/${exam.id}`}>
               Start Exam
@@ -191,12 +193,7 @@ const MockExams = () => {
             Prepare for your qualifications with practice exams and assessments
           </p>
         </div>
-        <Link to="/apprentice/study" className="shrink-0">
-          <Button variant="outline" className="border-elec-yellow/30 hover:bg-elec-yellow/10">
-            <FileText className="mr-2 h-4 w-4" />
-            Back to Study Centre
-          </Button>
-        </Link>
+        <SmartBackButton className="shrink-0" />
       </div>
 
       {/* Stats Overview */}

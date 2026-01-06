@@ -113,11 +113,11 @@ const Module7Section6_1 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-0 text-sm sm:text-base" asChild>
+          <Button variant="ghost" className="text-white hover:text-white p-0 text-sm sm:text-base" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 7.6
@@ -131,62 +131,62 @@ const Module7Section6_1 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-            <div className="p-1.5 sm:p-2 rounded-lg bg-card">
-              <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
+            <div className="p-1.5 sm:p-2 rounded-lg ">
+              <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 text-xs sm:text-sm">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs sm:text-sm">
               Section 7.6.1
             </Badge>
           </div>
-          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Clear and Accurate Recording of Observations and Test Findings
           </h1>
-          <p className="text-muted-foreground text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Importance of accurate test result documentation and record keeping practices
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-            <Target className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground">Spot it in 30 Seconds</h2>
+            <Target className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 sm:mb-3">In 30 seconds</p>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Clear, legible handwriting or digital entries</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>All measurements recorded to appropriate precision</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Test instruments calibrated and identified</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Environmental conditions and observations noted</span>
                 </li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/20">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/20">
               <p className="font-medium mb-2 sm:mb-3">Spot it / Use it / Check it</p>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Spot:</strong> Incomplete records, illegible writing, missing signatures, rounded values</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Use:</strong> Structured forms, calibrated instruments, permanent ink, systematic approach</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Check:</strong> All fields completed, calculations verified, records linked to circuit references</span>
                 </li>
               </ul>
@@ -195,18 +195,18 @@ const Module7Section6_1 = () => {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Introduction</h2>
-          <p className="text-sm sm:text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Introduction</h2>
+          <p className="text-sm sm:text-base text-white mb-4">
             Accurate recording of test observations and findings is fundamental to electrical installation work. Poor documentation can lead to safety risks, legal issues, and invalidate certifications. This section covers the essential practices for maintaining clear, accurate, and legally compliant records of all electrical testing activities. Every test result, observation, and measurement must be recorded with precision and clarity to ensure safety and regulatory compliance.
           </p>
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Learning Outcomes</h2>
-          <p className="text-sm sm:text-base text-foreground mb-3 sm:mb-4">By the end of this subsection, you should be able to:</p>
-          <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Learning Outcomes</h2>
+          <p className="text-sm sm:text-base text-white mb-3 sm:mb-4">By the end of this subsection, you should be able to:</p>
+          <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-white">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" />
               <span>Explain why accurate recording is essential for safety and compliance</span>
@@ -227,18 +227,18 @@ const Module7Section6_1 = () => {
         </Card>
 
         {/* Content / Learning */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Content / Learning</h2>
 
           {/* Section 1 — Legal Requirements and Standards */}
           <section className="mb-6 sm:mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-emerald-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-elec-yellow ">
               <div className="flex items-start gap-3 mb-4">
-                <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-emerald-400 dark:text-emerald-400 mb-4 text-base">Legal Requirements and Standards</h3>
+                  <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-4 text-base">Legal Requirements and Standards</h3>
                   
-                  <div className="space-y-4 text-xs sm:text-sm text-foreground">
+                  <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p>BS 7671 requires that every electrical installation be provided with appropriate documentation. This includes test results, inspection schedules, and certificates that demonstrate compliance with regulations. These records serve as legal evidence that proper testing procedures were followed and installations meet safety standards.</p>
                     
                     <p>The Electricity at Work Regulations 1989 place duties on duty holders to maintain electrical systems in a safe condition. Accurate test records are essential evidence that these duties are being fulfilled. Without proper documentation, it becomes impossible to demonstrate due diligence in safety management.</p>
@@ -262,13 +262,13 @@ const Module7Section6_1 = () => {
 
           {/* Section 2 — Essential Information to Record */}
           <section className="mb-6 sm:mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-green-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-green-500 ">
               <div className="flex items-start gap-3 mb-4">
                 <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                 <div className="flex-1">
                   <h3 className="font-semibold text-green-600 dark:text-green-400 mb-4 text-base">Essential Information to Record</h3>
                   
-                  <div className="space-y-4 text-xs sm:text-sm text-foreground">
+                  <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p>All test measurements must be recorded exactly as displayed on instruments, including decimal places and units. Never round values or approximate readings, as even small variations can indicate developing faults that could become dangerous if not detected early.</p>
                     
                     <p>Environmental conditions should be noted when they might affect test results. This includes ambient temperature, humidity levels, and any adverse conditions such as dampness, dust, or pollution that could influence readings or create additional safety considerations.</p>
@@ -292,13 +292,13 @@ const Module7Section6_1 = () => {
 
           {/* Section 3 — Documentation Best Practices */}
           <section className="mb-6 sm:mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-amber-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-amber-500 ">
               <div className="flex items-start gap-3 mb-4">
                 <span className="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                 <div className="flex-1">
                   <h3 className="font-semibold text-amber-600 dark:text-amber-400 mb-4 text-base">Documentation Best Practices</h3>
                   
-                  <div className="space-y-4 text-xs sm:text-sm text-foreground">
+                  <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p>Use permanent ink for all written records, as pencil can fade or be erased accidentally. Handwriting must be clear and legible - if others cannot read your records, they are of little value. Consider using capital letters for critical information such as circuit references and test results.</p>
                     
                     <p>Digital recording systems are increasingly common and offer advantages including automatic date/time stamping, reduced transcription errors, and easy storage and retrieval. Many modern test instruments can transfer results directly to smartphones or tablets, eliminating manual copying.</p>
@@ -322,13 +322,13 @@ const Module7Section6_1 = () => {
 
           {/* Section 4 — Common Mistakes and Quality Control */}
           <section className="mb-6 sm:mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-red-500 bg-card">
+            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-red-500 ">
               <div className="flex items-start gap-3 mb-4">
                 <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-red-600 dark:text-emerald-400 mb-4 text-base">Common Mistakes and Quality Control</h3>
+                  <h3 className="font-semibold text-red-600 dark:text-elec-yellow mb-4 text-base">Common Mistakes and Quality Control</h3>
                   
-                  <div className="space-y-4 text-xs sm:text-sm text-foreground">
+                  <div className="space-y-4 text-xs sm:text-sm text-white">
                     <p>Vague or incomplete descriptions are a major problem. Writing "socket not working" provides little useful information. Instead, record specific details: "Socket outlet in bedroom 2: no output voltage measured, loose neutral connection found at socket terminals, connection remade and tested satisfactory."</p>
                     
                     <p>Missing signatures, dates, or incomplete test schedules can invalidate entire certificates. Always check that all required information has been completed before leaving site. Returning to complete missing information later can be costly and may compromise the validity of results.</p>
@@ -352,49 +352,49 @@ const Module7Section6_1 = () => {
         </Card>
 
         {/* Real-World Applications */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Real-World Applications</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Real-World Applications</h2>
           
           <div className="space-y-6">
             <div className="border border-border/30 rounded-lg p-4 bg-muted/30">
-              <h4 className="font-semibold text-red-600 dark:text-emerald-400 mb-3">❌ Poor Practice Example</h4>
-              <p className="text-xs sm:text-sm text-foreground mb-4">
+              <h4 className="font-semibold text-red-600 dark:text-elec-yellow mb-3">❌ Poor Practice Example</h4>
+              <p className="text-xs sm:text-sm text-white mb-4">
                 An electrician completing periodic inspection of office building wrote "All circuits tested - satisfactory" without recording specific test values or circuit details. Three months later, a socket outlet failed causing a small fire. When questioned, the electrician could not prove which circuits had been tested or what results were obtained. The inadequate records provided no defence against negligence claims.
               </p>
               <div className="bg-card border border-red-500/20 rounded p-3">
-                <p className="text-xs text-foreground"><strong>Key Issues:</strong> No specific test results recorded, no circuit identification, no traceability, inadequate evidence of compliance</p>
+                <p className="text-xs text-white"><strong>Key Issues:</strong> No specific test results recorded, no circuit identification, no traceability, inadequate evidence of compliance</p>
               </div>
             </div>
 
             <div className="border border-border/30 rounded-lg p-4 bg-muted/30">
               <h4 className="font-semibold text-green-600 dark:text-green-400 mb-3">✅ Good Practice Example</h4>
-              <p className="text-xs sm:text-sm text-foreground mb-4">
+              <p className="text-xs sm:text-sm text-white mb-4">
                 During a domestic EICR, an electrician discovered a shower circuit with insulation resistance of 0.8 MΩ (below the 1 MΩ minimum). She recorded: "Shower circuit (Board A, Way 3): IR test L-E 0.8 MΩ @500V (below 1.0 MΩ min). Investigation revealed damaged cable in loft space. Cable replaced, circuit retested: IR L-E 150 MΩ, all other tests satisfactory." The detailed record provided clear evidence of the problem found, action taken, and satisfactory retest results.
               </p>
               <div className="bg-card border border-green-500/20 rounded p-3">
-                <p className="text-xs text-foreground"><strong>Key Strengths:</strong> Specific circuit identification, exact test values, clear description of fault and remedy, retest results recorded</p>
+                <p className="text-xs text-white"><strong>Key Strengths:</strong> Specific circuit identification, exact test values, clear description of fault and remedy, retest results recorded</p>
               </div>
             </div>
           </div>
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <div key={index} className="border border-border/30 rounded-lg p-4">
-                <h4 className="font-semibold text-foreground mb-2">{faq.question}</h4>
-                <p className="text-sm text-muted-foreground">{faq.answer}</p>
+                <h4 className="font-semibold text-white mb-2">{faq.question}</h4>
+                <p className="text-sm text-white">{faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Key Takeaways */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Key Takeaways</h2>
-          <div className="space-y-3 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Key Takeaways</h2>
+          <div className="space-y-3 text-xs sm:text-sm text-white">
             <div className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
               <span>Accurate documentation is a legal requirement under BS 7671 and the Electricity at Work Regulations</span>
@@ -419,8 +419,8 @@ const Module7Section6_1 = () => {
         </Card>
 
         {/* Test Your Knowledge */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Test Your Knowledge</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Test Your Knowledge</h2>
           <Quiz questions={quizQuestions} />
         </Card>
 

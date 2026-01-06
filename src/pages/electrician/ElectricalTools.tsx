@@ -3,14 +3,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Wrench, 
+import {
+  Wrench,
   Search,
-  ArrowLeft,
   Loader2,
   Package
 } from "lucide-react";
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { useToolCategories } from "@/hooks/useToolCategories";
 import EnhancedToolCategoryDisplay from "@/components/electrician-tools/EnhancedToolCategoryDisplay";
 import BatchToolsRefreshButton from "@/components/electrician-tools/BatchToolsRefreshButton";
@@ -48,11 +48,7 @@ const ElectricalTools = () => {
               queryClient.invalidateQueries({ queryKey: ['toolsData'] });
             }}
           />
-          <Link to="/electrician/business">
-            <Button variant="outline" className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" /> Back to Business Hub
-            </Button>
-          </Link>
+          <SmartBackButton />
         </div>
       </header>
 

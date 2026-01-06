@@ -132,11 +132,11 @@ const Module6Section3_4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6.3
@@ -150,62 +150,62 @@ const Module6Section3_4 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Shield className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Shield className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 6.3.4
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Proving Dead and Safe to Test
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Essential safe isolation procedures and proving dead techniques
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-8 p-6 bg-card border-border/20">
+        <Card className="mb-8 p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-6">
-            <Target className="w-6 h-6 text-foreground" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Spot it in 30 Seconds</h2>
+            <Target className="w-6 h-6 text-white" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-3">In 30 seconds</p>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Isolate → Lock off → Label → Prove tester → Test dead → Re-prove</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>GS38-compliant two-pole tester (no neon screwdrivers)</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Test all combinations: L–N, L–E, N–E at point of work</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Keep isolation key in your possession throughout work</span>
                 </li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/20">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/20">
               <p className="font-medium mb-3">Spot it / Use it / Check it</p>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Spot:</strong> Live circuits, faulty testers, backfed supplies, incorrect labels</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Use:</strong> Safe isolation procedure; proving unit before/after; lock-off devices</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Check:</strong> Circuit identity; tester function; all conductors dead; secure isolation</span>
                 </li>
               </ul>
@@ -214,21 +214,21 @@ const Module6Section3_4 = () => {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <p className="text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <p className="text-base text-white mb-4">
             Before any installation or maintenance work begins, electricians must ensure that circuits are dead and safe to work on. Failure to prove dead is one of the most common causes of electrical accidents.
           </p>
-          <p className="text-base text-foreground">
+          <p className="text-base text-white">
             This subsection explains how to correctly isolate, prove dead, and verify safety before touching conductors or equipment, following the requirements of the Electricity at Work Regulations and industry best practices.
           </p>
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-base text-foreground mb-4">By the end of this subsection, you will be able to:</p>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-base text-white mb-4">By the end of this subsection, you will be able to:</p>
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Explain the purpose of proving dead and its legal requirements.</li>
             <li>Follow the safe isolation procedure step by step.</li>
             <li>Use a GS38-compliant voltage tester and proving unit correctly.</li>
@@ -238,22 +238,22 @@ const Module6Section3_4 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* 1. Why Prove Dead? */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-3">Why Prove Dead?</p>
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Why Prove Dead?</p>
                     
                     <div className="space-y-4">
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Prevents Accidental Contact:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Prevents Accidental Contact:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Electric shock from live conductors can cause serious injury or death</li>
                            <li>Arc flash incidents can cause severe burns and blast injuries</li>
                            <li>Even low voltages can be lethal in certain conditions (wet hands, heart conditions)</li>
@@ -263,8 +263,8 @@ const Module6Section3_4 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Confirms Effective Isolation:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Confirms Effective Isolation:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Circuit labels may be incorrect due to modifications or poor maintenance</li>
                            <li>Circuits can be backfed through alternative supply routes</li>
                            <li>Isolators may be faulty or not fully disconnecting all poles</li>
@@ -274,8 +274,8 @@ const Module6Section3_4 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Legal and Regulatory Compliance:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Legal and Regulatory Compliance:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Electricity at Work Regulations 1989 - Regulation 4 requires systems to be dead before work</li>
                            <li>Health and Safety at Work Act 1974 - duty of care to prevent foreseeable harm</li>
                            <li>BS 7671 requirements for safe working practices</li>
@@ -302,16 +302,16 @@ const Module6Section3_4 = () => {
           {/* 2. Safe Isolation Procedure */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-orange-600 dark:text-emerald-400 mb-3">Safe Isolation Procedure (Step by Step)</p>
+                    <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-3">Safe Isolation Procedure (Step by Step)</p>
                     
                     <div className="space-y-4">
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Step 1: Identify the Correct Circuit</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Step 1: Identify the Correct Circuit</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Use circuit schedules, labels, and physical tracing to confirm circuit identity</li>
                            <li>Test switching operations to verify which circuits are controlled</li>
                            <li>Check for multiple supplies (emergency lighting, UPS systems)</li>
@@ -321,8 +321,8 @@ const Module6Section3_4 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Step 2: Switch Off the Supply at the Isolator</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Step 2: Switch Off the Supply at the Isolator</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Use the correct isolator - main switch, MCB, or dedicated isolator</li>
                            <li>Ensure all poles are disconnected (single-phase and three-phase)</li>
                            <li>Check the isolator is suitable for the load current</li>
@@ -332,8 +332,8 @@ const Module6Section3_4 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Step 3: Apply Lock-off Devices and Warning Notices</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Step 3: Apply Lock-off Devices and Warning Notices</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Use appropriate lock-off device: miniature lock-offs for MCBs, hasps for larger isolators</li>
                            <li>Apply your personal padlock - only you should have the key</li>
                            <li>Attach clear warning notices: "DANGER - MEN WORKING" or similar</li>
@@ -344,8 +344,8 @@ const Module6Section3_4 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Step 4: Prove Your Tester on a Proving Unit</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Step 4: Prove Your Tester on a Proving Unit</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Use a proving unit that provides a known voltage (typically 230V AC)</li>
                            <li>Check your two-pole voltage indicator reads the expected voltage</li>
                            <li>Verify the tester's audio and visual indicators work correctly</li>
@@ -355,8 +355,8 @@ const Module6Section3_4 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Step 5: Test Between Live, Neutral, and Earth at Point of Work</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Step 5: Test Between Live, Neutral, and Earth at Point of Work</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Test all combinations: L–N, L–E, N–E (and L1–L2, L2–L3, L3–L1 for three-phase)</li>
                            <li>Test at the exact point where work will be carried out</li>
                            <li>Hold test probes firmly against clean conductors or terminals</li>
@@ -367,8 +367,8 @@ const Module6Section3_4 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Step 6: Re-prove Your Tester on the Proving Unit</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Step 6: Re-prove Your Tester on the Proving Unit</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Immediately re-test the voltage indicator on the proving unit</li>
                            <li>Confirm it still reads the expected voltage correctly</li>
                            <li>This verifies the tester hasn't failed during the proving dead procedure</li>
@@ -395,7 +395,7 @@ const Module6Section3_4 = () => {
           {/* 3. GS38-Compliant Tester Use */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
@@ -403,8 +403,8 @@ const Module6Section3_4 = () => {
                     
                     <div className="space-y-4">
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Two-pole Voltage Indicators Only:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Two-pole Voltage Indicators Only:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Uses two separate probes to measure voltage between conductors</li>
                            <li>Provides clear indication of voltage presence through LED and audible signals</li>
                            <li>Self-checking circuitry that identifies internal faults</li>
@@ -414,8 +414,8 @@ const Module6Section3_4 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Prohibited Equipment:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Prohibited Equipment:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li><strong>Neon screwdrivers:</strong> Unreliable, can fail without indication, single-pole operation</li>
                            <li><strong>Voltage pens:</strong> Prone to false readings, affected by electromagnetic fields</li>
                            <li><strong>Single-pole testers:</strong> Rely on body capacitance, inconsistent operation</li>
@@ -425,8 +425,8 @@ const Module6Section3_4 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>CAT-rated and Fused Test Leads:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>CAT-rated and Fused Test Leads:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>CAT III or CAT IV rating appropriate for the installation voltage</li>
                            <li>In-line fuses to protect against short-circuit currents</li>
                            <li>Finger guards on probes to prevent accidental contact</li>
@@ -458,12 +458,12 @@ const Module6Section3_4 = () => {
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-3">Consequences of Skipping Proving Dead</p>
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Consequences of Skipping Proving Dead</p>
                     
                     <div className="space-y-4">
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Electric Shock or Electrocution:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Electric Shock or Electrocution:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Direct contact with live conductors can cause immediate cardiac arrest</li>
                            <li>Even non-fatal shocks can cause falls from height or into hazards</li>
                            <li>Secondary injuries from muscular contraction or loss of control</li>
@@ -473,8 +473,8 @@ const Module6Section3_4 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Arc Flash Burns:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Arc Flash Burns:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Temperatures can exceed 20,000°C - hotter than the sun's surface</li>
                            <li>Severe burns to exposed skin and airways</li>
                            <li>Blast pressure can cause hearing damage and throw personnel</li>
@@ -484,8 +484,8 @@ const Module6Section3_4 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Legal and Professional Consequences:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Legal and Professional Consequences:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>HSE prosecution under EAWR - unlimited fines and imprisonment</li>
                            <li>Corporate manslaughter charges for companies</li>
                            <li>Loss of professional qualifications and certifications</li>
@@ -512,14 +512,14 @@ const Module6Section3_4 = () => {
         </Card>
 
         {/* Safe Isolation Checklist */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-4">
             <CheckCircle className="w-6 h-6 text-green-500" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Safe Isolation Checklist</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Safe Isolation Checklist</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div className="space-y-3">
-              <h3 className="font-semibold text-foreground">Before Starting:</h3>
+              <h3 className="font-semibold text-white">Before Starting:</h3>
               <div className="space-y-2 text-sm">
                 <label className="flex items-center gap-2">
                   <input type="checkbox" className="rounded" />
@@ -540,7 +540,7 @@ const Module6Section3_4 = () => {
               </div>
             </div>
             <div className="space-y-3">
-              <h3 className="font-semibold text-foreground">During Isolation:</h3>
+              <h3 className="font-semibold text-white">During Isolation:</h3>
               <div className="space-y-2 text-sm">
                 <label className="flex items-center gap-2">
                   <input type="checkbox" className="rounded" />
@@ -568,13 +568,13 @@ const Module6Section3_4 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Practical Guidance</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div className="space-y-4">
               <div>
-                <h3 className="font-semibold text-foreground mb-2">Essential Practices:</h3>
-                <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                <h3 className="font-semibold text-white mb-2">Essential Practices:</h3>
+                <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>• Always lock off isolators and keep the key in your possession</li>
                   <li>• Never trust labelling alone; circuits may be misidentified</li>
                   <li>• Test between all combinations: L–N, L–E, and N–E</li>
@@ -583,8 +583,8 @@ const Module6Section3_4 = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold text-foreground mb-2">Emergency Procedures:</h3>
-                <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                <h3 className="font-semibold text-white mb-2">Emergency Procedures:</h3>
+                <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>• If someone is in contact with live conductors, switch off supply immediately</li>
                   <li>• Do not touch the person until supply is confirmed dead</li>
                   <li>• Call emergency services and provide first aid if trained</li>
@@ -594,8 +594,8 @@ const Module6Section3_4 = () => {
             </div>
             <div className="space-y-4">
               <div>
-                <h3 className="font-semibold text-foreground mb-2">Common Mistakes to Avoid:</h3>
-                <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                <h3 className="font-semibold text-white mb-2">Common Mistakes to Avoid:</h3>
+                <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>• Using unreliable test equipment (neon screwdrivers, voltage pens)</li>
                   <li>• Assuming circuits are dead without testing</li>
                   <li>• Working on circuits controlled by others</li>
@@ -604,8 +604,8 @@ const Module6Section3_4 = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold text-foreground mb-2">Best Practice Tips:</h3>
-                <ul className="text-xs sm:text-sm text-foreground space-y-1">
+                <h3 className="font-semibold text-white mb-2">Best Practice Tips:</h3>
+                <ul className="text-xs sm:text-sm text-white space-y-1">
                   <li>• Develop and stick to a personal proving dead routine</li>
                   <li>• Keep proving units calibrated and in good condition</li>
                   <li>• Use high-quality GS38-compliant test equipment</li>
@@ -617,60 +617,60 @@ const Module6Section3_4 = () => {
         </Card>
 
         {/* Micro-challenges */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-4">
             <Zap className="w-6 h-6 text-amber-500" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Quick Knowledge Check</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Quick Knowledge Check</h2>
           </div>
           <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
             <div className="p-4 rounded-lg bg-muted/50 border border-border/30">
-              <p className="font-semibold text-foreground mb-2">Challenge 1:</p>
-              <p className="text-sm text-muted-foreground">Why is proving dead important before electrical work?</p>
+              <p className="font-semibold text-white mb-2">Challenge 1:</p>
+              <p className="text-sm text-white">Why is proving dead important before electrical work?</p>
             </div>
             <div className="p-4 rounded-lg bg-muted/50 border border-border/30">
-              <p className="font-semibold text-foreground mb-2">Challenge 2:</p>
-              <p className="text-sm text-muted-foreground">Name the correct type of tester to prove dead.</p>
+              <p className="font-semibold text-white mb-2">Challenge 2:</p>
+              <p className="text-sm text-white">Name the correct type of tester to prove dead.</p>
             </div>
             <div className="p-4 rounded-lg bg-muted/50 border border-border/30">
-              <p className="font-semibold text-foreground mb-2">Challenge 3:</p>
-              <p className="text-sm text-muted-foreground">What must you do after proving dead?</p>
+              <p className="font-semibold text-white mb-2">Challenge 3:</p>
+              <p className="text-sm text-white">What must you do after proving dead?</p>
             </div>
           </div>
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-4">
             <AlertTriangle className="w-6 h-6 text-amber-500" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Real-World Example</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Real-World Example</h2>
           </div>
           <div className="bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
-            <p className="text-foreground mb-4">
+            <p className="text-white mb-4">
               <strong>Case Study: Incorrect Circuit Identification</strong>
             </p>
-            <p className="text-foreground mb-4">
+            <p className="text-white mb-4">
               An electrician working in an office assumed a labelled MCB controlled a lighting circuit. Without testing, they touched the live conductor and suffered an electric shock requiring hospital treatment.
             </p>
-            <p className="text-foreground mb-4">
+            <p className="text-white mb-4">
               Investigation revealed the labelling was wrong due to a previous alteration where circuits had been reconfigured but labels not updated. The "lighting" MCB actually controlled socket outlets that remained energised.
             </p>
-            <p className="text-foreground">
+            <p className="text-white">
               <strong>Lesson:</strong> Had the electrician followed the prove-dead procedure and tested all conductors at the point of work, the accident would have been completely avoided. Never trust labelling alone.
             </p>
           </div>
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <details key={index} className="group">
-                <summary className="font-medium text-foreground cursor-pointer list-none flex items-center justify-between p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
+                <summary className="font-medium text-white cursor-pointer list-none flex items-center justify-between p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
                   <span>{faq.question}</span>
                   <span className="transition-transform group-open:rotate-180">▼</span>
                 </summary>
-                <div className="mt-2 p-3 text-sm text-muted-foreground bg-muted/10 rounded-lg">
+                <div className="mt-2 p-3 text-sm text-white bg-muted/10 rounded-lg">
                   {faq.answer}
                 </div>
               </details>
@@ -679,39 +679,39 @@ const Module6Section3_4 = () => {
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Pocket Guide</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Guide</h2>
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4 text-center">
-            <div className="p-4 rounded-lg bg-card border border-red-500/20">
-              <Shield className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
-              <p className="font-semibold text-red-600 dark:text-emerald-400 text-sm">Always lock off and label</p>
+            <div className="p-4 rounded-lg border border-red-500/20">
+              <Shield className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
+              <p className="font-semibold text-red-600 dark:text-elec-yellow text-sm">Always lock off and label</p>
             </div>
-            <div className="p-4 rounded-lg bg-card border border-orange-500/20">
-              <Eye className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
-              <p className="font-semibold text-orange-600 dark:text-emerald-400 text-sm">Use only two-pole testers</p>
+            <div className="p-4 rounded-lg border border-orange-500/20">
+              <Eye className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
+              <p className="font-semibold text-orange-600 dark:text-elec-yellow text-sm">Use only two-pole testers</p>
             </div>
-            <div className="p-4 rounded-lg bg-card border border-amber-500/20">
+            <div className="p-4 rounded-lg border border-amber-500/20">
               <Zap className="w-8 h-8 text-amber-500 mx-auto mb-2" />
               <p className="font-semibold text-amber-600 dark:text-amber-400 text-sm">Test L–N, L–E, N–E</p>
             </div>
-            <div className="p-4 rounded-lg bg-card border border-green-500/20">
+            <div className="p-4 rounded-lg border border-green-500/20">
               <CheckCircle className="w-8 h-8 text-green-500 mx-auto mb-2" />
               <p className="font-semibold text-green-600 dark:text-green-400 text-sm">Prove tester before and after use</p>
             </div>
-            <div className="p-4 rounded-lg bg-card border border-emerald-500/20">
-              <Target className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
-              <p className="font-semibold text-emerald-400 dark:text-emerald-400 text-sm">Never assume circuits are dead</p>
+            <div className="p-4 rounded-lg border border-elec-yellow/20">
+              <Target className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
+              <p className="font-semibold text-elec-yellow dark:text-elec-yellow text-sm">Never assume circuits are dead</p>
             </div>
           </div>
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Recap</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h3 className="font-semibold text-foreground mb-2">Key Points:</h3>
-              <ul className="text-xs sm:text-sm text-foreground space-y-1">
+              <h3 className="font-semibold text-white mb-2">Key Points:</h3>
+              <ul className="text-xs sm:text-sm text-white space-y-1">
                 <li>• Proving dead is a life-saving step before work</li>
                 <li>• Safe isolation involves lock-off, testing, and proving</li>
                 <li>• Only GS38-compliant testers should be used</li>
@@ -719,8 +719,8 @@ const Module6Section3_4 = () => {
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold text-foreground mb-2">Remember:</h3>
-              <ul className="text-xs sm:text-sm text-foreground space-y-1">
+              <h3 className="font-semibold text-white mb-2">Remember:</h3>
+              <ul className="text-xs sm:text-sm text-white space-y-1">
                 <li>• Follow the six-step isolation procedure every time</li>
                 <li>• Test all conductor combinations at point of work</li>
                 <li>• Keep isolation keys in your possession throughout work</li>
@@ -742,7 +742,7 @@ const Module6Section3_4 = () => {
             <Link to="module6-section3/3" className="flex items-center justify-center text-center">
               <ArrowLeft className="w-4 h-4 mr-2 flex-shrink-0" />
               <span className="flex-1">
-                <span className="block text-xs text-muted-foreground">Previous</span>
+                <span className="block text-xs text-white">Previous</span>
                 <span className="block font-medium">Setting Up and Zeroing Instruments</span>
               </span>
             </Link>

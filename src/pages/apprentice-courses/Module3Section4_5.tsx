@@ -164,13 +164,13 @@ export default function Module3Section4_5() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -185,30 +185,30 @@ export default function Module3Section4_5() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Cable className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Cable className="w-6 h-6 text-white" />
             </div>
             <Badge
               variant="outline"
-              className="border-emerald-500/30 text-emerald-400"
+              className="border-elec-yellow/30 text-elec-yellow"
             >
               Section 3.4.5
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Supporting and Securing Cables
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Master the essential techniques for cable support, fire-resistant fixings, and BS 7671 compliance for professional electrical installations.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>All fixed wiring must be adequately supported per BS 7671.</li>
                 <li>Use non-combustible fixings in escape routes (18th Edition).</li>
@@ -216,8 +216,8 @@ export default function Module3Section4_5() {
                 <li>Protect against strain, vibration, heat and sharp edges.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Metal P-clips, stainless ties, cleats, flat twin clips.</li>
                 <li><strong>Use:</strong> Correct spacing; suit fixing to cable and environment.</li>
@@ -228,9 +228,9 @@ export default function Module3Section4_5() {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Explain why correct cable support is important for safety and compliance.</li>
             <li>Identify suitable fixing methods for different cable types and environments.</li>
             <li>Apply correct spacing and positioning for cable fixings.</li>
@@ -239,15 +239,15 @@ export default function Module3Section4_5() {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* 1) Purposes of Cable Support */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Shield className="w-5 h-5" /> 1) Purposes of Cable Support
             </h3>
-            <ul className="space-y-3 text-xs sm:text-sm text-foreground">
+            <ul className="space-y-3 text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
                 <span>Prevents sagging or strain on conductors</span>
@@ -272,23 +272,23 @@ export default function Module3Section4_5() {
 
           {/* 2) Types of Cable Supports */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Cable className="w-5 h-5" /> 2) Types of Cable Supports
             </h3>
             <div className="grid gap-4 text-sm">
-              <div className="p-4 bg-card border border-border/30 rounded-lg">
+              <div className="p-4 bg-transparent border border-border/30 rounded-lg">
                 <h4 className="font-medium mb-1 text-blue-200">Clips</h4>
                 <p className="text-blue-200">Flat twin clips for T&E, round clips for circular cables.</p>
               </div>
-              <div className="p-4 bg-card border border-green-400/30 rounded-lg">
+              <div className="p-4 bg-transparent border border-green-400/30 rounded-lg">
                 <h4 className="font-medium mb-1 text-green-200">Cleats</h4>
                 <p className="text-green-200">Heavy-duty fixings for SWA cables, metal or high-strength polymer.</p>
               </div>
-              <div className="p-4 bg-card border border-border/30 rounded-lg">
+              <div className="p-4 bg-transparent border border-border/30 rounded-lg">
                 <h4 className="font-medium mb-1 text-purple-200">Cable Ties</h4>
                 <p className="text-purple-200">Grouping cables; stainless steel for fire-resistant applications.</p>
               </div>
-              <div className="p-4 bg-card border border-amber-400/30 rounded-lg">
+              <div className="p-4 bg-transparent border border-amber-400/30 rounded-lg">
                 <h4 className="font-medium mb-1 text-amber-200">Saddles and Brackets</h4>
                 <p className="text-amber-200">Securing conduit or trunking carrying cables.</p>
               </div>
@@ -304,46 +304,46 @@ export default function Module3Section4_5() {
 
           {/* 3) Spacing Guidelines (Typical) */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <FileText className="w-5 h-5" /> 3) Spacing Guidelines (Typical)
             </h3>
-            <p className="text-muted-foreground mb-3">
+            <p className="text-white mb-3">
               Always refer to BS 7671 and manufacturer recommendations
             </p>
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse border border-border/20">
+              <table className="w-full border-collapse border border-white/10">
                 <thead>
-                  <tr className="bg-card text-foreground">
-                    <th className="border border-border/20 p-3 text-left font-semibold">
+                  <tr className="bg-card text-white">
+                    <th className="border border-white/10 p-3 text-left font-semibold">
                       Cable Type
                     </th>
-                    <th className="border border-border/20 p-3 text-left font-semibold">
+                    <th className="border border-white/10 p-3 text-left font-semibold">
                       Spacing
                     </th>
-                    <th className="border border-border/20 p-3 text-left font-semibold">
+                    <th className="border border-white/10 p-3 text-left font-semibold">
                       Notes
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td className="border border-border/20 p-3">T&E on walls/ceilings</td>
-                    <td className="border border-border/20 p-3">
+                    <td className="border border-white/10 p-3">T&E on walls/ceilings</td>
+                    <td className="border border-white/10 p-3">
                       300-400mm horizontal, 400-500mm vertical
                     </td>
-                    <td className="border border-border/20 p-3">Use flat twin clips</td>
+                    <td className="border border-white/10 p-3">Use flat twin clips</td>
                   </tr>
-                  <tr className="bg-card">
-                    <td className="border border-border/20 p-3">SWA on walls</td>
-                    <td className="border border-border/20 p-3">
+                  <tr className="">
+                    <td className="border border-white/10 p-3">SWA on walls</td>
+                    <td className="border border-white/10 p-3">
                       300-600mm depending on size
                     </td>
-                    <td className="border border-border/20 p-3">Use cable cleats</td>
+                    <td className="border border-white/10 p-3">Use cable cleats</td>
                   </tr>
                   <tr>
-                    <td className="border border-border/20 p-3">Tray/basket supports</td>
-                    <td className="border border-border/20 p-3">1.5-2m typically</td>
-                    <td className="border border-border/20 p-3">Varies by load and span</td>
+                    <td className="border border-white/10 p-3">Tray/basket supports</td>
+                    <td className="border border-white/10 p-3">1.5-2m typically</td>
+                    <td className="border border-white/10 p-3">Varies by load and span</td>
                   </tr>
                 </tbody>
               </table>
@@ -355,12 +355,12 @@ export default function Module3Section4_5() {
 
           {/* 4) Fire-Resistant Supports */}
           <section className="mb-2">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" /> 4) Fire-Resistant Supports (18th Edition Requirement)
             </h3>
             <div className="space-y-3 text-sm">
               <div className="p-4 bg-destructive/10 rounded-lg border border-destructive/20">
-                <p className="text-foreground">
+                <p className="text-white">
                   All wiring systems in escape routes must be supported by non-combustible fixings to prevent premature collapse in a fire.
                 </p>
               </div>
@@ -383,9 +383,9 @@ export default function Module3Section4_5() {
         </Card>
 
         {/* Best Practice */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Best Practice</h2>
-          <ul className="space-y-3 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Best Practice</h2>
+          <ul className="space-y-3 text-xs sm:text-sm text-white">
             <li className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
               <span>Avoid over-tightening fixings to prevent insulation damage</span>
@@ -407,27 +407,27 @@ export default function Module3Section4_5() {
 
 
         {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-World Example</h2>
-          <p className="text-foreground/90">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Example</h2>
+          <p className="text-white/90">
             In a warehouse fire, plastic cable fixings melted, causing cables to collapse into escape routes. Firefighters reported the hazard and
             regulations were updated in the 18th Edition to require non-combustible supports in such locations.
           </p>
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">FAQs</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
           <div className="space-y-4 text-sm">
             <div className="space-y-1">
               <p className="font-medium">Q: Can I still use plastic cable clips?</p>
-              <p className="text-foreground/90">
+              <p className="text-white/90">
                 A: Yes, but not as the sole means of support in escape routes — combine them with metal fixings.
               </p>
             </div>
             <div className="space-y-1">
               <p className="font-medium">Q: Do all cables need to be clipped?</p>
-              <p className="text-foreground/90">
+              <p className="text-white/90">
                 A: Yes, all fixed wiring must be adequately supported, although method and spacing will vary.
               </p>
             </div>
@@ -435,7 +435,7 @@ export default function Module3Section4_5() {
               <p className="font-medium">
                 Q: Is stainless steel overkill for normal domestic installations?
               </p>
-              <p className="text-foreground/90">
+              <p className="text-white/90">
                 A: It's only required in specific high-risk areas like escape routes, but it can still improve durability.
               </p>
             </div>
@@ -443,10 +443,10 @@ export default function Module3Section4_5() {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
           <div className="grid md:grid-cols-2 gap-4 text-sm">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
               <p className="font-medium mb-2">Key Benefits</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li>Prevents sagging and maintains safety</li>
@@ -466,8 +466,8 @@ export default function Module3Section4_5() {
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Knowledge Check Quiz</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Knowledge Check Quiz</h2>
           <Quiz questions={quizQuestions} />
         </Card>
 

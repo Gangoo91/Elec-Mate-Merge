@@ -87,11 +87,11 @@ const Module6Section7_4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-0 text-sm sm:text-base" asChild>
+          <Button variant="ghost" className="text-white hover:text-white p-0 text-sm sm:text-base" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 7
@@ -105,62 +105,62 @@ const Module6Section7_4 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-            <div className="p-1.5 sm:p-2 rounded-lg bg-card">
-              <Users className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
+            <div className="p-1.5 sm:p-2 rounded-lg ">
+              <Users className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 text-xs sm:text-sm">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs sm:text-sm">
               Section 6.7.4
             </Badge>
           </div>
-          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Who Can Sign Off Work and What Level 2 Can Do Legally
           </h1>
-          <p className="text-muted-foreground text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Understanding legal responsibilities for signing electrical certificates and Level 2 limitations
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-            <Target className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground">Spot it in 30 Seconds</h2>
+            <Target className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 sm:mb-3">In 30 seconds</p>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Only competent persons can sign electrical certificates</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Level 2 electricians cannot legally sign any certificates</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Signing carries legal responsibility for installation safety</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Supervision required until fully qualified</span>
                 </li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/20">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/20">
               <p className="font-medium mb-2 sm:mb-3">Spot it / Use it / Check it</p>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Spot:</strong> Unauthorised signatures on certificates</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Use:</strong> Supervised testing and recording for Level 2</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Check:</strong> Competent person signatures and authorisation</span>
                 </li>
               </ul>
@@ -169,18 +169,18 @@ const Module6Section7_4 = () => {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Introduction</h2>
-          <p className="text-sm sm:text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Introduction</h2>
+          <p className="text-sm sm:text-base text-white mb-4">
             One of the most important aspects of certification is understanding who is legally allowed to sign it. Not every electrician — especially at apprentice or Level 2 stage — can take legal responsibility for test results and certification. Signing off electrical work carries serious accountability under BS 7671 and the Electricity at Work Regulations 1989 (EAWR). This subsection explains who can legally sign certificates, what responsibilities come with that signature, and what tasks Level 2 learners can and cannot do at this stage in their career.
           </p>
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Learning Outcomes</h2>
-          <p className="text-sm sm:text-base text-foreground mb-3 sm:mb-4">By the end of this subsection, learners will be able to:</p>
-          <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Learning Outcomes</h2>
+          <p className="text-sm sm:text-base text-white mb-3 sm:mb-4">By the end of this subsection, learners will be able to:</p>
+          <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-white">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" />
               <span>Explain who is legally responsible for signing electrical certificates</span>
@@ -201,67 +201,67 @@ const Module6Section7_4 = () => {
         </Card>
 
         {/* Content / Learning */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Content / Learning</h2>
 
           {/* 1. Who Can Sign Off Electrical Work */}
           <section className="mb-4 sm:mb-6">
             <div className="space-y-4 sm:space-y-6">
-              <div className="rounded-lg p-3 sm:p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-3 sm:p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-2 sm:gap-3 mb-2">
-                  <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</span>
+                  <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-2 sm:mb-3 text-sm sm:text-base">Who Can Sign Off Electrical Work</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-2 sm:mb-3 text-sm sm:text-base">Who Can Sign Off Electrical Work</p>
                     
                     <div className="space-y-4">
-                      <p className="text-xs sm:text-sm text-foreground">
+                      <p className="text-xs sm:text-sm text-white">
                         Electrical certificates — whether EIC, MWC, or EICR — must be signed by a competent person. In BS 7671, a competent person is defined as someone with sufficient training, technical knowledge, and experience to carry out the work safely. This usually means a fully qualified electrician who holds the appropriate qualifications and is confident in verifying that the installation complies with the regulations. The signature is not just formality — it is a legal declaration of responsibility.
                       </p>
 
                       <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950/40 dark:to-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4 shadow-sm">
                         <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-3 flex items-center gap-2">
-                          <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                          <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                           Competent Person Requirements
                         </h4>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 text-sm">
                           <div>
                             <strong className="text-blue-900 dark:text-blue-200 block mb-2">Qualifications Needed:</strong>
-                            <ul className="space-y-1 text-blue-800 dark:text-emerald-400">
+                            <ul className="space-y-1 text-blue-800 dark:text-elec-yellow">
                               <li className="flex items-start gap-2">
-                                <span className="text-emerald-400 mt-1">•</span>
+                                <span className="text-elec-yellow mt-1">•</span>
                                 <span>Recognised electrical qualification (Level 3 minimum)</span>
                               </li>
                               <li className="flex items-start gap-2">
-                                <span className="text-emerald-400 mt-1">•</span>
+                                <span className="text-elec-yellow mt-1">•</span>
                                 <span>BS 7671 18th Edition certification</span>
                               </li>
                               <li className="flex items-start gap-2">
-                                <span className="text-emerald-400 mt-1">•</span>
+                                <span className="text-elec-yellow mt-1">•</span>
                                 <span>Inspection and Testing qualifications</span>
                               </li>
                               <li className="flex items-start gap-2">
-                                <span className="text-emerald-400 mt-1">•</span>
+                                <span className="text-elec-yellow mt-1">•</span>
                                 <span>Appropriate registration with scheme provider</span>
                               </li>
                             </ul>
                           </div>
                           <div>
                             <strong className="text-blue-900 dark:text-blue-200 block mb-2">Experience Requirements:</strong>
-                            <ul className="space-y-1 text-blue-800 dark:text-emerald-400">
+                            <ul className="space-y-1 text-blue-800 dark:text-elec-yellow">
                               <li className="flex items-start gap-2">
-                                <span className="text-emerald-400 mt-1">•</span>
+                                <span className="text-elec-yellow mt-1">•</span>
                                 <span>Practical electrical installation experience</span>
                               </li>
                               <li className="flex items-start gap-2">
-                                <span className="text-emerald-400 mt-1">•</span>
+                                <span className="text-elec-yellow mt-1">•</span>
                                 <span>Understanding of testing procedures</span>
                               </li>
                               <li className="flex items-start gap-2">
-                                <span className="text-emerald-400 mt-1">•</span>
+                                <span className="text-elec-yellow mt-1">•</span>
                                 <span>Knowledge of regulatory requirements</span>
                               </li>
                               <li className="flex items-start gap-2">
-                                <span className="text-emerald-400 mt-1">•</span>
+                                <span className="text-elec-yellow mt-1">•</span>
                                 <span>Ability to identify defects and non-compliance</span>
                               </li>
                             </ul>
@@ -269,7 +269,7 @@ const Module6Section7_4 = () => {
                         </div>
                       </div>
 
-                      <p className="text-xs sm:text-sm text-foreground">
+                      <p className="text-xs sm:text-sm text-white">
                         The concept of competence extends beyond just having qualifications. A competent person must understand the scope of their abilities and only undertake work they are qualified to perform. They must stay current with regulations, maintain their knowledge through continuing professional development, and recognise when specialist expertise is required.
                       </p>
 
@@ -315,17 +315,17 @@ const Module6Section7_4 = () => {
           {/* 2. Responsibilities of Signing a Certificate */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
                     <p className="font-semibold text-green-600 dark:text-green-400 mb-3 text-base">Responsibilities of Signing a Certificate</p>
                     
                     <div className="space-y-4">
-                      <p className="text-xs sm:text-sm text-foreground">
+                      <p className="text-xs sm:text-sm text-white">
                         When an electrician signs a certificate, they are confirming that:
                       </p>
-                      <ul className="list-disc list-inside space-y-2 text-xs sm:text-sm text-foreground ml-4">
+                      <ul className="list-disc list-inside space-y-2 text-xs sm:text-sm text-white ml-4">
                         <li>The design, construction, inspection, and testing of the installation comply with BS 7671</li>
                         <li>The recorded results are accurate and complete</li>
                         <li>The installation is safe to be energised and used</li>
@@ -356,7 +356,7 @@ const Module6Section7_4 = () => {
                         </div>
                       </div>
 
-                      <p className="text-xs sm:text-sm text-foreground">
+                      <p className="text-xs sm:text-sm text-white">
                         If an incident occurs later (shock, fire, or injury), the signatory can be held legally accountable. This is why only competent persons can take on this role. The certificate becomes evidence in any investigation, and the signatory may be required to justify their decisions and demonstrate their competence.
                       </p>
 
@@ -367,19 +367,19 @@ const Module6Section7_4 = () => {
                         </h4>
                         <ul className="space-y-2 text-red-800 dark:text-red-200">
                           <li className="flex items-start gap-3">
-                            <span className="text-emerald-400 mt-1">⚠️</span>
+                            <span className="text-elec-yellow mt-1">⚠️</span>
                             <span>Criminal prosecution under Health and Safety legislation</span>
                           </li>
                           <li className="flex items-start gap-3">
-                            <span className="text-emerald-400 mt-1">⚠️</span>
+                            <span className="text-elec-yellow mt-1">⚠️</span>
                             <span>Civil liability for damages and injuries</span>
                           </li>
                           <li className="flex items-start gap-3">
-                            <span className="text-emerald-400 mt-1">⚠️</span>
+                            <span className="text-elec-yellow mt-1">⚠️</span>
                             <span>Professional disciplinary action and loss of registration</span>
                           </li>
                           <li className="flex items-start gap-3">
-                            <span className="text-emerald-400 mt-1">⚠️</span>
+                            <span className="text-elec-yellow mt-1">⚠️</span>
                             <span>Insurance claim rejection and personal financial exposure</span>
                           </li>
                         </ul>
@@ -402,17 +402,17 @@ const Module6Section7_4 = () => {
           {/* 3. What Level 2 Electricians Can Do */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-3 text-base">What Level 2 Electricians Can Do</p>
+                    <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-3 text-base">What Level 2 Electricians Can Do</p>
                     
                     <div className="space-y-4">
-                      <p className="text-xs sm:text-sm text-foreground">
+                      <p className="text-xs sm:text-sm text-white">
                         At Level 2, learners are developing their knowledge and skills but are not yet fully qualified. This means:
                       </p>
-                      <ul className="list-disc list-inside space-y-2 text-xs sm:text-sm text-foreground ml-4">
+                      <ul className="list-disc list-inside space-y-2 text-xs sm:text-sm text-white ml-4">
                         <li>They can carry out tests under the instruction or supervision of a qualified person</li>
                         <li>They can record results and help complete documentation</li>
                         <li>They cannot legally sign an EIC, MWC, or EICR — even if they carried out the work or testing</li>
@@ -426,42 +426,42 @@ const Module6Section7_4 = () => {
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 text-sm">
                           <div>
                             <strong className="text-purple-900 dark:text-purple-200 block mb-2">Testing Activities:</strong>
-                            <ul className="space-y-1 text-purple-800 dark:text-emerald-400">
+                            <ul className="space-y-1 text-purple-800 dark:text-elec-yellow">
                               <li className="flex items-start gap-2">
-                                <span className="text-emerald-400 mt-1">✓</span>
+                                <span className="text-elec-yellow mt-1">✓</span>
                                 <span>Continuity testing under supervision</span>
                               </li>
                               <li className="flex items-start gap-2">
-                                <span className="text-emerald-400 mt-1">✓</span>
+                                <span className="text-elec-yellow mt-1">✓</span>
                                 <span>Insulation resistance measurements</span>
                               </li>
                               <li className="flex items-start gap-2">
-                                <span className="text-emerald-400 mt-1">✓</span>
+                                <span className="text-elec-yellow mt-1">✓</span>
                                 <span>Polarity verification</span>
                               </li>
                               <li className="flex items-start gap-2">
-                                <span className="text-emerald-400 mt-1">✓</span>
+                                <span className="text-elec-yellow mt-1">✓</span>
                                 <span>RCD testing with guidance</span>
                               </li>
                             </ul>
                           </div>
                           <div>
                             <strong className="text-purple-900 dark:text-purple-200 block mb-2">Documentation Support:</strong>
-                            <ul className="space-y-1 text-purple-800 dark:text-emerald-400">
+                            <ul className="space-y-1 text-purple-800 dark:text-elec-yellow">
                               <li className="flex items-start gap-2">
-                                <span className="text-emerald-400 mt-1">✓</span>
+                                <span className="text-elec-yellow mt-1">✓</span>
                                 <span>Recording test results accurately</span>
                               </li>
                               <li className="flex items-start gap-2">
-                                <span className="text-emerald-400 mt-1">✓</span>
+                                <span className="text-elec-yellow mt-1">✓</span>
                                 <span>Completing observation schedules</span>
                               </li>
                               <li className="flex items-start gap-2">
-                                <span className="text-emerald-400 mt-1">✓</span>
+                                <span className="text-elec-yellow mt-1">✓</span>
                                 <span>Preparing certificates for supervisor</span>
                               </li>
                               <li className="flex items-start gap-2">
-                                <span className="text-emerald-400 mt-1">✓</span>
+                                <span className="text-elec-yellow mt-1">✓</span>
                                 <span>Maintaining test equipment records</span>
                               </li>
                             </ul>
@@ -469,30 +469,30 @@ const Module6Section7_4 = () => {
                         </div>
                       </div>
 
-                      <p className="text-xs sm:text-sm text-foreground">
+                      <p className="text-xs sm:text-sm text-white">
                         Level 2 learners must always work under supervision and must not present themselves as competent persons until they are qualified and experienced enough to do so. This supervised approach allows gradual skill development while maintaining safety and compliance standards.
                       </p>
 
                       <div className="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-blue-950/40 dark:to-indigo-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4 shadow-sm">
                         <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-3 flex items-center gap-2">
-                          <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                          <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                           Progression Path for Level 2 Electricians
                         </h4>
-                        <div className="space-y-2 text-sm text-blue-800 dark:text-emerald-400">
+                        <div className="space-y-2 text-sm text-blue-800 dark:text-elec-yellow">
                           <div className="flex items-center gap-3">
-                            <span className="text-emerald-400 font-bold">1.</span>
+                            <span className="text-elec-yellow font-bold">1.</span>
                             <span><strong>Current Stage:</strong> Supervised practice and skill development</span>
                           </div>
                           <div className="flex items-center gap-3">
-                            <span className="text-emerald-400 font-bold">2.</span>
+                            <span className="text-elec-yellow font-bold">2.</span>
                             <span><strong>Next Steps:</strong> Complete Level 3 qualifications and gain experience</span>
                           </div>
                           <div className="flex items-center gap-3">
-                            <span className="text-emerald-400 font-bold">3.</span>
+                            <span className="text-elec-yellow font-bold">3.</span>
                             <span><strong>Future Goal:</strong> Achieve competent person status with scheme registration</span>
                           </div>
                           <div className="flex items-center gap-3">
-                            <span className="text-emerald-400 font-bold">⏱️</span>
+                            <span className="text-elec-yellow font-bold">⏱️</span>
                             <span><strong>Timeline:</strong> Typically 2-4 years depending on training route and experience</span>
                           </div>
                         </div>
@@ -515,20 +515,20 @@ const Module6Section7_4 = () => {
           {/* 4. Importance of Supervision and Integrity */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-3 text-base">Importance of Supervision and Integrity</p>
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3 text-base">Importance of Supervision and Integrity</p>
                     
                     <div className="space-y-4">
-                      <p className="text-xs sm:text-sm text-foreground">
+                      <p className="text-xs sm:text-sm text-white">
                         Working under supervision is not just a training exercise — it is a legal safeguard. Supervising electricians carry the legal responsibility for the work, while apprentices gain experience. Honesty is vital: Level 2 learners should never sign documents they are not authorised to sign. Doing so is fraudulent and could lead to disciplinary action, loss of employment, or even prosecution.
                       </p>
 
                       <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
-                        <h4 className="font-medium text-red-800 dark:text-emerald-400 mb-2">Importance of Supervision:</h4>
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 text-sm text-red-700 dark:text-emerald-400">
+                        <h4 className="font-medium text-red-800 dark:text-elec-yellow mb-2">Importance of Supervision:</h4>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 text-sm text-red-700 dark:text-elec-yellow">
                           <div>
                             <strong>Legal Protection:</strong>
                             <ul className="mt-1 space-y-1 ml-4">
@@ -550,7 +550,7 @@ const Module6Section7_4 = () => {
                         </div>
                       </div>
 
-                      <p className="text-xs sm:text-sm text-foreground">
+                      <p className="text-xs sm:text-sm text-white">
                         Integrity in certification is fundamental to the electrical industry's reputation and public safety. Level 2 learners must understand that cutting corners or misrepresenting their status undermines both personal career development and industry standards. The supervised learning period is an investment in becoming a competent, trustworthy professional.
                       </p>
 
@@ -590,9 +590,9 @@ const Module6Section7_4 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Practical Guidance</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Practical Guidance</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-white">
             <div className="space-y-3">
               <div className="flex items-start gap-2">
                 <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" />
@@ -617,14 +617,14 @@ const Module6Section7_4 = () => {
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Real-World Example</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Real-World Example</h2>
           <div className="space-y-4">
-            <p className="text-sm sm:text-base text-foreground">
+            <p className="text-sm sm:text-base text-white">
               On a small domestic rewiring job, an apprentice filled out and signed a Minor Works Certificate while the supervising electrician was off-site. Months later, a fault caused repeated RCD tripping, and the certificate was checked. Because the apprentice was not legally competent to sign, the certificate was invalid, and the contractor faced penalties for non-compliance. The client demanded retesting and full certification, costing the company time and money.
             </p>
             <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
-              <p className="text-sm text-red-700 dark:text-emerald-400">
+              <p className="text-sm text-red-700 dark:text-elec-yellow">
                 <strong>Issue:</strong> Apprentice signed certificate without authority, making it invalid and leading to compliance penalties and additional costs.
               </p>
             </div>
@@ -637,34 +637,34 @@ const Module6Section7_4 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">FAQs</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">FAQs</h2>
           <div className="space-y-4 text-sm sm:text-base">
             <div>
-              <p className="font-medium text-foreground mb-2">Q: Can Level 2 learners carry out testing?</p>
-              <p className="text-muted-foreground">A: Yes, but only under the supervision of a qualified person.</p>
+              <p className="font-medium text-white mb-2">Q: Can Level 2 learners carry out testing?</p>
+              <p className="text-white">A: Yes, but only under the supervision of a qualified person.</p>
             </div>
             <div>
-              <p className="font-medium text-foreground mb-2">Q: Why can't Level 2 electricians sign certificates?</p>
-              <p className="text-muted-foreground">A: Because they are not yet fully qualified and legally recognised as competent persons.</p>
+              <p className="font-medium text-white mb-2">Q: Why can't Level 2 electricians sign certificates?</p>
+              <p className="text-white">A: Because they are not yet fully qualified and legally recognised as competent persons.</p>
             </div>
             <div>
-              <p className="font-medium text-foreground mb-2">Q: Who is legally responsible for certification?</p>
-              <p className="text-muted-foreground">A: The qualified electrician who signs the certificate.</p>
+              <p className="font-medium text-white mb-2">Q: Who is legally responsible for certification?</p>
+              <p className="text-white">A: The qualified electrician who signs the certificate.</p>
             </div>
           </div>
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Recap</h2>
-          <p className="text-sm sm:text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Recap</h2>
+          <p className="text-sm sm:text-base text-white">
             Certification must always be signed by a competent person — someone with the training, knowledge, and experience to confirm compliance with BS 7671. Signing carries legal responsibility for the safety of the installation. Level 2 electricians can help with testing and recording results but cannot sign certificates. Supervision, honesty, and integrity are essential at this stage of training.
           </p>
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <Quiz 
             title="Who Can Sign Off Work Quiz"
             questions={quizQuestions}
@@ -672,7 +672,7 @@ const Module6Section7_4 = () => {
         </Card>
 
         {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6 border-t border-border/20">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6 border-t border-white/10">
           <Button variant="outline" className="w-full sm:w-auto" asChild>
             <Link to="../7-3">
               <ChevronLeft className="w-4 h-4 mr-2" />

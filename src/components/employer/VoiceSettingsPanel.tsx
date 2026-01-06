@@ -307,7 +307,7 @@ const VoiceSettingsPanel: React.FC = () => {
 
     try {
       // Call the elec-mate-merge edge function directly
-      const response = await fetch('https://yulrjfdmkjcoeddorawg.supabase.co/functions/v1/sync-elevenlabs-tools', {
+      const response = await fetch('https://jtwygbeceundfgnkirof.supabase.co/functions/v1/sync-elevenlabs-tools', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

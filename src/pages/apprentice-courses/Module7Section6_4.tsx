@@ -211,11 +211,11 @@ export default function Module7Section6_4() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 7.6
@@ -229,62 +229,62 @@ export default function Module7Section6_4() {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-            <div className="p-1.5 sm:p-2 rounded-lg bg-card">
-              <Wrench className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
+            <div className="p-1.5 sm:p-2 rounded-lg ">
+              <Wrench className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 text-xs sm:text-sm">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs sm:text-sm">
               Section 7.6.4
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl lg:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2 leading-tight">
+          <h1 className="text-xl sm:text-2xl lg:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 leading-tight">
             Rectifying Minor Faults Within Scope
           </h1>
-          <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
+          <p className="text-white text-sm sm:text-base leading-relaxed">
             Safe rectification of loose connections, miswiring and other minor electrical faults under supervision
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-            <Target className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground">Spot it in 30 Seconds</h2>
+            <Target className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 sm:mb-3">In 30 seconds</p>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Always isolate safely and prove dead before starting work</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Work only under supervision; never sign off certifications</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Re-terminate loose connections to correct torque</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Always retest after repair to confirm fault is resolved</span>
                 </li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/20">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/20">
               <p className="font-medium mb-2 sm:mb-3">Spot it / Use it / Check it</p>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Spot:</strong> Loose terminals, overheating signs, miswired connections, incorrect polarity</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Use:</strong> Safe isolation, proper termination techniques, correct test methods</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Check:</strong> Connections secure, correct polarity, retest confirms repair, supervisor approval</span>
                 </li>
               </ul>
@@ -293,47 +293,47 @@ export default function Module7Section6_4() {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Introduction</h2>
-          <p className="text-sm sm:text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Introduction</h2>
+          <p className="text-sm sm:text-base text-white mb-4">
             Not all faults require major intervention or advanced diagnostic skills. Many faults in domestic and light commercial installations are relatively minor, such as loose connections, incorrectly terminated conductors, or simple miswiring at accessories. Apprentices at Level 2, under supervision, are expected to learn how to identify, correct, and retest these types of faults safely. Developing competence in rectifying minor faults builds confidence, strengthens practical skills, and reduces the likelihood of unsafe conditions being left unresolved.
           </p>
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Learning Outcomes</h2>
-          <p className="text-sm sm:text-base text-foreground mb-4 sm:mb-6">By the end of this subsection, you should be able to:</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Learning Outcomes</h2>
+          <p className="text-sm sm:text-base text-white mb-4 sm:mb-6">By the end of this subsection, you should be able to:</p>
           
-          <div className="bg-card border border-emerald-500/20 rounded-lg p-4 sm:p-5">
+          <div className="bg-card border border-elec-yellow/20 rounded-lg p-4 sm:p-5">
             <div className="grid gap-3 sm:gap-4">
               <div className="flex items-start gap-3 sm:gap-4 group">
-                <div className="bg-emerald-500/20 rounded-full p-1.5 mt-0.5 flex-shrink-0">
-                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
+                <div className="bg-elec-yellow/20 rounded-full p-1.5 mt-0.5 flex-shrink-0">
+                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow" />
                 </div>
                 <div className="space-y-1">
-                  <span className="text-sm sm:text-base font-medium text-foreground block">Explain which types of minor faults can be rectified within Level 2 scope</span>
-                  <span className="text-xs sm:text-sm text-muted-foreground">Distinguish between minor and complex faults requiring escalation</span>
+                  <span className="text-sm sm:text-base font-medium text-white block">Explain which types of minor faults can be rectified within Level 2 scope</span>
+                  <span className="text-xs sm:text-sm text-white">Distinguish between minor and complex faults requiring escalation</span>
                 </div>
               </div>
               
               <div className="flex items-start gap-3 sm:gap-4 group">
-                <div className="bg-emerald-500/20 rounded-full p-1.5 mt-0.5 flex-shrink-0">
-                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
+                <div className="bg-elec-yellow/20 rounded-full p-1.5 mt-0.5 flex-shrink-0">
+                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow" />
                 </div>
                 <div className="space-y-1">
-                  <span className="text-sm sm:text-base font-medium text-foreground block">Describe how to correct them safely</span>
-                  <span className="text-xs sm:text-sm text-muted-foreground">Master safe isolation, termination techniques, and proper procedures</span>
+                  <span className="text-sm sm:text-base font-medium text-white block">Describe how to correct them safely</span>
+                  <span className="text-xs sm:text-sm text-white">Master safe isolation, termination techniques, and proper procedures</span>
                 </div>
               </div>
               
               <div className="flex items-start gap-3 sm:gap-4 group">
-                <div className="bg-emerald-500/20 rounded-full p-1.5 mt-0.5 flex-shrink-0">
-                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
+                <div className="bg-elec-yellow/20 rounded-full p-1.5 mt-0.5 flex-shrink-0">
+                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow" />
                 </div>
                 <div className="space-y-1">
-                  <span className="text-sm sm:text-base font-medium text-foreground block">Understand the importance of retesting and supervision</span>
-                  <span className="text-xs sm:text-sm text-muted-foreground">Appreciate verification requirements and professional responsibilities</span>
+                  <span className="text-sm sm:text-base font-medium text-white block">Understand the importance of retesting and supervision</span>
+                  <span className="text-xs sm:text-sm text-white">Appreciate verification requirements and professional responsibilities</span>
                 </div>
               </div>
             </div>
@@ -341,21 +341,21 @@ export default function Module7Section6_4() {
         </Card>
 
         {/* Content / Learning */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4 sm:mb-6">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6">Content / Learning</h2>
           
           {/* Section 1 */}
-          <div className="border-l-4 border-l-emerald-500 bg-card pl-4 sm:pl-6 pr-3 sm:pr-4 py-3 sm:py-4 mb-4 sm:mb-6">
-            <h3 className="text-sm sm:text-base font-semibold text-foreground mb-2 sm:mb-3">1. Understanding Minor Faults</h3>
+          <div className="border-l-4 border-l-elec-yellow pl-4 sm:pl-6 pr-3 sm:pr-4 py-3 sm:py-4 mb-4 sm:mb-6">
+            <h3 className="text-sm sm:text-base font-semibold text-white mb-2 sm:mb-3">1. Understanding Minor Faults</h3>
             <div className="prose prose-invert max-w-none">
-              <p className="text-foreground leading-relaxed mb-4">
+              <p className="text-white leading-relaxed mb-4">
                 Minor faults are those that can be corrected quickly and safely without redesigning or replacing major parts of the installation. Examples include loose terminals in sockets or switches, misconnected conductors at an accessory, or incorrectly wired polarity at a light fitting. Although these faults may seem simple, they can still cause serious risks if left unresolved — overheating, arcing, or even electric shock. Recognising them as important is the first step towards safe practice.
               </p>
               
-              <p className="text-foreground leading-relaxed mb-3">
+              <p className="text-white leading-relaxed mb-3">
                 <strong>Common Minor Faults Include:</strong>
               </p>
-              <ul className="text-foreground leading-relaxed mb-4 space-y-1">
+              <ul className="text-white leading-relaxed mb-4 space-y-1">
                 <li>• Loose terminal connections in sockets, switches, or accessories</li>
                 <li>• Incorrectly terminated conductors (wrong terminals, poor connections)</li>
                 <li>• Simple polarity errors at light fittings or socket outlets</li>
@@ -365,10 +365,10 @@ export default function Module7Section6_4() {
                 <li>• Damaged conductor insulation at terminals (requiring re-termination)</li>
               </ul>
               
-              <p className="text-foreground leading-relaxed mb-3">
+              <p className="text-white leading-relaxed mb-3">
                 <strong>Why These Faults Are Dangerous:</strong>
               </p>
-              <ul className="text-foreground leading-relaxed mb-4 space-y-1">
+              <ul className="text-white leading-relaxed mb-4 space-y-1">
                 <li>• <strong>Overheating:</strong> Loose connections create high resistance, generating heat that can ignite surrounding materials</li>
                 <li>• <strong>Arcing:</strong> Poor connections cause electrical arcing, creating fire risk and equipment damage</li>
                 <li>• <strong>Electric Shock:</strong> Incorrect polarity or loose earths remove vital safety protection</li>
@@ -390,17 +390,17 @@ export default function Module7Section6_4() {
           </div>
 
           {/* Section 2 */}
-          <div className="border-l-4 border-l-green-500 bg-card pl-4 sm:pl-6 pr-3 sm:pr-4 py-3 sm:py-4 mb-4 sm:mb-6">
-            <h3 className="text-sm sm:text-base font-semibold text-foreground mb-2 sm:mb-3">2. Safe Rectification Practices</h3>
+          <div className="border-l-4 border-l-green-500 pl-4 sm:pl-6 pr-3 sm:pr-4 py-3 sm:py-4 mb-4 sm:mb-6">
+            <h3 className="text-sm sm:text-base font-semibold text-white mb-2 sm:mb-3">2. Safe Rectification Practices</h3>
             <div className="prose prose-invert max-w-none">
-              <p className="text-foreground leading-relaxed mb-4">
+              <p className="text-white leading-relaxed mb-4">
                 Before attempting to correct any fault, the circuit must be safely isolated and proved dead using a voltage indicator and proving unit. Once safe, the faulty connection should be inspected and corrected. For example, a loose conductor should be re-terminated, ensuring the insulation is not pinched and that the conductor is secured to the correct torque where required. In cases of miswiring, conductors should be relocated to the correct terminals following wiring diagrams or supervisor guidance.
               </p>
               
-              <p className="text-foreground leading-relaxed mb-3">
+              <p className="text-white leading-relaxed mb-3">
                 <strong>Safe Isolation Procedure:</strong>
               </p>
-              <ul className="text-foreground leading-relaxed mb-4 space-y-1">
+              <ul className="text-white leading-relaxed mb-4 space-y-1">
                 <li>• Identify the correct circuit and protective device</li>
                 <li>• Switch off and lock off the protective device (use lockout/tagout where available)</li>
                 <li>• Test your voltage indicator on a known live source</li>
@@ -409,10 +409,10 @@ export default function Module7Section6_4() {
                 <li>• Apply warning labels/signs to prevent re-energisation</li>
               </ul>
               
-              <p className="text-foreground leading-relaxed mb-3">
+              <p className="text-white leading-relaxed mb-3">
                 <strong>Correct Termination Techniques:</strong>
               </p>
-              <ul className="text-foreground leading-relaxed mb-4 space-y-1">
+              <ul className="text-white leading-relaxed mb-4 space-y-1">
                 <li>• Strip conductor insulation to correct length (typically 10-12mm for most terminals)</li>
                 <li>• Ensure no conductor strands are cut or damaged during stripping</li>
                 <li>• For stranded conductors, twist strands together before termination</li>
@@ -422,10 +422,10 @@ export default function Module7Section6_4() {
                 <li>• Ensure insulation is not trapped under terminal screws</li>
               </ul>
               
-              <p className="text-foreground leading-relaxed mb-3">
+              <p className="text-white leading-relaxed mb-3">
                 <strong>Correcting Polarity Errors:</strong>
               </p>
-              <ul className="text-foreground leading-relaxed mb-4 space-y-1">
+              <ul className="text-white leading-relaxed mb-4 space-y-1">
                 <li>• Line conductor (brown/red) must connect to switch terminals, not lamp holders</li>
                 <li>• Neutral conductor (blue/black) provides the return path to the source</li>
                 <li>• Earth conductor (green/yellow) connects to earth terminals on all metalwork</li>
@@ -447,17 +447,17 @@ export default function Module7Section6_4() {
           </div>
 
           {/* Section 3 */}
-          <div className="border-l-4 border-l-purple-500 bg-card pl-4 sm:pl-6 pr-3 sm:pr-4 py-3 sm:py-4 mb-4 sm:mb-6">
-            <h3 className="text-sm sm:text-base font-semibold text-foreground mb-2 sm:mb-3">3. Retesting After Repair</h3>
+          <div className="border-l-4 border-l-purple-500 pl-4 sm:pl-6 pr-3 sm:pr-4 py-3 sm:py-4 mb-4 sm:mb-6">
+            <h3 className="text-sm sm:text-base font-semibold text-white mb-2 sm:mb-3">3. Retesting After Repair</h3>
             <div className="prose prose-invert max-w-none">
-              <p className="text-foreground leading-relaxed mb-4">
+              <p className="text-white leading-relaxed mb-4">
                 Rectification does not end once the conductor is tightened or reconnected. The same test that revealed the fault must be repeated to confirm it has been corrected. For a loose CPC, continuity should be rechecked; for polarity faults, polarity testing should confirm correctness after repair. This ensures that the repair is safe, compliant, and properly documented. Apprentices should always involve supervisors in retesting, both to confirm results and to reinforce learning.
               </p>
               
-              <p className="text-foreground leading-relaxed mb-3">
+              <p className="text-white leading-relaxed mb-3">
                 <strong>Essential Retest Procedures:</strong>
               </p>
-              <ul className="text-foreground leading-relaxed mb-4 space-y-1">
+              <ul className="text-white leading-relaxed mb-4 space-y-1">
                 <li>• <strong>Continuity Testing:</strong> Verify all protective conductors and bonding are continuous</li>
                 <li>• <strong>Polarity Testing:</strong> Confirm all single-pole devices are in the line conductor</li>
                 <li>• <strong>Insulation Resistance:</strong> Check no damage occurred during repair work</li>
@@ -466,10 +466,10 @@ export default function Module7Section6_4() {
                 <li>• <strong>Visual Inspection:</strong> Check workmanship meets required standards</li>
               </ul>
               
-              <p className="text-foreground leading-relaxed mb-3">
+              <p className="text-white leading-relaxed mb-3">
                 <strong>Documentation Requirements:</strong>
               </p>
-              <ul className="text-foreground leading-relaxed mb-4 space-y-1">
+              <ul className="text-white leading-relaxed mb-4 space-y-1">
                 <li>• Record original fault symptoms and test results</li>
                 <li>• Document remedial action taken</li>
                 <li>• Record retest results proving fault correction</li>
@@ -478,10 +478,10 @@ export default function Module7Section6_4() {
                 <li>• Update relevant certificates or test records</li>
               </ul>
               
-              <p className="text-foreground leading-relaxed mb-3">
+              <p className="text-white leading-relaxed mb-3">
                 <strong>When to Involve Supervisors:</strong>
               </p>
-              <ul className="text-foreground leading-relaxed mb-4 space-y-1">
+              <ul className="text-white leading-relaxed mb-4 space-y-1">
                 <li>• Always involve supervisors in verifying test results</li>
                 <li>• Seek guidance when unsure about correct termination methods</li>
                 <li>• Consult supervisors before re-energising circuits</li>
@@ -503,17 +503,17 @@ export default function Module7Section6_4() {
           </div>
 
           {/* Section 4 */}
-          <div className="border-l-4 border-l-orange-500 bg-card pl-4 sm:pl-6 pr-3 sm:pr-4 py-3 sm:py-4 mb-4 sm:mb-6">
-            <h3 className="text-sm sm:text-base font-semibold text-foreground mb-2 sm:mb-3">4. Limits of Apprentice Competence</h3>
+          <div className="border-l-4 border-l-orange-500 pl-4 sm:pl-6 pr-3 sm:pr-4 py-3 sm:py-4 mb-4 sm:mb-6">
+            <h3 className="text-sm sm:text-base font-semibold text-white mb-2 sm:mb-3">4. Limits of Apprentice Competence</h3>
             <div className="prose prose-invert max-w-none">
-              <p className="text-foreground leading-relaxed mb-4">
+              <p className="text-white leading-relaxed mb-4">
                 It is important to understand that apprentices are not authorised to take full responsibility for installations. You may correct loose or miswired connections, but you must always work under supervision and never sign off test records or certification. More complex faults — such as damaged cables in walls, failed insulation resistance across circuits, or design issues — must be escalated. Knowing where your role ends is a critical part of professional practice.
               </p>
               
-              <p className="text-foreground leading-relaxed mb-3">
+              <p className="text-white leading-relaxed mb-3">
                 <strong>What Apprentices CAN Do (Under Supervision):</strong>
               </p>
-              <ul className="text-foreground leading-relaxed mb-4 space-y-1">
+              <ul className="text-white leading-relaxed mb-4 space-y-1">
                 <li>• Re-terminate loose connections in accessible locations</li>
                 <li>• Correct simple miswiring at accessories</li>
                 <li>• Replace damaged accessories (like/for/like replacement)</li>
@@ -523,10 +523,10 @@ export default function Module7Section6_4() {
                 <li>• Clean and maintain accessible equipment</li>
               </ul>
               
-              <p className="text-foreground leading-relaxed mb-3">
+              <p className="text-white leading-relaxed mb-3">
                 <strong>What Must Be ESCALATED to Qualified Personnel:</strong>
               </p>
-              <ul className="text-foreground leading-relaxed mb-4 space-y-1">
+              <ul className="text-white leading-relaxed mb-4 space-y-1">
                 <li>• Damaged cables within walls, floors, or inaccessible areas</li>
                 <li>• Failed insulation resistance indicating cable damage</li>
                 <li>• Design faults requiring circuit modifications</li>
@@ -537,10 +537,10 @@ export default function Module7Section6_4() {
                 <li>• Faults involving special locations (bathrooms, swimming pools)</li>
               </ul>
               
-              <p className="text-foreground leading-relaxed mb-3">
+              <p className="text-white leading-relaxed mb-3">
                 <strong>Professional Responsibilities:</strong>
               </p>
-              <ul className="text-foreground leading-relaxed mb-4 space-y-1">
+              <ul className="text-white leading-relaxed mb-4 space-y-1">
                 <li>• Never exceed your level of competence or authorisation</li>
                 <li>• Always work under appropriate supervision</li>
                 <li>• Maintain accurate records of all work undertaken</li>
@@ -564,17 +564,17 @@ export default function Module7Section6_4() {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4 sm:mb-6">Practical Guidance</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6">Practical Guidance</h2>
           
           <div className="grid gap-4 sm:gap-6 mb-6">
             {/* Step-by-Step Fault Rectification */}
-            <div className="bg-card border border-emerald-500/20 rounded-lg p-4 sm:p-5">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground mb-3 flex items-center gap-2">
-                <Wrench className="w-4 h-4 text-emerald-400" />
+            <div className="bg-card border border-elec-yellow/20 rounded-lg p-4 sm:p-5">
+              <h3 className="text-sm sm:text-base font-semibold text-white mb-3 flex items-center gap-2">
+                <Wrench className="w-4 h-4 text-elec-yellow" />
                 Step-by-Step Fault Rectification Process
               </h3>
-              <ol className="text-foreground leading-relaxed space-y-2 text-sm sm:text-base">
+              <ol className="text-white leading-relaxed space-y-2 text-sm sm:text-base">
                 <li><strong>1. Safe Isolation:</strong> Isolate circuit, lock off, prove dead with voltage indicator</li>
                 <li><strong>2. Fault Assessment:</strong> Examine the fault, take photos if permitted, note all observations</li>
                 <li><strong>3. Plan Repair:</strong> Identify correct repair method, gather appropriate tools and materials</li>
@@ -588,14 +588,14 @@ export default function Module7Section6_4() {
 
             {/* Tools and Equipment */}
             <div className="bg-card border border-green-500/20 rounded-lg p-4 sm:p-5">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground mb-3 flex items-center gap-2">
-                <TestTube className="w-4 h-4 text-emerald-400" />
+              <h3 className="text-sm sm:text-base font-semibold text-white mb-3 flex items-center gap-2">
+                <TestTube className="w-4 h-4 text-elec-yellow" />
                 Essential Tools and Equipment
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-sm font-medium text-foreground mb-2">Safety Equipment:</p>
-                  <ul className="text-foreground leading-relaxed space-y-1 text-sm">
+                  <p className="text-sm font-medium text-white mb-2">Safety Equipment:</p>
+                  <ul className="text-white leading-relaxed space-y-1 text-sm">
                     <li>• Voltage indicator and proving unit</li>
                     <li>• Lock-out/tag-out devices</li>
                     <li>• Warning labels and barriers</li>
@@ -603,8 +603,8 @@ export default function Module7Section6_4() {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-foreground mb-2">Hand Tools:</p>
-                  <ul className="text-foreground leading-relaxed space-y-1 text-sm">
+                  <p className="text-sm font-medium text-white mb-2">Hand Tools:</p>
+                  <ul className="text-white leading-relaxed space-y-1 text-sm">
                     <li>• Insulated screwdrivers (slotted and Phillips)</li>
                     <li>• Wire strippers and side cutters</li>
                     <li>• Torque screwdriver (0.5-3.0 Nm range)</li>
@@ -616,37 +616,37 @@ export default function Module7Section6_4() {
 
             {/* Common Pitfalls */}
             <div className="bg-card border border-red-500/20 rounded-lg p-4 sm:p-5">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground mb-3 flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4 text-emerald-400" />
+              <h3 className="text-sm sm:text-base font-semibold text-white mb-3 flex items-center gap-2">
+                <AlertTriangle className="w-4 h-4 text-elec-yellow" />
                 Common Pitfalls and How to Avoid Them
               </h3>
-              <div className="space-y-3 text-sm sm:text-base text-foreground">
+              <div className="space-y-3 text-sm sm:text-base text-white">
                 <div>
                   <p className="font-medium mb-1">❌ Over-tightening terminals</p>
-                  <p className="text-muted-foreground">✅ Use torque screwdriver, follow manufacturer specifications</p>
+                  <p className="text-white">✅ Use torque screwdriver, follow manufacturer specifications</p>
                 </div>
                 <div>
                   <p className="font-medium mb-1">❌ Trapping insulation under screws</p>
-                  <p className="text-muted-foreground">✅ Strip to correct length, ensure clean termination</p>
+                  <p className="text-white">✅ Strip to correct length, ensure clean termination</p>
                 </div>
                 <div>
                   <p className="font-medium mb-1">❌ Not testing after repair</p>
-                  <p className="text-muted-foreground">✅ Always retest the original fault condition</p>
+                  <p className="text-white">✅ Always retest the original fault condition</p>
                 </div>
                 <div>
                   <p className="font-medium mb-1">❌ Working without supervision</p>
-                  <p className="text-muted-foreground">✅ Involve supervisor in planning, execution, and verification</p>
+                  <p className="text-white">✅ Involve supervisor in planning, execution, and verification</p>
                 </div>
               </div>
             </div>
 
             {/* Quality Standards */}
             <div className="bg-card border border-purple-500/20 rounded-lg p-4 sm:p-5">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground mb-3 flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-emerald-400" />
+              <h3 className="text-sm sm:text-base font-semibold text-white mb-3 flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-elec-yellow" />
                 Professional Quality Standards
               </h3>
-              <ul className="text-foreground leading-relaxed space-y-2 text-sm sm:text-base">
+              <ul className="text-white leading-relaxed space-y-2 text-sm sm:text-base">
                 <li>• <strong>Neatness:</strong> Cables dressed properly, no unnecessary bends or stress</li>
                 <li>• <strong>Security:</strong> All connections tight, no loose strands visible</li>
                 <li>• <strong>Identification:</strong> Circuits properly labelled, documentation complete</li>
@@ -659,25 +659,25 @@ export default function Module7Section6_4() {
         </Card>
 
         {/* Real-World Applications */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4 sm:mb-6">Real-World Applications</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6">Real-World Applications</h2>
           
           <div className="grid gap-4 sm:gap-6">
             {/* Example 1 */}
             <div className="bg-card border border-green-500/20 rounded-lg p-4 sm:p-5">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground mb-3">Example 1: Domestic Socket Circuit - Loose Earth Connection</h3>
+              <h3 className="text-sm sm:text-base font-semibold text-white mb-3">Example 1: Domestic Socket Circuit - Loose Earth Connection</h3>
               <div className="space-y-3">
-                <p className="text-foreground leading-relaxed">
+                <p className="text-white leading-relaxed">
                   <strong>Situation:</strong> During a routine inspection of a domestic installation, a socket circuit showed high earth continuity readings (2.5Ω instead of expected &lt;0.1Ω). Investigation revealed a loose CPC at one outlet where the earth conductor had worked loose over time.
                 </p>
-                <p className="text-foreground leading-relaxed">
+                <p className="text-white leading-relaxed">
                   <strong>Action Taken:</strong> The apprentice, supervised by a qualified electrician, safely isolated the circuit, removed the socket faceplate, and found the green/yellow conductor barely held by a single thread in the terminal. The conductor was properly stripped, re-terminated to the correct torque (1.0 Nm), and the circuit retested.
                 </p>
-                <p className="text-foreground leading-relaxed">
+                <p className="text-white leading-relaxed">
                   <strong>Result:</strong> Earth continuity reading dropped to 0.05Ω, well within acceptable limits.
                 </p>
                 <div className="bg-green-600/10 border border-green-600/20 rounded p-3">
-                  <p className="text-xs sm:text-sm text-foreground">
+                  <p className="text-xs sm:text-sm text-white">
                     <strong>Lessons Learned:</strong> Regular testing reveals hidden faults; proper termination prevents future problems; simple repairs can prevent serious safety hazards.
                   </p>
                 </div>
@@ -686,19 +686,19 @@ export default function Module7Section6_4() {
 
             {/* Example 2 */}
             <div className="bg-card border border-red-500/20 rounded-lg p-4 sm:p-5">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground mb-3">Example 2: Lighting Circuit Miswiring - Dangerous Polarity Error</h3>
+              <h3 className="text-sm sm:text-base font-semibold text-white mb-3">Example 2: Lighting Circuit Miswiring - Dangerous Polarity Error</h3>
               <div className="space-y-3">
-                <p className="text-foreground leading-relaxed">
+                <p className="text-white leading-relaxed">
                   <strong>Situation:</strong> In a rental flat, a lighting point was miswired with the switch connected in the neutral rather than the line conductor. The light functioned normally, but polarity testing revealed the dangerous error. The lamp holder remained live when switched off, creating a serious shock risk during maintenance.
                 </p>
-                <p className="text-foreground leading-relaxed">
+                <p className="text-white leading-relaxed">
                   <strong>Action Taken:</strong> The apprentice correctly identified the fault using polarity testing, then under supervision relocated the conductors so the switch interrupted the line conductor. The circuit was retested to confirm correct polarity before re-energisation.
                 </p>
-                <p className="text-foreground leading-relaxed">
+                <p className="text-white leading-relaxed">
                   <strong>Result:</strong> Polarity testing confirmed the switch now correctly controlled the line conductor, eliminating the shock hazard.
                 </p>
                 <div className="bg-red-600/10 border border-red-600/20 rounded p-3">
-                  <p className="text-xs sm:text-sm text-foreground">
+                  <p className="text-xs sm:text-sm text-white">
                     <strong>Lessons Learned:</strong> Functional testing alone is insufficient; polarity testing is essential; proper wiring prevents shock hazards during maintenance.
                   </p>
                 </div>
@@ -706,20 +706,20 @@ export default function Module7Section6_4() {
             </div>
 
             {/* Example 3 */}
-            <div className="bg-card border border-emerald-500/20 rounded-lg p-4 sm:p-5">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground mb-3">Example 3: Commercial Kitchen - Overheating Socket</h3>
+            <div className="bg-card border border-elec-yellow/20 rounded-lg p-4 sm:p-5">
+              <h3 className="text-sm sm:text-base font-semibold text-white mb-3">Example 3: Commercial Kitchen - Overheating Socket</h3>
               <div className="space-y-3">
-                <p className="text-foreground leading-relaxed">
+                <p className="text-white leading-relaxed">
                   <strong>Situation:</strong> A commercial kitchen reported a socket outlet that was "getting warm" when equipment was plugged in. Investigation revealed a loose neutral connection causing voltage drop and heating under load. The socket showed signs of thermal damage around the neutral terminal.
                 </p>
-                <p className="text-foreground leading-relaxed">
+                <p className="text-white leading-relaxed">
                   <strong>Action Taken:</strong> The apprentice isolated the circuit and under supervision replaced the damaged socket outlet, re-terminated all connections with proper torque settings, and tested voltage drop under load to confirm the repair was effective.
                 </p>
-                <p className="text-foreground leading-relaxed">
+                <p className="text-white leading-relaxed">
                   <strong>Result:</strong> Voltage drop reduced from 8V to 2V under full load, eliminating the overheating problem.
                 </p>
-                <div className="bg-emerald-500/10 border border-emerald-500/20 rounded p-3">
-                  <p className="text-xs sm:text-sm text-foreground">
+                <div className="bg-elec-yellow/10 border border-elec-yellow/20 rounded p-3">
+                  <p className="text-xs sm:text-sm text-white">
                     <strong>Lessons Learned:</strong> Load-related heating indicates poor connections; prompt action prevents fire risk; proper torque settings are critical in high-load applications.
                   </p>
                 </div>
@@ -728,19 +728,19 @@ export default function Module7Section6_4() {
 
             {/* Example 4 */}
             <div className="bg-card border border-purple-500/20 rounded-lg p-4 sm:p-5">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground mb-3">Example 4: Office Building - Intermittent Lighting Fault</h3>
+              <h3 className="text-sm sm:text-base font-semibold text-white mb-3">Example 4: Office Building - Intermittent Lighting Fault</h3>
               <div className="space-y-3">
-                <p className="text-foreground leading-relaxed">
+                <p className="text-white leading-relaxed">
                   <strong>Situation:</strong> An office building reported intermittent operation of fluorescent lights in one area. Testing revealed high resistance in the switch connections due to corrosion and loose terminations in the damp environment near an air conditioning unit.
                 </p>
-                <p className="text-foreground leading-relaxed">
+                <p className="text-white leading-relaxed">
                   <strong>Action Taken:</strong> The apprentice cleaned the corroded connections, applied contact cleaner, re-terminated all connections, and recommended improved IP protection for the switch location. Environmental factors were documented for future maintenance.
                 </p>
-                <p className="text-foreground leading-relaxed">
+                <p className="text-white leading-relaxed">
                   <strong>Result:</strong> Lighting operated reliably, and preventive measures were implemented to avoid future corrosion.
                 </p>
                 <div className="bg-purple-600/10 border border-purple-600/20 rounded p-3">
-                  <p className="text-xs sm:text-sm text-foreground">
+                  <p className="text-xs sm:text-sm text-white">
                     <strong>Lessons Learned:</strong> Environmental factors affect connection quality; preventive maintenance reduces future faults; proper IP ratings are essential in damp locations.
                   </p>
                 </div>
@@ -750,78 +750,78 @@ export default function Module7Section6_4() {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4 sm:mb-6">FAQs</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6">FAQs</h2>
           <div className="grid gap-4 sm:gap-6">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-l-2 border-l-emerald-500/50 pl-4 sm:pl-6">
-                <h3 className="text-sm sm:text-base font-semibold text-foreground mb-2">{faq.question}</h3>
-                <p className="text-muted-foreground leading-relaxed text-sm sm:text-base">{faq.answer}</p>
+              <div key={index} className="border-l-2 border-l-elec-yellow/50 pl-4 sm:pl-6">
+                <h3 className="text-sm sm:text-base font-semibold text-white mb-2">{faq.question}</h3>
+                <p className="text-white leading-relaxed text-sm sm:text-base">{faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4 sm:mb-6">Recap</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6">Recap</h2>
           <div className="bg-slate-500/5 border border-slate-500/20 rounded-lg p-4 sm:p-6">
             <div className="space-y-4">
-              <p className="text-foreground leading-relaxed mb-4">
+              <p className="text-white leading-relaxed mb-4">
                 Rectifying minor faults is a crucial skill for Level 2 apprentices, but it must be approached with proper knowledge, supervision, and respect for safety protocols. Here are the key takeaways:
               </p>
               
               <div className="grid gap-3">
                 <div className="flex items-start gap-3">
-                  <span className="text-emerald-400 text-lg">•</span>
-                  <span className="text-foreground">Always isolate circuits safely and prove dead before starting any repair work</span>
+                  <span className="text-elec-yellow text-lg">•</span>
+                  <span className="text-white">Always isolate circuits safely and prove dead before starting any repair work</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-emerald-400 text-lg">•</span>
-                  <span className="text-foreground">Minor faults like loose connections can cause serious hazards if left unaddressed</span>
+                  <span className="text-elec-yellow text-lg">•</span>
+                  <span className="text-white">Minor faults like loose connections can cause serious hazards if left unaddressed</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-emerald-400 text-lg">•</span>
-                  <span className="text-foreground">Proper termination techniques and correct torque settings prevent future failures</span>
+                  <span className="text-elec-yellow text-lg">•</span>
+                  <span className="text-white">Proper termination techniques and correct torque settings prevent future failures</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-emerald-400 text-lg">•</span>
-                  <span className="text-foreground">Always retest circuits after repair to confirm the fault has been corrected</span>
+                  <span className="text-elec-yellow text-lg">•</span>
+                  <span className="text-white">Always retest circuits after repair to confirm the fault has been corrected</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-emerald-400 text-lg">•</span>
-                  <span className="text-foreground">Work under supervision and never exceed your level of competence or authorisation</span>
+                  <span className="text-elec-yellow text-lg">•</span>
+                  <span className="text-white">Work under supervision and never exceed your level of competence or authorisation</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-emerald-400 text-lg">•</span>
-                  <span className="text-foreground">Escalate complex faults to qualified personnel - know your limits</span>
+                  <span className="text-elec-yellow text-lg">•</span>
+                  <span className="text-white">Escalate complex faults to qualified personnel - know your limits</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-emerald-400 text-lg">•</span>
-                  <span className="text-foreground">Document all work comprehensively for safety and legal compliance</span>
+                  <span className="text-elec-yellow text-lg">•</span>
+                  <span className="text-white">Document all work comprehensively for safety and legal compliance</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-emerald-400 text-lg">•</span>
-                  <span className="text-foreground">Quality workmanship protects people and equipment while building professional reputation</span>
+                  <span className="text-elec-yellow text-lg">•</span>
+                  <span className="text-white">Quality workmanship protects people and equipment while building professional reputation</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-emerald-400 text-lg">•</span>
-                  <span className="text-foreground">Understanding environmental factors helps prevent recurring faults</span>
+                  <span className="text-elec-yellow text-lg">•</span>
+                  <span className="text-white">Understanding environmental factors helps prevent recurring faults</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-emerald-400 text-lg">•</span>
-                  <span className="text-foreground">Professional development requires continuous learning and skill improvement</span>
+                  <span className="text-elec-yellow text-lg">•</span>
+                  <span className="text-white">Professional development requires continuous learning and skill improvement</span>
                 </div>
               </div>
               
               <Separator className="my-4" />
               
-              <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4">
-                <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
-                  <Target className="w-4 h-4 text-emerald-400" />
+              <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
+                <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
+                  <Target className="w-4 h-4 text-elec-yellow" />
                   If You Only Remember 3 Things:
                 </h3>
-                <ol className="text-foreground space-y-1 text-sm">
+                <ol className="text-white space-y-1 text-sm">
                   <li><strong>1. Safety First:</strong> Always isolate safely and prove dead before any work</li>
                   <li><strong>2. Quality Matters:</strong> Proper terminations and retesting prevent future problems</li>
                   <li><strong>3. Know Your Limits:</strong> Work under supervision and escalate complex issues</li>
@@ -832,7 +832,7 @@ export default function Module7Section6_4() {
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <Quiz questions={quizQuestions} title="Test Your Knowledge: Rectifying Minor Faults" />
         </Card>
 

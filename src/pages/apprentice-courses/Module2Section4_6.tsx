@@ -164,11 +164,11 @@ const Module2Section4_6 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 2.4
@@ -181,15 +181,15 @@ const Module2Section4_6 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <Zap className="h-8 w-8 text-emerald-400" />
+            <Zap className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 2.4.6
               </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
                 Safety Considerations & Testing Differences
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+              <p className="text-xl text-white max-w-3xl mt-2">
                 Learn safety and testing differences between AC and DC electrical systems
               </p>
             </div>
@@ -197,11 +197,11 @@ const Module2Section4_6 = () => {
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Safe isolation:</strong> lock‑off, prove dead (before/after) with a proving unit</li>
                 <li><strong>DC hazards:</strong> sustained arcing; use DC‑rated switching and PPE</li>
@@ -210,8 +210,8 @@ const Module2Section4_6 = () => {
                 <li><strong>Special installs:</strong> PV/EV/BESS follow Part 7 and manufacturer procedures</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> PV strings, battery systems, EVSE, VFD drives, UPS, generator interfaces</li>
                 <li><strong>Use:</strong> Disconnect electronics for IR where required, pick right test sequences</li>
@@ -222,28 +222,28 @@ const Module2Section4_6 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
-          <ul className="space-y-3 text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
+          <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Plan safe isolation and proving dead for AC and DC systems</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Select the right instruments and CAT ratings for testing</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Understand when RCD, loop, IR and continuity tests apply</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Apply BS 7671/GN3 guidance to special installations (PV/EV/BESS)</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Recognise the increased arc hazards associated with DC systems</span>
             </li>
           </ul>
@@ -251,12 +251,12 @@ const Module2Section4_6 = () => {
 
         {/* Section 1: Safety Fundamentals */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
+          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
               Safety Fundamentals for AC and DC Systems
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 Safety procedures must be adapted for different current types. DC systems present unique challenges 
                 due to their ability to sustain arcs and the presence of multiple sources in modern installations.
@@ -264,8 +264,8 @@ const Module2Section4_6 = () => {
               
               <div className="bg-card border border-border/30 p-4 rounded-lg">
                 <div className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
-                  <p className="text-emerald-400">
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <p className="text-elec-yellow">
                     <strong>Universal Rule:</strong> Always isolate, lock‑off, tag and prove dead before starting work. 
                     Use a proving unit and prove before/after testing.
                   </p>
@@ -273,7 +273,7 @@ const Module2Section4_6 = () => {
               </div>
               
               <div className="space-y-3">
-                <h4 className="font-bold text-emerald-400">Key Safety Differences</h4>
+                <h4 className="font-bold text-elec-yellow">Key Safety Differences</h4>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
                   <li><strong>DC Arc Hazards:</strong> DC may sustain arcs more readily than AC - use DC‑rated switches, fuses and breakers</li>
                   <li><strong>Multiple Sources:</strong> PV, battery, mains - each needs separate isolation and clear labelling</li>
@@ -289,12 +289,12 @@ const Module2Section4_6 = () => {
 
         {/* Section 2: Testing Differences */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
+          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
               Testing Differences Between AC and DC
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 Different test methods and instruments are required for AC and DC systems. 
                 Understanding these differences is crucial for proper installation verification.
@@ -302,7 +302,7 @@ const Module2Section4_6 = () => {
               
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-3">
-                  <h4 className="font-bold text-emerald-400">Tests for Both AC & DC</h4>
+                  <h4 className="font-bold text-elec-yellow">Tests for Both AC & DC</h4>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li><strong>Continuity:</strong> Applies to both - ensure correct conductor connections</li>
                     <li><strong>Polarity:</strong> L/N/PE for AC, +/−/PE for DC systems</li>
@@ -311,7 +311,7 @@ const Module2Section4_6 = () => {
                 </div>
                 
                 <div className="space-y-3">
-                  <h4 className="font-bold text-emerald-400">AC-Specific Tests</h4>
+                  <h4 className="font-bold text-elec-yellow">AC-Specific Tests</h4>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li><strong>Loop Impedance (Zs/Ze):</strong> For AC ADS disconnection calculations</li>
                     <li><strong>RCD Testing:</strong> AC systems with correct type selection (AC/A/F/B)</li>
@@ -320,7 +320,7 @@ const Module2Section4_6 = () => {
                 </div>
               </div>
               
-              <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
+              <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-yellow-300">
                   <strong>Important:</strong> For DC systems, traditional loop impedance testing doesn't apply. 
                   Instead, use manufacturer data for fault current paths and protective device selection.
@@ -334,12 +334,12 @@ const Module2Section4_6 = () => {
 
         {/* Section 3: Instrument Selection */}
         <div className="mb-8">
-          <div className="border-l-4 border-purple-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="border-l-4 border-purple-500 dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
               Instrument Selection and CAT Ratings
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 Choosing the correct instruments with appropriate safety ratings is essential for safe testing. 
                 Different systems require different instrument capabilities and safety categories.
@@ -347,7 +347,7 @@ const Module2Section4_6 = () => {
               
               <div className="space-y-4">
                 <div>
-                  <h4 className="font-bold text-emerald-400">Essential Test Instruments</h4>
+                  <h4 className="font-bold text-elec-yellow">Essential Test Instruments</h4>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li><strong>Insulation Tester:</strong> Selectable DC test voltages (250/500/1000V as specified)</li>
                     <li><strong>Loop Tester:</strong> Suitable for system type and prospective fault current ranges</li>
@@ -358,7 +358,7 @@ const Module2Section4_6 = () => {
                 </div>
 
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-emerald-400 mb-2">CAT Rating Guide</h4>
+                  <h4 className="font-semibold text-elec-yellow mb-2">CAT Rating Guide</h4>
                   <ul className="list-disc pl-4 space-y-1 text-sm text-purple-200">
                     <li><strong>CAT III:</strong> Distribution boards, fixed equipment - most electrical work</li>
                     <li><strong>CAT IV:</strong> Supply side, meters, primary equipment - higher energy systems</li>
@@ -375,12 +375,12 @@ const Module2Section4_6 = () => {
 
         {/* Section 4: Special Installation Considerations */}
         <div className="mb-8">
-          <div className="border-l-4 border-orange-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="border-l-4 border-orange-500 dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">4</span>
               Special Installation Considerations
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 Modern installations often include special systems covered by BS 7671 Part 7. 
                 These require additional safety measures and testing procedures.
@@ -388,7 +388,7 @@ const Module2Section4_6 = () => {
               
               <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-emerald-400 mb-2">PV Systems (712)</h4>
+                  <h4 className="font-semibold text-elec-yellow mb-2">PV Systems (712)</h4>
                   <ul className="list-disc pl-4 space-y-1 text-sm text-orange-200">
                     <li>High DC voltages (up to 1000V+)</li>
                     <li>Always live during daylight</li>
@@ -397,7 +397,7 @@ const Module2Section4_6 = () => {
                   </ul>
                 </div>
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-emerald-400 mb-2">EV Charging (722)</h4>
+                  <h4 className="font-semibold text-elec-yellow mb-2">EV Charging (722)</h4>
                   <ul className="list-disc pl-4 space-y-1 text-sm text-orange-200">
                     <li>DC residual components possible</li>
                     <li>RCD type selection critical</li>
@@ -406,7 +406,7 @@ const Module2Section4_6 = () => {
                   </ul>
                 </div>
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-emerald-400 mb-2">Battery Storage</h4>
+                  <h4 className="font-semibold text-elec-yellow mb-2">Battery Storage</h4>
                   <ul className="list-disc pl-4 space-y-1 text-sm text-orange-200">
                     <li>High prospective DC currents</li>
                     <li>Multiple energy sources</li>
@@ -418,8 +418,8 @@ const Module2Section4_6 = () => {
               
               <div className="bg-card border border-border/30 p-4 rounded-lg">
                 <div className="flex items-start gap-3">
-                  <Shield className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
-                  <p className="text-emerald-400">
+                  <Shield className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <p className="text-elec-yellow">
                     <strong>Remember:</strong> Always follow BS 7671 Part 7 requirements and manufacturer 
                     instructions for special installations. When in doubt, seek specialist advice.
                   </p>
@@ -430,14 +430,14 @@ const Module2Section4_6 = () => {
         </div>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Practical Guidance for Apprentices</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance for Apprentices</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-lg font-semibold text-foreground mb-3">Testing Procedures</h3>
+              <h3 className="text-lg font-semibold text-white mb-3">Testing Procedures</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-emerald-400 mb-2">Before Testing</h4>
+                  <h4 className="font-semibold text-elec-yellow mb-2">Before Testing</h4>
                   <ul className="list-disc pl-4 space-y-1 text-sm text-blue-200">
                     <li>Check instrument calibration dates and condition</li>
                     <li>Verify CAT rating suitable for the system</li>
@@ -445,9 +445,9 @@ const Module2Section4_6 = () => {
                     <li>Review manufacturer disconnection requirements</li>
                   </ul>
                 </div>
-                <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-emerald-400 mb-2">During Testing</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-emerald-400/80">
+                <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
+                  <h4 className="font-semibold text-elec-yellow mb-2">During Testing</h4>
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-elec-yellow/80">
                     <li>Follow safe isolation procedures throughout</li>
                     <li>Disconnect sensitive electronics for IR tests</li>
                     <li>Record all results and compare with design values</li>
@@ -458,7 +458,7 @@ const Module2Section4_6 = () => {
             </div>
             
             <div>
-              <h3 className="text-lg font-semibold text-foreground mb-3">Common Mistakes to Avoid</h3>
+              <h3 className="text-lg font-semibold text-white mb-3">Common Mistakes to Avoid</h3>
               <div className="bg-card border border-border/30 p-4 rounded-lg">
                 <ul className="list-disc pl-4 space-y-2 text-sm text-red-200">
                   <li><strong>Wrong instrument type:</strong> Using AC instruments on DC systems or vice versa</li>
@@ -471,9 +471,9 @@ const Module2Section4_6 = () => {
             </div>
 
             <div>
-              <h3 className="text-lg font-semibold text-foreground mb-3">Building Your Expertise</h3>
-              <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
-                <ul className="list-disc pl-4 space-y-2 text-sm text-emerald-400/80">
+              <h3 className="text-lg font-semibold text-white mb-3">Building Your Expertise</h3>
+              <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
+                <ul className="list-disc pl-4 space-y-2 text-sm text-elec-yellow/80">
                   <li><strong>Learn BS 7671 Part 6:</strong> Testing requirements and acceptable values</li>
                   <li><strong>Study Guidance Note 3:</strong> Detailed testing procedures and safety</li>
                   <li><strong>Practice with instruments:</strong> Become familiar with different test equipment</li>
@@ -486,15 +486,15 @@ const Module2Section4_6 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-8 p-0 bg-card border-border/20 bg-none shadow-none overflow-hidden">
-          <div className="p-6 border-b border-border/20">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Frequently Asked Questions</h2>
+        <Card className="mb-8 p-0 bg-transparent border-white/20 bg-none shadow-none overflow-hidden">
+          <div className="p-6 border-b border-white/10">
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Frequently Asked Questions</h2>
           </div>
           <div className="divide-y divide-border/20">
             {faqs.map((faq, index) => (
               <div key={index} className="p-6">
-                <h3 className="font-semibold text-foreground mb-2">{faq.question}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{faq.answer}</p>
+                <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -502,13 +502,13 @@ const Module2Section4_6 = () => {
 
         {/* Pocket Cards */}
         <div className="mb-8 space-y-6">
-          <Card className="p-6 bg-card border-border/20 bg-none shadow-none">
+          <Card className="p-6 bg-transparent border-white/20 bg-none shadow-none">
             <div className="mb-4">
               <div className="flex items-center gap-2 mb-2">
-                <Shield className="h-5 w-5 text-emerald-400" />
-                <h2 className="text-lg sm:text-xl font-semibold text-foreground">AC/DC Safety & Testing Pocket Guide</h2>
+                <Shield className="h-5 w-5 text-elec-yellow" />
+                <h2 className="text-lg sm:text-xl font-semibold text-white">AC/DC Safety & Testing Pocket Guide</h2>
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Essential safety and testing reference for AC/DC electrical systems
               </p>
             </div>
@@ -516,7 +516,7 @@ const Module2Section4_6 = () => {
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
               <div className="space-y-4">
                 <div className="bg-card border border-border/30 p-3 rounded-lg">
-                  <h4 className="font-semibold text-emerald-400 mb-2 flex items-center gap-2">
+                  <h4 className="font-semibold text-elec-yellow mb-2 flex items-center gap-2">
                     <TestTube className="w-4 h-4" />
                     AC System Tests
                   </h4>
@@ -530,7 +530,7 @@ const Module2Section4_6 = () => {
                 </div>
                 
                 <div className="bg-card border border-border/30 p-3 rounded-lg">
-                  <h4 className="font-semibold text-emerald-400 mb-2 flex items-center gap-2">
+                  <h4 className="font-semibold text-elec-yellow mb-2 flex items-center gap-2">
                     <Battery className="w-4 h-4" />
                     DC System Tests
                   </h4>
@@ -545,8 +545,8 @@ const Module2Section4_6 = () => {
               </div>
               
               <div className="space-y-4">
-                <div className="bg-card border border-emerald-500/30 p-3 rounded-lg">
-                  <h4 className="font-semibold text-emerald-400 mb-2">Safety Priorities</h4>
+                <div className="bg-card border border-elec-yellow/30 p-3 rounded-lg">
+                  <h4 className="font-semibold text-elec-yellow mb-2">Safety Priorities</h4>
                   <ul className="space-y-1 text-emerald-200 text-xs">
                     <li>• <strong>Isolate:</strong> Lock-off all sources</li>
                     <li>• <strong>Prove dead:</strong> Before & after with proving unit</li>
@@ -557,7 +557,7 @@ const Module2Section4_6 = () => {
                 </div>
                 
                 <div className="bg-card border border-border/30 p-3 rounded-lg">
-                  <h4 className="font-semibold text-emerald-400 mb-2 flex items-center gap-2">
+                  <h4 className="font-semibold text-elec-yellow mb-2 flex items-center gap-2">
                     <AlertTriangle className="w-4 h-4" />
                     Special Systems
                   </h4>
@@ -572,23 +572,23 @@ const Module2Section4_6 = () => {
               </div>
             </div>
             
-            <div className="mt-4 pt-4 border-t border-border/20">
+            <div className="mt-4 pt-4 border-t border-white/10">
               <div className="grid grid-cols-4 gap-4 text-xs">
                 <div className="text-center">
-                  <p className="font-semibold text-foreground">RCD Types</p>
-                  <p className="text-muted-foreground">AC/A/F/B for DC components</p>
+                  <p className="font-semibold text-white">RCD Types</p>
+                  <p className="text-white">AC/A/F/B for DC components</p>
                 </div>
                 <div className="text-center">
-                  <p className="font-semibold text-foreground">CAT Ratings</p>
-                  <p className="text-muted-foreground">III/IV for system voltage</p>
+                  <p className="font-semibold text-white">CAT Ratings</p>
+                  <p className="text-white">III/IV for system voltage</p>
                 </div>
                 <div className="text-center">
-                  <p className="font-semibold text-foreground">IR Test Volts</p>
-                  <p className="text-muted-foreground">250/500/1000V DC</p>
+                  <p className="font-semibold text-white">IR Test Volts</p>
+                  <p className="text-white">250/500/1000V DC</p>
                 </div>
                 <div className="text-center">
-                  <p className="font-semibold text-foreground">Arc Hazard</p>
-                  <p className="text-muted-foreground">DC higher risk</p>
+                  <p className="font-semibold text-white">Arc Hazard</p>
+                  <p className="text-white">DC higher risk</p>
                 </div>
               </div>
             </div>
@@ -602,7 +602,7 @@ const Module2Section4_6 = () => {
         />
 
         {/* Navigation */}
-        <div className="flex justify-between items-center mt-12 pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center mt-12 pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />

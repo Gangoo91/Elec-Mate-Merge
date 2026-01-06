@@ -1,11 +1,23 @@
 import React, { useState, useCallback } from 'react';
-import { Card } from '@/components/ui/card';
-import { MobileButton } from '@/components/ui/mobile-button';
-import { MobileInput } from '@/components/ui/mobile-input';
-import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from '@/components/ui/mobile-select';
 import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
-import { Calculator, Plus, X, Lightbulb, Zap } from 'lucide-react';
+import { Plus, X, Lightbulb, Zap, Info, BookOpen, ChevronDown } from 'lucide-react';
+import {
+  CalculatorCard,
+  CalculatorInputGrid,
+  CalculatorInput,
+  CalculatorSelect,
+  CalculatorActions,
+  CalculatorResult,
+  ResultValue,
+  ResultsGrid,
+  CALCULATOR_CONFIG,
+} from "@/components/calculators/shared";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { cn } from "@/lib/utils";
 
 interface Appliance {
   id: string;
@@ -39,16 +51,33 @@ const cableData: CableRecommendation[] = [
   { size: '16.0mm²', current: 76, method: 'Method C (clipped direct)' }
 ];
 
+const typeOptions = [
+  { value: "lighting", label: "Lighting (90% diversity)" },
+  { value: "socket", label: "Socket Outlet (40% diversity)" },
+  { value: "heating", label: "Heating (100% diversity)" },
+  { value: "motor", label: "Motor (80% diversity)" },
+  { value: "other", label: "Other (70% diversity)" },
+];
+
+const voltageOptions = [
+  { value: "230", label: "230V (Single Phase)" },
+  { value: "400", label: "400V (Three Phase)" },
+];
+
 export const LoadCalculator = () => {
   const [appliances, setAppliances] = useState<Appliance[]>([]);
-  const [voltage, setVoltage] = useState<number>(230);
+  const [voltage, setVoltage] = useState<string>("230");
   const [calculated, setCalculated] = useState(false);
+  const [showGuidance, setShowGuidance] = useState(false);
+  const [showBsRegs, setShowBsRegs] = useState(false);
   const [newAppliance, setNewAppliance] = useState({
     name: '',
     power: '',
     quantity: '1',
     type: 'other' as const
   });
+
+  const config = CALCULATOR_CONFIG['power'];
 
   const addAppliance = useCallback(() => {
     if (newAppliance.name && newAppliance.power) {
@@ -61,13 +90,13 @@ export const LoadCalculator = () => {
       };
       setAppliances(prev => [...prev, appliance]);
       setNewAppliance({ name: '', power: '', quantity: '1', type: 'other' });
-      setCalculated(false); // Reset calculations when adding new appliance
+      setCalculated(false);
     }
   }, [newAppliance]);
 
   const removeAppliance = useCallback((id: string) => {
     setAppliances(prev => prev.filter(a => a.id !== id));
-    setCalculated(false); // Reset calculations when removing appliance
+    setCalculated(false);
   }, []);
 
   const handleCalculate = useCallback(() => {
@@ -84,7 +113,7 @@ export const LoadCalculator = () => {
   const calculations = useCallback(() => {
     let totalConnectedLoad = 0;
     let totalMaximumDemand = 0;
-    
+
     const breakdownByType: Record<string, { connected: number; demand: number; count: number }> = {};
 
     appliances.forEach(appliance => {
@@ -103,13 +132,13 @@ export const LoadCalculator = () => {
       breakdownByType[appliance.type].count += appliance.quantity;
     });
 
-    const current = totalMaximumDemand / voltage;
-    const designCurrent = current * 1.25; // 25% safety margin
+    const voltageNum = parseInt(voltage);
+    const current = totalMaximumDemand / voltageNum;
+    const designCurrent = current * 1.25;
     const recommendedCable = cableData.find(cable => cable.current >= designCurrent) || cableData[cableData.length - 1];
     const recommendedMCB = current <= 6 ? 6 : current <= 10 ? 10 : current <= 16 ? 16 : current <= 20 ? 20 : current <= 25 ? 25 : current <= 32 ? 32 : current <= 40 ? 40 : 50;
-    
-    // Calculate voltage drop for recommended cable (rough estimate)
-    const cableResistance = {
+
+    const cableResistance: Record<string, number> = {
       '1.0mm²': 18.1,
       '1.5mm²': 12.1,
       '2.5mm²': 7.41,
@@ -118,10 +147,10 @@ export const LoadCalculator = () => {
       '10.0mm²': 1.83,
       '16.0mm²': 1.15
     };
-    
-    const resistance = cableResistance[recommendedCable.size as keyof typeof cableResistance] || 1.83;
-    const voltageDrop = (current * resistance * 20) / 1000; // Assume 20m run
-    const voltageDropPercent = (voltageDrop / voltage) * 100;
+
+    const resistance = cableResistance[recommendedCable.size] || 1.83;
+    const voltageDrop = (current * resistance * 20) / 1000;
+    const voltageDropPercent = (voltageDrop / voltageNum) * 100;
 
     return {
       totalConnectedLoad: totalConnectedLoad / 1000,
@@ -140,200 +169,232 @@ export const LoadCalculator = () => {
   const results = calculations();
 
   return (
-    <Card className="mb-8 p-6 bg-card border-border/20">
-      <div className="flex items-center gap-3 mb-6">
-        <Calculator className="w-6 h-6 text-foreground" />
-        <h3 className="text-xl font-semibold text-foreground">Try It: Load Calculator</h3>
-        <Badge variant="secondary">Interactive Tool</Badge>
-      </div>
+    <div className="space-y-4">
+      <CalculatorCard
+        category="power"
+        title="Load Calculator"
+        description="Calculate maximum demand with diversity factors for electrical installations"
+      >
+        {/* Add Appliance Section */}
+        <div
+          className="space-y-4 p-4 rounded-xl border"
+          style={{
+            borderColor: `${config.gradientFrom}30`,
+            background: `${config.gradientFrom}08`
+          }}
+        >
+          <h4 className="font-medium text-white flex items-center gap-2 text-sm">
+            <Plus className="h-4 w-4" style={{ color: config.gradientFrom }} />
+            Add Appliance
+          </h4>
 
-      {/* Add Appliance Form */}
-      <div className="space-y-4 mb-6 p-4 bg-muted/30 rounded-lg">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-          <div className="col-span-1">
-            <MobileInput
+          <CalculatorInputGrid columns={2}>
+            <CalculatorInput
               label="Appliance Name"
-              placeholder="e.g. Immersion Heater"
+              type="text"
               value={newAppliance.name}
-              onChange={(e) => setNewAppliance(prev => ({ ...prev, name: e.target.value }))}
+              onChange={(value) => setNewAppliance(prev => ({ ...prev, name: value }))}
+              placeholder="e.g. Immersion Heater"
             />
-          </div>
-          <div className="col-span-1">
-            <MobileInput
-              label="Power (W)"
-              type="number"
-              inputMode="decimal"
-              placeholder="3000"
-              value={newAppliance.power}
-              onChange={(e) => setNewAppliance(prev => ({ ...prev, power: e.target.value }))}
+            <CalculatorInput
+              label="Power"
               unit="W"
+              type="text"
+              inputMode="decimal"
+              value={newAppliance.power}
+              onChange={(value) => setNewAppliance(prev => ({ ...prev, power: value }))}
+              placeholder="e.g. 3000"
             />
-          </div>
-          <div className="col-span-1">
-            <MobileInput
+            <CalculatorInput
               label="Quantity"
-              type="number"
+              type="text"
               inputMode="numeric"
-              placeholder="1"
               value={newAppliance.quantity}
-              onChange={(e) => setNewAppliance(prev => ({ ...prev, quantity: e.target.value }))}
+              onChange={(value) => setNewAppliance(prev => ({ ...prev, quantity: value }))}
+              placeholder="1"
             />
-          </div>
-          <div className="col-span-1">
-            <MobileSelect value={newAppliance.type} onValueChange={(value) => setNewAppliance(prev => ({ ...prev, type: value as any }))}>
-              <MobileSelectTrigger label="Type">
-                <MobileSelectValue />
-              </MobileSelectTrigger>
-              <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
-                <MobileSelectItem value="lighting">Lighting (90% diversity)</MobileSelectItem>
-                <MobileSelectItem value="socket">Socket Outlet (40% diversity)</MobileSelectItem>
-                <MobileSelectItem value="heating">Heating (100% diversity)</MobileSelectItem>
-                <MobileSelectItem value="motor">Motor (80% diversity)</MobileSelectItem>
-                <MobileSelectItem value="other">Other (70% diversity)</MobileSelectItem>
-              </MobileSelectContent>
-            </MobileSelect>
-          </div>
-          <div className="col-span-1 sm:col-span-2 lg:col-span-1 xl:col-span-1 flex items-end">
-            <MobileButton onClick={addAppliance} variant="elec" className="w-full min-h-[48px]" disabled={!newAppliance.name || !newAppliance.power}>
-              <Plus className="w-4 h-4 mr-2" />
-              Add
-            </MobileButton>
-          </div>
+            <CalculatorSelect
+              label="Load Type"
+              value={newAppliance.type}
+              onChange={(value) => setNewAppliance(prev => ({ ...prev, type: value as any }))}
+              options={typeOptions}
+            />
+          </CalculatorInputGrid>
+
+          <button
+            onClick={addAppliance}
+            disabled={!newAppliance.name || !newAppliance.power}
+            className={cn(
+              "w-full h-12 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all touch-manipulation active:scale-[0.98]",
+              newAppliance.name && newAppliance.power
+                ? "bg-gradient-to-r text-white shadow-lg"
+                : "bg-white/10 text-white/40 cursor-not-allowed"
+            )}
+            style={newAppliance.name && newAppliance.power ? {
+              backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`
+            } : undefined}
+          >
+            <Plus className="h-4 w-4" />
+            Add Appliance
+          </button>
         </div>
-      </div>
 
-      {/* Supply Voltage */}
-      <div className="mb-6">
-        <MobileSelect value={voltage.toString()} onValueChange={(value) => setVoltage(parseInt(value))}>
-          <MobileSelectTrigger label="Supply Voltage (V)" className="w-full sm:w-48">
-            <MobileSelectValue />
-          </MobileSelectTrigger>
-          <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
-            <MobileSelectItem value="230">230V (Single Phase)</MobileSelectItem>
-            <MobileSelectItem value="400">400V (Three Phase)</MobileSelectItem>
-          </MobileSelectContent>
-        </MobileSelect>
-      </div>
+        {/* Supply Voltage */}
+        <CalculatorSelect
+          label="Supply Voltage"
+          value={voltage}
+          onChange={setVoltage}
+          options={voltageOptions}
+        />
 
-      {/* Appliance List */}
-      {appliances.length > 0 && (
-        <div className="mb-6">
-          <h4 className="font-medium text-foreground mb-3">Added Appliances</h4>
-          <div className="space-y-2">
-            {appliances.map(appliance => (
-              <div key={appliance.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 bg-muted/30 rounded gap-3">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-                  <span className="font-medium">{appliance.name}</span>
-                  <div className="flex items-center gap-2">
-                    <Badge variant="outline">{appliance.type}</Badge>
-                    <span className="text-sm text-muted-foreground">
-                      {appliance.power}W × {appliance.quantity} = {appliance.power * appliance.quantity}W
-                    </span>
+        {/* Appliance List */}
+        {appliances.length > 0 && (
+          <div className="space-y-3">
+            <h4 className="font-medium text-white text-sm flex items-center gap-2">
+              <Lightbulb className="h-4 w-4" style={{ color: config.gradientFrom }} />
+              Added Appliances ({appliances.length})
+            </h4>
+            <div className="space-y-2 max-h-64 overflow-y-auto pr-2">
+              {appliances.map(appliance => (
+                <div
+                  key={appliance.id}
+                  className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10"
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                    <span className="font-medium text-white text-sm">{appliance.name}</span>
+                    <div className="flex items-center gap-2">
+                      <Badge
+                        variant="outline"
+                        className="text-xs capitalize"
+                        style={{ borderColor: `${config.gradientFrom}40`, color: config.gradientFrom }}
+                      >
+                        {appliance.type}
+                      </Badge>
+                      <span className="text-xs text-white/60">
+                        {appliance.power}W × {appliance.quantity} = {(appliance.power * appliance.quantity).toLocaleString()}W
+                      </span>
+                    </div>
                   </div>
+                  <button
+                    onClick={() => removeAppliance(appliance.id)}
+                    className="p-2 rounded-lg hover:bg-white/10 text-white/40 hover:text-red-400 transition-colors touch-manipulation"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
                 </div>
-                <MobileButton size="sm" variant="ghost" onClick={() => removeAppliance(appliance.id)} className="self-end sm:self-center min-h-[40px]">
-                  <X className="w-4 h-4" />
-                </MobileButton>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Calculate Button */}
-      {appliances.length > 0 && (
-        <div className="flex flex-col sm:flex-row gap-3 mb-6">
-          <MobileButton onClick={handleCalculate} variant="elec" className="min-h-[48px]">
-            <Calculator className="w-4 h-4 mr-2" />
-            <span className="hidden sm:inline">Calculate Load & Cable Requirements</span>
-            <span className="sm:hidden">Calculate</span>
-          </MobileButton>
-          <MobileButton onClick={resetCalculator} variant="elec-outline" className="min-h-[48px]">
-            Reset Calculator
-          </MobileButton>
-        </div>
-      )}
+        {/* Calculate Actions */}
+        <CalculatorActions
+          category="power"
+          onCalculate={handleCalculate}
+          onReset={resetCalculator}
+          isDisabled={appliances.length === 0}
+        />
+      </CalculatorCard>
 
       {/* Results */}
       {calculated && appliances.length > 0 && (
-        <div className="space-y-6">
-          <Separator />
-          
-          <div className="space-y-6">
-            <div className="bg-muted/20 p-4 rounded-lg">
-              <h4 className="font-medium text-foreground mb-4 flex items-center gap-2">
-                <Lightbulb className="w-5 h-5" />
-                Load Calculations
-              </h4>
-              <div className="space-y-3">
-                <div className="flex flex-col sm:flex-row sm:justify-between gap-1 py-2 border-b border-border/20 last:border-b-0">
-                  <span className="text-sm sm:text-base">Total Connected Load:</span>
-                  <span className="font-medium text-lg sm:text-base">{results.totalConnectedLoad.toFixed(2)} kW</span>
-                </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between gap-1 py-2 border-b border-border/20 last:border-b-0">
-                  <span className="text-sm sm:text-base">Maximum Demand (after diversity):</span>
-                  <span className="font-medium text-primary text-lg sm:text-base">{results.totalMaximumDemand.toFixed(2)} kW</span>
-                </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between gap-1 py-2 border-b border-border/20 last:border-b-0">
-                  <span className="text-sm sm:text-base">Design Current (with 25% margin):</span>
-                  <span className="font-medium text-lg sm:text-base">{results.designCurrent.toFixed(1)} A</span>
-                </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between gap-1 py-2 border-b border-border/20 last:border-b-0">
-                  <span className="text-sm sm:text-base">Design Current:</span>
-                  <span className="font-medium text-primary text-lg sm:text-base">{results.current.toFixed(1)} A</span>
-                </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between gap-1 py-2 border-b border-border/20 last:border-b-0">
-                  <span className="text-sm sm:text-base">Voltage Drop (20m run):</span>
-                  <span className="font-medium text-lg sm:text-base">{results.voltageDrop.toFixed(2)}V ({results.voltageDropPercent.toFixed(1)}%)</span>
-                </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between gap-1 py-2">
-                  <span className="text-sm text-muted-foreground">Diversity Applied:</span>
-                  <span className="text-sm text-muted-foreground">{results.diversityApplied.toFixed(0)}%</span>
-                </div>
+        <div className="space-y-4 animate-fade-in">
+          {/* Main Results */}
+          <CalculatorResult category="power">
+            <div className="text-center pb-4 border-b border-white/10">
+              <p className="text-sm text-white/60 mb-1">Maximum Demand</p>
+              <div
+                className="text-4xl font-bold bg-clip-text text-transparent"
+                style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}
+              >
+                {results.totalMaximumDemand.toFixed(2)} kW
               </div>
+              <p className="text-sm text-white/50 mt-1">
+                {results.diversityApplied.toFixed(0)}% diversity applied
+              </p>
             </div>
 
-            <div className="bg-muted/20 p-4 rounded-lg">
-              <h4 className="font-medium text-foreground mb-4 flex items-center gap-2">
-                <Zap className="w-5 h-5" />
-                Recommendations
-              </h4>
-              <div className="space-y-4">
-                <div className="bg-background/50 p-3 rounded border">
-                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                    <span className="text-sm text-muted-foreground">Cable Size:</span>
-                    <div className="text-right">
-                      <div className="font-medium text-primary text-xl">{results.recommendedCable.size}</div>
-                      <div className="text-xs text-muted-foreground">Capacity: {results.recommendedCable.current}A</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-background/50 p-3 rounded border">
-                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                    <span className="text-sm text-muted-foreground">MCB Rating:</span>
-                    <div className="font-medium text-primary text-xl text-right">{results.recommendedMCB}A</div>
-                  </div>
-                </div>
-                <div className="text-xs text-muted-foreground bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 p-3 rounded">
-                  <strong>Note:</strong> Based on Method C installation. Consider derating factors for final design.
-                </div>
-              </div>
-            </div>
-          </div>
+            <ResultsGrid columns={2}>
+              <ResultValue
+                label="Connected Load"
+                value={results.totalConnectedLoad.toFixed(2)}
+                unit="kW"
+                category="power"
+                size="sm"
+              />
+              <ResultValue
+                label="Design Current"
+                value={results.designCurrent.toFixed(1)}
+                unit="A"
+                category="power"
+                size="sm"
+              />
+              <ResultValue
+                label="Load Current"
+                value={results.current.toFixed(1)}
+                unit="A"
+                category="power"
+                size="sm"
+              />
+              <ResultValue
+                label="Voltage Drop (20m)"
+                value={`${results.voltageDrop.toFixed(2)}V (${results.voltageDropPercent.toFixed(1)}%)`}
+                category="power"
+                size="sm"
+              />
+            </ResultsGrid>
+          </CalculatorResult>
 
-          {/* Diversity Breakdown */}
+          {/* Recommendations */}
+          <CalculatorResult category="cable">
+            <h4 className="font-medium text-white flex items-center gap-2 mb-4">
+              <Zap className="h-4 w-4 text-emerald-400" />
+              Recommendations
+            </h4>
+
+            <ResultsGrid columns={2}>
+              <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-center">
+                <p className="text-xs text-white/60 mb-1">Cable Size</p>
+                <p className="text-2xl font-bold text-emerald-400">{results.recommendedCable.size}</p>
+                <p className="text-xs text-white/40">Capacity: {results.recommendedCable.current}A</p>
+              </div>
+              <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-center">
+                <p className="text-xs text-white/60 mb-1">MCB Rating</p>
+                <p className="text-2xl font-bold text-emerald-400">{results.recommendedMCB}A</p>
+                <p className="text-xs text-white/40">Type B/C</p>
+              </div>
+            </ResultsGrid>
+
+            <div className="mt-3 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
+              <p className="text-xs text-amber-200">
+                <strong>Note:</strong> Based on Method C installation. Consider derating factors for final design.
+              </p>
+            </div>
+          </CalculatorResult>
+
+          {/* Load Breakdown */}
           {Object.keys(results.breakdownByType).length > 0 && (
-            <div>
-              <h4 className="font-medium text-foreground mb-3">Load Breakdown by Type</h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="calculator-card p-4">
+              <h4 className="font-medium text-white mb-3 text-sm">Load Breakdown by Type</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {Object.entries(results.breakdownByType).map(([type, data]) => (
-                  <div key={type} className="p-3 bg-muted/30 rounded">
-                    <div className="font-medium capitalize mb-2">{type}</div>
-                    <div className="text-sm space-y-1">
-                      <div>Connected: {(data.connected / 1000).toFixed(2)} kW</div>
-                      <div>After Diversity: {(data.demand / 1000).toFixed(2)} kW</div>
-                      <div className="text-xs text-muted-foreground">
-                        Diversity: {(diversityFactors[type as keyof typeof diversityFactors] * 100)}%
+                  <div
+                    key={type}
+                    className="p-3 rounded-xl bg-white/5 border border-white/10"
+                  >
+                    <div className="font-medium capitalize text-white mb-2 text-sm">{type}</div>
+                    <div className="text-xs space-y-1 text-white/70">
+                      <div className="flex justify-between">
+                        <span>Connected:</span>
+                        <span className="text-white">{(data.connected / 1000).toFixed(2)} kW</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>After Diversity:</span>
+                        <span style={{ color: config.gradientFrom }}>{(data.demand / 1000).toFixed(2)} kW</span>
+                      </div>
+                      <div className="flex justify-between text-white/50">
+                        <span>Diversity Factor:</span>
+                        <span>{(diversityFactors[type as keyof typeof diversityFactors] * 100)}%</span>
                       </div>
                     </div>
                   </div>
@@ -341,9 +402,73 @@ export const LoadCalculator = () => {
               </div>
             </div>
           )}
+
+          {/* What This Means - Collapsible */}
+          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
+              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                <div className="flex items-center gap-3">
+                  <Info className="h-4 w-4 text-blue-400" />
+                  <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
+                </div>
+                <ChevronDown className={cn(
+                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  showGuidance && "rotate-180"
+                )} />
+              </CollapsibleTrigger>
+
+              <CollapsibleContent className="p-4 pt-0 space-y-2">
+                <p className="text-sm text-blue-200/80">
+                  <strong className="text-blue-300">Maximum Demand:</strong> The estimated peak load after applying diversity factors. This accounts for the fact that not all loads operate simultaneously at full capacity.
+                </p>
+                <p className="text-sm text-blue-200/80">
+                  <strong className="text-blue-300">Design Current:</strong> The maximum demand current plus a 25% safety margin for future expansion and unexpected loads.
+                </p>
+                <p className="text-sm text-blue-200/80">
+                  <strong className="text-blue-300">Diversity Factors:</strong> Heating loads typically run at full capacity (100%), while socket outlets have lower diversity (40%) as they're rarely all used simultaneously.
+                </p>
+              </CollapsibleContent>
+            </div>
+          </Collapsible>
+
+          {/* BS 7671 Guidance - Collapsible */}
+          <Collapsible open={showBsRegs} onOpenChange={setShowBsRegs}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
+              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                <div className="flex items-center gap-3">
+                  <BookOpen className="h-4 w-4 text-amber-400" />
+                  <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 Regs at a Glance</span>
+                </div>
+                <ChevronDown className={cn(
+                  "h-4 w-4 text-white/40 transition-transform duration-200",
+                  showBsRegs && "rotate-180"
+                )} />
+              </CollapsibleTrigger>
+
+              <CollapsibleContent className="p-4 pt-0">
+                <div className="space-y-2 text-sm text-amber-200/80">
+                  <p>• <strong className="text-amber-300">311.1:</strong> Assessment of maximum demand shall account for diversity</p>
+                  <p>• <strong className="text-amber-300">433.1:</strong> Protective devices shall be selected for design current (Ib ≤ In ≤ Iz)</p>
+                  <p>• <strong className="text-amber-300">525:</strong> Voltage drop limits: 3% lighting, 5% other uses from origin</p>
+                  <p>• <strong className="text-amber-300">Appendix 4:</strong> Current-carrying capacities and cable sizing tables</p>
+                </div>
+              </CollapsibleContent>
+            </div>
+          </Collapsible>
         </div>
       )}
-    </Card>
+
+      {/* Formula Reference */}
+      <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
+        <div className="flex items-start gap-2">
+          <Info className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
+          <p className="text-sm text-blue-200">
+            <strong>Maximum Demand</strong> = Σ(Connected Load × Diversity Factor). Design Current = Max Demand Current × 1.25
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };
+
 export default LoadCalculator;

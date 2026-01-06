@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -583,7 +583,7 @@ const MentalHealthContent = () => {
 
       {/* Back to Dashboard */}
       <div className="pt-2">
-        <BackButton customUrl="/apprentice" label="Back to Dashboard" />
+        <SmartBackButton />
       </div>
 
       {/* Floating Crisis Button */}

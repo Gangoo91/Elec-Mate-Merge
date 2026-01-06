@@ -4,6 +4,7 @@ import { ArrowLeft, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import SimpleCareerCard from "@/components/electrician/career/SimpleCareerCard";
 import CareerPathways from "@/components/electrician/career/CareerPathways";
 import CareerCourses from "@/components/electrician/career/CareerCourses";
@@ -65,16 +66,7 @@ const CareerProgression = () => {
             </div>
           </div>
           {!activeSection ? (
-            <Link to="/electrician">
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Back to Hub
-              </Button>
-            </Link>
+            <SmartBackButton />
           ) : (
             <Button
               variant="outline"

@@ -145,11 +145,11 @@ const Module2Section4_5 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 2.4
@@ -162,15 +162,15 @@ const Module2Section4_5 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <Zap className="h-8 w-8 text-emerald-400" />
+            <Zap className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 2.4.5
               </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
                 Where AC and DC Are Used in Real Installations
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+              <p className="text-xl text-white max-w-3xl mt-2">
                 Learn practical AC and DC applications in electrical installations
               </p>
             </div>
@@ -178,11 +178,11 @@ const Module2Section4_5 = () => {
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>AC:</strong> 230/400V mains distribution for sockets, lighting, HVAC, motors</li>
                 <li><strong>DC:</strong> ELV controls, electronics, PV strings, BESS, EV charger electronics</li>
@@ -191,8 +191,8 @@ const Module2Section4_5 = () => {
                 <li><strong>Safety:</strong> DC can sustain arcs; use DC-rated switching and segregation</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> DBs, control panels, PV arrays, battery rooms, EV charge points, data/PoE</li>
                 <li><strong>Use:</strong> Identify AC vs DC, verify device ratings, plan DC isolation</li>
@@ -203,28 +203,28 @@ const Module2Section4_5 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
-          <ul className="space-y-3 text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
+          <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Identify typical AC applications in buildings and industry</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Identify typical DC applications including ELV, PV and controls</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Recognise equipment that converts AC↔DC (PSUs, inverters, EVSE)</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Apply BS 7671 selection and erection guidance for AC/DC circuits</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Plan safe isolation and segregation for mixed AC/DC installations</span>
             </li>
           </ul>
@@ -232,12 +232,12 @@ const Module2Section4_5 = () => {
 
         {/* Section 1: AC Applications */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
+          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
               AC Applications in Electrical Installations
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 AC (Alternating Current) is the backbone of electrical distribution in the UK. 
                 It's used for mains electricity supply and most building installations.
@@ -245,7 +245,7 @@ const Module2Section4_5 = () => {
               
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-3">
-                  <h4 className="font-bold text-emerald-400">Distribution & General Loads</h4>
+                  <h4 className="font-bold text-elec-yellow">Distribution & General Loads</h4>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li><strong>Mains supply:</strong> 230V single-phase, 400V three-phase</li>
                     <li><strong>Consumer units:</strong> DB distribution to final circuits</li>
@@ -256,7 +256,7 @@ const Module2Section4_5 = () => {
                 </div>
                 
                 <div className="space-y-3">
-                  <h4 className="font-bold text-emerald-400">Motors & Variable Speed</h4>
+                  <h4 className="font-bold text-elec-yellow">Motors & Variable Speed</h4>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li><strong>Induction motors:</strong> Single and three-phase supplies</li>
                     <li><strong>VFDs/inverters:</strong> For pumps, fans, conveyors</li>
@@ -273,12 +273,12 @@ const Module2Section4_5 = () => {
 
         {/* Section 2: DC Applications */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
+          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
               DC Applications in Electrical Installations
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 DC (Direct Current) is widely used for control systems, electronics, renewable energy, 
                 and modern technologies like EV charging.
@@ -286,7 +286,7 @@ const Module2Section4_5 = () => {
               
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-3">
-                  <h4 className="font-bold text-emerald-400">ELV, Control & Electronics</h4>
+                  <h4 className="font-bold text-elec-yellow">ELV, Control & Electronics</h4>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li><strong>Control circuits:</strong> SELV/PELV 24V DC for PLC I/O</li>
                     <li><strong>Fire & security:</strong> Alarm systems, access control</li>
@@ -297,7 +297,7 @@ const Module2Section4_5 = () => {
                 </div>
                 
                 <div className="space-y-3">
-                  <h4 className="font-bold text-emerald-400">Generation, Storage & EV</h4>
+                  <h4 className="font-bold text-elec-yellow">Generation, Storage & EV</h4>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li><strong>PV strings:</strong> DC output from solar panels</li>
                     <li><strong>Battery storage:</strong> BESS and UPS systems</li>
@@ -314,12 +314,12 @@ const Module2Section4_5 = () => {
 
         {/* Section 3: Conversion Equipment */}
         <div className="mb-8">
-          <div className="border-l-4 border-purple-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="border-l-4 border-purple-500 dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
               AC/DC Conversion Equipment
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 Many modern installations include equipment that converts between AC and DC. 
                 Understanding these conversion processes is essential for proper selection and installation.
@@ -327,7 +327,7 @@ const Module2Section4_5 = () => {
               
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-emerald-400 mb-2">AC to DC Conversion</h4>
+                  <h4 className="font-semibold text-elec-yellow mb-2">AC to DC Conversion</h4>
                   <ul className="list-disc pl-4 space-y-1 text-sm text-purple-200">
                     <li><strong>Rectifiers:</strong> Convert AC mains to DC supply</li>
                     <li><strong>Phone chargers:</strong> 230V AC to low voltage DC</li>
@@ -336,7 +336,7 @@ const Module2Section4_5 = () => {
                   </ul>
                 </div>
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-emerald-400 mb-2">DC to AC Conversion</h4>
+                  <h4 className="font-semibold text-elec-yellow mb-2">DC to AC Conversion</h4>
                   <ul className="list-disc pl-4 space-y-1 text-sm text-purple-200">
                     <li><strong>Solar inverters:</strong> PV DC to mains AC</li>
                     <li><strong>UPS systems:</strong> Battery DC to load AC</li>
@@ -346,7 +346,7 @@ const Module2Section4_5 = () => {
                 </div>
               </div>
               
-              <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
+              <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-yellow-300">
                   <strong>Practical Tip:</strong> VFDs first convert AC to DC, then back to variable-frequency AC 
                   for precise motor speed control. This is why they can create harmonics and DC components 
@@ -361,12 +361,12 @@ const Module2Section4_5 = () => {
 
         {/* Section 4: Selection and Safety */}
         <div className="mb-8">
-          <div className="border-l-4 border-orange-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="border-l-4 border-orange-500 dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">4</span>
               Selection Criteria and Safety Considerations
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 Proper selection of equipment and safety measures is crucial when working with mixed AC/DC installations. 
                 Key considerations include device ratings, isolation methods, and protective devices.
@@ -374,7 +374,7 @@ const Module2Section4_5 = () => {
               
               <div className="space-y-4">
                 <div>
-                  <h4 className="font-bold text-emerald-400">Equipment Selection</h4>
+                  <h4 className="font-bold text-elec-yellow">Equipment Selection</h4>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li>Check nameplates for AC/DC rating, voltage range, and frequency</li>
                     <li>Verify IP ratings for environmental conditions</li>
@@ -384,7 +384,7 @@ const Module2Section4_5 = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-bold text-emerald-400">Safety Considerations</h4>
+                  <h4 className="font-bold text-elec-yellow">Safety Considerations</h4>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li>DC can sustain arcs - use DC-rated switching devices where required</li>
                     <li>Segregate ELV/SELV from LV conductors per BS 7671</li>
@@ -396,8 +396,8 @@ const Module2Section4_5 = () => {
               
               <div className="bg-card border border-border/30 p-4 rounded-lg">
                 <div className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
-                  <p className="text-emerald-400">
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <p className="text-elec-yellow">
                     <strong>Safety Alert:</strong> Always isolate, lock-off and prove dead before working. 
                     DC systems can sustain arcs; use suitable PPE, tools and CAT-rated instruments.
                   </p>
@@ -408,14 +408,14 @@ const Module2Section4_5 = () => {
         </div>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Practical Guidance for Apprentices</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance for Apprentices</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-lg font-semibold text-foreground mb-3">On Site Application</h3>
+              <h3 className="text-lg font-semibold text-white mb-3">On Site Application</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-emerald-400 mb-2">When Installing AC Systems</h4>
+                  <h4 className="font-semibold text-elec-yellow mb-2">When Installing AC Systems</h4>
                   <ul className="list-disc pl-4 space-y-1 text-sm text-blue-200">
                     <li>Check supply characteristics (230V/400V, TN/TT system)</li>
                     <li>Consider three-phase balance for motor loads</li>
@@ -423,9 +423,9 @@ const Module2Section4_5 = () => {
                     <li>Ensure appropriate RCD types for loads</li>
                   </ul>
                 </div>
-                <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-emerald-400 mb-2">When Installing DC Systems</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-emerald-400/80">
+                <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
+                  <h4 className="font-semibold text-elec-yellow mb-2">When Installing DC Systems</h4>
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-elec-yellow/80">
                     <li>Verify polarity and maintain consistent marking</li>
                     <li>Use DC-rated switching devices where required</li>
                     <li>Plan for arc-resistant isolation methods</li>
@@ -436,7 +436,7 @@ const Module2Section4_5 = () => {
             </div>
             
             <div>
-              <h3 className="text-lg font-semibold text-foreground mb-3">Common Mistakes to Avoid</h3>
+              <h3 className="text-lg font-semibold text-white mb-3">Common Mistakes to Avoid</h3>
               <div className="bg-card border border-border/30 p-4 rounded-lg">
                 <ul className="list-disc pl-4 space-y-2 text-sm text-red-200">
                   <li><strong>Assuming all loads are AC:</strong> Always check equipment nameplates</li>
@@ -449,9 +449,9 @@ const Module2Section4_5 = () => {
             </div>
 
             <div>
-              <h3 className="text-lg font-semibold text-foreground mb-3">Building Your Understanding</h3>
-              <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
-                <ul className="list-disc pl-4 space-y-2 text-sm text-emerald-400/80">
+              <h3 className="text-lg font-semibold text-white mb-3">Building Your Understanding</h3>
+              <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
+                <ul className="list-disc pl-4 space-y-2 text-sm text-elec-yellow/80">
                   <li><strong>Study nameplates:</strong> Learn to read equipment ratings and requirements</li>
                   <li><strong>Understand conversion:</strong> How rectifiers, inverters, and VFDs work</li>
                   <li><strong>Practice identification:</strong> Recognise AC vs DC applications on site</li>
@@ -464,15 +464,15 @@ const Module2Section4_5 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-8 p-0 bg-card border-border/20 bg-none shadow-none overflow-hidden">
-          <div className="p-6 border-b border-border/20">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Frequently Asked Questions</h2>
+        <Card className="mb-8 p-0 bg-transparent border-white/20 bg-none shadow-none overflow-hidden">
+          <div className="p-6 border-b border-white/10">
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Frequently Asked Questions</h2>
           </div>
           <div className="divide-y divide-border/20">
             {faqs.map((faq, index) => (
               <div key={index} className="p-6">
-                <h3 className="font-semibold text-foreground mb-2">{faq.question}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{faq.answer}</p>
+                <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -480,13 +480,13 @@ const Module2Section4_5 = () => {
 
         {/* Pocket Cards */}
         <div className="mb-8 space-y-6">
-          <Card className="p-6 bg-card border-border/20 bg-none shadow-none">
+          <Card className="p-6 bg-transparent border-white/20 bg-none shadow-none">
             <div className="mb-4">
               <div className="flex items-center gap-2 mb-2">
-                <Zap className="h-5 w-5 text-emerald-400" />
-                <h2 className="text-lg sm:text-xl font-semibold text-foreground">AC/DC Applications Pocket Guide</h2>
+                <Zap className="h-5 w-5 text-elec-yellow" />
+                <h2 className="text-lg sm:text-xl font-semibold text-white">AC/DC Applications Pocket Guide</h2>
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Quick identification and selection guide for apprentice electricians
               </p>
             </div>
@@ -494,7 +494,7 @@ const Module2Section4_5 = () => {
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
               <div className="space-y-4">
                 <div className="bg-card border border-border/30 p-3 rounded-lg">
-                  <h4 className="font-semibold text-emerald-400 mb-2 flex items-center gap-2">
+                  <h4 className="font-semibold text-elec-yellow mb-2 flex items-center gap-2">
                     <Plug className="w-4 h-4" />
                     Typical AC Uses
                   </h4>
@@ -508,7 +508,7 @@ const Module2Section4_5 = () => {
                 </div>
                 
                 <div className="bg-card border border-border/30 p-3 rounded-lg">
-                  <h4 className="font-semibold text-emerald-400 mb-2 flex items-center gap-2">
+                  <h4 className="font-semibold text-elec-yellow mb-2 flex items-center gap-2">
                     <Battery className="w-4 h-4" />
                     Typical DC Uses
                   </h4>
@@ -524,8 +524,8 @@ const Module2Section4_5 = () => {
               </div>
               
               <div className="space-y-4">
-                <div className="bg-card border border-emerald-500/30 p-3 rounded-lg">
-                  <h4 className="font-semibold text-emerald-400 mb-2">Quick ID Checks</h4>
+                <div className="bg-card border border-elec-yellow/30 p-3 rounded-lg">
+                  <h4 className="font-semibold text-elec-yellow mb-2">Quick ID Checks</h4>
                   <ul className="space-y-1 text-emerald-200 text-xs">
                     <li>• <strong>Nameplate:</strong> Look for AC/DC, V rating, Hz</li>
                     <li>• <strong>Waveform symbol:</strong> ~ = AC, ⎓ = DC</li>
@@ -536,7 +536,7 @@ const Module2Section4_5 = () => {
                 </div>
                 
                 <div className="bg-card border border-border/30 p-3 rounded-lg">
-                  <h4 className="font-semibold text-emerald-400 mb-2 flex items-center gap-2">
+                  <h4 className="font-semibold text-elec-yellow mb-2 flex items-center gap-2">
                     <AlertTriangle className="w-4 h-4" />
                     Safety Reminders
                   </h4>
@@ -551,19 +551,19 @@ const Module2Section4_5 = () => {
               </div>
             </div>
             
-            <div className="mt-4 pt-4 border-t border-border/20">
+            <div className="mt-4 pt-4 border-t border-white/10">
               <div className="grid grid-cols-3 gap-4 text-xs">
                 <div className="text-center">
-                  <p className="font-semibold text-foreground">AC→DC</p>
-                  <p className="text-muted-foreground">Rectifier, PSU, Charger</p>
+                  <p className="font-semibold text-white">AC→DC</p>
+                  <p className="text-white">Rectifier, PSU, Charger</p>
                 </div>
                 <div className="text-center">
-                  <p className="font-semibold text-foreground">DC→AC</p>
-                  <p className="text-muted-foreground">Inverter, UPS, VFD output</p>
+                  <p className="font-semibold text-white">DC→AC</p>
+                  <p className="text-white">Inverter, UPS, VFD output</p>
                 </div>
                 <div className="text-center">
-                  <p className="font-semibold text-foreground">AC→DC→AC</p>
-                  <p className="text-muted-foreground">VFD, Variable speed drive</p>
+                  <p className="font-semibold text-white">AC→DC→AC</p>
+                  <p className="text-white">VFD, Variable speed drive</p>
                 </div>
               </div>
             </div>
@@ -577,7 +577,7 @@ const Module2Section4_5 = () => {
         />
 
         {/* Navigation */}
-        <div className="flex justify-between items-center mt-12 pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center mt-12 pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />

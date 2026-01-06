@@ -1,5 +1,5 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Clock, FileText, CheckCircle, Download } from "lucide-react";
@@ -69,7 +69,7 @@ const OffJobTrainingGuide = () => {
         <p className="text-muted-foreground text-center max-w-2xl mb-4">
           Everything you need to know about logging and managing your off-the-job learning hours
         </p>
-        <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
+        <SmartBackButton />
       </div>
 
       <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">

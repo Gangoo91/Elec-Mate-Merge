@@ -1,31 +1,20 @@
 
 import { Helmet } from "react-helmet";
 import LearningFromExperienceCard from "@/components/electrician/safety-shares/LearningFromExperienceCard";
-import { ArrowLeft, BookOpen } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { BookOpen } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 
 const LearningFromExperience = () => {
-  const navigate = useNavigate();
-
   return (
     <div className="min-h-screen bg-elec-dark text-white">
       <Helmet>
         <title>Learning From Experience - Elec-Mate</title>
         <meta name="description" content="Real electrical incidents, near misses, and lessons learned from the field" />
       </Helmet>
-      
+
       <div className="space-y-8 animate-fade-in">
         <div className="flex items-center gap-4">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => navigate(-1)}
-            className="border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/40 bg-transparent"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back
-          </Button>
+          <SmartBackButton />
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-full bg-elec-yellow flex items-center justify-center">
               <BookOpen className="h-6 w-6 text-elec-dark" />

@@ -222,11 +222,11 @@ const Module4Section2_3 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2
@@ -240,35 +240,35 @@ const Module4Section2_3 = () => {
         {/* Header (matches Module 4.2.1 style) */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Wrench className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Wrench className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 4.2.3
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Following Dimensions, Levels, and Tolerances
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Master precision in electrical installation by following specified dimensions, levels, and tolerances for compliance and professional results.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Follow specified dimensions exactly, checking centre vs edge.</li>
                 <li>Maintain tolerances: ±3mm for accessories, ±2mm/m for alignment.</li>
                 <li>Use consistent reference points and recheck long runs.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Reference points, tolerance requirements, specification details.</li>
                 <li><strong>Use:</strong> Spirit/laser levels, consistent measuring, double-checking.</li>
@@ -279,9 +279,9 @@ const Module4Section2_3 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Interpret dimensions and tolerances from technical drawings and specifications.</li>
             <li>Use levels and measuring equipment to achieve accuracy.</li>
             <li>Apply appropriate tolerances in different installation scenarios.</li>
@@ -291,25 +291,25 @@ const Module4Section2_3 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Understanding Dimensions */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Understanding Dimensions</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Understanding Dimensions</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Precise interpretation and application of dimensions ensures accurate positioning:
             </p>
             
             <div className="space-y-4">
               {dimensionPrinciples.map((principle, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+                <div key={i} className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                   <div className="flex items-start gap-3 mb-2">
-                    <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
+                    <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-1">{principle.principle}</p>
-                      <p className="text-xs sm:text-sm text-foreground mb-2">{principle.description}</p>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                      <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-1">{principle.principle}</p>
+                      <p className="text-xs sm:text-sm text-white mb-2">{principle.description}</p>
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Application:</strong> {principle.application} - {principle.keyPoint}
                       </div>
                     </div>
@@ -321,22 +321,22 @@ const Module4Section2_3 = () => {
 
           {/* Levels */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <Ruler className="w-5 h-5" /> Levels and Alignment Tools
             </h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <p className="text-xs sm:text-sm text-white mb-4">
               Proper levelling ensures professional appearance and functional integrity:
             </p>
             
             <div className="space-y-4">
               {levellingTools.map((tool, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+                <div key={i} className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
                       <p className="font-semibold text-green-600 dark:text-green-400 mb-1">{tool.tool}</p>
-                      <p className="text-xs sm:text-sm text-foreground mb-2">{tool.purpose}</p>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                      <p className="text-xs sm:text-sm text-white mb-2">{tool.purpose}</p>
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Applications:</strong> {tool.applications.join(', ')} - Advantages: {tool.advantages.join(', ')}
                       </div>
                     </div>
@@ -345,9 +345,9 @@ const Module4Section2_3 = () => {
               ))}
             </div>
 
-            <div className="mt-4 p-4 bg-card border border-green-400/30 rounded-lg">
-              <p className="text-sm font-medium text-foreground mb-1">Levelling Requirements</p>
-              <p className="text-xs text-foreground">
+            <div className="mt-4 p-4 bg-transparent border border-green-400/30 rounded-lg">
+              <p className="text-sm font-medium text-white mb-1">Levelling Requirements</p>
+              <p className="text-xs text-white">
                 Horizontal runs (trunking) must be straight for appearance and function. 
                 Vertical runs (risers) should be perfectly plumb unless specified otherwise.
               </p>
@@ -365,20 +365,20 @@ const Module4Section2_3 = () => {
 
           {/* Tolerances */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Tolerance Standards</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Tolerance Standards</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Understanding and applying appropriate tolerances ensures quality and compliance:
             </p>
             
             <div className="space-y-4">
               {toleranceStandards.map((standard, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-purple-500 bg-card">
+                <div key={i} className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-purple-600 dark:text-emerald-400 mb-1">{standard.component}</p>
-                      <p className="text-xs sm:text-sm text-foreground mb-2">Tolerance: <strong>{standard.tolerance}</strong> - {standard.reason}</p>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                      <p className="font-semibold text-purple-600 dark:text-elec-yellow mb-1">{standard.component}</p>
+                      <p className="text-xs sm:text-sm text-white mb-2">Tolerance: <strong>{standard.tolerance}</strong> - {standard.reason}</p>
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Impact:</strong> {standard.impact}
                       </div>
                     </div>
@@ -387,9 +387,9 @@ const Module4Section2_3 = () => {
               ))}
             </div>
 
-            <div className="mt-4 p-4 bg-card border border-border/30 rounded-lg">
-              <p className="text-sm font-medium text-foreground mb-1">Project-Specific Tolerances</p>
-              <p className="text-xs text-foreground">
+            <div className="mt-4 p-4 bg-transparent border border-border/30 rounded-lg">
+              <p className="text-sm font-medium text-white mb-1">Project-Specific Tolerances</p>
+              <p className="text-xs text-white">
                 Always follow project specifications as high-end projects may require much tighter tolerances than standard builds.
               </p>
             </div>
@@ -406,20 +406,20 @@ const Module4Section2_3 = () => {
 
           {/* Maintaining Accuracy on Site */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4">Maintaining Accuracy on Site</h3>
-            <p className="text-xs sm:text-sm text-foreground mb-4">
+            <h3 className="font-medium text-white mb-4">Maintaining Accuracy on Site</h3>
+            <p className="text-xs sm:text-sm text-white mb-4">
               Systematic approaches to maintaining precision throughout installation:
             </p>
             
             <div className="space-y-4">
               {accuracyTechniques.map((technique, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-orange-500 bg-card">
+                <div key={i} className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-orange-600 dark:text-emerald-400 mb-1">{technique.technique}</p>
-                      <p className="text-xs sm:text-sm text-foreground mb-2">{technique.description}</p>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                      <p className="font-semibold text-orange-600 dark:text-elec-yellow mb-1">{technique.technique}</p>
+                      <p className="text-xs sm:text-sm text-white mb-2">{technique.description}</p>
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Application:</strong> {technique.application} - <strong>Benefit:</strong> {technique.benefit}
                       </div>
                     </div>
@@ -440,19 +440,19 @@ const Module4Section2_3 = () => {
 
           {/* Consequences of Poor Dimensional Control */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" /> Consequences of Poor Dimensional Control
             </h3>
             
             <div className="space-y-4">
               {consequences.map((consequence, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+                <div key={i} className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                   <div className="flex items-start gap-3 mb-2">
                     <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">!</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-red-600 dark:text-emerald-400 mb-1">{consequence.issue}</p>
-                      <p className="text-xs sm:text-sm text-foreground mb-2">Impact: {consequence.impact}</p>
-                      <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                      <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">{consequence.issue}</p>
+                      <p className="text-xs sm:text-sm text-white mb-2">Impact: {consequence.impact}</p>
+                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                         <strong>Cost:</strong> {consequence.cost} - <strong>Prevention:</strong> {consequence.prevention}
                       </div>
                     </div>
@@ -464,31 +464,31 @@ const Module4Section2_3 = () => {
 
           {/* Regulatory Requirements */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5" /> Regulatory Requirements
             </h3>
             
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-1">BS 7671 Requirements</p>
-                    <p className="text-xs sm:text-sm text-foreground mb-2">Requires installations to be "adequately supported and correctly positioned".</p>
-                    <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">BS 7671 Requirements</p>
+                    <p className="text-xs sm:text-sm text-white mb-2">Requires installations to be "adequately supported and correctly positioned".</p>
+                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Implications:</strong> All dimensional and positional requirements must be met for compliance.
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-1">Building Regulations Part M</p>
-                    <p className="text-xs sm:text-sm text-foreground mb-2">Stipulates specific mounting heights for accessibility compliance.</p>
-                    <div className="text-xs text-foreground bg-background/50 p-2 rounded border">
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-1">Building Regulations Part M</p>
+                    <p className="text-xs sm:text-sm text-white mb-2">Stipulates specific mounting heights for accessibility compliance.</p>
+                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
                       <strong>Requirements:</strong> Switch and socket heights must meet accessibility standards for disabled access.
                     </div>
                   </div>
@@ -517,30 +517,30 @@ const Module4Section2_3 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-8 p-6 bg-card border-border/20">
-          <h3 className="font-semibold text-foreground mb-4">Frequently Asked Questions</h3>
+        <Card className="mb-8 p-6 bg-transparent border-white/20">
+          <h3 className="font-semibold text-white mb-4">Frequently Asked Questions</h3>
           <div className="space-y-4">
             <div>
-              <p className="font-medium text-foreground text-sm mb-1">
+              <p className="font-medium text-white text-sm mb-1">
                 Q: Can I adjust a dimension slightly if it looks better visually?
               </p>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-white text-sm">
                 A: Only if it's within tolerance and approved by the supervisor or client.
               </p>
             </div>
             <div>
-              <p className="font-medium text-foreground text-sm mb-1">
+              <p className="font-medium text-white text-sm mb-1">
                 Q: Are tolerances the same for all projects?
               </p>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-white text-sm">
                 A: No, high-specification projects may require much tighter tolerances than standard builds.
               </p>
             </div>
             <div>
-              <p className="font-medium text-foreground text-sm mb-1">
+              <p className="font-medium text-white text-sm mb-1">
                 Q: How do I measure accurately over long distances?
               </p>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-white text-sm">
                 A: Use a laser level or two-person measurement method to reduce errors.
               </p>
             </div>
@@ -548,12 +548,12 @@ const Module4Section2_3 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
             <TrendingUp className="w-5 h-5" />
             Summary
           </h3>
-          <p className="text-muted-foreground text-sm">
+          <p className="text-white text-sm">
             Working within the specified dimensions, levels, and tolerances ensures compliance, safety, and a professional finish. 
             Precision protects the integrity of the installation and avoids costly rework. Remember to use consistent reference points, 
             maintain appropriate tolerances, and always verify measurements before installation.
@@ -564,7 +564,7 @@ const Module4Section2_3 = () => {
         <Quiz questions={quizQuestions} title="Test Your Knowledge: Following Dimensions, Levels, and Tolerances" />
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="../2-2">
               <ArrowLeft className="w-4 h-4 mr-2" />

@@ -6,7 +6,7 @@ import { HelpCircle, Search, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { toast } from "@/hooks/use-toast";
 
 const SupervisorKnowledge = () => {
@@ -53,7 +53,7 @@ const SupervisorKnowledge = () => {
     <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col md:flex-row items-center justify-between mb-6">
         <h1 className="text-3xl font-bold tracking-tight">Ask a Supervisor</h1>
-        <BackButton customUrl="/apprentice/on-job-tools" label="Back to Tools" />
+        <SmartBackButton />
       </div>
       
       <div className="bg-elec-gray p-4 sm:p-6 rounded-lg border border-elec-yellow/20">

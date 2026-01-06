@@ -6,7 +6,7 @@ import { craftSkillsContent } from "@/data/craftSkills/index";
 import type { Subsection } from "@/data/healthAndSafety/types";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import BackButton from "@/components/apprentice/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 
 const CraftSkillsSubsection = () => {
   const { courseSlug, unitSlug, sectionId, subsectionId } = useParams();
@@ -67,11 +67,7 @@ const CraftSkillsSubsection = () => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="mb-6">
-        <BackButton 
-          courseSlug={courseSlug}
-          unitSlug={unitSlug}
-          sectionId={sectionId}
-        />
+        <SmartBackButton />
       </div>
       
       <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-6">

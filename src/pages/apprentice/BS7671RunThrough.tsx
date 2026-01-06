@@ -2,8 +2,9 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, CheckSquare, Clock, BookOpen, AlertTriangle, Zap, Settings } from "lucide-react";
+import { CheckSquare, Clock, BookOpen, AlertTriangle, Zap, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Progress } from "@/components/ui/progress";
 import { enhancedBS7671Steps } from "@/data/bs7671-steps/enhancedStepData";
 
@@ -50,12 +51,7 @@ const BS7671RunThrough = () => {
           <h1 className="text-3xl font-bold tracking-tight">BS7671 Inspection & Testing Run-Through</h1>
           <p className="text-muted-foreground">Comprehensive electrical safety testing procedures for apprentices</p>
         </div>
-        <Link to="/apprentice/on-job-tools" className="flex-shrink-0">
-          <Button variant="outline">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Tools
-          </Button>
-        </Link>
+        <SmartBackButton className="flex-shrink-0" />
       </div>
 
       {/* Enhanced Features Highlight */}

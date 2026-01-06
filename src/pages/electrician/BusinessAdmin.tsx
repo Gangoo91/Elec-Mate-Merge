@@ -2,7 +2,8 @@ import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { ArrowLeft, Settings, FileText, Calendar, BarChart3, Users, CreditCard } from "lucide-react";
+import { Settings, FileText, Calendar, BarChart3, Users, CreditCard } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 
 const BusinessAdmin = () => {
   const adminTools = [
@@ -67,11 +68,7 @@ const BusinessAdmin = () => {
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-center sm:text-left">
           Business Admin
         </h1>
-        <Link to="/electrician/business" className="w-full sm:w-auto">
-          <Button variant="outline" className="w-full sm:w-auto">
-            <ArrowLeft className="mr-2 h-4 w-4" /> Back to Business Hub
-          </Button>
-        </Link>
+        <SmartBackButton className="w-full sm:w-auto" />
       </header>
 
       {/* Coming Soon Banner */}

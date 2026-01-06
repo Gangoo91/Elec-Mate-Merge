@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { CheckCircle, XCircle, RotateCcw, Target } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
 interface QuizQuestion {
@@ -79,24 +78,23 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
     const passed = percentage >= 70;
 
     return (
-      <Card className="bg-elec-card border-elec-yellow/20">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-elec-yellow">
-            <Target className="h-5 w-5" />
-            Quiz Complete!
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="text-center space-y-6">
+      <div className="py-8">
+        <div className="flex items-center gap-2 text-elec-yellow mb-6">
+          <Target className="h-5 w-5" />
+          <h2 className="text-xl font-semibold">Quiz Complete!</h2>
+        </div>
+
+        <div className="text-center space-y-6">
           <div className={`text-6xl font-bold ${passed ? 'text-green-400' : 'text-red-400'}`}>
             {percentage}%
           </div>
           <div>
-            <p className="text-lg text-gray-300 mb-2">
+            <p className="text-lg text-white mb-3">
               You scored {score} out of {questions.length} questions correctly
             </p>
             <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${
-              passed 
-                ? 'bg-green-500/20 border border-green-400/30 text-green-300' 
+              passed
+                ? 'bg-green-500/20 border border-green-400/30 text-green-300'
                 : 'bg-red-500/20 border border-red-400/30 text-red-300'
             }`}>
               {passed ? (
@@ -112,7 +110,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
               )}
             </div>
           </div>
-          <Button 
+          <Button
             onClick={restartQuiz}
             variant="outline"
             className="border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow hover:text-elec-dark"
@@ -120,135 +118,140 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
             <RotateCcw className="h-4 w-4 mr-2" />
             Retake Quiz
           </Button>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     );
   }
 
   return (
-    <Card className="bg-elec-card border-elec-yellow/20">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-elec-yellow">
+    <div className="py-8">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-2 text-elec-yellow">
           <Target className="h-5 w-5" />
-          {title}
-        </CardTitle>
-        <div className="flex items-center justify-between text-sm text-gray-400">
-          <span>Question {currentQuestion + 1} of {questions.length}</span>
+          <h2 className="text-xl font-semibold">{title}</h2>
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="text-sm text-white">Question {currentQuestion + 1} of {questions.length}</span>
           <div className="flex gap-1 items-center">
             {questions.map((_, index) => (
               <div
                 key={index}
                 className={`w-2 h-2 rounded-full flex-shrink-0 ${
-                  index < currentQuestion 
-                    ? 'bg-green-400' 
-                    : index === currentQuestion 
-                    ? 'bg-elec-yellow' 
-                    : 'bg-gray-600'
+                  index < currentQuestion
+                    ? 'bg-green-400'
+                    : index === currentQuestion
+                    ? 'bg-elec-yellow'
+                    : 'bg-white/20'
                 }`}
               />
             ))}
           </div>
         </div>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <div>
-          <h3 className="text-lg font-medium text-foreground mb-4">
-            {currentQ?.question}
-          </h3>
-          <div className="space-y-3">
-            {currentQ?.options.map((option, index) => (
-              <button
-                key={index}
-                onClick={() => handleAnswerSelect(index)}
-                disabled={showResult}
-                className={`w-full p-4 text-left rounded-lg border transition-all duration-200 ${
+      </div>
+
+      {/* Question */}
+      <div className="space-y-6">
+        <h3 className="text-lg font-medium text-white">
+          {currentQ?.question}
+        </h3>
+
+        {/* Options */}
+        <div className="space-y-3">
+          {currentQ?.options.map((option, index) => (
+            <button
+              key={index}
+              onClick={() => handleAnswerSelect(index)}
+              disabled={showResult}
+              className={`w-full p-4 text-left rounded-lg border transition-all duration-200 ${
+                selectedAnswers[currentQuestion] === index
+                  ? showResult
+                    ? index === currentQ.correctAnswer
+                      ? 'bg-green-500/20 border-green-400/50 text-green-300'
+                      : 'bg-red-500/20 border-red-400/50 text-red-300'
+                    : 'bg-elec-yellow/20 border-elec-yellow/50 text-elec-yellow'
+                  : showResult && index === currentQ.correctAnswer
+                  ? 'bg-green-500/20 border-green-400/50 text-green-300'
+                  : 'border-white/10 hover:border-elec-yellow/30 text-white'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
                   selectedAnswers[currentQuestion] === index
                     ? showResult
                       ? index === currentQ.correctAnswer
-                        ? 'bg-green-500/20 border-green-400/50 text-green-300'
-                        : 'bg-red-500/20 border-red-400/50 text-red-300'
-                      : 'bg-elec-yellow/20 border-elec-yellow/50 text-elec-yellow'
+                        ? 'border-green-400 bg-green-400'
+                        : 'border-red-400 bg-red-400'
+                      : 'border-elec-yellow bg-elec-yellow'
                     : showResult && index === currentQ.correctAnswer
-                    ? 'bg-green-500/20 border-green-400/50 text-green-300'
-                    : 'bg-elec-gray/30 border-elec-gray hover:border-elec-yellow/30 text-gray-300 hover:text-foreground'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                    selectedAnswers[currentQuestion] === index
-                      ? showResult
-                        ? index === currentQ.correctAnswer
-                          ? 'border-green-400 bg-green-400'
-                          : 'border-red-400 bg-red-400'
-                        : 'border-elec-yellow bg-elec-yellow'
-                      : showResult && index === currentQ.correctAnswer
-                      ? 'border-green-400 bg-green-400'
-                      : 'border-gray-400 bg-transparent'
-                   }`}>
-                    {selectedAnswers[currentQuestion] === index && !showResult && (
-                      <div className="w-3 h-3 rounded-full bg-elec-dark"></div>
-                    )}
-                    {showResult && (
-                      <>
-                        {index === currentQ.correctAnswer ? (
-                          <CheckCircle className="h-4 w-4 text-foreground" />
-                        ) : selectedAnswers[currentQuestion] === index ? (
-                          <XCircle className="h-4 w-4 text-foreground" />
-                        ) : null}
-                      </>
-                    )}
-                  </div>
-                  <span className="flex-1">{option}</span>
+                    ? 'border-green-400 bg-green-400'
+                    : 'border-white/40 bg-transparent'
+                 }`}>
+                  {selectedAnswers[currentQuestion] === index && !showResult && (
+                    <div className="w-3 h-3 rounded-full bg-[#1a1a1a]"></div>
+                  )}
+                  {showResult && (
+                    <>
+                      {index === currentQ.correctAnswer ? (
+                        <CheckCircle className="h-4 w-4 text-white" />
+                      ) : selectedAnswers[currentQuestion] === index ? (
+                        <XCircle className="h-4 w-4 text-white" />
+                      ) : null}
+                    </>
+                  )}
                 </div>
-              </button>
-            ))}
-          </div>
+                <span className="flex-1">{option}</span>
+              </div>
+            </button>
+          ))}
         </div>
 
+        {/* Explanation */}
         {showResult && currentQ?.explanation && (
           <div className={`p-4 rounded-lg border ${
-            isCorrect 
-              ? 'bg-green-500/10 border-green-400/30 text-green-300' 
-              : 'bg-blue-500/10 border-blue-400/30 text-blue-300'
+            isCorrect
+              ? 'bg-green-500/10 border-green-400/30 text-green-300'
+              : 'bg-elec-yellow/10 border-elec-yellow/30 text-white'
           }`}>
             <p className="font-medium mb-2">
-              {isCorrect ? '✓ Correct!' : 'ℹ Explanation:'}
+              {isCorrect ? '✓ Correct!' : 'Explanation:'}
             </p>
             <p className="text-sm">{currentQ.explanation}</p>
           </div>
         )}
 
-        <div className="flex justify-between">
+        {/* Navigation */}
+        <div className="flex justify-between pt-4">
           <Button
             onClick={handlePrevious}
             disabled={currentQuestion === 0}
-            variant="outline"
-            className="border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow hover:text-elec-dark disabled:opacity-50"
+            variant="ghost"
+            className="text-white hover:text-elec-yellow disabled:opacity-50"
           >
             Previous
           </Button>
-          
+
           <div className="flex gap-2">
             {!showResult && isAnswered && (
               <Button
                 onClick={handleSubmitAnswer}
-                className="bg-blue-600 hover:bg-blue-700 text-foreground"
+                className="bg-elec-yellow text-[#121212] hover:bg-elec-yellow/90"
               >
                 Submit Answer
               </Button>
             )}
-            
+
             {showResult && (
               <Button
                 onClick={handleNext}
-                className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                className="bg-elec-yellow text-[#121212] hover:bg-elec-yellow/90"
               >
                 {currentQuestion === questions.length - 1 ? 'Complete Quiz' : 'Next Question'}
               </Button>
             )}
           </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };

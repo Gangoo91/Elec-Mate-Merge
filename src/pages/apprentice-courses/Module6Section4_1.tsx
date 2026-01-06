@@ -137,11 +137,11 @@ const Module6Section4_1 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6.4
@@ -155,62 +155,62 @@ const Module6Section4_1 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <CheckCircle className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <CheckCircle className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 6.4.1
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Continuity of Protective Conductors (CPCs)
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Essential testing procedures for CPCs to ensure electrical safety and fault protection
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-8 p-6 bg-card border-border/20">
+        <Card className="mb-8 p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-3 mb-6">
-            <Target className="w-6 h-6 text-foreground" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Spot it in 30 Seconds</h2>
+            <Target className="w-6 h-6 text-white" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-3">In 30 seconds</p>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>CPC provides fault current path to earth</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Test using low-resistance ohmmeter</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>R1+R2 test confirms both line and CPC</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Always isolate circuit before testing</span>
                 </li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/20">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/20">
               <p className="font-medium mb-3">Spot it / Use it / Check it</p>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Spot:</strong> High-resistance connections, broken conductors, loose terminals</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Use:</strong> Multifunction tester with GS38-compliant leads</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Check:</strong> Zero instrument, test all points, record readings</span>
                 </li>
               </ul>
@@ -219,21 +219,21 @@ const Module6Section4_1 = () => {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <p className="text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <p className="text-base text-white mb-4">
             The protective conductor, often referred to as the CPC (Circuit Protective Conductor), is essential in ensuring safety in electrical installations. It provides a low-resistance path for fault currents, ensuring protective devices (like fuses and MCBs) operate quickly and safely to disconnect supply.
           </p>
-          <p className="text-base text-foreground">
+          <p className="text-base text-white">
             Testing CPC continuity is a critical verification step under BS 7671 to confirm all exposed-conductive-parts are effectively earthed.
           </p>
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-base text-foreground mb-4">By the end of this subsection, learners will be able to:</p>
-          <ul className="space-y-3 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-base text-white mb-4">By the end of this subsection, learners will be able to:</p>
+          <ul className="space-y-3 text-base text-white">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
               <span>Explain the role of CPCs in fault protection</span>
@@ -258,22 +258,22 @@ const Module6Section4_1 = () => {
         </Card>
 
         {/* Content / Learning */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* 1. Purpose and Importance of CPC Testing */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-red-600 dark:text-emerald-400 mb-3">Purpose and Importance of CPC Testing</p>
+                    <p className="font-semibold text-red-600 dark:text-elec-yellow mb-3">Purpose and Importance of CPC Testing</p>
                     
                     <div className="space-y-4">
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Safety Protection:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Safety Protection:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Provides low-resistance path for fault currents to earth - typically less than 1.67 ohms for domestic circuits</li>
                            <li>Ensures protective devices (MCBs, RCDs) operate within required disconnection times (0.4s for socket circuits, 5s for fixed equipment)</li>
                            <li>Prevents dangerous voltages appearing on exposed metalwork during fault conditions</li>
@@ -284,8 +284,8 @@ const Module6Section4_1 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Regulatory Compliance:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Regulatory Compliance:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>BS 7671:2018+A2:2022 Section 612.2 requires verification of protective conductor continuity</li>
                            <li>Part P Building Regulations compliance for notifiable work in domestic installations</li>
                            <li>Electricity at Work Regulations 1989 - Regulation 4 requires precautions against danger</li>
@@ -296,8 +296,8 @@ const Module6Section4_1 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>System Integrity and Performance:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>System Integrity and Performance:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Confirms earthing system effectiveness throughout entire electrical installation</li>
                            <li>Verifies correct installation and termination of protective conductors at all connection points</li>
                            <li>Detects high-resistance joints before they become dangerous or cause nuisance tripping</li>
@@ -325,16 +325,16 @@ const Module6Section4_1 = () => {
           {/* 2. Testing Methods and Procedures */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-emerald-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
                 <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-emerald-400 dark:text-emerald-400 mb-3">Testing Methods and Procedures</p>
+                    <p className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3">Testing Methods and Procedures</p>
                     
                     <div className="space-y-4">
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>R1 + R2 Method (Recommended for New Installations):</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>R1 + R2 Method (Recommended for New Installations):</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Link line and CPC at distribution board using temporary fly lead (typically 4mm² or appropriate size)</li>
                            <li>Measure resistance between line and CPC at each outlet point using low resistance ohmmeter</li>
                            <li>Tests both line conductor and CPC continuity simultaneously in one measurement</li>
@@ -346,8 +346,8 @@ const Module6Section4_1 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>End-to-End CPC Test (Alternative Method):</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>End-to-End CPC Test (Alternative Method):</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Test CPC continuity from distribution board earth terminal to furthest circuit point</li>
                            <li>Measure resistance between CPC terminals at consumer unit and final accessory</li>
                            <li>Isolates CPC testing from line conductor - useful for fault diagnosis</li>
@@ -359,8 +359,8 @@ const Module6Section4_1 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Step-by-Step Testing Procedure:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Step-by-Step Testing Procedure:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li><strong>Step 1:</strong> Isolate circuit completely at consumer unit/distribution board and prove dead</li>
                            <li><strong>Step 2:</strong> Remove or disconnect any electronic equipment (dimmers, timers, smoke detectors)</li>
                            <li><strong>Step 3:</strong> Zero the ohmmeter using short test leads (typically 0.01-0.02 ohms lead resistance)</li>
@@ -372,8 +372,8 @@ const Module6Section4_1 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Common Testing Challenges:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Common Testing Challenges:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Parallel earth paths through structural steelwork or metallic services can affect readings</li>
                            <li>Electronic equipment with filters or surge protectors must be disconnected</li>
                            <li>Long test leads can introduce significant resistance - use appropriate lead lengths</li>
@@ -401,7 +401,7 @@ const Module6Section4_1 = () => {
           {/* 3. Interpretation of Results */}
           <section className="mb-6">
             <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 bg-card">
+              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
                 <div className="flex items-start gap-3 mb-2">
                   <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   <div className="flex-1">
@@ -409,8 +409,8 @@ const Module6Section4_1 = () => {
                     
                     <div className="space-y-4">
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Acceptable Values and Limits:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Acceptable Values and Limits:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>R1+R2 values should be low and proportional to conductor length and cross-sectional area</li>
                            <li>Typical domestic socket circuit (32A, 4mm²): R1+R2 should be 0.2-1.2 ohms depending on length</li>
                            <li>Lighting circuits (6A, 1.5mm²): R1+R2 typically 0.5-3.0 ohms for reasonable cable runs</li>
@@ -421,8 +421,8 @@ const Module6Section4_1 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Fault Indicators and Investigation:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Fault Indicators and Investigation:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Infinite resistance (open circuit) indicates broken or disconnected CPC - immediate safety concern</li>
                            <li>Unexpectedly high resistance suggests loose connections, corroded joints, or undersized conductors</li>
                            <li>Significantly different values at similar distances indicate installation faults or cable damage</li>
@@ -433,8 +433,8 @@ const Module6Section4_1 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Documentation and Certification:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Documentation and Certification:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Record all R1+R2 measurements on Electrical Installation Certificate (EIC) Schedule of Test Results</li>
                            <li>Note ambient temperature during testing (standard reference is 20°C)</li>
                            <li>Document any remedial work required and actions taken to rectify faults</li>
@@ -446,8 +446,8 @@ const Module6Section4_1 = () => {
                        </div>
 
                        <div>
-                         <p className="text-base text-foreground mb-2"><strong>Troubleshooting High Resistance Readings:</strong></p>
-                         <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                         <p className="text-base text-white mb-2"><strong>Troubleshooting High Resistance Readings:</strong></p>
+                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                            <li>Check all terminations for tightness and corrosion at consumer unit and accessories</li>
                            <li>Inspect cable routes for physical damage, crushing, or penetration by fixings</li>
                            <li>Verify correct cable types and sizes have been installed as per design</li>
@@ -465,43 +465,43 @@ const Module6Section4_1 = () => {
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Practical Guidance</h2>
-          <ul className="space-y-3 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
+          <ul className="space-y-3 text-base text-white">
             <li className="flex items-start gap-2">
-              <span className="text-foreground">•</span>
+              <span className="text-white">•</span>
               <span>Run through all CPC points on a ring or radial circuit</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-foreground">•</span>
+              <span className="text-white">•</span>
               <span>Always zero instruments before testing</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-foreground">•</span>
+              <span className="text-white">•</span>
               <span>Ensure good contact with metal parts (use crocodile clips where possible)</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-foreground">•</span>
+              <span className="text-white">•</span>
               <span>For larger installations, keep a log of measured values to spot patterns or faults</span>
             </li>
           </ul>
         </Card>
 
         {/* Real World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border border-emerald-500/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-World Example: Kitchen Ring Circuit CPC Testing</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 border border-elec-yellow/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Example: Kitchen Ring Circuit CPC Testing</h2>
           
           <div className="space-y-6">
             <div>
-              <h3 className="font-semibold text-foreground mb-3">Scenario</h3>
-              <p className="text-base text-foreground mb-4">
+              <h3 className="font-semibold text-white mb-3">Scenario</h3>
+              <p className="text-base text-white mb-4">
                 You are testing a newly installed kitchen ring circuit (32A MCB, 2.5mm² twin and earth cable) that serves 6 double socket outlets around a kitchen. The circuit has been installed using the radial method initially, then linked at the far end to create the ring. Total cable length is approximately 45 metres.
               </p>
             </div>
 
             <div>
-              <h3 className="font-semibold text-foreground mb-3">Pre-Test Setup</h3>
-              <ul className="text-xs sm:text-sm text-foreground space-y-2 ml-4 list-disc">
+              <h3 className="font-semibold text-white mb-3">Pre-Test Setup</h3>
+              <ul className="text-xs sm:text-sm text-white space-y-2 ml-4 list-disc">
                 <li><strong>Safety First:</strong> Circuit isolated at consumer unit, MCB switched off and locked</li>
                 <li><strong>Prove Dead:</strong> GS38 voltage indicator confirms no voltage at each socket outlet</li>
                 <li><strong>Equipment:</strong> Megger MFT1741 multifunction tester, test leads zeroed (0.01Ω lead resistance)</li>
@@ -510,15 +510,15 @@ const Module6Section4_1 = () => {
             </div>
 
             <div>
-              <h3 className="font-semibold text-foreground mb-3">R1+R2 Testing Procedure</h3>
-              <ul className="text-xs sm:text-sm text-foreground space-y-2 ml-4 list-disc">
+              <h3 className="font-semibold text-white mb-3">R1+R2 Testing Procedure</h3>
+              <ul className="text-xs sm:text-sm text-white space-y-2 ml-4 list-disc">
                 <li><strong>Step 1:</strong> At consumer unit, link L1 and CPC terminals using 4mm² fly lead</li>
                 <li><strong>Step 2:</strong> Test at each socket between L and E terminals:</li>
               </ul>
               
-              <div className="mt-4 bg-background border border-border/20 rounded-lg p-4">
-                <p className="font-medium text-foreground mb-2">Test Results:</p>
-                <ul className="text-xs sm:text-sm text-foreground space-y-1 ml-4">
+              <div className="mt-4 bg-[#121212] border border-white/10 rounded-lg p-4">
+                <p className="font-medium text-white mb-2">Test Results:</p>
+                <ul className="text-xs sm:text-sm text-white space-y-1 ml-4">
                   <li>Socket 1 (nearest): 0.28Ω</li>
                   <li>Socket 2: 0.45Ω</li>
                   <li>Socket 3: 0.62Ω</li>
@@ -530,26 +530,26 @@ const Module6Section4_1 = () => {
             </div>
 
             <div>
-              <h3 className="font-semibold text-foreground mb-3">Analysis and Interpretation</h3>
+              <h3 className="font-semibold text-white mb-3">Analysis and Interpretation</h3>
               <div className="space-y-3">
-                <div className="p-3 bg-card border border-green-500/20 rounded">
-                  <p className="text-xs sm:text-sm text-foreground"><strong>✓ Good News:</strong> All readings are acceptably low (under 1Ω) indicating good continuity</p>
+                <div className="p-3 border border-green-500/20 rounded">
+                  <p className="text-xs sm:text-sm text-white"><strong>✓ Good News:</strong> All readings are acceptably low (under 1Ω) indicating good continuity</p>
                 </div>
-                <div className="p-3 bg-card border border-green-500/20 rounded">
-                  <p className="text-xs sm:text-sm text-foreground"><strong>✓ Ring Integrity:</strong> Sockets 1 and 6 show similar low values, confirming ring is complete</p>
+                <div className="p-3 border border-green-500/20 rounded">
+                  <p className="text-xs sm:text-sm text-white"><strong>✓ Ring Integrity:</strong> Sockets 1 and 6 show similar low values, confirming ring is complete</p>
                 </div>
-                <div className="p-3 bg-card border border-green-500/20 rounded">
-                  <p className="text-xs sm:text-sm text-foreground"><strong>✓ Design Compliance:</strong> Maximum reading (0.62Ω) well within limits for 32A protection</p>
+                <div className="p-3 border border-green-500/20 rounded">
+                  <p className="text-xs sm:text-sm text-white"><strong>✓ Design Compliance:</strong> Maximum reading (0.62Ω) well within limits for 32A protection</p>
                 </div>
-                <div className="p-3 bg-card border border-emerald-500/20 rounded">
-                  <p className="text-xs sm:text-sm text-foreground"><strong>📋 Pattern Recognition:</strong> Resistance increases towards middle of ring (sockets 3&4) as expected</p>
+                <div className="p-3 border border-elec-yellow/20 rounded">
+                  <p className="text-xs sm:text-sm text-white"><strong>📋 Pattern Recognition:</strong> Resistance increases towards middle of ring (sockets 3&4) as expected</p>
                 </div>
               </div>
             </div>
 
             <div>
-              <h3 className="font-semibold text-foreground mb-3">Certification and Documentation</h3>
-              <ul className="text-xs sm:text-sm text-foreground space-y-2 ml-4 list-disc">
+              <h3 className="font-semibold text-white mb-3">Certification and Documentation</h3>
+              <ul className="text-xs sm:text-sm text-white space-y-2 ml-4 list-disc">
                 <li>Results recorded on EIC Schedule of Test Results under "R1+R2" column</li>
                 <li>Maximum value (0.62Ω) noted for fault loop impedance calculations</li>
                 <li>Ambient temperature: 18°C (within acceptable range, no correction needed)</li>
@@ -558,10 +558,10 @@ const Module6Section4_1 = () => {
               </ul>
             </div>
 
-            <div className="p-4 bg-card border border-amber-500/20 rounded">
-              <h4 className="font-semibold text-foreground mb-2">What if Socket 4 had read 3.2Ω?</h4>
-              <p className="text-xs sm:text-sm text-foreground mb-2">This would indicate a fault requiring investigation:</p>
-              <ul className="text-xs sm:text-sm text-foreground space-y-1 ml-4 list-disc">
+            <div className="p-4 bg-transparent border border-amber-500/20 rounded">
+              <h4 className="font-semibold text-white mb-2">What if Socket 4 had read 3.2Ω?</h4>
+              <p className="text-xs sm:text-sm text-white mb-2">This would indicate a fault requiring investigation:</p>
+              <ul className="text-xs sm:text-sm text-white space-y-1 ml-4 list-disc">
                 <li>Check terminations at socket 4 for loose connections</li>
                 <li>Inspect cable route for damage or crushing</li>
                 <li>Test individual legs of ring to isolate the fault</li>
@@ -573,26 +573,26 @@ const Module6Section4_1 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-border/20 last:border-0 pb-4 last:pb-0">
-                <h3 className="font-medium text-foreground mb-2">{faq.question}</h3>
-                <p className="text-sm text-muted-foreground">{faq.answer}</p>
+              <div key={index} className="border-b border-white/10 last:border-0 pb-4 last:pb-0">
+                <h3 className="font-medium text-white mb-2">{faq.question}</h3>
+                <p className="text-sm text-white">{faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Pocket Guide</h2>
-          <div className="bg-card border border-emerald-500/20 p-6 rounded-lg">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Guide</h2>
+          <div className="bg-card border border-elec-yellow/20 p-6 rounded-lg">
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div>
-                <h3 className="font-semibold text-emerald-700 dark:text-emerald-400 mb-3">Key Takeaways</h3>
-                <ul className="space-y-1 text-xs sm:text-sm text-foreground">
+                <h3 className="font-semibold text-emerald-700 dark:text-elec-yellow mb-3">Key Takeaways</h3>
+                <ul className="space-y-1 text-xs sm:text-sm text-white">
                   <li>• CPC continuity ensures earth fault protection</li>
                   <li>• Test using a low-resistance ohmmeter</li>
                   <li>• R1+R2 confirms both line and CPC continuity</li>
@@ -601,8 +601,8 @@ const Module6Section4_1 = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold text-emerald-700 dark:text-emerald-400 mb-3">Critical Points</h3>
-                <ul className="space-y-1 text-xs sm:text-sm text-foreground">
+                <h3 className="font-semibold text-emerald-700 dark:text-elec-yellow mb-3">Critical Points</h3>
+                <ul className="space-y-1 text-xs sm:text-sm text-white">
                   <li>• Zero instruments before every test</li>
                   <li>• Use GS38-compliant equipment only</li>
                   <li>• Record all readings accurately</li>
@@ -615,12 +615,12 @@ const Module6Section4_1 = () => {
         </Card>
 
         {/* Summary Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Recap</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h3 className="font-semibold text-foreground mb-3">What We Learned</h3>
-              <ul className="space-y-2 text-base text-foreground">
+              <h3 className="font-semibold text-white mb-3">What We Learned</h3>
+              <ul className="space-y-2 text-base text-white">
                 <li>• The importance of CPCs in fault protection</li>
                 <li>• How to carry out CPC continuity tests</li>
                 <li>• Acceptable resistance values and fault indicators</li>
@@ -628,8 +628,8 @@ const Module6Section4_1 = () => {
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold text-foreground mb-3">Key Skills Gained</h3>
-              <ul className="space-y-2 text-base text-foreground">
+              <h3 className="font-semibold text-white mb-3">Key Skills Gained</h3>
+              <ul className="space-y-2 text-base text-white">
                 <li>• CPC testing procedures using multifunctional testers</li>
                 <li>• R1+R2 test methodology</li>
                 <li>• Result interpretation and fault diagnosis</li>
@@ -648,7 +648,7 @@ const Module6Section4_1 = () => {
             <Link to=".." className="flex items-center justify-center text-center">
               <ArrowLeft className="w-4 h-4 mr-2 flex-shrink-0" />
               <span className="flex-1">
-                <span className="block text-xs text-muted-foreground">Previous</span>
+                <span className="block text-xs text-white">Previous</span>
                 <span className="block font-medium">Section 4 Overview</span>
               </span>
             </Link>

@@ -1,9 +1,9 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
-import { 
+import {
   FileText,
   Home,
   Building,
@@ -85,7 +85,7 @@ const ElectricalInstallationGuides = () => {
           Comprehensive electrical installation guidance for UK electricians. 
           Choose your installation type to access detailed guides with BS 7671 compliance information.
         </p>
-        <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
+        <SmartBackButton />
       </div>
 
       {/* Installation Types */}

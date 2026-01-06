@@ -3,8 +3,8 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import {
-  ArrowLeft,
   MessageCircle,
   FileText,
   PoundSterling,
@@ -265,14 +265,7 @@ const ApprenticeToolbox = () => {
             Essential resources, skills development, and support for UK electrical apprentices
           </p>
         </div>
-        <Link to="/apprentice" className="flex-shrink-0">
-          <Button
-            variant="outline"
-            className="flex items-center gap-2 w-full sm:w-auto border-elec-yellow/30 hover:border-elec-yellow/50"
-          >
-            <ArrowLeft className="h-4 w-4" /> Back to Hub
-          </Button>
-        </Link>
+        <SmartBackButton className="flex-shrink-0 w-full sm:w-auto" />
       </div>
 
       {/* Quick Stats Banner */}
@@ -443,8 +436,9 @@ const ApprenticeToolbox = () => {
               </Link>
               <Link to="/apprentice/career-progression" className="flex-1 sm:flex-initial">
                 <Button
+                  variant="accent"
                   size="sm"
-                  className="w-full bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+                  className="w-full"
                 >
                   Career Paths
                   <ChevronRight className="h-4 w-4 ml-1" />

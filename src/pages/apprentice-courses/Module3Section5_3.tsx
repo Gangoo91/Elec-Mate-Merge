@@ -176,13 +176,13 @@ export default function Module3Section5_3() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -197,30 +197,30 @@ export default function Module3Section5_3() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Sun className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Sun className="w-6 h-6 text-white" />
             </div>
             <Badge
               variant="outline"
-              className="border-emerald-500/30 text-emerald-400"
+              className="border-elec-yellow/30 text-elec-yellow"
             >
               Section 3.5.3
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             UV, Temperature, and Mechanical Damage Risks
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Understand environmental stresses affecting electrical installations including UV degradation, temperature extremes, and mechanical damage, with comprehensive protective measures per BS 7671.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Electrical installations face UV, temperature, and mechanical stresses.</li>
                 <li>These factors cause material degradation and safety risks.</li>
@@ -228,8 +228,8 @@ export default function Module3Section5_3() {
                 <li>BS 7671 requires assessment during design and installation phases.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> UV exposure signs, temperature extremes, impact risks.</li>
                 <li><strong>Use:</strong> UV-resistant materials; temperature derating; mechanical protection.</li>
@@ -240,9 +240,9 @@ export default function Module3Section5_3() {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Explain how UV radiation, temperature, and mechanical forces can damage electrical installations.</li>
             <li>Identify materials and equipment suitable for these environmental stresses.</li>
             <li>Apply protective measures to mitigate each type of risk.</li>
@@ -251,19 +251,19 @@ export default function Module3Section5_3() {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* 1. UV Degradation */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Sun className="w-5 h-5" /> 1. UV Degradation - Understanding Solar Radiation Damage
             </h3>
             
             <div className="mb-6">
-              <h4 className="font-medium text-foreground mb-3">UV Radiation Physics and Material Impact</h4>
-              <div className="p-4 bg-card border border-amber-400/30 rounded-lg mb-4">
-                <p className="text-xs sm:text-sm text-foreground mb-3">
+              <h4 className="font-medium text-white mb-3">UV Radiation Physics and Material Impact</h4>
+              <div className="p-4 bg-transparent border border-amber-400/30 rounded-lg mb-4">
+                <p className="text-xs sm:text-sm text-white mb-3">
                   <strong>UV Radiation Spectrum:</strong> Solar UV radiation consists of UVA (315-400nm), UVB (280-315nm), and UVC (100-280nm). UVB is most damaging to electrical materials, causing polymer chain scission and material degradation.
                 </p>
                 <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
@@ -283,11 +283,11 @@ export default function Module3Section5_3() {
               </div>
 
               <div className="space-y-4">
-                <div className="p-4 bg-card border border-border/30 rounded-lg">
-                  <h5 className="font-medium text-emerald-400 mb-3">UV Damage Mechanisms and Effects</h5>
+                <div className="p-4 bg-transparent border border-border/30 rounded-lg">
+                  <h5 className="font-medium text-elec-yellow mb-3">UV Damage Mechanisms and Effects</h5>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">Chemical Changes</h6>
+                      <h6 className="font-medium text-white mb-2">Chemical Changes</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• <strong>Polymer chain scission:</strong> Breaking of molecular bonds</li>
                         <li>• <strong>Cross-linking:</strong> Formation of brittle polymer networks</li>
@@ -297,7 +297,7 @@ export default function Module3Section5_3() {
                       </ul>
                     </div>
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">Physical Manifestations</h6>
+                      <h6 className="font-medium text-white mb-2">Physical Manifestations</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• <strong>Surface chalking:</strong> White powdery residue formation</li>
                         <li>• <strong>Cracking:</strong> Stress-induced fractures</li>
@@ -309,59 +309,59 @@ export default function Module3Section5_3() {
                   </div>
                 </div>
 
-                <div className="p-4 bg-card border border-border/30 rounded-lg">
-                  <h5 className="font-medium text-emerald-400 mb-3">Material Vulnerability Assessment</h5>
+                <div className="p-4 bg-transparent border border-border/30 rounded-lg">
+                  <h5 className="font-medium text-elec-yellow mb-3">Material Vulnerability Assessment</h5>
                   <div className="overflow-x-auto">
-                    <table className="w-full border-collapse border border-border/20 text-sm">
+                    <table className="w-full border-collapse border border-white/10 text-sm">
                       <thead>
-                        <tr className="bg-card">
-                          <th className="border border-border/20 p-3 text-left">Material Type</th>
-                          <th className="border border-border/20 p-3 text-left">UV Susceptibility</th>
-                          <th className="border border-border/20 p-3 text-left">Degradation Timeline</th>
-                          <th className="border border-border/20 p-3 text-left">Protection Required</th>
+                        <tr className="">
+                          <th className="border border-white/10 p-3 text-left">Material Type</th>
+                          <th className="border border-white/10 p-3 text-left">UV Susceptibility</th>
+                          <th className="border border-white/10 p-3 text-left">Degradation Timeline</th>
+                          <th className="border border-white/10 p-3 text-left">Protection Required</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td className="border border-border/20 p-3">Standard PVC</td>
-                          <td className="border border-border/20 p-3">Very High</td>
-                          <td className="border border-border/20 p-3">6-24 months</td>
-                          <td className="border border-border/20 p-3">Essential</td>
+                          <td className="border border-white/10 p-3">Standard PVC</td>
+                          <td className="border border-white/10 p-3">Very High</td>
+                          <td className="border border-white/10 p-3">6-24 months</td>
+                          <td className="border border-white/10 p-3">Essential</td>
                         </tr>
                         <tr className="bg-muted/5">
-                          <td className="border border-border/20 p-3">UV-Stabilised PVC</td>
-                          <td className="border border-border/20 p-3">Moderate</td>
-                          <td className="border border-border/20 p-3">5-10 years</td>
-                          <td className="border border-border/20 p-3">Recommended</td>
+                          <td className="border border-white/10 p-3">UV-Stabilised PVC</td>
+                          <td className="border border-white/10 p-3">Moderate</td>
+                          <td className="border border-white/10 p-3">5-10 years</td>
+                          <td className="border border-white/10 p-3">Recommended</td>
                         </tr>
                         <tr>
-                          <td className="border border-border/20 p-3">XLPE</td>
-                          <td className="border border-border/20 p-3">Moderate</td>
-                          <td className="border border-border/20 p-3">3-7 years</td>
-                          <td className="border border-border/20 p-3">Advisable</td>
+                          <td className="border border-white/10 p-3">XLPE</td>
+                          <td className="border border-white/10 p-3">Moderate</td>
+                          <td className="border border-white/10 p-3">3-7 years</td>
+                          <td className="border border-white/10 p-3">Advisable</td>
                         </tr>
                         <tr className="bg-muted/5">
-                          <td className="border border-border/20 p-3">LSZH</td>
-                          <td className="border border-border/20 p-3">High</td>
-                          <td className="border border-border/20 p-3">12-36 months</td>
-                          <td className="border border-border/20 p-3">Essential</td>
+                          <td className="border border-white/10 p-3">LSZH</td>
+                          <td className="border border-white/10 p-3">High</td>
+                          <td className="border border-white/10 p-3">12-36 months</td>
+                          <td className="border border-white/10 p-3">Essential</td>
                         </tr>
                         <tr>
-                          <td className="border border-border/20 p-3">Rubber (EPDM)</td>
-                          <td className="border border-border/20 p-3">Low</td>
-                          <td className="border border-border/20 p-3">10-20 years</td>
-                          <td className="border border-border/20 p-3">Optional</td>
+                          <td className="border border-white/10 p-3">Rubber (EPDM)</td>
+                          <td className="border border-white/10 p-3">Low</td>
+                          <td className="border border-white/10 p-3">10-20 years</td>
+                          <td className="border border-white/10 p-3">Optional</td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
                 </div>
 
-                <div className="p-4 bg-card border border-green-400/30 rounded-lg">
+                <div className="p-4 bg-transparent border border-green-400/30 rounded-lg">
                   <h5 className="font-medium text-green-400 mb-3">UV Protection Strategies</h5>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">Material Selection</h6>
+                      <h6 className="font-medium text-white mb-2">Material Selection</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• <strong>UV-stabilised compounds:</strong> Carbon black, UV absorbers</li>
                         <li>• <strong>Pigmented materials:</strong> Titanium dioxide protection</li>
@@ -370,7 +370,7 @@ export default function Module3Section5_3() {
                       </ul>
                     </div>
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">Physical Protection</h6>
+                      <h6 className="font-medium text-white mb-2">Physical Protection</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• <strong>Conduit systems:</strong> PVC, steel, aluminium protection</li>
                         <li>• <strong>Trunking installation:</strong> Complete UV shielding</li>
@@ -389,19 +389,19 @@ export default function Module3Section5_3() {
 
           {/* 2. Temperature Risks */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Thermometer className="w-5 h-5" /> 2. Temperature Risks - Thermal Effects and Protection
             </h3>
             
             <div className="mb-6">
-              <h4 className="font-medium text-foreground mb-3">Temperature Impact Mechanisms</h4>
+              <h4 className="font-medium text-white mb-3">Temperature Impact Mechanisms</h4>
               
               <div className="space-y-4">
-                <div className="p-4 bg-card border border-border/30 rounded-lg">
-                  <h5 className="font-medium text-emerald-400 mb-3">High Temperature Effects</h5>
+                <div className="p-4 bg-transparent border border-border/30 rounded-lg">
+                  <h5 className="font-medium text-elec-yellow mb-3">High Temperature Effects</h5>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">Insulation Degradation</h6>
+                      <h6 className="font-medium text-white mb-2">Insulation Degradation</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• <strong>Thermal aging:</strong> Accelerated polymer breakdown</li>
                         <li>• <strong>Plasticiser migration:</strong> Loss of cable flexibility</li>
@@ -411,7 +411,7 @@ export default function Module3Section5_3() {
                       </ul>
                     </div>
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">Electrical Performance Impact</h6>
+                      <h6 className="font-medium text-white mb-2">Electrical Performance Impact</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• <strong>Increased resistance:</strong> Higher losses and heating</li>
                         <li>• <strong>Reduced current capacity:</strong> Derating requirements</li>
@@ -423,11 +423,11 @@ export default function Module3Section5_3() {
                   </div>
                 </div>
 
-                <div className="p-4 bg-card border border-border/30 rounded-lg">
-                  <h5 className="font-medium text-emerald-400 mb-3">Low Temperature Effects</h5>
+                <div className="p-4 bg-transparent border border-border/30 rounded-lg">
+                  <h5 className="font-medium text-elec-yellow mb-3">Low Temperature Effects</h5>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">Material Embrittlement</h6>
+                      <h6 className="font-medium text-white mb-2">Material Embrittlement</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• <strong>PVC embrittlement:</strong> Below 0°C becomes brittle</li>
                         <li>• <strong>Rubber hardening:</strong> Loss of flexibility</li>
@@ -437,7 +437,7 @@ export default function Module3Section5_3() {
                       </ul>
                     </div>
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">Thermal Cycling Damage</h6>
+                      <h6 className="font-medium text-white mb-2">Thermal Cycling Damage</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• <strong>Expansion/contraction:</strong> Mechanical stress cycles</li>
                         <li>• <strong>Joint loosening:</strong> Thermal expansion mismatch</li>
@@ -449,56 +449,56 @@ export default function Module3Section5_3() {
                   </div>
                 </div>
 
-                <div className="p-4 bg-card border border-border/30 rounded-lg">
-                  <h5 className="font-medium text-emerald-400 mb-3">BS 7671 Temperature Requirements and Derating</h5>
+                <div className="p-4 bg-transparent border border-border/30 rounded-lg">
+                  <h5 className="font-medium text-elec-yellow mb-3">BS 7671 Temperature Requirements and Derating</h5>
                   <div className="space-y-3">
                     <div className="overflow-x-auto">
-                      <table className="w-full border-collapse border border-border/20 text-sm">
+                      <table className="w-full border-collapse border border-white/10 text-sm">
                         <thead>
-                          <tr className="bg-card">
-                            <th className="border border-border/20 p-3 text-left">Ambient Temperature</th>
-                            <th className="border border-border/20 p-3 text-left">Derating Factor (Ca)</th>
-                            <th className="border border-border/20 p-3 text-left">Application</th>
-                            <th className="border border-border/20 p-3 text-left">Special Considerations</th>
+                          <tr className="">
+                            <th className="border border-white/10 p-3 text-left">Ambient Temperature</th>
+                            <th className="border border-white/10 p-3 text-left">Derating Factor (Ca)</th>
+                            <th className="border border-white/10 p-3 text-left">Application</th>
+                            <th className="border border-white/10 p-3 text-left">Special Considerations</th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr>
-                            <td className="border border-border/20 p-3">30°C</td>
-                            <td className="border border-border/20 p-3">1.00</td>
-                            <td className="border border-border/20 p-3">Standard reference</td>
-                            <td className="border border-border/20 p-3">Base rating condition</td>
+                            <td className="border border-white/10 p-3">30°C</td>
+                            <td className="border border-white/10 p-3">1.00</td>
+                            <td className="border border-white/10 p-3">Standard reference</td>
+                            <td className="border border-white/10 p-3">Base rating condition</td>
                           </tr>
                           <tr className="bg-muted/5">
-                            <td className="border border-border/20 p-3">35°C</td>
-                            <td className="border border-border/20 p-3">0.94</td>
-                            <td className="border border-border/20 p-3">Warm climates</td>
-                            <td className="border border-border/20 p-3">6% capacity reduction</td>
+                            <td className="border border-white/10 p-3">35°C</td>
+                            <td className="border border-white/10 p-3">0.94</td>
+                            <td className="border border-white/10 p-3">Warm climates</td>
+                            <td className="border border-white/10 p-3">6% capacity reduction</td>
                           </tr>
                           <tr>
-                            <td className="border border-border/20 p-3">40°C</td>
-                            <td className="border border-border/20 p-3">0.87</td>
-                            <td className="border border-border/20 p-3">Hot environments</td>
-                            <td className="border border-border/20 p-3">13% capacity reduction</td>
+                            <td className="border border-white/10 p-3">40°C</td>
+                            <td className="border border-white/10 p-3">0.87</td>
+                            <td className="border border-white/10 p-3">Hot environments</td>
+                            <td className="border border-white/10 p-3">13% capacity reduction</td>
                           </tr>
                           <tr className="bg-muted/5">
-                            <td className="border border-border/20 p-3">45°C</td>
-                            <td className="border border-border/20 p-3">0.79</td>
-                            <td className="border border-border/20 p-3">Very hot areas</td>
-                            <td className="border border-border/20 p-3">21% capacity reduction</td>
+                            <td className="border border-white/10 p-3">45°C</td>
+                            <td className="border border-white/10 p-3">0.79</td>
+                            <td className="border border-white/10 p-3">Very hot areas</td>
+                            <td className="border border-white/10 p-3">21% capacity reduction</td>
                           </tr>
                           <tr>
-                            <td className="border border-border/20 p-3">50°C</td>
-                            <td className="border border-border/20 p-3">0.71</td>
-                            <td className="border border-border/20 p-3">Extreme heat</td>
-                            <td className="border border-border/20 p-3">29% capacity reduction</td>
+                            <td className="border border-white/10 p-3">50°C</td>
+                            <td className="border border-white/10 p-3">0.71</td>
+                            <td className="border border-white/10 p-3">Extreme heat</td>
+                            <td className="border border-white/10 p-3">29% capacity reduction</td>
                           </tr>
                         </tbody>
                       </table>
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-4">
-                      <div className="p-3 bg-card border border-amber-400/30 rounded-lg">
+                      <div className="p-3 border border-amber-400/30 rounded-lg">
                         <h6 className="font-medium text-amber-400 mb-2">Cable Temperature Ratings</h6>
                         <ul className="space-y-1 text-sm">
                           <li>• <strong>PVC 70°C:</strong> Standard domestic/commercial</li>
@@ -507,7 +507,7 @@ export default function Module3Section5_3() {
                           <li>• <strong>Silicone 180°C:</strong> Extreme temperature applications</li>
                         </ul>
                       </div>
-                      <div className="p-3 bg-card border border-green-400/30 rounded-lg">
+                      <div className="p-3 border border-green-400/30 rounded-lg">
                         <h6 className="font-medium text-green-400 mb-2">Thermal Protection Methods</h6>
                         <ul className="space-y-1 text-sm">
                           <li>• <strong>Thermal barriers:</strong> Insulation and heat shields</li>
@@ -528,19 +528,19 @@ export default function Module3Section5_3() {
 
           {/* 3. Mechanical Damage */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Hammer className="w-5 h-5" /> 3. Mechanical Damage - Impact, Abrasion, and Protection
             </h3>
             
             <div className="mb-6">
-              <h4 className="font-medium text-foreground mb-3">Mechanical Damage Mechanisms</h4>
+              <h4 className="font-medium text-white mb-3">Mechanical Damage Mechanisms</h4>
               
               <div className="space-y-4">
-                <div className="p-4 bg-card border border-border/30 rounded-lg">
-                  <h5 className="font-medium text-emerald-400 mb-3">Types of Mechanical Damage</h5>
+                <div className="p-4 bg-transparent border border-border/30 rounded-lg">
+                  <h5 className="font-medium text-elec-yellow mb-3">Types of Mechanical Damage</h5>
                   <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">Impact Damage</h6>
+                      <h6 className="font-medium text-white mb-2">Impact Damage</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• <strong>Direct strikes:</strong> Tools, vehicles, falling objects</li>
                         <li>• <strong>Installation damage:</strong> Crushing during installation</li>
@@ -550,7 +550,7 @@ export default function Module3Section5_3() {
                       </ul>
                     </div>
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">Abrasion Damage</h6>
+                      <h6 className="font-medium text-white mb-2">Abrasion Damage</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• <strong>Edge cutting:</strong> Sharp metal edges</li>
                         <li>• <strong>Vibration wear:</strong> Constant movement friction</li>
@@ -560,7 +560,7 @@ export default function Module3Section5_3() {
                       </ul>
                     </div>
                     <div>
-                      <h6 className="font-medium text-foreground mb-2">Crushing Forces</h6>
+                      <h6 className="font-medium text-white mb-2">Crushing Forces</h6>
                       <ul className="space-y-1 text-sm">
                         <li>• <strong>Compression loads:</strong> Heavy equipment weight</li>
                         <li>• <strong>Clamp damage:</strong> Over-tightened supports</li>
@@ -572,56 +572,56 @@ export default function Module3Section5_3() {
                   </div>
                 </div>
 
-                <div className="p-4 bg-card border border-border/30 rounded-lg">
-                  <h5 className="font-medium text-emerald-400 mb-3">Mechanical Protection Systems</h5>
+                <div className="p-4 bg-transparent border border-border/30 rounded-lg">
+                  <h5 className="font-medium text-elec-yellow mb-3">Mechanical Protection Systems</h5>
                   <div className="space-y-3">
                     <div className="overflow-x-auto">
-                      <table className="w-full border-collapse border border-border/20 text-sm">
+                      <table className="w-full border-collapse border border-white/10 text-sm">
                         <thead>
-                          <tr className="bg-card">
-                            <th className="border border-border/20 p-3 text-left">Protection Method</th>
-                            <th className="border border-border/20 p-3 text-left">Impact Rating</th>
-                            <th className="border border-border/20 p-3 text-left">Applications</th>
-                            <th className="border border-border/20 p-3 text-left">Limitations</th>
+                          <tr className="">
+                            <th className="border border-white/10 p-3 text-left">Protection Method</th>
+                            <th className="border border-white/10 p-3 text-left">Impact Rating</th>
+                            <th className="border border-white/10 p-3 text-left">Applications</th>
+                            <th className="border border-white/10 p-3 text-left">Limitations</th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr>
-                            <td className="border border-border/20 p-3">SWA Cable</td>
-                            <td className="border border-border/20 p-3">Very High</td>
-                            <td className="border border-border/20 p-3">Underground, industrial</td>
-                            <td className="border border-border/20 p-3">Higher cost, weight</td>
+                            <td className="border border-white/10 p-3">SWA Cable</td>
+                            <td className="border border-white/10 p-3">Very High</td>
+                            <td className="border border-white/10 p-3">Underground, industrial</td>
+                            <td className="border border-white/10 p-3">Higher cost, weight</td>
                           </tr>
                           <tr className="bg-muted/5">
-                            <td className="border border-border/20 p-3">Steel Conduit</td>
-                            <td className="border border-border/20 p-3">High</td>
-                            <td className="border border-border/20 p-3">Harsh environments</td>
-                            <td className="border border-border/20 p-3">Corrosion risk</td>
+                            <td className="border border-white/10 p-3">Steel Conduit</td>
+                            <td className="border border-white/10 p-3">High</td>
+                            <td className="border border-white/10 p-3">Harsh environments</td>
+                            <td className="border border-white/10 p-3">Corrosion risk</td>
                           </tr>
                           <tr>
-                            <td className="border border-border/20 p-3">Heavy Gauge Trunking</td>
-                            <td className="border border-border/20 p-3">High</td>
-                            <td className="border border-border/20 p-3">Industrial distribution</td>
-                            <td className="border border-border/20 p-3">Access requirements</td>
+                            <td className="border border-white/10 p-3">Heavy Gauge Trunking</td>
+                            <td className="border border-white/10 p-3">High</td>
+                            <td className="border border-white/10 p-3">Industrial distribution</td>
+                            <td className="border border-white/10 p-3">Access requirements</td>
                           </tr>
                           <tr className="bg-muted/5">
-                            <td className="border border-border/20 p-3">PVC Conduit</td>
-                            <td className="border border-border/20 p-3">Medium</td>
-                            <td className="border border-border/20 p-3">Light commercial</td>
-                            <td className="border border-border/20 p-3">Impact limitations</td>
+                            <td className="border border-white/10 p-3">PVC Conduit</td>
+                            <td className="border border-white/10 p-3">Medium</td>
+                            <td className="border border-white/10 p-3">Light commercial</td>
+                            <td className="border border-white/10 p-3">Impact limitations</td>
                           </tr>
                           <tr>
-                            <td className="border border-border/20 p-3">Cable Ladder</td>
-                            <td className="border border-border/20 p-3">Low</td>
-                            <td className="border border-border/20 p-3">Controlled environments</td>
-                            <td className="border border-border/20 p-3">Open design</td>
+                            <td className="border border-white/10 p-3">Cable Ladder</td>
+                            <td className="border border-white/10 p-3">Low</td>
+                            <td className="border border-white/10 p-3">Controlled environments</td>
+                            <td className="border border-white/10 p-3">Open design</td>
                           </tr>
                         </tbody>
                       </table>
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-4">
-                      <div className="p-3 bg-card border border-green-400/30 rounded-lg">
+                      <div className="p-3 border border-green-400/30 rounded-lg">
                         <h6 className="font-medium text-green-400 mb-2">Installation Best Practices</h6>
                         <ul className="space-y-1 text-sm">
                           <li>• <strong>Route planning:</strong> Avoid high-risk areas</li>
@@ -631,8 +631,8 @@ export default function Module3Section5_3() {
                           <li>• <strong>Warning systems:</strong> Identification and marking</li>
                         </ul>
                       </div>
-                      <div className="p-3 bg-card border border-border/30 rounded-lg">
-                        <h6 className="font-medium text-emerald-400 mb-2">Protective Hardware</h6>
+                      <div className="p-3 border border-border/30 rounded-lg">
+                        <h6 className="font-medium text-elec-yellow mb-2">Protective Hardware</h6>
                         <ul className="space-y-1 text-sm">
                           <li>• <strong>Grommets:</strong> Edge protection at entry points</li>
                           <li>• <strong>Bushings:</strong> Smooth cable transitions</li>
@@ -645,11 +645,11 @@ export default function Module3Section5_3() {
                   </div>
                 </div>
 
-                <div className="p-4 bg-card border border-amber-400/30 rounded-lg">
+                <div className="p-4 bg-transparent border border-amber-400/30 rounded-lg">
                   <h5 className="font-medium text-amber-400 mb-3">Risk Assessment and Protection Selection</h5>
                   <div className="space-y-3">
-                    <div className="p-3 bg-card border border-border/20 rounded-lg">
-                      <h6 className="font-medium text-foreground mb-2">Mechanical Risk Assessment Matrix</h6>
+                    <div className="p-3 border border-white/10 rounded-lg">
+                      <h6 className="font-medium text-white mb-2">Mechanical Risk Assessment Matrix</h6>
                       <div className="grid md:grid-cols-2 gap-4">
                         <div>
                           <p className="text-sm mb-2"><strong>High Risk Environments:</strong></p>
@@ -684,13 +684,13 @@ export default function Module3Section5_3() {
 
           {/* 4. BS 7671 Requirements and Compliance */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <FileText className="w-5 h-5" /> 4. BS 7671 Requirements and Environmental Assessment
             </h3>
 
             <div className="space-y-4">
-              <div className="p-4 bg-card border border-border/30 rounded-lg">
-                <h5 className="font-medium text-emerald-400 mb-3">Regulatory Requirements</h5>
+              <div className="p-4 bg-transparent border border-border/30 rounded-lg">
+                <h5 className="font-medium text-elec-yellow mb-3">Regulatory Requirements</h5>
                 <ul className="space-y-2 text-sm">
                   <li><strong>Section 512:</strong> Environmental conditions must be assessed during design</li>
                   <li><strong>Section 522:</strong> Cable selection must account for environmental influences</li>
@@ -700,11 +700,11 @@ export default function Module3Section5_3() {
                 </ul>
               </div>
 
-              <div className="p-4 bg-card border border-green-400/30 rounded-lg">
+              <div className="p-4 bg-transparent border border-green-400/30 rounded-lg">
                 <h5 className="font-medium text-green-400 mb-3">Documentation and Verification</h5>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Design Phase Documentation</h6>
+                    <h6 className="font-medium text-white mb-2">Design Phase Documentation</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• Environmental condition assessment</li>
                       <li>• Material selection justification</li>
@@ -713,7 +713,7 @@ export default function Module3Section5_3() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Installation Verification</h6>
+                    <h6 className="font-medium text-white mb-2">Installation Verification</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• Protection integrity inspection</li>
                       <li>• Environmental condition monitoring</li>
@@ -728,44 +728,44 @@ export default function Module3Section5_3() {
         </Card>
 
         {/* Real-World Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-World Case Studies</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Case Studies</h2>
           <div className="space-y-4">
-            <div className="p-4 bg-card border border-amber-400/30 rounded-lg">
+            <div className="p-4 bg-transparent border border-amber-400/30 rounded-lg">
               <h3 className="font-medium text-amber-400 mb-3">Case Study 1: Car Park Lighting UV Failure</h3>
-              <p className="text-xs sm:text-sm text-foreground mb-3">
+              <p className="text-xs sm:text-sm text-white mb-3">
                 <strong>Situation:</strong> An outdoor lighting system in a car park used standard PVC cable exposed to direct sunlight without UV protection.
               </p>
-              <p className="text-xs sm:text-sm text-foreground mb-3">
+              <p className="text-xs sm:text-sm text-white mb-3">
                 <strong>Failure Mode:</strong> Within two years, the cable sheath became brittle and cracked, leading to moisture ingress and RCD tripping.
               </p>
-              <p className="text-xs sm:text-sm text-foreground">
+              <p className="text-xs sm:text-sm text-white">
                 <strong>Solution:</strong> Replacement with UV-resistant SWA cables routed in steel conduit provided complete protection and eliminated future UV damage risks.
               </p>
             </div>
 
-            <div className="p-4 bg-card border border-border/30 rounded-lg">
-              <h3 className="font-medium text-emerald-400 mb-3">Case Study 2: Industrial Oven Temperature Damage</h3>
-              <p className="text-xs sm:text-sm text-foreground mb-3">
+            <div className="p-4 bg-transparent border border-border/30 rounded-lg">
+              <h3 className="font-medium text-elec-yellow mb-3">Case Study 2: Industrial Oven Temperature Damage</h3>
+              <p className="text-xs sm:text-sm text-white mb-3">
                 <strong>Challenge:</strong> Power cables routed near industrial ovens experienced regular overheating despite being rated for ambient conditions.
               </p>
-              <p className="text-xs sm:text-sm text-foreground mb-3">
+              <p className="text-xs sm:text-sm text-white mb-3">
                 <strong>Analysis:</strong> Radiant heat from ovens raised local ambient temperature to 60°C, exceeding cable ratings and causing insulation breakdown.
               </p>
-              <p className="text-xs sm:text-sm text-foreground">
+              <p className="text-xs sm:text-sm text-white">
                 <strong>Resolution:</strong> Installation of heat shields and upgrade to high-temperature rated cables (180°C) with appropriate derating provided reliable operation.
               </p>
             </div>
 
-            <div className="p-4 bg-card border border-green-400/30 rounded-lg">
+            <div className="p-4 bg-transparent border border-green-400/30 rounded-lg">
               <h3 className="font-medium text-green-400 mb-3">Case Study 3: Construction Site Mechanical Damage</h3>
-              <p className="text-xs sm:text-sm text-foreground mb-3">
+              <p className="text-xs sm:text-sm text-white mb-3">
                 <strong>Problem:</strong> Temporary electrical installation on construction site suffered repeated cable damage from vehicle traffic and construction equipment.
               </p>
-              <p className="text-xs sm:text-sm text-foreground mb-3">
+              <p className="text-xs sm:text-sm text-white mb-3">
                 <strong>Impact:</strong> Multiple power outages, safety incidents, and project delays due to electrical system failures.
               </p>
-              <p className="text-xs sm:text-sm text-foreground">
+              <p className="text-xs sm:text-sm text-white">
                 <strong>Solution:</strong> Implementation of buried SWA cables with impact-resistant route marking and overhead cable protection systems eliminated damage incidents.
               </p>
             </div>
@@ -773,36 +773,36 @@ export default function Module3Section5_3() {
         </Card>
 
         {/* Enhanced FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
-            <div className="p-4 bg-card border border-border/20 rounded-lg">
-              <h3 className="font-medium text-foreground mb-2">Q: Can mechanical damage occur in domestic properties?</h3>
-              <p className="text-xs sm:text-sm text-foreground">
+            <div className="p-4 bg-transparent border border-white/10 rounded-lg">
+              <h3 className="font-medium text-white mb-2">Q: Can mechanical damage occur in domestic properties?</h3>
+              <p className="text-xs sm:text-sm text-white">
                 A: Yes — common examples include loft storage crushing cables, kitchen appliances damaging wiring behind units, and garden maintenance cutting outdoor cables. Protection measures should be proportionate to risk.
               </p>
             </div>
-            <div className="p-4 bg-card border border-border/20 rounded-lg">
-              <h3 className="font-medium text-foreground mb-2">Q: Do all cables have UV protection?</h3>
-              <p className="text-xs sm:text-sm text-foreground">
+            <div className="p-4 bg-transparent border border-white/10 rounded-lg">
+              <h3 className="font-medium text-white mb-2">Q: Do all cables have UV protection?</h3>
+              <p className="text-xs sm:text-sm text-white">
                 A: No — standard PVC cables degrade rapidly in sunlight unless specifically formulated with UV stabilisers. Always check cable markings for UV resistance or specify UV-rated cables for outdoor use.
               </p>
             </div>
-            <div className="p-4 bg-card border border-border/20 rounded-lg">
-              <h3 className="font-medium text-foreground mb-2">Q: Is heat damage always obvious?</h3>
-              <p className="text-xs sm:text-sm text-foreground">
+            <div className="p-4 bg-transparent border border-white/10 rounded-lg">
+              <h3 className="font-medium text-white mb-2">Q: Is heat damage always obvious?</h3>
+              <p className="text-xs sm:text-sm text-white">
                 A: Not always — insulation may become brittle and lose electrical properties before visible discolouration appears. Regular thermal imaging and electrical testing can detect early degradation.
               </p>
             </div>
-            <div className="p-4 bg-card border border-border/20 rounded-lg">
-              <h3 className="font-medium text-foreground mb-2">Q: How can I assess the mechanical damage risk for my installation?</h3>
-              <p className="text-xs sm:text-sm text-foreground">
+            <div className="p-4 bg-transparent border border-white/10 rounded-lg">
+              <h3 className="font-medium text-white mb-2">Q: How can I assess the mechanical damage risk for my installation?</h3>
+              <p className="text-xs sm:text-sm text-white">
                 A: Consider vehicle movement, foot traffic, machinery operation, construction activity, and public access. Document potential impact sources and select protection accordingly using BS 7671 influence codes.
               </p>
             </div>
-            <div className="p-4 bg-card border border-border/20 rounded-lg">
-              <h3 className="font-medium text-foreground mb-2">Q: What's the difference between derating and cable upgrade?</h3>
-              <p className="text-xs sm:text-sm text-foreground">
+            <div className="p-4 bg-transparent border border-white/10 rounded-lg">
+              <h3 className="font-medium text-white mb-2">Q: What's the difference between derating and cable upgrade?</h3>
+              <p className="text-xs sm:text-sm text-white">
                 A: Derating reduces the current capacity of existing cables for environmental conditions, while upgrading selects cables with higher temperature ratings. Both approaches ensure safe operation.
               </p>
             </div>
@@ -810,21 +810,21 @@ export default function Module3Section5_3() {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
-          <p className="text-foreground/90">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+          <p className="text-white/90">
             UV radiation, temperature extremes, and mechanical forces pose significant threats to electrical installations. Understanding these degradation mechanisms and implementing appropriate protective measures through material selection, installation techniques, and environmental design ensures safety, compliance with BS 7671, and long-term reliability. Regular assessment and maintenance preserve protection effectiveness throughout the installation lifecycle.
           </p>
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quiz (8 Questions)</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quiz (8 Questions)</h2>
           <Quiz questions={quizQuestions} />
         </Card>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="../5-2">
               <ArrowLeft className="w-4 h-4 mr-2" />

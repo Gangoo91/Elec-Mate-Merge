@@ -1,5 +1,5 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { School, Award, BookOpen } from "lucide-react";
 
@@ -9,7 +9,7 @@ const HigherLearning = () => {
       <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 md:pt-8 pb-8 sm:pb-12 space-y-4 sm:space-y-6 animate-fade-in">
         <div className="flex flex-col items-center justify-center mb-2 sm:mb-4">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-3 sm:mb-4">Higher Learning</h1>
-          <BackButton customUrl="/apprentice/study" label="Back to Study Centre" />
+          <SmartBackButton />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 auto-rows-fr">

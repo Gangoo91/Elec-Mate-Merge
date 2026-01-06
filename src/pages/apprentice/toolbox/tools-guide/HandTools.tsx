@@ -3,9 +3,9 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Search, Filter, SlidersHorizontal } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Search, SlidersHorizontal } from "lucide-react";
 import { useToolsData } from "@/hooks/useToolsData";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import ToolsFeaturedCarousel from "@/components/electrician-tools/ToolsFeaturedCarousel";
 import ToolsGrid from "@/components/electrician-tools/ToolsGrid";
 import EssentialToolsQuickRef from "@/components/electrician-tools/EssentialToolsQuickRef";
@@ -86,16 +86,7 @@ const HandTools = () => {
         {/* Sticky Header */}
         <div className="sticky top-0 z-10 bg-elec-dark/95 backdrop-blur-sm pb-4 space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <Link to="/apprentice/toolbox/tools-guide">
-              <Button 
-                variant="outline" 
-                size="sm"
-                className="bg-elec-gray/50 border-elec-yellow/30 hover:bg-elec-yellow/10 text-white"
-              >
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back
-              </Button>
-            </Link>
+            <SmartBackButton />
             
             <div className="relative w-full sm:flex-1 sm:max-w-md">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/60" />

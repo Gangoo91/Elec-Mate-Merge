@@ -1,7 +1,8 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, CheckCircle } from "lucide-react";
+import { CheckCircle } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { QuoteWizard } from "@/components/electrician/quote-builder/QuoteWizard";
 import { useQuoteStorage } from "@/hooks/useQuoteStorage";
 import { useState, useEffect } from "react";
@@ -80,14 +81,7 @@ const QuoteBuilderCreate = () => {
                 Follow our guided process to create professional electrical quotes
               </p>
             </div>
-            <Button 
-              onClick={() => navigate('/electrician/quote-builder')}
-              variant="secondary" 
-              size="lg" 
-              className="w-full sm:w-auto shadow-lg"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" /> Back to Quote Builder
-            </Button>
+            <SmartBackButton className="w-full sm:w-auto shadow-lg" size="lg" />
           </div>
         </div>
       </header>

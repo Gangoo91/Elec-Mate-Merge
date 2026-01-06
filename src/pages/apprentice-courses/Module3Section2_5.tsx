@@ -207,13 +207,13 @@ const Module3Section2_5: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -228,32 +228,32 @@ const Module3Section2_5: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Building2 className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Building2 className="w-6 h-6 text-white" />
             </div>
             <Badge
               variant="outline"
-              className="border-emerald-500/30 text-emerald-400"
+              className="border-elec-yellow/30 text-elec-yellow"
             >
               Section 3.2.5
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Underfloor and Dado Trunking Systems
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Understanding trunking systems for power and data distribution in commercial buildings and office environments.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Introduction
           </h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Underfloor: Hidden distribution beneath raised floors for clean office aesthetics.</li>
                 <li>Dado: Wall-mounted horizontal trunking with accessible outlet points.</li>
@@ -261,8 +261,8 @@ const Module3Section2_5: React.FC = () => {
                 <li>Both require load calculations, support spacing and BS 7671 compliance.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>
                   <strong>Spot:</strong> Rectangular channels in floors (underfloor) or horizontal wall-mounted boxes (dado).
@@ -279,11 +279,11 @@ const Module3Section2_5: React.FC = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Learning outcomes
           </h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Calculate load requirements and support spacing for underfloor and dado trunking systems.</li>
             <li>Determine segregation distances and compartment sizing for mixed power and data installations.</li>
             <li>Apply fire barrier placement and access cover positioning calculations to meet regulations.</li>
@@ -293,18 +293,18 @@ const Module3Section2_5: React.FC = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Trunking Types */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Shield className="w-5 h-5" /> Trunking System Types and Applications
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Underfloor Trunking Systems</p>
                   <div className="space-y-3">
                     <div>
@@ -337,7 +337,7 @@ const Module3Section2_5: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                   <p className="font-medium mb-2">Dado Trunking Systems</p>
                   <div className="space-y-3">
                     <div>
@@ -378,12 +378,12 @@ const Module3Section2_5: React.FC = () => {
 
           {/* What this means on site */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Target className="w-5 h-5" /> What this means on site
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium text-orange-200 mb-2">Load calculations and sizing</p>
                 <ul className="list-disc pl-4 space-y-1 text-orange-200">
                   <li>Calculate total cable cross-sectional area including separators and barriers</li>
@@ -394,7 +394,7 @@ const Module3Section2_5: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="rounded-lg p-4 bg-card border border-cyan-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-cyan-400/30">
                 <p className="font-medium text-cyan-200 mb-2">Segregation and compartmentation</p>
                 <ul className="list-disc pl-4 space-y-1 text-cyan-200">
                   <li>Power circuits: Band I (up to 50V), Band II (over 50V) separation required</li>
@@ -411,12 +411,12 @@ const Module3Section2_5: React.FC = () => {
 
           {/* Installation Calculations */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Settings className="w-5 h-5" /> Installation Calculations and Methods
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
                 <p className="font-medium text-emerald-200 mb-2">Support and structural calculations</p>
                 <ul className="list-disc pl-4 space-y-1 text-emerald-200">
                   <li><strong>Support loading:</strong> Trunking weight + cable weight + 2.5 safety factor</li>
@@ -440,7 +440,7 @@ const Module3Section2_5: React.FC = () => {
 
               <div className="rounded-lg p-4 bg-indigo-500/10 border border-indigo-400/30">
                 <p className="font-medium text-indigo-200 mb-2">Worked example: Office trunking sizing</p>
-                <div className="bg-background/50 p-3 rounded font-mono text-xs text-indigo-100">
+                <div className="bg-[#121212]/50 p-3 rounded font-mono text-xs text-indigo-100">
                   <p><strong>Scenario:</strong> 500m² office, 50 workstations at 300W each</p>
                   <p><strong>Calculation:</strong></p>
                   <p>• Total load = 50 × 300W = 15kW</p>
@@ -463,12 +463,12 @@ const Module3Section2_5: React.FC = () => {
 
           {/* Common Mistakes */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" /> Common Mistakes to Avoid
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium text-red-200 mb-2">Installation errors</p>
                 <ul className="list-disc pl-4 space-y-1 text-red-200">
                   <li><strong>Overfilling trunking:</strong> Exceeding 45% fill factor causes overheating and installation difficulties</li>
@@ -479,7 +479,7 @@ const Module3Section2_5: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="rounded-lg p-4 bg-card border border-amber-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
                 <p className="font-medium text-amber-200 mb-2">Planning and design oversights</p>
                 <ul className="list-disc pl-4 space-y-1 text-amber-200">
                   <li><strong>Insufficient access provision:</strong> Poor access cover placement making maintenance difficult</li>
@@ -496,12 +496,12 @@ const Module3Section2_5: React.FC = () => {
 
           {/* BS 7671 Context */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <CheckCircle2 className="w-5 h-5" /> BS 7671 and Standards Context
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium text-blue-200 mb-2">Key standards and regulations</p>
                 <ul className="list-disc pl-4 space-y-1 text-blue-200">
                   <li><strong>BS EN 50085:</strong> Cable trunking and ducting systems for electrical installations</li>
@@ -512,7 +512,7 @@ const Module3Section2_5: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="rounded-lg p-4 bg-card border border-green-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                 <p className="font-medium text-green-200 mb-2">Segregation and compatibility requirements</p>
                 <ul className="list-disc pl-4 space-y-1 text-green-200">
                   <li>Band I circuits (ELV): Up to 50V including telecommunications and control</li>
@@ -523,7 +523,7 @@ const Module3Section2_5: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium text-purple-200 mb-2">Testing and compliance verification</p>
                 <ul className="list-disc pl-4 space-y-1 text-purple-200">
                   <li>Earth continuity: &lt;0.05Ω between all metallic sections</li>
@@ -538,11 +538,11 @@ const Module3Section2_5: React.FC = () => {
         </Card>
 
         {/* Real-world Scenario */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Building className="w-5 h-5" /> Real-world Scenario
           </h2>
-          <div className="rounded-lg p-3 sm:p-4 bg-card border border-slate-400/30">
+          <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30">
             <h3 className="font-medium text-slate-200 mb-2">Open-plan office electrical distribution</h3>
             <p className="text-slate-200 text-sm mb-3">
               A financial services company requires electrical distribution for a new 800m² trading floor
@@ -572,22 +572,22 @@ const Module3Section2_5: React.FC = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-l-4 border-l-emerald-500/50 pl-4">
-                <p className="font-medium text-foreground mb-1">Q: {faq.q}</p>
-                <p className="text-muted-foreground text-sm">A: {faq.a}</p>
+              <div key={index} className="border-l-4 border-l-elec-yellow/50 pl-4">
+                <p className="font-medium text-white mb-1">Q: {faq.q}</p>
+                <p className="text-white text-sm">A: {faq.a}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
-          <div className="space-y-3 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+          <div className="space-y-3 text-xs sm:text-sm text-white">
             <p>
               <strong>Trunking systems</strong> provide organised, accessible distribution for power and data cables in commercial buildings.
             </p>
@@ -606,10 +606,10 @@ const Module3Section2_5: React.FC = () => {
         </Card>
 
         {/* Apprentice Do's and Don'ts */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Apprentice Do's and Don'ts</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Apprentice Do's and Don'ts</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
-            <div className="rounded-lg p-4 bg-card border border-green-400/30">
+            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
               <h3 className="font-medium text-green-200 mb-3">✓ DO</h3>
               <ul className="space-y-2 text-green-200">
                 <li>• Calculate cable cross-sectional areas and ensure 45% maximum fill</li>
@@ -622,7 +622,7 @@ const Module3Section2_5: React.FC = () => {
                 <li>• Document all calculations and test results</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <h3 className="font-medium text-red-200 mb-3">✗ DON'T</h3>
               <ul className="space-y-2 text-red-200">
                 <li>• Exceed 45% fill factor - causes overheating risks</li>
@@ -639,10 +639,10 @@ const Module3Section2_5: React.FC = () => {
         </Card>
 
         {/* Pocket Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Pocket Card: Trunking Installation Quick Reference</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Card: Trunking Installation Quick Reference</h2>
           <div className="grid md:grid-cols-2 gap-4 text-xs">
-            <div className="rounded-lg p-3 bg-card border border-border/30">
+            <div className="rounded-lg p-3 border border-border/30">
               <h4 className="font-medium text-blue-200 mb-2">Underfloor Trunking</h4>
               <ul className="space-y-1 text-blue-200">
                 <li>• Support spacing: 600mm max</li>
@@ -653,7 +653,7 @@ const Module3Section2_5: React.FC = () => {
                 <li>• Earth continuity: &lt;0.05Ω</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 bg-card border border-green-400/30">
+            <div className="rounded-lg p-3 border border-green-400/30">
               <h4 className="font-medium text-green-200 mb-2">Dado Trunking</h4>
               <ul className="space-y-1 text-green-200">
                 <li>• Support spacing: 750mm max</li>
@@ -665,7 +665,7 @@ const Module3Section2_5: React.FC = () => {
               </ul>
             </div>
           </div>
-          <div className="mt-4 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30">
+          <div className="mt-4 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
             <p className="text-yellow-200 text-xs">
               <strong>Critical checks:</strong> Fill factor calculation, segregation distances, support spacing, 
               fire barrier placement, earthing continuity. Test before energising!
@@ -674,30 +674,30 @@ const Module3Section2_5: React.FC = () => {
         </Card>
 
         {/* Key References */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Key References</h2>
-          <div className="space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Key References</h2>
+          <div className="space-y-2 text-xs sm:text-sm text-white">
             <div className="flex justify-between items-center p-2 rounded bg-muted/10">
               <span>BS EN 50085:2005</span>
-              <span className="text-muted-foreground">Cable trunking and ducting systems</span>
+              <span className="text-white">Cable trunking and ducting systems</span>
             </div>
             <div className="flex justify-between items-center p-2 rounded bg-muted/10">
               <span>BS 7671:2018+A2:2022</span>
-              <span className="text-muted-foreground">IET Wiring Regulations (Section 521)</span>
+              <span className="text-white">IET Wiring Regulations (Section 521)</span>
             </div>
             <div className="flex justify-between items-center p-2 rounded bg-muted/10">
               <span>Building Regulations Part B</span>
-              <span className="text-muted-foreground">Fire safety and compartmentation</span>
+              <span className="text-white">Fire safety and compartmentation</span>
             </div>
             <div className="flex justify-between items-center p-2 rounded bg-muted/10">
               <span>BS EN 61439-2</span>
-              <span className="text-muted-foreground">Switchgear and controlgear assemblies</span>
+              <span className="text-white">Switchgear and controlgear assemblies</span>
             </div>
           </div>
         </Card>
 
         {/* Quiz */}
-        <Card className="p-6 bg-card border-border/20">
+        <Card className="p-6 bg-transparent border-white/20">
           <Quiz title="Test Your Knowledge: Underfloor and Dado Trunking Systems" questions={quizQuestions} />
         </Card>
       </main>

@@ -163,13 +163,13 @@ export default function Module3Section6_3() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -184,30 +184,30 @@ export default function Module3Section6_3() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Flame className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Flame className="w-6 h-6 text-white" />
             </div>
             <Badge
               variant="outline"
-              className="border-emerald-500/30 text-emerald-400"
+              className="border-elec-yellow/30 text-elec-yellow"
             >
               Section 3.6.3
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Fire Stopping and Sealing Penetrations
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Critical fire safety requirements for sealing electrical penetrations through fire barriers, maintaining compartmentation and escape route integrity per Building Regulations and BS 7671.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Service penetrations compromise fire barrier integrity without proper sealing.</li>
                 <li>Fire stopping prevents flames, smoke, and heat spreading between compartments.</li>
@@ -215,8 +215,8 @@ export default function Module3Section6_3() {
                 <li>Only tested, certified fire-rated materials are acceptable for sealing.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Unsealed gaps, damaged seals, non-rated materials, missing fire stopping.</li>
                 <li><strong>Use:</strong> Intumescent products, fire pillows, rated boards, certified systems.</li>
@@ -227,9 +227,9 @@ export default function Module3Section6_3() {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Explain why penetrations in fire barriers must be sealed and the consequences of failure.</li>
             <li>Identify approved materials and methods for different types of electrical penetrations.</li>
             <li>Apply correct installation techniques to maintain fire compartment integrity.</li>
@@ -238,24 +238,24 @@ export default function Module3Section6_3() {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* 1. Fire Compartmentation Principles and Requirements */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Shield className="w-5 h-5" /> 1. Fire Compartmentation Principles and Requirements
             </h3>
             
             <div className="mb-6">
-              <h4 className="font-medium text-foreground mb-3">Understanding Fire Compartmentation Strategy</h4>
-              <div className="p-4 bg-card border border-border/30 rounded-lg mb-4">
-                <p className="text-xs sm:text-sm text-foreground mb-3">
+              <h4 className="font-medium text-white mb-3">Understanding Fire Compartmentation Strategy</h4>
+              <div className="p-4 bg-transparent border border-border/30 rounded-lg mb-4">
+                <p className="text-xs sm:text-sm text-white mb-3">
                   <strong>Compartmentation Philosophy:</strong> Fire compartmentation divides buildings into separate fire-resisting sections to prevent fire spread, protect escape routes, and provide firefighting access. Every penetration through these barriers potentially compromises the entire fire safety strategy unless properly sealed.
                 </p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Fire Spread Mechanisms</h6>
+                    <h6 className="font-medium text-white mb-2">Fire Spread Mechanisms</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Flame spread:</strong> Direct fire penetration through openings</li>
                       <li>• <strong>Heat transfer:</strong> Conduction through materials and structures</li>
@@ -265,7 +265,7 @@ export default function Module3Section6_3() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Consequences of Unsealed Penetrations</h6>
+                    <h6 className="font-medium text-white mb-2">Consequences of Unsealed Penetrations</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Rapid fire spread:</strong> 2-5 minute compartment failure</li>
                       <li>• <strong>Smoke logging:</strong> Escape route contamination</li>
@@ -277,53 +277,53 @@ export default function Module3Section6_3() {
                 </div>
               </div>
 
-              <div className="p-4 bg-card border border-border/30 rounded-lg mb-4">
-                <h5 className="font-medium text-emerald-400 mb-3">Building Regulations and Legal Framework</h5>
+              <div className="p-4 bg-transparent border border-border/30 rounded-lg mb-4">
+                <h5 className="font-medium text-elec-yellow mb-3">Building Regulations and Legal Framework</h5>
                 <div className="overflow-x-auto">
-                  <table className="w-full border-collapse border border-border/20 text-sm">
+                  <table className="w-full border-collapse border border-white/10 text-sm">
                     <thead>
-                      <tr className="bg-card">
-                        <th className="border border-border/20 p-3 text-left">Regulation/Standard</th>
-                        <th className="border border-border/20 p-3 text-left">Scope</th>
-                        <th className="border border-border/20 p-3 text-left">Key Requirements</th>
-                        <th className="border border-border/20 p-3 text-left">Compliance Evidence</th>
+                      <tr className="">
+                        <th className="border border-white/10 p-3 text-left">Regulation/Standard</th>
+                        <th className="border border-white/10 p-3 text-left">Scope</th>
+                        <th className="border border-white/10 p-3 text-left">Key Requirements</th>
+                        <th className="border border-white/10 p-3 text-left">Compliance Evidence</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="border border-border/20 p-3"><strong>Building Regulations Part B</strong></td>
-                        <td className="border border-border/20 p-3">Fire safety in buildings</td>
-                        <td className="border border-border/20 p-3">Maintain fire resistance of barriers</td>
-                        <td className="border border-border/20 p-3">Fire test certificates, installation records</td>
+                        <td className="border border-white/10 p-3"><strong>Building Regulations Part B</strong></td>
+                        <td className="border border-white/10 p-3">Fire safety in buildings</td>
+                        <td className="border border-white/10 p-3">Maintain fire resistance of barriers</td>
+                        <td className="border border-white/10 p-3">Fire test certificates, installation records</td>
                       </tr>
                       <tr className="bg-muted/5">
-                        <td className="border border-border/20 p-3"><strong>BS 7671 Section 527</strong></td>
-                        <td className="border border-border/20 p-3">Electrical installation fire precautions</td>
-                        <td className="border border-border/20 p-3">Appropriate sealing where barriers penetrated</td>
-                        <td className="border border-border/20 p-3">Material specifications, test certificates</td>
+                        <td className="border border-white/10 p-3"><strong>BS 7671 Section 527</strong></td>
+                        <td className="border border-white/10 p-3">Electrical installation fire precautions</td>
+                        <td className="border border-white/10 p-3">Appropriate sealing where barriers penetrated</td>
+                        <td className="border border-white/10 p-3">Material specifications, test certificates</td>
                       </tr>
                       <tr>
-                        <td className="border border-border/20 p-3"><strong>BS EN 1366 Series</strong></td>
-                        <td className="border border-border/20 p-3">Fire resistance testing</td>
-                        <td className="border border-border/20 p-3">Test methods for service penetrations</td>
-                        <td className="border border-border/20 p-3">Third-party test reports</td>
+                        <td className="border border-white/10 p-3"><strong>BS EN 1366 Series</strong></td>
+                        <td className="border border-white/10 p-3">Fire resistance testing</td>
+                        <td className="border border-white/10 p-3">Test methods for service penetrations</td>
+                        <td className="border border-white/10 p-3">Third-party test reports</td>
                       </tr>
                       <tr className="bg-muted/5">
-                        <td className="border border-border/20 p-3"><strong>BS 8519</strong></td>
-                        <td className="border border-border/20 p-3">Fire stopping installation code</td>
-                        <td className="border border-border/20 p-3">Installation best practice guidance</td>
-                        <td className="border border-border/20 p-3">Installation certificates, photographic records</td>
+                        <td className="border border-white/10 p-3"><strong>BS 8519</strong></td>
+                        <td className="border border-white/10 p-3">Fire stopping installation code</td>
+                        <td className="border border-white/10 p-3">Installation best practice guidance</td>
+                        <td className="border border-white/10 p-3">Installation certificates, photographic records</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
 
-              <div className="p-4 bg-card border border-green-400/30 rounded-lg">
+              <div className="p-4 bg-transparent border border-green-400/30 rounded-lg">
                 <h5 className="font-medium text-green-400 mb-3">Fire Resistance Rating Requirements</h5>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Standard Fire Ratings</h6>
+                    <h6 className="font-medium text-white mb-2">Standard Fire Ratings</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>30 minutes:</strong> Typical for single-storey commercial, domestic</li>
                       <li>• <strong>60 minutes:</strong> Multi-storey offices, educational buildings</li>
@@ -333,7 +333,7 @@ export default function Module3Section6_3() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Rating Criteria (EI Classification)</h6>
+                    <h6 className="font-medium text-white mb-2">Rating Criteria (EI Classification)</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>E - Integrity:</strong> No flames or hot gases pass through</li>
                       <li>• <strong>I - Insulation:</strong> Temperature rise limited (≤140°C average)</li>
@@ -352,17 +352,17 @@ export default function Module3Section6_3() {
 
           {/* 2. Fire Stopping Materials and Systems */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Wrench className="w-5 h-5" /> 2. Fire Stopping Materials and Installation Systems
             </h3>
 
             <div className="mb-6">
-              <h4 className="font-medium text-foreground mb-3">Intumescent Systems and Applications</h4>
-              <div className="p-4 bg-card border border-border/30 rounded-lg mb-4">
-                <h5 className="font-medium text-emerald-400 mb-3">Intumescent Material Technology</h5>
+              <h4 className="font-medium text-white mb-3">Intumescent Systems and Applications</h4>
+              <div className="p-4 bg-transparent border border-border/30 rounded-lg mb-4">
+                <h5 className="font-medium text-elec-yellow mb-3">Intumescent Material Technology</h5>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Operating Principles</h6>
+                    <h6 className="font-medium text-white mb-2">Operating Principles</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Activation temperature:</strong> Typically 120-180°C</li>
                       <li>• <strong>Expansion ratio:</strong> 10:1 to 50:1 volume increase</li>
@@ -372,7 +372,7 @@ export default function Module3Section6_3() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Product Forms and Applications</h6>
+                    <h6 className="font-medium text-white mb-2">Product Forms and Applications</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Sealants:</strong> Gun-applied for small gaps and irregular shapes</li>
                       <li>• <strong>Putty:</strong> Hand-moldable for complex penetrations</li>
@@ -384,55 +384,55 @@ export default function Module3Section6_3() {
                 </div>
 
                 <div className="mt-4 overflow-x-auto">
-                  <table className="w-full border-collapse border border-border/20 text-sm">
+                  <table className="w-full border-collapse border border-white/10 text-sm">
                     <thead>
-                      <tr className="bg-card">
-                        <th className="border border-border/20 p-3 text-left">Material Type</th>
-                        <th className="border border-border/20 p-3 text-left">Typical Applications</th>
-                        <th className="border border-border/20 p-3 text-left">Gap Size Range</th>
-                        <th className="border border-border/20 p-3 text-left">Fire Rating</th>
-                        <th className="border border-border/20 p-3 text-left">Installation Notes</th>
+                      <tr className="">
+                        <th className="border border-white/10 p-3 text-left">Material Type</th>
+                        <th className="border border-white/10 p-3 text-left">Typical Applications</th>
+                        <th className="border border-white/10 p-3 text-left">Gap Size Range</th>
+                        <th className="border border-white/10 p-3 text-left">Fire Rating</th>
+                        <th className="border border-white/10 p-3 text-left">Installation Notes</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="border border-border/20 p-3">Intumescent Sealant</td>
-                        <td className="border border-border/20 p-3">Small cable penetrations</td>
-                        <td className="border border-border/20 p-3">5-25mm</td>
-                        <td className="border border-border/20 p-3">30-240 minutes</td>
-                        <td className="border border-border/20 p-3">Gun applied, tool finish required</td>
+                        <td className="border border-white/10 p-3">Intumescent Sealant</td>
+                        <td className="border border-white/10 p-3">Small cable penetrations</td>
+                        <td className="border border-white/10 p-3">5-25mm</td>
+                        <td className="border border-white/10 p-3">30-240 minutes</td>
+                        <td className="border border-white/10 p-3">Gun applied, tool finish required</td>
                       </tr>
                       <tr className="bg-muted/5">
-                        <td className="border border-border/20 p-3">Intumescent Putty</td>
-                        <td className="border border-border/20 p-3">Complex shapes, grouped cables</td>
-                        <td className="border border-border/20 p-3">10-100mm</td>
-                        <td className="border border-border/20 p-3">60-120 minutes</td>
-                        <td className="border border-border/20 p-3">Hand moldable, no curing time</td>
+                        <td className="border border-white/10 p-3">Intumescent Putty</td>
+                        <td className="border border-white/10 p-3">Complex shapes, grouped cables</td>
+                        <td className="border border-white/10 p-3">10-100mm</td>
+                        <td className="border border-white/10 p-3">60-120 minutes</td>
+                        <td className="border border-white/10 p-3">Hand moldable, no curing time</td>
                       </tr>
                       <tr>
-                        <td className="border border-border/20 p-3">Fire Collars</td>
-                        <td className="border border-border/20 p-3">Plastic pipes and ducts</td>
-                        <td className="border border-border/20 p-3">50-300mm diameter</td>
-                        <td className="border border-border/20 p-3">30-120 minutes</td>
-                        <td className="border border-border/20 p-3">Sized to pipe, structural fixing</td>
+                        <td className="border border-white/10 p-3">Fire Collars</td>
+                        <td className="border border-white/10 p-3">Plastic pipes and ducts</td>
+                        <td className="border border-white/10 p-3">50-300mm diameter</td>
+                        <td className="border border-white/10 p-3">30-120 minutes</td>
+                        <td className="border border-white/10 p-3">Sized to pipe, structural fixing</td>
                       </tr>
                       <tr className="bg-muted/5">
-                        <td className="border border-border/20 p-3">Fire Pillows</td>
-                        <td className="border border-border/20 p-3">Removable penetrations</td>
-                        <td className="border border-border/20 p-3">100-500mm</td>
-                        <td className="border border-border/20 p-3">60-180 minutes</td>
-                        <td className="border border-border/20 p-3">Reusable, compression required</td>
+                        <td className="border border-white/10 p-3">Fire Pillows</td>
+                        <td className="border border-white/10 p-3">Removable penetrations</td>
+                        <td className="border border-white/10 p-3">100-500mm</td>
+                        <td className="border border-white/10 p-3">60-180 minutes</td>
+                        <td className="border border-white/10 p-3">Reusable, compression required</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
 
-              <div className="p-4 bg-card border border-amber-400/30 rounded-lg mb-4">
+              <div className="p-4 bg-transparent border border-amber-400/30 rounded-lg mb-4">
                 <h5 className="font-medium text-amber-400 mb-3">Fire-Rated Board Systems and Structural Solutions</h5>
                 <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Calcium Silicate Boards</h6>
+                    <h6 className="font-medium text-white mb-2">Calcium Silicate Boards</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• Non-combustible mineral board</li>
                       <li>• 12-50mm thickness available</li>
@@ -442,7 +442,7 @@ export default function Module3Section6_3() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Gypsum-Based Systems</h6>
+                    <h6 className="font-medium text-white mb-2">Gypsum-Based Systems</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• Fire-rated plasterboard systems</li>
                       <li>• 15-25mm thickness typical</li>
@@ -452,7 +452,7 @@ export default function Module3Section6_3() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Composite Fire Barriers</h6>
+                    <h6 className="font-medium text-white mb-2">Composite Fire Barriers</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• Multi-layer board systems</li>
                       <li>• Integrated intumescent strips</li>
@@ -464,7 +464,7 @@ export default function Module3Section6_3() {
                 </div>
 
                 <div className="mt-4 p-3 bg-white/5 rounded-lg">
-                  <h6 className="font-medium text-foreground mb-2">Installation Considerations for Board Systems</h6>
+                  <h6 className="font-medium text-white mb-2">Installation Considerations for Board Systems</h6>
                   <div className="grid md:grid-cols-2 gap-4">
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Structural support:</strong> Adequate framing for board weight and wind loading</li>
@@ -482,11 +482,11 @@ export default function Module3Section6_3() {
                 </div>
               </div>
 
-              <div className="p-4 bg-card border border-cyan-400/30 rounded-lg">
+              <div className="p-4 bg-transparent border border-cyan-400/30 rounded-lg">
                 <h5 className="font-medium text-cyan-400 mb-3">Electrical-Specific Fire Stopping Solutions</h5>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Cable Tray Penetrations</h6>
+                    <h6 className="font-medium text-white mb-2">Cable Tray Penetrations</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Tray fire barriers:</strong> Vertical and horizontal intumescent systems</li>
                       <li>• <strong>Wrap systems:</strong> Flexible intumescent wraps for cable bundles</li>
@@ -496,7 +496,7 @@ export default function Module3Section6_3() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Conduit and Trunking Systems</h6>
+                    <h6 className="font-medium text-white mb-2">Conduit and Trunking Systems</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Metal conduit:</strong> Fire-rated joint compounds and end seals</li>
                       <li>• <strong>PVC systems:</strong> Intumescent collars to close gaps when plastic melts</li>
@@ -508,8 +508,8 @@ export default function Module3Section6_3() {
                 </div>
 
                 <div className="mt-4 p-3 bg-white/5 rounded-lg">
-                  <h6 className="font-medium text-foreground mb-2">Case Study: Data Centre Fire Stopping Strategy</h6>
-                  <p className="text-xs sm:text-sm text-foreground mb-2">
+                  <h6 className="font-medium text-white mb-2">Case Study: Data Centre Fire Stopping Strategy</h6>
+                  <p className="text-xs sm:text-sm text-white mb-2">
                     <strong>Challenge:</strong> 500-rack data centre with multiple cable routes and high availability requirements.
                   </p>
                   <div className="grid md:grid-cols-2 gap-4">
@@ -536,17 +536,17 @@ export default function Module3Section6_3() {
 
           {/* 3. Installation Best Practice and Maintenance */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Eye className="w-5 h-5" /> 3. Installation Best Practice and Maintenance Requirements
             </h3>
 
             <div className="mb-6">
-              <h4 className="font-medium text-foreground mb-3">Professional Installation Standards</h4>
-              <div className="p-4 bg-card border border-green-400/30 rounded-lg mb-4">
+              <h4 className="font-medium text-white mb-3">Professional Installation Standards</h4>
+              <div className="p-4 bg-transparent border border-green-400/30 rounded-lg mb-4">
                 <h5 className="font-medium text-green-400 mb-3">Pre-Installation Assessment and Planning</h5>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Site Assessment Requirements</h6>
+                    <h6 className="font-medium text-white mb-2">Site Assessment Requirements</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Barrier identification:</strong> Verify fire rating and construction type</li>
                       <li>• <strong>Penetration survey:</strong> Catalogue all existing and planned openings</li>
@@ -556,7 +556,7 @@ export default function Module3Section6_3() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Material Selection Criteria</h6>
+                    <h6 className="font-medium text-white mb-2">Material Selection Criteria</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Fire rating match:</strong> System rating ≥ barrier rating</li>
                       <li>• <strong>Test evidence:</strong> Third-party test reports for specific application</li>
@@ -568,59 +568,59 @@ export default function Module3Section6_3() {
                 </div>
               </div>
 
-              <div className="p-4 bg-card border border-border/30 rounded-lg mb-4">
-                <h5 className="font-medium text-emerald-400 mb-3">Installation Process and Quality Control</h5>
+              <div className="p-4 bg-transparent border border-border/30 rounded-lg mb-4">
+                <h5 className="font-medium text-elec-yellow mb-3">Installation Process and Quality Control</h5>
                 <div className="overflow-x-auto">
-                  <table className="w-full border-collapse border border-border/20 text-sm">
+                  <table className="w-full border-collapse border border-white/10 text-sm">
                     <thead>
-                      <tr className="bg-card">
-                        <th className="border border-border/20 p-3 text-left">Installation Stage</th>
-                        <th className="border border-border/20 p-3 text-left">Key Activities</th>
-                        <th className="border border-border/20 p-3 text-left">Quality Checks</th>
-                        <th className="border border-border/20 p-3 text-left">Documentation</th>
+                      <tr className="">
+                        <th className="border border-white/10 p-3 text-left">Installation Stage</th>
+                        <th className="border border-white/10 p-3 text-left">Key Activities</th>
+                        <th className="border border-white/10 p-3 text-left">Quality Checks</th>
+                        <th className="border border-white/10 p-3 text-left">Documentation</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="border border-border/20 p-3"><strong>Preparation</strong></td>
-                        <td className="border border-border/20 p-3">Clean surfaces, remove debris, check dimensions</td>
-                        <td className="border border-border/20 p-3">Surface condition, gap measurement</td>
-                        <td className="border border-border/20 p-3">Site survey, material certificates</td>
+                        <td className="border border-white/10 p-3"><strong>Preparation</strong></td>
+                        <td className="border border-white/10 p-3">Clean surfaces, remove debris, check dimensions</td>
+                        <td className="border border-white/10 p-3">Surface condition, gap measurement</td>
+                        <td className="border border-white/10 p-3">Site survey, material certificates</td>
                       </tr>
                       <tr className="bg-muted/5">
-                        <td className="border border-border/20 p-3"><strong>Installation</strong></td>
-                        <td className="border border-border/20 p-3">Apply materials per manufacturer instructions</td>
-                        <td className="border border-border/20 p-3">Coverage, thickness, adhesion</td>
-                        <td className="border border-border/20 p-3">Installation photos, material usage</td>
+                        <td className="border border-white/10 p-3"><strong>Installation</strong></td>
+                        <td className="border border-white/10 p-3">Apply materials per manufacturer instructions</td>
+                        <td className="border border-white/10 p-3">Coverage, thickness, adhesion</td>
+                        <td className="border border-white/10 p-3">Installation photos, material usage</td>
                       </tr>
                       <tr>
-                        <td className="border border-border/20 p-3"><strong>Curing/Setting</strong></td>
-                        <td className="border border-border/20 p-3">Allow cure time, protect from damage</td>
-                        <td className="border border-border/20 p-3">Cure completion, surface integrity</td>
-                        <td className="border border-border/20 p-3">Time records, environmental conditions</td>
+                        <td className="border border-white/10 p-3"><strong>Curing/Setting</strong></td>
+                        <td className="border border-white/10 p-3">Allow cure time, protect from damage</td>
+                        <td className="border border-white/10 p-3">Cure completion, surface integrity</td>
+                        <td className="border border-white/10 p-3">Time records, environmental conditions</td>
                       </tr>
                       <tr className="bg-muted/5">
-                        <td className="border border-border/20 p-3"><strong>Testing</strong></td>
-                        <td className="border border-border/20 p-3">Visual inspection, smoke testing if required</td>
-                        <td className="border border-border/20 p-3">Seal integrity, gap closure</td>
-                        <td className="border border-border/20 p-3">Test certificates, non-conformance reports</td>
+                        <td className="border border-white/10 p-3"><strong>Testing</strong></td>
+                        <td className="border border-white/10 p-3">Visual inspection, smoke testing if required</td>
+                        <td className="border border-white/10 p-3">Seal integrity, gap closure</td>
+                        <td className="border border-white/10 p-3">Test certificates, non-conformance reports</td>
                       </tr>
                       <tr>
-                        <td className="border border-border/20 p-3"><strong>Handover</strong></td>
-                        <td className="border border-border/20 p-3">Provide documentation, maintenance schedule</td>
-                        <td className="border border-border/20 p-3">Complete records, client sign-off</td>
-                        <td className="border border-border/20 p-3">As-built drawings, O&M manuals</td>
+                        <td className="border border-white/10 p-3"><strong>Handover</strong></td>
+                        <td className="border border-white/10 p-3">Provide documentation, maintenance schedule</td>
+                        <td className="border border-white/10 p-3">Complete records, client sign-off</td>
+                        <td className="border border-white/10 p-3">As-built drawings, O&M manuals</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
 
-              <div className="p-4 bg-card border border-border/30 rounded-lg mb-4">
-                <h5 className="font-medium text-emerald-400 mb-3">Inspection and Maintenance Protocols</h5>
+              <div className="p-4 bg-transparent border border-border/30 rounded-lg mb-4">
+                <h5 className="font-medium text-elec-yellow mb-3">Inspection and Maintenance Protocols</h5>
                 <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Initial Inspection</h6>
+                    <h6 className="font-medium text-white mb-2">Initial Inspection</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• Complete coverage verification</li>
                       <li>• Material adhesion testing</li>
@@ -630,7 +630,7 @@ export default function Module3Section6_3() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Periodic Maintenance</h6>
+                    <h6 className="font-medium text-white mb-2">Periodic Maintenance</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• 6-monthly visual inspections</li>
                       <li>• Annual detailed assessment</li>
@@ -640,7 +640,7 @@ export default function Module3Section6_3() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Remedial Actions</h6>
+                    <h6 className="font-medium text-white mb-2">Remedial Actions</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• Immediate repair of damage</li>
                       <li>• Material replacement when degraded</li>
@@ -652,7 +652,7 @@ export default function Module3Section6_3() {
                 </div>
 
                 <div className="mt-4 p-3 bg-white/5 rounded-lg">
-                  <h6 className="font-medium text-foreground mb-2">Inspection Checklist for Fire Stopping Systems</h6>
+                  <h6 className="font-medium text-white mb-2">Inspection Checklist for Fire Stopping Systems</h6>
                   <div className="grid md:grid-cols-2 gap-4">
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Visual integrity:</strong> No cracks, gaps, or missing material</li>
@@ -670,11 +670,11 @@ export default function Module3Section6_3() {
                 </div>
               </div>
 
-              <div className="p-4 bg-card border border-border/30 rounded-lg">
-                <h5 className="font-medium text-emerald-400 mb-3">Common Installation Failures and Prevention</h5>
+              <div className="p-4 bg-transparent border border-border/30 rounded-lg">
+                <h5 className="font-medium text-elec-yellow mb-3">Common Installation Failures and Prevention</h5>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Typical Failure Modes</h6>
+                    <h6 className="font-medium text-white mb-2">Typical Failure Modes</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Incomplete gap filling:</strong> Hidden voids behind visible sealing</li>
                       <li>• <strong>Material incompatibility:</strong> Chemical reaction between sealant and services</li>
@@ -684,7 +684,7 @@ export default function Module3Section6_3() {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-foreground mb-2">Prevention Strategies</h6>
+                    <h6 className="font-medium text-white mb-2">Prevention Strategies</h6>
                     <ul className="space-y-1 text-sm">
                       <li>• <strong>Competent installer training:</strong> Manufacturer certification programmes</li>
                       <li>• <strong>Quality control procedures:</strong> Stage inspections and hold points</li>
@@ -696,8 +696,8 @@ export default function Module3Section6_3() {
                 </div>
 
                 <div className="mt-4 p-3 bg-white/5 rounded-lg">
-                  <h6 className="font-medium text-foreground mb-2">Emergency Response and Remedial Work</h6>
-                  <p className="text-xs sm:text-sm text-foreground mb-2">
+                  <h6 className="font-medium text-white mb-2">Emergency Response and Remedial Work</h6>
+                  <p className="text-xs sm:text-sm text-white mb-2">
                     <strong>Scenario:</strong> Fire stopping damage discovered during routine inspection in a hospital critical care unit.
                   </p>
                   <div className="grid md:grid-cols-2 gap-4">
@@ -723,30 +723,30 @@ export default function Module3Section6_3() {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
-            <div className="p-4 bg-card border border-border/20 rounded-lg">
-              <h3 className="font-medium text-foreground mb-2">Q: Can expanding foam from a DIY store be used as fire stopping?</h3>
-              <p className="text-xs sm:text-sm text-foreground">
+            <div className="p-4 bg-transparent border border-white/10 rounded-lg">
+              <h3 className="font-medium text-white mb-2">Q: Can expanding foam from a DIY store be used as fire stopping?</h3>
+              <p className="text-xs sm:text-sm text-white">
                 A: No. Only tested and certified fire-rated foams with proven fire resistance test evidence are acceptable for fire stopping applications.
               </p>
             </div>
-            <div className="p-4 bg-card border border-border/20 rounded-lg">
-              <h3 className="font-medium text-foreground mb-2">Q: Are fire pillows permanent installations?</h3>
-              <p className="text-xs sm:text-sm text-foreground">
+            <div className="p-4 bg-transparent border border-white/10 rounded-lg">
+              <h3 className="font-medium text-white mb-2">Q: Are fire pillows permanent installations?</h3>
+              <p className="text-xs sm:text-sm text-white">
                 A: No. Fire pillows are removable and intended for access points, but they must still provide the required fire rating and be properly compressed for effectiveness.
               </p>
             </div>
-            <div className="p-4 bg-card border border-border/20 rounded-lg">
-              <h3 className="font-medium text-foreground mb-2">Q: Does trunking itself provide fire stopping?</h3>
-              <p className="text-xs sm:text-sm text-foreground">
+            <div className="p-4 bg-transparent border border-white/10 rounded-lg">
+              <h3 className="font-medium text-white mb-2">Q: Does trunking itself provide fire stopping?</h3>
+              <p className="text-xs sm:text-sm text-white">
                 A: No. Unless it is specifically fire-rated trunking installed with approved sealing materials, additional fire stopping is required at barrier penetrations.
               </p>
             </div>
-            <div className="p-4 bg-card border border-border/20 rounded-lg">
-              <h3 className="font-medium text-foreground mb-2">Q: Who can install fire stopping systems?</h3>
-              <p className="text-xs sm:text-sm text-foreground">
+            <div className="p-4 bg-transparent border border-white/10 rounded-lg">
+              <h3 className="font-medium text-white mb-2">Q: Who can install fire stopping systems?</h3>
+              <p className="text-xs sm:text-sm text-white">
                 A: Installation should be carried out by competent persons with appropriate training and certification. Many manufacturers offer training schemes for installers.
               </p>
             </div>
@@ -754,21 +754,21 @@ export default function Module3Section6_3() {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
-          <p className="text-foreground/90">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+          <p className="text-white/90">
             Fire stopping and sealing penetrations is a critical safety requirement that maintains building fire compartmentation and protects escape routes. Proper material selection, professional installation, and ongoing maintenance ensure compliance with Building Regulations Part B and BS 7671 while protecting life and property. Only tested, certified fire-rated systems should be used, and any breach of fire stopping integrity must be remedied immediately.
           </p>
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quiz (8 Questions)</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quiz (8 Questions)</h2>
           <Quiz questions={quizQuestions} />
         </Card>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="../6-2">
               <ArrowLeft className="w-4 h-4 mr-2" />

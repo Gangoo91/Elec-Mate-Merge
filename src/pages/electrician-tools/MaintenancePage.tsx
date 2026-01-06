@@ -8,9 +8,9 @@ const MaintenancePage = () => {
   const fromAgentSelector = location.state?.fromAgentSelector;
 
   return (
-    <div className="min-h-screen bg-[#121212] pb-24">
+    <div className="min-h-screen bg-background pb-24">
       {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-[#121212]/95 backdrop-blur-sm border-b border-white/10">
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
         <div className="px-4 py-3">
           <button
             onClick={() => navigate(fromAgentSelector ? "/electrician/agent-selector" : "/electrician")}

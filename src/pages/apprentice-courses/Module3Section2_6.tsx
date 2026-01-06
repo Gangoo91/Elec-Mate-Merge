@@ -204,13 +204,13 @@ const Module3Section2_6: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -225,32 +225,32 @@ const Module3Section2_6: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Paperclip className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Paperclip className="w-6 h-6 text-white" />
             </div>
             <Badge
               variant="outline"
-              className="border-emerald-500/30 text-emerald-400"
+              className="border-elec-yellow/30 text-elec-yellow"
             >
               Section 3.2.6
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Fixings, Clips and Cable Ties
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Essential cable support components, fire-resistant requirements and best practices for secure electrical installations.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Introduction
           </h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Cable fixings: Essential for secure, compliant installations preventing cable damage.</li>
                 <li>Fire-resistant: BS 7671 18th Edition requires non-combustible fixings in escape routes.</li>
@@ -258,8 +258,8 @@ const Module3Section2_6: React.FC = () => {
                 <li>Best practice: Correct spacing, proper tensioning and material compatibility.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>
                   <strong>Spot:</strong> White plastic clips (T&E), metal cleats (SWA), cable ties (grouping).
@@ -276,11 +276,11 @@ const Module3Section2_6: React.FC = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
             Learning outcomes
           </h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Identify common types of cable fixings and supports for different cable types and applications.</li>
             <li>Select appropriate fixing methods for different environments including corrosive and outdoor conditions.</li>
             <li>Explain the fire-resistant support requirements introduced in BS 7671 18th Edition.</li>
@@ -290,18 +290,18 @@ const Module3Section2_6: React.FC = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Common Fixing Types */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Shield className="w-5 h-5" /> Common Fixing Types and Applications
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Cable Clips</p>
                   <div className="space-y-3">
                     <div>
@@ -325,7 +325,7 @@ const Module3Section2_6: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                   <p className="font-medium mb-2">Saddles and Cleats</p>
                   <div className="space-y-3">
                     <div>
@@ -351,7 +351,7 @@ const Module3Section2_6: React.FC = () => {
               </div>
 
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Cable Ties</p>
                   <div className="space-y-3">
                     <div>
@@ -375,7 +375,7 @@ const Module3Section2_6: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Containment Fixings</p>
                   <div className="space-y-3">
                     <div>
@@ -407,12 +407,12 @@ const Module3Section2_6: React.FC = () => {
 
           {/* What this means on site */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Target className="w-5 h-5" /> What this means on site
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium text-orange-200 mb-2">Fire-resistant support requirements (BS 7671 18th Edition)</p>
                 <ul className="list-disc pl-4 space-y-1 text-orange-200">
                   <li>All wiring systems in escape routes must use non-combustible fixings</li>
@@ -423,7 +423,7 @@ const Module3Section2_6: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="rounded-lg p-4 bg-card border border-cyan-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-cyan-400/30">
                 <p className="font-medium text-cyan-200 mb-2">Environmental selection criteria</p>
                 <ul className="list-disc pl-4 space-y-1 text-cyan-200">
                   <li>Indoor standard: Nylon or PVC suitable for most applications</li>
@@ -440,12 +440,12 @@ const Module3Section2_6: React.FC = () => {
 
           {/* Best Practices */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Settings className="w-5 h-5" /> Best Practices for Installation and Selection
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
                 <p className="font-medium text-emerald-200 mb-2">Selection and sizing guidelines</p>
                 <ul className="list-disc pl-4 space-y-1 text-emerald-200">
                   <li><strong>Load rating:</strong> Choose fixings rated for cable weight plus 50% safety margin</li>
@@ -486,12 +486,12 @@ const Module3Section2_6: React.FC = () => {
 
           {/* Common Mistakes */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" /> Common Mistakes to Avoid
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium text-red-200 mb-2">Installation errors</p>
                 <ul className="list-disc pl-4 space-y-1 text-red-200">
                   <li><strong>Over-tightening fixings:</strong> Compressing cable insulation causing potential failure points</li>
@@ -502,7 +502,7 @@ const Module3Section2_6: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="rounded-lg p-4 bg-card border border-amber-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
                 <p className="font-medium text-amber-200 mb-2">Compliance and safety oversights</p>
                 <ul className="list-disc pl-4 space-y-1 text-amber-200">
                   <li><strong>Fire regulation non-compliance:</strong> Using plastic-only fixings in escape routes</li>
@@ -519,12 +519,12 @@ const Module3Section2_6: React.FC = () => {
 
           {/* BS 7671 Context */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <CheckCircle2 className="w-5 h-5" /> BS 7671 and Standards Context
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium text-blue-200 mb-2">18th Edition fire-resistant requirements</p>
                 <ul className="list-disc pl-4 space-y-1 text-blue-200">
                   <li><strong>521.10.201:</strong> Cable supports in escape routes must be fire-resistant</li>
@@ -535,7 +535,7 @@ const Module3Section2_6: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="rounded-lg p-4 bg-card border border-green-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                 <p className="font-medium text-green-200 mb-2">Cable support spacing requirements</p>
                 <ul className="list-disc pl-4 space-y-1 text-green-200">
                   <li>Table 4A3: Support spacing for cables not in conduit or trunking</li>
@@ -546,7 +546,7 @@ const Module3Section2_6: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium text-purple-200 mb-2">Material and environmental standards</p>
                 <ul className="list-disc pl-4 space-y-1 text-purple-200">
                   <li>BS EN 61537: Cable management systems including support requirements</li>
@@ -561,11 +561,11 @@ const Module3Section2_6: React.FC = () => {
         </Card>
 
         {/* Real-world Scenario */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Building className="w-5 h-5" /> Real-world Scenario
           </h2>
-          <div className="rounded-lg p-3 sm:p-4 bg-card border border-slate-400/30">
+          <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30">
             <h3 className="font-medium text-slate-200 mb-2">Post-fire inspection compliance failure</h3>
             <p className="text-slate-200 text-sm mb-3">
               During a post-fire inspection of an apartment block, it was found that plastic-only cable fixings 
@@ -596,22 +596,22 @@ const Module3Section2_6: React.FC = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-l-4 border-l-emerald-500/50 pl-4">
-                <p className="font-medium text-foreground mb-1">Q: {faq.q}</p>
-                <p className="text-muted-foreground text-sm">A: {faq.a}</p>
+              <div key={index} className="border-l-4 border-l-elec-yellow/50 pl-4">
+                <p className="font-medium text-white mb-1">Q: {faq.q}</p>
+                <p className="text-white text-sm">A: {faq.a}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
-          <div className="space-y-3 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+          <div className="space-y-3 text-xs sm:text-sm text-white">
             <p>
               <strong>Cable fixings</strong> are essential components that ensure cables remain secure, compliant and safe throughout their service life.
             </p>
@@ -630,10 +630,10 @@ const Module3Section2_6: React.FC = () => {
         </Card>
 
         {/* Apprentice Do's and Don'ts */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Apprentice Do's and Don'ts</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Apprentice Do's and Don'ts</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
-            <div className="rounded-lg p-4 bg-card border border-green-400/30">
+            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
               <h3 className="font-medium text-green-200 mb-3">✓ DO</h3>
               <ul className="space-y-2 text-green-200">
                 <li>• Use non-combustible fixings in escape routes and fire-rated areas</li>
@@ -646,7 +646,7 @@ const Module3Section2_6: React.FC = () => {
                 <li>• Document materials used for compliance records</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <h3 className="font-medium text-red-200 mb-3">✗ DON'T</h3>
               <ul className="space-y-2 text-red-200">
                 <li>• Use plastic-only fixings in escape routes or fire areas</li>
@@ -663,10 +663,10 @@ const Module3Section2_6: React.FC = () => {
         </Card>
 
         {/* Pocket Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Pocket Card: Cable Fixing Quick Reference</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Card: Cable Fixing Quick Reference</h2>
           <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-xs">
-            <div className="rounded-lg p-3 bg-card border border-border/30">
+            <div className="rounded-lg p-3 border border-border/30">
               <h4 className="font-medium text-blue-200 mb-2">Standard Clips</h4>
               <ul className="space-y-1 text-blue-200">
                 <li>• T&E: Flat twin clips</li>
@@ -675,7 +675,7 @@ const Module3Section2_6: React.FC = () => {
                 <li>• Material: Match environment</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 bg-card border border-green-400/30">
+            <div className="rounded-lg p-3 border border-green-400/30">
               <h4 className="font-medium text-green-200 mb-2">Heavy Duty</h4>
               <ul className="space-y-1 text-green-200">
                 <li>• SWA: Cable cleats/saddles</li>
@@ -684,7 +684,7 @@ const Module3Section2_6: React.FC = () => {
                 <li>• Thermal expansion allowance</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 bg-card border border-border/30">
+            <div className="rounded-lg p-3 border border-border/30">
               <h4 className="font-medium text-purple-200 mb-2">Fire Areas</h4>
               <ul className="space-y-1 text-purple-200">
                 <li>• Non-combustible fixings only</li>
@@ -694,7 +694,7 @@ const Module3Section2_6: React.FC = () => {
               </ul>
             </div>
           </div>
-          <div className="mt-4 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30">
+          <div className="mt-4 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
             <p className="text-yellow-200 text-xs">
               <strong>Critical check:</strong> Fire areas need non-combustible fixings. Check environment for corrosion 
               resistance. Never over-tighten - damage to cable insulation creates safety hazards.
@@ -703,30 +703,30 @@ const Module3Section2_6: React.FC = () => {
         </Card>
 
         {/* Key References */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Key References</h2>
-          <div className="space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Key References</h2>
+          <div className="space-y-2 text-xs sm:text-sm text-white">
             <div className="flex justify-between items-center p-2 rounded bg-muted/10">
               <span>BS 7671:2018+A2:2022</span>
-              <span className="text-muted-foreground">IET Wiring Regulations (521.10.201-202)</span>
+              <span className="text-white">IET Wiring Regulations (521.10.201-202)</span>
             </div>
             <div className="flex justify-between items-center p-2 rounded bg-muted/10">
               <span>BS EN 61537:2006</span>
-              <span className="text-muted-foreground">Cable management systems</span>
+              <span className="text-white">Cable management systems</span>
             </div>
             <div className="flex justify-between items-center p-2 rounded bg-muted/10">
               <span>Building Regulations Part B</span>
-              <span className="text-muted-foreground">Fire safety requirements</span>
+              <span className="text-white">Fire safety requirements</span>
             </div>
             <div className="flex justify-between items-center p-2 rounded bg-muted/10">
               <span>BS EN 60529:1992</span>
-              <span className="text-muted-foreground">IP protection ratings</span>
+              <span className="text-white">IP protection ratings</span>
             </div>
           </div>
         </Card>
 
         {/* Quiz */}
-        <Card className="p-6 bg-card border-border/20">
+        <Card className="p-6 bg-transparent border-white/20">
           <Quiz title="Test Your Knowledge: Fixings, Clips and Cable Ties" questions={quizQuestions} />
         </Card>
       </main>

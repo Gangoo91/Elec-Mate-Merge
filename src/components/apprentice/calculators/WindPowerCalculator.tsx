@@ -1,9 +1,23 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { MobileSelectWrapper as MobileSelect } from "@/components/ui/mobile-select-wrapper";
+import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Wind, Info, BookOpen, ChevronDown, TrendingUp, Clock, PoundSterling, Leaf } from "lucide-react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { cn } from "@/lib/utils";
+import {
+  CalculatorCard,
+  CalculatorInputGrid,
+  CalculatorInput,
+  CalculatorSelect,
+  CalculatorActions,
+  CalculatorResult,
+  ResultValue,
+  ResultsGrid,
+  CALCULATOR_CONFIG,
+} from "@/components/calculators/shared";
 
 interface WindPowerResult {
   grossAEP: number;
@@ -38,6 +52,8 @@ interface WindPowerResult {
 }
 
 export function WindPowerCalculator() {
+  const config = CALCULATOR_CONFIG['renewable'];
+
   const [turbineModel, setTurbineModel] = useState('');
   const [hubHeight, setHubHeight] = useState('');
   const [averageWindSpeed, setAverageWindSpeed] = useState('');
@@ -50,27 +66,30 @@ export function WindPowerCalculator() {
   const [selfConsumptionRate, setSelfConsumptionRate] = useState('');
   const [result, setResult] = useState<WindPowerResult | null>(null);
 
+  const [showGuidance, setShowGuidance] = useState(false);
+  const [showCosts, setShowCosts] = useState(false);
+  const [showRegs, setShowRegs] = useState(false);
+
   const turbineModels = [
-    { value: '2.5kW', label: '2.5 kW Domestic (Cut-in: 3m/s, Rated: 12m/s)' },
-    { value: '5kW', label: '5 kW Small Commercial (Cut-in: 2.5m/s, Rated: 11m/s)' },
-    { value: '10kW', label: '10 kW Farm/Estate (Cut-in: 3m/s, Rated: 12m/s)' },
-    { value: '20kW', label: '20 kW Small Wind Farm (Cut-in: 2.5m/s, Rated: 11m/s)' },
-    { value: '50kW', label: '50 kW Commercial (Cut-in: 3m/s, Rated: 12m/s)' },
-    { value: 'custom', label: 'Custom Turbine' }
+    { value: '2.5kW', label: '2.5 kW Domestic' },
+    { value: '5kW', label: '5 kW Small Commercial' },
+    { value: '10kW', label: '10 kW Farm/Estate' },
+    { value: '20kW', label: '20 kW Small Wind Farm' },
+    { value: '50kW', label: '50 kW Commercial' },
   ];
 
   const hubHeights = [
-    { value: '10', label: '10m (Domestic/Small)' },
-    { value: '15', label: '15m (Standard Domestic)' },
+    { value: '10', label: '10m (Domestic)' },
+    { value: '15', label: '15m (Standard)' },
     { value: '20', label: '20m (Small Commercial)' },
-    { value: '25', label: '25m (Farm Installation)' },
+    { value: '25', label: '25m (Farm)' },
     { value: '30', label: '30m (Commercial)' },
     { value: '40', label: '40m (Large Commercial)' },
     { value: '50', label: '50m (Wind Farm)' }
   ];
 
   const windClasses = [
-    { value: '1', label: 'Class 1 (Poor - <14.3 mph annual average)' },
+    { value: '1', label: 'Class 1 (Poor - <14.3 mph)' },
     { value: '2', label: 'Class 2 (Marginal - 14.3-15.7 mph)' },
     { value: '3', label: 'Class 3 (Fair - 15.7-16.8 mph)' },
     { value: '4', label: 'Class 4 (Good - 16.8-17.9 mph)' },
@@ -81,10 +100,10 @@ export function WindPowerCalculator() {
 
   const terrainTypes = [
     { value: 'smooth', label: 'Smooth (Water, Ice, Flat Desert)' },
-    { value: 'open', label: 'Open Country (Grassland, Few Obstacles)' },
-    { value: 'rough', label: 'Rough Open (Farmland, Some Buildings)' },
-    { value: 'wooded', label: 'Wooded Country (Many Trees, Buildings)' },
-    { value: 'urban', label: 'Urban/Suburban (Cities, Industrial Areas)' }
+    { value: 'open', label: 'Open Country (Grassland)' },
+    { value: 'rough', label: 'Rough Open (Farmland)' },
+    { value: 'wooded', label: 'Wooded Country' },
+    { value: 'urban', label: 'Urban/Suburban' }
   ];
 
   const altitudeBands = [
@@ -96,16 +115,16 @@ export function WindPowerCalculator() {
   ];
 
   const lossesPresets = [
-    { value: 'low', label: 'Low Losses (5%) - New Equipment, Good Maintenance' },
-    { value: 'medium', label: 'Medium Losses (10%) - Standard Installation' },
-    { value: 'high', label: 'High Losses (15%) - Older Equipment, Harsh Environment' }
+    { value: 'low', label: 'Low Losses (5%)' },
+    { value: 'medium', label: 'Medium Losses (10%)' },
+    { value: 'high', label: 'High Losses (15%)' }
   ];
 
   const electricityPrices = [
-    { value: '0.20', label: '£0.20/kWh (Economy Rate)' },
-    { value: '0.25', label: '£0.25/kWh (Standard Rate)' },
-    { value: '0.30', label: '£0.30/kWh (Peak Rate)' },
-    { value: '0.35', label: '£0.35/kWh (Premium Rate)' }
+    { value: '0.20', label: '£0.20/kWh (Economy)' },
+    { value: '0.25', label: '£0.25/kWh (Standard)' },
+    { value: '0.30', label: '£0.30/kWh (Peak)' },
+    { value: '0.35', label: '£0.35/kWh (Premium)' }
   ];
 
   const annualConsumptions = [
@@ -119,9 +138,9 @@ export function WindPowerCalculator() {
 
   const selfConsumptionRates = [
     { value: '30', label: '30% (Standard household)' },
-    { value: '50', label: '50% (Home office/High daytime use)' },
-    { value: '70', label: '70% (Battery storage/EV charging)' },
-    { value: '90', label: '90% (Commercial/Industrial)' }
+    { value: '50', label: '50% (Home office)' },
+    { value: '70', label: '70% (Battery storage/EV)' },
+    { value: '90', label: '90% (Commercial)' }
   ];
 
   const getTurbineRating = () => {
@@ -130,39 +149,34 @@ export function WindPowerCalculator() {
   };
 
   const calculateCostEstimate = (rating: number, height: number) => {
-    // 2025 UK Wind Turbine Cost Estimates
     let baseCostPerKw = 0;
     let category = "";
-    
-    // Cost per kW based on turbine size (economies of scale)
+
     if (rating <= 5) {
-      baseCostPerKw = 4500; // Small domestic turbines
+      baseCostPerKw = 4500;
       category = "Small Domestic System";
     } else if (rating <= 15) {
-      baseCostPerKw = 3500; // Medium domestic/small commercial
+      baseCostPerKw = 3500;
       category = "Medium Domestic System";
     } else if (rating <= 30) {
-      baseCostPerKw = 2800; // Small commercial
+      baseCostPerKw = 2800;
       category = "Small Commercial System";
     } else {
-      baseCostPerKw = 2200; // Large commercial
+      baseCostPerKw = 2200;
       category = "Commercial System";
     }
 
-    // Component breakdown (2025 costs)
-    const turbine = rating * baseCostPerKw * 0.45; // 45% turbine cost
-    const tower = Math.max(15000, height * 800); // Minimum £15k or £800/m
-    const foundation = Math.max(8000, rating * 600); // Minimum £8k or £600/kW
-    const electrical = 5000 + (rating * 400); // Base £5k + £400/kW
-    const planning = rating <= 10 ? 3000 : 8000; // Planning costs
-    const installation = rating * 800; // Installation labour
-    const commissioning = Math.max(2000, rating * 150); // Commissioning
-    
-    const subtotal = turbine + tower + foundation + electrical + planning + installation + commissioning;
-    const vat = subtotal * 0.20; // 20% VAT on wind installations
-    const totalCost = subtotal + vat;
+    const turbine = rating * baseCostPerKw * 0.45;
+    const tower = Math.max(15000, height * 800);
+    const foundation = Math.max(8000, rating * 600);
+    const electrical = 5000 + (rating * 400);
+    const planning = rating <= 10 ? 3000 : 8000;
+    const installation = rating * 800;
+    const commissioning = Math.max(2000, rating * 150);
 
-    // Annual maintenance (2-4% of CAPEX)
+    const subtotal = turbine + tower + foundation + electrical + planning + installation + commissioning;
+    const vat = subtotal * 0.20;
+    const totalCost = subtotal + vat;
     const annualMaintenance = totalCost * 0.03;
 
     return {
@@ -187,7 +201,7 @@ export function WindPowerCalculator() {
     const rating = getTurbineRating();
     const height = parseFloat(hubHeight);
     const windSpeedMph = parseFloat(averageWindSpeed);
-    const windSpeed = windSpeedMph * 0.44704; // Convert MPH to m/s for calculations
+    const windSpeed = windSpeedMph * 0.44704;
     const price = parseFloat(electricityPrice);
     const windClassNum = parseInt(windClass);
     const altitudeM = parseFloat(altitude);
@@ -198,13 +212,9 @@ export function WindPowerCalculator() {
       return;
     }
 
-    // Enhanced physics calculations
-    
-    // 1. Air density correction for altitude (affects power output)
-    const airDensity = 1.225 * Math.exp(-altitudeM / 8400); // Standard atmosphere model
+    const airDensity = 1.225 * Math.exp(-altitudeM / 8400);
     const densityFactor = airDensity / 1.225;
 
-    // 2. Terrain roughness factors for wind shear
     const roughnessFactors = {
       smooth: 0.10,
       open: 0.15,
@@ -214,60 +224,48 @@ export function WindPowerCalculator() {
     };
     const alpha = roughnessFactors[terrain as keyof typeof roughnessFactors] || 0.15;
 
-    // 3. Height-adjusted wind speed using power law
-    const referenceHeight = 10; // Standard measurement height
+    const referenceHeight = 10;
     const windSpeedAtHub = windSpeed * Math.pow(height / referenceHeight, alpha);
 
-    // 4. Weibull distribution parameters for wind resource
-    const weibullK = 2.0; // Shape parameter (typical for wind)
-    const weibullC = windSpeedAtHub / 0.887; // Scale parameter
-    
-    // 5. Power curve integration using simplified turbine characteristics
-    const cutIn = 3.0; // Cut-in wind speed
-    const rated = turbineModel.includes('2.5') ? 12 : turbineModel.includes('5') ? 11 : 12;
-    const cutOut = 25; // Cut-out wind speed
+    const weibullK = 2.0;
+    const weibullC = windSpeedAtHub / 0.887;
 
-    // 6. Capacity factor calculation using power curve
+    const cutIn = 3.0;
+    const rated = turbineModel.includes('2.5') ? 12 : turbineModel.includes('5') ? 11 : 12;
+    const cutOut = 25;
+
     let capacityFactor = 0;
     for (let v = 0; v <= 30; v += 0.5) {
-      const probability = (weibullK / weibullC) * Math.pow(v / weibullC, weibullK - 1) * 
+      const probability = (weibullK / weibullC) * Math.pow(v / weibullC, weibullK - 1) *
                          Math.exp(-Math.pow(v / weibullC, weibullK)) * 0.5;
-      
+
       let powerRatio = 0;
       if (v >= cutIn && v < rated) {
         powerRatio = Math.pow((v - cutIn) / (rated - cutIn), 3);
       } else if (v >= rated && v < cutOut) {
         powerRatio = 1.0;
       }
-      
+
       capacityFactor += probability * powerRatio;
     }
 
-    // 7. Apply losses
     const lossFactors = { low: 0.95, medium: 0.90, high: 0.85 };
     const lossFactor = lossFactors[losses as keyof typeof lossFactors] || 0.90;
 
-    // 8. Calculate energy outputs
-    const grossAEP = rating * capacityFactor * 8760 * densityFactor; // Gross Annual Energy Production
-    const netAEP = grossAEP * lossFactor; // Net after losses
-    
+    const grossAEP = rating * capacityFactor * 8760 * densityFactor;
+    const netAEP = grossAEP * lossFactor;
+
     const averagePower = netAEP / 8760;
     const dailyGeneration = netAEP / 365;
     const monthlyGeneration = netAEP / 12;
-    
-    // 9. Financial calculations
+
     const selfConsumption = Math.min(netAEP, consumption * selfConsRate);
     const gridExport = netAEP - selfConsumption;
-    const exportPrice = price * 0.75; // Assume 75% of import price for export
+    const exportPrice = price * 0.75;
     const yearlyValue = (selfConsumption * price) + (gridExport * exportPrice);
-    
-    // 10. Get realistic cost estimate
+
     const costEstimate = calculateCostEstimate(rating, height);
-    
-    // 11. Environmental impact
-    const co2Savings = netAEP * 0.193; // kg CO2 per kWh (UK grid factor 2024)
-    
-    // 12. Payback calculation using realistic costs
+    const co2Savings = netAEP * 0.193;
     const paybackPeriod = costEstimate.totalCost / yearlyValue;
 
     setResult({
@@ -302,396 +300,303 @@ export function WindPowerCalculator() {
     setResult(null);
   };
 
+  const hasValidInputs = () => turbineModel && hubHeight && averageWindSpeed && windClass && terrain && altitude && losses && electricityPrice && annualConsumption && selfConsumptionRate;
+
+  const getPaybackColor = (years: number) => years <= 10 ? 'text-green-400' : years <= 15 ? 'text-amber-400' : 'text-red-400';
+  const getCapacityColor = (cf: number) => cf >= 30 ? 'text-green-400' : cf >= 20 ? 'text-amber-400' : 'text-red-400';
+
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>Wind Power Calculator</CardTitle>
-        <CardDescription>
-          Calculate wind turbine power generation and energy output
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-white">Turbine Specification</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <MobileSelect
+    <div className="space-y-4">
+      <CalculatorCard
+        category="renewable"
+        title="Wind Power Calculator"
+        description="Design and analyse wind turbine installations"
+        badge="G98/G99"
+      >
+        {/* Turbine Specification */}
+        <div className="space-y-3">
+          <p className="text-sm font-medium text-white/80">Turbine Specification</p>
+          <CalculatorInputGrid columns={2}>
+            <CalculatorSelect
               label="Turbine Model"
-              placeholder="Select turbine type"
               value={turbineModel}
-              onValueChange={setTurbineModel}
+              onChange={setTurbineModel}
               options={turbineModels}
+              placeholder="Select turbine"
             />
-            
-            <MobileSelect
+            <CalculatorSelect
               label="Hub Height"
-              placeholder="Select hub height"
               value={hubHeight}
-              onValueChange={setHubHeight}
+              onChange={setHubHeight}
               options={hubHeights}
+              placeholder="Select height"
             />
-          </div>
+          </CalculatorInputGrid>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-white">Site Conditions</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <MobileInput
+        {/* Site Conditions */}
+        <div className="space-y-3">
+          <p className="text-sm font-medium text-white/80">Site Conditions</p>
+          <CalculatorInputGrid columns={2}>
+            <CalculatorInput
+              label="Wind Speed (at 10m)"
+              unit="mph"
               type="text"
               inputMode="decimal"
-              label="Average Wind Speed (at 10m)"
-              placeholder="Enter wind speed"
               value={averageWindSpeed}
-              onChange={(e) => setAverageWindSpeed(e.target.value)}
-              unit="mph"
-              step="0.1"
+              onChange={setAverageWindSpeed}
+              placeholder="e.g., 14"
             />
-            
-            <MobileSelect
-              label="Wind Resource Class"
-              placeholder="Select wind class"
+            <CalculatorSelect
+              label="Wind Class"
               value={windClass}
-              onValueChange={setWindClass}
+              onChange={setWindClass}
               options={windClasses}
+              placeholder="Select class"
             />
-            
-            <MobileSelect
+            <CalculatorSelect
               label="Terrain Type"
-              placeholder="Select terrain"
               value={terrain}
-              onValueChange={setTerrain}
+              onChange={setTerrain}
               options={terrainTypes}
+              placeholder="Select terrain"
             />
-            
-            <MobileSelect
+            <CalculatorSelect
               label="Site Altitude"
-              placeholder="Select altitude band"
               value={altitude}
-              onValueChange={setAltitude}
+              onChange={setAltitude}
               options={altitudeBands}
+              placeholder="Select altitude"
             />
-            
-            <MobileSelect
-              label="System Losses"
-              placeholder="Select loss category"
-              value={losses}
-              onValueChange={setLosses}
-              options={lossesPresets}
-            />
-          </div>
+          </CalculatorInputGrid>
+          <CalculatorSelect
+            label="System Losses"
+            value={losses}
+            onChange={setLosses}
+            options={lossesPresets}
+            placeholder="Select losses"
+          />
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-white">Economic Parameters</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <MobileSelect
-              label="Electricity Import Price"
-              placeholder="Select electricity price"
+        {/* Economic Parameters */}
+        <div className="space-y-3">
+          <p className="text-sm font-medium text-white/80">Economic Parameters</p>
+          <CalculatorInputGrid columns={2}>
+            <CalculatorSelect
+              label="Electricity Price"
               value={electricityPrice}
-              onValueChange={setElectricityPrice}
+              onChange={setElectricityPrice}
               options={electricityPrices}
+              placeholder="Select price"
             />
-            
-            <MobileSelect
-              label="Annual Electricity Consumption"
-              placeholder="Select consumption"
+            <CalculatorSelect
+              label="Annual Consumption"
               value={annualConsumption}
-              onValueChange={setAnnualConsumption}
+              onChange={setAnnualConsumption}
               options={annualConsumptions}
+              placeholder="Select usage"
             />
-            
-            <MobileSelect
-              label="Self-Consumption Rate"
-              placeholder="Select consumption rate"
-              value={selfConsumptionRate}
-              onValueChange={setSelfConsumptionRate}
-              options={selfConsumptionRates}
-            />
+          </CalculatorInputGrid>
+          <CalculatorSelect
+            label="Self-Consumption Rate"
+            value={selfConsumptionRate}
+            onChange={setSelfConsumptionRate}
+            options={selfConsumptionRates}
+            placeholder="Select rate"
+          />
+        </div>
+
+        <CalculatorActions
+          category="renewable"
+          onCalculate={calculateWindPower}
+          onReset={reset}
+          isDisabled={!hasValidInputs()}
+          calculateLabel="Calculate Wind Power"
+        />
+      </CalculatorCard>
+
+      {result && (
+        <div className="space-y-4 animate-fade-in">
+          {/* Main Results */}
+          <CalculatorResult category="renewable">
+            <div className="flex items-center justify-between pb-3 border-b border-white/10">
+              <span className="text-sm text-white/60">Wind Power Analysis</span>
+              <Badge variant="outline" className={cn(
+                result.capacityFactor >= 25 ? "text-green-400 border-green-400/50" : "text-amber-400 border-amber-400/50"
+              )}>
+                {result.capacityFactor >= 30 ? "Excellent Site" : result.capacityFactor >= 20 ? "Good Site" : "Marginal Site"}
+              </Badge>
+            </div>
+
+            <div className="text-center py-4">
+              <p className="text-sm text-white/60 mb-1">Net Annual Energy</p>
+              <div className="text-4xl font-bold bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}>
+                {result.netAEP.toLocaleString(undefined, { maximumFractionDigits: 0 })} kWh
+              </div>
+            </div>
+
+            <ResultsGrid columns={2}>
+              <ResultValue label="Wind at Hub" value={(result.windSpeedAtHub * 2.23694).toFixed(1)} unit="mph" category="renewable" size="sm" />
+              <ResultValue label="Capacity Factor" value={result.capacityFactor.toFixed(1)} unit="%" category="renewable" size="sm" />
+              <ResultValue label="Avg Power" value={result.averagePower.toFixed(2)} unit="kW" category="renewable" size="sm" />
+              <ResultValue label="Daily Output" value={result.dailyGeneration.toFixed(0)} unit="kWh" category="renewable" size="sm" />
+            </ResultsGrid>
+
+            <div className="grid grid-cols-2 gap-3 pt-4 mt-4 border-t border-white/10">
+              <div className="text-center p-3 rounded-lg bg-white/5">
+                <Clock className="h-4 w-4 mx-auto mb-1 text-white/60" />
+                <p className="text-xs text-white/60">Payback</p>
+                <p className={cn("text-lg font-bold", getPaybackColor(result.paybackPeriod))}>
+                  {result.paybackPeriod.toFixed(1)} yrs
+                </p>
+              </div>
+              <div className="text-center p-3 rounded-lg bg-white/5">
+                <PoundSterling className="h-4 w-4 mx-auto mb-1 text-white/60" />
+                <p className="text-xs text-white/60">Annual Value</p>
+                <p className="text-lg font-bold text-green-400">
+                  £{result.yearlyValue.toFixed(0)}
+                </p>
+              </div>
+            </div>
+          </CalculatorResult>
+
+          {/* Financial Summary */}
+          <CalculatorResult category="renewable">
+            <div className="flex items-center gap-2 pb-3 border-b border-white/10">
+              <TrendingUp className="h-4 w-4 text-green-400" />
+              <span className="text-sm font-medium text-white">Financial Summary</span>
+            </div>
+            <ResultsGrid columns={2}>
+              <ResultValue label="Self-Consumed" value={result.selfConsumption.toLocaleString(undefined, { maximumFractionDigits: 0 })} unit="kWh" category="renewable" size="sm" />
+              <ResultValue label="Grid Export" value={result.gridExport.toLocaleString(undefined, { maximumFractionDigits: 0 })} unit="kWh" category="renewable" size="sm" />
+              <ResultValue label="System Cost" value={`£${(result.costEstimate.totalCost / 1000).toFixed(0)}k`} category="renewable" size="sm" />
+              <ResultValue label="Cost/kW" value={`£${result.costEstimate.costPerKw.toLocaleString()}`} category="renewable" size="sm" />
+            </ResultsGrid>
+          </CalculatorResult>
+
+          {/* Environmental Impact */}
+          <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/30">
+            <div className="flex items-center gap-2 mb-2">
+              <Leaf className="h-4 w-4 text-green-400" />
+              <p className="text-sm font-medium text-green-300">Environmental Impact</p>
+            </div>
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              <div>
+                <p className="text-green-200/80">CO₂ Savings</p>
+                <p className="font-semibold text-green-300">{result.co2Savings.toLocaleString(undefined, { maximumFractionDigits: 0 })} kg/yr</p>
+              </div>
+              <div>
+                <p className="text-green-200/80">Equivalent Trees</p>
+                <p className="font-semibold text-green-300">{(result.co2Savings / 21.8).toFixed(0)} trees/yr</p>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div className="flex flex-col sm:flex-row gap-2">
-          <MobileButton 
-            onClick={calculateWindPower} 
-            variant="elec"
-            size="wide"
-            className="sm:flex-1"
-          >
-            Calculate Wind Power
-          </MobileButton>
-          <MobileButton 
-            onClick={reset} 
-            variant="outline" 
-            size="default"
-            className="sm:w-auto"
-          >
-            Reset
-          </MobileButton>
-        </div>
-
-        {result && (
-          <div className="space-y-6">
-            {/* Technical Performance */}
-            <div className="p-6 bg-elec-dark/20 rounded-lg border border-elec-yellow/20">
-              <h3 className="text-xl font-semibold mb-6 text-elec-yellow flex items-center gap-2">
-                <span className="w-2 h-2 bg-elec-yellow rounded-full"></span>
-                Technical Performance
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div className="bg-background/50 p-4 rounded-lg border border-border/20">
-                  <div className="text-sm text-muted-foreground mb-1">Wind Speed at Hub Height</div>
-                  <div className="text-lg font-semibold text-white">
-                    {(result.windSpeedAtHub * 2.23694).toFixed(1)} mph
-                  </div>
-                  <div className="text-xs text-muted-foreground">({result.windSpeedAtHub.toFixed(1)} m/s)</div>
+          {/* Cost Breakdown Collapsible */}
+          <Collapsible open={showCosts} onOpenChange={setShowCosts}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#22c55e15' }}>
+              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                <div className="flex items-center gap-3">
+                  <PoundSterling className="h-4 w-4 text-green-400" />
+                  <span className="text-sm sm:text-base font-medium text-green-300">2025 Installation Cost Breakdown</span>
                 </div>
-                
-                <div className="bg-background/50 p-4 rounded-lg border border-border/20">
-                  <div className="text-sm text-muted-foreground mb-1">Capacity Factor</div>
-                  <div className="text-lg font-semibold text-white">{result.capacityFactor.toFixed(1)}%</div>
-                  <div className="text-xs text-muted-foreground">
-                    {result.capacityFactor < 20 ? "Poor" : result.capacityFactor < 30 ? "Moderate" : result.capacityFactor < 40 ? "Good" : "Excellent"}
-                  </div>
-                </div>
-                
-                <div className="bg-background/50 p-4 rounded-lg border border-border/20">
-                  <div className="text-sm text-muted-foreground mb-1">Average Power Output</div>
-                  <div className="text-lg font-semibold text-white">{result.averagePower.toFixed(2)} kW</div>
-                  <div className="text-xs text-muted-foreground">Continuous average</div>
-                </div>
-                
-                <div className="bg-background/50 p-4 rounded-lg border border-border/20">
-                  <div className="text-sm text-muted-foreground mb-1">Gross AEP (P50)</div>
-                  <div className="text-lg font-semibold text-white">{result.grossAEP.toLocaleString()} kWh/year</div>
-                  <div className="text-xs text-muted-foreground">Before losses</div>
-                </div>
-                
-                <div className="bg-background/50 p-4 rounded-lg border border-border/20">
-                  <div className="text-sm text-muted-foreground mb-1">Net AEP</div>
-                  <div className="text-lg font-semibold text-white">{result.netAEP.toLocaleString()} kWh/year</div>
-                  <div className="text-xs text-muted-foreground">After losses</div>
-                </div>
-                
-                <div className="bg-background/50 p-4 rounded-lg border border-border/20">
-                  <div className="text-sm text-muted-foreground mb-1">Daily Average</div>
-                  <div className="text-lg font-semibold text-white">{result.dailyGeneration.toFixed(1)} kWh</div>
-                  <div className="text-xs text-muted-foreground">Per day</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Economic Analysis */}
-            <div className="p-6 bg-elec-dark/20 rounded-lg border border-elec-yellow/20">
-              <h3 className="text-xl font-semibold mb-6 text-elec-yellow flex items-center gap-2">
-                <span className="w-2 h-2 bg-green-400 rounded-full"></span>
-                Economic Analysis
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="bg-background/50 p-4 rounded-lg border border-border/20">
-                  <div className="text-sm text-muted-foreground mb-1">Self-Consumed Energy</div>
-                  <div className="text-lg font-semibold text-white">{result.selfConsumption.toLocaleString()} kWh/year</div>
-                  <div className="text-xs text-green-400">Maximum value</div>
-                </div>
-                
-                <div className="bg-background/50 p-4 rounded-lg border border-border/20">
-                  <div className="text-sm text-muted-foreground mb-1">Grid Export</div>
-                  <div className="text-lg font-semibold text-white">{result.gridExport.toLocaleString()} kWh/year</div>
-                  <div className="text-xs text-muted-foreground">To grid</div>
-                </div>
-                
-                <div className="bg-background/50 p-4 rounded-lg border border-border/20">
-                  <div className="text-sm text-muted-foreground mb-1">Annual Savings</div>
-                  <div className="text-lg font-semibold text-green-400">£{result.yearlyValue.toLocaleString()}</div>
-                  <div className="text-xs text-muted-foreground">Per year</div>
-                </div>
-                
-                <div className="bg-background/50 p-4 rounded-lg border border-border/20">
-                  <div className="text-sm text-muted-foreground mb-1">Payback Period</div>
-                  <div className="text-lg font-semibold text-white">{result.paybackPeriod.toFixed(1)} years</div>
-                  <div className="text-xs text-muted-foreground">
-                    {result.paybackPeriod > 15 ? "Poor ROI" : result.paybackPeriod > 10 ? "Moderate ROI" : "Good ROI"}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* 2025 Cost Estimate Section */}
-            <div className="p-6 bg-elec-dark/20 rounded-lg border border-elec-yellow/20">
-              <h3 className="text-xl font-semibold mb-6 text-elec-yellow flex items-center gap-2">
-                <span className="w-2 h-2 bg-yellow-400 rounded-full"></span>
-                2025 Installation Cost Estimate
-              </h3>
-              
-              {/* Mobile-First Stacked Layout */}
-              <div className="space-y-4 mb-6">
-                <div className="text-center">
-                  <p className="text-3xl font-bold text-elec-yellow mb-1">£{result.costEstimate.totalCost.toLocaleString()}</p>
-                  <p className="text-base text-white font-medium">Total System Cost</p>
+                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showCosts && "rotate-180")} />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="p-4 pt-0 space-y-3">
+                <div className="text-center pb-3 border-b border-white/10">
+                  <p className="text-2xl font-bold text-green-400">£{result.costEstimate.totalCost.toLocaleString()}</p>
                   <p className="text-sm text-white/60">{result.costEstimate.category}</p>
                 </div>
-                
-                <div className="text-center pt-2">
-                  <p className="text-2xl font-bold text-yellow-400 mb-1">£{result.costEstimate.costPerKw.toLocaleString()}</p>
-                  <p className="text-base text-white font-medium">Cost per kW</p>
-                  <p className="text-sm text-white/60">Including VAT & installation</p>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between"><span className="text-white/70">Turbine</span><span className="text-white">£{result.costEstimate.breakdown.turbine.toLocaleString()}</span></div>
+                  <div className="flex justify-between"><span className="text-white/70">Tower</span><span className="text-white">£{result.costEstimate.breakdown.tower.toLocaleString()}</span></div>
+                  <div className="flex justify-between"><span className="text-white/70">Foundation</span><span className="text-white">£{result.costEstimate.breakdown.foundation.toLocaleString()}</span></div>
+                  <div className="flex justify-between"><span className="text-white/70">Electrical</span><span className="text-white">£{result.costEstimate.breakdown.electrical.toLocaleString()}</span></div>
+                  <div className="flex justify-between"><span className="text-white/70">Planning</span><span className="text-white">£{result.costEstimate.breakdown.planning.toLocaleString()}</span></div>
+                  <div className="flex justify-between"><span className="text-white/70">Installation</span><span className="text-white">£{result.costEstimate.breakdown.installation.toLocaleString()}</span></div>
+                  <div className="flex justify-between"><span className="text-white/70">Commissioning</span><span className="text-white">£{result.costEstimate.breakdown.commissioning.toLocaleString()}</span></div>
+                  <div className="flex justify-between pt-2 border-t border-white/10"><span className="text-white/70">VAT (20%)</span><span className="text-green-400 font-semibold">£{result.costEstimate.breakdown.vat.toLocaleString()}</span></div>
+                  <div className="flex justify-between"><span className="text-white/70">Annual Maintenance</span><span className="text-amber-400">£{result.costEstimate.annualMaintenance.toLocaleString()}/yr</span></div>
                 </div>
-              </div>
-
-              <div className="space-y-3">
-                <p className="text-base font-semibold text-white mb-3">Cost Breakdown:</p>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center py-1">
-                    <span className="text-white/80">Turbine:</span>
-                    <span className="text-white font-semibold">£{result.costEstimate.breakdown.turbine.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-1">
-                    <span className="text-white/80">Tower:</span>
-                    <span className="text-white font-semibold">£{result.costEstimate.breakdown.tower.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-1">
-                    <span className="text-white/80">Foundation:</span>
-                    <span className="text-white font-semibold">£{result.costEstimate.breakdown.foundation.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-1">
-                    <span className="text-white/80">Electrical:</span>
-                    <span className="text-white font-semibold">£{result.costEstimate.breakdown.electrical.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-1">
-                    <span className="text-white/80">Planning:</span>
-                    <span className="text-white font-semibold">£{result.costEstimate.breakdown.planning.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-1">
-                    <span className="text-white/80">Installation:</span>
-                    <span className="text-white font-semibold">£{result.costEstimate.breakdown.installation.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-1">
-                    <span className="text-white/80">Commissioning:</span>
-                    <span className="text-white font-semibold">£{result.costEstimate.breakdown.commissioning.toLocaleString()}</span>
-                  </div>
-                </div>
-                <div className="flex justify-between items-center pt-3 mt-3 border-t border-elec-yellow/20">
-                  <span className="text-white font-medium">VAT (20%):</span>
-                  <span className="text-elec-yellow font-bold text-lg">£{result.costEstimate.breakdown.vat.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center pt-2">
-                  <span className="text-white/80">Annual Maintenance:</span>
-                  <span className="text-yellow-400 font-semibold">£{result.costEstimate.annualMaintenance.toLocaleString()}</span>
-                </div>
-              </div>
+              </CollapsibleContent>
             </div>
+          </Collapsible>
 
-            {/* Environmental Impact */}
-            <div className="p-6 bg-elec-dark/20 rounded-lg border border-elec-yellow/20">
-              <h3 className="text-xl font-semibold mb-6 text-elec-yellow flex items-center gap-2">
-                <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                Environmental Impact
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="bg-background/50 p-4 rounded-lg border border-border/20">
-                  <div className="text-sm text-muted-foreground mb-1">Annual CO₂ Savings</div>
-                  <div className="text-lg font-semibold text-green-400">{result.co2Savings.toLocaleString()} kg CO₂</div>
-                  <div className="text-xs text-muted-foreground">Per year</div>
+          {/* What This Means */}
+          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
+              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                <div className="flex items-center gap-3">
+                  <Info className="h-4 w-4 text-blue-400" />
+                  <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
                 </div>
-                
-                <div className="bg-background/50 p-4 rounded-lg border border-border/20">
-                  <div className="text-sm text-muted-foreground mb-1">Equivalent Trees Planted</div>
-                  <div className="text-lg font-semibold text-green-400">{(result.co2Savings / 21.8).toFixed(0)} trees/year</div>
-                  <div className="text-xs text-muted-foreground">Carbon offset equivalent</div>
-                </div>
-              </div>
-            </div>
-
-            {/* What This Means */}
-            <div className="p-6 bg-blue-900/20 rounded-lg border border-blue-400/20">
-              <h3 className="text-xl font-semibold mb-6 text-blue-400 flex items-center gap-2">
-                <span className="w-2 h-2 bg-blue-400 rounded-full"></span>
-                What This Means
-              </h3>
-              <div className="space-y-4">
-                <div className="bg-background/30 p-4 rounded-lg border border-border/10">
-                  <h4 className="font-semibold text-white mb-2">Capacity Factor ({result.capacityFactor.toFixed(1)}%)</h4>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {result.capacityFactor < 20 ? "Poor wind resource - turbine will run at low efficiency. Consider alternative location or technology." :
-                    result.capacityFactor < 30 ? "Moderate wind resource - viable but not optimal. Ensure proper feasibility study." :
-                    result.capacityFactor < 40 ? "Good wind resource - commercially viable installation with reasonable returns." :
-                    "Excellent wind resource - highly profitable installation with strong returns."}
+                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showGuidance && "rotate-180")} />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="p-4 pt-0 space-y-3">
+                <div className="p-3 rounded-lg bg-white/5">
+                  <p className="text-sm font-medium text-blue-300 mb-1">Capacity Factor ({result.capacityFactor.toFixed(1)}%)</p>
+                  <p className="text-sm text-blue-200/80">
+                    {result.capacityFactor < 20 ? "Poor wind resource - turbine will run at low efficiency. Consider alternative location." :
+                    result.capacityFactor < 30 ? "Moderate wind resource - viable but ensure proper feasibility study." :
+                    result.capacityFactor < 40 ? "Good wind resource - commercially viable with reasonable returns." :
+                    "Excellent wind resource - highly profitable installation."}
                   </p>
                 </div>
-                
-                <div className="bg-background/30 p-4 rounded-lg border border-border/10">
-                  <h4 className="font-semibold text-white mb-2">Wind Speed Enhancement</h4>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    Your {hubHeight}m hub height increases wind speed from {averageWindSpeed}mph to {(result.windSpeedAtHub * 2.23694).toFixed(1)}mph, 
-                    demonstrating the importance of turbine height for energy capture.
+                <div className="p-3 rounded-lg bg-white/5">
+                  <p className="text-sm font-medium text-blue-300 mb-1">Wind Speed Enhancement</p>
+                  <p className="text-sm text-blue-200/80">
+                    Your {hubHeight}m hub height increases wind speed from {averageWindSpeed}mph to {(result.windSpeedAtHub * 2.23694).toFixed(1)}mph, demonstrating the importance of turbine height.
                   </p>
                 </div>
-                
-                <div className="bg-background/30 p-4 rounded-lg border border-border/10">
-                  <h4 className="font-semibold text-white mb-2">Financial Viability</h4>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    With a {result.paybackPeriod.toFixed(1)}-year payback period, this installation {
-                      result.paybackPeriod > 15 ? "may not be financially viable without grants or subsidies." :
-                      result.paybackPeriod > 10 ? "shows moderate returns - consider incentives and long-term electricity price trends." :
-                      "shows strong financial returns over the turbine's 20-25 year lifespan."
-                    }
+                <div className="p-3 rounded-lg bg-white/5">
+                  <p className="text-sm font-medium text-blue-300 mb-1">Financial Viability</p>
+                  <p className="text-sm text-blue-200/80">
+                    {result.paybackPeriod > 15 ? "May not be financially viable without grants or subsidies." :
+                    result.paybackPeriod > 10 ? "Moderate returns - consider incentives and electricity price trends." :
+                    "Strong financial returns over the turbine's 20-25 year lifespan."}
                   </p>
                 </div>
-              </div>
+              </CollapsibleContent>
             </div>
+          </Collapsible>
 
-            {/* BS 7671 & Planning Requirements */}
-            <div className="p-6 bg-amber-900/20 rounded-lg border border-amber-400/20">
-              <h3 className="text-xl font-semibold mb-6 text-amber-400 flex items-center gap-2">
-                <span className="w-2 h-2 bg-amber-400 rounded-full"></span>
-                BS 7671 & Planning Considerations
-              </h3>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="bg-background/30 p-4 rounded-lg border border-border/10">
-                  <h4 className="font-semibold text-amber-400 mb-3">Electrical Installation (BS 7671:2018+A3:2024)</h4>
-                  <ul className="list-disc ml-4 space-y-1 text-sm text-muted-foreground">
-                    <li>Install appropriate DC and AC isolators as per Section 537</li>
-                    <li>Earthing and bonding must comply with Chapter 54</li>
-                    <li>Surge protection required for wind installations (Chapter 44)</li>
-                    <li>Cable sizing for voltage drop limits (Appendix 4)</li>
-                    <li>RCD protection for final circuits (Chapter 41)</li>
-                  </ul>
+          {/* BS 7671 & Planning */}
+          <Collapsible open={showRegs} onOpenChange={setShowRegs}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
+              <CollapsibleTrigger className="agent-collapsible-trigger w-full">
+                <div className="flex items-center gap-3">
+                  <BookOpen className="h-4 w-4 text-amber-400" />
+                  <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 & Planning</span>
                 </div>
-
-                <div className="bg-background/30 p-4 rounded-lg border border-border/10">
-                  <h4 className="font-semibold text-amber-400 mb-3">Planning Permission</h4>
-                  <ul className="list-disc ml-4 space-y-1 text-sm text-muted-foreground">
-                    <li>Turbines {'>'}15m height typically require full planning permission</li>
-                    <li>Permitted development rights may apply for smaller installations</li>
-                    <li>Noise assessment required - typically 45dB limit at nearest property</li>
-                    <li>Shadow flicker analysis may be required</li>
-                    <li>Consider aviation lighting requirements for installations {'>'}15m</li>
-                  </ul>
+                <ChevronDown className={cn("h-4 w-4 text-white/40 transition-transform duration-200", showRegs && "rotate-180")} />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="p-4 pt-0 space-y-3">
+                <div className="space-y-2 text-sm text-amber-200/80">
+                  <p><strong className="text-amber-300">Section 537:</strong> Install appropriate DC and AC isolators</p>
+                  <p><strong className="text-amber-300">Chapter 54:</strong> Earthing and bonding requirements</p>
+                  <p><strong className="text-amber-300">Chapter 44:</strong> Surge protection required</p>
+                  <p><strong className="text-amber-300">Appendix 4:</strong> Cable sizing for voltage drop</p>
                 </div>
-
-                <div className="bg-background/30 p-4 rounded-lg border border-border/10">
-                  <h4 className="font-semibold text-amber-400 mb-3">Grid Connection</h4>
-                  <ul className="list-disc ml-4 space-y-1 text-sm text-muted-foreground">
-                    <li>G98 application for systems ≤16A per phase</li>
-                    <li>G99 application for larger systems - DNO approval required</li>
-                    <li>Export limitation may be required in weak grid areas</li>
-                    <li>Consider power quality requirements (voltage, frequency, harmonics)</li>
-                  </ul>
+                <div className="pt-2 border-t border-white/10 space-y-2 text-sm text-amber-200/80">
+                  <p><strong className="text-amber-300">Planning:</strong> Turbines &gt;15m typically require full planning permission</p>
+                  <p><strong className="text-amber-300">Noise:</strong> 45dB limit at nearest property boundary</p>
+                  <p><strong className="text-amber-300">Grid:</strong> G98 for ≤16A/phase, G99 for larger systems</p>
                 </div>
-              </div>
+              </CollapsibleContent>
             </div>
-          </div>
-        )}
+          </Collapsible>
+        </div>
+      )}
 
-        <Alert>
-          <AlertDescription>
-            <strong>Important:</strong> This calculator provides preliminary estimates only. Professional wind resource assessment 
-            with anemometer data over 12+ months is essential for commercial viability. Consider local planning restrictions, 
-            noise regulations, and grid connection requirements. All electrical work must be carried out by qualified electricians 
-            in accordance with BS 7671:2018+A3:2024.
-          </AlertDescription>
-        </Alert>
-      </CardContent>
-    </Card>
+      <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
+        <div className="flex items-start gap-2">
+          <Wind className="h-4 w-4 text-green-400 mt-0.5 shrink-0" />
+          <p className="text-sm text-green-200">
+            <strong>Professional assessment essential.</strong> 12+ months anemometer data required for commercial viability.
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }
 

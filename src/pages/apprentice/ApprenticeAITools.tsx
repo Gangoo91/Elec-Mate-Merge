@@ -2,8 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Bot, Book, CircuitBoard, Code, FileText, Lightbulb } from "lucide-react";
-import { Link } from "react-router-dom";
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 
 const ApprenticeAITools = () => {
   const aiTools = [
@@ -49,7 +48,7 @@ const ApprenticeAITools = () => {
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
         <h1 className="text-3xl font-bold tracking-tight text-centre">AI Tools for Apprentices</h1>
         <div className="flex-grow"></div>
-        <BackButton customUrl="/apprentice/hub" label="Back to Apprentice Hub" />
+        <SmartBackButton />
       </div>
 
       <Card className="border-elec-yellow/20 bg-elec-gray">

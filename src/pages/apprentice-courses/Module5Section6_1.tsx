@@ -194,11 +194,11 @@ const Module5Section6_1 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6
@@ -212,17 +212,17 @@ const Module5Section6_1 = () => {
         {/* Page Header */}
         <header className="mb-12">
           <div className="flex items-center gap-4 mb-6">
-            <div className="p-2 rounded bg-card">
-              <MessageSquare className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded ">
+              <MessageSquare className="w-6 h-6 text-white" />
             </div>
             <div>
-              <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 mb-2">
+              <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow mb-2">
                 Section 5.6.1
               </Badge>
-              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
                 Verbal Communication: Being Clear, Concise, and Professional
               </h1>
-              <p className="text-muted-foreground mt-2">
+              <p className="text-white mt-2">
                 Master essential communication skills for electrical work environments
               </p>
             </div>
@@ -230,11 +230,11 @@ const Module5Section6_1 = () => {
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Clear communication prevents installation mistakes</li>
                 <li>Use simple language, avoid unnecessary jargon</li>
@@ -242,8 +242,8 @@ const Module5Section6_1 = () => {
                 <li>Active listening prevents costly errors</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Plan your words before speaking</li>
                 <li><strong>Use:</strong> Check understanding after giving instructions</li>
@@ -254,12 +254,12 @@ const Module5Section6_1 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-2xl font-bold mb-4 text-foreground">Learning Outcomes</h2>
-          <p className="text-base text-muted-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-2xl font-bold mb-4 text-white">Learning Outcomes</h2>
+          <p className="text-base text-white mb-4">
             By the end of this subsection, you will be able to:
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Explain why professional verbal communication is essential in electrical work</li>
             <li>Identify common barriers to clear communication on site</li>
             <li>Apply techniques for being concise and professional when speaking with others</li>
@@ -268,26 +268,26 @@ const Module5Section6_1 = () => {
         </Card>
 
         {/* Content / Learning */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-2xl font-bold mb-6 text-foreground">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-2xl font-bold mb-6 text-white">Content / Learning</h2>
           
           {/* Section 1 - Blue */}
-          <div className="border-l-4 border-l-emerald-500 bg-card p-4 mb-6">
+          <div className="border-l-4 border-l-elec-yellow p-4 mb-6">
             <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
+              <div className="w-8 h-8 rounded-full bg-elec-yellow text-white flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
                 1
               </div>
               <div>
-                <h3 className="text-lg sm:text-xl font-semibold text-emerald-400 mb-3">
+                <h3 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-3">
                   Why Clear Verbal Communication Matters
                 </h3>
-                <p className="text-base text-foreground mb-3">
+                <p className="text-base text-white mb-3">
                   Effective communication is the foundation of safe and efficient electrical work. Poor communication leads to serious consequences:
                 </p>
                 <div className="space-y-3">
                   <div>
-                    <p className="text-base text-foreground mb-2"><strong>Safety implications:</strong></p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Safety implications:</strong></p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                       <li>Prevents mistakes in installation (e.g., misunderstanding circuit layouts)</li>
                       <li>Reduces risks of accidents caused by misheard instructions</li>
                       <li>Ensures proper isolation procedures are communicated</li>
@@ -295,8 +295,8 @@ const Module5Section6_1 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-base text-foreground mb-2"><strong>Project efficiency:</strong></p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Project efficiency:</strong></p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                       <li>Improves coordination with supervisors, clients, and other trades</li>
                       <li>Reduces time wasted on clarification and rework</li>
                       <li>Ensures materials and tools are available when needed</li>
@@ -309,7 +309,7 @@ const Module5Section6_1 = () => {
           </div>
 
           {/* Section 2 - Green */}
-          <div className="border-l-4 border-l-green-500 bg-card p-4 mb-6">
+          <div className="border-l-4 border-l-green-500 p-4 mb-6">
             <div className="flex items-start gap-3">
               <div className="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
                 2
@@ -318,13 +318,13 @@ const Module5Section6_1 = () => {
                 <h3 className="text-lg sm:text-xl font-semibold text-green-600 mb-3">
                   Characteristics of Professional Communication
                 </h3>
-                <p className="text-base text-foreground mb-3">
+                <p className="text-base text-white mb-3">
                   Professional communication has four key characteristics that distinguish it from casual conversation:
                 </p>
                 <div className="space-y-3">
                   <div>
-                    <p className="text-base text-foreground mb-2"><strong>Clarity</strong> – Speak in straightforward language</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Clarity</strong> – Speak in straightforward language</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                       <li>Avoid unnecessary jargon unless everyone understands it</li>
                       <li>Use specific terms rather than vague descriptions</li>
                       <li>Speak at an appropriate pace and volume</li>
@@ -332,8 +332,8 @@ const Module5Section6_1 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-base text-foreground mb-2"><strong>Conciseness</strong> – Get to the point quickly</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Conciseness</strong> – Get to the point quickly</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                       <li>Deliver your message without rambling</li>
                       <li>Focus on essential information first</li>
                       <li>Avoid unnecessary details that might confuse</li>
@@ -341,8 +341,8 @@ const Module5Section6_1 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-base text-foreground mb-2"><strong>Professional Tone</strong> – Respectful, calm, and confident</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Professional Tone</strong> – Respectful, calm, and confident</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                       <li>Maintain composure even under pressure</li>
                       <li>Show respect for all team members regardless of rank</li>
                       <li>Project confidence without appearing arrogant</li>
@@ -350,8 +350,8 @@ const Module5Section6_1 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-base text-foreground mb-2"><strong>Accuracy</strong> – Use correct terminology</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Accuracy</strong> – Use correct terminology</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                       <li>Use correct terms (e.g., "distribution board" not "fuse box" if that's the site terminology)</li>
                       <li>Reference specific locations, quantities, and specifications</li>
                       <li>Double-check facts before communicating them</li>
@@ -367,7 +367,7 @@ const Module5Section6_1 = () => {
           <Separator className="my-6" />
 
           {/* Section 3 - Purple */}
-          <div className="border-l-4 border-l-purple-500 bg-card p-4 mb-6">
+          <div className="border-l-4 border-l-purple-500 p-4 mb-6">
             <div className="flex items-start gap-3">
               <div className="w-8 h-8 rounded-full bg-purple-500 text-white flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
                 3
@@ -376,13 +376,13 @@ const Module5Section6_1 = () => {
                 <h3 className="text-lg sm:text-xl font-semibold text-purple-600 mb-3">
                   Barriers to Effective Communication
                 </h3>
-                <p className="text-base text-foreground mb-3">
+                <p className="text-base text-white mb-3">
                   Construction sites present unique challenges to clear communication. Understanding these barriers helps you overcome them:
                 </p>
                 <div className="space-y-3">
                   <div>
-                    <p className="text-base text-foreground mb-2"><strong>Environmental barriers:</strong></p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Environmental barriers:</strong></p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                       <li>Background noise (common on construction sites)</li>
                       <li>Distance between speaker and listener</li>
                       <li>Poor lighting affecting visual cues</li>
@@ -390,8 +390,8 @@ const Module5Section6_1 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-base text-foreground mb-2"><strong>Language and cultural barriers:</strong></p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Language and cultural barriers:</strong></p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                       <li>Technical jargon misunderstood by non-electricians</li>
                       <li>Language or cultural differences</li>
                       <li>Different levels of technical knowledge</li>
@@ -399,8 +399,8 @@ const Module5Section6_1 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-base text-foreground mb-2"><strong>Personal barriers:</strong></p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Personal barriers:</strong></p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                       <li>Not actively listening or repeating back instructions</li>
                       <li>Assumptions about what others know</li>
                       <li>Stress or time pressure affecting concentration</li>
@@ -416,7 +416,7 @@ const Module5Section6_1 = () => {
           <Separator className="my-6" />
 
           {/* Section 4 - Orange */}
-          <div className="border-l-4 border-l-orange-500 bg-card p-4 mb-6">
+          <div className="border-l-4 border-l-orange-500 p-4 mb-6">
             <div className="flex items-start gap-3">
               <div className="w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
                 4
@@ -425,13 +425,13 @@ const Module5Section6_1 = () => {
                 <h3 className="text-lg sm:text-xl font-semibold text-orange-600 mb-3">
                   Techniques for Clear and Professional Speech
                 </h3>
-                <p className="text-base text-foreground mb-3">
+                <p className="text-base text-white mb-3">
                   Master these practical techniques to improve your verbal communication on site:
                 </p>
                 <div className="space-y-3">
                   <div>
-                    <p className="text-base text-foreground mb-2"><strong>Preparation techniques:</strong></p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Preparation techniques:</strong></p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                       <li>Plan before you speak – think through what needs to be said</li>
                       <li>Organise information logically (most important first)</li>
                       <li>Consider your audience and their level of knowledge</li>
@@ -439,8 +439,8 @@ const Module5Section6_1 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-base text-foreground mb-2"><strong>Delivery techniques:</strong></p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Delivery techniques:</strong></p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                       <li>Use simple, short sentences – especially when giving instructions</li>
                       <li>Speak clearly and at appropriate volume for the environment</li>
                       <li>Pause between key points to allow processing</li>
@@ -448,8 +448,8 @@ const Module5Section6_1 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-base text-foreground mb-2"><strong>Confirmation techniques:</strong></p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Confirmation techniques:</strong></p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                       <li>Check understanding – ask the listener to repeat back key instructions</li>
                       <li>Use open questions: "What questions do you have?" not "Do you understand?"</li>
                       <li>Watch for non-verbal cues that suggest confusion</li>
@@ -457,8 +457,8 @@ const Module5Section6_1 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-base text-foreground mb-2"><strong>Professional presentation:</strong></p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Professional presentation:</strong></p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                       <li>Maintain eye contact and appropriate body language</li>
                       <li>Avoid filler words (e.g., "um," "like," "you know")</li>
                       <li>Keep a confident but approachable tone</li>
@@ -474,7 +474,7 @@ const Module5Section6_1 = () => {
           <Separator className="my-6" />
 
           {/* Section 5 - Cyan */}
-          <div className="border-l-4 border-l-cyan-500 bg-card p-4 mb-6">
+          <div className="border-l-4 border-l-cyan-500 p-4 mb-6">
             <div className="flex items-start gap-3">
               <div className="w-8 h-8 rounded-full bg-cyan-500 text-white flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
                 5
@@ -483,13 +483,13 @@ const Module5Section6_1 = () => {
                 <h3 className="text-lg sm:text-xl font-semibold text-cyan-600 mb-3">
                   Active Listening Skills
                 </h3>
-                <p className="text-base text-foreground mb-3">
+                <p className="text-base text-white mb-3">
                   Active listening is just as important as speaking clearly. It ensures you fully understand instructions and can respond appropriately:
                 </p>
                 <div className="space-y-3">
                   <div>
-                    <p className="text-base text-foreground mb-2"><strong>Physical attention:</strong></p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Physical attention:</strong></p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                       <li>Give full attention (don't keep working when someone's talking to you)</li>
                       <li>Face the speaker and maintain appropriate eye contact</li>
                       <li>Put down tools or materials to show you're listening</li>
@@ -497,8 +497,8 @@ const Module5Section6_1 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-base text-foreground mb-2"><strong>Verbal and non-verbal feedback:</strong></p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Verbal and non-verbal feedback:</strong></p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                       <li>Nod or give verbal cues ("yes," "I understand," "right")</li>
                       <li>Use appropriate facial expressions to show engagement</li>
                       <li>Avoid interrupting unless clarification is urgently needed</li>
@@ -506,8 +506,8 @@ const Module5Section6_1 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-base text-foreground mb-2"><strong>Confirmation and clarification:</strong></p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>Confirmation and clarification:</strong></p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                       <li>Repeat or paraphrase key points to confirm understanding</li>
                       <li>Ask specific questions about unclear instructions</li>
                       <li>Summarise complex instructions in your own words</li>
@@ -532,43 +532,43 @@ const Module5Section6_1 = () => {
                 <h3 className="text-lg sm:text-xl font-semibold text-indigo-600 mb-3">
                   Practical Application: The "Who, What, When, Where" Structure
                 </h3>
-                <p className="text-base text-foreground mb-3">
+                <p className="text-base text-white mb-3">
                   Use this structured approach for giving clear instructions:
                 </p>
                 <div className="space-y-3">
                   <div>
-                    <p className="text-base text-foreground mb-2"><strong>WHO:</strong> Address the person specifically</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>WHO:</strong> Address the person specifically</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                       <li>Use the person's name to get their attention</li>
                       <li>Ensure they are ready to receive the instruction</li>
                       <li>Make sure you have the right person for the task</li>
                     </ul>
                   </div>
                   <div>
-                    <p className="text-base text-foreground mb-2"><strong>WHAT:</strong> Describe the task clearly</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>WHAT:</strong> Describe the task clearly</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                       <li>Be specific about materials (e.g., "2.5mm twin and earth cable")</li>
                       <li>Specify the method or standard required</li>
                       <li>Include any safety considerations</li>
                     </ul>
                   </div>
                   <div>
-                    <p className="text-base text-foreground mb-2"><strong>WHEN:</strong> Set clear timescales</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>WHEN:</strong> Set clear timescales</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                       <li>Give specific deadlines ("before lunch," "by 3pm")</li>
                       <li>Indicate priority level if multiple tasks</li>
                       <li>Allow time for questions and confirmation</li>
                     </ul>
                   </div>
                   <div>
-                    <p className="text-base text-foreground mb-2"><strong>WHERE:</strong> Specify exact locations</p>
-                    <ul className="text-xs sm:text-sm text-foreground ml-4 list-disc space-y-1">
+                    <p className="text-base text-white mb-2"><strong>WHERE:</strong> Specify exact locations</p>
+                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
                       <li>Use specific references ("socket three on the north wall")</li>
                       <li>Reference drawings or room numbers where available</li>
                       <li>Describe route or access requirements if needed</li>
                     </ul>
                   </div>
-                  <div className="text-xs sm:text-sm text-foreground bg-background/50 p-3 rounded border mt-3">
+                  <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-3 rounded border mt-3">
                     <strong>Example:</strong> "John (WHO), I need you to run 2.5mm twin and earth cable from the consumer unit to socket three on the north wall (WHAT), and get it done before lunch (WHEN). Socket three is in the office area, marked on drawing E-02 (WHERE)."
                   </div>
                 </div>
@@ -578,11 +578,11 @@ const Module5Section6_1 = () => {
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-2xl font-bold mb-4 text-foreground">Real-World Example</h2>
-          <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-2xl font-bold mb-4 text-white">Real-World Example</h2>
+          <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
             <div className="flex gap-3">
-              <AlertTriangle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
               <div>
                 <h3 className="text-lg font-semibold text-blue-700 mb-3">Communication Comparison on a Busy Commercial Site</h3>
                 <p className="text-blue-800 mb-4">
@@ -590,7 +590,7 @@ const Module5Section6_1 = () => {
                 </p>
                 
                 <div className="space-y-4">
-                  <div className="bg-background/50 p-4 rounded border">
+                  <div className="bg-[#121212]/50 p-4 rounded border">
                     <h4 className="font-semibold text-blue-700 mb-2">Scenario A - Poor Communication:</h4>
                     <p className="text-sm mb-2"><strong>Supervisor to Apprentice A:</strong> "Run that cable to socket three."</p>
                     <p className="text-sm text-blue-700"><strong>Problems:</strong></p>
@@ -603,7 +603,7 @@ const Module5Section6_1 = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-background/50 p-4 rounded border">
+                  <div className="bg-[#121212]/50 p-4 rounded border">
                     <h4 className="font-semibold text-blue-700 mb-2">Scenario B - Clear Communication:</h4>
                     <p className="text-sm mb-2"><strong>Supervisor to Apprentice B:</strong> "John, I need you to take the 2.5mm twin and earth cable from the consumer unit and run it to socket outlet number three on the north wall of the office area. Please get this completed before lunch break at 12:30. The socket location is marked on drawing E-02, and you'll need to coordinate with the plaster team who are working in that area this morning."</p>
                     <p className="text-sm text-blue-700"><strong>Advantages:</strong></p>
@@ -644,54 +644,54 @@ const Module5Section6_1 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-2xl font-bold mb-4 text-foreground">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-2xl font-bold mb-4 text-white">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <div key={index} className="border-l-4 border-l-muted pl-4">
-                <h3 className="font-semibold text-foreground mb-2">Q: {faq.question}</h3>
-                <p className="text-muted-foreground">A: {faq.answer}</p>
+                <h3 className="font-semibold text-white mb-2">Q: {faq.question}</h3>
+                <p className="text-white">A: {faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-2xl font-bold mb-4 text-foreground">Pocket Guide</h2>
-          <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-2xl font-bold mb-4 text-white">Pocket Guide</h2>
+          <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
             <ul className="space-y-3">
               <li className="flex items-center gap-3">
                 <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0" />
-                <span className="text-foreground">Be clear, concise, professional</span>
+                <span className="text-white">Be clear, concise, professional</span>
               </li>
               <li className="flex items-center gap-3">
                 <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0" />
-                <span className="text-foreground">Speak with confidence and respect</span>
+                <span className="text-white">Speak with confidence and respect</span>
               </li>
               <li className="flex items-center gap-3">
                 <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0" />
-                <span className="text-foreground">Avoid jargon unless everyone understands it</span>
+                <span className="text-white">Avoid jargon unless everyone understands it</span>
               </li>
               <li className="flex items-center gap-3">
                 <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0" />
-                <span className="text-foreground">Always check understanding (repeat back if needed)</span>
+                <span className="text-white">Always check understanding (repeat back if needed)</span>
               </li>
               <li className="flex items-center gap-3">
                 <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0" />
-                <span className="text-foreground">Practice active listening – stop, focus, confirm</span>
+                <span className="text-white">Practice active listening – stop, focus, confirm</span>
               </li>
             </ul>
           </div>
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-2xl font-bold mb-4 text-foreground">Recap</h2>
-          <p className="text-base text-muted-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-2xl font-bold mb-4 text-white">Recap</h2>
+          <p className="text-base text-white mb-4">
             In this subsection, you've learned:
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-base text-foreground">
+          <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Why clear and professional verbal communication is critical</li>
             <li>Common barriers and how to overcome them</li>
             <li>Techniques for giving instructions effectively</li>
@@ -703,7 +703,7 @@ const Module5Section6_1 = () => {
         <Quiz title="Test Your Knowledge: Verbal Communication" questions={quizQuestions} />
 
         {/* Navigation */}
-        <div className="flex justify-between items-center mt-12 pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center mt-12 pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to=".." className="flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" />

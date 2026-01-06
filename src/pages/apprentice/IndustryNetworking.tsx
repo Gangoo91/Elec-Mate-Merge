@@ -1,5 +1,5 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Users, Calendar, MapPin, Globe, Building, Award, Coffee, Handshake, MessageSquare, Briefcase, GraduationCap, Zap } from "lucide-react";
@@ -234,7 +234,7 @@ const IndustryNetworking = () => {
           Build meaningful professional relationships that accelerate career growth, create business opportunities, 
           and keep you connected to industry developments. Networking is essential for long-term success in the electrical trade.
         </p>
-        <BackButton customUrl="/apprentice/professional-development" label="Back to Professional Development" />
+        <SmartBackButton />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

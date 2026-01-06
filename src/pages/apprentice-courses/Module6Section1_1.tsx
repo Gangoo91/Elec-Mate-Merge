@@ -133,11 +133,11 @@ const Module6Section1_1 = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6.1
@@ -151,35 +151,35 @@ const Module6Section1_1 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <ShieldCheck className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <ShieldCheck className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               Section 6.1.1
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Why Electrical Installations Must Be Inspected and Tested
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Why inspection and testing are essential for safety and compliance with BS 7671 and EAWR 1989
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Ensures safety and compliance (BS 7671, EAWR 1989) before energising.</li>
                 <li>Finds hidden issues (polarity, continuity, insulation, earth) that prevent shock/fire.</li>
                 <li>Creates documented assurance for clients, employers and regulators.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> BS 7671 refs, test instrument labels, certificate forms (EIC/EICR).</li>
                 <li><strong>Use:</strong> Plan inspections and tests before energising; verify polarity, continuity, insulation, Zs, and functional checks; record results.</li>
@@ -190,10 +190,10 @@ const Module6Section1_1 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <p className="text-base text-muted-foreground mb-4">By the end of this subsection, you will be able to:</p>
-          <ul className="list-disc pl-6 space-y-3 text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <p className="text-base text-white mb-4">By the end of this subsection, you will be able to:</p>
+          <ul className="list-disc pl-6 space-y-3 text-base text-white">
             <li>Explain the main reasons why inspection and testing are necessary for electrical installations.</li>
             <li>Identify the specific risks that inspections and testing help prevent in both domestic and commercial environments.</li>
             <li>Understand the legal requirements for inspection and testing under BS 7671 and EAWR 1989.</li>
@@ -204,18 +204,18 @@ const Module6Section1_1 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
 
           {/* 1. The Purpose of Inspection */}
           <section className="mb-8">
-            <h3 className="text-lg font-medium text-foreground mb-4 flex items-center gap-2">
+            <h3 className="text-lg font-medium text-white mb-4 flex items-center gap-2">
               <FileText className="w-5 h-5" /> 1. The Purpose of Inspection
             </h3>
-            <p className="text-base text-muted-foreground mb-4">
+            <p className="text-base text-white mb-4">
               Visual inspection is the first line of defence in electrical safety. It involves systematically examining the installation using only your eyes and basic tools, without the need for electrical instruments. This process is crucial for identifying obvious defects and ensuring the installation meets basic safety requirements.
             </p>
-            <div className="rounded-lg p-5 bg-card border border-border/30 text-base mb-4">
+            <div className="rounded-lg p-5 border border-border/30 text-base mb-4">
               <p className="font-medium mb-3">Key aspects of inspection include:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li><strong>Compliance verification:</strong> Confirms the installation meets BS 7671 Wiring Regulations requirements for cable routing, protection, and accessibility.</li>
@@ -225,7 +225,7 @@ const Module6Section1_1 = () => {
                 <li><strong>Documentation check:</strong> Verifies that circuit charts, labels, and warning notices are correctly fitted and legible.</li>
               </ul>
             </div>
-            <p className="text-base text-muted-foreground">
+            <p className="text-base text-white">
               <strong>Critical point:</strong> Inspection must be carried out before any testing begins, and the installation must be de-energised during the inspection process for safety.
             </p>
           </section>
@@ -241,11 +241,11 @@ const Module6Section1_1 = () => {
 
           {/* 2. The Purpose of Testing */}
           <section className="mb-8">
-            <h3 className="text-lg font-medium text-foreground mb-4">2. The Purpose of Testing</h3>
-            <p className="text-base text-muted-foreground mb-4">
+            <h3 className="text-lg font-medium text-white mb-4">2. The Purpose of Testing</h3>
+            <p className="text-base text-white mb-4">
               Electrical testing goes beyond what the eye can see. Using calibrated instruments, testing verifies that circuits perform correctly and safely under electrical conditions. This process reveals hidden faults that could cause serious harm if left undetected.
             </p>
-            <div className="rounded-lg p-5 bg-card border border-border/30 text-base mb-4">
+            <div className="rounded-lg p-5 border border-border/30 text-base mb-4">
               <p className="font-medium mb-3">Essential testing functions:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li><strong>Electrical continuity:</strong> Confirms protective conductors (earth) provide an unbroken path for fault current.</li>
@@ -256,7 +256,7 @@ const Module6Section1_1 = () => {
                 <li><strong>Functional testing:</strong> Checks that all controls, switches, and safety devices operate as intended.</li>
               </ul>
             </div>
-            <p className="text-base text-muted-foreground">
+            <p className="text-base text-white">
               <strong>Remember:</strong> Testing provides measurable, documented proof that safety requirements are met, creating legal evidence of due diligence.
             </p>
           </section>
@@ -272,11 +272,11 @@ const Module6Section1_1 = () => {
 
           {/* 3. Legal and Safety Obligations */}
           <section className="mb-8">
-            <h3 className="text-lg font-medium text-foreground mb-4">3. Legal and Safety Obligations</h3>
-            <p className="text-base text-muted-foreground mb-4">
+            <h3 className="text-lg font-medium text-white mb-4">3. Legal and Safety Obligations</h3>
+            <p className="text-base text-white mb-4">
               Electrical safety isn't just good practice – it's a legal requirement. Multiple regulations and standards create a framework of obligations that every electrical worker must understand and follow.
             </p>
-            <div className="rounded-lg p-5 bg-card border border-border/30 text-base mb-4">
+            <div className="rounded-lg p-5 border border-border/30 text-base mb-4">
               <p className="font-medium mb-3">Key legal requirements:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li><strong>Electricity at Work Regulations (EAWR 1989):</strong> Requires all electrical systems to be constructed, maintained, and used safely. Places absolute duty on employers and employees to prevent danger.</li>
@@ -286,10 +286,10 @@ const Module6Section1_1 = () => {
                 <li><strong>Management of Health and Safety at Work Regulations:</strong> Requires risk assessments that must consider electrical hazards.</li>
               </ul>
             </div>
-            <p className="text-base text-muted-foreground mb-4">
+            <p className="text-base text-white mb-4">
               <strong>Personal responsibility:</strong> As an electrical worker, you have both legal and moral obligations to ensure installations are safe. Cutting corners on inspection and testing isn't just unprofessional – it could result in criminal prosecution if someone is injured.
             </p>
-            <p className="text-base text-muted-foreground">
+            <p className="text-base text-white">
               <strong>Employer duties:</strong> Employers must ensure workers are competent, have proper equipment, and follow safe systems of work including mandatory inspection and testing procedures.
             </p>
           </section>
@@ -305,11 +305,11 @@ const Module6Section1_1 = () => {
 
           {/* 4. Benefits of Inspection and Testing */}
           <section className="mb-6">
-            <h3 className="text-lg font-medium text-foreground mb-4">4. Benefits of Inspection and Testing</h3>
-            <p className="text-base text-muted-foreground mb-4">
+            <h3 className="text-lg font-medium text-white mb-4">4. Benefits of Inspection and Testing</h3>
+            <p className="text-base text-white mb-4">
               Beyond legal compliance, proper inspection and testing delivers tangible benefits to installers, clients, and the wider electrical industry.
             </p>
-            <div className="rounded-lg p-5 bg-card border border-emerald-500/30 text-base mb-4">
+            <div className="rounded-lg p-5 border border-elec-yellow/30 text-base mb-4">
               <p className="font-medium mb-3">Professional and business benefits:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li><strong>Life and property protection:</strong> Prevents electrical fires, shocks, and deaths that devastate families and communities.</li>
@@ -321,7 +321,7 @@ const Module6Section1_1 = () => {
                 <li><strong>Industry standards:</strong> Maintains the reputation of the electrical trade and supports professional recognition.</li>
               </ul>
             </div>
-            <p className="text-base text-muted-foreground">
+            <p className="text-base text-white">
               <strong>Financial reality:</strong> The cost of proper inspection and testing is tiny compared to the potential costs of electrical accidents, legal action, or loss of professional reputation.
             </p>
           </section>
@@ -337,39 +337,39 @@ const Module6Section1_1 = () => {
         </Card>
 
         {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-2xl font-semibold text-foreground mb-4">Real-World Example</h2>
-          <div className="rounded-lg p-5 border-l-4 border-l-orange-500 bg-card mb-4">
-            <h4 className="font-medium text-foreground mb-2">Case Study: Office Building Lighting Circuit</h4>
-            <p className="text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-2xl font-semibold text-white mb-4">Real-World Example</h2>
+          <div className="rounded-lg p-5 border-l-4 border-l-orange-500 mb-4">
+            <h4 className="font-medium text-white mb-2">Case Study: Office Building Lighting Circuit</h4>
+            <p className="text-base text-white mb-4">
               An office building had a new lighting circuit installed by a contractor who was running behind schedule. To save time, the contractor skipped the formal testing process and simply checked that the lights switched on correctly. The installation was energised and handed over to the client.
             </p>
-            <p className="text-base text-foreground mb-4">
+            <p className="text-base text-white mb-4">
               Three weeks later, an employee received an electric shock from a light fitting while changing a bulb. The incident was reported to the HSE, who launched a full investigation. Testing revealed that polarity had been reversed on several lighting points, with live and neutral conductors swapped over.
             </p>
-            <p className="text-base text-foreground mb-4">
+            <p className="text-base text-white mb-4">
               <strong>The consequences were severe:</strong>
             </p>
-            <ul className="list-disc pl-6 space-y-1 text-base text-foreground mb-4">
+            <ul className="list-disc pl-6 space-y-1 text-base text-white mb-4">
               <li>The employee suffered burns and lost time from work</li>
               <li>The contractor faced HSE prosecution and heavy fines</li>
               <li>Professional indemnity insurance was invalidated due to non-compliance</li>
               <li>The contractor lost their preferred contractor status with multiple clients</li>
               <li>Reputation damage led to significant loss of future business</li>
             </ul>
-            <p className="text-base text-foreground">
+            <p className="text-base text-white">
               <strong>Prevention:</strong> If proper polarity testing had been completed using a simple voltage indicator or multimeter, the reversed connections would have been identified immediately. The 30 minutes required for testing would have prevented months of legal proceedings and business damage.
             </p>
           </div>
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-2xl font-semibold text-foreground mb-4">Practical Guidance</h2>
-          <p className="text-base text-muted-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-2xl font-semibold text-white mb-4">Practical Guidance</h2>
+          <p className="text-base text-white mb-4">
             Effective inspection and testing requires proper planning, correct procedures, and the right mindset. Here's how to approach it professionally:
           </p>
-          <div className="rounded-lg p-5 bg-emerald-500/10 border border-emerald-500/30 text-base mb-4">
+          <div className="rounded-lg p-5 bg-elec-yellow/10 border border-elec-yellow/30 text-base mb-4">
             <p className="font-medium mb-3">Essential practices:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li><strong>Plan ahead:</strong> Always schedule inspections and tests before energising any system. Never leave testing until after handover pressure builds.</li>
@@ -388,8 +388,8 @@ const Module6Section1_1 = () => {
         </Card>
 
         {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-2xl font-semibold text-foreground mb-4">Pocket Guide</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-2xl font-semibold text-white mb-4">Pocket Guide</h2>
           <div className="rounded-lg p-5 bg-elec-blue/10 border border-elec-blue/30 text-base">
             <p className="font-medium mb-3 text-lg">Quick Reference:</p>
             <ul className="list-disc pl-6 space-y-2">
@@ -405,15 +405,15 @@ const Module6Section1_1 = () => {
         </Card>
 
         {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-2xl font-semibold text-foreground mb-4">Recap</h2>
-          <p className="text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-2xl font-semibold text-white mb-4">Recap</h2>
+          <p className="text-base text-white mb-4">
             Inspection and testing are not optional – they are legal and professional requirements that form the foundation of electrical safety. They ensure installations are safe, compliant, and reliable before being put into service.
           </p>
-          <p className="text-base text-foreground mb-4">
+          <p className="text-base text-white mb-4">
             Visual inspection catches obvious defects and confirms compliance with wiring regulations, while electrical testing reveals hidden faults that could cause serious harm. Together, they create a comprehensive safety verification process.
           </p>
-          <p className="text-base text-foreground">
+          <p className="text-base text-white">
             Without proper inspection and testing, hidden faults remain undetected, putting people and property at serious risk. Every electrical worker has both legal and professional obligations to ensure these vital safety checks are completed thoroughly and documented properly.
           </p>
         </Card>
@@ -422,7 +422,7 @@ const Module6Section1_1 = () => {
         <Quiz questions={quizQuestions} title="Quiz: Why Electrical Installations Must Be Inspected and Tested" />
 
         {/* Navigation */}
-        <div className="flex justify-between items-center mt-8 pt-6 border-t border-border/20">
+        <div className="flex justify-between items-center mt-8 pt-6 border-t border-white/10">
           <Button variant="ghost" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />

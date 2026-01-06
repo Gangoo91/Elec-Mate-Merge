@@ -1,8 +1,7 @@
 
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Users, Calendar, MapPin, ExternalLink } from "lucide-react";
-import { Link } from "react-router-dom";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
+import { Users, Calendar, MapPin, ExternalLink } from "lucide-react";
 
 const IndustryNetworking = () => {
   const networkingOpportunities = [
@@ -62,12 +61,7 @@ const IndustryNetworking = () => {
           <h1 className="text-3xl font-bold tracking-tight">Industry Networking</h1>
           <p className="text-muted-foreground">Build connections and advance your career through professional networks</p>
         </div>
-        <Link to="/apprentice/professional-development" className="flex-shrink-0">
-          <Button variant="outline">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Professional Development
-          </Button>
-        </Link>
+        <SmartBackButton />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

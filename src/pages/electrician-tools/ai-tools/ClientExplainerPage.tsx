@@ -7,16 +7,16 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Loader2, Lightbulb, Zap, Brain } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import ElectricalHeroSection from "@/components/electrician-tools/ai-tools/client-explainer/ElectricalHeroSection";
+import { ArrowLeft, Loader2, Lightbulb, Zap, Megaphone, Brain } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
 import ClientTypeSelector, { ClientType } from "@/components/electrician-tools/ai-tools/client-explainer/ClientTypeSelector";
 import TemplateSelector, { Template } from "@/components/electrician-tools/ai-tools/client-explainer/TemplateSelector";
 import LivePreview from "@/components/electrician-tools/ai-tools/client-explainer/LivePreview";
 import OutputPanel from "@/components/electrician-tools/ai-tools/client-explainer/OutputPanel";
 
 const ClientExplainerPage = () => {
+  const navigate = useNavigate();
   const { toast } = useToast();
   const [technicalNotes, setTechnicalNotes] = useState("");
   const [tone, setTone] = useState("professional");
@@ -110,35 +110,31 @@ const ClientExplainerPage = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark">
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 pb-safe">
-        {/* Header */}
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20">
-              <Brain className="h-6 w-6 sm:h-7 sm:w-7 text-cyan-400" />
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Client Explainer
-              </h1>
-              <p className="text-sm text-white/60">Translate technical findings for clients</p>
-            </div>
-          </div>
-          <Link to="/electrician-tools/ai-tooling">
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to AI Tools
-            </Button>
-          </Link>
-        </header>
+    <div className="min-h-screen bg-background pb-24">
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
+        <div className="px-4 py-3">
+          <button
+            onClick={() => navigate('/electrician-tools/ai-tooling')}
+            className="flex items-center gap-2 text-white active:opacity-70 transition-opacity touch-manipulation"
+          >
+            <ArrowLeft className="h-5 w-5" />
+            <span className="text-sm font-medium">AI Tools</span>
+          </button>
+        </div>
+      </div>
 
-        {/* Hero Section */}
-        <ElectricalHeroSection />
+      <main className="px-4 py-4 space-y-5">
+        {/* Hero Header */}
+        <div className="flex items-center gap-3">
+          <div className="p-3 rounded-xl bg-gradient-to-br from-pink-500/20 to-rose-500/10 border border-pink-500/20">
+            <Megaphone className="h-6 w-6 text-pink-400" />
+          </div>
+          <div>
+            <h1 className="text-xl font-bold text-white">Client Explainer</h1>
+            <p className="text-sm text-white/50">Convert technical findings to client-friendly explanations</p>
+          </div>
+        </div>
 
           {/* Mobile-first responsive layout */}
           <div className="space-y-6 lg:grid lg:grid-cols-1 xl:grid-cols-3 lg:gap-6 lg:space-y-0">

@@ -1,5 +1,5 @@
 
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Briefcase, Building, Zap, Users, Crown, Wrench, GraduationCap, Shield, Hammer } from "lucide-react";
@@ -119,7 +119,7 @@ const CareerPathways = () => {
           Explore comprehensive career paths in the UK electrical industry, from apprentice to senior management roles. 
           Each pathway shows typical progression times, salary ranges, and requirements specific to UK electrical professionals.
         </p>
-        <BackButton customUrl="/apprentice/professional-development" label="Back to Professional Development" />
+        <SmartBackButton />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">

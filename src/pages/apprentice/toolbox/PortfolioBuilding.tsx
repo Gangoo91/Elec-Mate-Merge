@@ -7,7 +7,7 @@ import {
   FileText,
   Building
 } from "lucide-react";
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import PortfolioIntroduction from "@/components/apprentice/portfolio/guide/PortfolioIntroduction";
 import PortfolioStepByStepGuide from "@/components/apprentice/portfolio/guide/PortfolioStepByStepGuide";
 import EvidenceCollectionGuide from "@/components/apprentice/portfolio/guide/EvidenceCollectionGuide";
@@ -24,7 +24,7 @@ const PortfolioBuilding = () => {
             A comprehensive guide to building an exceptional electrical apprenticeship portfolio
           </p>
         </div>
-        <BackButton customUrl="/apprentice/toolbox" label="Back to Toolbox" />
+        <SmartBackButton />
       </div>
 
       {/* Main Content Tabs */}

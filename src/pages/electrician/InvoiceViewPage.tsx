@@ -3,7 +3,8 @@ import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Download, Mail, Edit, CheckCircle, AlertCircle } from "lucide-react";
+import { Download, Mail, Edit, CheckCircle, AlertCircle } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Quote } from "@/types/quote";
@@ -286,12 +287,7 @@ const InvoiceViewPage = () => {
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>Invoice not found</AlertDescription>
         </Alert>
-        <Link to="/electrician/invoices">
-          <Button variant="outline">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Invoices
-          </Button>
-        </Link>
+        <SmartBackButton />
       </div>
     );
   }
@@ -317,12 +313,7 @@ const InvoiceViewPage = () => {
           </p>
         </div>
         <div className="flex gap-2 w-full sm:w-auto">
-          <Link to="/electrician/invoices" className="flex-1 sm:flex-initial">
-            <Button variant="outline" className="w-full">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back
-            </Button>
-          </Link>
+          <SmartBackButton className="flex-1 sm:flex-initial" />
         </div>
       </div>
 

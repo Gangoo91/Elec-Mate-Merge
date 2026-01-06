@@ -121,13 +121,13 @@ const Module3Section4_4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -142,30 +142,30 @@ const Module3Section4_4 = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Wrench className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Wrench className="w-6 h-6 text-white" />
             </div>
             <Badge
               variant="outline"
-              className="border-emerald-500/30 text-emerald-400"
+              className="border-elec-yellow/30 text-elec-yellow"
             >
               Section 3.4.4
             </Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Jointing and Glanding Techniques
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             How to joint and gland cables correctly for safe, durable installations aligned to BS 7671.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Joints must maintain electrical performance and mechanical strength.</li>
                 <li>Glands secure, seal and (for SWA) provide earth continuity via the armour.</li>
@@ -173,8 +173,8 @@ const Module3Section4_4 = () => {
                 <li>Follow manufacturer instructions and torque settings; test earth continuity.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> BW (indoor), CW (outdoor), E1W (hazardous); shrouds and earth tags.</li>
                 <li><strong>Use:</strong> Fan armour evenly; clamp correctly; seal to IP rating; torque to spec.</li>
@@ -185,9 +185,9 @@ const Module3Section4_4 = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Explain the purpose of cable jointing and glanding.</li>
             <li>Identify jointing types and when to use them.</li>
             <li>Select, assemble and test SWA cable glands correctly.</li>
@@ -196,18 +196,18 @@ const Module3Section4_4 = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Cable Jointing */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Cable className="w-5 h-5" /> 1) Cable Jointing
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Common Methods</p>
                   <div className="space-y-3">
                     <div>
@@ -234,7 +234,7 @@ const Module3Section4_4 = () => {
                   </div>
                 </div>
 
-                <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                   <p className="font-medium mb-2">Best Practice</p>
                   <div className="space-y-3">
                     <div>
@@ -276,13 +276,13 @@ const Module3Section4_4 = () => {
 
           {/* Cable Glanding */}
           <section className="mb-2">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Shield className="w-5 h-5" /> 2) Cable Glanding
             </h3>
 
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-slate-400/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30">
                   <p className="font-medium mb-2">Types</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>BW</strong> – indoor SWA</li>
@@ -291,7 +291,7 @@ const Module3Section4_4 = () => {
                     <li>PVC shrouds and earth tags as specified</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-4 bg-card border border-amber-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
                   <p className="font-medium mb-2">Fitting Process</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Prepare sheath to correct length; trim and fan armour</li>
@@ -314,17 +314,17 @@ const Module3Section4_4 = () => {
         </Card>
 
         {/* Safety considerations */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Safety considerations</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Safety considerations</h2>
           <div className="grid gap-3 text-sm">
             {["Ensure joints and glands are mechanically sound and electrically continuous",
               "For SWA cables, test earth continuity after fitting glands",
               "Use weatherproof glands/enclosures outdoors or in damp locations",
               "Follow manufacturer instructions — incorrect assembly is a common cause of failure",
             ].map((point, i) => (
-              <div key={i} className="flex items-start p-3 bg-card/10 rounded-lg border border-border/20">
-                <Shield className="w-5 h-5 text-emerald-400 mr-3 mt-0.5 flex-shrink-0" />
-                <span className="text-foreground">{point}</span>
+              <div key={i} className="flex items-start p-3 bg-card/10 rounded-lg border border-white/10">
+                <Shield className="w-5 h-5 text-elec-yellow mr-3 mt-0.5 flex-shrink-0" />
+                <span className="text-white">{point}</span>
               </div>
             ))}
           </div>
@@ -339,8 +339,8 @@ const Module3Section4_4 = () => {
         </Card>
 
         {/* Common mistakes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Common mistakes to avoid</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Common mistakes to avoid</h2>
           <div className="grid gap-3 text-sm">
             {["Leaving exposed copper strands outside the joint",
               "Over-tightening gland nuts, damaging armour or sheath",
@@ -349,23 +349,23 @@ const Module3Section4_4 = () => {
             ].map((mistake, i) => (
               <div key={i} className="flex items-start p-3 bg-destructive/10 rounded-lg border border-destructive/20">
                 <AlertTriangle className="w-5 h-5 text-destructive mr-3 mt-0.5 flex-shrink-0" />
-                <span className="text-foreground">{mistake}</span>
+                <span className="text-white">{mistake}</span>
               </div>
             ))}
           </div>
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">FAQs</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
           <div className="space-y-4 text-sm">
             {faqs.map((f, idx) => (
               <div key={idx}>
                 <div className="flex items-start gap-3">
-                  <HelpCircle className="w-5 h-5 text-emerald-400 mt-0.5" />
+                  <HelpCircle className="w-5 h-5 text-elec-yellow mt-0.5" />
                   <p className="font-medium">{f.q}</p>
                 </div>
-                <p className="ml-8 text-foreground/90">{f.a}</p>
+                <p className="ml-8 text-white/90">{f.a}</p>
                 <Separator className="my-4" />
               </div>
             ))}
@@ -373,10 +373,10 @@ const Module3Section4_4 = () => {
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
           <div className="grid md:grid-cols-2 gap-4 text-sm">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
               <p className="font-medium mb-2">Key Benefits</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li>Reliable, safe terminations under mechanical stress</li>
@@ -396,10 +396,10 @@ const Module3Section4_4 = () => {
         </Card>
 
         {/* Do's and Don'ts */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Apprentice Do’s and Don’ts</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Apprentice Do’s and Don’ts</h2>
           <div className="grid md:grid-cols-2 gap-4 text-sm">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
               <p className="font-medium mb-2">Do</p>
               <ul className="space-y-1">
                 <li>• Use correct glands and accessories for the environment</li>
@@ -421,9 +421,9 @@ const Module3Section4_4 = () => {
         </Card>
 
         {/* Pocket Card Quick Reference */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Pocket Card Quick Reference</h2>
-          <div className="rounded-lg p-3 sm:p-4 bg-card border border-slate-400/30 text-sm">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Card Quick Reference</h2>
+          <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30 text-sm">
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <p className="font-medium mb-2">Gland fitting essentials</p>
@@ -448,9 +448,9 @@ const Module3Section4_4 = () => {
         </Card>
 
         {/* Key References */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Key References</h2>
-          <div className="text-xs sm:text-sm text-foreground space-y-2">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Key References</h2>
+          <div className="text-xs sm:text-sm text-white space-y-2">
             <p><strong>BS 7671:</strong> 526 (Electrical connections), 522 (Selection and erection), 543 (Earthing arrangements), Part 6 (Inspection & testing)</p>
             <p><strong>Manufacturer data:</strong> Gland and joint kit instructions incl. torque settings</p>
             <p><strong>HSE/GS38:</strong> Safe working practices, test equipment guidance</p>
@@ -458,17 +458,17 @@ const Module3Section4_4 = () => {
         </Card>
 
         {/* Practical Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Practical Examples</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Examples</h2>
           
           {/* Example 1: SWA CW Gland Step-by-Step */}
           <section className="mb-8">
-            <h3 className="font-medium text-foreground mb-4 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <Wrench className="w-5 h-5" /> 1) SWA CW Gland Installation with Torque Checklist
             </h3>
             
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-3">Step-by-Step Process</p>
                 <div className="space-y-3 text-sm">
                   <div className="flex items-start gap-2">
@@ -502,7 +502,7 @@ const Module3Section4_4 = () => {
                 </div>
               </div>
               
-              <div className="rounded-lg p-4 bg-card border border-amber-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
                 <p className="font-medium mb-3">Torque & Safety Checklist</p>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center gap-2">
@@ -554,12 +554,12 @@ const Module3Section4_4 = () => {
 
           {/* Example 2: Resin Joint Step-by-Step */}
           <section className="mb-8">
-            <h3 className="font-medium text-foreground mb-4 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <Cable className="w-5 h-5" /> 2) Resin Joint Installation
             </h3>
             
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="rounded-lg p-4 bg-card border border-green-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                 <p className="font-medium mb-3">Preparation & Assembly</p>
                 <div className="space-y-3 text-sm">
                   <div>
@@ -589,7 +589,7 @@ const Module3Section4_4 = () => {
                 </div>
               </div>
               
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-3">Critical Points</p>
                 <div className="space-y-3 text-sm">
                   <div>
@@ -625,12 +625,12 @@ const Module3Section4_4 = () => {
 
           {/* Example 3: Heat-shrink Crimp Joint */}
           <section className="mb-8">
-            <h3 className="font-medium text-foreground mb-4 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5" /> 3) Heat-shrink Crimp Joint with Inspection
             </h3>
             
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-3">Installation Process</p>
                 <div className="space-y-3 text-sm">
                   <div>
@@ -660,7 +660,7 @@ const Module3Section4_4 = () => {
                 </div>
               </div>
               
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-3">Quality Inspection</p>
                 <div className="space-y-2 text-sm">
                   <div className="border-b border-orange-400/20 pb-2 mb-2">
@@ -711,12 +711,12 @@ const Module3Section4_4 = () => {
 
           {/* Example 4: Fault-finding Ingress Case */}
           <section className="mb-8">
-            <h3 className="font-medium text-foreground mb-4 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" /> 4) Fault-finding: Water Ingress Case Study
             </h3>
             
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-3">Scenario: External SWA Joint Failure</p>
                 <div className="space-y-3 text-sm">
                   <div>
@@ -740,7 +740,7 @@ const Module3Section4_4 = () => {
                 </div>
               </div>
               
-              <div className="rounded-lg p-4 bg-card border border-cyan-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-cyan-400/30">
                 <p className="font-medium mb-3">Diagnostic Tests & Repair</p>
                 <div className="space-y-3 text-sm">
                   <div>
@@ -785,12 +785,12 @@ const Module3Section4_4 = () => {
 
           {/* Example 5: Gland Selection Guide */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <HelpCircle className="w-5 h-5" /> 5) Quick Gland Selection by Cable OD & IP Rating
             </h3>
             
             <div className="grid gap-4">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-slate-400/30">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30">
                 <p className="font-medium mb-3">Common SWA Cable Sizes & Glands</p>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
@@ -852,7 +852,7 @@ const Module3Section4_4 = () => {
               </div>
               
               <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Selection Tips</p>
                   <ul className="list-disc pl-4 space-y-1 text-sm">
                     <li>Measure cable OD with callipers</li>
@@ -862,7 +862,7 @@ const Module3Section4_4 = () => {
                   </ul>
                 </div>
                 
-                <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                   <p className="font-medium mb-2">Environmental Guide</p>
                   <ul className="list-disc pl-4 space-y-1 text-sm">
                     <li><strong>Indoor dry:</strong> BW glands, IP54</li>
@@ -872,7 +872,7 @@ const Module3Section4_4 = () => {
                   </ul>
                 </div>
                 
-                <div className="rounded-lg p-4 bg-card border border-amber-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
                   <p className="font-medium mb-2">Common Mistakes</p>
                   <ul className="list-disc pl-4 space-y-1 text-sm">
                     <li>Gland too small: cable won't fit</li>
@@ -895,16 +895,16 @@ const Module3Section4_4 = () => {
         </Card>
 
         {/* Technical Specifications & Standards */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Technical Specifications & Standards</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Technical Specifications & Standards</h2>
           
           <section className="mb-8">
-            <h3 className="font-medium text-foreground mb-4 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5" /> Cable Gland Technical Data
             </h3>
             
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-3">Material Specifications</p>
                 <div className="space-y-3 text-sm">
                   <div>
@@ -937,7 +937,7 @@ const Module3Section4_4 = () => {
                 </div>
               </div>
               
-              <div className="rounded-lg p-4 bg-card border border-green-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                 <p className="font-medium mb-3">Performance Ratings</p>
                 <div className="space-y-3 text-sm">
                   <div>
@@ -983,12 +983,12 @@ const Module3Section4_4 = () => {
           <Separator className="my-6" />
 
           <section className="mb-8">
-            <h3 className="font-medium text-foreground mb-4 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <Cable className="w-5 h-5" /> Joint Types & Applications
             </h3>
             
             <div className="grid gap-4">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-3">Joint Classification by Application</p>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
@@ -1043,7 +1043,7 @@ const Module3Section4_4 = () => {
               </div>
               
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-4 bg-card border border-cyan-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-cyan-400/30">
                   <p className="font-medium mb-3">Low Voltage (230V-1000V)</p>
                   <div className="space-y-2 text-sm">
                     <div>
@@ -1067,7 +1067,7 @@ const Module3Section4_4 = () => {
                   </div>
                 </div>
                 
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-3">Extra Low Voltage (SELV/PELV)</p>
                   <div className="space-y-2 text-sm">
                     <div>
@@ -1104,16 +1104,16 @@ const Module3Section4_4 = () => {
         </Card>
 
         {/* Environmental & Installation Conditions */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Environmental & Installation Conditions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Environmental & Installation Conditions</h2>
           
           <section className="mb-8">
-            <h3 className="font-medium text-foreground mb-4 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" /> Environmental Classification
             </h3>
             
             <div className="grid gap-4">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-3">Aggressive Environments</p>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div>
@@ -1155,7 +1155,7 @@ const Module3Section4_4 = () => {
                 </div>
               </div>
               
-              <div className="rounded-lg p-4 bg-card border border-green-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                 <p className="font-medium mb-3">Installation Environment Assessment</p>
                 <div className="space-y-3 text-sm">
                   <div>
@@ -1215,12 +1215,12 @@ const Module3Section4_4 = () => {
           <Separator className="my-6" />
 
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-4 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <Wrench className="w-5 h-5" /> Installation Tools & Equipment
             </h3>
             
             <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-3">Essential Tools</p>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center gap-2">
@@ -1250,7 +1250,7 @@ const Module3Section4_4 = () => {
                 </div>
               </div>
               
-              <div className="rounded-lg p-4 bg-card border border-amber-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
                 <p className="font-medium mb-3">Crimping Equipment</p>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center gap-2">
@@ -1280,7 +1280,7 @@ const Module3Section4_4 = () => {
                 </div>
               </div>
               
-              <div className="rounded-lg p-4 bg-card border border-green-400/30">
+              <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                 <p className="font-medium mb-3">Testing Equipment</p>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center gap-2">
@@ -1314,16 +1314,16 @@ const Module3Section4_4 = () => {
         </Card>
 
         {/* Advanced Troubleshooting Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Advanced Troubleshooting Guide</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Advanced Troubleshooting Guide</h2>
           
           <section className="mb-8">
-            <h3 className="font-medium text-foreground mb-4 flex items-center gap-2">
+            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" /> Common Fault Scenarios
             </h3>
             
             <div className="grid gap-6">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-3">🔧 Fault 1: High Earth Loop Impedance</p>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div>
@@ -1353,7 +1353,7 @@ const Module3Section4_4 = () => {
                 </div>
               </div>
               
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-3">🔧 Fault 2: Intermittent RCD Tripping</p>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div>
@@ -1383,7 +1383,7 @@ const Module3Section4_4 = () => {
                 </div>
               </div>
               
-              <div className="rounded-lg p-4 bg-emerald-500/10 border border-emerald-500/30">
+              <div className="rounded-lg p-4 bg-elec-yellow/10 border border-elec-yellow/30">
                 <p className="font-medium mb-3">🔧 Fault 3: Cable Joint Overheating</p>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div>
@@ -1423,8 +1423,8 @@ const Module3Section4_4 = () => {
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Knowledge Check</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Knowledge Check</h2>
           <Quiz questions={quizQuestions} title="Knowledge Check" />
         </Card>
 

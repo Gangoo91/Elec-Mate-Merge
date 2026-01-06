@@ -1,19 +1,17 @@
 
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { 
-  Briefcase, 
-  GraduationCap, 
-  TrendingUp, 
-  HandHelping, 
-  Users, 
+import { SmartBackButton } from "@/components/ui/smart-back-button";
+import {
+  Briefcase,
+  GraduationCap,
+  TrendingUp,
+  HandHelping,
+  Users,
   UserCheck,
   Calculator,
   CreditCard,
-  Wrench,
-  ArrowLeft,
-  ChevronLeft
+  Wrench
 } from "lucide-react";
 
 const BusinessDevelopment = () => {
@@ -87,12 +85,7 @@ const BusinessDevelopment = () => {
             Resources and guidance to establish and grow your electrical contracting business
           </p>
         </div>
-        <Link to="/electrician/business" className="flex-shrink-0 w-full sm:w-auto">
-          <Button variant="outline" className="w-full sm:w-auto">
-            <ChevronLeft className="mr-2 h-4 w-4" />
-            Back to Business Hub
-          </Button>
-        </Link>
+        <SmartBackButton className="flex-shrink-0 w-full sm:w-auto" />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6">

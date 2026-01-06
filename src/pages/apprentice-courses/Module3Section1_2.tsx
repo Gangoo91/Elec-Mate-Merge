@@ -151,11 +151,11 @@ const Module3Section1_2: React.FC = () => {
   } as const;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.1
@@ -168,29 +168,29 @@ const Module3Section1_2: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-card">
-              <Cable className="w-6 h-6 text-foreground" />
+            <div className="p-2 rounded-lg ">
+              <Cable className="w-6 h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400">Section 3.1.2</Badge>
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">Section 3.1.2</Badge>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">Twin and Earth Cable (T&E)</h1>
-          <p className="text-muted-foreground">Understanding flat PVC sheathed cable construction, applications and installation requirements for UK electrical work.</p>
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">Twin and Earth Cable (T&E)</h1>
+          <p className="text-white">Understanding flat PVC sheathed cable construction, applications and installation requirements for UK electrical work.</p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>T&E cable contains live (brown), neutral (blue), and bare earth conductors in flat PVC sheath.</li>
                 <li>Most common cable for UK domestic installations - cost-effective and easy to install.</li>
                 <li>Common sizes: 1.0mm² (lighting), 1.5mm² (lighting), 2.5mm² (sockets), 4-6mm² (high loads).</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Flat grey cable with three conductors visible at cut ends.</li>
                 <li><strong>Use:</strong> Domestic circuits, light commercial where mechanical protection isn't critical.</li>
@@ -201,9 +201,9 @@ const Module3Section1_2: React.FC = () => {
         </Card>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Identify the construction and components of Twin and Earth cable.</li>
             <li>Explain the common sizes and their typical applications in UK installations.</li>
             <li>Recognise the benefits and limitations of T&E compared to other wiring types.</li>
@@ -214,17 +214,17 @@ const Module3Section1_2: React.FC = () => {
         </Card>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Content</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Construction */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2"><Wrench className="w-5 h-5" /> Construction of T&E Cable</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><Wrench className="w-5 h-5" /> Construction of T&E Cable</h3>
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <p><strong>Description:</strong> Twin and Earth cable consists of two insulated conductors plus a bare earth wire, all contained within a flat PVC sheath.</p>
               
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Conductor Components</p>
                   <ul className="space-y-2">
                     <li><strong>Live conductor:</strong> Brown PVC insulated (was red pre-2004)</li>
@@ -232,7 +232,7 @@ const Module3Section1_2: React.FC = () => {
                     <li><strong>CPC (earth):</strong> Bare copper wire, requires green/yellow sleeving at terminations</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                   <p className="font-medium mb-2">Protection & Design</p>
                   <ul className="space-y-2">
                     <li><strong>Sheath:</strong> Flat grey PVC for mechanical protection</li>
@@ -265,13 +265,13 @@ const Module3Section1_2: React.FC = () => {
 
           {/* Common Sizes and Applications */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2"><Zap className="w-5 h-5" /> Common Sizes and Applications</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><Zap className="w-5 h-5" /> Common Sizes and Applications</h3>
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <p><strong>Description:</strong> T&E cable is available in various conductor sizes to suit different circuit requirements and current ratings.</p>
               
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-sm">
-                  <thead className="text-muted-foreground border-b border-border/20">
+                  <thead className="text-white border-b border-white/10">
                     <tr>
                       <th className="py-3 pr-4">Size</th>
                       <th className="py-3 pr-4">Typical Current Rating</th>
@@ -279,38 +279,38 @@ const Module3Section1_2: React.FC = () => {
                       <th className="py-3 pr-4">Typical Protection</th>
                     </tr>
                   </thead>
-                  <tbody className="text-foreground">
-                    <tr className="border-t border-border/20">
+                  <tbody className="text-white">
+                    <tr className="border-t border-white/10">
                       <td className="py-3 pr-4 font-medium">1.0 mm²</td>
                       <td className="py-3 pr-4">11A (clipped direct)</td>
                       <td className="py-3 pr-4">Lighting circuits, low-power loads</td>
                       <td className="py-3 pr-4">6A MCB/RCBO</td>
                     </tr>
-                    <tr className="border-t border-border/20">
+                    <tr className="border-t border-white/10">
                       <td className="py-3 pr-4 font-medium">1.5 mm²</td>
                       <td className="py-3 pr-4">15A (clipped direct)</td>
                       <td className="py-3 pr-4">Lighting, immersion heater</td>
                       <td className="py-3 pr-4">10A MCB/RCBO</td>
                     </tr>
-                    <tr className="border-t border-border/20">
+                    <tr className="border-t border-white/10">
                       <td className="py-3 pr-4 font-medium">2.5 mm²</td>
                       <td className="py-3 pr-4">20A (clipped direct)</td>
                       <td className="py-3 pr-4">Socket ring/radial circuits</td>
                       <td className="py-3 pr-4">32A (ring), 20A (radial)</td>
                     </tr>
-                    <tr className="border-t border-border/20">
+                    <tr className="border-t border-white/10">
                       <td className="py-3 pr-4 font-medium">4.0 mm²</td>
                       <td className="py-3 pr-4">26A (clipped direct)</td>
                       <td className="py-3 pr-4">Cooker circuits, larger radials</td>
                       <td className="py-3 pr-4">32A MCB/RCBO</td>
                     </tr>
-                    <tr className="border-t border-border/20">
+                    <tr className="border-t border-white/10">
                       <td className="py-3 pr-4 font-medium">6.0 mm²</td>
                       <td className="py-3 pr-4">32A (clipped direct)</td>
                       <td className="py-3 pr-4">Showers, large cookers</td>
                       <td className="py-3 pr-4">32A MCB/RCBO</td>
                     </tr>
-                    <tr className="border-t border-border/20">
+                    <tr className="border-t border-white/10">
                       <td className="py-3 pr-4 font-medium">10.0 mm²</td>
                       <td className="py-3 pr-4">43A (clipped direct)</td>
                       <td className="py-3 pr-4">Electric showers, sub-mains</td>
@@ -343,10 +343,10 @@ const Module3Section1_2: React.FC = () => {
 
           {/* Advantages */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3">Advantages of T&E Cable</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-3">Advantages of T&E Cable</h3>
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                   <p className="font-medium mb-2">Installation Benefits</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Easy to handle and route due to flat profile</li>
@@ -356,7 +356,7 @@ const Module3Section1_2: React.FC = () => {
                     <li>Wide range of accessories available</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Economic Advantages</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Cost-effective compared to other cable types</li>
@@ -368,7 +368,7 @@ const Module3Section1_2: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-card border border-emerald-500/30 rounded-lg p-4">
+              <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
                 <p className="font-medium mb-2">Technical Advantages:</p>
                 <ul className="list-disc pl-4 space-y-1">
                   <li>Suitable for most domestic and light commercial applications</li>
@@ -383,9 +383,9 @@ const Module3Section1_2: React.FC = () => {
 
           {/* Limitations */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3">Limitations and Restrictions</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <h3 className="font-medium text-white mb-3">Limitations and Restrictions</h3>
+            <div className="space-y-4 text-xs sm:text-sm text-white">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-2">Environmental Limitations</p>
                 <ul className="list-disc pl-4 space-y-1">
                   <li>Not suitable for outdoor direct burial without protection</li>
@@ -396,7 +396,7 @@ const Module3Section1_2: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-2">Installation Restrictions</p>
                 <ul className="list-disc pl-4 space-y-1">
                   <li>Requires additional containment in areas at risk of damage</li>
@@ -431,10 +431,10 @@ const Module3Section1_2: React.FC = () => {
 
           {/* Installation Considerations */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3">Installation Considerations and Best Practice</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-3">Installation Considerations and Best Practice</h3>
+            <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Fixing and Support</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Use flat T&E cable clips at maximum 300mm horizontal spacing</li>
@@ -444,7 +444,7 @@ const Module3Section1_2: React.FC = () => {
                     <li>Use appropriate clip size for cable dimensions</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Routing and Protection</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Avoid sharp bends that could damage insulation</li>
@@ -485,14 +485,14 @@ const Module3Section1_2: React.FC = () => {
 
           {/* Practical Installation Guide */}
           <section className="mb-6">
-            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2"><Settings className="w-5 h-5" /> Practical Installation Guide</h3>
-            <div className="space-y-6 text-xs sm:text-sm text-foreground">
+            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><Settings className="w-5 h-5" /> Practical Installation Guide</h3>
+            <div className="space-y-6 text-xs sm:text-sm text-white">
               
               {/* Cable Clips and Fixings */}
               <div className="space-y-4">
-                <h4 className="font-medium text-foreground">Cable Clips and Fixings</h4>
+                <h4 className="font-medium text-white">Cable Clips and Fixings</h4>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                     <p className="font-medium mb-2">Clip Types and Sizes</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li><strong>Flat T&E clips:</strong> White or grey plastic, sized for cable width</li>
@@ -502,7 +502,7 @@ const Module3Section1_2: React.FC = () => {
                       <li><strong>Heavy-duty clips:</strong> Metal clips for industrial applications</li>
                     </ul>
                   </div>
-                  <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                  <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                     <p className="font-medium mb-2">Installation Technique</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Mark clip positions with pencil before drilling</li>
@@ -528,12 +528,12 @@ const Module3Section1_2: React.FC = () => {
 
               {/* Cable Stripping and Preparation */}
               <div className="space-y-4">
-                <h4 className="font-medium text-foreground flex items-center gap-2">
+                <h4 className="font-medium text-white flex items-center gap-2">
                   <Scissors className="w-4 h-4" />
                   Cable Stripping and Preparation
                 </h4>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                     <p className="font-medium mb-2">Tools Required</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li><strong>Cable knife:</strong> Sharp, retractable blade</li>
@@ -543,7 +543,7 @@ const Module3Section1_2: React.FC = () => {
                       <li><strong>Green/yellow sleeving:</strong> Various sizes</li>
                     </ul>
                   </div>
-                  <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                     <p className="font-medium mb-2">Stripping Technique</p>
                     <ol className="list-decimal pl-4 space-y-1">
                       <li>Measure required strip length (typically 15-20mm)</li>
@@ -572,9 +572,9 @@ const Module3Section1_2: React.FC = () => {
 
               {/* Sleeving Requirements */}
               <div className="space-y-4">
-                <h4 className="font-medium text-foreground">Sleeving Requirements and Techniques</h4>
+                <h4 className="font-medium text-white">Sleeving Requirements and Techniques</h4>
                 <div className="space-y-3">
-                  <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                  <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                     <p className="font-medium mb-2">When Sleeving is Required</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li><strong>All CPC terminations:</strong> Must be sleeved green/yellow</li>
@@ -585,7 +585,7 @@ const Module3Section1_2: React.FC = () => {
                     </ul>
                   </div>
 
-                  <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                     <p className="font-medium mb-2">Sleeving Selection and Application</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li><strong>Size selection:</strong> Snug fit over conductor, not too tight</li>
@@ -600,9 +600,9 @@ const Module3Section1_2: React.FC = () => {
 
               {/* Termination Techniques */}
               <div className="space-y-4">
-                <h4 className="font-medium text-foreground">Termination Techniques</h4>
+                <h4 className="font-medium text-white">Termination Techniques</h4>
                 <div className="space-y-3">
-                  <div className="rounded-lg p-4 bg-card border border-cyan-400/30">
+                  <div className="rounded-lg p-4 bg-transparent border border-cyan-400/30">
                     <p className="font-medium mb-2">Socket Outlet Termination</p>
                     <ol className="list-decimal pl-4 space-y-1">
                       <li>Strip cable sheath 25-30mm, individual conductors 12mm</li>
@@ -614,7 +614,7 @@ const Module3Section1_2: React.FC = () => {
                     </ol>
                   </div>
 
-                  <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                     <p className="font-medium mb-2">Consumer Unit Termination</p>
                     <ol className="list-decimal pl-4 space-y-1">
                       <li>Strip cable for entry into enclosure (typically 40-50mm)</li>
@@ -626,7 +626,7 @@ const Module3Section1_2: React.FC = () => {
                     </ol>
                   </div>
 
-                  <div className="rounded-lg p-4 bg-emerald-500/10 border border-emerald-500/30">
+                  <div className="rounded-lg p-4 bg-elec-yellow/10 border border-elec-yellow/30">
                     <p className="font-medium mb-2">Junction Box Connections</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Use maintenance-free connectors (Wago, choc blocks with covers)</li>
@@ -641,9 +641,9 @@ const Module3Section1_2: React.FC = () => {
 
               {/* Common Tools and Equipment */}
               <div className="space-y-4">
-                <h4 className="font-medium text-foreground">Essential Tools and Equipment</h4>
+                <h4 className="font-medium text-white">Essential Tools and Equipment</h4>
                 <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-                  <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                     <p className="font-medium mb-2">Cutting Tools</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Cable knife/stripping tool</li>
@@ -652,7 +652,7 @@ const Module3Section1_2: React.FC = () => {
                       <li>Electrical scissors</li>
                     </ul>
                   </div>
-                  <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                  <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                     <p className="font-medium mb-2">Installation Tools</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Cordless drill/driver</li>
@@ -662,7 +662,7 @@ const Module3Section1_2: React.FC = () => {
                       <li>Tape measure</li>
                     </ul>
                   </div>
-                  <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                     <p className="font-medium mb-2">Testing Equipment</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Multifunction tester</li>
@@ -678,11 +678,11 @@ const Module3Section1_2: React.FC = () => {
         </Card>
 
         {/* Real-world scenario */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-world scenario: Kitchen Rewire</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <div className="flex items-start gap-3 bg-card border-l-4 border-emerald-400 p-4 rounded">
-              <Home className="w-5 h-5 text-emerald-400 mt-0.5" />
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-world scenario: Kitchen Rewire</h2>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <div className="flex items-start gap-3 border-l-4 border-emerald-400 p-4 rounded">
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5" />
               <div>
                 <p className="font-medium mb-2">The Project</p>
                 <p>A domestic property kitchen rewire required complete electrical installation to serve:</p>
@@ -699,7 +699,7 @@ const Module3Section1_2: React.FC = () => {
             <div className="space-y-3">
               <p className="font-medium">T&E Cable Selection and Installation Strategy:</p>
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-4 bg-card border border-green-400/30">
+                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                   <p className="font-medium mb-2">Cable Selection</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>2.5mm² T&E:</strong> Socket ring circuit (32A protection)</li>
@@ -708,7 +708,7 @@ const Module3Section1_2: React.FC = () => {
                     <li><strong>1.0mm² T&E:</strong> Extractor fan (6A protection)</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Protection Strategy</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>Behind units:</strong> Mini-trunking for mechanical protection</li>
@@ -720,7 +720,7 @@ const Module3Section1_2: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-background/20 border-l-4 border-emerald-500 p-4 rounded">
+            <div className="bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded">
               <p className="font-medium mb-2">Key Success Factors:</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Proper cable sizing calculations including voltage drop for longer runs</li>
@@ -734,10 +734,10 @@ const Module3Section1_2: React.FC = () => {
         </Card>
 
         {/* Common mistakes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Common Mistakes and How to Avoid Them</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Common Mistakes and How to Avoid Them</h2>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 flex items-center gap-2"><AlertTriangle className="w-4 h-4" /> Termination Errors</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li><strong>Wrong:</strong> Leaving CPC bare at terminations</li>
@@ -747,7 +747,7 @@ const Module3Section1_2: React.FC = () => {
               </ul>
             </div>
 
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 flex items-center gap-2"><AlertTriangle className="w-4 h-4" /> Installation Mistakes</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li><strong>Wrong:</strong> Excessive clip spacing causing cable sag</li>
@@ -757,7 +757,7 @@ const Module3Section1_2: React.FC = () => {
               </ul>
             </div>
 
-            <div className="rounded-lg p-4 bg-emerald-500/10 border border-emerald-500/30">
+            <div className="rounded-lg p-4 bg-elec-yellow/10 border border-elec-yellow/30">
               <p className="font-medium mb-2 flex items-center gap-2"><CheckCircle2 className="w-4 h-4" /> Best Practice Tips</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li>Always calculate voltage drop for longer cable runs</li>
@@ -771,10 +771,10 @@ const Module3Section1_2: React.FC = () => {
         </Card>
 
         {/* BS 7671 Context */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">BS 7671 Context and Compliance</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">BS 7671 Context and Compliance</h2>
+          <div className="space-y-4 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2">Cable Selection (Chapter 52)</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li>T&E cables must be suitable for environmental conditions</li>
@@ -784,7 +784,7 @@ const Module3Section1_2: React.FC = () => {
               </ul>
             </div>
 
-            <div className="rounded-lg p-4 bg-card border border-green-400/30">
+            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
               <p className="font-medium mb-2">Installation Methods (Chapter 52)</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li>Follow prescribed installation methods for current ratings</li>
@@ -794,7 +794,7 @@ const Module3Section1_2: React.FC = () => {
               </ul>
             </div>
 
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2">Earth Arrangements (Chapter 54)</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li>CPC must be identified with green/yellow sleeving</li>
@@ -804,29 +804,29 @@ const Module3Section1_2: React.FC = () => {
               </ul>
             </div>
 
-            <div className="flex items-start gap-3 bg-background/20 border-l-4 border-emerald-500 p-4 rounded mt-4" role="alert">
-              <AlertTriangle className="w-5 h-5 text-emerald-400 mt-0.5" />
-              <p className="text-foreground">Isolate, lock-off and prove dead before work. Follow manufacturer instructions and BS 7671 requirements for all T&E installations.</p>
+            <div className="flex items-start gap-3 bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded mt-4" role="alert">
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5" />
+              <p className="text-white">Isolate, lock-off and prove dead before work. Follow manufacturer instructions and BS 7671 requirements for all T&E installations.</p>
             </div>
           </div>
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">FAQs</h2>
-          <ul className="space-y-3 text-xs sm:text-sm text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
+          <ul className="space-y-3 text-xs sm:text-sm text-white">
             {faqs.map((f, i) => (
-              <li key={i} className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
+              <li key={i} className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
                 <p className="font-medium mb-1">{f.q}</p>
-                <p className="text-muted-foreground">{f.a}</p>
+                <p className="text-white">{f.a}</p>
               </li>
             ))}
           </ul>
         </Card>
 
         {/* Quick Knowledge Check */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Quick Knowledge Check</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick Knowledge Check</h2>
           <div className="space-y-6">
             {quickCheckQuestions.map((q, index) => (
               <InlineCheck
@@ -842,13 +842,13 @@ const Module3Section1_2: React.FC = () => {
         </Card>
 
         {/* Quiz */}
-        <Card className="mb-16 p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Section Quiz</h2>
+        <Card className="mb-16 p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Section Quiz</h2>
           <Quiz questions={quizQuestions as any} title="Twin and Earth Cable Knowledge Check" />
         </Card>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-border/20">
+        <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" asChild>
             <Link to="../1-1">
               <ArrowLeft className="w-4 h-4 mr-2" />

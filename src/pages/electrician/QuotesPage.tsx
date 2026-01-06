@@ -2,7 +2,8 @@ import { Link, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { MobileButton } from "@/components/ui/mobile-button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Plus, X } from "lucide-react";
+import { Plus, X } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { useQuoteStorage } from "@/hooks/useQuoteStorage";
 import RecentQuotesList from "@/components/electrician/quote-builder/RecentQuotesList";
 import { filterQuotesByStatus } from "@/utils/quote-analytics";
@@ -82,11 +83,7 @@ const QuotesPage = () => {
               </p>
             </div>
             <div className="flex gap-3 w-full sm:w-auto">
-              <Link to="/electrician" className="w-full sm:w-auto">
-                <MobileButton variant="outline" size="wide" className="sm:w-auto">
-                  <ArrowLeft className="mr-2 h-4 w-4" /> Back
-                </MobileButton>
-              </Link>
+              <SmartBackButton />
             </div>
           </div>
         </div>

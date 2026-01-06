@@ -2,9 +2,10 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { GraduationCap, ArrowLeft, Users, FileText, BookOpen, Phone, Calculator, Heart, ChevronDown } from "lucide-react";
+import { GraduationCap, Users, FileText, BookOpen, Phone, Calculator, Heart, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useState } from "react";
 import RecruitmentTab from "@/components/electrician/business-development/apprentices/RecruitmentTab";
@@ -34,12 +35,7 @@ const BusinessApprentices = () => {
   return (
     <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8 animate-fade-in px-4 sm:px-6">
       <div className="flex items-center gap-2">
-        <Link to="/electrician/business-development">
-          <Button variant="ghost" size="sm" className="gap-1">
-            <ArrowLeft className="h-4 w-4" />
-            <span>Back to Business Development</span>
-          </Button>
-        </Link>
+        <SmartBackButton />
       </div>
 
       <div className="text-center space-y-4 px-4">

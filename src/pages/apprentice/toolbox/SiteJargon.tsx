@@ -4,9 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, BookOpen, Users, Lightbulb, ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import { MessageCircle, BookOpen, Users, Lightbulb } from "lucide-react";
 import { siteJargonTerms, siteJargonCategories } from "@/data/apprentice/siteJargonData";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import JargonSearchAndFilter from "@/components/apprentice/site-jargon/JargonSearchAndFilter";
 import JargonTermCard from "@/components/apprentice/site-jargon/JargonTermCard";
 import LearningFeatures from "@/components/apprentice/site-jargon/LearningFeatures";
@@ -108,12 +108,7 @@ const SiteJargon = () => {
             From basic electrical terms to complex industry jargon, learn what every electrician needs to know.
           </p>
         </div>
-        <Link to="/apprentice/toolbox" className="flex-shrink-0">
-          <Button variant="outline">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Guidance Area
-          </Button>
-        </Link>
+        <SmartBackButton />
       </div>
 
       {/* Statistics Cards */}

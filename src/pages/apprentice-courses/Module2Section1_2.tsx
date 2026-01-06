@@ -195,11 +195,11 @@ const Module2Section1_2 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 2.1
@@ -212,15 +212,15 @@ const Module2Section1_2 = () => {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <Zap className="h-8 w-8 text-emerald-400" />
+            <Zap className="h-8 w-8 text-elec-yellow" />
             <div>
-              <span className="inline-block bg-emerald-500 text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
+              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
                 Module 2.1.2
               </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
                 Voltage, Current, and Resistance
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+              <p className="text-xl text-white max-w-3xl mt-2">
                 Definitions and Relationships – The Foundation of All Electrical Work
               </p>
             </div>
@@ -228,11 +228,11 @@ const Module2Section1_2 = () => {
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Voltage:</strong> Electrical pressure that pushes current through circuits (measured in Volts).</li>
                 <li><strong>Current:</strong> Flow of electrons through conductors (measured in Amperes).</li>
@@ -241,8 +241,8 @@ const Module2Section1_2 = () => {
                 <li><strong>Applications:</strong> Essential for circuit design, fault finding, and safety calculations.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-emerald-500/10 border-l-4 border-l-emerald-500 border border-emerald-500/30">
-              <p className="font-semibold text-emerald-400 mb-2">Spot it / Use it</p>
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Multimeter readings (230V, 13A, 2.3Ω), cable ratings, fuse sizes.</li>
                 <li><strong>Use:</strong> Circuit testing, load calculations, cable selection, fault diagnosis.</li>
@@ -253,32 +253,32 @@ const Module2Section1_2 = () => {
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
-          <ul className="space-y-3 text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
+          <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Define voltage, current, and resistance with real-world examples</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Explain the relationship between these quantities using Ohm's Law</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Identify typical voltage and current values in UK electrical systems</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Understand factors affecting resistance in conductors and circuits</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Apply basic power calculations using voltage and current</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Use Ohm's Law calculator for practical electrical calculations</span>
             </li>
           </ul>
@@ -286,12 +286,12 @@ const Module2Section1_2 = () => {
 
         {/* Section 1: Voltage */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
+          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
               Voltage (V) - Electrical Pressure
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 <strong>Voltage</strong> is the electrical pressure that pushes current through a circuit. 
                 Think of it like water pressure in pipes - higher pressure pushes more water through.
@@ -328,12 +328,12 @@ const Module2Section1_2 = () => {
 
         {/* Section 2: Current */}
         <div className="mb-8">
-          <div className="border-l-4 border-emerald-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-emerald-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
+          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
               Current (I) - Flow of Electrons
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 <strong>Current</strong> is the flow of electrons through a conductor. Like water flowing through a pipe, 
                 it's the actual movement of charge carriers through the circuit.
@@ -353,7 +353,7 @@ const Module2Section1_2 = () => {
 
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <p className="font-bold text-emerald-400">DC (Direct Current)</p>
+                    <p className="font-bold text-elec-yellow">DC (Direct Current)</p>
                     <ul className="list-disc pl-6 space-y-1 text-sm">
                       <li>Flows in one direction only</li>
                       <li>From batteries, solar panels, DC power supplies</li>
@@ -363,7 +363,7 @@ const Module2Section1_2 = () => {
                   </div>
                   
                   <div>
-                    <p className="font-bold text-emerald-400">AC (Alternating Current)</p>
+                    <p className="font-bold text-elec-yellow">AC (Alternating Current)</p>
                     <ul className="list-disc pl-6 space-y-1 text-sm">
                       <li>Changes direction 50 times per second (50Hz in UK)</li>
                       <li>UK mains supply - generated by power stations</li>
@@ -381,12 +381,12 @@ const Module2Section1_2 = () => {
 
         {/* Section 3: Resistance */}
         <div className="mb-8">
-          <div className="border-l-4 border-purple-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="border-l-4 border-purple-500 dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
               Resistance (R) - Opposition to Current
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 <strong>Resistance</strong> opposes the flow of current. Like friction in water pipes, 
                 it reduces flow and converts electrical energy to heat.
@@ -416,7 +416,7 @@ const Module2Section1_2 = () => {
                   </div>
                   
                   <div>
-                    <p className="font-bold text-emerald-400">Poor Conductors (High Resistance)</p>
+                    <p className="font-bold text-elec-yellow">Poor Conductors (High Resistance)</p>
                     <ul className="list-disc pl-6 space-y-1 text-sm">
                       <li><strong>PVC</strong> - cable insulation</li>
                       <li><strong>Rubber</strong> - flexible insulation</li>
@@ -434,19 +434,19 @@ const Module2Section1_2 = () => {
 
         {/* Section 4: The Relationship - Ohm's Law */}
         <div className="mb-8">
-          <div className="border-l-4 border-amber-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="border-l-4 border-amber-500 dark:bg-card p-6 rounded-r-lg">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">4</span>
               Ohm's Law - How V, I, and R Relate
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-white">
               <p>
                 <strong>Ohm's Law</strong> shows the mathematical relationship between voltage, current, and resistance. 
                 It's the most important formula in electrical work.
               </p>
               
               <div className="space-y-4">
-                <div className="bg-background/50 p-4 rounded-lg border">
+                <div className="bg-[#121212]/50 p-4 rounded-lg border">
                   <p className="font-bold text-center text-lg mb-2">V = I × R</p>
                   <p className="text-center text-sm">Voltage = Current × Resistance</p>
                   <div className="grid grid-cols-3 gap-4 mt-4 text-sm">
@@ -480,21 +480,21 @@ const Module2Section1_2 = () => {
         </div>
 
         {/* Ohm's Law Calculator */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-            <Calculator className="h-5 w-5 text-emerald-400" />
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <Calculator className="h-5 w-5 text-elec-yellow" />
             Interactive Ohm's Law Calculator
           </h2>
-          <p className="text-muted-foreground mb-4">
+          <p className="text-white mb-4">
             Use this calculator to practice Ohm's Law calculations. Enter any two values to find the third:
           </p>
           <OhmsCalculator />
         </Card>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Practical Guidance for Apprentices</h2>
-          <div className="space-y-4 text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance for Apprentices</h2>
+          <div className="space-y-4 text-white">
             <div>
               <p className="font-bold">Why these concepts matter on site:</p>
               <ul className="list-disc pl-6 space-y-1 text-sm">
@@ -522,10 +522,10 @@ const Module2Section1_2 = () => {
         <UnitsPocketCard />
 
         {/* Real-World Scenario */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Real-World Scenario</h2>
-          <div className="space-y-4 text-foreground">
-            <div className="bg-background/50 p-4 rounded-lg border">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Scenario</h2>
+          <div className="space-y-4 text-white">
+            <div className="bg-[#121212]/50 p-4 rounded-lg border">
               <p className="font-bold mb-2">Scenario: Testing a Ring Final Circuit</p>
               <p className="text-sm">
                 You're testing a 32A ring final circuit in a domestic property. Your multimeter shows:
@@ -545,9 +545,9 @@ const Module2Section1_2 = () => {
               </ul>
             </div>
 
-            <div className="bg-card border border-emerald-500/30 p-4 rounded-lg">
+            <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
               <p className="font-semibold text-emerald-600 mb-2">This shows how V, I, R knowledge helps you:</p>
-              <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-foreground">
+              <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                 <li>Verify circuit safety through calculations</li>
                 <li>Identify potential problems before they cause issues</li>
                 <li>Understand what your test equipment is telling you</li>
@@ -558,22 +558,22 @@ const Module2Section1_2 = () => {
         </Card>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-border/20 pb-4 last:border-b-0">
-                <p className="font-semibold text-foreground mb-2">{faq.question}</p>
-                <p className="text-muted-foreground text-sm">{faq.answer}</p>
+              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
+                <p className="font-semibold text-white mb-2">{faq.question}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>
         </Card>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
-          <div className="space-y-4 text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+          <div className="space-y-4 text-white">
             <p>
               Understanding voltage, current, and resistance is fundamental to all electrical work. 
               These three quantities, governed by Ohm's Law, form the foundation of circuit analysis, 
@@ -582,10 +582,10 @@ const Module2Section1_2 = () => {
             
             <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-sm">
               <div className="bg-card border border-border/30 p-4 rounded-lg">
-                <p className="font-bold text-emerald-400 mb-2">Voltage (V)</p>
+                <p className="font-bold text-elec-yellow mb-2">Voltage (V)</p>
                 <p>The electrical pressure that drives current through circuits. UK mains = 230V.</p>
               </div>
-              <div className="bg-card border border-emerald-500/30 p-4 rounded-lg">
+              <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="font-bold text-emerald-600 mb-2">Current (I)</p>
                 <p>The flow of electrons through conductors. Measured in Amperes (A).</p>
               </div>
@@ -595,7 +595,7 @@ const Module2Section1_2 = () => {
               </div>
             </div>
 
-            <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
+            <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
               <p className="font-bold mb-2">Key Takeaway for Apprentices:</p>
               <p className="text-sm">
                 Master these concepts now - they'll help you understand every aspect of electrical work, 

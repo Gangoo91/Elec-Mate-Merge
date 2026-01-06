@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -710,7 +710,7 @@ const SpecialistInstallations = () => {
   return (
     <div className="max-w-7xl mx-auto space-y-6 animate-fade-in p-4">
       <div className="mb-6">
-        <BackButton customUrl="/apprentice/on-job-tools/electrical-installation-guides" label="Back to Installation Guides" />
+        <SmartBackButton />
       </div>
 
       <div className="space-y-6">

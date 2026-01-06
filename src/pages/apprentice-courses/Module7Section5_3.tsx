@@ -138,11 +138,11 @@ const Module7Section5_3 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#121212]">
       {/* Top header bar */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
+      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-0 text-sm sm:text-base" asChild>
+          <Button variant="ghost" className="text-white hover:text-white p-0 text-sm sm:text-base" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 7.5
@@ -156,62 +156,62 @@ const Module7Section5_3 = () => {
         {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-            <div className="p-1.5 sm:p-2 rounded-lg bg-card">
-              <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
+            <div className="p-1.5 sm:p-2 rounded-lg ">
+              <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </div>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 text-xs sm:text-sm">
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs sm:text-sm">
               Section 7.5.3
             </Badge>
           </div>
-          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             GS38-Compliant Testing Practices
           </h1>
-          <p className="text-muted-foreground text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Master GS38 safety standards for electrical test equipment, including fused leads, shrouded probes, and compliance requirements for safe electrical testing practices.
           </p>
         </header>
 
         {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-            <Target className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground">Spot it in 30 Seconds</h2>
+            <Target className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/30">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 sm:mb-3">In 30 seconds</p>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Check test leads have fuses fitted</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Verify probe tips show maximum 2mm exposed metal</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Confirm finger guards are present on probes</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span>Check leads are double-insulated and undamaged</span>
                 </li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-emerald-500/20">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/20">
               <p className="font-medium mb-2 sm:mb-3">Spot it / Use it / Check it</p>
               <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Spot:</strong> Damaged insulation, excessive exposed tips, missing fuses, homemade equipment</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Use:</strong> Only GS38-compliant test equipment with proper ratings</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-foreground">•</span>
+                  <span className="text-white">•</span>
                   <span><strong>Check:</strong> Visual inspection before each use, report non-compliant equipment</span>
                 </li>
               </ul>
@@ -220,18 +220,18 @@ const Module7Section5_3 = () => {
         </Card>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Introduction</h2>
-          <p className="text-sm sm:text-base text-foreground mb-4">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Introduction</h2>
+          <p className="text-sm sm:text-base text-white mb-4">
             When using test equipment, safety depends not only on the electrician but also on the design and condition of the instruments themselves. The Health and Safety Executive's GS38 guidance note sets out the minimum safety requirements for electrical test equipment in the UK. Compliance with GS38 protects electricians from shock, burns, and arc flash injuries during testing. Apprentices must become familiar with these requirements and treat them as standard practice in every situation, not just during formal inspections.
           </p>
         </Card>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4">Learning Outcomes</h2>
-          <p className="text-sm sm:text-base text-foreground mb-3 sm:mb-4">By the end of this subsection, you should be able to:</p>
-          <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-foreground">
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Learning Outcomes</h2>
+          <p className="text-sm sm:text-base text-white mb-3 sm:mb-4">By the end of this subsection, you should be able to:</p>
+          <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-white">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" />
               <span>Explain what GS38 requires for electrical test equipment</span>
@@ -248,18 +248,18 @@ const Module7Section5_3 = () => {
         </Card>
 
         {/* Content / Learning */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-6">Content / Learning</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-xl sm:text-2xl font-bold text-white mb-6">Content / Learning</h2>
           
           {/* Section 1: GS38 Safety Requirements */}
-          <div className="border-l-4 border-emerald-500 pl-4 sm:pl-6 space-y-3 sm:space-y-4 mb-6">
-            <h3 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400">1. GS38 Safety Requirements</h3>
-            <p className="text-sm sm:text-base text-foreground">
+          <div className="border-l-4 border-elec-yellow pl-4 sm:pl-6 space-y-3 sm:space-y-4 mb-6">
+            <h3 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow">1. GS38 Safety Requirements</h3>
+            <p className="text-sm sm:text-base text-white">
               GS38 focuses on the safe design of test leads, probes, and instruments used for electrical testing. The key requirements are designed to protect electricians from electrical shock, arc flash, and related injuries during routine testing work.
             </p>
-            <div className="bg-card border border-emerald-500/20 rounded-lg p-3 sm:p-4 space-y-2 sm:space-y-3">
-              <h4 className="font-semibold text-emerald-400 text-sm sm:text-base">Essential GS38 Features:</h4>
-              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
+            <div className="bg-card border border-elec-yellow/20 rounded-lg p-3 sm:p-4 space-y-2 sm:space-y-3">
+              <h4 className="font-semibold text-elec-yellow text-sm sm:text-base">Essential GS38 Features:</h4>
+              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-xs sm:text-sm text-white">
                 <li><strong>Fused leads:</strong> Test leads must contain high-breaking capacity (HBC) fuses to protect the user if a short circuit occurs during testing</li>
                 <li><strong>Shrouded probes:</strong> Only 2 mm of exposed metal should be visible at the probe tip to reduce accidental contact risk</li>
                 <li><strong>Finger guards:</strong> Probes must have guards to prevent fingers from slipping forward onto live conductors</li>
@@ -284,12 +284,12 @@ const Module7Section5_3 = () => {
           {/* Section 2: Prohibited Equipment */}
           <div className="border-l-4 border-green-500 pl-4 sm:pl-6 space-y-3 sm:space-y-4 mb-6">
             <h3 className="text-lg sm:text-lg sm:text-xl font-semibold text-green-400">2. Prohibited Equipment and Practices</h3>
-            <p className="text-sm sm:text-base text-foreground">
+            <p className="text-sm sm:text-base text-white">
               GS38 explicitly prohibits the use of certain types of equipment and modifications that compromise safety standards. Understanding what cannot be used is as important as knowing what should be used.
             </p>
             <div className="bg-card border border-green-500/20 rounded-lg p-3 sm:p-4 space-y-2 sm:space-y-3">
               <h4 className="font-semibold text-green-400 text-sm sm:text-base">Never Use:</h4>
-              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
+              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-xs sm:text-sm text-white">
                 <li><strong>Homemade test equipment:</strong> Cannot guarantee compliance with safety standards</li>
                 <li><strong>Modified equipment:</strong> Alterations may compromise safety features</li>
                 <li><strong>Damaged leads:</strong> Cracked insulation or exposed conductors are dangerous</li>
@@ -314,12 +314,12 @@ const Module7Section5_3 = () => {
           {/* Section 3: Legal Compliance */}
           <div className="border-l-4 border-amber-500 pl-4 sm:pl-6 space-y-3 sm:space-y-4 mb-6">
             <h3 className="text-lg sm:text-lg sm:text-xl font-semibold text-amber-400">3. Legal Framework and Compliance</h3>
-            <p className="text-sm sm:text-base text-foreground">
+            <p className="text-sm sm:text-base text-white">
               GS38 compliance is not optional—it is underpinned by legal requirements that make adherence to these standards a duty for all electrical workers. Understanding the legal context helps emphasise why these standards matter.
             </p>
             <div className="bg-card border border-amber-500/20 rounded-lg p-3 sm:p-4 space-y-2 sm:space-y-3">
               <h4 className="font-semibold text-amber-400 text-sm sm:text-base">Legal Requirements:</h4>
-              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
+              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-xs sm:text-sm text-white">
                 <li><strong>Electricity at Work Regulations 1989:</strong> Provides the legal framework requiring safe electrical work practices</li>
                 <li><strong>Daily inspection duty:</strong> Electricians must visually inspect test equipment before each use</li>
                 <li><strong>Employer responsibilities:</strong> Must provide GS38-compliant equipment and training</li>
@@ -343,13 +343,13 @@ const Module7Section5_3 = () => {
 
           {/* Section 4: Professional Practice */}
           <div className="border-l-4 border-purple-500 pl-4 sm:pl-6 space-y-3 sm:space-y-4">
-            <h3 className="text-lg sm:text-lg sm:text-xl font-semibold text-emerald-400">4. Professional Practice and Implementation</h3>
-            <p className="text-sm sm:text-base text-foreground">
+            <h3 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow">4. Professional Practice and Implementation</h3>
+            <p className="text-sm sm:text-base text-white">
               Developing professional habits around GS38 compliance ensures that safety becomes automatic rather than an afterthought. This section covers how to integrate these standards into daily electrical work.
             </p>
             <div className="bg-card border border-purple-500/20 rounded-lg p-3 sm:p-4 space-y-2 sm:space-y-3">
-              <h4 className="font-semibold text-emerald-400 text-sm sm:text-base">Daily Practice Routine:</h4>
-              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-xs sm:text-sm text-foreground">
+              <h4 className="font-semibold text-elec-yellow text-sm sm:text-base">Daily Practice Routine:</h4>
+              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-xs sm:text-sm text-white">
                 <li><strong>Pre-use inspection:</strong> Check every piece of test equipment before starting work</li>
                 <li><strong>Equipment selection:</strong> Choose appropriate category-rated instruments for the system being tested</li>
                 <li><strong>Damage reporting:</strong> Immediately report and remove any non-compliant equipment from service</li>
@@ -374,20 +374,20 @@ const Module7Section5_3 = () => {
 
         {/* Real-World Applications */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-gradient-to-r from-green-500/5 to-emerald-500/10 border-green-500/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Real-World Applications</h2>
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Real-World Applications</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
-              <h3 className="font-semibold text-foreground mb-2">Case Study 1: Non-Compliant Probes</h3>
-              <p className="text-sm text-muted-foreground mb-2">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
+              <h3 className="font-semibold text-white mb-2">Case Study 1: Non-Compliant Probes</h3>
+              <p className="text-sm text-white mb-2">
                 An electrician using old test probes with 8mm exposed tips was testing a distribution board. The long metal tips slipped and created a short circuit between phases, causing a flashover that resulted in burns and equipment damage.
               </p>
               <p className="text-xs text-amber-400 font-medium">
                 GS38-compliant probes with 2mm tips and finger guards would have prevented this accident.
               </p>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
-              <h3 className="font-semibold text-foreground mb-2">Case Study 2: Proper Equipment Management</h3>
-              <p className="text-sm text-muted-foreground mb-2">
+            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
+              <h3 className="font-semibold text-white mb-2">Case Study 2: Proper Equipment Management</h3>
+              <p className="text-sm text-white mb-2">
                 An apprentice noticed damaged insulation on test leads and immediately reported it to his supervisor. He was provided with GS38-compliant replacement equipment and commended for following safety protocols.
               </p>
               <p className="text-xs text-green-400 font-medium">
@@ -399,8 +399,8 @@ const Module7Section5_3 = () => {
 
         {/* Key Takeaways */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-gradient-to-r from-purple-500/5 to-pink-500/5 border-purple-500/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Key Takeaways</h2>
-          <ul className="space-y-2 text-xs sm:text-sm text-foreground">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Key Takeaways</h2>
+          <ul className="space-y-2 text-xs sm:text-sm text-white">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
               <span>GS38 sets mandatory safety standards for electrical test equipment in the UK</span>
@@ -425,8 +425,8 @@ const Module7Section5_3 = () => {
         </Card>
 
         {/* Test Your Knowledge */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground mb-4">Test Your Knowledge</h2>
+        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Test Your Knowledge</h2>
           <Quiz questions={quizQuestions} title="GS38-Compliant Testing Practices Quiz" />
         </Card>
 

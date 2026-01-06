@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
-  ArrowLeft,
   ArrowRight,
   Shield,
   FileSearch,
@@ -71,15 +70,7 @@ const InspectionTesting = () => {
         <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-4">
             {/* Back Button */}
-            <Link to="/apprentice">
-              <Button
-                variant="ghost"
-                className="w-fit text-muted-foreground hover:text-white p-0"
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Apprentice Hub
-              </Button>
-            </Link>
+            <SmartBackButton />
 
             <div>
               <h1 className="text-2xl font-bold text-white flex items-center gap-2">
