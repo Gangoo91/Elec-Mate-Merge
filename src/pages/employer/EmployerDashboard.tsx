@@ -498,7 +498,7 @@ const EmployerDashboard = () => {
 
   return (
     <EmployerProvider>
-      <div className="animate-fade-in pb-20 md:pb-0">
+      <div className="animate-fade-in pb-20 md:pb-0 px-4 sm:px-6">
         {/* Back navigation for sub-sections */}
         {activeSection !== "overview" && (
           <div className="mb-4">

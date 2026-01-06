@@ -86,7 +86,7 @@ export default function StudyCentreIndex() {
   ];
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in px-4 sm:px-6">
       {/* Header */}
       <div className="flex items-center gap-3 sm:gap-4">
         <div className="p-2.5 sm:p-3 rounded-xl bg-primary/10">

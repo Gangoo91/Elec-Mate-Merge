@@ -210,9 +210,9 @@ export const EICRWizard: React.FC<EICRWizardProps> = ({
   };
 
   return (
-    <div className="flex flex-col h-full min-h-screen bg-background">
+    <div className="fixed inset-0 z-50 flex flex-col bg-background overflow-hidden">
       {/* Header with progress */}
-      <header className="sticky top-0 z-30 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="shrink-0 z-30 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="max-w-4xl mx-auto px-4 py-4">
           {/* Mobile: Compact progress */}
           {isMobile ? (
@@ -235,8 +235,8 @@ export const EICRWizard: React.FC<EICRWizardProps> = ({
       </header>
 
       {/* Step content */}
-      <main className="flex-1 overflow-y-auto">
-        <div className="max-w-4xl mx-auto px-4 py-6 pb-24">
+      <main className="flex-1 overflow-y-auto min-h-0">
+        <div className="max-w-4xl mx-auto px-4 py-6 pb-32">
           {/* Step title */}
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-foreground">
@@ -255,7 +255,7 @@ export const EICRWizard: React.FC<EICRWizardProps> = ({
       </main>
 
       {/* Navigation footer */}
-      <footer className="sticky bottom-0 z-30 border-t border-border bg-background/95 backdrop-blur pb-safe">
+      <footer className="shrink-0 z-30 border-t border-border bg-background/95 backdrop-blur pb-safe">
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between gap-4">
             {/* Back button */}
