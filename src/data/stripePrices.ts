@@ -19,12 +19,14 @@ export interface PlanDetails {
 // Define Stripe price IDs for each plan
 export const stripePrices = {
   monthly: {
-    "desktop": "price_1RhtdT2RKw5t5RAmv6b2xE6p", // £6.99 Desktop Price Monthly
-    "employer": "price_1SlyAT2RKw5t5RAmUmTRGimH", // £29.99 Employer Monthly
+    "apprentice": "price_1SmUef2RKw5t5RAmRIMTWTqU",  // £4.99 Apprentice Monthly
+    "electrician": "price_1RhteS2RKw5t5RAmzRbaTE8U", // £9.99 Electrician Monthly
+    "employer": "price_1SlyAT2RKw5t5RAmUmTRGimH",    // £29.99 Employer Monthly
   },
   yearly: {
-    "desktop": "price_1Rhtgl2RKw5t5RAmkQVKVnKn", // £69.99 Desktop Price Yearly
-    "employer": "price_1SlyB82RKw5t5RAmN447YJUW", // £299.99 Employer Yearly
+    "apprentice": "price_1SmUfK2RKw5t5RAml6bj1I77",  // £49.99 Apprentice Yearly
+    "electrician": "price_1RhtiS2RKw5t5RAmha0s6PJA", // £99.99 Electrician Yearly
+    "employer": "price_1SlyB82RKw5t5RAmN447YJUW",    // £299.99 Employer Yearly
   }
 };
 
@@ -32,11 +34,35 @@ export const stripePrices = {
 export const stripePriceData = {
   monthly: [
     {
-      id: "desktop-monthly",
-      name: "Desktop Price",
-      price: "£6.99",
+      id: "apprentice-monthly",
+      name: "Apprentice",
+      price: "£4.99",
       period: "/month",
-      description: "Complete access for electricians and apprentices",
+      description: "Essential learning tools for electrical apprentices",
+      features: [
+        "Full Study Centre (AM2, HNC, BS 7671)",
+        "Apprentice courses & modules",
+        "Progress tracking & milestones",
+        "Basic electrical calculators",
+        "Regulation search",
+        "CV Builder",
+      ],
+      notIncluded: [
+        "Inspection & Testing (EIC/EICR)",
+        "Quote & Invoice Builder",
+        "Live material pricing",
+        "Employer Dashboard",
+      ],
+      popular: false,
+      color: "bg-gradient-to-br from-elec-gray to-elec-dark",
+      priceId: stripePrices.monthly.apprentice,
+    },
+    {
+      id: "electrician-monthly",
+      name: "Electrician",
+      price: "£9.99",
+      period: "/month",
+      description: "Complete toolkit for qualified electricians",
       features: [
         "Full Study Centre (AM2, HNC, BS 7671)",
         "All electrical calculators",
@@ -55,7 +81,7 @@ export const stripePriceData = {
       ],
       popular: true,
       color: "bg-gradient-to-br from-elec-gray to-elec-dark",
-      priceId: stripePrices.monthly.desktop,
+      priceId: stripePrices.monthly.electrician,
     },
     {
       id: "employer-monthly",
@@ -64,7 +90,7 @@ export const stripePriceData = {
       period: "/month",
       description: "Full suite for electrical business owners",
       features: [
-        "Everything in Desktop Price",
+        "Everything in Electrician",
         "Employer Dashboard",
         "Team Management (up to 5 users)",
         "Job Board & Assignments",
@@ -106,11 +132,36 @@ export const stripePriceData = {
   ],
   yearly: [
     {
-      id: "desktop-yearly",
-      name: "Desktop Price",
-      price: "£69.99",
+      id: "apprentice-yearly",
+      name: "Apprentice",
+      price: "£49.99",
       period: "/year",
-      description: "Complete access for electricians and apprentices",
+      description: "Essential learning tools for electrical apprentices",
+      features: [
+        "Full Study Centre (AM2, HNC, BS 7671)",
+        "Apprentice courses & modules",
+        "Progress tracking & milestones",
+        "Basic electrical calculators",
+        "Regulation search",
+        "CV Builder",
+      ],
+      notIncluded: [
+        "Inspection & Testing (EIC/EICR)",
+        "Quote & Invoice Builder",
+        "Live material pricing",
+        "Employer Dashboard",
+      ],
+      popular: false,
+      color: "bg-gradient-to-br from-elec-gray to-elec-dark",
+      savings: "Save £9.89 vs monthly",
+      priceId: stripePrices.yearly.apprentice,
+    },
+    {
+      id: "electrician-yearly",
+      name: "Electrician",
+      price: "£99.99",
+      period: "/year",
+      description: "Complete toolkit for qualified electricians",
       features: [
         "Full Study Centre (AM2, HNC, BS 7671)",
         "All electrical calculators",
@@ -129,8 +180,8 @@ export const stripePriceData = {
       ],
       popular: true,
       color: "bg-gradient-to-br from-elec-gray to-elec-dark",
-      savings: "Save £14 vs monthly",
-      priceId: stripePrices.yearly.desktop,
+      savings: "Save £19.89 vs monthly",
+      priceId: stripePrices.yearly.electrician,
     },
     {
       id: "employer-yearly",
@@ -139,7 +190,7 @@ export const stripePriceData = {
       period: "/year",
       description: "Full suite for electrical business owners",
       features: [
-        "Everything in Desktop Price",
+        "Everything in Electrician",
         "Employer Dashboard",
         "Team Management (up to 5 users)",
         "Job Board & Assignments",
@@ -153,7 +204,7 @@ export const stripePriceData = {
       notIncluded: [],
       popular: false,
       color: "bg-gradient-to-br from-elec-gray to-elec-dark",
-      savings: "Save £60 vs monthly",
+      savings: "Save £59.89 vs monthly",
       priceId: stripePrices.yearly.employer,
     },
     {

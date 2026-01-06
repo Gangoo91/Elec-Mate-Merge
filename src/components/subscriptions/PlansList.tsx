@@ -1,6 +1,6 @@
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Check, X, ChevronRight, Loader2, Zap, Building2, Sparkles, Mail, Users, CheckCircle } from "lucide-react";
+import { Check, X, ChevronRight, Loader2, Zap, Building2, Sparkles, Mail, Users, CheckCircle, GraduationCap } from "lucide-react";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
@@ -62,7 +62,9 @@ const PlansList = ({ billing }: PlansListProps) => {
 
   const getPlanIcon = (planName: string) => {
     switch (planName) {
-      case 'Desktop Price':
+      case 'Apprentice':
+        return <GraduationCap className="h-6 w-6" />;
+      case 'Electrician':
         return <Zap className="h-6 w-6" />;
       case 'Employer':
         return <Building2 className="h-6 w-6" />;
