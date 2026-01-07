@@ -48,11 +48,11 @@ const CrisisHelplines = ({ emergencyContacts }: CrisisHelplinesProps) => {
       <CardContent className="space-y-4">
         <div className="grid gap-4">
           {emergencyContacts.map((contact, index) => (
-            <div 
+            <div
               key={index}
-              className={`p-4 rounded-lg border transition-all hover:scale-[1.02] ${
-                contact.type === 'emergency' 
-                  ? 'border-red-500/30 bg-red-500/5 shadow-md' 
+              className={`p-4 rounded-lg border transition-all hover:scale-[1.02] touch-manipulation ${
+                contact.type === 'emergency'
+                  ? 'border-red-500/30 bg-red-500/5 shadow-md'
                   : 'border-gray-600/30 bg-gray-800/30'
               }`}
             >
@@ -80,13 +80,13 @@ const CrisisHelplines = ({ emergencyContacts }: CrisisHelplinesProps) => {
                   <Badge className={getTypeColor(contact.type)}>
                     {contact.type}
                   </Badge>
-                  <Button 
-                    size="sm"
-                    className={contact.type === 'emergency' ? 'bg-red-600 hover:bg-red-700' : ''}
+                  <Button
+                    size="lg"
+                    className={`touch-manipulation min-h-[48px] min-w-[100px] active:scale-95 ${contact.type === 'emergency' ? 'bg-red-600 hover:bg-red-700 min-h-[56px]' : ''}`}
                     asChild
                   >
                     <a href={`tel:${contact.phone.replace(/\s/g, '')}`}>
-                      <Phone className="h-3 w-3 mr-1" />
+                      <Phone className="h-4 w-4 mr-1.5" />
                       Call Now
                     </a>
                   </Button>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
-import { Plus, BarChart3, Zap, Camera, LayoutGrid, Table2, Shield, X, PenTool, FileText, Wrench, ClipboardList, ClipboardCheck, Wand2, Sparkles, MoreVertical, Layout, Table, Trash2, Grid, Pen } from 'lucide-react';
+import { Plus, BarChart3, Zap, Camera, LayoutGrid, Table2, Shield, X, PenTool, FileText, Wrench, ClipboardList, ClipboardCheck, Wand2, Sparkles, MoreVertical, Layout, Table, Trash2, Grid, Pen, Mic } from 'lucide-react';
 import { toast } from 'sonner';
 import { TestResult } from '@/types/testResult';
 import EnhancedTestResultDesktopTable from './EnhancedTestResultDesktopTable';
@@ -968,11 +968,22 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
                 </DropdownMenuContent>
               </DropdownMenu>
 
+              {/* Voice Button - Placeholder for Eleven Labs */}
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-9 w-9 p-0 shrink-0 hover:bg-primary/10 hover:border-primary/30 transition-all duration-200"
+                title="Voice Assistant (Coming Soon)"
+                onClick={() => toast.info('Voice assistant coming soon', { description: 'Eleven Labs integration in progress', duration: 2000 })}
+              >
+                <Mic className="h-4 w-4 text-primary" />
+              </Button>
+
               {/* More Options */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     size="sm"
                     className="h-9 w-9 p-0 shrink-0 hover:bg-primary/10 hover:border-primary/30 transition-all duration-200"
                     title="More Options"
@@ -1243,29 +1254,56 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
         </div>
       )}
 
-      {/* SHARED DIALOGS - Fixed positioned overlays */}
-      {/* AI Board Photo Capture */}
+      {/* SHARED DIALOGS - Tool Sheet Pattern */}
+      {/* AI Board Photo Capture - Tool Sheet Pattern */}
       {showBoardCapture && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-3 md:p-4 z-50">
-          <div className="max-w-2xl w-full">
-            <BoardPhotoCapture
-              onAnalysisComplete={handleAIAnalysisComplete}
-              onClose={() => setShowBoardCapture(false)}
-            />
+        <>
+          <div className="tool-sheet-overlay" onClick={() => setShowBoardCapture(false)} />
+          <div className="tool-sheet-container">
+            <div className="tool-sheet-handle md:hidden" />
+            <div className="tool-sheet-header">
+              <div className="tool-sheet-title">
+                <Camera className="h-5 w-5 text-elec-yellow" />
+                AI Board Scanner
+              </div>
+              <Button variant="ghost" size="icon" onClick={() => setShowBoardCapture(false)} className="text-white/70 hover:text-white hover:bg-white/10">
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+            <div className="tool-sheet-content">
+              <BoardPhotoCapture
+                onAnalysisComplete={handleAIAnalysisComplete}
+                onClose={() => setShowBoardCapture(false)}
+                renderContentOnly={true}
+              />
+            </div>
           </div>
-        </div>
+        </>
       )}
 
-      {/* Test Results Photo Capture */}
+      {/* Test Results Photo Capture - Tool Sheet Pattern */}
       {showTestResultsScan && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-3 md:p-4 z-50">
-          <div className="max-w-2xl w-full">
-            <TestResultsPhotoCapture
-              onAnalysisComplete={handleTestResultsAnalysisComplete}
-              onClose={() => setShowTestResultsScan(false)}
-            />
+        <>
+          <div className="tool-sheet-overlay" onClick={() => setShowTestResultsScan(false)} />
+          <div className="tool-sheet-container">
+            <div className="tool-sheet-handle md:hidden" />
+            <div className="tool-sheet-header">
+              <div className="tool-sheet-title">
+                <FileText className="h-5 w-5 text-elec-yellow" />
+                Scan Test Results
+              </div>
+              <Button variant="ghost" size="icon" onClick={() => setShowTestResultsScan(false)} className="text-white/70 hover:text-white hover:bg-white/10">
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+            <div className="tool-sheet-content">
+              <TestResultsPhotoCapture
+                onAnalysisComplete={handleTestResultsAnalysisComplete}
+                onClose={() => setShowTestResultsScan(false)}
+              />
+            </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* AI Circuit Review */}
@@ -1307,80 +1345,78 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
         circuitNumber={newCircuitNumber}
       />
 
-      {/* Smart Auto-Fill Dialog */}
+      {/* Smart Auto-Fill Dialog - Tool Sheet Pattern */}
       {showSmartAutoFillDialog && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-3 z-50">
-          <div className="max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="bg-background rounded-lg">
-              <div className="flex items-center justify-between p-4 border-b">
-                <h3 className="text-lg font-semibold">Smart Circuit Auto-Fill</h3>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={() => setShowSmartAutoFillDialog(false)}
-                >
-                  <X className="h-4 w-4" />
-                </Button>
+        <>
+          <div className="tool-sheet-overlay" onClick={() => setShowSmartAutoFillDialog(false)} />
+          <div className="tool-sheet-container">
+            <div className="tool-sheet-handle md:hidden" />
+            <div className="tool-sheet-header">
+              <div className="tool-sheet-title">
+                <Zap className="h-5 w-5 text-elec-yellow" />
+                Smart Auto-Fill
               </div>
-              <div className="p-4">
-                <MobileSmartAutoFill 
-                  testResults={testResults}
-                  onUpdate={handleBulkUpdate}
-                />
-              </div>
+              <Button variant="ghost" size="icon" onClick={() => setShowSmartAutoFillDialog(false)} className="text-white/70 hover:text-white hover:bg-white/10">
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+            <div className="tool-sheet-content">
+              <MobileSmartAutoFill
+                testResults={testResults}
+                onUpdate={handleBulkUpdate}
+              />
             </div>
           </div>
-        </div>
+        </>
       )}
 
-      {/* RCD Presets Dialog */}
+      {/* RCD Presets Dialog - Tool Sheet Pattern */}
       {showRcdPresetsDialog && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-3 z-50">
-          <div className="max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="bg-background rounded-lg">
-              <div className="flex items-center justify-between p-4 border-b">
-                <h3 className="text-lg font-semibold">Quick RCD Presets</h3>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={() => setShowRcdPresetsDialog(false)}
-                >
-                  <X className="h-4 w-4" />
-                </Button>
+        <>
+          <div className="tool-sheet-overlay" onClick={() => setShowRcdPresetsDialog(false)} />
+          <div className="tool-sheet-container">
+            <div className="tool-sheet-handle md:hidden" />
+            <div className="tool-sheet-header">
+              <div className="tool-sheet-title">
+                <Shield className="h-5 w-5 text-elec-yellow" />
+                Quick RCD Presets
               </div>
-              <div className="p-4">
-                <QuickRcdPresets 
-                  testResults={testResults.map(r => ({ id: r.id, circuitDesignation: r.circuitDesignation }))}
-                  onApplyToCircuits={(circuitIds, preset) => {
-                    // Batch update all circuits at once
-                    const updatedResults = testResults.map(result => {
-                      if (circuitIds.includes(result.id)) {
-                        return {
-                          ...result,
-                          rcdBsStandard: preset.bsStandard,
-                          rcdType: preset.type,
-                          rcdRating: preset.rating,
-                          rcdRatingA: preset.ratingA,
-                        };
-                      }
-                      return result;
-                    });
-                    
-                    setTestResults(updatedResults);
-                    onUpdate('scheduleOfTests', updatedResults);
-                    setShowRcdPresetsDialog(false);
-                    
-                    // Show success toast
-                    toast.success(`✓ ${preset.label} Applied`, {
-                      description: `RCD details set for ${circuitIds.length} circuit${circuitIds.length > 1 ? 's' : ''}`,
-                      duration: 2000,
-                    });
-                  }}
-                />
-              </div>
+              <Button variant="ghost" size="icon" onClick={() => setShowRcdPresetsDialog(false)} className="text-white/70 hover:text-white hover:bg-white/10">
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+            <div className="tool-sheet-content">
+              <QuickRcdPresets
+                testResults={testResults.map(r => ({ id: r.id, circuitDesignation: r.circuitDesignation }))}
+                onApplyToCircuits={(circuitIds, preset) => {
+                  // Batch update all circuits at once
+                  const updatedResults = testResults.map(result => {
+                    if (circuitIds.includes(result.id)) {
+                      return {
+                        ...result,
+                        rcdBsStandard: preset.bsStandard,
+                        rcdType: preset.type,
+                        rcdRating: preset.rating,
+                        rcdRatingA: preset.ratingA,
+                      };
+                    }
+                    return result;
+                  });
+
+                  setTestResults(updatedResults);
+                  onUpdate('scheduleOfTests', updatedResults);
+                  setShowRcdPresetsDialog(false);
+
+                  // Show success toast
+                  toast.success(`✓ ${preset.label} Applied`, {
+                    description: `RCD details set for ${circuitIds.length} circuit${circuitIds.length > 1 ? 's' : ''}`,
+                    duration: 2000,
+                  });
+                }}
+              />
             </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* Scribble to Table Dialog - Mobile Only */}

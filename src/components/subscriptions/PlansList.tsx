@@ -1,7 +1,7 @@
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Check, X, ChevronRight, Loader2, Zap, Building2, GraduationCap, Star, Sparkles } from "lucide-react";
-import { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from '@/contexts/AuthContext';
@@ -16,6 +16,23 @@ const PlansList = ({ billing }: PlansListProps) => {
   const { isSubscribed, subscriptionTier } = useAuth();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState<{[key: string]: boolean}>({});
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(1); // Start on popular plan
+
+  // Track scroll position for pagination dots
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    const handleScroll = () => {
+      const cardWidth = el.scrollWidth / 3;
+      const index = Math.round(el.scrollLeft / cardWidth);
+      setActiveIndex(index);
+    };
+
+    el.addEventListener('scroll', handleScroll, { passive: true });
+    return () => el.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleSubscribe = async (planId: string, priceId: string) => {
     try {
@@ -69,8 +86,19 @@ const PlansList = ({ billing }: PlansListProps) => {
 
   return (
     <div className="space-y-6 sm:space-y-8">
-      {/* Pricing Cards Grid - Stack on mobile */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+      {/* Pricing Cards - Horizontal carousel on mobile, grid on desktop */}
+      <div
+        ref={scrollRef}
+        className={cn(
+          // Mobile: horizontal scroll carousel
+          "flex gap-4 overflow-x-auto pb-2 -mx-4 px-4",
+          "snap-x snap-mandatory scroll-smooth",
+          "scrollbar-hide momentum-scroll-x touch-manipulation",
+          // Desktop: grid layout
+          "md:grid md:grid-cols-3 md:gap-6",
+          "md:overflow-visible md:mx-0 md:px-0 md:pb-0"
+        )}
+      >
         {plans.map((plan: PlanDetails, index: number) => {
           const isCurrentPlan = subscriptionTier === plan.name && isSubscribed;
 
@@ -81,7 +109,10 @@ const PlansList = ({ billing }: PlansListProps) => {
                 "relative overflow-hidden transition-all duration-300",
                 "bg-white/[0.02] backdrop-blur-xl",
                 "border rounded-2xl sm:rounded-3xl",
-                // Mobile: horizontal layout for non-popular plans
+                // Mobile: carousel card sizing with snap
+                "flex-shrink-0 w-[85vw] max-w-[320px] snap-center",
+                // Desktop: equal width columns
+                "md:w-full md:max-w-none md:flex-shrink md:snap-align-none",
                 "md:flex md:flex-col",
                 // Popular plan styling
                 plan.popular && !isCurrentPlan && [
@@ -219,6 +250,29 @@ const PlansList = ({ billing }: PlansListProps) => {
             </Card>
           );
         })}
+      </div>
+
+      {/* Pagination dots - mobile only */}
+      <div className="flex justify-center gap-2 mt-3 md:hidden">
+        {plans.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => {
+              const el = scrollRef.current;
+              if (el) {
+                const cardWidth = el.scrollWidth / plans.length;
+                el.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
+              }
+            }}
+            className={cn(
+              "transition-all duration-200 touch-manipulation rounded-full",
+              i === activeIndex
+                ? "w-6 h-2 bg-elec-yellow"
+                : "w-2 h-2 bg-white/20 hover:bg-white/40"
+            )}
+            aria-label={`View plan ${i + 1}`}
+          />
+        ))}
       </div>
 
       {/* Enterprise CTA - Simplified */}

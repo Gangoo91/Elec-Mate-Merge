@@ -6,6 +6,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { HelpCircle } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const SubscriptionFAQ = () => {
   const faqItems = [
@@ -57,12 +58,20 @@ const SubscriptionFAQ = () => {
           <AccordionItem
             key={i}
             value={`item-${i}`}
-            className="border border-white/10 rounded-xl px-6 bg-elec-gray/50 backdrop-blur-sm data-[state=open]:border-elec-yellow/30"
+            className={cn(
+              "border border-white/10 rounded-xl px-4 sm:px-6 bg-elec-gray/50 backdrop-blur-sm",
+              "data-[state=open]:border-elec-yellow/30",
+              "transition-all duration-200",
+              "touch-manipulation active:scale-[0.99] active:bg-white/[0.03]"
+            )}
           >
-            <AccordionTrigger className="text-left text-foreground hover:text-elec-yellow hover:no-underline py-5">
+            <AccordionTrigger className={cn(
+              "text-left text-foreground hover:text-elec-yellow hover:no-underline",
+              "py-4 sm:py-5 min-h-[52px] touch-manipulation"
+            )}>
               {faq.q}
             </AccordionTrigger>
-            <AccordionContent className="text-foreground/80 pb-5 leading-relaxed">
+            <AccordionContent className="text-foreground/80 pb-4 sm:pb-5 leading-relaxed">
               {faq.a}
             </AccordionContent>
           </AccordionItem>

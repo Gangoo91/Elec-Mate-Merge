@@ -160,7 +160,7 @@ const AM2Module3Section5 = () => {
 
       <AM2CriticalWarning
         title="CRITICAL: Workmanship Standards Determine AM2 Outcome"
-        message="Accuracy and neatness are not cosmetic extras in AM2 - they're central to passing. NET assessors judge your installation against BS 7671 (Regulation 134.1.1 - \"workmanlike manner\") and the supplied specification. Even if a circuit works, sloppy workmanship, poor alignment, or incorrect cable dressing will lose you marks. Unsafe presentation (like exposed copper or damaged insulation) can fail you outright. This section teaches you exactly what assessors are looking for."
+        message="Accuracy and neatness are not cosmetic extras in AM2 - they're central to passing. NET assessors judge your installation against BS 7671 (Regulation 134.1.1 - 'workmanlike manner') and the supplied specification. Even if a circuit works, sloppy workmanship, poor alignment, or incorrect cable dressing will lose you marks. Unsafe presentation (like exposed copper or damaged insulation) can fail you outright. This section teaches you exactly what assessors are looking for."
       />
 
       <AM2LearningOutcomes outcomes={learningOutcomes} />

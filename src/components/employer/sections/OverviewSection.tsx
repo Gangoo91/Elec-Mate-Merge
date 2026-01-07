@@ -208,7 +208,7 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
                 <button
                   key={`${item.type}-${index}`}
                   onClick={() => onNavigate(item.section)}
-                  className="w-full flex items-center justify-between p-3 rounded-xl bg-background/60 hover:bg-background/90 border border-border/50 hover:border-warning/30 transition-all duration-200 text-left group"
+                  className="w-full flex items-center justify-between p-3 rounded-xl bg-background/60 hover:bg-background/90 border border-border/50 hover:border-warning/30 transition-all duration-200 text-left group touch-manipulation min-h-[52px] active:scale-[0.99]"
                 >
                   <div className="flex items-center gap-3">
                     <div className={`w-2.5 h-2.5 rounded-full ${item.urgent ? 'bg-warning' : 'bg-muted-foreground/50'}`}>
@@ -234,7 +234,7 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
           <h2 className="text-sm font-semibold text-foreground">Quick Actions</h2>
           <Zap className="h-4 w-4 text-elec-yellow" />
         </div>
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-4 gap-2 touch-grid">
           {[
             { icon: Plus, label: "New Job", color: "elec-yellow", section: "jobs" as Section },
             { icon: FileText, label: "Quote", color: "info", section: "quotes" as Section },
@@ -252,7 +252,7 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
               <button
                 key={action.label}
                 onClick={() => onNavigate(action.section)}
-                className={`relative flex flex-col items-center gap-1.5 p-3 rounded-xl border-2 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] ${colorMap[action.color]}`}
+                className={`relative flex flex-col items-center gap-1.5 p-3 rounded-xl border-2 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] touch-manipulation min-h-[72px] ${colorMap[action.color]}`}
               >
                 <Icon className="h-5 w-5" />
                 <span className="text-[10px] md:text-xs font-medium text-foreground">{action.label}</span>
@@ -275,10 +275,10 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
           <h2 className="text-sm font-semibold text-foreground">Your Hubs</h2>
           <TrendingUp className="h-4 w-4 text-muted-foreground" />
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-3 touch-grid">
           {/* People Hub */}
           <Card
-            className="group relative overflow-hidden border-2 border-border/50 hover:border-elec-yellow/50 bg-gradient-to-br from-elec-gray/50 via-background to-elec-yellow/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/5"
+            className="group relative overflow-hidden border-2 border-border/50 hover:border-elec-yellow/50 bg-gradient-to-br from-elec-gray/50 via-background to-elec-yellow/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/5 touch-manipulation min-h-[140px]"
             onClick={() => onNavigate("peoplehub")}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/0 to-elec-yellow/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -303,7 +303,7 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
 
           {/* Jobs Hub */}
           <Card
-            className="group relative overflow-hidden border-2 border-border/50 hover:border-info/50 bg-gradient-to-br from-elec-gray/50 via-background to-info/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-info/5"
+            className="group relative overflow-hidden border-2 border-border/50 hover:border-info/50 bg-gradient-to-br from-elec-gray/50 via-background to-info/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-info/5 touch-manipulation min-h-[140px]"
             onClick={() => onNavigate("jobshub")}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-info/0 to-info/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -328,7 +328,7 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
 
           {/* Finance Hub */}
           <Card
-            className="group relative overflow-hidden border-2 border-border/50 hover:border-success/50 bg-gradient-to-br from-elec-gray/50 via-background to-success/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-success/5"
+            className="group relative overflow-hidden border-2 border-border/50 hover:border-success/50 bg-gradient-to-br from-elec-gray/50 via-background to-success/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-success/5 touch-manipulation min-h-[140px]"
             onClick={() => onNavigate("financehub")}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-success/0 to-success/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -353,7 +353,7 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
 
           {/* Safety Hub */}
           <Card
-            className="group relative overflow-hidden border-2 border-border/50 hover:border-orange-500/50 bg-gradient-to-br from-elec-gray/50 via-background to-orange-500/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-orange-500/5"
+            className="group relative overflow-hidden border-2 border-border/50 hover:border-orange-500/50 bg-gradient-to-br from-elec-gray/50 via-background to-orange-500/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-orange-500/5 touch-manipulation min-h-[140px]"
             onClick={() => onNavigate("safetyhub")}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-orange-500/0 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -380,7 +380,7 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
 
       {/* Smart Docs - Premium Full Width Card */}
       <Card
-        className="group relative overflow-hidden border-2 border-purple-500/30 hover:border-purple-500/60 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/10"
+        className="group relative overflow-hidden border-2 border-purple-500/30 hover:border-purple-500/60 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/10 touch-manipulation active:scale-[0.99]"
         onClick={() => onNavigate("smartdocs")}
       >
         {/* Animated gradient background */}

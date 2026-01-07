@@ -173,7 +173,9 @@ const SettingsNavGrid = ({ onSelect, isSubscribed }: SettingsNavGridProps) => {
               "bg-white/[0.03] border border-white/[0.08]",
               "hover:bg-white/[0.06] hover:border-white/[0.12]",
               "transition-colors duration-200",
-              "text-left group"
+              "text-left group",
+              // Touch optimization
+              "touch-manipulation min-h-[100px] active:bg-white/[0.08]"
             )}
           >
             {/* Badge */}

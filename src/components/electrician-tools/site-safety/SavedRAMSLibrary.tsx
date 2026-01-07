@@ -3,16 +3,31 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { FileText, Download, Trash2, Calendar, Loader2, FolderOpen, Edit, ChevronDown, ChevronUp } from 'lucide-react';
+import {
+  FileText,
+  Download,
+  Trash2,
+  Calendar,
+  Loader2,
+  FolderOpen,
+  Edit,
+  ChevronDown,
+  ChevronUp,
+  Search,
+  SlidersHorizontal,
+  X,
+} from 'lucide-react';
 import { format, subDays } from 'date-fns';
 import { RAMSAmendDialog } from './ai-rams/RAMSAmendDialog';
 import { RAMSQuickEditDialog } from './ai-rams/RAMSQuickEditDialog';
-import { RAMSSearchBar } from './rams-library/RAMSSearchBar';
 import { RAMSFilterPanel } from './rams-library/RAMSFilterPanel';
-import { RAMSBulkActionBar } from './rams-library/RAMSBulkActionBar';
 import { RAMSEmptyState } from './rams-library/RAMSEmptyState';
+import { SwipeableDocumentCard } from './rams-library/SwipeableDocumentCard';
+import { RAMSFilterSheet } from './rams-library/RAMSFilterSheet';
+import { cn } from '@/lib/utils';
 
 interface SavedRAMS {
   id: string;
@@ -27,45 +42,44 @@ interface SavedRAMS {
 export const SavedRAMSLibrary = () => {
   const [documents, setDocuments] = useState<SavedRAMS[]>([]);
   const [loading, setLoading] = useState(true);
-  const [initialLoading, setInitialLoading] = useState(true);
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
   const [amendDialogOpen, setAmendDialogOpen] = useState(false);
   const [quickEditDialogOpen, setQuickEditDialogOpen] = useState(false);
   const [selectedDocumentId, setSelectedDocumentId] = useState<string | null>(null);
-  
+
   // Search and filter state
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [dateFilter, setDateFilter] = useState('all');
   const [locationFilter, setLocationFilter] = useState('all');
-  
-  // Bulk selection state
+  const [filterSheetOpen, setFilterSheetOpen] = useState(false);
+
+  // Edit/Selection mode state
+  const [editMode, setEditMode] = useState(false);
   const [selectedDocIds, setSelectedDocIds] = useState<Set<string>>(new Set());
   const [bulkDeleting, setBulkDeleting] = useState(false);
-  
+
   const { toast } = useToast();
 
-  // Extract unique locations for filter dropdown
+  // Extract unique locations for filter
   const uniqueLocations = useMemo(() => {
-    const locations = documents.map(doc => doc.location).filter(Boolean);
+    const locations = documents.map((doc) => doc.location).filter(Boolean);
     return Array.from(new Set(locations)).sort();
   }, [documents]);
 
-  // Filter documents based on search and filters
+  // Filter documents
   const filteredDocuments = useMemo(() => {
-    return documents.filter(doc => {
-      // Search filter
+    return documents.filter((doc) => {
       const searchLower = searchTerm.toLowerCase();
-      const matchesSearch = searchTerm === '' || 
+      const matchesSearch =
+        searchTerm === '' ||
         doc.project_name.toLowerCase().includes(searchLower) ||
         doc.location.toLowerCase().includes(searchLower);
-      
-      // Status filter
+
       const matchesStatus = statusFilter === 'all' || doc.status === statusFilter;
-      
-      // Date filter
+
       let matchesDate = true;
       if (dateFilter !== 'all') {
         const docDate = new Date(doc.created_at);
@@ -78,58 +92,59 @@ export const SavedRAMSLibrary = () => {
           matchesDate = docDate >= subDays(now, 90);
         }
       }
-      
-      // Location filter
+
       const matchesLocation = locationFilter === 'all' || doc.location === locationFilter;
-      
+
       return matchesSearch && matchesStatus && matchesDate && matchesLocation;
     });
   }, [documents, searchTerm, statusFilter, dateFilter, locationFilter]);
 
-  // Display logic: show 12 most recent by default
   const displayedDocuments = showAll ? filteredDocuments : filteredDocuments.slice(0, 12);
-  
-  // Check if filters are active
-  const hasActiveFilters = searchTerm !== '' || statusFilter !== 'all' || 
-    dateFilter !== 'all' || locationFilter !== 'all';
+
+  const hasActiveFilters =
+    statusFilter !== 'all' || dateFilter !== 'all' || locationFilter !== 'all';
+
+  const activeFilterCount = [
+    statusFilter !== 'all',
+    dateFilter !== 'all',
+    locationFilter !== 'all',
+  ].filter(Boolean).length;
 
   useEffect(() => {
-    fetchDocuments(false); // Initial load with spinner
+    fetchDocuments(false);
   }, []);
 
-  // Auto-refresh every 30 seconds to pick up new saves
+  // Auto-refresh every 30 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      fetchDocuments(true); // Silent background refresh
-    }, 30000); // Changed from 10s to 30s
-    
+      fetchDocuments(true);
+    }, 30000);
     return () => clearInterval(interval);
   }, []);
 
-  // Also refresh when component becomes visible
+  // Refresh on visibility change
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (!document.hidden) {
-        fetchDocuments(true); // Silent refresh
+        fetchDocuments(true);
       }
     };
-    
     document.addEventListener('visibilitychange', handleVisibilityChange);
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
   }, []);
 
   const fetchDocuments = async (silent = false) => {
     try {
-      if (!silent) {
-        setLoading(true);
-      }
-      const { data: { user } } = await supabase.auth.getUser();
-      
+      if (!silent) setLoading(true);
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
       if (!user) {
         toast({
           title: 'Authentication Required',
           description: 'Please sign in to view your saved documents',
-          variant: 'destructive'
+          variant: 'destructive',
         });
         return;
       }
@@ -148,14 +163,11 @@ export const SavedRAMSLibrary = () => {
         toast({
           title: 'Error Loading Documents',
           description: 'Could not load your saved RAMS documents',
-          variant: 'destructive'
+          variant: 'destructive',
         });
       }
     } finally {
-      if (!silent) {
-        setLoading(false);
-        setInitialLoading(false);
-      }
+      if (!silent) setLoading(false);
     }
   };
 
@@ -164,22 +176,17 @@ export const SavedRAMSLibrary = () => {
       toast({
         title: 'PDF Not Available',
         description: 'This document does not have a PDF file',
-        variant: 'destructive'
+        variant: 'destructive',
       });
       return;
     }
 
     try {
       setDownloadingId(doc.id);
-      
-      // Download from Supabase Storage
-      const { data, error } = await supabase.storage
-        .from('rams-pdfs')
-        .download(doc.pdf_url);
+      const { data, error } = await supabase.storage.from('rams-pdfs').download(doc.pdf_url);
 
       if (error) throw error;
 
-      // Create download link
       const url = URL.createObjectURL(data);
       const link = document.createElement('a');
       link.href = url;
@@ -192,87 +199,107 @@ export const SavedRAMSLibrary = () => {
       toast({
         title: 'Download Complete',
         description: 'Your RAMS PDF has been downloaded',
-        variant: 'success'
+        variant: 'success',
       });
     } catch (error) {
       console.error('Error downloading PDF:', error);
       toast({
         title: 'Download Failed',
         description: 'Could not download the PDF file',
-        variant: 'destructive'
+        variant: 'destructive',
       });
     } finally {
       setDownloadingId(null);
     }
   };
 
-  // Bulk delete handler
-  const handleBulkDelete = async () => {
-    const count = selectedDocIds.size;
-    
-    if (!confirm(`Are you sure you want to delete ${count} document${count !== 1 ? 's' : ''}? This cannot be undone.`)) {
+  const handleDelete = async (docId: string, pdfUrl: string | null) => {
+    if (!confirm('Are you sure you want to delete this RAMS document?')) {
       return;
     }
-    
-    setBulkDeleting(true);
-    let successCount = 0;
-    let failCount = 0;
-    
+
     try {
-      // Get documents to delete
-      const docsToDelete = documents.filter(d => selectedDocIds.has(d.id));
-      
-      // Delete PDFs from storage (batch)
-      const pdfPaths = docsToDelete
-        .filter(d => d.pdf_url)
-        .map(d => d.pdf_url!);
-      
-      if (pdfPaths.length > 0) {
-        const { error: storageError } = await supabase.storage
-          .from('rams-pdfs')
-          .remove(pdfPaths);
-        
+      setDeletingId(docId);
+
+      if (pdfUrl) {
+        const { error: storageError } = await supabase.storage.from('rams-pdfs').remove([pdfUrl]);
         if (storageError) {
-          console.error('Error deleting PDFs from storage:', storageError);
+          console.error('Error deleting PDF from storage:', storageError);
         }
       }
-      
-      // Delete database records (batch)
+
+      const { error } = await supabase.from('rams_documents').delete().eq('id', docId);
+      if (error) throw error;
+
+      toast({
+        title: 'Document Deleted',
+        description: 'RAMS document has been removed',
+        variant: 'success',
+      });
+
+      setDocuments((docs) => docs.filter((d) => d.id !== docId));
+    } catch (error) {
+      console.error('Error deleting document:', error);
+      toast({
+        title: 'Delete Failed',
+        description: 'Could not delete the document',
+        variant: 'destructive',
+      });
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
+  const handleBulkDelete = async () => {
+    const count = selectedDocIds.size;
+    if (
+      !confirm(
+        `Are you sure you want to delete ${count} document${count !== 1 ? 's' : ''}? This cannot be undone.`
+      )
+    ) {
+      return;
+    }
+
+    setBulkDeleting(true);
+
+    try {
+      const docsToDelete = documents.filter((d) => selectedDocIds.has(d.id));
+      const pdfPaths = docsToDelete.filter((d) => d.pdf_url).map((d) => d.pdf_url!);
+
+      if (pdfPaths.length > 0) {
+        await supabase.storage.from('rams-pdfs').remove(pdfPaths);
+      }
+
       const { error } = await supabase
         .from('rams_documents')
         .delete()
         .in('id', Array.from(selectedDocIds));
-      
+
       if (error) throw error;
-      
-      successCount = count;
-      
+
       toast({
         title: 'Documents Deleted',
-        description: `Successfully deleted ${successCount} document${successCount !== 1 ? 's' : ''}`,
-        variant: 'success'
+        description: `Successfully deleted ${count} document${count !== 1 ? 's' : ''}`,
+        variant: 'success',
       });
-      
-      // Clear selection and refresh
+
       setSelectedDocIds(new Set());
-      setDocuments(docs => docs.filter(d => !selectedDocIds.has(d.id)));
-      
+      setDocuments((docs) => docs.filter((d) => !selectedDocIds.has(d.id)));
+      setEditMode(false);
     } catch (error) {
       console.error('Bulk delete error:', error);
-      failCount = count - successCount;
       toast({
         title: 'Bulk Delete Failed',
-        description: `Could not delete all documents. ${successCount} succeeded, ${failCount} failed.`,
-        variant: 'destructive'
+        description: 'Could not delete all documents',
+        variant: 'destructive',
       });
     } finally {
       setBulkDeleting(false);
     }
   };
 
-  // Selection handlers
   const toggleSelection = (docId: string) => {
-    setSelectedDocIds(prev => {
+    setSelectedDocIds((prev) => {
       const next = new Set(prev);
       if (next.has(docId)) {
         next.delete(docId);
@@ -287,7 +314,7 @@ export const SavedRAMSLibrary = () => {
     if (selectedDocIds.size === displayedDocuments.length) {
       setSelectedDocIds(new Set());
     } else {
-      setSelectedDocIds(new Set(displayedDocuments.map(d => d.id)));
+      setSelectedDocIds(new Set(displayedDocuments.map((d) => d.id)));
     }
   };
 
@@ -298,51 +325,11 @@ export const SavedRAMSLibrary = () => {
     setLocationFilter('all');
   };
 
-  const handleDelete = async (docId: string, pdfUrl: string | null) => {
-    if (!confirm('Are you sure you want to delete this RAMS document?')) {
-      return;
+  const toggleEditMode = () => {
+    if (editMode) {
+      setSelectedDocIds(new Set());
     }
-
-    try {
-      setDeletingId(docId);
-
-      // Delete PDF from storage if exists
-      if (pdfUrl) {
-        const { error: storageError } = await supabase.storage
-          .from('rams-pdfs')
-          .remove([pdfUrl]);
-        
-        if (storageError) {
-          console.error('Error deleting PDF from storage:', storageError);
-        }
-      }
-
-      // Delete document record
-      const { error } = await supabase
-        .from('rams_documents')
-        .delete()
-        .eq('id', docId);
-
-      if (error) throw error;
-
-      toast({
-        title: 'Document Deleted',
-        description: 'RAMS document has been removed',
-        variant: 'success'
-      });
-
-      // Refresh list
-      setDocuments(docs => docs.filter(d => d.id !== docId));
-    } catch (error) {
-      console.error('Error deleting document:', error);
-      toast({
-        title: 'Delete Failed',
-        description: 'Could not delete the document',
-        variant: 'destructive'
-      });
-    } finally {
-      setDeletingId(null);
-    }
+    setEditMode(!editMode);
   };
 
   const getStatusColor = (status: string) => {
@@ -358,199 +345,351 @@ export const SavedRAMSLibrary = () => {
     }
   };
 
+  // Loading state
   if (loading) {
     return (
-      <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl">
-        <CardContent className="py-16">
-          <div className="flex flex-col items-center justify-center gap-4">
-            <div className="p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
-              <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-            </div>
-            <div className="text-center">
-              <p className="text-white font-medium">Loading Documents</p>
-              <p className="text-sm text-white/70 mt-1">Fetching your saved RAMS...</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="flex flex-col items-center justify-center py-20 gap-4">
+        <div className="p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
+          <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+        </div>
+        <div className="text-center">
+          <p className="text-white font-medium">Loading Documents</p>
+          <p className="text-sm text-white/50 mt-1">Fetching your saved RAMS...</p>
+        </div>
+      </div>
     );
   }
 
+  // Empty state - no documents
   if (documents.length === 0) {
-    return (
-      <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl">
-        <CardContent className="py-12">
-          <RAMSEmptyState type="no-documents" />
-        </CardContent>
-      </Card>
-    );
+    return <RAMSEmptyState type="no-documents" />;
   }
 
   return (
-    <div className="space-y-4">
-      {/* Search and Filter Section */}
-      <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl">
-        <CardContent className="pt-6">
-          <div className="space-y-4">
-            <RAMSSearchBar
-              searchTerm={searchTerm}
-              onSearchChange={setSearchTerm}
-            />
-            <RAMSFilterPanel
-              statusFilter={statusFilter}
-              dateFilter={dateFilter}
-              locationFilter={locationFilter}
-              locations={uniqueLocations}
-              onStatusChange={setStatusFilter}
-              onDateChange={setDateFilter}
-              onLocationChange={setLocationFilter}
-              onClearFilters={clearFilters}
-              hasActiveFilters={hasActiveFilters}
-            />
+    <div className="space-y-0">
+      {/* Mobile Header with Search */}
+      <div className="block md:hidden">
+        <header className="sticky top-0 z-40 bg-elec-dark/95 backdrop-blur-md border-b border-white/[0.06] -mx-4 px-4">
+          <div className="py-3">
+            {/* Title row */}
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <h2 className="text-lg font-semibold text-white">Saved Documents</h2>
+                <Badge className="bg-white/10 text-white/70 border-0 text-xs">
+                  {filteredDocuments.length}
+                </Badge>
+              </div>
+              <div className="flex items-center gap-1">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={toggleEditMode}
+                  className={cn(
+                    'h-8 px-3 text-sm font-medium',
+                    editMode ? 'text-elec-yellow' : 'text-white/70'
+                  )}
+                >
+                  {editMode ? 'Done' : 'Edit'}
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setFilterSheetOpen(true)}
+                  className="relative h-9 w-9 text-white/70"
+                >
+                  <SlidersHorizontal className="h-5 w-5" />
+                  {activeFilterCount > 0 && (
+                    <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-elec-yellow text-black text-[10px] font-bold flex items-center justify-center">
+                      {activeFilterCount}
+                    </span>
+                  )}
+                </Button>
+              </div>
+            </div>
+
+            {/* Search bar */}
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+              <Input
+                type="text"
+                placeholder="Search documents..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 pr-10 h-11 bg-white/[0.05] border-white/[0.08] rounded-xl text-white placeholder:text-white/40"
+              />
+              {searchTerm && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSearchTerm('')}
+                  className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0 text-white/40"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
           </div>
-        </CardContent>
-      </Card>
 
-      {/* Bulk Action Bar */}
-      <RAMSBulkActionBar
-        selectedCount={selectedDocIds.size}
-        onBulkDelete={handleBulkDelete}
-        onClearSelection={() => setSelectedDocIds(new Set())}
-        isDeleting={bulkDeleting}
-      />
+          {/* Active filter chips */}
+          {hasActiveFilters && (
+            <div className="flex items-center gap-2 pb-3 overflow-x-auto scrollbar-hide">
+              {statusFilter !== 'all' && (
+                <Badge
+                  className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 shrink-0 pr-1"
+                >
+                  {statusFilter}
+                  <button
+                    onClick={() => setStatusFilter('all')}
+                    className="ml-1 hover:bg-elec-yellow/20 rounded p-0.5"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </Badge>
+              )}
+              {dateFilter !== 'all' && (
+                <Badge
+                  className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 shrink-0 pr-1"
+                >
+                  {dateFilter === '7days'
+                    ? 'Last 7 days'
+                    : dateFilter === '30days'
+                    ? 'Last 30 days'
+                    : 'Last 90 days'}
+                  <button
+                    onClick={() => setDateFilter('all')}
+                    className="ml-1 hover:bg-elec-yellow/20 rounded p-0.5"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </Badge>
+              )}
+              {locationFilter !== 'all' && (
+                <Badge
+                  className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 shrink-0 pr-1 max-w-[150px]"
+                >
+                  <span className="truncate">{locationFilter}</span>
+                  <button
+                    onClick={() => setLocationFilter('all')}
+                    className="ml-1 hover:bg-elec-yellow/20 rounded p-0.5 shrink-0"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </Badge>
+              )}
+            </div>
+          )}
+        </header>
 
-      {/* Document count and View All toggle */}
-      {filteredDocuments.length > 12 && (
-        <div className="flex items-center justify-between px-1">
-          <p className="text-sm text-white/70">
-            Showing {displayedDocuments.length} of {filteredDocuments.length} documents
-            {hasActiveFilters && ` (filtered from ${documents.length} total)`}
-          </p>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setShowAll(!showAll)}
-            className="text-elec-yellow hover:text-elec-yellow/80 hover:bg-elec-yellow/10"
-          >
-            {showAll ? (
-              <>
-                <ChevronUp className="h-4 w-4 mr-1" />
-                Show Less
-              </>
-            ) : (
-              <>
-                <ChevronDown className="h-4 w-4 mr-1" />
-                View All
-              </>
+        {/* Empty filtered state */}
+        {filteredDocuments.length === 0 && (
+          <RAMSEmptyState
+            type={hasActiveFilters ? 'no-filtered-results' : 'no-results'}
+            searchTerm={searchTerm}
+            onClearFilters={clearFilters}
+          />
+        )}
+
+        {/* Mobile Document Cards */}
+        {filteredDocuments.length > 0 && (
+          <div className="py-4 space-y-3">
+            {displayedDocuments.map((doc, index) => (
+              <SwipeableDocumentCard
+                key={doc.id}
+                doc={doc}
+                index={index}
+                editMode={editMode}
+                selected={selectedDocIds.has(doc.id)}
+                isDownloading={downloadingId === doc.id}
+                isDeleting={deletingId === doc.id}
+                onToggleSelect={() => toggleSelection(doc.id)}
+                onDownload={() => handleDownload(doc)}
+                onDelete={() => handleDelete(doc.id, doc.pdf_url)}
+                onEdit={() => {
+                  setSelectedDocumentId(doc.id);
+                  setAmendDialogOpen(true);
+                }}
+              />
+            ))}
+
+            {/* View all toggle */}
+            {filteredDocuments.length > 12 && (
+              <Button
+                variant="ghost"
+                onClick={() => setShowAll(!showAll)}
+                className="w-full h-12 text-elec-yellow hover:text-elec-yellow/80 hover:bg-elec-yellow/10"
+              >
+                {showAll ? (
+                  <>
+                    <ChevronUp className="h-4 w-4 mr-2" />
+                    Show Less
+                  </>
+                ) : (
+                  <>
+                    <ChevronDown className="h-4 w-4 mr-2" />
+                    View All ({filteredDocuments.length - 12} more)
+                  </>
+                )}
+              </Button>
             )}
-          </Button>
-        </div>
-      )}
+          </div>
+        )}
 
-      {/* Empty state for filtered results */}
-      {filteredDocuments.length === 0 && (
+        {/* Edit mode bottom bar */}
+        {editMode && (
+          <div
+            className={cn(
+              'fixed bottom-0 inset-x-0 z-50 p-4 bg-elec-dark/95 backdrop-blur-md border-t border-white/[0.06]',
+              'transition-transform duration-300',
+              selectedDocIds.size > 0 ? 'translate-y-0' : 'translate-y-full'
+            )}
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={toggleSelectAll}
+                  className="text-white/70 h-9"
+                >
+                  {selectedDocIds.size === displayedDocuments.length ? 'Deselect All' : 'Select All'}
+                </Button>
+                <span className="text-sm text-white/50">{selectedDocIds.size} selected</span>
+              </div>
+              <Button
+                size="sm"
+                variant="destructive"
+                onClick={handleBulkDelete}
+                disabled={bulkDeleting || selectedDocIds.size === 0}
+                className="h-10 px-4"
+              >
+                {bulkDeleting ? (
+                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                ) : (
+                  <Trash2 className="h-4 w-4 mr-2" />
+                )}
+                Delete
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Desktop View */}
+      <div className="hidden md:block space-y-4">
+        {/* Search and Filter Section */}
         <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl">
-          <CardContent className="py-12">
-            <RAMSEmptyState
-              type={hasActiveFilters ? 'no-filtered-results' : 'no-results'}
-              searchTerm={searchTerm}
-              onClearFilters={clearFilters}
-            />
+          <CardContent className="pt-6">
+            <div className="space-y-4">
+              <div className="relative flex-1 max-w-md">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Search by project, location, or assessor..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 pr-10 h-11 bg-background border-border"
+                />
+                {searchTerm && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setSearchTerm('')}
+                    className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                )}
+              </div>
+              <RAMSFilterPanel
+                statusFilter={statusFilter}
+                dateFilter={dateFilter}
+                locationFilter={locationFilter}
+                locations={uniqueLocations}
+                onStatusChange={setStatusFilter}
+                onDateChange={setDateFilter}
+                onLocationChange={setLocationFilter}
+                onClearFilters={clearFilters}
+                hasActiveFilters={hasActiveFilters}
+              />
+            </div>
           </CardContent>
         </Card>
-      )}
 
-      {/* Mobile: Stack cards */}
-      {filteredDocuments.length > 0 && (
-        <div className="block md:hidden space-y-3">
-          {displayedDocuments.map((doc) => (
-            <Card
-              key={doc.id}
-              className={`
-                bg-[#1e1e1e] border rounded-2xl transition-all duration-200
-                ${selectedDocIds.has(doc.id) ? 'border-elec-yellow/50 ring-1 ring-elec-yellow/20' : 'border-white/10 hover:border-white/20'}
-              `}
+        {/* Bulk Action Bar */}
+        {selectedDocIds.size > 0 && (
+          <div className="flex items-center justify-between p-3 bg-elec-yellow/10 border border-elec-yellow/20 rounded-xl">
+            <span className="text-sm text-elec-yellow">
+              {selectedDocIds.size} document{selectedDocIds.size !== 1 ? 's' : ''} selected
+            </span>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setSelectedDocIds(new Set())}
+                className="text-white/70"
+              >
+                Clear Selection
+              </Button>
+              <Button
+                size="sm"
+                variant="destructive"
+                onClick={handleBulkDelete}
+                disabled={bulkDeleting}
+              >
+                {bulkDeleting ? (
+                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                ) : (
+                  <Trash2 className="h-4 w-4 mr-2" />
+                )}
+                Delete Selected
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* Document count and View All toggle */}
+        {filteredDocuments.length > 12 && (
+          <div className="flex items-center justify-between px-1">
+            <p className="text-sm text-white/70">
+              Showing {displayedDocuments.length} of {filteredDocuments.length} documents
+              {hasActiveFilters && ` (filtered from ${documents.length} total)`}
+            </p>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowAll(!showAll)}
+              className="text-elec-yellow hover:text-elec-yellow/80 hover:bg-elec-yellow/10"
             >
-              <CardContent className="p-4 space-y-4">
-                {/* Header with checkbox and document info */}
-                <div className="flex items-start gap-3">
-                  <Checkbox
-                    checked={selectedDocIds.has(doc.id)}
-                    onCheckedChange={() => toggleSelection(doc.id)}
-                    className="mt-1 border-white/30 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
-                  />
-                  <div className="flex items-start gap-3 flex-1 min-w-0">
-                    <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 shrink-0">
-                      <FileText className="h-5 w-5 text-elec-yellow" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-white text-base truncate">{doc.project_name}</h3>
-                      <p className="text-sm text-white/70 truncate">{doc.location}</p>
-                    </div>
-                  </div>
-                </div>
+              {showAll ? (
+                <>
+                  <ChevronUp className="h-4 w-4 mr-1" />
+                  Show Less
+                </>
+              ) : (
+                <>
+                  <ChevronDown className="h-4 w-4 mr-1" />
+                  View All
+                </>
+              )}
+            </Button>
+          </div>
+        )}
 
-                {/* Status and date */}
-                <div className="flex items-center justify-between gap-2 px-1">
-                  <Badge variant="outline" className={`${getStatusColor(doc.status)} capitalize`}>
-                    {doc.status}
-                  </Badge>
-                  <div className="flex items-center gap-1.5 text-white/70 text-xs">
-                    <Calendar className="h-3.5 w-3.5" />
-                    <span>{format(new Date(doc.created_at), 'dd/MM/yy')}</span>
-                  </div>
-                </div>
+        {/* Empty filtered state */}
+        {filteredDocuments.length === 0 && (
+          <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl">
+            <CardContent className="py-12">
+              <RAMSEmptyState
+                type={hasActiveFilters ? 'no-filtered-results' : 'no-results'}
+                searchTerm={searchTerm}
+                onClearFilters={clearFilters}
+              />
+            </CardContent>
+          </Card>
+        )}
 
-                {/* Action buttons */}
-                <div className="grid grid-cols-3 gap-2">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="h-11 bg-[#1a1a1a] border-white/10 hover:border-elec-yellow/30 hover:bg-elec-yellow/10 text-white active:scale-[0.98]"
-                    onClick={() => handleDownload(doc)}
-                    disabled={!doc.pdf_url || downloadingId === doc.id}
-                  >
-                    {downloadingId === doc.id ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      <Download className="h-4 w-4" />
-                    )}
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="h-11 bg-[#1a1a1a] border-white/10 hover:border-blue-500/30 hover:bg-blue-500/10 text-white active:scale-[0.98]"
-                    onClick={() => {
-                      setSelectedDocumentId(doc.id);
-                      setAmendDialogOpen(true);
-                    }}
-                  >
-                    <Edit className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="h-11 bg-[#1a1a1a] border-red-500/30 hover:bg-red-500/10 text-red-400 active:scale-[0.98]"
-                    onClick={() => handleDelete(doc.id, doc.pdf_url)}
-                    disabled={deletingId === doc.id}
-                  >
-                    {deletingId === doc.id ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      <Trash2 className="h-4 w-4" />
-                    )}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      )}
-
-
-      {/* Desktop: Table view */}
-      {filteredDocuments.length > 0 && (
-        <div className="hidden md:block">
+        {/* Desktop Table */}
+        {filteredDocuments.length > 0 && (
           <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl overflow-hidden">
             <CardHeader className="border-b border-white/5">
               <div className="flex items-center justify-between">
@@ -564,9 +703,11 @@ export const SavedRAMSLibrary = () => {
                   <div className="flex items-center gap-3">
                     <span className="text-sm text-white/70">Select All</span>
                     <Checkbox
-                      checked={selectedDocIds.size === displayedDocuments.length && displayedDocuments.length > 0}
+                      checked={
+                        selectedDocIds.size === displayedDocuments.length &&
+                        displayedDocuments.length > 0
+                      }
                       onCheckedChange={toggleSelectAll}
-                      aria-label="Select all documents"
                       className="border-white/30 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
                     />
                   </div>
@@ -580,21 +721,31 @@ export const SavedRAMSLibrary = () => {
                     <th className="px-4 py-3 text-center text-xs font-semibold text-white/70 w-12">
                       <span className="sr-only">Select</span>
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-white/70 uppercase tracking-wider">Document</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-white/70 uppercase tracking-wider">Location</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-white/70 uppercase tracking-wider">Status</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-white/70 uppercase tracking-wider">Created</th>
-                    <th className="px-4 py-3 text-right text-xs font-semibold text-white/70 uppercase tracking-wider">Actions</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-white/70 uppercase tracking-wider">
+                      Document
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-white/70 uppercase tracking-wider">
+                      Location
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-white/70 uppercase tracking-wider">
+                      Status
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-white/70 uppercase tracking-wider">
+                      Created
+                    </th>
+                    <th className="px-4 py-3 text-right text-xs font-semibold text-white/70 uppercase tracking-wider">
+                      Actions
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/5">
                   {displayedDocuments.map((doc) => (
                     <tr
                       key={doc.id}
-                      className={`
-                        transition-colors
-                        ${selectedDocIds.has(doc.id) ? 'bg-elec-yellow/5' : 'hover:bg-white/[0.02]'}
-                      `}
+                      className={cn(
+                        'transition-colors',
+                        selectedDocIds.has(doc.id) ? 'bg-elec-yellow/5' : 'hover:bg-white/[0.02]'
+                      )}
                     >
                       <td className="px-4 py-3 text-center">
                         <Checkbox
@@ -671,8 +822,24 @@ export const SavedRAMSLibrary = () => {
               </table>
             </div>
           </Card>
-        </div>
-      )}
+        )}
+      </div>
+
+      {/* Filter Bottom Sheet (Mobile) */}
+      <RAMSFilterSheet
+        open={filterSheetOpen}
+        onOpenChange={setFilterSheetOpen}
+        statusFilter={statusFilter}
+        dateFilter={dateFilter}
+        locationFilter={locationFilter}
+        locations={uniqueLocations}
+        onStatusChange={setStatusFilter}
+        onDateChange={setDateFilter}
+        onLocationChange={setLocationFilter}
+        onClearFilters={clearFilters}
+        onApply={() => {}}
+        hasActiveFilters={hasActiveFilters}
+      />
 
       {/* Amend Dialogs */}
       {selectedDocumentId && (
@@ -696,11 +863,46 @@ export const SavedRAMSLibrary = () => {
             onClose={() => {
               setQuickEditDialogOpen(false);
               setSelectedDocumentId(null);
-              fetchDocuments(); // Refresh list after edit
+              fetchDocuments();
             }}
           />
         </>
       )}
+
+      {/* Animation styles */}
+      <style>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(16px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fade-in-up {
+          animation: fadeInUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        .animate-fade-in {
+          animation: fadeIn 0.2s ease-out forwards;
+        }
+
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </div>
   );
 };

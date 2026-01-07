@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Heart, ArrowLeft, Shield, Users, BookOpen, Brain, Headphones } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
 interface MentalHealthHubLayoutProps {
   children: ReactNode;
@@ -51,7 +52,7 @@ const MentalHealthHubLayout = ({ children, showBackButton = true }: MentalHealth
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 pb-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 pb-8 momentum-scroll-y">
       {/* Enhanced Header */}
       <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
         <div className="space-y-2">
@@ -67,7 +68,7 @@ const MentalHealthHubLayout = ({ children, showBackButton = true }: MentalHealth
         </div>
         {showBackButton && (
           <Link to={basePath} className="self-start sm:self-auto">
-            <Button variant="outline" size="sm" className="w-full sm:w-auto flex items-center gap-2">
+            <Button variant="outline" size="sm" className="w-full sm:w-auto flex items-center gap-2 min-h-[44px] touch-manipulation active:scale-95">
               <ArrowLeft className="h-4 w-4" />
               Back to Hub
             </Button>
@@ -92,27 +93,32 @@ const MentalHealthHubLayout = ({ children, showBackButton = true }: MentalHealth
       </Card>
 
       {/* Quick Access Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 touch-grid">
         {quickAccessCards.map((card) => (
-          <Link 
+          <Link
             key={card.title}
             to={card.link.startsWith('#') ? card.link : card.link}
             className="block group"
           >
-            <Card className={`border-elec-yellow/20 bg-elec-gray h-full hover:shadow-md hover:border-elec-yellow/30 transition-all group-hover:scale-[1.02] ${card.urgent ? 'border-red-500/30 bg-red-500/5' : ''}`}>
-              <CardHeader className="pb-2">
+            <Card className={cn(
+              "border-elec-yellow/20 bg-elec-gray h-full hover:shadow-md hover:border-elec-yellow/30 transition-all",
+              "group-hover:scale-[1.02] group-active:scale-[0.98]",
+              "touch-manipulation min-h-[100px]",
+              card.urgent && "border-red-500/30 bg-red-500/5"
+            )}>
+              <CardHeader className="pb-2 p-3 sm:p-4 sm:pb-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     {card.icon}
-                    <CardTitle className="text-sm">{card.title}</CardTitle>
+                    <CardTitle className="text-xs sm:text-sm">{card.title}</CardTitle>
                   </div>
                   {card.urgent && (
-                    <Badge className="bg-red-500 text-foreground text-xs">Urgent</Badge>
+                    <Badge className="bg-red-500 text-foreground text-[10px] sm:text-xs">Urgent</Badge>
                   )}
                 </div>
               </CardHeader>
-              <CardContent className="pt-0">
-                <p className="text-xs text-white">{card.description}</p>
+              <CardContent className="pt-0 px-3 pb-3 sm:px-4 sm:pb-4">
+                <p className="text-[10px] sm:text-xs text-white">{card.description}</p>
               </CardContent>
             </Card>
           </Link>

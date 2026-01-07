@@ -139,7 +139,7 @@ const SettingsPage = () => {
   // Mobile View
   if (isMobile) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-dark to-elec-dark/95">
+      <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-dark to-elec-dark/95 momentum-scroll-y">
         <AnimatePresence mode="wait">
           {selectedTab === null ? (
             // Mobile Grid View
@@ -184,7 +184,7 @@ const SettingsPage = () => {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-10 w-10 rounded-xl text-white/50 hover:text-white hover:bg-white/10"
+                      className="h-11 w-11 rounded-xl text-white/50 hover:text-white hover:bg-white/10 touch-manipulation active:scale-95"
                       onClick={handleSignOut}
                     >
                       <LogOut className="h-5 w-5" />
@@ -246,7 +246,7 @@ const SettingsPage = () => {
                       variant="ghost"
                       size="icon"
                       onClick={handleMobileBack}
-                      className="h-10 w-10 rounded-xl text-white/70 hover:text-white hover:bg-white/10"
+                      className="h-11 w-11 rounded-xl text-white/70 hover:text-white hover:bg-white/10 touch-manipulation active:scale-95"
                     >
                       <ArrowLeft className="h-5 w-5" />
                     </Button>
@@ -261,7 +261,7 @@ const SettingsPage = () => {
               </div>
 
               {/* Detail Content */}
-              <div className="px-4 py-6">
+              <div className="px-4 py-6 momentum-scroll-y">
                 <TabComponent />
               </div>
             </motion.div>
@@ -348,7 +348,7 @@ const SettingsPage = () => {
           <div
             ref={tabsRef}
             onScroll={checkScrollArrows}
-            className="flex items-center gap-1 overflow-x-auto scrollbar-hide pb-0 -mb-px"
+            className="flex items-center gap-1 overflow-x-auto scrollbar-hide pb-0 -mb-px momentum-scroll-x"
           >
             {ALL_TABS.map((tab) => {
               const Icon = tab.icon;
@@ -359,6 +359,7 @@ const SettingsPage = () => {
                   onClick={() => handleDesktopTabSelect(tab.id)}
                   className={cn(
                     "flex items-center gap-2 px-4 py-3 text-sm font-medium whitespace-nowrap transition-all duration-200 border-b-2 flex-shrink-0",
+                    "touch-manipulation active:scale-[0.98] min-h-[48px]",
                     isActive
                       ? "text-elec-yellow border-elec-yellow"
                       : "text-white/50 border-transparent hover:text-white hover:border-white/20"

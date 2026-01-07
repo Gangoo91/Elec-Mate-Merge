@@ -520,13 +520,13 @@ const EmployerDashboard = () => {
 
   return (
     <EmployerProvider>
-      <div className="animate-fade-in pb-20 md:pb-0 px-4 sm:px-6">
+      <div className="animate-fade-in pb-20 md:pb-0 px-4 sm:px-6 momentum-scroll-y">
         {/* Back navigation for sub-sections */}
         {activeSection !== "overview" && (
           <div className="mb-4">
             <button
               onClick={handleBack}
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-elec-yellow transition-colors touch-target"
+              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-elec-yellow transition-colors touch-manipulation min-h-[44px] active:scale-95"
             >
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
