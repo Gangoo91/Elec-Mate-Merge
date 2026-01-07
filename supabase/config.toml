@@ -1,45 +1,45 @@
-project_id = "jtwygbeceundfgnkirof"
+project_id = "cjjlpiyfzvhffkfyszgh"
 
 # MINIMAL DEPLOY: Only 2 functions to fix bundle timeout
 [functions.health-safety-v3]
 verify_jwt = false
-timeout_sec = 480
+
 
 # Parallel Circuit Designer Architecture (Designer + Installation Guidance)
 [functions.process-circuit-design-parallel]
 verify_jwt = false
-timeout_sec = 360
+
 
 # Design Installation Agent (generates installation guidance for circuits)
 [functions.design-installation-agent]
 verify_jwt = false
-timeout_sec = 300
+
 
 [functions.project-mgmt-v3]
 verify_jwt = false
-timeout_sec = 360
+
 
 [functions.installer-v3]
 verify_jwt = false
-timeout_sec = 360
+
 
 [functions.installer-rag-direct]
 verify_jwt = false
-timeout_sec = 360
+
 
 # Installation Method Statement Agent (ISOLATED from AI RAMS)
 [functions.installation-method-agent]
 verify_jwt = false
-timeout_sec = 360
+
 
 # Job Queue Architecture for Installation Method Agent
 [functions.create-installation-method-job]
 verify_jwt = false
-timeout_sec = 30
+
 
 [functions.process-installation-method-job]
 verify_jwt = false
-timeout_sec = 600
+
 
 [functions.cancel-installation-method-job]
 verify_jwt = true
@@ -47,211 +47,211 @@ verify_jwt = true
 # Commissioning & Testing Specialist V3
 [functions.commissioning-v3]
 verify_jwt = false
-timeout_sec = 360
+
 
 # Commissioning Job Queue Architecture
 [functions.create-commissioning-job]
 verify_jwt = false
-timeout_sec = 30
+
 
 [functions.process-commissioning-job]
 verify_jwt = false
-timeout_sec = 600
+
 
 [functions.cancel-commissioning-job]
 verify_jwt = false
-timeout_sec = 30
+
 
 [functions.visual-analysis-rag-enhanced]
 verify_jwt = false
-timeout_sec = 180
+
 
 [functions.visual-fault-diagnosis-rag]
 verify_jwt = false
-timeout_sec = 120
+
 
 [functions.wiring-diagram-generator-rag]
 verify_jwt = false
-timeout_sec = 180
+
 
 [functions.generate-electrical-report]
 verify_jwt = false
-timeout_sec = 120
+
 
 # PDF Monkey Template Verification
 [functions.check-pdfmonkey-template]
 verify_jwt = false
-timeout_sec = 60
+
 
 # Circuit Design PDF Generation
 [functions.generate-circuit-design-pdf]
 verify_jwt = false
-timeout_sec = 180
+
 
 # Circuit Designer V3 - Enhanced with 30-day cache, indexed RAG, installation type context
 [functions.designer-agent-v3]
 verify_jwt = false
-timeout_sec = 360
+
 
 # Circuit Designer Job Queue Architecture
 [functions.create-circuit-design-job]
 verify_jwt = false
-timeout_sec = 30
+
 
 [functions.process-circuit-design-job]
 verify_jwt = false
-timeout_sec = 600
+
 
 [functions.cancel-circuit-design-job]
 verify_jwt = false
-timeout_sec = 30
+
 
 # Cost Engineer PDF Generation
 [functions.generate-cost-engineer-pdf]
 verify_jwt = false
-timeout_sec = 180
+
 
 # Fault Diagnosis PDF Generation
 [functions.generate-fault-diagnosis-pdf]
 verify_jwt = false
-timeout_sec = 180
+
 
 # Maintenance Method PDF Generation
 [functions.generate-maintenance-method-pdf]
 verify_jwt = false
-timeout_sec = 180
+
 
 # Unified Circuit Design V2 (parallel agents - mirrors AI RAMS architecture)
 [functions.process-circuit-design-v2]
 verify_jwt = false
-timeout_sec = 360
+
 
 # Job Queue Architecture for RAMS Generation
 [functions.create-rams-job]
 verify_jwt = false
-timeout_sec = 30
+
 
 [functions.generate-rams]
 verify_jwt = false
-timeout_sec = 600
+
 
 # Health & Safety Job Queue Architecture
 [functions.create-health-safety-job]
 verify_jwt = false
-timeout_sec = 30
+
 
 [functions.process-health-safety-job]
 verify_jwt = false
-timeout_sec = 600
+
 
 [functions.cancel-health-safety-job]
 verify_jwt = false
-timeout_sec = 30
+
 
 # RAG V3: Offline Enrichment Pipeline
 [functions.enrich-regulations]
 verify_jwt = false
-timeout_sec = 600
+
 
 # Universal Enrichment Pipeline (Phase 0: Pre-Flight Optimizations)
 [functions.master-enrichment-scheduler]
 verify_jwt = false
-timeout_sec = 600
+
 
 [functions.enrichment-keepalive]
 verify_jwt = false
-timeout_sec = 60
+
 
 [functions.enrich-health-safety]
 verify_jwt = false
-timeout_sec = 600
+
 
 [functions.enrich-installation-procedures]
 verify_jwt = false
-timeout_sec = 600
+
 
 [functions.enrich-design-patterns]
 verify_jwt = false
-timeout_sec = 600
+
 
 [functions.enrich-inspection-procedures]
 verify_jwt = false
-timeout_sec = 600
+
 
 [functions.enrich-maintenance-schedules]
 verify_jwt = false
-timeout_sec = 600
+
 
 [functions.enrich-project-templates]
 verify_jwt = false
-timeout_sec = 600
+
 
 [functions.enrich-pricing-intelligence]
 verify_jwt = false
-timeout_sec = 600
+
 
 [functions.enrich-design-knowledge]
 verify_jwt = false
-timeout_sec = 600
+
 
 # Maintenance Method Job Queue Architecture
 [functions.create-maintenance-method-job]
 verify_jwt = false
-timeout_sec = 30
+
 
 [functions.process-maintenance-method-job]
 verify_jwt = false
-timeout_sec = 600
+
 
 [functions.cancel-maintenance-method-job]
 verify_jwt = false
-timeout_sec = 30
+
 
 # Design Intelligence Field Enrichment (populates cable_sizes/load_types)
 [functions.enrich-design-intelligence-fields]
 verify_jwt = false
-timeout_sec = 300
+
 
 # AI Room Diagram Generator
 [functions.room-diagram-generator]
 verify_jwt = false
-timeout_sec = 120
+
 
 # One-time Hazard Embeddings Generator
 [functions.generate-hazard-embeddings]
 verify_jwt = false
-timeout_sec = 300
+
 
 # One-time Design Knowledge Embeddings Generator (RAG Fix)
 [functions.generate-missing-embeddings]
 verify_jwt = false
-timeout_sec = 300
+
 
 # Cost Engineer V3 - AI-powered pricing with RAG
 [functions.cost-engineer-v3]
 verify_jwt = false
-timeout_sec = 360
+
 
 # Cost Engineer Job Queue Architecture
 [functions.create-cost-engineer-job]
 verify_jwt = false
-timeout_sec = 30
+
 
 [functions.process-cost-engineer-job]
 verify_jwt = false
-timeout_sec = 600
+
 
 [functions.cancel-cost-engineer-job]
 verify_jwt = false
-timeout_sec = 30
+
 
 # Project Management PDF Generation
 [functions.generate-project-management-pdf]
 verify_jwt = false
-timeout_sec = 120
+
 
 # Elec-ID Document Verification (AI Vision OCR)
 [functions.verify-document]
 verify_jwt = false
-timeout_sec = 60
+
 
