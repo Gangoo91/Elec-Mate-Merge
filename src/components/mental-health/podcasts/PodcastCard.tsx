@@ -96,7 +96,7 @@ const PodcastCard = ({ podcast }: PodcastCardProps) => {
 
       {/* Category Gradient Header */}
       <div className={`
-        relative h-24 sm:h-28 bg-gradient-to-br ${colors.gradient}
+        relative h-16 sm:h-24 bg-gradient-to-br ${colors.gradient}
         flex items-center justify-center overflow-hidden
       `}>
         {/* Animated Background Pattern */}
@@ -110,39 +110,39 @@ const PodcastCard = ({ podcast }: PodcastCardProps) => {
 
         {/* Mic Icon */}
         <div className={`
-          relative z-10 w-14 h-14 sm:w-16 sm:h-16 rounded-2xl ${colors.iconBg}
+          relative z-10 w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl ${colors.iconBg}
           border border-white/20 backdrop-blur-sm
           flex items-center justify-center
           shadow-lg group-hover:scale-110 transition-transform duration-300
         `}>
-          <Mic className={`w-7 h-7 sm:w-8 sm:h-8 ${colors.accent}`} />
+          <Mic className={`w-5 h-5 sm:w-7 sm:h-7 ${colors.accent}`} />
         </div>
       </div>
 
       {/* Content */}
-      <div className="relative p-4 sm:p-5 space-y-4">
+      <div className="relative p-3 sm:p-5 space-y-2 sm:space-y-4">
         {/* Title & Host */}
         <div>
-          <h3 className="font-bold text-white text-lg sm:text-xl leading-tight group-hover:text-white transition-colors">
+          <h3 className="font-bold text-white text-base sm:text-lg leading-tight line-clamp-2 group-hover:text-white transition-colors">
             {podcast.name}
           </h3>
-          <p className={`text-sm mt-1 ${colors.accent}`}>
+          <p className={`text-xs sm:text-sm mt-0.5 sm:mt-1 ${colors.accent}`}>
             {podcast.host}
           </p>
         </div>
 
-        {/* Description */}
-        <p className="text-sm text-white leading-relaxed line-clamp-3">
+        {/* Description - hidden on mobile for cleaner cards */}
+        <p className="hidden sm:block text-sm text-white leading-relaxed line-clamp-3">
           {podcast.description}
         </p>
 
-        {/* Topics */}
-        <div className="flex flex-wrap gap-1.5">
-          {podcast.topics.slice(0, 4).map((topic, idx) => (
+        {/* Topics - fewer on mobile */}
+        <div className="flex flex-wrap gap-1 sm:gap-1.5">
+          {podcast.topics.slice(0, 3).map((topic, idx) => (
             <span
               key={idx}
               className={`
-                text-xs px-2.5 py-1 rounded-full border
+                text-[10px] sm:text-xs px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full border
                 ${colors.topicBg} ${colors.topicText}
               `}
             >
@@ -151,19 +151,19 @@ const PodcastCard = ({ podcast }: PodcastCardProps) => {
           ))}
         </div>
 
-        {/* Platform Buttons */}
+        {/* Platform Buttons - compact on mobile */}
         {hasLinks && (
-          <div className="flex flex-wrap gap-2 pt-2">
+          <div className="flex flex-wrap gap-1.5 sm:gap-2 pt-1 sm:pt-2">
             {podcast.links.spotify && (
               <Button
                 size="sm"
                 onClick={() => openLink(podcast.links.spotify!)}
-                className="h-9 px-4 bg-[#1DB954] hover:bg-[#1ed760] text-white border-0 gap-2
+                className="h-7 sm:h-9 px-2 sm:px-4 bg-[#1DB954] hover:bg-[#1ed760] text-white border-0 gap-1 sm:gap-2
                   shadow-lg shadow-[#1DB954]/0 hover:shadow-[#1DB954]/30
-                  transition-all duration-300 hover:scale-105"
+                  transition-all duration-300 hover:scale-105 active:scale-95"
               >
                 <SpotifyIcon />
-                <span className="text-xs font-medium">Spotify</span>
+                <span className="text-[10px] sm:text-xs font-medium hidden sm:inline">Spotify</span>
               </Button>
             )}
 
@@ -171,12 +171,12 @@ const PodcastCard = ({ podcast }: PodcastCardProps) => {
               <Button
                 size="sm"
                 onClick={() => openLink(podcast.links.apple!)}
-                className="h-9 px-4 bg-[#9933FF] hover:bg-[#a855f7] text-white border-0 gap-2
+                className="h-7 sm:h-9 px-2 sm:px-4 bg-[#9933FF] hover:bg-[#a855f7] text-white border-0 gap-1 sm:gap-2
                   shadow-lg shadow-[#9933FF]/0 hover:shadow-[#9933FF]/30
-                  transition-all duration-300 hover:scale-105"
+                  transition-all duration-300 hover:scale-105 active:scale-95"
               >
                 <ApplePodcastIcon />
-                <span className="text-xs font-medium">Apple</span>
+                <span className="text-[10px] sm:text-xs font-medium hidden sm:inline">Apple</span>
               </Button>
             )}
 
@@ -184,12 +184,12 @@ const PodcastCard = ({ podcast }: PodcastCardProps) => {
               <Button
                 size="sm"
                 onClick={() => openLink(podcast.links.youtube!)}
-                className="h-9 px-4 bg-[#FF0000] hover:bg-[#ff1a1a] text-white border-0 gap-2
+                className="h-7 sm:h-9 px-2 sm:px-4 bg-[#FF0000] hover:bg-[#ff1a1a] text-white border-0 gap-1 sm:gap-2
                   shadow-lg shadow-[#FF0000]/0 hover:shadow-[#FF0000]/30
-                  transition-all duration-300 hover:scale-105"
+                  transition-all duration-300 hover:scale-105 active:scale-95"
               >
                 <YouTubeIcon />
-                <span className="text-xs font-medium">YouTube</span>
+                <span className="text-[10px] sm:text-xs font-medium hidden sm:inline">YouTube</span>
               </Button>
             )}
 
@@ -197,12 +197,12 @@ const PodcastCard = ({ podcast }: PodcastCardProps) => {
               <Button
                 size="sm"
                 onClick={() => openLink(podcast.links.facebook!)}
-                className="h-9 px-4 bg-[#1877F2] hover:bg-[#1a85ff] text-white border-0 gap-2
+                className="h-7 sm:h-9 px-2 sm:px-4 bg-[#1877F2] hover:bg-[#1a85ff] text-white border-0 gap-1 sm:gap-2
                   shadow-lg shadow-[#1877F2]/0 hover:shadow-[#1877F2]/30
-                  transition-all duration-300 hover:scale-105"
+                  transition-all duration-300 hover:scale-105 active:scale-95"
               >
                 <FacebookIcon />
-                <span className="text-xs font-medium">Facebook</span>
+                <span className="text-[10px] sm:text-xs font-medium hidden sm:inline">Facebook</span>
               </Button>
             )}
 
@@ -210,11 +210,11 @@ const PodcastCard = ({ podcast }: PodcastCardProps) => {
               <Button
                 size="sm"
                 onClick={() => openLink(podcast.links.website!)}
-                className="h-9 px-4 bg-white/10 hover:bg-white/20 text-white border border-white/20 gap-2
-                  transition-all duration-300 hover:scale-105"
+                className="h-7 sm:h-9 px-2 sm:px-4 bg-white/10 hover:bg-white/20 text-white border border-white/20 gap-1 sm:gap-2
+                  transition-all duration-300 hover:scale-105 active:scale-95"
               >
                 <Globe className="h-4 w-4" />
-                <span className="text-xs font-medium">Website</span>
+                <span className="text-[10px] sm:text-xs font-medium hidden sm:inline">Website</span>
                 <ExternalLink className="h-3 w-3 opacity-50" />
               </Button>
             )}

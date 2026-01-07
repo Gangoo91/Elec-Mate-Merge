@@ -87,6 +87,11 @@ const CategoryFilterBar = ({ selectedCategory, onCategoryChange, podcastCounts }
 
   return (
     <div className="relative group">
+      {/* Left Scroll Fade - Mobile indicator */}
+      {showLeftArrow && (
+        <div className="sm:hidden absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+      )}
+
       {/* Left Scroll Arrow - Desktop Only */}
       {showLeftArrow && (
         <div className="hidden sm:flex absolute left-0 top-0 bottom-0 z-10 items-center">
@@ -119,7 +124,7 @@ const CategoryFilterBar = ({ selectedCategory, onCategoryChange, podcastCounts }
               key={category.id}
               onClick={() => onCategoryChange(category.id)}
               className={`
-                relative flex items-center gap-2 px-4 py-2.5 rounded-xl border
+                relative flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-lg sm:rounded-xl border
                 transition-all duration-300 whitespace-nowrap flex-shrink-0
                 touch-manipulation active:scale-95
                 ${isSelected
@@ -134,14 +139,14 @@ const CategoryFilterBar = ({ selectedCategory, onCategoryChange, podcastCounts }
               </span>
 
               {/* Label */}
-              <span className={`text-sm font-medium ${isSelected ? '' : 'text-white'}`}>
+              <span className={`text-xs sm:text-sm font-medium ${isSelected ? '' : 'text-white'}`}>
                 {category.label}
               </span>
 
-              {/* Count Badge */}
+              {/* Count Badge - hidden on mobile */}
               {count !== undefined && (
                 <span className={`
-                  text-xs px-1.5 py-0.5 rounded-full
+                  hidden sm:inline text-xs px-1.5 py-0.5 rounded-full
                   ${isSelected
                     ? 'bg-white/20 text-white'
                     : 'bg-white/10 text-white'
@@ -153,12 +158,17 @@ const CategoryFilterBar = ({ selectedCategory, onCategoryChange, podcastCounts }
 
               {/* Selection Indicator */}
               {isSelected && (
-                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-8 h-1 rounded-full bg-current opacity-60" />
+                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-6 sm:w-8 h-0.5 sm:h-1 rounded-full bg-current opacity-60" />
               )}
             </button>
           );
         })}
       </div>
+
+      {/* Right Scroll Fade - Mobile indicator */}
+      {showRightArrow && (
+        <div className="sm:hidden absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+      )}
 
       {/* Right Scroll Arrow - Desktop Only */}
       {showRightArrow && (

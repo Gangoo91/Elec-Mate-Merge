@@ -55,7 +55,7 @@ const FeaturedPodcastHero = ({ podcast }: FeaturedPodcastHeroProps) => {
       }} />
 
       {/* Content */}
-      <div className="relative z-10 p-6 sm:p-8 md:p-10">
+      <div className="relative z-10 p-4 sm:p-6 md:p-8">
         {/* Featured Badge */}
         <div className="flex items-center gap-2 mb-6">
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-500/30 border border-orange-400/40 backdrop-blur-sm">
@@ -65,35 +65,35 @@ const FeaturedPodcastHero = ({ podcast }: FeaturedPodcastHeroProps) => {
         </div>
 
         {/* Main Content */}
-        <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-8">
+        <div className="flex flex-row items-start sm:items-center gap-4 sm:gap-6 md:gap-8">
           {/* Podcast Icon/Visual */}
           <div className="flex-shrink-0">
             <div className="relative">
-              <div className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-orange-500/40 to-amber-600/30 border border-orange-400/30 backdrop-blur-sm flex items-center justify-center shadow-2xl shadow-orange-500/20">
-                <Mic className="w-14 h-14 sm:w-18 sm:h-18 md:w-20 md:h-20 text-orange-300" />
+              <div className="w-16 h-16 sm:w-28 sm:h-28 md:w-36 md:h-36 rounded-xl sm:rounded-2xl md:rounded-3xl bg-gradient-to-br from-orange-500/40 to-amber-600/30 border border-orange-400/30 backdrop-blur-sm flex items-center justify-center shadow-2xl shadow-orange-500/20">
+                <Mic className="w-8 h-8 sm:w-14 sm:h-14 md:w-16 md:h-16 text-orange-300" />
               </div>
               {/* Glow ring */}
-              <div className="absolute -inset-1 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-orange-500/30 to-amber-500/20 blur-lg -z-10" />
+              <div className="absolute -inset-1 rounded-xl sm:rounded-2xl md:rounded-3xl bg-gradient-to-br from-orange-500/30 to-amber-500/20 blur-lg -z-10" />
             </div>
           </div>
 
           {/* Text Content */}
-          <div className="flex-1 space-y-4">
+          <div className="flex-1 space-y-2 sm:space-y-4">
             <div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 tracking-tight">
+              <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-white mb-1 sm:mb-2 tracking-tight">
                 {podcast.name}
               </h2>
-              <p className="text-orange-200/90 font-medium">
+              <p className="text-sm sm:text-base text-orange-200/90 font-medium">
                 {podcast.host}
               </p>
             </div>
 
-            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl">
+            <p className="hidden sm:block text-white text-base sm:text-lg leading-relaxed max-w-2xl">
               {podcast.description}
             </p>
 
-            {/* Topics */}
-            <div className="flex flex-wrap gap-2">
+            {/* Topics - hidden on mobile for cleaner look */}
+            <div className="hidden sm:flex flex-wrap gap-2">
               {podcast.topics.map((topic, idx) => (
                 <span
                   key={idx}
@@ -104,53 +104,53 @@ const FeaturedPodcastHero = ({ podcast }: FeaturedPodcastHeroProps) => {
               ))}
             </div>
 
-            {/* Platform Buttons */}
-            <div className="flex flex-wrap gap-3 pt-2">
+            {/* Platform Buttons - compact on mobile */}
+            <div className="flex flex-wrap gap-2 sm:gap-3 pt-1 sm:pt-2">
               {podcast.links.youtube && (
                 <Button
-                  size="lg"
+                  size="sm"
                   onClick={() => openLink(podcast.links.youtube!)}
-                  className="bg-[#FF0000] hover:bg-[#CC0000] text-white border-0 gap-2 shadow-lg shadow-red-500/25 hover:shadow-red-500/40 transition-all duration-300 hover:scale-105"
+                  className="h-8 sm:h-10 px-2.5 sm:px-4 text-xs sm:text-sm bg-[#FF0000] hover:bg-[#CC0000] text-white border-0 gap-1.5 sm:gap-2 shadow-lg shadow-red-500/25 hover:shadow-red-500/40 transition-all duration-300 hover:scale-105 active:scale-95"
                 >
                   <YouTubeIcon />
-                  <span>YouTube</span>
-                  <ExternalLink className="h-4 w-4 opacity-70" />
+                  <span className="hidden sm:inline">YouTube</span>
+                  <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 opacity-70" />
                 </Button>
               )}
 
               {podcast.links.facebook && (
                 <Button
-                  size="lg"
+                  size="sm"
                   onClick={() => openLink(podcast.links.facebook!)}
-                  className="bg-[#1877F2] hover:bg-[#1466D9] text-white border-0 gap-2 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300 hover:scale-105"
+                  className="h-8 sm:h-10 px-2.5 sm:px-4 text-xs sm:text-sm bg-[#1877F2] hover:bg-[#1466D9] text-white border-0 gap-1.5 sm:gap-2 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300 hover:scale-105 active:scale-95"
                 >
                   <FacebookIcon />
-                  <span>Facebook</span>
-                  <ExternalLink className="h-4 w-4 opacity-70" />
+                  <span className="hidden sm:inline">Facebook</span>
+                  <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 opacity-70" />
                 </Button>
               )}
 
               {podcast.links.spotify && (
                 <Button
-                  size="lg"
+                  size="sm"
                   onClick={() => openLink(podcast.links.spotify!)}
-                  className="bg-[#1DB954] hover:bg-[#1AA34A] text-white border-0 gap-2 shadow-lg shadow-green-500/25 hover:shadow-green-500/40 transition-all duration-300 hover:scale-105"
+                  className="h-8 sm:h-10 px-2.5 sm:px-4 text-xs sm:text-sm bg-[#1DB954] hover:bg-[#1AA34A] text-white border-0 gap-1.5 sm:gap-2 shadow-lg shadow-green-500/25 hover:shadow-green-500/40 transition-all duration-300 hover:scale-105 active:scale-95"
                 >
                   <SpotifyIcon />
-                  <span>Spotify</span>
-                  <ExternalLink className="h-4 w-4 opacity-70" />
+                  <span className="hidden sm:inline">Spotify</span>
+                  <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 opacity-70" />
                 </Button>
               )}
 
               {podcast.links.apple && (
                 <Button
-                  size="lg"
+                  size="sm"
                   onClick={() => openLink(podcast.links.apple!)}
-                  className="bg-[#9933FF] hover:bg-[#8822EE] text-white border-0 gap-2 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 hover:scale-105"
+                  className="h-8 sm:h-10 px-2.5 sm:px-4 text-xs sm:text-sm bg-[#9933FF] hover:bg-[#8822EE] text-white border-0 gap-1.5 sm:gap-2 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 hover:scale-105 active:scale-95"
                 >
                   <ApplePodcastIcon />
-                  <span>Apple</span>
-                  <ExternalLink className="h-4 w-4 opacity-70" />
+                  <span className="hidden sm:inline">Apple</span>
+                  <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 opacity-70" />
                 </Button>
               )}
             </div>

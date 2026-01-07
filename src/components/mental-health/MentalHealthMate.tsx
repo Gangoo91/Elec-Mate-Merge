@@ -391,7 +391,7 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
           </div>
 
           {/* Messages Area */}
-          <div className="h-80 overflow-y-auto p-4 space-y-4">
+          <div className="h-64 sm:h-80 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4">
             {chatMessages.length === 0 ? (
               <div className="space-y-4">
                 {/* Welcome Message */}
@@ -413,18 +413,18 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
                     </div>
 
                     {/* Quick Prompts */}
-                    <div className="flex flex-wrap gap-2 mt-3">
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-2 sm:mt-3">
                       {quickPrompts.map((prompt, i) => {
                         const Icon = prompt.icon;
                         return (
                           <button
                             key={i}
                             onClick={() => handleAIChat(prompt.text)}
-                            className="flex items-center gap-1.5 text-xs px-3 py-2 rounded-full bg-white/10 text-foreground/80
+                            className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs px-2 sm:px-3 py-1.5 sm:py-2 rounded-full bg-white/10 text-foreground/80
                               hover:bg-white/20 active:scale-95 transition-all border border-white/10"
                           >
                             <Icon className="h-3 w-3" />
-                            {prompt.text}
+                            <span className="whitespace-nowrap">{prompt.text}</span>
                           </button>
                         );
                       })}
@@ -451,7 +451,7 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
                       )}
                     </div>
                     <div className={`flex-1 ${message.type === 'user' ? 'flex justify-end' : ''}`}>
-                      <div className={`max-w-[85%] rounded-2xl p-4 ${
+                      <div className={`max-w-[90%] sm:max-w-[85%] rounded-xl sm:rounded-2xl p-3 sm:p-4 ${
                         message.type === 'user'
                           ? 'bg-blue-500 rounded-tr-none'
                           : 'bg-purple-500/10 rounded-tl-none'
@@ -546,18 +546,18 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
 
       {/* Crisis Banner */}
       <Card className="border-red-500/40 bg-gradient-to-r from-red-500/20 to-red-600/10">
-        <CardContent className="p-3">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-red-500/30 flex items-center justify-center flex-shrink-0">
-              <AlertTriangle className="h-5 w-5 text-red-400" />
+        <CardContent className="p-2.5 sm:p-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-red-500/30 flex items-center justify-center flex-shrink-0">
+              <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-red-400">In crisis?</p>
-              <p className="text-xs text-red-300/80">
-                Call <a href="tel:116123" className="font-bold underline">116 123</a> (Samaritans 24/7) or text SHOUT to 85258
+              <p className="text-xs sm:text-sm font-medium text-red-400">In crisis?</p>
+              <p className="text-[10px] sm:text-xs text-red-300/80">
+                Call <a href="tel:116123" className="font-bold underline">116 123</a> or text SHOUT to 85258
               </p>
             </div>
-            <Button size="sm" className="bg-red-500 hover:bg-red-600 flex-shrink-0" asChild>
+            <Button size="sm" className="h-8 w-8 sm:h-9 sm:w-9 p-0 bg-red-500 hover:bg-red-600 flex-shrink-0" asChild>
               <a href="tel:116123">
                 <Phone className="h-4 w-4" />
               </a>
@@ -570,15 +570,15 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
       <Card className="border-white/10 bg-white/5 overflow-hidden">
         <button
           onClick={() => setShowPeers(!showPeers)}
-          className="w-full p-4 flex items-center justify-between"
+          className="w-full p-3 sm:p-4 flex items-center justify-between active:bg-white/5 transition-colors"
         >
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center">
-              <Users className="h-5 w-5 text-green-400" />
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-green-500/20 flex items-center justify-center flex-shrink-0">
+              <Users className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
             </div>
             <div className="text-left">
-              <h3 className="font-semibold text-foreground text-sm">Talk to a Real Person</h3>
-              <p className="text-xs text-white">Connect with trained peer supporters</p>
+              <h3 className="font-semibold text-foreground text-xs sm:text-sm">Talk to a Real Person</h3>
+              <p className="text-[10px] sm:text-xs text-white">Connect with trained peer supporters</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -634,15 +634,15 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
             {!isVolunteer ? (
               <button
                 onClick={handleBecomeMate}
-                className="w-full p-4 rounded-lg border border-dashed border-purple-500/30 bg-purple-500/5
+                className="w-full p-3 sm:p-4 rounded-lg border border-dashed border-purple-500/30 bg-purple-500/5
                   flex flex-col items-center gap-2 text-sm
-                  hover:bg-purple-500/10 transition-colors"
+                  hover:bg-purple-500/10 active:scale-[0.98] transition-all"
               >
-                <div className="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
-                  <UserPlus className="h-6 w-6 text-purple-400" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
+                  <UserPlus className="h-5 w-5 sm:h-6 sm:w-6 text-purple-400" />
                 </div>
-                <span className="font-medium text-purple-300">Become a Mental Health Mate</span>
-                <span className="text-xs text-white text-center">
+                <span className="font-medium text-purple-300 text-sm sm:text-base">Become a Mental Health Mate</span>
+                <span className="text-[10px] sm:text-xs text-white text-center">
                   Volunteer to support fellow electricians
                 </span>
               </button>
