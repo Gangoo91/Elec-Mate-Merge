@@ -73,7 +73,7 @@ const MaterialTopDiscounts = ({ deals }: MaterialTopDiscountsProps) => {
                     <img
                       src={deal.image || '/placeholder.svg'}
                       alt={deal.name}
-                      className="object-cover w-full h-full transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-105"
+                      className="object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-105"
                       onError={(e) => {
                         e.currentTarget.src = '/placeholder.svg';
                       }}
