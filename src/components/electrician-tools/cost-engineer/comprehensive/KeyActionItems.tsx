@@ -1,5 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckSquare, AlertCircle, Clock } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { CheckSquare, AlertCircle, Clock, ListChecks } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface KeyActionItemsProps {
   structuredData: any;
@@ -52,41 +53,57 @@ const KeyActionItems = ({ structuredData }: KeyActionItemsProps) => {
 
   if (actions.length === 0) return null;
 
-  const getPriorityColor = (priority: string) => {
+  const getPriorityStyle = (priority: string) => {
     switch(priority) {
-      case 'critical': return 'border-red-500/50 bg-red-500/10';
-      case 'high': return 'border-yellow-500/50 bg-yellow-500/10';
-      default: return 'border-blue-500/50 bg-blue-500/10';
+      case 'critical': return { bg: 'bg-red-500/10', border: 'border-red-500/30', icon: 'text-red-400' };
+      case 'high': return { bg: 'bg-amber-500/10', border: 'border-amber-500/30', icon: 'text-amber-400' };
+      default: return { bg: 'bg-blue-500/10', border: 'border-blue-500/30', icon: 'text-blue-400' };
     }
   };
 
   return (
-    <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
-      <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
-        <CardTitle className="text-xl sm:text-lg font-bold text-foreground flex items-center gap-2">
-          <CheckSquare className="h-5 w-5 text-elec-yellow" />
-          Key Action Items
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6 space-y-3">
-        {actions.map((action, idx) => {
-          const Icon = action.icon;
-          return (
-            <div 
-              key={idx}
-              className={`p-4 sm:p-3 rounded-lg border ${getPriorityColor(action.priority)}`}
+    <Card variant="ios" className="overflow-hidden">
+      <CardContent className="p-0">
+        {/* Header */}
+        <div className="p-4 border-b border-white/5">
+          <div className="flex items-center gap-3">
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center"
             >
-              <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 mt-0.5">
-                  <Icon className="h-5 w-5" />
-                </div>
-                <div className="flex-1">
-                  <span className="text-base sm:text-sm font-medium text-foreground leading-relaxed">{action.text}</span>
-                </div>
-              </div>
+              <ListChecks className="h-5 w-5 text-elec-yellow" />
+            </motion.div>
+            <div>
+              <h3 className="text-ios-headline text-white font-semibold">Key Action Items</h3>
+              <p className="text-ios-caption-1 text-white/50">Priority tasks before starting</p>
             </div>
-          );
-        })}
+          </div>
+        </div>
+
+        {/* Actions */}
+        <div className="p-4 space-y-3">
+          {actions.map((action, idx) => {
+            const Icon = action.icon;
+            const style = getPriorityStyle(action.priority);
+            return (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: idx * 0.1 }}
+                className={`p-4 rounded-xl border ${style.bg} ${style.border}`}
+              >
+                <div className="flex items-start gap-3">
+                  <div className={`flex-shrink-0 mt-0.5 ${style.icon}`}>
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <span className="text-ios-body text-white/90 leading-relaxed">{action.text}</span>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
       </CardContent>
     </Card>
   );

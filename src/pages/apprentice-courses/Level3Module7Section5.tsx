@@ -1,7 +1,8 @@
-import { ArrowLeft, FileText, Scale, Briefcase, Calculator, Star, PoundSterling } from "lucide-react";
+import { ArrowLeft, FileText, Scale, Briefcase, Calculator, Star, PoundSterling, Zap } from "lucide-react";
 import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import useSEO from "@/hooks/useSEO";
 
 const subsections = [
   {
@@ -9,52 +10,62 @@ const subsections = [
     title: "Writing CVs and Preparing for Interviews",
     description: "Creating effective CVs and developing interview skills for electrical industry roles",
     icon: FileText,
-    href: "../level3-module7-section5-5-1",
+    href: "../level3-module7-section5-1",
   },
   {
-    number: "5.2", 
+    number: "5.2",
     title: "Understanding Employment Law and Workers' Rights",
     description: "Knowledge of employment legislation and understanding workers' rights and protections",
     icon: Scale,
-    href: "../level3-module7-section5-5-2",
+    href: "../level3-module7-section5-2",
   },
   {
     number: "5.3",
     title: "Setting up as a Self-employed Electrician (insurance, UTR, HMRC)",
     description: "Requirements and procedures for establishing a self-employed electrical business",
     icon: Briefcase,
-    href: "../level3-module7-section5-5-3",
+    href: "../level3-module7-section5-3",
   },
   {
     number: "5.4",
     title: "Quoting, Tendering, and Estimating Jobs",
     description: "Skills for accurate job estimation, competitive quoting and tender preparation",
     icon: Calculator,
-    href: "../level3-module7-section5-5-4",
+    href: "../level3-module7-section5-4",
   },
   {
     number: "5.5",
     title: "Customer Service and Building Reputation",
     description: "Developing excellent customer service skills and building professional reputation",
     icon: Star,
-    href: "../level3-module7-section5-5-5",
+    href: "../level3-module7-section5-5",
   },
   {
     number: "5.6",
     title: "Financial Awareness (tax, bookkeeping, pricing strategies)",
     description: "Understanding business finances, tax obligations and effective pricing strategies",
     icon: PoundSterling,
-    href: "../level3-module7-section5-5-6",
+    href: "../level3-module7-section5-6",
   },
 ];
 
 const Level3Module7Section5 = () => {
+  useSEO(
+    "Section 5: Employment and Business Awareness - Level 3 Module 7",
+    "Employment skills, self-employment options and business development"
+  );
+
   return (
     <div className="min-h-screen bg-[#1a1a1a]">
-      {/* Header */}
-      <div className="border-b border-white/10 bg-transparent">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white/70 hover:text-white active:text-white p-0 -ml-1" asChild>
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../level3-module7">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 7
@@ -64,29 +75,49 @@ const Level3Module7Section5 = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-        <div className="mb-12">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6">
-            Section 5 - Employment and Business Awareness
+      <div className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Hero Section */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Section 5</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Employment and Business Awareness
           </h1>
-          <p className="text-xl text-white/70 max-w-3xl">
+          <p className="text-white/80 max-w-3xl mx-auto">
             Employment skills, self-employment options and business development
           </p>
-        </div>
+        </header>
+
+        {/* Section Overview */}
+        <section className="mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">Section Overview</p>
+            <p className="text-sm text-white">
+              This section covers employment and business awareness including CV writing and interviews,
+              employment law, self-employment setup, quoting and estimating,
+              customer service, and financial awareness.
+            </p>
+          </div>
+        </section>
 
         {/* Subsections Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {subsections.map((subsection, index) => (
-            <ModuleCard
-              key={index}
-              number={subsection.number}
-              title={subsection.title}
-              description={subsection.description}
-              icon={subsection.icon}
-              href={subsection.href}
-            />
-          ))}
-        </div>
+        <section>
+          <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {subsections.map((subsection, index) => (
+              <ModuleCard
+                key={index}
+                number={subsection.number}
+                title={subsection.title}
+                description={subsection.description}
+                icon={subsection.icon}
+                href={subsection.href}
+              />
+            ))}
+          </div>
+        </section>
       </div>
     </div>
   );

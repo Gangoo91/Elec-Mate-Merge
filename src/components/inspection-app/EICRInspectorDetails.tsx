@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
-import { AlertTriangle, User, Copy, Trash2, Upload, X, Palette, Shield, Zap } from 'lucide-react';
+import { AlertTriangle, User, Upload, X, Palette, Shield, Zap } from 'lucide-react';
 import { useInspectorProfiles, InspectorProfile } from '@/hooks/useInspectorProfiles';
 import { useProfileDataService } from '@/hooks/useProfileDataService';
 import { getSourceDisplayInfo } from '@/services/profileDataService';
@@ -32,7 +31,7 @@ const EICRInspectorDetails = ({ formData, onUpdate, isOpen, onToggle }: EICRInsp
   const [availableQualifications] = useState([
     '18th Edition BS7671',
     'City & Guilds 2391-52',
-    'City & Guilds 2391-51', 
+    'City & Guilds 2391-51',
     'NICEIC Approved',
     'NAPIT Registered',
     'ECA Member',
@@ -72,18 +71,18 @@ const EICRInspectorDetails = ({ formData, onUpdate, isOpen, onToggle }: EICRInsp
     onUpdate('inspectorName', profile.name);
     onUpdate('inspectorQualifications', profile.qualifications.join(', '));
     onUpdate('inspectorSignature', profile.signatureData || '');
-    
+
     // Registration details
     onUpdate('registrationScheme', profile.registrationScheme || '');
     onUpdate('registrationNumber', profile.registrationNumber || '');
     onUpdate('registrationExpiry', profile.registrationExpiry || '');
-    
+
     // Insurance details
     onUpdate('insuranceProvider', profile.insuranceProvider || '');
     onUpdate('insurancePolicyNumber', profile.insurancePolicyNumber || '');
     onUpdate('insuranceCoverage', profile.insuranceCoverage || '');
     onUpdate('insuranceExpiry', profile.insuranceExpiry || '');
-    
+
     // Company details
     onUpdate('companyName', profile.companyName || '');
     onUpdate('companyAddress', profile.companyAddress || '');
@@ -91,7 +90,7 @@ const EICRInspectorDetails = ({ formData, onUpdate, isOpen, onToggle }: EICRInsp
     onUpdate('companyEmail', profile.companyEmail || '');
     onUpdate('companyLogo', profile.companyLogo || '');
     onUpdate('companyWebsite', profile.companyWebsite || '');
-    
+
     setSelectedQualifications(profile.qualifications);
   };
 
@@ -141,9 +140,6 @@ const EICRInspectorDetails = ({ formData, onUpdate, isOpen, onToggle }: EICRInsp
       description: `Auto-filled from ${sourceInfo?.label || 'profile'}${isVerified ? ' (verified)' : ''}.`,
     });
   };
-
-
-
 
   // Company Branding handlers
   const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -212,7 +208,7 @@ const EICRInspectorDetails = ({ formData, onUpdate, isOpen, onToggle }: EICRInsp
       default:
         break;
     }
-    
+
     toast({
       title: "Branding template applied",
       description: `${template} branding template has been applied.`,
@@ -231,355 +227,349 @@ const EICRInspectorDetails = ({ formData, onUpdate, isOpen, onToggle }: EICRInsp
   const validation = getValidationStatus();
 
   return (
-    <div className="md:max-w-6xl mx-auto">
-      <Card className="border border-border bg-card overflow-hidden rounded-xl shadow-lg shadow-black/10">
+    <div className="md:max-w-6xl mx-auto pb-20 lg:pb-4">
+      <div className="eicr-section-card">
         <Collapsible open={isOpen} onOpenChange={onToggle}>
-          <SectionHeader 
-            title="Inspector & Company Details" 
+          <SectionHeader
+            title="Inspector & Company Details"
             icon={User}
             isOpen={isOpen}
             color="blue-500"
           />
           <CollapsibleContent>
-            <CardContent className="space-y-8 p-6 lg:p-8">
-          {!validation.isValid && (
-            <Alert className="border-orange-200 bg-orange-50 flex items-center gap-3">
-              <AlertTriangle className="h-5 w-5 text-orange-600 flex-shrink-0" />
-              <AlertDescription className="text-orange-800 p-0 text-left">
-                <strong>Required fields missing:</strong> {validation.missingFields.join(', ')}
-              </AlertDescription>
-            </Alert>
-          )}
+            <div className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
+              {/* Validation Alert */}
+              {!validation.isValid && (
+                <Alert className="border-orange-500/30 bg-orange-500/10 flex items-center gap-3">
+                  <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0" />
+                  <AlertDescription className="text-orange-300 p-0 text-left">
+                    <strong>Required fields missing:</strong> {validation.missingFields.join(', ')}
+                  </AlertDescription>
+                </Alert>
+              )}
 
-          {/* Smart Auto-Fill Button - Uses cascade: Elec-ID → Inspector Profile → Account */}
-          {(inspectorDetails || getDefaultProfile()) && (
-            <div className="space-y-3">
-              <Button
-                onClick={handleSmartAutoFill}
-                disabled={profileDataLoading || !inspectorDetails}
-                className={cn(
-                  "w-full",
-                  isVerified
-                    ? "bg-green-600 hover:bg-green-700"
-                    : "bg-primary hover:bg-primary/90"
-                )}
-                size="lg"
-              >
-                {isVerified ? (
-                  <>
-                    <Shield className="h-5 w-5 mr-2" />
-                    Auto-Fill from Elec-ID
-                  </>
-                ) : (
-                  <>
-                    <Zap className="h-5 w-5 mr-2" />
-                    Smart Auto-Fill
-                  </>
-                )}
-              </Button>
-
-              {/* Data source indicator */}
-              {dataSource && (
-                <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
-                  <span>Data from:</span>
-                  {(() => {
-                    const sourceInfo = getSourceDisplayInfo(dataSource);
-                    return (
-                      <Badge
-                        variant="outline"
-                        className={cn(
-                          'px-2 py-0.5 text-xs',
-                          sourceInfo.bgColor,
-                          sourceInfo.color,
-                          'border',
-                          sourceInfo.borderColor
+              {/* Smart Auto-Fill Card */}
+              {(inspectorDetails || getDefaultProfile()) && (
+                <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-500/30 rounded-lg p-4">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                    <div className="flex-1">
+                      <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
+                        {isVerified ? (
+                          <Shield className="h-5 w-5 text-green-400" />
+                        ) : (
+                          <Zap className="h-5 w-5 text-elec-yellow" />
                         )}
-                      >
-                        {isVerified && <Shield className="h-3 w-3 mr-1" />}
-                        {sourceInfo.label}
-                      </Badge>
-                    );
-                  })()}
+                        {isVerified ? 'Verified Profile Available' : 'Quick Setup Available'}
+                      </h3>
+                      {dataSource && (
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Data from {getSourceDisplayInfo(dataSource).label}
+                        </p>
+                      )}
+                    </div>
+                    <Button
+                      onClick={handleSmartAutoFill}
+                      disabled={profileDataLoading || !inspectorDetails}
+                      className={cn(
+                        isVerified
+                          ? "bg-green-600 hover:bg-green-700"
+                          : "bg-primary hover:bg-primary/90"
+                      )}
+                    >
+                      {isVerified ? (
+                        <>
+                          <Shield className="h-4 w-4 mr-2" />
+                          Auto-Fill from Elec-ID
+                        </>
+                      ) : (
+                        <>
+                          <Zap className="h-4 w-4 mr-2" />
+                          Smart Auto-Fill
+                        </>
+                      )}
+                    </Button>
+                  </div>
                 </div>
               )}
-            </div>
-          )}
 
-          {/* Certificate Number */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-3 pb-3 border-b border-border/50">
-              <div className="w-2 h-2 rounded-full bg-blue-400"></div>
-              <h3 className="text-lg font-semibold text-foreground">Certificate Details</h3>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="certificateNumber" className="font-medium text-sm">Certificate Number</Label>
-              <Input
-                id="certificateNumber"
-                value={formData.certificateNumber || ''}
-                readOnly
-                className="bg-muted/50 cursor-not-allowed font-mono text-foreground"
-                tabIndex={-1}
-              />
-              <p className="text-xs text-muted-foreground">Auto-generated and cannot be changed</p>
-            </div>
-          </div>
-
-          {/* Personal Details */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-3 pb-3 border-b border-border/50">
-              <div className="w-2 h-2 rounded-full bg-blue-400"></div>
-              <h3 className="text-lg font-semibold text-foreground">Personal Details</h3>
-            </div>
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="inspectorName" className="font-medium text-sm">Inspector Name *</Label>
-                <Input
-                  id="inspectorName"
-                  value={formData.inspectorName || ''}
-                  onChange={(e) => onUpdate('inspectorName', e.target.value)}
-                  placeholder="Full name of the inspector"
-                  className="h-11 text-base touch-manipulation"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Qualifications */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-3 pb-3 border-b border-border/50">
-              <div className="w-2 h-2 rounded-full bg-elec-yellow"></div>
-              <h3 className="text-lg font-semibold text-foreground">Qualifications *</h3>
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-2 gap-2 p-3 border border-border/50 rounded-md bg-background/50">
-              {availableQualifications.map((qualification) => (
-                <div key={qualification} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={qualification}
-                    checked={selectedQualifications.includes(qualification)}
-                    onCheckedChange={() => toggleQualification(qualification)}
-                    className="border-white/50 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+              {/* Certificate Details */}
+              <div className="space-y-3 sm:space-y-4">
+                <h3 className="text-base sm:text-lg font-semibold text-foreground border-b border-elec-gray pb-2 flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-blue-400"></div>
+                  Certificate Details
+                </h3>
+                <div className="space-y-2">
+                  <Label htmlFor="certificateNumber">Certificate Number</Label>
+                  <Input
+                    id="certificateNumber"
+                    value={formData.certificateNumber || ''}
+                    readOnly
+                    className="bg-muted/50 cursor-not-allowed font-mono text-foreground h-11 text-base"
+                    tabIndex={-1}
                   />
-                  <Label 
-                    htmlFor={qualification} 
-                    className="text-sm cursor-pointer leading-tight"
-                  >
-                    {qualification}
-                  </Label>
+                  <p className="text-xs text-muted-foreground">Auto-generated and cannot be changed</p>
                 </div>
-              ))}
-            </div>
-          </div>
+              </div>
 
-          <Separator className="my-6" />
+              {/* Personal Details */}
+              <div className="space-y-3 sm:space-y-4">
+                <h3 className="text-base sm:text-lg font-semibold text-foreground border-b border-elec-gray pb-2 flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-blue-400"></div>
+                  Personal Details
+                </h3>
+                <div className="space-y-2">
+                  <Label htmlFor="inspectorName">Inspector Name *</Label>
+                  <Input
+                    id="inspectorName"
+                    value={formData.inspectorName || ''}
+                    onChange={(e) => onUpdate('inspectorName', e.target.value)}
+                    placeholder="Full name of the inspector"
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                  />
+                </div>
+              </div>
 
-          {/* Company Branding */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-3 pb-3 border-b border-border/50">
-              <div className="w-2 h-2 rounded-full bg-purple-400"></div>
-              <h3 className="text-lg font-semibold text-foreground">Company Branding</h3>
-            </div>
-            
-            {/* Company Logo */}
-            <div className="space-y-4">
-              <div className="space-y-3">
-                <Label className="font-medium text-sm">Company Logo</Label>
-                {formData.companyLogo ? (
-                  <div className="relative w-fit">
-                    <img 
-                      src={formData.companyLogo} 
-                      alt="Company Logo" 
-                      className="max-w-48 max-h-32 object-contain rounded-lg border border-border bg-background/50 p-2"
-                    />
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      size="sm"
-                      onClick={handleRemoveLogo}
-                      className="absolute -top-2 -right-2 w-6 h-6 rounded-full p-0"
+              {/* Qualifications */}
+              <div className="space-y-3 sm:space-y-4">
+                <div className="bg-gradient-to-r from-elec-yellow/20 to-amber-600/20 border border-elec-yellow/30 rounded-lg px-4 py-3">
+                  <h3 className="text-base sm:text-lg font-semibold text-foreground flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow"></div>
+                    Qualifications *
+                  </h3>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 bg-card/50 rounded-lg border border-border">
+                  {availableQualifications.map((qualification) => (
+                    <div
+                      key={qualification}
+                      className="flex items-center space-x-3 p-3 rounded-lg hover:bg-white/5 transition-colors cursor-pointer"
+                      onClick={() => toggleQualification(qualification)}
                     >
-                      <X className="h-3 w-3" />
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-purple-400 transition-colors">
-                    <Upload className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                    <p className="text-sm text-muted-foreground mb-2">Upload company logo</p>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleLogoUpload}
-                      className="hidden"
-                      id="logo-upload"
-                    />
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => document.getElementById('logo-upload')?.click()}
-                      className="text-xs"
-                    >
-                      Choose File
-                    </Button>
-                    <p className="text-xs text-muted-foreground mt-2">JPG, PNG, GIF or WebP (max 5MB)</p>
-                  </div>
-                )}
+                      <Checkbox
+                        id={qualification}
+                        checked={selectedQualifications.includes(qualification)}
+                        onCheckedChange={() => toggleQualification(qualification)}
+                        className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                      />
+                      <Label
+                        htmlFor={qualification}
+                        className="text-sm cursor-pointer leading-tight flex-1"
+                      >
+                        {qualification}
+                      </Label>
+                    </div>
+                  ))}
+                </div>
               </div>
 
-              {/* Branding Details */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="companyTagline" className="font-medium text-sm">Company Tagline</Label>
-                  <Input
-                    id="companyTagline"
-                    value={formData.companyTagline || ''}
-                    onChange={(e) => onUpdate('companyTagline', e.target.value)}
-                    placeholder="Professional Electrical Services"
-                    className="h-11 text-base touch-manipulation"
-                  />
+              <Separator className="my-6" />
+
+              {/* Company Branding */}
+              <div className="space-y-3 sm:space-y-4">
+                <h3 className="text-base sm:text-lg font-semibold text-foreground border-b border-elec-gray pb-2 flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-purple-400"></div>
+                  Company Branding
+                </h3>
+
+                {/* Company Logo */}
+                <div className="space-y-4">
+                  <div className="space-y-3">
+                    <Label>Company Logo</Label>
+                    {formData.companyLogo ? (
+                      <div className="relative w-fit">
+                        <img
+                          src={formData.companyLogo}
+                          alt="Company Logo"
+                          className="max-w-48 max-h-32 object-contain rounded-lg border border-border bg-background/50 p-2"
+                        />
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="sm"
+                          onClick={handleRemoveLogo}
+                          className="absolute -top-2 -right-2 w-6 h-6 rounded-full p-0"
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="border-2 border-dashed border-white/20 rounded-lg p-6 text-center hover:border-purple-400 hover:bg-purple-500/5 transition-all">
+                        <Upload className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                        <p className="text-sm text-muted-foreground mb-2">Upload company logo</p>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleLogoUpload}
+                          className="hidden"
+                          id="logo-upload"
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => document.getElementById('logo-upload')?.click()}
+                          className="text-xs border-white/20"
+                        >
+                          Choose File
+                        </Button>
+                        <p className="text-xs text-muted-foreground mt-2">JPG, PNG, GIF or WebP (max 5MB)</p>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Branding Details */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="companyTagline">Company Tagline</Label>
+                      <Input
+                        id="companyTagline"
+                        value={formData.companyTagline || ''}
+                        onChange={(e) => onUpdate('companyTagline', e.target.value)}
+                        placeholder="Professional Electrical Services"
+                        className="h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="companyWebsite">Website</Label>
+                      <Input
+                        id="companyWebsite"
+                        value={formData.companyWebsite || ''}
+                        onChange={(e) => onUpdate('companyWebsite', e.target.value)}
+                        placeholder="www.yourcompany.co.uk"
+                        className="h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500"
+                      />
+                    </div>
+                    <div className="space-y-2 sm:col-span-2">
+                      <Label htmlFor="companyAccentColor">Accent Colour</Label>
+                      <div className="flex gap-2">
+                        <Input
+                          id="companyAccentColor"
+                          type="color"
+                          value={formData.companyAccentColor || '#3b82f6'}
+                          onChange={(e) => onUpdate('companyAccentColor', e.target.value)}
+                          className="w-16 h-11 p-1 border-white/30 focus:border-purple-500 focus:ring-purple-500 cursor-pointer"
+                        />
+                        <Input
+                          value={formData.companyAccentColor || '#3b82f6'}
+                          onChange={(e) => onUpdate('companyAccentColor', e.target.value)}
+                          placeholder="#3b82f6"
+                          className="flex-1 h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Quick Fill Templates */}
+                  <div className="space-y-2">
+                    <Label>Quick Fill Templates</Label>
+                    <div className="flex flex-wrap gap-2">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleQuickFillBranding('electrical-contractor')}
+                        className="text-xs border-white/20 hover:bg-white/5"
+                      >
+                        <Palette className="h-3 w-3 mr-1" />
+                        Electrical Contractor
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleQuickFillBranding('niceic-approved')}
+                        className="text-xs border-white/20 hover:bg-white/5"
+                      >
+                        <Palette className="h-3 w-3 mr-1" />
+                        NICEIC Approved
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleQuickFillBranding('independent')}
+                        className="text-xs border-white/20 hover:bg-white/5"
+                      >
+                        <Palette className="h-3 w-3 mr-1" />
+                        Independent Engineer
+                      </Button>
+                    </div>
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="companyWebsite" className="font-medium text-sm">Website</Label>
-                  <Input
-                    id="companyWebsite"
-                    value={formData.companyWebsite || ''}
-                    onChange={(e) => onUpdate('companyWebsite', e.target.value)}
-                    placeholder="www.yourcompany.co.uk"
-                    className="h-11 text-base touch-manipulation"
-                  />
+              </div>
+
+              <Separator className="my-6" />
+
+              {/* Company Details */}
+              <div className="space-y-3 sm:space-y-4">
+                <div className="bg-gradient-to-r from-green-500/20 to-green-600/20 border border-green-500/30 rounded-lg px-4 py-3 flex items-center justify-between">
+                  <h3 className="text-base sm:text-lg font-semibold text-foreground flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
+                    Company Details
+                  </h3>
+                  <InspectorProfileDialog onProfileSelected={handleProfileSelect} />
                 </div>
-                <div className="space-y-2 sm:col-span-2">
-                  <Label htmlFor="companyAccentColor" className="font-medium text-sm">Accent Colour</Label>
-                  <div className="flex gap-2">
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="companyName">Company Name</Label>
                     <Input
-                      id="companyAccentColor"
-                      type="color"
-                      value={formData.companyAccentColor || '#3b82f6'}
-                      onChange={(e) => onUpdate('companyAccentColor', e.target.value)}
-                      className="w-16 p-1 border-white/30 focus:border-purple-500 focus:ring-purple-500"
+                      id="companyName"
+                      value={formData.companyName || ''}
+                      onChange={(e) => onUpdate('companyName', e.target.value)}
+                      placeholder="Your Company Name Ltd"
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                     />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="companyAddress">Company Address</Label>
+                    <Textarea
+                      id="companyAddress"
+                      value={formData.companyAddress || ''}
+                      onChange={(e) => onUpdate('companyAddress', e.target.value)}
+                      placeholder="Full company address including postcode"
+                      rows={2}
+                      className="touch-manipulation text-base min-h-[100px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
+                    />
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="companyPhone">Company Phone</Label>
+                      <Input
+                        id="companyPhone"
+                        type="tel"
+                        value={formData.companyPhone || ''}
+                        onChange={(e) => onUpdate('companyPhone', e.target.value)}
+                        placeholder="Company phone number"
+                        className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="companyEmail">Company Email</Label>
+                      <Input
+                        id="companyEmail"
+                        type="email"
+                        value={formData.companyEmail || ''}
+                        onChange={(e) => onUpdate('companyEmail', e.target.value)}
+                        placeholder="Company email address"
+                        className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="registrationNumber">Registration Number</Label>
                     <Input
-                      value={formData.companyAccentColor || '#3b82f6'}
-                      onChange={(e) => onUpdate('companyAccentColor', e.target.value)}
-                      placeholder="#3b82f6"
-                      className="flex-1 h-11 text-base touch-manipulation"
+                      id="registrationNumber"
+                      value={formData.registrationNumber || ''}
+                      onChange={(e) => onUpdate('registrationNumber', e.target.value)}
+                      placeholder="NICEIC/NAPIT/Company registration number"
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                     />
                   </div>
                 </div>
               </div>
-
-              {/* Quick Fill Templates */}
-              <div className="space-y-2">
-                <Label className="font-medium text-sm">Quick Fill Templates</Label>
-                <div className="flex flex-wrap gap-2">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleQuickFillBranding('electrical-contractor')}
-                    className="text-xs"
-                  >
-                    <Palette className="h-3 w-3 mr-1" />
-                    Electrical Contractor
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleQuickFillBranding('niceic-approved')}
-                    className="text-xs"
-                  >
-                    <Palette className="h-3 w-3 mr-1" />
-                    NICEIC Approved
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleQuickFillBranding('independent')}
-                    className="text-xs"
-                  >
-                    <Palette className="h-3 w-3 mr-1" />
-                    Independent Engineer
-                  </Button>
-                </div>
-              </div>
             </div>
-          </div>
-
-          <Separator className="my-6" />
-
-          {/* Company Details */}
-          <div className="space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-border/50">
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-green-400"></div>
-                <h3 className="text-lg font-semibold text-foreground">Company Details</h3>
-              </div>
-              <InspectorProfileDialog onProfileSelected={handleProfileSelect} />
-            </div>
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="companyName" className="font-medium text-sm">Company Name</Label>
-                <Input
-                  id="companyName"
-                  value={formData.companyName || ''}
-                  onChange={(e) => onUpdate('companyName', e.target.value)}
-                  placeholder="Your Company Name Ltd"
-                  className="h-11 text-base touch-manipulation"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="companyAddress" className="font-medium text-sm">Company Address</Label>
-                <Textarea
-                  id="companyAddress"
-                  value={formData.companyAddress || ''}
-                  onChange={(e) => onUpdate('companyAddress', e.target.value)}
-                  placeholder="Full company address including postcode"
-                  rows={2}
-                  className="touch-manipulation text-base min-h-[100px]"
-                />
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="companyPhone" className="font-medium text-sm">Company Phone</Label>
-                  <Input
-                    id="companyPhone"
-                    type="tel"
-                    value={formData.companyPhone || ''}
-                    onChange={(e) => onUpdate('companyPhone', e.target.value)}
-                    placeholder="Company phone number"
-                    className="h-11 text-base touch-manipulation"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="companyEmail" className="font-medium text-sm">Company Email</Label>
-                  <Input
-                    id="companyEmail"
-                    type="email"
-                    value={formData.companyEmail || ''}
-                    onChange={(e) => onUpdate('companyEmail', e.target.value)}
-                    placeholder="Company email address"
-                    className="h-11 text-base touch-manipulation"
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="registrationNumber" className="font-medium text-sm">Registration Number</Label>
-                <Input
-                  id="registrationNumber"
-                  value={formData.registrationNumber || ''}
-                  onChange={(e) => onUpdate('registrationNumber', e.target.value)}
-                  placeholder="NICEIC/NAPIT/Company registration number"
-                  className="h-11 text-base touch-manipulation"
-                />
-              </div>
-            </div>
-          </div>
-
-            </CardContent>
           </CollapsibleContent>
         </Collapsible>
-      </Card>
+      </div>
     </div>
   );
 };

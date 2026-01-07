@@ -1,7 +1,8 @@
-import { ArrowLeft, Droplets, Cloud, Factory, Car, HardHat, Flame } from "lucide-react";
+import { ArrowLeft, Droplets, Cloud, Factory, Car, HardHat, Flame, Zap } from "lucide-react";
 import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import useSEO from "@/hooks/useSEO";
 
 const subsections = [
   {
@@ -9,52 +10,62 @@ const subsections = [
     title: "Bathrooms and Locations Containing a Bath/Shower",
     description: "Special design considerations for bathrooms and wet locations",
     icon: Droplets,
-    href: "../level3-module6-section4-4-1",
+    href: "../level3-module6-section4-1",
   },
   {
-    number: "4.2", 
+    number: "4.2",
     title: "Outdoor Installations and External Influences (IP ratings, UV, weatherproofing)",
     description: "Designing for outdoor installations considering environmental factors",
     icon: Cloud,
-    href: "../level3-module6-section4-4-2",
+    href: "../level3-module6-section4-2",
   },
   {
     number: "4.3",
     title: "Agricultural and Industrial Installations",
     description: "Special requirements for agricultural and industrial electrical installations",
     icon: Factory,
-    href: "../level3-module6-section4-4-3",
+    href: "../level3-module6-section4-3",
   },
   {
     number: "4.4",
     title: "EV Charging Points (OZEV guidance, Section 722)",
     description: "Design requirements for electric vehicle charging installations",
     icon: Car,
-    href: "../level3-module6-section4-4-4",
+    href: "../level3-module6-section4-4",
   },
   {
     number: "4.5",
     title: "Temporary Installations (construction sites, exhibitions)",
     description: "Design considerations for temporary electrical installations",
     icon: HardHat,
-    href: "../level3-module6-section4-4-5",
+    href: "../level3-module6-section4-5",
   },
   {
     number: "4.6",
     title: "Fire Alarm, Emergency Lighting and Data/Communications Integration",
     description: "Integrating safety systems and communications into electrical designs",
     icon: Flame,
-    href: "../level3-module6-section4-4-6",
+    href: "../level3-module6-section4-6",
   },
 ];
 
 const Level3Module6Section4 = () => {
+  useSEO(
+    "Section 4: Designing for Special Installations and Locations - Level 3 Module 6",
+    "Design considerations for special locations and installations with specific requirements"
+  );
+
   return (
     <div className="min-h-screen bg-[#1a1a1a]">
-      {/* Header */}
-      <div className="border-b border-white/10 bg-transparent">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white/70 hover:text-white active:text-white p-0 -ml-1" asChild>
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../level3-module6">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 6
@@ -64,29 +75,49 @@ const Level3Module6Section4 = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-        <div className="mb-12">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6">
-            Section 4 - Designing for Special Installations and Locations
+      <div className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Hero Section */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Section 4</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Designing for Special Installations and Locations
           </h1>
-          <p className="text-xl text-white/70 max-w-3xl">
+          <p className="text-white/80 max-w-3xl mx-auto">
             Design considerations for special locations and installations with specific requirements
           </p>
-        </div>
+        </header>
+
+        {/* Section Overview */}
+        <section className="mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">Section Overview</p>
+            <p className="text-sm text-white">
+              This section covers special installations including bathrooms, outdoor locations,
+              agricultural and industrial settings, EV charging points,
+              temporary installations, and fire alarm and emergency lighting integration.
+            </p>
+          </div>
+        </section>
 
         {/* Subsections Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {subsections.map((subsection, index) => (
-            <ModuleCard
-              key={index}
-              number={subsection.number}
-              title={subsection.title}
-              description={subsection.description}
-              icon={subsection.icon}
-              href={subsection.href}
-            />
-          ))}
-        </div>
+        <section>
+          <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {subsections.map((subsection, index) => (
+              <ModuleCard
+                key={index}
+                number={subsection.number}
+                title={subsection.title}
+                description={subsection.description}
+                icon={subsection.icon}
+                href={subsection.href}
+              />
+            ))}
+          </div>
+        </section>
       </div>
     </div>
   );

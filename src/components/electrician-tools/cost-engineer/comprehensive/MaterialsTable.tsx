@@ -1,9 +1,10 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Package, Edit, Save, X } from "lucide-react";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 interface MaterialsTableProps {
   items: any[];
@@ -46,150 +47,169 @@ const MaterialsTable = ({ items, onItemsChange }: MaterialsTableProps) => {
   };
 
   return (
-    <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
-      <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-xl sm:text-lg font-bold text-foreground flex items-center gap-2">
-            <Package className="h-5 w-5 text-elec-yellow" />
-            Materials Breakdown
-          </CardTitle>
-          {onItemsChange && (
-            <div className="flex gap-2">
-              {isEditMode ? (
-                <>
-                  <Button 
-                    size="sm" 
-                    variant="outline"
-                    onClick={handleCancel}
-                    className="h-8 gap-1"
-                  >
-                    <X className="h-3.5 w-3.5" />
-                    Cancel
-                  </Button>
-                  <Button 
-                    size="sm" 
-                    onClick={handleSave}
-                    className="h-8 gap-1 bg-elec-yellow text-elec-gray hover:bg-elec-yellow/90"
-                  >
-                    <Save className="h-3.5 w-3.5" />
-                    Save Prices
-                  </Button>
-                </>
-              ) : (
-                <Button 
-                  size="sm" 
-                  variant="outline"
-                  onClick={handleEdit}
-                  className="h-8 gap-1"
-                >
-                  <Edit className="h-3.5 w-3.5" />
-                  Edit Prices
-                </Button>
-              )}
-            </div>
-          )}
-        </div>
-      </CardHeader>
-      <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6">
-        {/* Mobile: Stacked Cards */}
-        <div className="space-y-3 sm:hidden">
-          {currentItems.map((item, idx) => (
-            <div key={idx} className="p-4 rounded-lg bg-background/50 border border-border/30">
-              <div className="font-medium text-foreground text-base mb-1 leading-snug">
-                {item.item || item.description}
-              </div>
-              {item.supplier && (
-                <div className="text-sm text-foreground/70 mb-3">{item.supplier}</div>
-              )}
-              <div className="grid grid-cols-3 gap-2 text-center mt-3">
-                <div className="p-2.5 rounded bg-background/50">
-                  <div className="text-xs text-foreground/70 mb-1">Qty</div>
-                  <div className="font-mono text-foreground text-sm">{item.quantity} {item.unit}</div>
-                </div>
-                <div className="p-2.5 rounded bg-background/50">
-                  <div className="text-xs text-foreground/70 mb-1">Unit</div>
-                  {isEditMode ? (
-                    <Input
-                      type="number"
-                      step="0.01"
-                      min="0"
-                      value={item.unitPrice}
-                      onChange={(e) => handleEditPrice(idx, e.target.value)}
-                      className="h-7 text-center font-mono text-sm p-1"
-                    />
-                  ) : (
-                    <div className="font-mono text-foreground text-sm">£{item.unitPrice?.toFixed(2)}</div>
-                  )}
-                </div>
-                <div className="p-2.5 rounded bg-background/50">
-                  <div className="text-xs text-foreground/70 mb-1">Total</div>
-                  <div className="font-mono text-elec-yellow font-bold text-sm">£{item.total?.toFixed(0)}</div>
-                </div>
+    <Card variant="ios" className="overflow-hidden">
+      <CardContent className="p-0">
+        {/* Header */}
+        <div className="p-4 border-b border-white/5">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center"
+              >
+                <Package className="h-5 w-5 text-blue-400" />
+              </motion.div>
+              <div>
+                <h3 className="text-ios-headline text-white font-semibold">Materials Breakdown</h3>
+                <p className="text-ios-caption-1 text-white/50">{currentItems.length} items</p>
               </div>
             </div>
-          ))}
-          {/* Total row */}
-          <div className="p-4 rounded-lg bg-elec-yellow/20 border border-elec-yellow/30">
-            <div className="flex justify-between items-center">
-              <span className="font-bold text-foreground">Total Materials</span>
-              <span className="text-xl font-bold text-elec-yellow">£{total.toFixed(2)}</span>
-            </div>
+            {onItemsChange && (
+              <div className="flex gap-2">
+                {isEditMode ? (
+                  <>
+                    <Button
+                      size="sm"
+                      variant="ios-ghost"
+                      onClick={handleCancel}
+                      className="h-8 gap-1 text-xs"
+                    >
+                      <X className="h-3.5 w-3.5" />
+                      Cancel
+                    </Button>
+                    <Button
+                      size="sm"
+                      onClick={handleSave}
+                      className="h-8 gap-1 text-xs bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                    >
+                      <Save className="h-3.5 w-3.5" />
+                      Save
+                    </Button>
+                  </>
+                ) : (
+                  <Button
+                    size="sm"
+                    variant="ios-ghost"
+                    onClick={handleEdit}
+                    className="h-8 gap-1 text-xs"
+                  >
+                    <Edit className="h-3.5 w-3.5" />
+                    Edit
+                  </Button>
+                )}
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Desktop: Table */}
-        <div className="hidden sm:block">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="text-left text-foreground font-semibold text-base sm:text-sm">Description</TableHead>
-                <TableHead className="text-right text-foreground font-semibold text-base sm:text-sm">Qty</TableHead>
-                <TableHead className="text-right text-foreground font-semibold text-base sm:text-sm">Unit Price</TableHead>
-                <TableHead className="text-right text-foreground font-semibold text-base sm:text-sm">Total</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {currentItems.map((item, idx) => (
-                <TableRow key={idx}>
-                  <TableCell className="font-medium text-base sm:text-sm text-foreground text-left py-4">
-                    {item.item || item.description}
-                    {item.supplier && (
-                      <div className="text-sm text-foreground text-left">
-                        {item.supplier}
-                      </div>
-                    )}
-                  </TableCell>
-                  <TableCell className="text-right text-base sm:text-sm text-foreground">
-                    {item.quantity} {item.unit}
-                  </TableCell>
-                  <TableCell className="text-right font-mono text-base sm:text-sm text-foreground">
+        <div className="p-4">
+          {/* Mobile: Stacked Cards */}
+          <div className="space-y-3 sm:hidden">
+            {currentItems.map((item, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.05 }}
+                className="p-4 rounded-xl bg-black/30 border border-white/10"
+              >
+                <div className="text-ios-body font-medium text-white mb-1 leading-snug">
+                  {item.item || item.description}
+                </div>
+                {item.supplier && (
+                  <div className="text-ios-caption-1 text-white/50 mb-3">{item.supplier}</div>
+                )}
+                <div className="grid grid-cols-3 gap-2 text-center mt-3">
+                  <div className="p-2.5 rounded-lg bg-white/5">
+                    <div className="text-ios-caption-1 text-white/50 mb-1">Qty</div>
+                    <div className="font-mono text-ios-footnote text-white">{item.quantity} {item.unit}</div>
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-white/5">
+                    <div className="text-ios-caption-1 text-white/50 mb-1">Unit</div>
                     {isEditMode ? (
-                      <div className="flex items-center justify-end gap-1">
-                        <span className="text-foreground">£</span>
-                        <Input
-                          type="number"
-                          step="0.01"
-                          min="0"
-                          value={item.unitPrice}
-                          onChange={(e) => handleEditPrice(idx, e.target.value)}
-                          className="w-20 h-8 text-right font-mono"
-                        />
-                      </div>
+                      <Input
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        value={item.unitPrice}
+                        onChange={(e) => handleEditPrice(idx, e.target.value)}
+                        className="h-7 text-center font-mono text-sm p-1 bg-white/10 border-white/20"
+                      />
                     ) : (
-                      `£${item.unitPrice?.toFixed(2)}`
+                      <div className="font-mono text-ios-footnote text-white">£{item.unitPrice?.toFixed(2)}</div>
                     )}
-                  </TableCell>
-                  <TableCell className="text-right font-mono font-medium text-base sm:text-sm text-foreground">
-                    £{item.total?.toFixed(2)}
-                  </TableCell>
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-white/5">
+                    <div className="text-ios-caption-1 text-white/50 mb-1">Total</div>
+                    <div className="font-mono text-ios-footnote font-bold text-blue-400">£{item.total?.toFixed(0)}</div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+            {/* Total row */}
+            <div className="p-4 rounded-xl bg-blue-500/20 border border-blue-500/30">
+              <div className="flex justify-between items-center">
+                <span className="text-ios-body font-semibold text-white">Total Materials</span>
+                <span className="text-xl font-bold text-blue-400">£{total.toFixed(2)}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop: Table */}
+          <div className="hidden sm:block">
+            <Table>
+              <TableHeader>
+                <TableRow className="border-white/10">
+                  <TableHead className="text-left text-white/70 font-semibold text-ios-footnote">Description</TableHead>
+                  <TableHead className="text-right text-white/70 font-semibold text-ios-footnote">Qty</TableHead>
+                  <TableHead className="text-right text-white/70 font-semibold text-ios-footnote">Unit Price</TableHead>
+                  <TableHead className="text-right text-white/70 font-semibold text-ios-footnote">Total</TableHead>
                 </TableRow>
-              ))}
-              <TableRow className="bg-elec-yellow/10 font-bold border-t-2 border-elec-yellow/30">
-                <TableCell colSpan={3} className="text-right text-foreground">Total Materials:</TableCell>
-                <TableCell className="text-right font-mono text-foreground text-lg sm:text-base">£{total.toFixed(2)}</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {currentItems.map((item, idx) => (
+                  <TableRow key={idx} className="border-white/5">
+                    <TableCell className="font-medium text-ios-body text-white text-left py-4">
+                      {item.item || item.description}
+                      {item.supplier && (
+                        <div className="text-ios-caption-1 text-white/50 text-left">
+                          {item.supplier}
+                        </div>
+                      )}
+                    </TableCell>
+                    <TableCell className="text-right text-ios-body text-white/80">
+                      {item.quantity} {item.unit}
+                    </TableCell>
+                    <TableCell className="text-right font-mono text-ios-body text-white/80">
+                      {isEditMode ? (
+                        <div className="flex items-center justify-end gap-1">
+                          <span className="text-white/60">£</span>
+                          <Input
+                            type="number"
+                            step="0.01"
+                            min="0"
+                            value={item.unitPrice}
+                            onChange={(e) => handleEditPrice(idx, e.target.value)}
+                            className="w-20 h-8 text-right font-mono bg-white/10 border-white/20"
+                          />
+                        </div>
+                      ) : (
+                        `£${item.unitPrice?.toFixed(2)}`
+                      )}
+                    </TableCell>
+                    <TableCell className="text-right font-mono font-medium text-ios-body text-white">
+                      £{item.total?.toFixed(2)}
+                    </TableCell>
+                  </TableRow>
+                ))}
+                <TableRow className="bg-blue-500/10 font-bold border-t border-blue-500/30">
+                  <TableCell colSpan={3} className="text-right text-white">Total Materials:</TableCell>
+                  <TableCell className="text-right font-mono text-blue-400 text-lg">£{total.toFixed(2)}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </div>
         </div>
       </CardContent>
     </Card>

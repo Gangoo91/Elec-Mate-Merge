@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Calculator, ChevronDown } from "lucide-react";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
+import { Calculator, ChevronDown, Home, Building2, Factory, Sparkles, Settings2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -12,11 +10,14 @@ import CostAnalysisProcessingView from "./CostAnalysisProcessingView";
 import CostAnalysisResults from "./CostAnalysisResults";
 import { parseCostAnalysis, ParsedCostAnalysis } from "@/utils/cost-analysis-parser";
 import { BusinessSettingsDialog, BusinessSettings, DEFAULT_BUSINESS_SETTINGS } from "./BusinessSettingsDialog";
-import { InlineProjectTypeSelector } from "./InlineProjectTypeSelector";
 import ProjectTypeSelector from "./ProjectTypeSelector";
-import { StickySubmitButton } from "@/components/agents/shared/StickySubmitButton";
 import { AgentSuccessDialog } from "@/components/agents/shared/AgentSuccessDialog";
-import { AGENT_CONFIG } from "@/components/agents/shared/AgentConfig";
+
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { IOSTextarea } from "@/components/ui/ios-textarea";
+import { IOSInput } from "@/components/ui/ios-input";
+import { IOSSegmentedControl, SegmentOption } from "@/components/ui/ios-segmented-control";
 import {
   Collapsible,
   CollapsibleContent,
@@ -24,10 +25,17 @@ import {
 } from "@/components/ui/collapsible";
 
 type ViewState = 'input' | 'processing' | 'results';
+type ProjectType = 'domestic' | 'commercial' | 'industrial';
+
+const PROJECT_TYPE_OPTIONS: SegmentOption<ProjectType>[] = [
+  { value: 'domestic', label: 'Domestic', icon: <Home className="h-4 w-4" /> },
+  { value: 'commercial', label: 'Commercial', icon: <Building2 className="h-4 w-4" /> },
+  { value: 'industrial', label: 'Industrial', icon: <Factory className="h-4 w-4" /> },
+];
 
 const CostEngineerInterface = () => {
   const [viewState, setViewState] = useState<ViewState>('input');
-  const [projectType, setProjectType] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
+  const [projectType, setProjectType] = useState<ProjectType>('domestic');
   const [prompt, setPrompt] = useState("");
   const [originalQueryFromResponse, setOriginalQueryFromResponse] = useState<string>("");
   const [parsedResults, setParsedResults] = useState<ParsedCostAnalysis | null>(null);
@@ -42,8 +50,6 @@ const CostEngineerInterface = () => {
   const [showBusinessSettings, setShowBusinessSettings] = useState(false);
   const [jobId, setJobId] = useState<string | null>(null);
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
-
-  const config = AGENT_CONFIG['cost-engineer'];
 
   // Use job queue pattern with polling
   const { job, isPolling, cancelJob } = useCostEngineerGeneration({
@@ -67,20 +73,6 @@ const CostEngineerInterface = () => {
     toast({
       title: "Example loaded",
       description: "You can edit this or generate directly",
-    });
-  };
-
-  const handleFillTestData = () => {
-    setProjectName("Smith Residence Full Rewire");
-    setClientInfo("Mr & Mrs John Smith");
-    setLocation("Manchester, M15 4AA");
-    setAdditionalInfo("Limited parking on street. Access to loft required. Working hours: 8am-5pm weekdays only.");
-    setProjectType("domestic");
-    setPrompt("Complete rewire of a 3-bedroom semi-detached house built in 1970s. Property requires:\n\n- New 18th Edition consumer unit with RCBO protection\n- Complete rewire including new cables and back boxes\n- 12x LED downlights in kitchen (dimmable)\n- 8x LED downlights in living room\n- New sockets throughout (minimum 2 double sockets per bedroom)\n- Outdoor double socket with RCD protection\n- Garden lighting circuit with 4x spike lights\n- Smoke and heat detector system linked to consumer unit\n- All work to comply with BS7671:2018+A3:2024\n\nProperty is occupied, dustsheets and daily cleanup required.");
-    
-    toast({
-      title: "Test data loaded",
-      description: "All fields populated with sample project data",
     });
   };
 
@@ -133,13 +125,6 @@ const CostEngineerInterface = () => {
   const handleViewResults = () => {
     setShowSuccessDialog(false);
     setViewState('results');
-  };
-
-  // Character count styling
-  const getCharCountClass = () => {
-    if (prompt.length < 100) return 'text-white/40';
-    if (prompt.length < 500) return 'text-emerald-400';
-    return 'text-amber-400';
   };
 
   const handleGenerate = async () => {
@@ -221,7 +206,7 @@ const CostEngineerInterface = () => {
     }
 
     return (
-      <CostAnalysisProcessingView 
+      <CostAnalysisProcessingView
         progress={{
           stage,
           message: job?.current_step || 'Initializing...'
@@ -233,7 +218,7 @@ const CostEngineerInterface = () => {
 
   if (viewState === 'results' && parsedResults) {
     return (
-      <CostAnalysisResults 
+      <CostAnalysisResults
         analysis={parsedResults}
         projectName={projectName}
         originalQuery={originalQueryFromResponse || prompt}
@@ -255,174 +240,196 @@ const CostEngineerInterface = () => {
 
   return (
     <>
-      <div className="space-y-4 pb-24 sm:pb-6">
-        {/* Main Project Description */}
-        <div className="agent-card p-4 sm:p-6" style={{ borderColor: `${config.gradientFrom}15` }}>
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <Label className="text-base sm:text-lg font-semibold flex items-center gap-2">
-                <div className="p-1.5 rounded-lg" style={{ background: `${config.gradientFrom}20` }}>
-                  <Calculator className="h-4 w-4" style={{ color: config.gradientFrom }} />
+      <div className="flex-1 flex flex-col px-4 pb-32">
+        {/* Hero Section */}
+        <div className="text-center py-6 ios-stagger-children">
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20 mb-4"
+          >
+            <Calculator className="h-8 w-8 text-elec-yellow" />
+          </motion.div>
+          <h1 className="text-ios-title-1 text-white mb-1">Cost Engineer</h1>
+          <p className="text-ios-body text-white/60">Material pricing & labour analysis</p>
+        </div>
+
+        {/* Main Form */}
+        <div className="space-y-4 ios-stagger-children">
+          {/* Project Description Card */}
+          <Card variant="ios-elevated" className="p-5">
+            <CardContent className="p-0 space-y-4">
+              <IOSTextarea
+                label="Describe Your Project"
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                placeholder="Describe the electrical work needed in detail. Include scope, specifications, and any special requirements..."
+                showCharCount
+                minChars={100}
+                hint="100+ characters recommended for accurate pricing"
+                rows={5}
+              />
+            </CardContent>
+          </Card>
+
+          {/* Project Type Card */}
+          <Card variant="ios" className="p-5">
+            <CardContent className="p-0 space-y-4">
+              <label className="block text-ios-subhead font-medium text-white/80">
+                Project Type
+              </label>
+              <IOSSegmentedControl
+                options={PROJECT_TYPE_OPTIONS}
+                value={projectType}
+                onChange={setProjectType}
+                size="large"
+              />
+
+              {/* Examples Toggle */}
+              <button
+                onClick={() => setShowExamples(!showExamples)}
+                className="flex items-center gap-1.5 text-ios-footnote font-medium text-elec-yellow ios-pressable"
+              >
+                <ChevronDown className={cn(
+                  "h-4 w-4 transition-transform duration-200",
+                  showExamples && "rotate-180"
+                )} />
+                {showExamples ? 'Hide examples' : 'View example projects'}
+              </button>
+            </CardContent>
+          </Card>
+
+          {/* Examples Dropdown */}
+          <AnimatePresence>
+            {showExamples && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <ProjectTypeSelector
+                  selectedType={projectType}
+                  onTypeChange={setProjectType}
+                  onExampleSelect={handleExampleSelect}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Optional Project Details */}
+          <Collapsible open={showOptionalSettings} onOpenChange={setShowOptionalSettings}>
+            <Card variant="ios" className="overflow-hidden">
+              <CollapsibleTrigger className="w-full p-4 flex items-center justify-between touch-manipulation ios-pressable">
+                <div className="flex items-center gap-3">
+                  <span className="text-ios-body font-medium text-white">Project Details</span>
+                  <span className="text-ios-caption-1 px-2 py-0.5 rounded-full bg-white/10 text-white/50">
+                    Optional
+                  </span>
                 </div>
-                Describe Your Project
-              </Label>
-              <span className={cn(
-                "text-xs font-medium px-2 py-1 rounded-lg transition-colors",
-                getCharCountClass(),
-                prompt.length >= 100 && "bg-white/5"
-              )}>
-                {prompt.length} {prompt.length >= 100 && '✓'}
-              </span>
-            </div>
+                <ChevronDown className={cn(
+                  "h-5 w-5 text-white/40 transition-transform duration-200",
+                  showOptionalSettings && "rotate-180"
+                )} />
+              </CollapsibleTrigger>
 
-            <Textarea
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              placeholder="Describe the electrical work needed in detail..."
-              className="agent-input"
-              rows={5}
-              autoComplete="off"
-              spellCheck={true}
-            />
+              <CollapsibleContent>
+                <CardContent className="p-4 pt-0 space-y-4 border-t border-white/5">
+                  <p className="text-ios-caption-1 text-white/50 pb-1">
+                    Add details for +15% accuracy
+                  </p>
 
-            <p className="text-xs sm:text-sm text-white/50">
-              100+ characters recommended for accurate pricing
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <IOSInput
+                      label="Project Name"
+                      value={projectName}
+                      onChange={(e) => setProjectName(e.target.value)}
+                      placeholder="e.g., Smith Residence"
+                    />
+                    <IOSInput
+                      label="Client Name"
+                      value={clientInfo}
+                      onChange={(e) => setClientInfo(e.target.value)}
+                      placeholder="e.g., Mr & Mrs Smith"
+                    />
+                  </div>
+
+                  <IOSInput
+                    label="Location / Postcode"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    placeholder="e.g., Manchester, M1 1AA"
+                  />
+
+                  <IOSTextarea
+                    label="Additional Requirements"
+                    value={additionalInfo}
+                    onChange={(e) => setAdditionalInfo(e.target.value)}
+                    placeholder="Access restrictions, parking, special conditions..."
+                    rows={3}
+                  />
+                </CardContent>
+              </CollapsibleContent>
+            </Card>
+          </Collapsible>
+
+          {/* Business Settings */}
+          <Collapsible open={showBusinessSettings} onOpenChange={setShowBusinessSettings}>
+            <Card variant="ios" className="overflow-hidden">
+              <CollapsibleTrigger className="w-full p-4 flex items-center justify-between touch-manipulation ios-pressable">
+                <div className="flex items-center gap-3">
+                  <Settings2 className="h-5 w-5 text-white/60" />
+                  <span className="text-ios-body font-medium text-white">Business Settings</span>
+                  <span className={cn(
+                    "text-ios-caption-1 px-2 py-0.5 rounded-full",
+                    hasBusinessSettings ? "bg-emerald-500/20 text-emerald-400" : "bg-white/10 text-white/50"
+                  )}>
+                    {hasBusinessSettings ? "Configured" : "Optional"}
+                  </span>
+                </div>
+                <ChevronDown className={cn(
+                  "h-5 w-5 text-white/40 transition-transform duration-200",
+                  showBusinessSettings && "rotate-180"
+                )} />
+              </CollapsibleTrigger>
+
+              <CollapsibleContent>
+                <CardContent className="p-4 pt-0 border-t border-white/5">
+                  <p className="text-ios-caption-1 text-white/50 pb-3">
+                    Configure profitability analysis
+                  </p>
+                  <BusinessSettingsDialog
+                    onSettingsChange={setBusinessSettings}
+                    currentSettings={businessSettings}
+                  />
+                </CardContent>
+              </CollapsibleContent>
+            </Card>
+          </Collapsible>
+        </div>
+      </div>
+
+      {/* Sticky Generate Button */}
+      <div className="fixed bottom-0 left-0 right-0 p-4 safe-bottom bg-gradient-to-t from-black via-black/95 to-transparent z-40">
+        <div className="max-w-md mx-auto">
+          <Button
+            variant="ios-primary"
+            size="ios-large"
+            className="w-full"
+            onClick={handleGenerate}
+            disabled={!isValid}
+          >
+            <Sparkles className="h-5 w-5 mr-2" />
+            Generate Cost Analysis
+          </Button>
+
+          {!isValid && (
+            <p className="text-ios-caption-1 text-white/40 text-center mt-2">
+              Describe your project to continue
             </p>
-          </div>
+          )}
         </div>
-
-        {/* Project Type */}
-        <div className="agent-card p-4 sm:p-6" style={{ borderColor: `${config.gradientFrom}15` }}>
-          <div className="space-y-3">
-            <Label className="text-base sm:text-lg font-semibold">Project Type</Label>
-            <InlineProjectTypeSelector
-              selectedType={projectType}
-              onTypeChange={setProjectType}
-              agentType="cost-engineer"
-            />
-            <button
-              onClick={() => setShowExamples(!showExamples)}
-              className="text-sm font-medium flex items-center gap-1 touch-manipulation"
-              style={{ color: config.gradientFrom }}
-            >
-              <ChevronDown className={cn(
-                "h-4 w-4 transition-transform duration-200",
-                showExamples && "rotate-180"
-              )} />
-              {showExamples ? 'Hide examples' : 'Show examples'}
-            </button>
-          </div>
-        </div>
-
-        {/* Examples - Collapsible */}
-        {showExamples && (
-          <div className="animate-slide-up">
-            <ProjectTypeSelector
-              selectedType={projectType}
-              onTypeChange={setProjectType}
-              onExampleSelect={handleExampleSelect}
-            />
-          </div>
-        )}
-
-        {/* Optional Project Details */}
-        <Collapsible open={showOptionalSettings} onOpenChange={setShowOptionalSettings}>
-          <div className="agent-card overflow-hidden" style={{ borderColor: `${config.gradientFrom}15` }}>
-            <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <span className="text-sm sm:text-base font-medium">Project Details</span>
-                <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-white/10 text-white/50">
-                  Optional
-                </span>
-              </div>
-              <ChevronDown className={cn(
-                "h-4 w-4 text-white/40 transition-transform duration-200",
-                showOptionalSettings && "rotate-180"
-              )} />
-            </CollapsibleTrigger>
-
-            <CollapsibleContent className="p-4 pt-0 space-y-4">
-              <p className="text-xs text-white/50 pb-2">
-                Add details for +15% accuracy
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <MobileInputWrapper
-                  label="Project Name"
-                  value={projectName}
-                  onChange={setProjectName}
-                  placeholder="e.g., Smith Residence"
-                  inputMode="text"
-                />
-                <MobileInputWrapper
-                  label="Client Name"
-                  value={clientInfo}
-                  onChange={setClientInfo}
-                  placeholder="e.g., Mr & Mrs Smith"
-                  inputMode="text"
-                />
-              </div>
-
-              <MobileInputWrapper
-                label="Location/Postcode"
-                value={location}
-                onChange={setLocation}
-                placeholder="e.g., Manchester, M1 1AA"
-                inputMode="text"
-              />
-
-              <div className="space-y-2">
-                <Label className="text-sm font-medium text-white/80">Additional Requirements</Label>
-                <Textarea
-                  value={additionalInfo}
-                  onChange={(e) => setAdditionalInfo(e.target.value)}
-                  placeholder="Access, parking, special conditions..."
-                  className="agent-input min-h-[80px]"
-                  rows={3}
-                  autoComplete="off"
-                  spellCheck={true}
-                />
-              </div>
-            </CollapsibleContent>
-          </div>
-        </Collapsible>
-
-        {/* Business Settings */}
-        <Collapsible open={showBusinessSettings} onOpenChange={setShowBusinessSettings}>
-          <div className="agent-card overflow-hidden" style={{ borderColor: `${config.gradientFrom}15` }}>
-            <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <span className="text-sm sm:text-base font-medium">Business Settings</span>
-                <span className={cn(
-                  "text-[10px] sm:text-xs px-2 py-0.5 rounded-full",
-                  hasBusinessSettings ? "bg-emerald-500/20 text-emerald-400" : "bg-white/10 text-white/50"
-                )}>
-                  {hasBusinessSettings ? "✓ Configured" : "Optional"}
-                </span>
-              </div>
-              <ChevronDown className={cn(
-                "h-4 w-4 text-white/40 transition-transform duration-200",
-                showBusinessSettings && "rotate-180"
-              )} />
-            </CollapsibleTrigger>
-
-            <CollapsibleContent className="p-4 pt-0">
-              <p className="text-xs text-white/50 pb-3">
-                Configure profitability analysis
-              </p>
-              <BusinessSettingsDialog
-                onSettingsChange={setBusinessSettings}
-                currentSettings={businessSettings}
-              />
-            </CollapsibleContent>
-          </div>
-        </Collapsible>
-
-        {/* Sticky Generate Button */}
-        <StickySubmitButton
-          agentType="cost-engineer"
-          onClick={handleGenerate}
-          isDisabled={!isValid}
-        />
       </div>
 
       {/* Success Dialog */}

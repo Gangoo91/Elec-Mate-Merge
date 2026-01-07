@@ -63,13 +63,13 @@ export const HazardCardV2: React.FC<HazardCardV2Props> = ({
   const activeControls = getActiveControls(hazard.controlMeasures);
   const totalControls = countControls(hazard.controlMeasures);
 
+  // Only animate first 10 cards for performance
+  const shouldAnimate = index < 10;
+
   return (
     <div
-      className="animate-fade-in-up"
-      style={{
-        animationDelay: `${index * 40}ms`,
-        opacity: 0,
-      }}
+      className={shouldAnimate ? "animate-fade-in-up" : ""}
+      style={shouldAnimate ? { animationDelay: `${index * 30}ms`, opacity: 0 } : undefined}
     >
       <div
         onClick={onTap}

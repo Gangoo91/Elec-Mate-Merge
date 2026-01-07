@@ -61,6 +61,7 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
   }, [profile]);
 
   // Function to check subscription status with Stripe
+  // Includes timeout to prevent hanging on slow mobile networks
   const checkSubscriptionStatus = useCallback(async () => {
     if (!profile) return;
 
@@ -72,7 +73,13 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
     try {
       setState(prev => ({ ...prev, isCheckingStatus: true, lastError: null }));
 
-      const { data, error } = await supabase.functions.invoke('check-subscription');
+      // Add 5 second timeout for mobile performance
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+      const { data, error } = await supabase.functions.invoke('check-subscription', {
+        body: {},
+      }).finally(() => clearTimeout(timeoutId));
 
       if (error) {
         console.error('Error checking subscription:', error);

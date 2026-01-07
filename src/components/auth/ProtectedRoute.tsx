@@ -29,9 +29,10 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     return <Navigate to="/auth/signin" state={{ from: location }} replace />;
   }
 
-  // Show loading indicator while checking authentication OR subscription status
-  // This prevents the redirect from happening before we know the subscription status
-  if (isLoading || isCheckingStatus) {
+  // Show loading indicator only while checking initial authentication
+  // Subscription check now runs in background - we use profile.subscribed for instant access
+  // This prevents mobile from hanging on slow serverless function calls
+  if (isLoading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-black">
         <Loader2 className="h-12 w-12 text-yellow-400 animate-spin" />

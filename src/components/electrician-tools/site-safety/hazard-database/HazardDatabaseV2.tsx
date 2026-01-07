@@ -21,6 +21,9 @@ export const HazardDatabaseV2: React.FC = () => {
   const [bookmarksOpen, setBookmarksOpen] = useState(false);
   const [bookmarks, setBookmarks] = useState<Set<string>>(new Set());
 
+  // Progressive loading state - only render 10 hazards at a time for performance
+  const [displayCount, setDisplayCount] = useState(10);
+
   // Load bookmarks from localStorage
   useEffect(() => {
     try {
@@ -70,6 +73,23 @@ export const HazardDatabaseV2: React.FC = () => {
   const bookmarkedHazards = useMemo(() => {
     return hazards.filter((h) => bookmarks.has(h.id));
   }, [hazards, bookmarks]);
+
+  // Progressive loading - slice hazards for display
+  const displayedHazards = useMemo(() => {
+    return filteredHazards.slice(0, displayCount);
+  }, [filteredHazards, displayCount]);
+
+  const hasMore = displayCount < filteredHazards.length;
+
+  // Reset display count when category changes
+  useEffect(() => {
+    setDisplayCount(10);
+  }, [activeCategory]);
+
+  // Show more handler
+  const handleShowMore = useCallback(() => {
+    setDisplayCount((prev) => Math.min(prev + 10, filteredHazards.length));
+  }, [filteredHazards.length]);
 
   // Get category name for display
   const activeCategoryName = useMemo(() => {
@@ -181,16 +201,31 @@ export const HazardDatabaseV2: React.FC = () => {
               </p>
             </div>
           ) : (
-            filteredHazards.map((hazard, i) => (
-              <HazardCardV2
-                key={hazard.id}
-                hazard={hazard}
-                index={i}
-                isBookmarked={bookmarks.has(hazard.id)}
-                onTap={() => setSelectedHazard(hazard)}
-                onBookmark={() => toggleBookmark(hazard.id)}
-              />
-            ))
+            <>
+              {displayedHazards.map((hazard, i) => (
+                <HazardCardV2
+                  key={hazard.id}
+                  hazard={hazard}
+                  index={i}
+                  isBookmarked={bookmarks.has(hazard.id)}
+                  onTap={() => setSelectedHazard(hazard)}
+                  onBookmark={() => toggleBookmark(hazard.id)}
+                />
+              ))}
+              {hasMore && (
+                <button
+                  onClick={handleShowMore}
+                  className={cn(
+                    "w-full py-4 mt-2 rounded-2xl",
+                    "bg-elec-yellow/10 border border-elec-yellow/20",
+                    "text-elec-yellow font-medium text-sm",
+                    "hover:bg-elec-yellow/15 active:scale-[0.98] transition-all"
+                  )}
+                >
+                  Show More ({filteredHazards.length - displayCount} remaining)
+                </button>
+              )}
+            </>
           )}
         </div>
       </div>

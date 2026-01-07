@@ -62,17 +62,19 @@ export const HazardSearchOverlay: React.FC<HazardSearchOverlayProps> = ({
     }
   }, [open]);
 
-  // Search results
+  // Search results - limit to 20 for performance
   const results = useMemo(() => {
     if (!query.trim()) return [];
 
     const lowerQuery = query.toLowerCase();
-    return hazards.filter(
-      (h) =>
-        h.hazard.toLowerCase().includes(lowerQuery) ||
-        h.consequence.toLowerCase().includes(lowerQuery) ||
-        h.category.toLowerCase().includes(lowerQuery)
-    );
+    return hazards
+      .filter(
+        (h) =>
+          h.hazard.toLowerCase().includes(lowerQuery) ||
+          h.consequence.toLowerCase().includes(lowerQuery) ||
+          h.category.toLowerCase().includes(lowerQuery)
+      )
+      .slice(0, 20); // Limit results for mobile performance
   }, [query, hazards]);
 
   // Save search to recent

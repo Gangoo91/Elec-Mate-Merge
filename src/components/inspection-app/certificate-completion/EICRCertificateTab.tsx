@@ -14,7 +14,6 @@ import {
   Copy,
   AlertTriangle
 } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -396,7 +395,7 @@ export const EICRCertificateTab: React.FC<EICRCertificateTabProps> = ({
   }, [formData, onUpdate, toast, haptics]);
 
   return (
-    <div className={cn('space-y-6', isMobile && 'pb-32')}>
+    <div className={cn('space-y-4 sm:space-y-5 md:max-w-6xl mx-auto', isMobile && 'pb-32')}>
       {/* Hero Card */}
       <CertificateSummaryHero
         certificateType="EICR"
@@ -413,46 +412,44 @@ export const EICRCertificateTab: React.FC<EICRCertificateTabProps> = ({
       />
 
       {/* Completion Progress */}
-      <Card className="border-border/50 bg-card/50">
-        <CardContent className="p-4 sm:p-6">
+      <div className="eicr-section-card">
+        <div className="p-4 sm:p-6">
           <CertificateCompletionProgress steps={completionSteps} />
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Final Assessment Section */}
       <Collapsible open={isAssessmentOpen} onOpenChange={setIsAssessmentOpen}>
-        <Card className="border-border/50 overflow-hidden">
+        <div className="eicr-section-card overflow-hidden">
           <CollapsibleTrigger asChild>
-            <CardHeader className="cursor-pointer hover:bg-muted/30 transition-colors">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-base font-semibold flex items-center gap-2">
-                  {formData.overallAssessment ? (
-                    <CheckCircle className="h-5 w-5 text-green-400" />
-                  ) : (
-                    <AlertTriangle className="h-5 w-5 text-amber-400" />
-                  )}
-                  Final Assessment
-                </CardTitle>
-                <ChevronDown className={cn(
-                  'h-5 w-5 text-muted-foreground transition-transform',
-                  isAssessmentOpen && 'rotate-180'
-                )} />
-              </div>
-            </CardHeader>
+            <div className="cursor-pointer hover:bg-white/5 transition-colors p-4 flex items-center justify-between">
+              <h3 className="text-base sm:text-lg font-semibold text-foreground flex items-center gap-2">
+                {formData.overallAssessment ? (
+                  <CheckCircle className="h-5 w-5 text-green-400" />
+                ) : (
+                  <AlertTriangle className="h-5 w-5 text-amber-400" />
+                )}
+                Final Assessment
+              </h3>
+              <ChevronDown className={cn(
+                'h-5 w-5 text-muted-foreground transition-transform',
+                isAssessmentOpen && 'rotate-180'
+              )} />
+            </div>
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <CardContent className="pt-0 space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="p-4 sm:p-5 md:p-6 pt-0 space-y-4 sm:space-y-5 border-t border-white/10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label className="text-sm font-medium">Overall Assessment *</Label>
+                  <Label>Overall Assessment *</Label>
                   <Select
                     value={formData.overallAssessment}
                     onValueChange={(value) => onUpdate('overallAssessment', value)}
                   >
-                    <SelectTrigger className="h-11 text-base touch-manipulation">
+                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                       <SelectValue placeholder="Select assessment" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-elec-gray border-elec-gray text-foreground">
                       <SelectItem value="satisfactory">Satisfactory</SelectItem>
                       <SelectItem value="unsatisfactory">Unsatisfactory</SelectItem>
                     </SelectContent>
@@ -460,15 +457,15 @@ export const EICRCertificateTab: React.FC<EICRCertificateTabProps> = ({
                 </div>
 
                 <div className="space-y-2">
-                  <Label className="text-sm font-medium">Satisfactory for Continued Use *</Label>
+                  <Label>Satisfactory for Continued Use *</Label>
                   <Select
                     value={formData.satisfactoryForContinuedUse}
                     onValueChange={(value) => onUpdate('satisfactoryForContinuedUse', value)}
                   >
-                    <SelectTrigger className="h-11 text-base touch-manipulation">
+                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                       <SelectValue placeholder="Yes/No" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-elec-gray border-elec-gray text-foreground">
                       <SelectItem value="yes">Yes</SelectItem>
                       <SelectItem value="no">No</SelectItem>
                       <SelectItem value="yes-with-recommendations">Yes, subject to recommendations</SelectItem>
@@ -478,43 +475,41 @@ export const EICRCertificateTab: React.FC<EICRCertificateTabProps> = ({
               </div>
 
               <div className="space-y-2">
-                <Label className="text-sm font-medium">Additional Comments</Label>
+                <Label>Additional Comments</Label>
                 <textarea
-                  className="w-full p-3 border border-input rounded-lg resize-none text-base min-h-[100px] focus:ring-2 focus:ring-elec-yellow/20 focus:border-elec-yellow/50 bg-background"
+                  className="w-full p-3 rounded-lg resize-none text-base min-h-[100px] touch-manipulation bg-background border border-white/30 focus:ring-2 focus:ring-elec-yellow/20 focus:border-yellow-500 focus:outline-none"
                   rows={4}
                   placeholder="Enter any additional comments or observations..."
                   value={formData.additionalComments || ''}
                   onChange={(e) => onUpdate('additionalComments', e.target.value)}
                 />
               </div>
-            </CardContent>
+            </div>
           </CollapsibleContent>
-        </Card>
+        </div>
       </Collapsible>
 
       {/* Authorisation Signatures Section */}
       <Collapsible open={isSignaturesOpen} onOpenChange={setIsSignaturesOpen}>
-        <Card className="border-border/50 overflow-hidden">
+        <div className="eicr-section-card overflow-hidden">
           <CollapsibleTrigger asChild>
-            <CardHeader className="cursor-pointer hover:bg-muted/30 transition-colors">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-base font-semibold flex items-center gap-2">
-                  {completionData.signaturesComplete ? (
-                    <CheckCircle className="h-5 w-5 text-green-400" />
-                  ) : (
-                    <User className="h-5 w-5 text-elec-yellow" />
-                  )}
-                  Authorisation Signatures
-                </CardTitle>
-                <ChevronDown className={cn(
-                  'h-5 w-5 text-muted-foreground transition-transform',
-                  isSignaturesOpen && 'rotate-180'
-                )} />
-              </div>
-            </CardHeader>
+            <div className="cursor-pointer hover:bg-white/5 transition-colors p-4 flex items-center justify-between">
+              <h3 className="text-base sm:text-lg font-semibold text-foreground flex items-center gap-2">
+                {completionData.signaturesComplete ? (
+                  <CheckCircle className="h-5 w-5 text-green-400" />
+                ) : (
+                  <User className="h-5 w-5 text-elec-yellow" />
+                )}
+                Authorisation Signatures
+              </h3>
+              <ChevronDown className={cn(
+                'h-5 w-5 text-muted-foreground transition-transform',
+                isSignaturesOpen && 'rotate-180'
+              )} />
+            </div>
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <CardContent className="pt-0 space-y-6">
+            <div className="p-4 sm:p-5 md:p-6 pt-0 space-y-4 sm:space-y-5 border-t border-white/10">
               <p className="text-sm text-muted-foreground">
                 Both signatures are required per BS 7671 regulations.
               </p>
@@ -523,32 +518,34 @@ export const EICRCertificateTab: React.FC<EICRCertificateTabProps> = ({
               <Button
                 variant="outline"
                 onClick={handleCopyFromInspector}
-                className="w-full h-11 gap-2 border-blue-500/30 bg-blue-500/5 hover:bg-blue-500/10"
+                className="w-full h-11 gap-2 border-blue-500/30 bg-blue-500/5 hover:bg-blue-500/10 touch-manipulation"
               >
                 <Copy className="h-4 w-4" />
                 Copy from Inspector Details
               </Button>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 {/* Inspected By */}
-                <div className="space-y-4 p-4 rounded-xl border border-border/50 bg-card/50">
-                  <h4 className="font-semibold text-elec-yellow flex items-center gap-2">
-                    <User className="h-4 w-4" />
-                    INSPECTED BY:
-                  </h4>
+                <div className="space-y-4 p-4 rounded-lg border border-border bg-card/50">
+                  <div className="bg-gradient-to-r from-elec-yellow/20 to-amber-500/20 border border-elec-yellow/30 rounded-lg px-4 py-3 -mx-4 -mt-4">
+                    <h4 className="font-semibold text-foreground flex items-center gap-2">
+                      <User className="h-4 w-4 text-elec-yellow" />
+                      INSPECTED BY:
+                    </h4>
+                  </div>
 
                   <div className="space-y-4">
-                    <div>
+                    <div className="space-y-2">
                       <Label>Name (Capitals) *</Label>
                       <Input
                         value={formData.inspectedByName || ''}
                         onChange={(e) => onUpdate('inspectedByName', e.target.value.toUpperCase())}
                         placeholder="FULL NAME"
-                        className="uppercase h-11"
+                        className="uppercase h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                       />
                     </div>
 
-                    <div>
+                    <div className="space-y-2">
                       <Label>Signature *</Label>
                       <SignatureInput
                         value={formData.inspectedBySignature || ''}
@@ -558,59 +555,62 @@ export const EICRCertificateTab: React.FC<EICRCertificateTabProps> = ({
                       />
                     </div>
 
-                    <div>
+                    <div className="space-y-2">
                       <Label>For/on behalf of</Label>
                       <Input
                         value={formData.inspectedByForOnBehalfOf || ''}
                         onChange={(e) => onUpdate('inspectedByForOnBehalfOf', e.target.value)}
                         placeholder="Company name"
-                        className="h-11"
+                        className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                       />
                     </div>
 
-                    <div>
+                    <div className="space-y-2">
                       <Label>Position</Label>
                       <Input
                         value={formData.inspectedByPosition || ''}
                         onChange={(e) => onUpdate('inspectedByPosition', e.target.value)}
                         placeholder="Job title"
-                        className="h-11"
+                        className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                       />
                     </div>
                   </div>
                 </div>
 
                 {/* Report Authorised By */}
-                <div className="space-y-4 p-4 rounded-xl border border-border/50 bg-card/50">
+                <div className="space-y-4 p-4 rounded-lg border border-border bg-card/50">
                   {/* Same as Inspected By */}
-                  <div className="flex items-center gap-3 p-3 rounded-lg bg-purple-500/5 border border-purple-500/20">
+                  <div className="flex items-start space-x-3 p-4 bg-card/50 rounded-lg border border-border -mx-4 -mt-4">
                     <Checkbox
                       id="sameAsInspectedBy"
                       checked={formData.sameAsInspectedBy || false}
                       onCheckedChange={handleSameAsInspectedBy}
+                      className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black mt-0.5"
                     />
-                    <Label htmlFor="sameAsInspectedBy" className="cursor-pointer text-sm">
+                    <Label htmlFor="sameAsInspectedBy" className="text-foreground cursor-pointer leading-relaxed">
                       Same person as Inspected By
                     </Label>
                   </div>
 
-                  <h4 className="font-semibold text-elec-yellow flex items-center gap-2">
-                    <User className="h-4 w-4" />
-                    REPORT AUTHORISED BY:
-                  </h4>
+                  <div className="bg-gradient-to-r from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-lg px-4 py-3 -mx-4">
+                    <h4 className="font-semibold text-foreground flex items-center gap-2">
+                      <User className="h-4 w-4 text-purple-400" />
+                      REPORT AUTHORISED BY:
+                    </h4>
+                  </div>
 
                   <div className="space-y-4">
-                    <div>
+                    <div className="space-y-2">
                       <Label>Name (Capitals) *</Label>
                       <Input
                         value={formData.reportAuthorisedByName || ''}
                         onChange={(e) => onUpdate('reportAuthorisedByName', e.target.value.toUpperCase())}
                         placeholder="FULL NAME"
-                        className="uppercase h-11"
+                        className="uppercase h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                       />
                     </div>
 
-                    <div>
+                    <div className="space-y-2">
                       <Label>Signature *</Label>
                       <SignatureInput
                         value={formData.reportAuthorisedBySignature || ''}
@@ -620,31 +620,31 @@ export const EICRCertificateTab: React.FC<EICRCertificateTabProps> = ({
                       />
                     </div>
 
-                    <div>
+                    <div className="space-y-2">
                       <Label>Date *</Label>
                       <Input
                         type="date"
                         value={formData.reportAuthorisedByDate || ''}
                         onChange={(e) => onUpdate('reportAuthorisedByDate', e.target.value)}
-                        className="h-11"
+                        className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                       />
                     </div>
 
-                    <div>
+                    <div className="space-y-2">
                       <Label>For/on behalf of</Label>
                       <Input
                         value={formData.reportAuthorisedByForOnBehalfOf || ''}
                         onChange={(e) => onUpdate('reportAuthorisedByForOnBehalfOf', e.target.value)}
                         placeholder="Company name"
-                        className="h-11"
+                        className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                       />
                     </div>
                   </div>
                 </div>
               </div>
-            </CardContent>
+            </div>
           </CollapsibleContent>
-        </Card>
+        </div>
       </Collapsible>
 
       {/* Actions Bar */}

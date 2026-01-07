@@ -1,7 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Brain } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Brain, ChevronDown } from "lucide-react";
 import { parseAgentResponse } from "@/utils/agentTextProcessor";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 interface AIAnalysisSummaryProps {
   jobDescription?: string;
@@ -9,83 +11,106 @@ interface AIAnalysisSummaryProps {
 
 const AIAnalysisSummary = ({ jobDescription }: AIAnalysisSummaryProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  
+
   if (!jobDescription) return null;
 
   const sections = parseAgentResponse(jobDescription);
   const shouldCollapse = jobDescription.length > 1200;
-  
+
   return (
-    <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl bg-gradient-to-br from-elec-card to-elec-dark/50">
-      <CardHeader className="px-4 py-4 sm:px-6 sm:py-5 bg-gradient-to-r from-elec-yellow/10 to-transparent border-b border-elec-yellow/20">
-        <div className="flex items-center gap-3">
-          <Brain className="h-6 w-6 text-elec-yellow" />
-          <CardTitle className="text-xl sm:text-lg font-bold text-foreground">
-            📋 Analysis & Reasoning
-          </CardTitle>
+    <Card variant="ios" className="overflow-hidden">
+      <CardContent className="p-0">
+        {/* Header */}
+        <div className="p-4 border-b border-white/5">
+          <div className="flex items-center gap-3">
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center"
+            >
+              <Brain className="h-5 w-5 text-elec-yellow" />
+            </motion.div>
+            <div>
+              <h3 className="text-ios-headline text-white font-semibold">Analysis & Reasoning</h3>
+              <p className="text-ios-caption-1 text-white/50">AI-generated cost breakdown logic</p>
+            </div>
+          </div>
         </div>
-      </CardHeader>
-      
-      <CardContent className="px-4 py-5 sm:px-6 sm:py-6">
-        <div className={`space-y-4 ${!isExpanded && shouldCollapse ? 'line-clamp-[12]' : ''}`}>
-          {sections.map((section, idx) => {
-            if (section.type === 'header') {
-              return (
-                <h4 key={idx} className="text-xl sm:text-lg font-bold text-elec-yellow mt-5 mb-2 first:mt-0">
-                  {section.content}
-                </h4>
-              );
-            }
-            
-            if (section.type === 'paragraph') {
-              return (
-                <p key={idx} className="text-base sm:text-base text-foreground leading-relaxed">
-                  {section.content}
-                </p>
-              );
-            }
-            
-            if (section.type === 'list' && section.items) {
-              return (
-                <ul key={idx} className="space-y-3 ml-2">
-                  {section.items.map((item, i) => (
-                    <li key={i} className="flex gap-3 text-foreground text-base sm:text-sm">
-                      <span className="text-elec-yellow font-bold mt-1">•</span>
-                      <span className="flex-1">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              );
-            }
-            
-            if (section.type === 'calculation') {
-              return (
-                <div key={idx} className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4 font-mono text-sm sm:text-base text-foreground">
-                  {section.content}
-                </div>
-              );
-            }
-            
-            if (section.type === 'citation') {
-              return (
-                <div key={idx} className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3 text-sm sm:text-base text-blue-300">
-                  📖 {section.content}
-                </div>
-              );
-            }
-            
-            return null;
-          })}
+
+        {/* Content */}
+        <div className="p-4">
+          <div className={cn(
+            "space-y-4",
+            !isExpanded && shouldCollapse && "max-h-[300px] overflow-hidden relative"
+          )}>
+            {sections.map((section, idx) => {
+              if (section.type === 'header') {
+                return (
+                  <h4 key={idx} className="text-ios-subhead font-bold text-elec-yellow mt-4 mb-2 first:mt-0">
+                    {section.content}
+                  </h4>
+                );
+              }
+
+              if (section.type === 'paragraph') {
+                return (
+                  <p key={idx} className="text-ios-body text-white/80 leading-relaxed">
+                    {section.content}
+                  </p>
+                );
+              }
+
+              if (section.type === 'list' && section.items) {
+                return (
+                  <ul key={idx} className="space-y-2 ml-1">
+                    {section.items.map((item, i) => (
+                      <li key={i} className="flex gap-3 text-ios-body text-white/80">
+                        <span className="text-elec-yellow font-bold mt-0.5">•</span>
+                        <span className="flex-1">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                );
+              }
+
+              if (section.type === 'calculation') {
+                return (
+                  <div key={idx} className="bg-elec-yellow/10 border border-elec-yellow/20 rounded-xl p-4 font-mono text-ios-footnote text-white/90">
+                    {section.content}
+                  </div>
+                );
+              }
+
+              if (section.type === 'citation') {
+                return (
+                  <div key={idx} className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3 text-ios-footnote text-blue-300">
+                    📖 {section.content}
+                  </div>
+                );
+              }
+
+              return null;
+            })}
+
+            {/* Gradient fade when collapsed */}
+            {!isExpanded && shouldCollapse && (
+              <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#1a1a1a] to-transparent pointer-events-none" />
+            )}
+          </div>
+
+          {shouldCollapse && (
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="flex items-center gap-2 text-elec-yellow text-ios-footnote font-semibold mt-4 ios-pressable"
+            >
+              <ChevronDown className={cn(
+                "h-4 w-4 transition-transform duration-200",
+                isExpanded && "rotate-180"
+              )} />
+              {isExpanded ? 'Show Less' : 'Read Full Analysis'}
+            </button>
+          )}
         </div>
-        
-        {shouldCollapse && (
-          <button 
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="text-elec-yellow text-sm font-semibold mt-4 hover:text-elec-yellow/80 transition-colors"
-          >
-            {isExpanded ? '▲ Show Less' : '▼ Read Full Analysis'}
-          </button>
-        )}
       </CardContent>
     </Card>
   );

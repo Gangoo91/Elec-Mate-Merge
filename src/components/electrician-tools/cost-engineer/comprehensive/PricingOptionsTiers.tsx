@@ -1,6 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, DollarSign, Clock } from "lucide-react";
+import { TrendingUp, Coins } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface PricingOptionsTiersProps {
   profitability?: any;
@@ -145,105 +146,126 @@ const PricingOptionsTiers = ({
   const busy = calculateTierMetrics(busyPrice);
 
   return (
-    <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
-      <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
-        <CardTitle className="text-xl sm:text-lg font-bold text-foreground">Pricing Options</CardTitle>
-        {explanation && (
-          <p className="text-base sm:text-sm text-foreground mt-2">{explanation}</p>
-        )}
-      </CardHeader>
-      <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6">
-        {/* Price Sanity Check */}
-        <div className="bg-blue-500/10 border-2 border-blue-500/30 rounded-xl p-5 sm:p-4 mb-6">
-          <h4 className="font-bold text-foreground text-lg sm:text-base mb-3 sm:mb-2 flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 sm:h-4 sm:w-4 text-blue-400" />
-            Industry Benchmark Check
-          </h4>
-          <div className="space-y-4 text-base sm:text-sm text-left">
-            <div className="space-y-1">
-              <span className="text-foreground/70 text-sm">{benchmark.name} typical range:</span>
-              <div className="font-medium text-foreground text-lg">{benchmark.range}</div>
-            </div>
-            <div className="space-y-1">
-              <span className="text-foreground/70 text-sm">This quote (Standard tier):</span>
-              <div className={`font-bold text-lg ${
-                standardPrice < benchmark.min ? 'text-red-500' : 
-                standardPrice > benchmark.max ? 'text-red-500' : 
-                'text-green-600'
-              }`}>
-                £{standardPrice.toFixed(0)}
-                {standardPrice < benchmark.min && ' ⚠️ Below market rate'}
-                {standardPrice > benchmark.max && ' ⚠️ Above market rate'}
-                {standardPrice >= benchmark.min && standardPrice <= benchmark.max && ' ✅ Within range'}
-              </div>
-            </div>
-            <div className="text-sm text-foreground mt-3 pt-3 border-t border-blue-500/20">
-              {standardPrice < benchmark.min && 'Consider if materials or labour are underestimated'}
-              {standardPrice > benchmark.max && 'Review for over-specification or excessive margins'}
-              {standardPrice >= benchmark.min && standardPrice <= benchmark.max && 'Competitive pricing for your region'}
+    <Card variant="ios" className="overflow-hidden">
+      <CardContent className="p-0">
+        {/* Header */}
+        <div className="p-4 border-b border-white/5">
+          <div className="flex items-center gap-3">
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center"
+            >
+              <Coins className="h-5 w-5 text-elec-yellow" />
+            </motion.div>
+            <div>
+              <h3 className="text-ios-headline text-white font-semibold">Pricing Options</h3>
+              {explanation && (
+                <p className="text-ios-caption-1 text-white/50">{explanation}</p>
+              )}
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* Standard */}
-          <div className={`p-5 sm:p-4 rounded-xl border-2 ${
-            selectedTier === 'standard' 
-              ? 'border-primary bg-primary/10' 
-              : 'border-border/50 bg-background/30'
-          }`}>
-            <div className="text-center mb-4 sm:mb-3">
-              <Badge className="bg-primary/30 text-primary border-primary/50 mb-2">
-                Standard (20%) ⭐
-              </Badge>
-              <div className="text-5xl sm:text-4xl font-bold text-primary">£{standardPrice.toFixed(0)}</div>
-              <div className="text-sm sm:text-xs text-foreground mt-1">Healthy business margin</div>
+        <div className="p-4 space-y-4">
+          {/* Price Sanity Check */}
+          <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <TrendingUp className="h-4 w-4 text-blue-400" />
+              <span className="text-ios-subhead font-semibold text-white">Industry Benchmark</span>
             </div>
-            
-            <div className="space-y-2 text-base sm:text-sm">
-              <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-                <span className="text-foreground">Profit Margin:</span>
-                <span className="font-medium text-foreground whitespace-nowrap">{standard.margin.toFixed(0)}%</span>
+            <div className="space-y-3">
+              <div>
+                <span className="text-ios-caption-1 text-white/50">{benchmark.name} typical range:</span>
+                <div className="text-ios-body font-medium text-white">{benchmark.range}</div>
               </div>
-              <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-                <span className="text-foreground">Your Profit:</span>
-                <span className="font-medium text-green-500 whitespace-nowrap">£{standard.profit.toFixed(0)}</span>
-              </div>
-              <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-                <span className="text-foreground">Profit/hour:</span>
-                <span className="font-medium text-foreground whitespace-nowrap">£{standard.profitPerHour.toFixed(0)}</span>
+              <div>
+                <span className="text-ios-caption-1 text-white/50">This quote (Standard tier):</span>
+                <div className={`text-ios-body font-bold ${
+                  standardPrice < benchmark.min ? 'text-red-400' :
+                  standardPrice > benchmark.max ? 'text-red-400' :
+                  'text-emerald-400'
+                }`}>
+                  £{standardPrice.toFixed(0)}
+                  {standardPrice < benchmark.min && ' — Below market'}
+                  {standardPrice > benchmark.max && ' — Above market'}
+                  {standardPrice >= benchmark.min && standardPrice <= benchmark.max && ' — Competitive'}
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Busy Period */}
-          <div className={`p-5 sm:p-4 rounded-xl border-2 ${
-            selectedTier === 'busy' 
-              ? 'border-primary bg-primary/10' 
-              : 'border-border/50 bg-background/30'
-          }`}>
-            <div className="text-center mb-4 sm:mb-3">
-              <Badge className="bg-green-500/20 text-green-500 border-green-500/30 mb-2">
-                Busy Period (35%)
-              </Badge>
-              <div className="text-5xl sm:text-4xl font-bold text-foreground">£{busyPrice.toFixed(0)}</div>
-              <div className="text-sm sm:text-xs text-foreground mt-1">When demand is high</div>
-            </div>
-            
-            <div className="space-y-2 text-base sm:text-sm">
-              <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-                <span className="text-foreground">Profit Margin:</span>
-                <span className="font-medium text-foreground whitespace-nowrap">{busy.margin.toFixed(0)}%</span>
+          {/* Tiers Grid */}
+          <div className="grid grid-cols-2 gap-3">
+            {/* Standard */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className={`p-4 rounded-xl border-2 ${
+                selectedTier === 'standard'
+                  ? 'border-elec-yellow bg-elec-yellow/10'
+                  : 'border-white/10 bg-black/20'
+              }`}
+            >
+              <div className="text-center mb-3">
+                <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs mb-2">
+                  Standard 20%
+                </Badge>
+                <div className="text-3xl font-bold text-elec-yellow">£{standardPrice.toFixed(0)}</div>
+                <div className="text-ios-caption-1 text-white/50 mt-1">Business margin</div>
               </div>
-              <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-                <span className="text-foreground">Your Profit:</span>
-                <span className="font-medium text-green-500 whitespace-nowrap">£{busy.profit.toFixed(0)}</span>
+
+              <div className="space-y-2">
+                <div className="flex justify-between text-ios-footnote">
+                  <span className="text-white/60">Margin:</span>
+                  <span className="font-medium text-white">{standard.margin.toFixed(0)}%</span>
+                </div>
+                <div className="flex justify-between text-ios-footnote">
+                  <span className="text-white/60">Profit:</span>
+                  <span className="font-medium text-emerald-400">£{standard.profit.toFixed(0)}</span>
+                </div>
+                <div className="flex justify-between text-ios-footnote">
+                  <span className="text-white/60">Per hour:</span>
+                  <span className="font-medium text-white">£{standard.profitPerHour.toFixed(0)}</span>
+                </div>
               </div>
-              <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-                <span className="text-foreground">Profit/hour:</span>
-                <span className="font-medium text-foreground whitespace-nowrap">£{busy.profitPerHour.toFixed(0)}</span>
+            </motion.div>
+
+            {/* Busy Period */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15 }}
+              className={`p-4 rounded-xl border-2 ${
+                selectedTier === 'busy'
+                  ? 'border-emerald-500 bg-emerald-500/10'
+                  : 'border-white/10 bg-black/20'
+              }`}
+            >
+              <div className="text-center mb-3">
+                <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-xs mb-2">
+                  Premium 35%
+                </Badge>
+                <div className="text-3xl font-bold text-white">£{busyPrice.toFixed(0)}</div>
+                <div className="text-ios-caption-1 text-white/50 mt-1">High demand</div>
               </div>
-            </div>
+
+              <div className="space-y-2">
+                <div className="flex justify-between text-ios-footnote">
+                  <span className="text-white/60">Margin:</span>
+                  <span className="font-medium text-white">{busy.margin.toFixed(0)}%</span>
+                </div>
+                <div className="flex justify-between text-ios-footnote">
+                  <span className="text-white/60">Profit:</span>
+                  <span className="font-medium text-emerald-400">£{busy.profit.toFixed(0)}</span>
+                </div>
+                <div className="flex justify-between text-ios-footnote">
+                  <span className="text-white/60">Per hour:</span>
+                  <span className="font-medium text-white">£{busy.profitPerHour.toFixed(0)}</span>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </CardContent>

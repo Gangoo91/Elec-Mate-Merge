@@ -2,6 +2,7 @@ import { ArrowLeft, CircuitBoard, Lightbulb, Shield, Zap, Thermometer, AlertTria
 import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import useSEO from "@/hooks/useSEO";
 
 const subsections = [
   {
@@ -9,52 +10,62 @@ const subsections = [
     title: "Ring and Radial Circuit Faults",
     description: "Common faults in ring final and radial circuits and their diagnosis",
     icon: CircuitBoard,
-    href: "../level3-module4-section3-3-1",
+    href: "../level3-module4-section3-1",
   },
   {
-    number: "3.2", 
+    number: "3.2",
     title: "Lighting Circuit Faults",
     description: "Fault finding in lighting circuits including switching and control problems",
     icon: Lightbulb,
-    href: "../level3-module4-section3-3-2",
+    href: "../level3-module4-section3-2",
   },
   {
     number: "3.3",
     title: "Protective Device Tripping",
     description: "MCBs, RCDs, RCBOs tripping faults and protective device malfunctions",
     icon: Shield,
-    href: "../level3-module4-section3-3-3",
+    href: "../level3-module4-section3-3",
   },
   {
     number: "3.4",
     title: "Earthing and Bonding Issues",
     description: "Earth continuity problems, bonding failures and earthing system faults",
     icon: Zap,
-    href: "../level3-module4-section3-3-4",
+    href: "../level3-module4-section3-4",
   },
   {
     number: "3.5",
     title: "Appliance and Equipment Faults",
     description: "Fault diagnosis in electrical appliances and fixed equipment",
     icon: AlertTriangle,
-    href: "../level3-module4-section3-3-5",
+    href: "../level3-module4-section3-5",
   },
   {
     number: "3.6",
     title: "Overheating and Insulation Breakdown",
     description: "Thermal faults, insulation failures and degradation problems",
     icon: Thermometer,
-    href: "../level3-module4-section3-3-6",
+    href: "../level3-module4-section3-6",
   },
 ];
 
 const Level3Module4Section3 = () => {
+  useSEO(
+    "Section 3: Common Faults in Electrical Systems - Level 3 Module 4",
+    "Ring/radial circuits, lighting, protective devices, earthing and equipment faults"
+  );
+
   return (
     <div className="min-h-screen bg-[#1a1a1a]">
-      {/* Header */}
-      <div className="border-b border-white/10 bg-transparent">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white/70 hover:text-white active:text-white p-0 -ml-1" asChild>
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../level3-module4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 4
@@ -64,29 +75,49 @@ const Level3Module4Section3 = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-        <div className="mb-12">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6">
-            Section 3 - Common Faults in Electrical Systems
+      <div className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Hero Section */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Section 3</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Common Faults in Electrical Systems
           </h1>
-          <p className="text-xl text-white/70 max-w-3xl">
+          <p className="text-white/80 max-w-3xl mx-auto">
             Understand the most common types of faults encountered in electrical installations and their characteristics
           </p>
-        </div>
+        </header>
+
+        {/* Section Overview */}
+        <section className="mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">Section Overview</p>
+            <p className="text-sm text-white">
+              This section covers common faults in electrical systems including ring and radial circuits,
+              lighting circuits, protective device tripping, earthing and bonding issues,
+              appliance faults, and overheating with insulation breakdown.
+            </p>
+          </div>
+        </section>
 
         {/* Subsections Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {subsections.map((subsection, index) => (
-            <ModuleCard
-              key={index}
-              number={subsection.number}
-              title={subsection.title}
-              description={subsection.description}
-              icon={subsection.icon}
-              href={subsection.href}
-            />
-          ))}
-        </div>
+        <section>
+          <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {subsections.map((subsection, index) => (
+              <ModuleCard
+                key={index}
+                number={subsection.number}
+                title={subsection.title}
+                description={subsection.description}
+                icon={subsection.icon}
+                href={subsection.href}
+              />
+            ))}
+          </div>
+        </section>
       </div>
     </div>
   );

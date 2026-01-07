@@ -1,0 +1,206 @@
+import { useState, useEffect } from "react";
+import { motion, useSpring, useTransform } from "framer-motion";
+import {
+  Wrench,
+  CheckCircle,
+  AlertTriangle,
+  AlertCircle,
+  Plus,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+interface StatItem {
+  label: string;
+  value: number;
+  icon: typeof Wrench;
+  color: "yellow" | "green" | "amber" | "red";
+}
+
+interface EquipmentHeroCardProps {
+  totalEquipment: number;
+  goodCount: number;
+  attentionCount: number;
+  overdueCount: number;
+  onAddEquipment: () => void;
+}
+
+function AnimatedCounter({ value }: { value: number }) {
+  const spring = useSpring(0, { stiffness: 100, damping: 30 });
+  const display = useTransform(spring, (current) =>
+    Math.round(current).toLocaleString()
+  );
+  const [displayValue, setDisplayValue] = useState("0");
+
+  useEffect(() => {
+    spring.set(value);
+    const unsubscribe = display.on("change", (v) => setDisplayValue(v));
+    return () => unsubscribe();
+  }, [value, spring, display]);
+
+  return <span className="tabular-nums">{displayValue}</span>;
+}
+
+function StatCard({ stat, index }: { stat: StatItem; index: number }) {
+  const colorMap = {
+    yellow: "from-elec-yellow/20 to-elec-yellow/5 border-elec-yellow/30 text-elec-yellow",
+    green: "from-emerald-500/20 to-emerald-500/5 border-emerald-500/30 text-emerald-500",
+    amber: "from-amber-500/20 to-amber-500/5 border-amber-500/30 text-amber-500",
+    red: "from-red-500/20 to-red-500/5 border-red-500/30 text-red-500",
+  };
+
+  const iconBgMap = {
+    yellow: "bg-elec-yellow/20 text-elec-yellow",
+    green: "bg-emerald-500/20 text-emerald-500",
+    amber: "bg-amber-500/20 text-amber-500",
+    red: "bg-red-500/20 text-red-500",
+  };
+
+  const Icon = stat.icon;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.1, type: "spring", stiffness: 200 }}
+      className={cn(
+        "relative overflow-hidden rounded-xl p-4",
+        "bg-gradient-to-br border",
+        "backdrop-blur-sm",
+        colorMap[stat.color]
+      )}
+    >
+      <div className="flex items-center gap-3">
+        <div className={cn("p-2 rounded-lg", iconBgMap[stat.color])}>
+          <Icon className="h-4 w-4" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-2xl font-bold text-white leading-none">
+            <AnimatedCounter value={stat.value} />
+          </p>
+          <p className="text-xs text-white/60 mt-1 truncate">{stat.label}</p>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+export function EquipmentHeroCard({
+  totalEquipment,
+  goodCount,
+  attentionCount,
+  overdueCount,
+  onAddEquipment,
+}: EquipmentHeroCardProps) {
+  const stats: StatItem[] = [
+    {
+      label: "Total",
+      value: totalEquipment,
+      icon: Wrench,
+      color: "yellow",
+    },
+    {
+      label: "Good",
+      value: goodCount,
+      icon: CheckCircle,
+      color: "green",
+    },
+    {
+      label: "Attention",
+      value: attentionCount,
+      icon: AlertTriangle,
+      color: "amber",
+    },
+    {
+      label: "Overdue",
+      value: overdueCount,
+      icon: AlertCircle,
+      color: "red",
+    },
+  ];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className={cn(
+        "relative overflow-hidden rounded-2xl",
+        "bg-gradient-to-br from-elec-gray/90 via-elec-gray to-elec-dark",
+        "border border-white/10",
+        "p-5 md:p-8"
+      )}
+    >
+      {/* Background decoration */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-24 -right-24 w-48 h-48 rounded-full bg-elec-yellow/10 blur-3xl" />
+        <div className="absolute -bottom-24 -left-24 w-48 h-48 rounded-full bg-emerald-500/10 blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-amber-500/5 blur-3xl" />
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 space-y-5">
+        {/* Header */}
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex items-center gap-3 md:gap-4">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
+              className="p-2.5 md:p-3 rounded-xl md:rounded-2xl bg-elec-yellow/20 border border-elec-yellow/30"
+            >
+              <Wrench className="h-6 w-6 md:h-8 md:w-8 text-elec-yellow" />
+            </motion.div>
+            <div>
+              <motion.h1
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 }}
+                className="text-xl md:text-3xl font-bold text-white"
+              >
+                Equipment Tracker
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+                className="text-white/60 text-sm md:text-base"
+              >
+                Track your safety equipment & PAT testing
+              </motion.p>
+            </div>
+          </div>
+        </div>
+
+        {/* Stats Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 md:gap-3">
+          {stats.map((stat, index) => (
+            <StatCard key={stat.label} stat={stat} index={index} />
+          ))}
+        </div>
+
+        {/* CTA Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+        >
+          <Button
+            size="lg"
+            onClick={onAddEquipment}
+            className={cn(
+              "w-full h-14 text-base font-semibold",
+              "bg-elec-yellow text-black hover:bg-elec-yellow/90",
+              "shadow-lg shadow-elec-yellow/20",
+              "transition-all duration-300",
+              "hover:shadow-xl hover:shadow-elec-yellow/30",
+              "active:scale-[0.98]"
+            )}
+          >
+            <Plus className="h-5 w-5 mr-2" />
+            Add Equipment
+          </Button>
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+}
