@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { IOSInput } from '@/components/ui/ios-input';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Loader2,
@@ -26,6 +27,7 @@ import {
   AlertTriangle
 } from 'lucide-react';
 import { storeConsent } from '@/services/consentService';
+import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 
 // Password requirements
@@ -150,7 +152,7 @@ const SignUp = () => {
     const consentWithTimestamp = { ...consent, timestamp: new Date().toISOString() };
 
     try {
-      const { error } = await signUp(email, password, fullName);
+      const { error, data } = await signUp(email, password, fullName);
 
       if (error) {
         setError(error.message);
@@ -158,11 +160,13 @@ const SignUp = () => {
         return;
       }
 
-      localStorage.setItem('elec-mate-onboarding', JSON.stringify({
+      // Store onboarding data including Elec-ID preference
+      const onboardingData = {
         ...profile,
         consent: consentWithTimestamp,
         completedAt: new Date().toISOString()
-      }));
+      };
+      localStorage.setItem('elec-mate-onboarding', JSON.stringify(onboardingData));
 
       await storeConsent({
         email,
@@ -173,6 +177,25 @@ const SignUp = () => {
         marketing_opt_in: consent.marketingOptIn,
         consent_timestamp: consentWithTimestamp.timestamp
       });
+
+      // If user opted for Elec-ID, try to generate it now (will be created on first login if profile not ready)
+      if (profile.createElecId && data?.user?.id) {
+        try {
+          await supabase.functions.invoke('generate-elec-id', {
+            body: {
+              user_id: data.user.id,
+              ecs_card_type: profile.ecsCardType || null
+            }
+          });
+        } catch (elecIdError) {
+          // Store intent for later - will be picked up on first login
+          localStorage.setItem('elec-mate-pending-elecid', JSON.stringify({
+            createElecId: true,
+            ecsCardType: profile.ecsCardType
+          }));
+          console.log('Elec-ID will be generated on first login');
+        }
+      }
 
       setStep('complete');
     } catch (err: any) {
@@ -848,9 +871,9 @@ const SignUp = () => {
                         </div>
                         <div className="grid grid-cols-1 gap-2">
                           {[
+                            { text: 'Worker-owned professional identity', icon: '🔐' },
+                            { text: 'Find work opportunities in Elec-Mate', icon: '💼' },
                             { text: 'Store all qualifications in one place', icon: '📜' },
-                            { text: 'Track training & CPD progress', icon: '📊' },
-                            { text: 'Build your work history portfolio', icon: '💼' },
                             { text: 'Share via QR code with employers', icon: '📱' },
                             { text: 'Verifiable digital credential', icon: '✅' },
                           ].map((item, idx) => (
@@ -971,16 +994,25 @@ const SignUp = () => {
                         className="mb-4 overflow-hidden"
                       >
                         <label className="text-ios-caption-1 text-white/60 mb-2 block">ECS Card Type (optional)</label>
-                        <select
+                        <Select
                           value={profile.ecsCardType}
-                          onChange={(e) => setProfile({ ...profile, ecsCardType: e.target.value })}
-                          className="w-full h-[56px] px-4 rounded-2xl border-2 border-white/10 bg-[#1a1a2e] text-white text-ios-body focus:border-elec-yellow/60 focus:outline-none transition-colors [&>option]:bg-[#1a1a2e] [&>option]:text-white [&>option]:py-2"
+                          onValueChange={(value) => setProfile({ ...profile, ecsCardType: value })}
                         >
-                          <option value="">Select card type...</option>
-                          {ecsCardTypes.map((type) => (
-                            <option key={type.value} value={type.value}>{type.label}</option>
-                          ))}
-                        </select>
+                          <SelectTrigger className="h-14 rounded-2xl border-2 border-white/10 bg-[#1a1a2e] text-white focus:border-elec-yellow/60 focus:ring-elec-yellow/20">
+                            <SelectValue placeholder="Select card type..." />
+                          </SelectTrigger>
+                          <SelectContent className="bg-[#1a1a2e] border-white/20 rounded-xl">
+                            {ecsCardTypes.map((type) => (
+                              <SelectItem
+                                key={type.value}
+                                value={type.value}
+                                className="text-white hover:bg-white/10 focus:bg-elec-yellow/20 focus:text-white cursor-pointer"
+                              >
+                                {type.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                       </motion.div>
                     )}
                   </AnimatePresence>

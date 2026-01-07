@@ -37,6 +37,7 @@ import { Badge } from '@/components/ui/badge';
 import { useDashboardData } from '@/hooks/useDashboardData';
 import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
 import { useAuth } from '@/contexts/AuthContext';
+import { ElecIdBanner } from '@/components/elec-id/ElecIdBanner';
 
 // Animation variants
 const containerVariants = {
@@ -524,6 +525,11 @@ const ElectricalHub = () => {
             {/* Stats Bar - Now visible on mobile as carousel */}
             <motion.section variants={itemVariants} className="sm:px-0">
               <ElectricalStatsBar />
+            </motion.section>
+
+            {/* Elec-ID Banner */}
+            <motion.section variants={itemVariants} className="px-4 sm:px-0">
+              <ElecIdBanner variant="electrician" />
             </motion.section>
 
             {/* Featured AI Card */}

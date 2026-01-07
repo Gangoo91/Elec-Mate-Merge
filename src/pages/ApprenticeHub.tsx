@@ -33,6 +33,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useApprenticeData } from '@/hooks/useApprenticeData';
 import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
+import { ElecIdBanner } from '@/components/elec-id/ElecIdBanner';
 
 // Animation variants
 const containerVariants = {
@@ -506,6 +507,11 @@ const ApprenticeHub = () => {
             {/* Stats Bar - Now visible on mobile as carousel */}
             <motion.section variants={itemVariants} className="sm:px-0">
               <ApprenticeStatsBar />
+            </motion.section>
+
+            {/* Elec-ID Banner */}
+            <motion.section variants={itemVariants} className="px-4 sm:px-0">
+              <ElecIdBanner variant="apprentice" />
             </motion.section>
 
             {/* Featured AI Card */}
