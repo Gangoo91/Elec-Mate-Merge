@@ -14,7 +14,7 @@ import {
   Check,
   Plug,
   Zap,
-  Ladder,
+  ArrowUpDown,
   Wrench,
   Shield,
   Settings,
@@ -41,7 +41,7 @@ interface Equipment {
 const categoryIcons: Record<string, typeof Plug> = {
   "pat-tester": Plug,
   "test-equipment": Zap,
-  "ladders": Ladder,
+  "ladders": ArrowUpDown,
   "power-tools": Wrench,
   "ppe": Shield,
   "other": Settings,

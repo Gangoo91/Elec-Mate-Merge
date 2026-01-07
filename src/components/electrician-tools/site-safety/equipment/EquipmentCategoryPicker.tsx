@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import {
   Plug,
   Zap,
-  Ladder,
+  ArrowUpDown,
   Wrench,
   Shield,
   Settings,
@@ -46,7 +46,7 @@ export const equipmentCategories: CategoryOption[] = [
   {
     id: "ladders",
     label: "Ladders",
-    icon: Ladder,
+    icon: ArrowUpDown,
     color: "text-orange-400",
     bgColor: "bg-orange-500/10",
     borderColor: "border-orange-500/30",
